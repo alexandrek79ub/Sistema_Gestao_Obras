@@ -1,0 +1,8 @@
+"ID_ATIVIDADE";"NOME_DA_ATIVIDADE";"DATA_INICIO_PREVISTA";"DATA_FIM_PREVISTA";"DURACAO_DIAS";"PREDECESSORAS";"RECURSO_ATRIBUIDO"
+"1";"Mobilização e Canteiro";"01/09/2026";"10/09/2026";"10";"";"Equipe Própria"
+"2";"Gabarito e Locação";"11/09/2026";"15/09/2026";"5";"1";"Topografia Alfa"
+"3";"Perfuração de Estacas";"16/09/2026";"25/09/2026";"10";"2";"Fundações XYZ"
+"4";"Concretagem das Estacas";"26/09/2026";"28/09/2026";"3";"3";"Concreteira Beta"
+"5";"Blocos de Coroamento e Baldrames";"29/09/2026";"15/10/2026";"17";"4";"Empreiteiro João"
+"6";"Pilares Térreo";"16/10/2026";"25/10/2026";"10";"5";"Empreiteiro João"
+"7";"Alvenaria de Vedação Térreo";"26/10/2026";"15/11/2026";"21";"6";"Empreiteiro Silva"
