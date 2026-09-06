@@ -13,6 +13,7 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 ### 🧠 Pilar 1: A Mente Central (Roteamento)
 - `agents.md`: O arquivo mestre que dá a persona para a Inteligência Artificial. Ele sabe para onde direcionar a dúvida do usuário (se é para custos ou se é para campo).
 - `skills/gestao/agents_gestor_obras.md`: O "Cérebro" do Gerente de Projetos. Ele puxa as skills de gestão e obriga a comparação de tudo com a Bíblia da Obra (Orçamento).
+- `governanca/INDICE_MESTRE_SKILLS.md`: O mapa de consulta completo que resolve sobreposições de Skills e regras de autonomia.
 
 ### 📐 Pilar 2: Engenharia de Custos (Quantitativo)
 *Regra: Arredondar sempre para Unidade Comercial de Compra (UCC).*
@@ -21,6 +22,7 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 - `SKILL_QUANT_02_ESTRUTURA.md`: Pilares, Lajes, Aço (CA-50/60) e Fôrmas.
 - `SKILL_QUANT_03_ARQUITETURA.md`: Alvenaria, Reboco, Pisos, Gesso, Pintura.
 - `SKILL_QUANT_04_ELETRICA.md` & `05_HIDRAULICA.md`: Módulos de instalações.
+- `SKILL_QUANTIFICACAO_ORCAMENTACAO.md`, `PEDIDO_DE_COMPRA.md` e `CONCILIACAO_3_PONTAS.md`: Skills avançadas de orçamento e validação fiscal.
 
 ### 📊 Pilar 3: A Gestão de Obra (O Backoffice)
 *Onde a IA cruza dinheiro, prazo e segurança.*
@@ -31,6 +33,7 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 - `SKILL_GESTAO_04_SEGURANCA.md`: Normas da NR-18.
 - `SKILL_GESTAO_05_QUALIDADE.md`: Controle de PBQP-H e rastreabilidade.
 - `SKILL_GESTAO_06_RELATORIOS.md`: Dashboard, cruzamento EVM (SPI/CPI) e Planos de Ação autônomos.
+- `SKILL_GESTAO_07` a `17`: Gestão avançada, abrangendo Ciência de Dados, Fluxo de Caixa, Contratos, Riscos, Encerramento e Reprogramação (consulte o Índice Mestre).
 
 ### 👷 Pilar 4: O Chão de Fábrica (Biblioteca de POPs)
 *Os manuais inegociáveis para não ocorrer patologias nem desperdício logístico. Estão na pasta `procedimentos/`.*
@@ -40,7 +43,8 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 - **Módulo 4 (Engenharia):** POP 10 (Fundação), 11 (Concreto), 12 (Alvenaria), 13 (Revestimento), 14 (Impermeabilização), 15 (Instalações Hidráulicas), 16 (Instalações Elétricas).
 - **Módulo 5 (Compliance e Closeout):** POP 17 (Onboarding Terceiros), POP 18 (As-Built e DataBook).
 - **Módulo 6 (Canteiro Pesado e SESMT):** POP 19 (Fôrmas e Cimbramento), POP 20 (Andaimes e NR-35), POP 21 (Topografia a Laser), POP 22 (Controle de Concreto), POP 23 (SESMT e Treinamentos).
-- *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro).
+- **Módulo 7 (Acabamentos Externos):** POP 24 (Cobertura), POP 25 (Esquadrias).
+- *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro) e `MANUAL_BOAS_PRATICAS_EXECUCAO.md` (Mapa de fases com checkpoints topográficos).
 
 ### 🤖 Pilar 5: Automação e Engenharia 4.0
 *Onde a escala acontece. Integração de sistemas proprietários.*

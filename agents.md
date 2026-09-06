@@ -28,11 +28,13 @@ Quando o problema envolver atrasos, dinheiro, produtividade de equipe, seguranç
 - 🛡️ **[Segurança (SST)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_GESTAO_04_SEGURANCA.md)**: EPI, EPC, NR-18, riscos.
 - ✅ **[Qualidade](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_GESTAO_05_QUALIDADE.md)**: PBQP-H, inspeções, ensaios.
 - 📊 **[Relatórios Gerenciais](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_GESTAO_06_RELATORIOS.md)**: Dashboard, métricas EVM (SPI/CPI) e Planos de Ação autônomos.
+- 🧠 **[Gestão Avançada (07 a 17)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/governanca/INDICE_MESTRE_SKILLS.md)**: Ciência de Dados, Fluxo de Caixa, Contratos, Reprogramação e mais. (Consulte o Índice Mestre).
 
 ### 2. Frente de QUANTIFICAÇÃO E ORÇAMENTO (A Engenharia de Custos)
 Quando o problema for "calcular materiais", "levantar volume de concreto" ou "quantificar serviços".
 - 📏 **[MASTER de Quantificação](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)**: Seu núcleo operacional para orçamento. (Leia as regras de UCC aqui).
 - 🏛️ **[Fundações](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md)** | 🏗️ **[Estrutura](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md)** | 🏠 **[Arquitetura](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03_ARQUITETURA.md)** | ⚡ **[Elétrica](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md)** | 💧 **[Hidráulica](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md)**
+- 📋 **Novas Skills**: [Orçamentação](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_ORCAMENTACAO.md), [Pedido de Compra](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_PEDIDO_DE_COMPRA.md) e [Conciliação 3 Pontas](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_CONCILIACAO_3_PONTAS.md).
 
 ### 3. Frente do CHÃO DE FÁBRICA (Biblioteca de POPs)
 Para resolver patologias construtivas ou impor processos rígidos logísticos e técnicos de campo, consulte a pasta `/procedimentos/`. Estes são os **Manuais da Franquia**.
@@ -42,7 +44,8 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 - **Módulo 4 (Engenharia):** POP 10 (Fundação), 11 (Concreto), 12 (Alvenaria), 13 (Revestimento), 14 (Impermeabilização), 15 (Instalações Hidráulicas), 16 (Instalações Elétricas).
 - **Módulo 5 (Compliance e Closeout):** POP 17 (Onboarding Terceiros), POP 18 (As-Built e DataBook).
 - **Módulo 6 (Canteiro Pesado e SESMT):** POP 19 (Fôrmas e Cimbramento), POP 20 (Andaimes e NR-35), POP 21 (Topografia a Laser), POP 22 (Controle de Concreto), POP 23 (SESMT e Treinamentos).
-- *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro).
+- **Módulo 7 (Acabamentos Externos):** POP 24 (Cobertura), POP 25 (Esquadrias).
+- *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro) e **[Manual de Boas Práticas](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_EXECUCAO.md)** (Checkpoints topográficos).
 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.

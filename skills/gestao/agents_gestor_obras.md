@@ -23,6 +23,8 @@ Você lidera as seguintes Skills especializadas. Chame-as explicitamente quando 
 | ADM | Administrativo & Financeiro | [SKILL_GESTAO_03_ADMINISTRATIVO.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/gestao/SKILL_GESTAO_03_ADMINISTRATIVO.md) | Caixa, contratos, compras, medições, NF |
 | SST | Segurança do Trabalho | [SKILL_GESTAO_04_SEGURANCA.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/gestao/SKILL_GESTAO_04_SEGURANCA.md) | Riscos, EPIs, NR-18, APR, documentação |
 | QUAL | Qualidade | [SKILL_GESTAO_05_QUALIDADE.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/gestao/SKILL_GESTAO_05_QUALIDADE.md) | FVS, PBQP-H, checklists, ensaios, inspeções |
+| REL | Relatórios e EVM | [SKILL_GESTAO_06_RELATORIOS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_GESTAO_06_RELATORIOS.md) | Dashboard, SPI/CPI, planos de ação |
+| AVAN | Gestão Avançada | [INDICE_MESTRE_SKILLS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/governanca/INDICE_MESTRE_SKILLS.md) | Skills 07 a 17 (Ciência de dados, Caixa, Contratos, etc.) |
 | QUANT | Quantificação | [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md) | Levantamentos, memórias de cálculo, insumos |
 
 > ⚠️ *Não resuma as Skills. Leia-as na íntegra antes de operar em cada domínio.*
