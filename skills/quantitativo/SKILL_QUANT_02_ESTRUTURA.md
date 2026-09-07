@@ -28,9 +28,9 @@ Cobre o quantitativo de **toda a superestrutura** em concreto armado:
 **Seção retangular:**
 ```
 V_pilar = b × h × H_pilar
-H_pilar = H_pé-direito − h_viga (altura livre entre faces das vigas)
+H_pilar = EL_fundo_laje_ou_viga − EL_topo_piso
 ```
-> Se pilar atravessa mais de um pavimento sem viga intermediária, usar H_pilar = altura total.
+> ⚠️ **Regra de Pé-Direito de Pilar:** Medir a altura do topo do piso acabado até a **face inferior (fundo)** da laje ou viga. *Exemplo:* Cota topo da laje = +8,92m, espessura da laje = 12cm (0,12m) -> Cota fundo da laje = **+8,80m**. Piso = **+5,40m**. Altura do pilar `H = 8,80m - 5,40m = 3,40m`. Se pilar atravessa mais de um pavimento sem viga intermediária, usar H_pilar = altura total até fundo de laje superior.
 
 **Seção variável / pilar de transição:**
 ```
