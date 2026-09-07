@@ -9,13 +9,12 @@ Este é o **arquivo núcleo** do sistema de quantificação. Ele define os proto
 
 | Arquivo | Disciplina | Conteúdo |
 |---|---|---|
-| [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) | Fundações | Sapatas, blocos, estacas, radier, baldrame, concreto C30 |
-| [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) | Estrutura | Pilares, vigas, lajes, escadas, fôrmas, armadura CA-50/CA-60 |
-| [SKILL_QUANT_03_ARQUITETURA.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANT_03_ARQUITETURA.md) | Arquitetura & Acabamentos | Alvenaria, revestimentos, pisos, teto, cobertura, drywall, impermeabilização |
-| [SKILL_QUANT_04_ELETRICA.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md) | Instalações Elétricas | *Placeholder — em desenvolvimento* |
-| [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md) | Instalações Hidráulicas | *Placeholder — em desenvolvimento* |
+| [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) | Fundações | Sapatas, blocos, estacas, radier, baldrame, concreto C30 |
+| [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) | Estrutura | Pilares, vigas, lajes, escadas, fôrmas, armadura CA-50/CA-60 |
+| [SKILL_QUANT_03_ARQUITETURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03_ARQUITETURA.md) | Arquitetura & Acabamentos | Alvenaria, revestimentos, pisos, teto, cobertura, drywall, impermeabilização |
+| [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md) | Auditoria e Verificação | Loop de QA anti-erro de leitura, checklists de cotas, desmembramento de cantos e validação UCC |
 
-> **Protocolo de uso:** Sempre carregar este MASTER + o módulo da disciplina necessária. Para quantificação completa de obra, carregar MASTER + todos os módulos.
+> **Protocolo de uso:** Sempre carregar este MASTER + o módulo da disciplina necessária + **SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md** para validação final.
 
 ---
 

@@ -63,6 +63,20 @@ V_viga = b × h × L_total
 L_total = comprimento total entre extremos dos apoios
 ```
 
+**Vigas Baldrame e Cintas Perimétricas Fechadas (Regra da Geometria Líquida Executiva):**
+```text
+PROIBIDO medir aproximação simplificada por eixos. Desmembrar os encontros perimétricos sem duplicar cantos:
+L_longitudinal_total = 2 × L_externo_longitudinal
+L_transversal_líquido = 2 × (L_externo_transversal − 2 × e_viga)
+L_total_líquido = L_longitudinal_total + L_transversal_líquido
+
+Exemplo Exato (Perímetro 6,94m × 3,20m com viga e = 0,20m):
+  Longitudinais: 2 × 6,94m = 13,88m
+  Transversais: 2 × (3,20m - 0,40m) = 5,60m
+  L_total_líquido = 13,88m + 5,60m = 19,48m
+  V_concreto = 19,48m × 0,20m × 0,50m = 1,95 m³
+```
+
 **Viga invertida (abaixo da laje):**
 ```
 V_viga_inv = b × (h_total − e_laje) × L_livre
