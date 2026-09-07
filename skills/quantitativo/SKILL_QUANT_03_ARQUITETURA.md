@@ -65,6 +65,15 @@ A_líquida_pintura_int = A_bruta_pintura_int − Σ Descontos de Vãos Internos
 ```
 > ⚠️ **Regra de Pintura sob Forro Rebaixado:** A pintura é executada APÓS o forro já estar instalado. Portanto, a altura de pintura de parede é exatamente a altura visível do piso ao forro (`H_forro`), sem pintar a área oculta acima do gesso.
 
+**Complemento de Alvenaria e Revestimento de Platibanda (Cobertura):**
+```
+H_alvenaria_platibanda = H_platibanda_total − h_viga_invertida
+A_alvenaria_platibanda = P_líquido_platibanda × H_alvenaria_platibanda
+A_pintura_ext_platibanda = P_fachada_ext × H_platibanda_total
+A_emboço_int_platibanda = P_líquido_platibanda × H_platibanda_total
+```
+> ⚠️ **Regra de Platibanda sobre Viga Invertida:** Quando a cobertura possuir viga invertida (ex: 52 cm de altura) e platibanda mais alta (ex: 91 cm), o complemento de alvenaria sobre a viga DEVE ser quantificado separadamente (`H_alv = 0,91m - 0,52m = 0,39m` ou 2 fiadas de bloco). Os revestimentos/pinturas de ambas as faces da platibanda cobrem a altura total (`H = 0,91m`).
+
 **Ambiente com geometria irregular (L, U, T, recortes):**
 ```
 A_bruta = (P1 + P2 + P3 + ... + Pn) × H_pé-direito
