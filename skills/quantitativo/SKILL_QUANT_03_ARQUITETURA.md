@@ -74,6 +74,14 @@ A_emboço_int_platibanda = P_líquido_platibanda × H_platibanda_total
 ```
 > ⚠️ **Regra de Platibanda sobre Viga Invertida:** Quando a cobertura possuir viga invertida (ex: 52 cm de altura) e platibanda mais alta (ex: 91 cm), o complemento de alvenaria sobre a viga DEVE ser quantificado separadamente (`H_alv = 0,91m - 0,52m = 0,39m` ou 2 fiadas de bloco). Os revestimentos/pinturas de ambas as faces da platibanda cobrem a altura total (`H = 0,91m`).
 
+**Muretas Escalonadas de Apoio de Telhado e Terças Metálicas:**
+```
+L_total_perfis_terça = Num_linhas_apoio × Comprimento_vão
+A_alvenaria_apoio = Σ (Comprimento_vão × H_mureta_i)  (Blocos 9x19x39 cm)
+Revestimento_muretas_apoio = 0,00 m² (Sem emboço/chapisco no entreforro)
+```
+> ⚠️ **Regra de Muretas de Apoio de Cobertura:** Verificar no corte da cobertura a quantidade de linhas de apoio da telha (ex: 3 muretas escalonadas h=0,39m, 0,58m e 0,77m para a inclinação de 9%). As muretas internas no entreforro **NÃO recebem emboço/pintura**, sendo computadas apenas como alvenaria de bloco aparente/bruta.
+
 **Ambiente com geometria irregular (L, U, T, recortes):**
 ```
 A_bruta = (P1 + P2 + P3 + ... + Pn) × H_pé-direito
