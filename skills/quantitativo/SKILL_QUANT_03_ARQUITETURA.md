@@ -49,6 +49,14 @@ A_líquida_pintura_ext = A_bruta_fachada − Σ Descontos de Vãos de Esquadrias
 ```
 > ⚠️ **Regra de Pintura Externa:** A pintura externa reveste a face EXTERNA da edificação de ponta a ponta. Portanto, usa-se o **perímetro bruto externo da fachada** `2 × (Comp_ext + Larg_ext)` sem descontar espessuras de paredes ou cantos internos.
 
+**Pintura e Emboço de Paredes Internas sob Forro Rebaixado:**
+```
+H_pintura_parede = H_forro + 0,10 m (transpasse mínimo de 10 cm acima da linha do forro)
+A_bruta_parede_int = P_interno × H_pintura_parede
+A_líquida_parede_int = A_bruta_parede_int − Σ Descontos de Vãos Internos
+```
+> ⚠️ **Regra de Transpasse em Paredes sob Forro Rebaixado:** Em paredes que recebem forro suspenso (gesso/pvc), a pintura e o emboço de parede DEVEM ser calculados com acréscimo de no mínimo **10 cm a 15 cm acima da cota do forro** (`H_forro + 0,10m`) para cobrir a zona de arremate atrás da tabica/rodaforro. A área do forro (teto) deve ser quantificada em item separado.
+
 **Ambiente com geometria irregular (L, U, T, recortes):**
 ```
 A_bruta = (P1 + P2 + P3 + ... + Pn) × H_pé-direito
