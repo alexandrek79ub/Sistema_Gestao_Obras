@@ -29,17 +29,30 @@ Cobre o quantitativo de **toda a arquitetura e acabamentos** de uma edificação
 
 ### 1.1 Fórmulas
 
-**Ambiente retangular (4 paredes):**
+**Ambiente retangular — Alvenaria de Vedação / Estrutural (4 paredes):**
 ```
-A_bruta = (2 × Comp + 2 × Larg) × H_pé-direito
-A_líquida = A_bruta − Σ Descontos de Vãos
+P_envelope = 2 × Comp_ext + 2 × (Larg_ext − 2 × e_parede)
+P_alvenaria_líquido = P_envelope − Σ (Largura_pilares_concreto) + Σ (Paredes_divisórias_internas)
+A_bruta = P_alvenaria_líquido × H_pé-direito
+A_líquida = A_bruta − Σ Descontos de Vãos (NBR 12721 Art. 3)
 A_final = A_líquida × (1 + Taxa de Perda)
 ```
+> ⚠️ **Regras Obrigatórias de Alvenaria:**
+> 1. **Desconto de Pilares de Concreto:** Em estruturas convencionais com pilares de concreto in loco embutidos na alvenaria, a largura de CADA pilar (`b_pilar`) DEVE ser subtraída do perímetro de alvenaria, pois não há tijolos/blocos onde existe concreto.
+> 2. **Desconto de Interseções de Canto:** No contorno de alvenaria, considera-se a dimensão externa em um dos sentidos (longitudinal ou transversal) e descontam-se as 2 espessuras de parede (`2 × e_parede`) no outro sentido, evitando sobreposição dos 4 cantos.
+
+**Pintura Externa da Fachada (Envelope Externo Total):**
+```
+P_fachada_ext = 2 × (Comp_ext + Larg_ext)
+A_bruta_fachada = P_fachada_ext × H_fachada
+A_líquida_pintura_ext = A_bruta_fachada − Σ Descontos de Vãos de Esquadrias Externas
+```
+> ⚠️ **Regra de Pintura Externa:** A pintura externa reveste a face EXTERNA da edificação de ponta a ponta. Portanto, usa-se o perímetro BRUTO externo do envelope `2 × (Comp_ext + Larg_ext)` sem descontar espessuras de paredes ou cantos internos.
 
 **Ambiente com geometria irregular (L, U, T, recortes):**
 ```
 A_bruta = (P1 + P2 + P3 + ... + Pn) × H_pé-direito
-Onde P1..Pn = comprimento medido de CADA trecho de parede individualmente
+Onde P1..Pn = comprimento medido de CADA trecho de parede individualmente descontando pilares e cantos
 A_líquida = A_bruta − Σ Descontos de Vãos
 A_final = A_líquida × (1 + Taxa de Perda)
 ```
