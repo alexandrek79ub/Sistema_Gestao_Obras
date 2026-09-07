@@ -67,7 +67,7 @@ Para alvenaria de vedação e pinturas de fachada:
 
 - [ ] **Desconto de Pilares em Alvenaria:** O volume/área de alvenaria descontou a largura de todos os pilares de concreto embutidos (`Σ b_pilar × H`), pois não há blocos/tijolos onde existe pilar executado.
 - [ ] **Desconto de Interseções de Canto de Alvenaria:** A alvenaria perimétrica descontou as 2 espessuras de parede (`2 × e_parede`) no sentido transversal para não duplicar blocos nos 4 cantos.
-- [ ] **Pintura Externa da Fachada (Envelope):** A área de pintura externa foi calculada sobre o **envelope externo bruto total** `2 × (Comp_ext + Larg_ext) × H_fachada`, descontando os vãos de esquadrias externas.
+- [ ] **Pintura Externa da Fachada (Perímetro Bruto):** A área de pintura externa foi calculada sobre o **perímetro bruto externo total da fachada** `2 × (Comp_ext + Larg_ext) × H_fachada`, descontando os vãos de esquadrias externas.
 
 ---
 
