@@ -74,11 +74,19 @@ A_final = A_líquida × (1 + Taxa de Perda)
 ```
 > O agente DEVE perguntar se o ambiente é retangular ou irregular. Se irregular, solicitar comprimento de cada trecho (P1, P2, P3...).
 
-### 1.2 Regra de Desconto de Vãos — NBR 12721 Art. 3
+### 1.2 Regra de Desconto de Vãos — NBR 12721 Art. 3 (Material vs. Serviço)
 
-| Área do Vão (A_vão) | Critério | Desconto |
+> ⚠️ **DUPLA VISÃO DE QUANTITATIVOS (COMPRAS vs. EMPREITEIRO):**
+> No PMO Virtual, todo orçamento de alvenaria e revestimentos DEVE gerar duas quantificações separadas para evitar desperdício de material e pleitos contratuais:
+
+| Visão de Engenharia | Regra de Desconto de Vãos | Objetivo Operacional | Exemplo Portaria 02 |
+|---|---|---|---|
+| **1. VISÃO MATERIAL (Suprimentos)** | **Desconto Físico 100%** de todos os vãos (portas e janelas) | Comprar a quantidade real de blocos, cimento e argamassa (+ perda comercial) | **49,84 m²** (~680 blocos) |
+| **2. VISÃO SERVIÇO (Empreiteiro)** | **Regra NBR 12721** (vãos ≤ 2,00m² medidos cheios; > 2,00m² desconta excedente) | Medir e pagar o empreiteiro remunerando o requadramento sem pagar item extra | **59,48 m²** (boletim de medição) |
+
+| Área do Vão (A_vão) | Critério NBR 12721 (Serviço) | Desconto na Medição de Serviço |
 |---|---|---|
-| A_vão ≤ 2,00 m² | **NÃO desconta** | 0,00 m² (compensa arremates) |
+| A_vão ≤ 2,00 m² | **NÃO desconta** | 0,00 m² (remunera requadros e bonecas) |
 | 2,00 m² < A_vão ≤ 6,00 m² | **Desconta o excedente** | A_vão − 2,00 m² |
 | A_vão > 6,00 m² | **Desconta tudo** | A_vão completo |
 | Armário embutido / nicho | **Desconta 100%** | A_nicho completo |
