@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
+import path from 'path';
+
 const nextConfig: NextConfig = {
-  /* config options here */
+  env: {
+    OBRA_PATH: path.resolve(process.cwd(), '../projetos/OBRA')
+  }
 };
 
 export default nextConfig;

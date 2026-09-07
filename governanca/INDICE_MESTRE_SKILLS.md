@@ -20,7 +20,7 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Qualquer projeção, tendência, correlação, ou "por que isso aconteceu" | `SKILL_GESTAO_07_CIENCIA_DE_DADOS.md` (rigor obrigatório, não é opcional) |
 | Produtividade (RUP), efetivo, desperdício, ciclo de melhoria | `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` |
 | Caixa disponível, quando pagar, quando recebe | `SKILL_GESTAO_09_FLUXO_DE_CAIXA.md` |
-| Aditivo de contrato, retenção de garantia | `SKILL_GESTAO_10_CONTRATOS_EMPREITEIROS.md` |
+| Aditivo de contrato, retenção de garantia | `SKILL_GESTAO_10_CONTRATOS.md` |
 | Retrabalho, defeito de execução | `SKILL_GESTAO_11_QUALIDADE_NAO_CONFORMIDADE.md` |
 | Fim de obra, as-built, entrega ao cliente | `SKILL_GESTAO_12_ENCERRAMENTO_DE_OBRA.md` |
 | Risco futuro, ainda não materializado | `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md` |
@@ -54,7 +54,7 @@ Quando nenhuma tabela acima resolve o conflito, esta é a ordem de precedência:
    qualquer skill de conteúdo — não importa o que a skill técnica recomenda, se a ação cai em
    🟠/🔴 de autonomia, pausa primeiro.
 2. **Rigor de ciência de dados** (`SKILL_GESTAO_07`) se aplica a **qualquer** afirmação analítica
-   de qualquer outra skill — nenhuma skill de conteúdo está isenta da hierarquia de confiança.
+   de qualquer outra skill — nenhuma skill de conteúdo está isenta da hierarquia de confiança. O Portão de Qualidade de Dado DEVE ser declarado explicitamente antes de gerar relatórios (06), analisar produtividade (08), projetar fluxo de caixa (09), estimar riscos (13) ou reprogramar o cronograma (16).
 3. Skills de quantitativo (fonte do dado bruto) têm precedência sobre skills de gestão (que
    consomem esse dado) em caso de divergência de número — a gestão nunca "corrige" um
    quantitativo por conta própria, sinaliza a divergência de volta pra quantificação.

@@ -10,6 +10,18 @@ isso num ciclo de melhoria, não só num relatório**.
 
 ---
 
+## ⚠️ PRÉ-REQUISITO OBRIGATÓRIO — PORTÃO DE QUALIDADE DE DADO
+Antes de apresentar **qualquer número, projeção ou recomendação** desta skill, o agente DEVE verificar o nível de confiança de cada dado de entrada consultando a `SKILL_GESTAO_07_CIENCIA_DE_DADOS.md` (Seção 1: Hierarquia de Confiança) ou rodando o script `scripts/calculadoras/portao_qualidade_dado.py`.
+
+Formato obrigatório de declaração antes de qualquer análise:
+| Dado | Fonte | Confiança | Observação |
+|---|---|---|---|
+| [dado usado] | [arquivo/CSV] | 🟢/🟡/🔴 | [caveats] |
+
+**NÃO prosseguir com análise se qualquer dado crítico for 🔴.**
+
+---
+
 ## 1. Produtividade — RUP (Razão Unitária de Produção)
 
 RUP é a métrica padrão do setor pra medir produtividade de mão de obra:

@@ -85,4 +85,28 @@ O objetivo é transformar a construtora em uma verdadeira **Engenharia 4.0**, on
     *   **Exemplo de Mensagem:** *"Bom dia, João! Suas metas para hoje (29/08) na Obra Lumina são: 1. Levantar Alvenaria Pav. 3. 2. Chapiscar Muro dos fundos. Lembre-se de não iniciar o reboco sem a FVS assinada. Bom trabalho!"*
 
 ---
-*Status do Documento: Roadmap de Inovação traçado. Aguardando priorização técnica.*
+
+## 📅 Fases de Implementação (Plano de Execução)
+
+| Fase | Automações | Pré-requisito | Complexidade | Estimativa |
+|---|---|---|---|---|
+| **Fase 1A** | Dashboard CSV Real (#10) | — | Baixa | ✅ Sprint 2 |
+| **Fase 1B** | Despacho WhatsApp (#11) | CSV cronograma populado | Média | 2 semanas |
+| **Fase 2A** | Controle de Estoque com gatilho (#4) | API CSV funcionando | Média | 3 semanas |
+| **Fase 2B** | Ponto Digital / Efetivo (#6) | App ou Google Forms | Média-Alta | 1 mês |
+| **Fase 3A** | Leitura de NF via OCR (#3) | Integração n8n ou Make | Alta | 6 semanas |
+| **Fase 3B** | FVS Digital (#5) | App de captura | Alta | 6 semanas |
+| **Fase 4** | ML de Previsão de Atraso (#10) | ≥3 meses de histórico | Muito Alta | 3 meses+ |
+| **Fase 5** | IoT Equipamentos (#7), Biometria (#6), OCR Medição (#2) | Infraestrutura física | Muito Alta | 6 meses+ |
+
+---
+
+## 🔒 Pré-requisitos Globais
+
+Antes de iniciar qualquer automação da **Fase 2 em diante**, é obrigatório:
+- **CSVs Reais:** Pelo menos 1 obra real populada e em uso ativo no dashboard (Sprint 2 completo).
+- **Deploy do Servidor:** Servidor Next.js acessível publicamente (plataforma ainda a ser definida), saindo do modo *localhost*.
+- **Canal de Comunicação:** Número de WhatsApp Business dedicado ativado na Evolution API para disparos sem risco de banimento.
+
+---
+*Status do Documento: Fase 1A concluída (Dashboard CSV). Fase 1B em planejamento executivo.*
