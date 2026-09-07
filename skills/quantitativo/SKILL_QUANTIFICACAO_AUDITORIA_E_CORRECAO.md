@@ -71,6 +71,16 @@ Para alvenaria de vedação e pinturas de fachada:
 
 ---
 
+## 🔎 6. Checklist 6 — Varredura 360° de Pranchas e Interrogatório Técnico
+
+Para garantir zero omissão de detalhes construtivos:
+
+- [ ] **Mapeamento de Chamadas de Detalhes:** Todas as pranchas de detalhes (ex: Detalhes 01 a N), cortes, elevações e quadros de notas foram rastreados.
+- [ ] **Cadeia Completa de Insumos:** Todos os elementos secundários (pingadeiras, rufos, impermeabilizações, muretas de apoio, perfis metálicos, calhas, ralos) foram quantificados.
+- [ ] **Interrogatório Técnico:** Se houve qualquer detalhe omisso, sem especificação ou dúvida de cálculo, o agente **parou e fez o Interrogatório Técnico** com o usuário antes de emitir a versão final.
+
+---
+
 ## 🛑 Red Flags — Erros Críticos que Cancelam a Emissão do Quantitativo
 
 Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o levantamento e exige correção imediata:

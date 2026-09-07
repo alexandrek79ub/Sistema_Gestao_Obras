@@ -181,23 +181,64 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 
 ---
 
-## 📊 3. Estrutura dos Relatórios Finais
+---
 
-### 3.1 Tabela de Resumo — Arquitetura & Acabamentos
+## 🔍 4. Protocolo de Varredura Exaustiva de Projetos e Interrogatório Técnico (Varredura 360°)
 
-| Código | Serviço | Und | Qtd Líq. | % Perda | Qtd Final | Preço Unit. (R$) | Custo Total (R$) | Pavimento |
-|---|---|---|---|---|---|---|---|---|
-| ARQ-01 | Chapisco de Paredes | m² | — | 5% | — | — | — | — |
-| ARQ-02 | Emboço de Paredes | m² | — | 5% | — | — | — | — |
-| ARQ-03 | Gesso Liso | m² | — | 5% | — | — | — | — |
-| ARQ-04 | Massa Corrida PVA | m² | — | — | — | — | — | — |
-| ARQ-05 | Pintura Látex Acrílica | m² | — | 10% | — | — | — | — |
-| ARQ-06 | Piso Cerâmico/Porcelanato | m² | — | 10–15% | — | — | — | — |
-| ARQ-07 | Argamassa Colante AC-II | kg | — | — | — | — | — | — |
-| ARQ-08 | Rejunte | kg | — | — | — | — | — | — |
-| ARQ-09 | Impermeabilização | m² | — | 15% | — | — | — | — |
-| | | | | | **SUBTOTAL** | | **R$ —** | |
-| | | | | | **TOTAL GERAL** | | **R$ —** | |
+> ⚠️ **REGRA SUPREMA ANTI-OMISSÃO DE ITENS:**  
+> O agente NUNCA deve olhar apenas para a Planta Baixa principal! Um projeto de engenharia é composto por Plantas, Cortes, Elevações, Quadros de Notas e **Pranchas de Detalhes Construtivos (Callouts de Detalhe 01 a N)**.
+
+### 4.1 As 4 Etapas da Varredura Exaustiva
+
+```
+ [1. Mapeamento de Pranchas & Detalhes] ──► [2. Varredura 360° por Disciplina]
+                                                    │
+                                                    ▼
+ [4. Matriz de Cobertura 100%] ◄── [3. Interrogatório Técnico se Houver Dúvida]
+```
+
+#### Etapa 1 — Mapeamento de Pranchas e Chamadas de Detalhes (Callout Scanning)
+Antes de emitir o orçamento, o agente DEVE listar explicitamente todas as chamadas de detalhe encontradas nas pranchas:
+
+| Prancha | Círculo / Chamada no Desenho | Descrição do Detalhe | Status no Levantamento |
+|---|---|---|---|
+| DW-2054-101 | Detalhe 01 / Corte AA | Impermeabilização da Calha e Platibanda | [X] Quantificado |
+| DW-2054-102 | Detalhe 02 / 08 | Mureta de Apoio e Terça Metálica | [X] Quantificado (3x apoios) |
+| DW-2054-102 | Detalhe 04 | Pingadeira Pré-moldada no topo da Platibanda | [X] Quantificado |
+| DW-2054-102 | Detalhe 06 | Rufo Metálico de Encontro Telha/Platibanda | [X] Quantificado |
+
+#### Etapa 2 — Varredura Tridimensional por Matriz de Integridade
+Para cada disciplina, o agente deve verificar a **Cadeia Completa de Insumos Secundários**:
+
+- **Fundações:** Estaca + Bloco + Lastro + Armadura + Fôrmas + Escavação + Reaterro.
+- **Estrutura:** Pilares + Vigas + Lajes + Vigas Invertidas + Fôrmas + Armadura + Escoramento + Arame.
+- **Alvenarias:** Alvenaria do Corpo + Alvenaria da Platibanda + Muretas de Apoio no Entreforro + Vergas/Contravergas + Bonecas.
+- **Cobertura:** Telha + Terças Metálicas + Muretas de Apoio + Calha + Ralo Hemisférico + Tubo Queda AP + Pingadeiras + Rufos + Manta Asfáltica + Proteção Mecânica.
+- **Impermeabilização:** Manta Asfáltica (Calhas) + Proteção Mecânica + Argamassa Polimérica (Piso Sanitário + Rodapé h=20cm) + Primer.
+
+#### Etapa 3 — Protocolo de Interrogatório Técnico (Dúvidas ou Faltas de Projeto)
+Se o agente identificar um detalhe construtivo ou elemento desenhado nas pranchas (ex: *"Detalhe de junta de dilatação"*, *"Peça especial de pingadeira"*, *"Mureta de apoio sem espessura"*), mas:
+1. Faltar a especificação exata do material nas notas, OU
+2. Não houver regra direta de cálculo na Skill:
+
+> 🛑 **PROIBIDO CHUTAR OU OMITIR O ITEM!**  
+> O agente DEVE parar imediatamente o levantamento e formular o **Interrogatório Técnico de Alinhamento**, apresentando as opções ao usuário:
+
+```markdown
+❓ INTERROGATÓRIO TÉCNICO DE ALINHAMENTO DE ORÇAMENTO
+
+Identifiquei os seguintes detalhes no projeto que requerem confirmação de critério:
+1. DETALHE 06 (Rufo da Platibanda - Prancha DW-2054-102):
+   - Opção A (Recomendada): Quantificar como Rufo em Chapa Galvanizada corte 33cm (20,36 m linear).
+   - Opção B: Quantificar como Calha-Rufo moldada in loco.
+
+2. MURETAS DE APOIO DA COBERTURA (Corte BB):
+   - Opção A (Recomendada): Quantificar as 3 muretas escalonadas em Bloco 9x19x39cm (11,62 m²) SEM revestimento/emboço.
+   - Opção B: Quantificar com emboço simples de proteção.
+```
+
+#### Etapa 4 — Emissão do Certificado de Cobertura de Detalhes
+No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e chamadas de detalhe foram cobertas.
 
 > Preços preenchidos pelo Engenheiro com base no SINAPI vigente ou cotações locais. O agente NÃO estima preços — apenas quantidades.
 
