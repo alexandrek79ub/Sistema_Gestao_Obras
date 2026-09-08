@@ -25,12 +25,15 @@ Cobre o quantitativo de **toda a superestrutura** em concreto armado:
 
 ### 1.1 Pilares
 
-**Seção retangular:**
+### 1.1 Pilares
+
+**Seção retangular (com Cotas Nasce / Morre):**
+```text
+H_pilar = Cota_Morre − Cota_Nasce
+V_pilar = seção1 × seção2 × H_pilar
+A_forma = (2 × seção1 + 2 × seção2) × H_pilar × (n_lados / 4)
 ```
-V_pilar = b × h × H_pilar
-H_pilar = EL_fundo_laje_ou_viga − EL_topo_piso
-```
-> ⚠️ **Regra de Pé-Direito de Pilar:** Medir a altura do topo do piso acabado até a **face inferior (fundo)** da laje ou viga. *Exemplo:* Cota topo da laje = +8,92m, espessura da laje = 12cm (0,12m) -> Cota fundo da laje = **+8,80m**. Piso = **+5,40m**. Altura do pilar `H = 8,80m - 5,40m = 3,40m`. Se pilar atravessa mais de um pavimento sem viga intermediária, usar H_pilar = altura total até fundo de laje superior.
+> ⚠️ **Regra de Cotas de Elevação (Nasce / Morre):** A memória de cálculo executiva DEVE registrar a cota inferior onde o pilar **nasce** (ex: 0,00m ou +5,40m) e a cota superior onde **morre** (ex: +7,60m ou +8,80m). O pé-direito de forma/concreto é a diferença direta entre essas cotas (`alt = morre - nasce`).
 
 **Seção variável / pilar de transição:**
 ```
@@ -51,16 +54,15 @@ V = π × (D/2)² × H_pilar
 
 ### 1.2 Vigas
 
-**Viga simples (2 apoios):**
-```
-V_viga = b × h × L_livre
-L_livre = vão entre faces dos pilares (m)
-```
+**Viga simples, contínua ou invertida (com controle de Fundo S/N e Lados):**
+```text
+V_concreto = LARG × ALT × L_livre × QUANT
 
-**Viga contínua (>2 apoios):**
-```
-V_viga = b × h × L_total
-L_total = comprimento total entre extremos dos apoios
+A_forma_viga = (n_lados_laterais × ALT + (Fundo_SN × LARG)) × L_livre × QUANT
+Onde:
+  - Vigas suspensas normais: n_lados_laterais = 2, Fundo_SN = 1 (Total = 3 lados de forma)
+  - Vigas Baldrame apoiadas no solo: n_lados_laterais = 2, Fundo_SN = 0 (Total = 2 lados de forma, sem fundo)
+  - Vigas de borda/parede cega: n_lados_laterais = 1 ou 2 conforme encontros
 ```
 
 **Vigas Baldrame e Cintas Perimétricas Fechadas (Regra da Geometria Líquida Executiva):**
@@ -69,53 +71,43 @@ PROIBIDO medir aproximação simplificada por eixos. Desmembrar os encontros per
 L_longitudinal_total = 2 × L_externo_longitudinal
 L_transversal_líquido = 2 × (L_externo_transversal − 2 × e_viga)
 L_total_líquido = L_longitudinal_total + L_transversal_líquido
-
-Exemplo Exato (Perímetro 6,94m × 3,20m com viga e = 0,20m):
-  Longitudinais: 2 × 6,94m = 13,88m
-  Transversais: 2 × (3,20m - 0,40m) = 5,60m
-  L_total_líquido = 13,88m + 5,60m = 19,48m
-  V_concreto = 19,48m × 0,20m × 0,50m = 1,95 m³
 ```
 
-**Viga invertida (abaixo da laje):**
-```
-V_viga_inv = b × (h_total − e_laje) × L_livre
-(descontar a espessura da laje que ocupa o topo da viga)
+### 1.3 Lajes e Escoramento (Cimbramento)
+
+**Laje Maciça / Pré-Moldada / Nervurada:**
+```text
+1. Concreto (m³):
+   V_laje = A_projetada × e_laje  (ou V_capa + V_vigotas para pré-moldadas)
+
+2. Fôrma de Laje (m²):
+   A_forma = A_projetada × coef_fôrma
+
+3. Escoramento / Cimbramento (m² · Pé-Direito):
+   V_escoramento = A_forma × Pé_Direito_PD (m)
+   (Exemplo: Laje de 35 m² com Pé-Direito PD = 7,00m -> Escoramento = 245 m²·m de cimbramento)
+
+4. Mapeamento por Tipo de Laje e Moldes:
+   - Lajes Pré-moldadas / Treliçadas: Especificar vigotas e vigotes (ex: TR20745, H12, H16)
+   - Lajes Nervuradas: Mapear área por tipo de molde/cubeta (ex: 80×80×20 cm, 80×40×30 cm)
 ```
 
-### 1.3 Lajes
+### 1.4 Escadas (Parametrização Desmembrada Laje Rampa + Degraus/Espelhos)
 
-**Laje Maciça:**
-```
-V_laje = A_projetada × e_laje
-A_projetada = área em planta (descontar aberturas de shaft, escada, etc.)
-```
+```text
+1. Geometria da Laje Piso (Rampa Inclinada):
+   A_inclinada = Largura_A × √(Comprimento_B² + H_desnível²)
+   V_concreto_rampa = Largura_A × Comprimento_B × Espessura_C × Qtde_D
+   A_forma_rampa = A_inclinada × Qtde_D
 
-**Laje Nervurada / Treliçada (com cubetas EPS ou cerâmica):**
-```
-V_total = A_laje × e_total
-V_cubetas = n_cubetas × b_caixote × h_caixote × L_caixote
-V_laje_líq = V_total − V_cubetas
-```
-> Solicitar do projeto: dimensões do caixote (cubeta), espaçamento entre nervuras, largura da nervura, altura total da laje.
+2. Geometria dos Degraus / Espelhos:
+   V_concreto_degraus = n_degraus_H × (0,5 × lar_deg_E × esp_alt_F × Base_G)
+   A_forma_degraus = n_degraus_H × (esp_alt_F × Base_G + 2 × espelhos_laterais)
 
-**Laje pré-moldada (vigotas + tavelas):**
+3. Totais Acumulados da Escada:
+   V_total_concreto_m3 = (V_concreto_rampa + V_concreto_degraus) × QUANT
+   A_total_forma_m2 = (A_forma_rampa + A_forma_degraus) × QUANT
 ```
-Volume de capeamento (capa de concreto in loco):
-V_capa = A_laje × e_capa
-e_capa = tipicamente 3 a 5 cm
-```
-
-### 1.4 Escadas
-
-```
-V_escada = Largura × A_inclinada × e_laje + V_degraus
-
-A_inclinada = Larg_escada × √(H_desnível² + L_projeção²)
-V_degraus = n_degraus × (0,5 × b_degrau × h_degrau × Larg_escada)
-(triângulo de concreto de cada degrau)
-```
-> Solicitar: Largura da escada, Altura total (desnível), Projeção horizontal, N° de degraus, Espessura da laje.
 
 ### 1.5 Reservatório / Caixa d'água
 

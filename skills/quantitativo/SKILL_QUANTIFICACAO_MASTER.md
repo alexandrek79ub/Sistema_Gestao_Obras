@@ -9,9 +9,12 @@ Este é o **arquivo núcleo** do sistema de quantificação. Ele define os proto
 
 | Arquivo | Disciplina | Conteúdo |
 |---|---|---|
-| [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) | Fundações | Sapatas, blocos, estacas, radier, baldrame, concreto C30 |
-| [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) | Estrutura | Pilares, vigas, lajes, escadas, fôrmas, armadura CA-50/CA-60 |
-| [SKILL_QUANT_03_ARQUITETURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03_ARQUITETURA.md) | Arquitetura & Acabamentos | Alvenaria, revestimentos, pisos, teto, cobertura, drywall, impermeabilização |
+| [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) | Fundações | Sapatas, blocos 3 estacas, estacas/brocas, radier, baldrame, lastros, 10 serviços integrados |
+| [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) | Estrutura | Pilares (nasce/morre), vigas (fundo/lados), lajes (escoramento PD), escadas, fôrmas, armadura CA-50/CA-60 |
+| [SKILL_QUANT_03_ARQUITETURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03_ARQUITETURA.md) | Arquitetura & Acabamentos | Alvenaria Paginada/Paramétrica, Room-by-Room, Panos de Fachada, Esquadrias, Louças, **Muros de Divisa, Portões & Pavimentação** |
+| [SKILL_QUANT_04_ELETRICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md) | Elétrica, Lógica & SPDA | Eletrodutos, Cabos, QDC, Dutos Enterrados, SPDA, Entrada/Poste, Subestação, **Telefonia, Dados, Fibra, CFTV & Interfonia** |
+| [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md) | Hidráulica, Incêndio & Gás | Tubulações PVC/PEAD, Caixas Enterradas, Rede de Incêndio Aço, Gás, **Cavalete, Cisternas & Castelo D'Água Elevado** |
+| [SKILL_QUANT_06_SERVICOS_ESPECIAIS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_06_SERVICOS_ESPECIAIS.md) | Serviços Especiais & Canteiro | Preliminares, Terraplenagem/Contenções, HVAC, Elevadores/Bombas, SDAI/Extintores, **Comunicação Visual, Paisagismo, Piscinas & Áreas de Lazer** |
 | [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md) | Auditoria e Verificação | Loop de QA anti-erro de leitura, checklists de cotas, desmembramento de cantos e validação UCC |
 
 > **Protocolo de uso:** Sempre carregar este MASTER + o módulo da disciplina necessária + **SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md** para validação final.
@@ -183,10 +186,11 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 
 ---
 
-## 🔍 4. Protocolo de Varredura Exaustiva de Projetos e Interrogatório Técnico (Varredura 360°)
+## 🔍 4. Protocolo de Varredura Exaustiva de Projetos e Interrogatório Técnico (Varredura 360° — Regra Universal)
 
-> ⚠️ **REGRA SUPREMA ANTI-OMISSÃO DE ITENS:**  
-> O agente NUNCA deve olhar apenas para a Planta Baixa principal! Um projeto de engenharia é composto por Plantas, Cortes, Elevações, Quadros de Notas e **Pranchas de Detalhes Construtivos (Callouts de Detalhe 01 a N)**.
+> ⚠️ **REGRA OBRIGATÓRIA E UNIVERSAL ANTI-OMISSÃO (APLICA-SE A TODAS AS DISCIPLINAS):**  
+> 1. **Varredura 100% da Prancha:** Toda prancha de desenho deve ser varrida de ponta a ponta. É **ESTRITAMENTE PROIBIDO** olhar apenas para a Planta Baixa principal! O levantamento deve incluir obrigatoriamente: Plantas, Cortes, Elevações, Quadros de Legenda/Notas Técnicas, Prumadas, Esquemas Unifilares/Isométricos e **todos os Callouts de Detalhes Construtivos (Detalhes 01 a N)**. Nenhum detalhe pode ser esquecido ou ignorado.  
+> 2. **Consulta Obrigatória ao Usuário:** Caso exista algum detalhe ou especificação no desenho que **NÃO possua instruções diretas ou regras claras nas Skills**, o Agente é **PROIBIDO de omitir ou assumir premissas por conta própria**. O Agente **DEVE OBRIGATORIAMENTE PARAR E PERGUNTAR AO USUÁRIO** (formulando o Interrogatório Técnico de Alinhamento) antes de prosseguir.
 
 ### 4.1 As 4 Etapas da Varredura Exaustiva
 
@@ -194,7 +198,7 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
  [1. Mapeamento de Pranchas & Detalhes] ──► [2. Varredura 360° por Disciplina]
                                                     │
                                                     ▼
- [4. Matriz de Cobertura 100%] ◄── [3. Interrogatório Técnico se Houver Dúvida]
+ [4. Matriz de Cobertura 100%] ◄── [3. Interrogatório Técnico se Houver Dúvida/Lacuna]
 ```
 
 #### Etapa 1 — Mapeamento de Pranchas e Chamadas de Detalhes (Callout Scanning)
@@ -216,10 +220,10 @@ Para cada disciplina, o agente deve verificar a **Cadeia Completa de Insumos Sec
 - **Cobertura:** Telha + Terças Metálicas + Muretas de Apoio + Calha + Ralo Hemisférico + Tubo Queda AP + Pingadeiras + Rufos + Manta Asfáltica + Proteção Mecânica.
 - **Impermeabilização:** Manta Asfáltica (Calhas) + Proteção Mecânica + Argamassa Polimérica (Piso Sanitário + Rodapé h=20cm) + Primer.
 
-#### Etapa 3 — Protocolo de Interrogatório Técnico (Dúvidas ou Faltas de Projeto)
+#### Etapa 3 — Protocolo de Interrogatório Técnico (Dúvidas ou Faltas de Instrução na Skill)
 Se o agente identificar um detalhe construtivo ou elemento desenhado nas pranchas (ex: *"Detalhe de junta de dilatação"*, *"Peça especial de pingadeira"*, *"Mureta de apoio sem espessura"*), mas:
 1. Faltar a especificação exata do material nas notas, OU
-2. Não houver regra direta de cálculo na Skill:
+2. Não houver regra ou instrução direta de cálculo registrada nas Skills:
 
 > 🛑 **PROIBIDO CHUTAR OU OMITIR O ITEM!**  
 > O agente DEVE parar imediatamente o levantamento e formular o **Interrogatório Técnico de Alinhamento**, apresentando as opções ao usuário:

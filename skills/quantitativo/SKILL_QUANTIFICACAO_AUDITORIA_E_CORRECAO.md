@@ -71,13 +71,14 @@ Para alvenaria de vedação e pinturas de fachada:
 
 ---
 
-## 🔎 6. Checklist 6 — Varredura 360° de Pranchas e Interrogatório Técnico
+## 🔎 6. Checklist 6 — Varredura 360° de Pranchas e Interrogatório Técnico (Regra Universal)
 
-Para garantir zero omissão de detalhes construtivos:
+Para garantir zero omissão de detalhes construtivos em qualquer disciplina:
 
-- [ ] **Mapeamento de Chamadas de Detalhes:** Todas as pranchas de detalhes (ex: Detalhes 01 a N), cortes, elevações e quadros de notas foram rastreados.
+- [ ] **Varredura 100% da Prancha:** Todas as áreas da prancha (plantas baixas, cortes, elevações, quadros de notas, esquemas unifilares/isométricos e detalhes 01 a N) foram varridas exaustivamente. Nenhum detalhe foi esquecido ou omitido.
+- [ ] **Mapeamento de Chamadas de Detalhes:** Todas as pranchas de detalhes (callouts) foram rastreadas e vinculadas aos insumos/serviços correspondentes.
 - [ ] **Cadeia Completa de Insumos:** Todos os elementos secundários (pingadeiras, rufos, impermeabilizações, muretas de apoio, perfis metálicos, calhas, ralos) foram quantificados.
-- [ ] **Interrogatório Técnico:** Se houve qualquer detalhe omisso, sem especificação ou dúvida de cálculo, o agente **parou e fez o Interrogatório Técnico** com o usuário antes de emitir a versão final.
+- [ ] **Interrogatório Técnico (Instrução Ausente na Skill):** Se algum detalhe ou especificação da prancha **não possuir regra direta ou instrução explícita nas Skills**, o agente **PAROU O LEVANTAMENTO E PERGUNTOU AO USUÁRIO** para definir a premissa antes de prosseguir. *PROIBIDO CHUTAR OU ASSUMIR SOBERANAMENTE.*
 
 ---
 

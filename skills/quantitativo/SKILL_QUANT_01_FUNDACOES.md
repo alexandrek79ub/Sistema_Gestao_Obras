@@ -20,76 +20,83 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 
 ---
 
-## 📐 1. Concreto de Fundações (m³)
+## 📐 1. Matriz Consolidada de Serviços de Infraestrutura (10 Serviços Integrados)
 
-> ⚠️ **PRECISÃO OBRIGATÓRIA:** 2 casas decimais em todos os volumes. Fck mínimo C30 para fundações em solo com nível d'água ou agressividade média/alta.
+> ⚠️ **REGRA DE OURO DA INFRAESTRUTURA:** Para CADA elemento de fundação (sapata, bloco, baldrame, estaca), o PMO Virtual DEVE derivar até **10 serviços integrados de canteiro**:
 
-### 1.1 Sapata Isolada
+| Service ID | Serviço de Infraestrutura | Unidade | Fórmula Base de Derivação |
+|---|---|---|---|
+| **01** | Escavação de Cava / Vala | m³ | $(b + \text{folga}) \times (L + \text{folga}) \times h_{\text{escav}} \times \text{Quant}$ |
+| **02** | Apiloamento do Fundo da Cava | m² | $(b + \text{folga}) \times (L + \text{folga}) \times \text{Quant}$ (compactação da base) |
+| **03** | Lastro de Concreto Magro | m³ | $A_{\text{cava}} \times e_{\text{lastro\_conc}}$ (tipicamente $e = 0,05m$) |
+| **04** | Lastro de Brita / Pedra Drenante | m³ | $A_{\text{cava}} \times e_{\text{brita}}$ (quando especificado no projeto) |
+| **05** | Fôrma de Fundação | m² | Perímetro lateral da peça $\times h_{\text{peça}} \times \text{Quant}$ |
+| **06** | Concreto Estrutural de Fundação | m³ | Volume líquido geométrico do elemento |
+| **07** | Armadura de Fundação (Aço) | kg | $V_{\text{concreto}} \times \text{Taxa\_Aço (kg/m³)}$ ou detalhamento |
+| **08** | Impermeabilização (Tinta Asfáltica) | m² | Face superior + faces laterais em contato com solo |
+| **09** | Reaterro Compactado | m³ | $V_{\text{escavado}} - V_{\text{concreto\_ocupado}}$ |
+| **10** | Bota-fora / Remoção de Terra | m³ | $V_{\text{escavado}} - V_{\text{reaterro}}$ (aplicar empolamento 1,25 a 1,35) |
 
+---
+
+## 📐 2. Elementos de Fundação e Geometrias Especiais
+
+### 2.1 Bloco de Coroamento sobre 3 Estacas (Seção Poligonal / Trapezoidal)
+
+```text
+Geometria da Seção Trapezoidal do Bloco de 3 Estacas:
+Dimensões em planta: L1, L2, L3 (larguras) | H1, H2 (alturas dos trapézios)
+
+Área da Seção (m²):
+A_seção = [(L1 + L2) × H1 / 2] + [(L2 + L3) × H2 / 2]
+
+Volume de Concreto (m³):
+V_bloco_3estacas = A_seção × H_altura_bloco × QUANT
 ```
+
+### 2.2 Viga Baldrame / Cinta com Folga de Escavação e Impermeabilização
+
+```text
+1. Dimensões da Peça: LARG, ALTURA, COMP, QUANT
+2. Folgas Operacionais de Vala: folga_larg = 0,20m, folga_alt = 0,20m
+
+3. Serviços Derivados de Baldrame:
+   - V_escavação = (LARG + 0,20m) × (ALTURA + 0,20m) × COMP × QUANT
+   - A_apiloamento = (LARG + 0,20m) × COMP × QUANT
+   - V_lastro_conc = (LARG + 0,20m) × 0,05m × COMP × QUANT
+   - A_forma = (2 × ALTURA) × COMP × QUANT  (2 lados, sem fundo)
+   - V_concreto = LARG × ALTURA × COMP × QUANT
+   - A_impermeab = (LARG + 2 × ALTURA) × COMP × QUANT  (Topo + 2 laterais)
+   - V_reaterro = V_escavação − V_concreto − V_lastro_conc
+   - V_bota_fora = V_escavação − V_reaterro
+```
+
+### 2.3 Estacas e Brocas por Cotas de Apoio e Arrasamento
+
+```text
+H_estaca = Cota_Apoio − Cota_Topo_Arrasamento
+V_concreto_estaca = π × (Ø / 2)² × H_estaca × QUANT
+V_escavação_estaca = V_concreto_estaca
+V_bota_fora_estaca = V_escavação_estaca × Fator_Empolamento (1,25)
+Peso_aço_estaca = V_concreto_estaca × Taxa_Aço (kg/m³)
+```
+
+### 2.4 Sapata Isolada, Associada e Corrida
+
+```text
 V_sapata = b × L × h_sapata
 V_pedestal = b_ped × h_ped × H_ped
-V_total = V_sapata + V_pedestal
-
-Onde:
-  b, L = dimensões em planta da sapata (m)
-  h_sapata = altura da sapata (m)
-  b_ped, h_ped = seção do pedestal (= seção do pilar, m)
-  H_ped = altura do pedestal até o topo da sapata (m)
+V_total_sapata = V_sapata + V_pedestal
+A_forma_sapata = 2 × (b + L) × h_sapata
 ```
 
-### 1.2 Sapata Associada (2 ou mais pilares)
+### 2.5 Radier (Fundação em Laje)
 
-```
-V_sapata_assoc = b × L_total × h_sapata
-V_pedestais = Σ (b_ped_i × h_ped_i × H_ped_i)
-V_total = V_sapata_assoc + V_pedestais
-```
-
-### 1.3 Sapata Corrida (sob parede estrutural)
-
-```
-V_sap_corrida = b × h × L_total
-Onde L_total = comprimento total da parede (m)
-```
-
-### 1.4 Bloco de Coroamento sobre Estacas
-
-```
-V_bloco = b × L × h_bloco
-Onde b, L = dimensões em planta do bloco
-     h_bloco = altura do bloco (conforme projeto)
-```
-> Verificar se o bloco é sobre 2, 3 ou 4 estacas — as dimensões variam conforme o projeto estrutural.
-
-### 1.5 Radier (Fundação em Laje)
-
-```
+```text
 V_radier = A_projetada × e_radier
-A_projetada = Comprimento_total × Largura_total da edificação
-e_radier = espessura (tipicamente 15cm a 30cm)
-
-Nervuras sob paredes (se houver):
-V_nervura = b_nervura × h_nervura × L_nervura
-V_total_radier = V_radier + Σ V_nervuras
+V_nervuras = Σ (b_nervura × h_nervura × L_nervura)
+A_forma_radier = Perímetro_externo × e_radier
 ```
-
-### 1.6 Viga Baldrame / Cinta de Fundação
-
-```
-V_baldrame = b × h × L_total
-Onde L_total = comprimento entre eixos dos pilares (m)
-```
-> O baldrame é medido separadamente das vigas de superestrutura. Sempre incluir na seção de FUNDAÇÕES.
-
-### 1.7 Concreto de Regularização / Lastro (blinding)
-
-```
-V_lastro = A_base × e_lastro
-e_lastro = 5cm a 10cm (conforme projeto)
-Fck mínimo: C10 (não estrutural)
-```
-> Calcular sob sapatas, blocos e radier individualmente.
 
 ---
 

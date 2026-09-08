@@ -121,6 +121,132 @@ A_final = A_líquida × (1 + Taxa de Perda)
 
 ---
 
+### 1.4 Métodos de Quantificação de Alvenaria: Paramétrico (Sem Paginação) vs. Executivo (Com Paginação)
+
+> ⚠️ **REGRAS DE MATURIDADE DO PROJETO:** O PMO Virtual deve identificar a fase do projeto antes de iniciar o levantamento de alvenaria.
+
+#### 🅰️ FASE 1: Orçamento Preliminar / Sem Paginação (Método Paramétrico por m²)
+Quando o projeto estrutural paginado **AINDA NÃO EXISTE** (fase de estudo de viabilidade, anteprojeto ou concorrência), utiliza-se o modelo paramétrico por m² com estimativa de insumos estruturais:
+
+1. **Dupla Visão de Vãos (MAT vs. MDO):**
+   - `MAT (Desconto Físico 100%):` Subtrai a área real total de portas e janelas para compra exata de blocos.
+   - `MDO (Desconto NBR 12721):` Aplica as regras de desconto parcial (vãos ≤ 2m² medidos cheios) para remuneração do empreiteiro/pedreiro.
+2. **Estimativas de Graute Paramétrico:**
+   - `Graute Canal (m³):` Estimado por metros lineares de vergas, contravergas e cintas superiores (`L_cinta × A_calha`).
+   - `Graute Pilaretes (m³):` Estimado pela quantidade de prumos verticalizados a cada 1,5m a 2,0m (`N_prumos × H_parede × A_alvéolo`).
+3. **Encunhamento Paramétrico (m³):**
+   - Calculado pela extensão linear no topo da parede quando houver encunhamento com argamassa expansiva (`Comprimento × Espessura × 0,05m`).
+
+#### 🅱️ FASE 2: Orçamento Executivo / Com Paginação (Método por Elevação e SKU)
+Quando as pranchas de paginação de alvenaria estrutural **ESTÃO DISPONÍVEIS** (projetos tipo Engesique), abandona-se o m² genérico e quantifica-se por **Elevação Parede a Parede (`ELEV`)**:
+
+##### A. Tabela de Mapeamento de SKUs de Blocos Modulados
+| Código SKU | Descrição do Bloco | Dimensões (cm) | Área de Face (m²) | Função Principal |
+|---|---|---|---|---|
+| **B144 / B194** | Bloco Inteiro de Vedação/Estrutural | 14×19×39 / 19×19×39 | 0,080 | Elevação corrente dos painéis |
+| **B142 / B192** | Meio Bloco | 14×19×19 / 19×19×19 | 0,040 | Amarração de cantos e vãos sem corte |
+| **C144 / C194** | Bloco Canaleta Inteiro | 14×19×39 / 19×19×39 | 0,080 | Cinta de amarração, vergas e contravergas |
+| **C142 / C192** | Bloco Canaleta Meio | 14×19×19 / 19×19×19 | 0,040 | Fechamento de amarrações de cinta |
+| **BC94 / BC99** | Bloco Compensador / Japa | 14×19×9 ou variável | 0,008 a 0,018 | Ajuste fino de módulo e fiada de transição |
+| **CC146 / CC1415** | Bloco de Canto / Especial | Variável | 0,012 a 0,030 | Encontro de paredes em L, T ou Z |
+
+##### B. Fórmulas de Quantificação Executiva de Alvenaria Estrutural
+```text
+1. Quantidade de Blocos por Tipo em cada Elevação (ELEV_i):
+   N_bloco_k = Σ (Blocos do tipo k na elevação paginada ELEV_i)
+
+2. Volume de Graute Executivo (m³):
+   V_graute = (N_alvéolos_grauteados × A_alvéolo × H_elevação) + (N_canaletas × A_calha_canaleta × L_canaleta)
+
+3. Armadura Vertical (kg) e Horizontal (kg):
+   Peso_aço_vert = N_prumos_grauteados × (H_pé-direito + C_transpasse) × Peso_linear(Ø)
+   Peso_aço_horiz = Σ (L_cinta × N_barras × Peso_linear(Ø))
+
+4. Agrupamento Logístico em Kit-Paletes com QR Code:
+   N_paletes_eixo = Ceil( Σ N_blocos_eixo / Capacidade_palete_padrão )
+   Etiqueta QR Code = { Obra, Pavimento, Eixo/Apto, Qtd_B144, Qtd_B142, Qtd_C144, Qtd_Graute_m3, Prancha_Desenho_URL }
+```
+
+---
+
+### 1.5 Matriz Mestra de Revestimentos e Acabamentos por Ambiente (Método Room-by-Room)
+
+> ⚠️ **PADRÃO DE PLANILHA MATRIX:** O levantamento de revestimentos internos DEVE ser estruturado em colunas por **Nº do Ambiente (Ambiente 1, 2, 3...)**, derivando automaticamente as áreas de materiais (MAT) e mão de obra (MDO) a partir dos atributos geométricos do cômodo.
+
+#### A. Parâmetros de Entrada por Ambiente
+| Atributo do Ambiente | Unidade | Descrição Técnica / Aplicação |
+|---|---|---|
+| `Área Piso` | m² | Área útil interna do cômodo |
+| `Área Teto` | m² | Área útil de gesso/forro/pintura de teto |
+| `Perímetro` | m | Perímetro bruto interno de paredes |
+| `Pé-Direito Revestimento (H_revest)` | m | Altura bruta do piso até acima do forro (chapisco/emboço) |
+| `Pé-Direito Acabamento (H_acab)` | m | Altura livre visível do piso até a tabica/forro (pintura/massa) |
+| `Vãos Total` | m² | Soma da área de TODOS os vãos (portas/janelas/aberturas) |
+| `Vãos p/ Desconto NBR (>2,00m²)` | m² | Soma do excedente de vãos com área $> 2,00 \, m²$ |
+| `Desconto Rodapé` | m | Soma das larguras de portas (aberturas onde não vai rodapé) |
+| `Sanca` | m | Extensão linear de sancas/cortineiros de gesso |
+
+#### B. Fórmulas Derivadas por Coluna de Ambiente
+```text
+1. Parede - Revestimento MAT (m²):
+   A_revest_MAT = (Perímetro × H_revest) − Vãos_Total
+
+2. Parede - Revestimento MDO / Gesso (m²):
+   A_revest_MDO = (Perímetro × H_revest) − Vãos_p/ Desconto_NBR
+
+3. Parede - Acabamento MAT (m²):
+   A_acab_MAT = (Perímetro × H_acab) − Vãos_Total
+
+4. Parede - Acabamento MDO / Pintura (m²):
+   A_acab_MDO = (Perímetro × H_acab) − Vãos_p/ Desconto_NBR
+
+5. Impermeabilização com Virada de 20cm (Áreas Frias - m²):
+   A_impermeab_virada = Área_Piso + (Perímetro × 0,20m)
+
+6. Rodapé Líquido (m):
+   L_rodapé = Perímetro − Desconto_Rodapé
+```
+
+#### C. Consolidação no Resumo Mestre (Summary Sheet por Pavimento)
+As colunas dos ambientes (`PLAN01`, `PLAN02`, `PLAN04`...) são somadas automaticamente no **Resumo Geral de Revestimentos e Acabamentos**, agrupando por disciplinas:
+- **Impermeabilização e Isolamento Térmico:** Áreas frias (nivelamento, polimérica, proteção mecânica), terraços/varandas, poço de elevador, reservatórios e coberturas/calhas.
+- **Revestimentos de Parede e Teto:** Emboço, gesso liso, cerâmica, pinturas e rodapés.
+
+---
+
+### 1.6 Revestimentos Externos por Panos de Fachada (Panos, Frisos & Molduras)
+
+> ⚠️ **REGRA DE FACHADA:** É **PROIBIDO** medir fachada por perímetro interno ou aproximação simplificada. O orçamento de revestimento externo DEVE ser desmembrado por **Panos de Fachada (`PANO 01, PANO 02...`)**, considerando reentrâncias, sacadas, platibandas, frisos e molduras.
+
+#### A. Estrutura por Panos Geométricos de Fachada (`DESCRIÇÃO DO PANO`)
+| Parâmetro | Unidade | Aplicação / Cálculo |
+|---|---|---|
+| `Comprimento do Pano` | m | Extensão horizontal contínua do trecho de fachada |
+| `Altura (PD do Pano)` | m | Altura total do plano (da base/balancim até o topo/platibanda) |
+| `Vãos Total` | m² | Soma total da área de esquadrias e aberturas externas |
+| `Vãos p/ Desconto NBR (>2,00m²)` | m² | Excedente de vãos para contrato de fachadistas/balancim |
+| `Frisos e Faixas` | m | Metros lineares de juntas de dilatação, frisos decorativos e pingadeiras |
+| `Requadros e Molduras` | m | Metros lineares de requadramento de molduras de janelas e sacadas |
+
+#### B. Fórmulas de Fachada
+```text
+1. Chapisco e Massa Única MAT (m²):
+   A_fachada_MAT = (Comprimento × Altura) − Vãos_Total
+
+2. Chapisco e Massa Única MDO / Balancim (m²):
+   A_fachada_MDO = (Comprimento × Altura) − Vãos_p/ Desconto_NBR
+
+3. Frisos, Juntas de Dilatação e Pingadeiras (m):
+   L_frisos = Σ (Metros lineares de frisos e juntas no pano)
+
+4. Requadro de Molduras e Peitoris Externos (m):
+   L_requadro = Σ (Perímetro dos vãos requadrados na fachada)
+```
+
+---
+
+---
+
 ## 📐 2. Pisos, Contrapisos e Revestimentos de Piso
 
 ### 2.1 Fórmulas
@@ -201,16 +327,31 @@ Onde θ = inclinação do plano em graus
 
 ---
 
-## 📐 5. Esquadrias — Quadro de Portas e Janelas
+## 📐 5. Esquadrias, Vidros, Fechaduras e Derivação Automática de Vergas/Contravergas
 
-O agente DEVE gerar tabela de vãos associada a cada memória de revestimento:
+> ⚠️ **REGRA DE ESQUADRIAS:** O levantamento de esquadrias DEVE ser estruturado em **duas etapas interligadas**: um **Quadro Mestre Cadastral de Tipologias** e uma **Tabela de Alocação por Ambiente** que deriva automaticamente pintura e vergas/contravergas.
 
-| Tag | Tipo | Largura (m) | Altura (m) | Área (m²) | Pavimento | CIA | Observação |
+### 5.1 Quadro Mestre de Tipologias Cadastrais (`CÓD` `JA01`, `PA01`, `GA01`)
+| Código | Tipo / Disciplina | Descrição Técnica | Largura (m) | Altura (m) | Área Unid (m²) | Vidro / Fechadura | Coef. Pintura |
 |---|---|---|---|---|---|---|---|
-| PA-01 | Porta interna | 0,80 | 2,10 | 1,68 | Térreo | T-101-SAL | Madeira — 1 folha |
-| PA-02 | Porta externa | 0,90 | 2,10 | 1,89 | Térreo | T-101-ENT | Madeira c/ batente |
-| JA-01 | Janela basculante | 0,60 | 0,60 | 0,36 | Térreo | T-101-BAN | Alumínio s/ peitoril |
-| JA-02 | Janela de correr 2F | 1,20 | 1,20 | 1,44 | Térreo | T-101-COZ | Alumínio c/ peitoril |
+| **JA01** | Janela Alumínio | Basculante 1 Folha | 0,60 | 0,60 | 0,36 | Vidro Foco 4mm | 1,00 (1 face) |
+| **JA02** | Janela Alumínio | Correr 2 Folhas | 1,20 | 1,20 | 1,44 | Vidro Incolor 4mm | 2,00 (2 faces) |
+| **PA01** | Porta Madeira | Lisa c/ Batente e Alizar | 0,80 | 2,10 | 1,68 | Fechadura Soprano | 2,00 (2 faces) |
+| **GA01** | Gradil Alumínio | Peitoril Sacada H=1,10m | 2,50 | 1,10 | 2,75 | — | 2,00 (2 faces) |
+
+### 5.2 Tabela de Alocação por Ambiente e Derivação Automática
+```text
+1. Vínculo de Quantidades por Pavimento:
+   Qtd_Total_Esquadria = Qtd_por_tipo × Qtd_andares
+
+2. Área Total de Pintura de Esquadria/Batente (m²):
+   A_pintura_esq = (Largura × Altura) × Coef_Pintura × Qtd_Total
+   (Coef_Pintura = 1,00 para 1 face; 2,00 para 2 faces/ambas as vistas)
+
+3. Derivação Automática de Verga e Contraverga (m):
+   - Verga (Topo do Vão): L_verga = (Largura + 2 × 0,20m) × Qtd_Total
+   - Contraverga (Base da Janela): L_contraverga = (Largura + 2 × 0,20m) × Qtd_Janelas
+```
 
 ---
 
@@ -220,6 +361,56 @@ O agente DEVE gerar tabela de vãos associada a cada memória de revestimento:
 Rodapé = Perímetro_interno − Σ Largura_portas − Σ Largura_nichos
 Peitoril = Σ Largura_janelas
 Soleira = Σ Largura_portas_externas
+```
+
+---
+
+## 📐 8. Louças, Metais e Acessórios Sanitários (Matriz por Ambiente × Pavimento Repetido)
+
+> ⚠️ **REGRA DE LOUÇAS E METAIS:** O levantamento de aparelhos sanitários, torneiras, misturadores, cubas e acabamentos de registro DEVE ser realizado em **Matriz de Ambientes por Pavimento Repetido**, multiplicando a quantidade unitária do cômodo pelo multiplicador de repetição da torre.
+
+### 8.1 Categorização Mestra por Família de Equipamentos
+| Família | Insumos / Itens Mapeados | Unidade | Aplicação Típica |
+|---|---|---|---|
+| **LOUÇAS** | Bacia sanitária c/ caixa acoplada, Lavatório c/ coluna, Cuba de embutir, Cuba de sobrepor, Tanque | un | Banheiros, lavabos, suítes, áreas de serviço |
+| **CUBAS INOX** | Cuba de aço inox simples, Cuba de aço inox dupla, Tanque de inox | un | Cozinhas, varandas gourmet, lavanderias |
+| **METAIS** | Torneira de lavatório, Torneira de pia de cozinha, Misturador monocomando, Ducha higiênica, Chuveiro | un | Pontos de água fria/quente dos ambientes |
+| **ACABAMENTOS** | Acabamento de registro de gaveta, Acabamento de registro de pressão, Sifões, Válvulas de escoamento | un | Registros gerais e saídas de esgoto de peças |
+
+### 8.2 Fórmula de Multiplicação Matricial
+```text
+Qtd_Total_Insumo_k = Σ (Qtd_Unid_Cômodo × N_ambientes_por_andar × N_andares_repetidos)
+
+Exemplo (Bacia c/ Cx Acoplada em Edifício de 16 Andares com 4 Aptos por andar):
+  - Banho Social: 1 un/cômodo × 4 aptos/andar × 16 andares = 64 un
+  - Lavabo:       1 un/cômodo × 4 aptos/andar × 16 andares = 64 un
+  - Total Bacias da Obra = 64 + 64 = 128 unidades
+```
+
+---
+
+## 📐 9. Bancadas, Tampos e Divisórias (Mármores, Granitos e Pedras)
+
+> ⚠️ **REGRA DE BANCADAS E PEDRAS:** O levantamento de bancadas de cozinha, tampos de lavatório, balcões e divisórias sanitárias em pedra DEVE ser parametrizado por **Código de Especificação (`CÓD`)**, calculando a área unitária ($m²$) por peça e multiplicando pela repetição nos locais.
+
+### 9.1 Mapeamento por Código de Especificação da Pedra
+| Código | Descrição do Insumo | Material / Acabamento | Dimensões Unit. (Comp × Larg) | Área Unitária (m²) |
+|---|---|---|---|---|
+| **CÓD 1** | Bancada de Banheiro c/ Cuba | Granito Cinza Corumbá 2cm | 1,00m × 1,00m | 1,00 m² |
+| **CÓD 2** | Bancada de Cozinha / Copa | Granito Preto São Gabriel 2cm | 1,20m × 0,60m | 0,72 m² |
+| **CÓD 3** | Balcão Passa-Prato | Mármore Branco Social | 1,50m × 0,35m | 0,53 m² |
+| **CÓD 4** | Divisória Sanitária | Granito Cinza / Granilite 3cm | 1,60m × 0,80m | 1,28 m² |
+
+### 9.2 Fórmulas de Derivação e Consolidação
+```text
+1. Área Unitária da Peça (m²):
+   A_unit = Comprimento × Largura
+
+2. Área Total do Local (m²):
+   A_total_local = A_unit × Quantidade_Peças_no_Local
+
+3. Consolidação no Resumo Geral (m²):
+   A_acumulada_COD_k = Σ (A_total_local para todas as ocorrências do CÓD k na obra)
 ```
 
 ---
@@ -432,3 +623,35 @@ A_final = A_forro × (1 + 10% perda)
 | "Quantifique a cobertura" | Solicitar: área projetada em planta, inclinação (°), tipo de telha | §4 |
 | "Quantifique a alvenaria do apartamento" | Para cada ambiente: Comp, Larg, H, vãos — calcular §1 e aplicar §9.1/9.2 | §1 + §9.1 |
 | "Quantifique a pintura de toda a obra" | Paredes (§1) + Teto (§3) → aplicar coef. pintura §9.7 | §1+§3+§9.7 |
+
+---
+
+## 🏗️ 11. Muros de Divisa, Fechamentos Perimetrais, Portões de Acesso e Pavimentação Externa
+
+### 11.1 Muros de Divisa e Fechamentos Perimetrais
+- **Estrutura e Alvenaria do Muro (por metro linear $L_{\text{muro}}$):**
+  - `Escavação de Baldrame / Sapata do Muro (m³):` $V_{\text{escav}} = L_{\text{muro}} \times B_{\text{sapata}} \times H_{\text{cava}}$.
+  - `Viga Baldrame / Sapata de Concreto Armado (m³ / m² / kg):` Concreto C25/C30 ($m³$) + Fôrma ($m²$) + Aço CA-50 ($kg$).
+  - `Alvenaria de Vedação / Estrutural do Muro (m²):` $A_{\text{muro}} = L_{\text{muro}} \times H_{\text{muro}}$ (Blocos de concreto ou cerâmicos $14\times19\times39cm$).
+  - `Pilaretes de Travamento do Muro (unid ou m³):` Pilaretes de concreto armado a cada $2,50m$ a $3,00m$ ($0,14 \times 0,19 \times H_{\text{muro}}$).
+  - `Cinta de Coroamento Superior (m³ / m² / kg):` Cinta em bloco canaleta no topo do muro.
+  - `Chapim / Pingadeira de Concreto / Rufo Metálico (m):` Proteção contra infiltração de topo do muro.
+  - `Revestimento do Muro (Chapisco + Emboço + Pintura Acrílica / Textura - m²):` $A_{\text{revest}} = 2 \times A_{\text{muro}}$ (ambas as faces, quando couber).
+  - `Concertina / Cerca Elétrica de Segurança (m):` Lança concertina dupla espiral $\varnothing 30cm / 45cm$ ou cerca elétrica 6 fios c/ hastes de alumínio.
+
+### 11.2 Portões de Acesso de Veículos e Pedestres
+- **Portões de Veículos e Automação:**
+  - `Portão de Veículos Basculante / Deslizante / Pivotante (m² ou unid):` Estrutura em alumínio anodizado / aço galvanizado c/ pintura eletrostática epóxi.
+  - `Motor Automatizador de Portão Rápido (unid):` Motor cremalheira / fuso de alta frequência ($1/3\text{ HP}$ ou $1/2\text{ HP}$) c/ placa de comando inverter, fotoelétrica de segurança e controles remotos.
+  - `Cancela Automatizada de Garagem (unid):` Cancela c/ haste articulada/reta $3m$ a $4m$ para controle de fluxo de garagem.
+- **Portões de Pedestres e Controle de Acesso de Guarita:**
+  - `Portão Social de Pedestres (unid ou m²):` Portão metálico/alumínio c/ fechadura eletroímã / e-Lock de embutir $150kgf / 280kgf$.
+  - `Catracas / Torniquetes de Acesso (unid):` Catraca pedestal inox / torniquete de altura inteira c/ leitor de biometria / reconhecimento facial / leitor de Tag RFID e comutador de pânico.
+
+### 11.3 Pavimentação Externa, Passeios e Meio-Fio
+- `Regularização e Compactação de Solo de Passeio (m²):` Preparação de leito com sapo/compactador mecânico.
+- `Sub-base de Brita Graduada Simples - BGS (m³):` Camada de base drenante e estrutural ($e=10cm$ a $20cm$).
+- `Piso Intertravado de Concreto / Paver (m²):` Blocos retangulares/holandeses/sextavados ($e=6cm$ para pedestres / $e=8cm$ para veículos) + colchão de assentamento de areia/pó de pedra ($e=5cm$).
+- `Guia / Meio-fio de Concreto Pré-moldado (m):` Guias de concreto reto ou curvo Padrão Prefeitura ($15\times30\times100cm$).
+- `Sarjeta de Concreto Moldada in loco (m):` Sarjeta em concreto C20 ($L=30cm$, $e=8cm$).
+- `Piso Tátil Alerta e Direcional (m² ou m):` Placas cimentícias ou de PVC auto-adesivo $25\times25cm$ / $30\times30cm$ conforme norma ABNT NBR 9050 (acessibilidade).

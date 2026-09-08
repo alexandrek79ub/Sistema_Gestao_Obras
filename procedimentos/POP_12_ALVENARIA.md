@@ -5,7 +5,9 @@
 
 ---
 
-## 1. Logística e Marcação
+## 1. Logística Lean e Kit-Paletes com QR Code
+- **Recebimento e Endereçamento (QR Code):** Cada palete recebido da fábrica possui QR Code identificando o destino (`Obra > Pavimento > Eixo/Apartamento`). A elevação do palete pela grua/elevador é feita diretamente para a posição final de assentamento.
+- **Prancha de Elevação Paginada:** O encarregado/pedreiro escaneia o QR Code do palete no smartphone/tablet para abrir o desenho da elevação (`ELEV`), conferindo a disposição de blocos inteiros, meios-blocos, canaletas e prumos de grauteamento.
 - **Umedecimento:** Blocos de concreto não devem ser molhados. Blocos cerâmicos apenas levemente umedecidos para não roubar água da argamassa.
 - **1ª Fiada (Marcação):** A etapa mais crítica. O esquadro deve ser conferido com laser ou método 3-4-5. A primeira fiada dita o prumo do painel inteiro. O mestre deve assinar a FVS de marcação.
 
@@ -14,12 +16,12 @@
 - **Juntas:** A espessura da junta de argamassa deve ser constante, em torno de 1,0 cm a 1,5 cm. Juntas espessas demais geram retração e enfraquecem a parede.
 
 ## 3. Interface e Amarração (Prevenção de Trincas)
-- **Ligação Pilar-Parede:** A cada 2 fiadas, instalar uma tela de aço galvanizado (tela de amarração) fixada no pilar com pino de aço (finca-pino). A tela deve ser dobrada e chumbada na argamassa de assentamento do bloco.
-- **Vergas e Contravergas:** Obrigatórias em todas as esquadrias (portas e janelas). O transpasse da verga para além do vão da janela deve ser de no mínimo **20 cm a 30 cm** de cada lado. Sem isso, surgem as clássicas "trincas a 45º".
+- **Ligação Pilar-Parede / Grauteamento:** A cada 2 fiadas, aplicar amarrações conforme paginação estrutural. Os alvéolos destinados ao graute (`V_graute`) devem ser limpos na base (janela de inspeção/limpeza) antes do lançamento do graute fluído e vibração.
+- **Vergas e Contravergas:** Obrigatórias em todas as esquadrias (portas e janelas), executadas com blocos canaleta (`C144`/`C194`) e armadura longitudinal. O transpasse da verga para além do vão da janela deve ser de no mínimo **20 cm a 30 cm** de cada lado.
 
-## 4. O Encunhamento (Fechamento Superior)
+## 4. O Encunhamento / Fechamento Superior
 - **Tempo de Espera:** A parede NÃO deve ser fechada contra a viga superior imediatamente. É obrigatório aguardar no **mínimo 14 dias** (preferencialmente 21 dias) após a elevação da parede. Isso permite que a laje superior deforme e a argamassa da parede sofra retração inicial.
 - **Material:** O encunhamento deve ser feito com argamassa expansiva, espuma de poliuretano ou, em último caso, tijolos maciços inclinados prensados fortemente com argamassa rica.
 
 ---
-*Revisão 00 - Engenharia de Campo*
+*Revisão 01 - Engenharia de Campo & PMO Virtual*
