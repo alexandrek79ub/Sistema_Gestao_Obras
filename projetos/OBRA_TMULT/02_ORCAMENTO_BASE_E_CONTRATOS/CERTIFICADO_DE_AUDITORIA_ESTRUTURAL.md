@@ -11,44 +11,47 @@
 ## 📋 Relatório de Verificação dos 6 Checklists de QA
 
 ### 1. Checklist 1 — Rastreabilidade de Cotas e Níveis
-- [x] **Cotas de Nível Conferidas:** Nível Térreo `EL. 585` e Cobertura `EL. 883` conferidos na prancha `EGS-060`. Pé-direito útil de `2,98 m` aplicado corretamente na altura livre dos 24 pilares.
-- [x] **Separação de Elementos:** Espessuras de lajes (`e=6cm` capa + nervuras `17cm`) e seções de pilares/vigas (`25×40cm`) foram mantidas 100% isoladas sem sobreposição.
+- [x] **Cotas de Nível Conferidas:** Nível Térreo `EL. 585` (+5,85m) e Cobertura `EL. 883` (+8,83m) conferidos na prancha `EGS-060`. Pé-direito livre executivo de `2,98 m` aplicado corretamente na altura útil dos 24 pilares.
+- [x] **Separação de Elementos:** Espessuras de lajes (`e=5cm` capa + nervura `16cm`), vigas superiores (`20×50cm`), vigas baldrames (`25×40cm`) e pilares (`30×30cm`) mantidas 100% segregadas sem sobreposição.
 
-### 2. Checklist 2 — Geometria Líquida Executiva (Sem Duplicidade de Cantos)
-- [x] **Eixos de Vigas Baldrames:** $L_{total} = 186,00	ext{ m}$ conferidos em `EGS-053/054`.
-- [x] **Eixos de Vigas Elevadas:** $L_{total} = 142,00	ext{ m}$ conferidos em `EGS-055/060`.
-- [x] **Área de Lajes:** $368,40	ext{ m}^2$ conferida em planta `EGS-056`.
+### 2. Checklist 2 — Geometria Líquida Executiva (Sem Duplicidade de Cantos e Nós)
+- [x] **Vigas Baldrames Líquidas:** $L_{\text{livre}} = 140,44\text{ m}$ viga a viga (VB1 a VB19) conferidos em `EGS-053/054`.
+- [x] **Vigas Superiores com Dedução de Nós:** $L_{\text{líq}} = 155,46\text{ m}$ (descontando nós de cruzamento e encontros de pilares) conferidos em `EGS-055/056/057`.
+- [x] **Área Útil Líquida de Lajes:** $263,48\text{ m}^2$ (área bruta $298,25\text{ m}^2$ menos projeção de topo de vigas $34,77\text{ m}^2$) conferida em `EGS-055/059`.
 
 ### 3. Checklist 3 — Interface Pilar × Laje × Viga
-- [x] **Fundo de Viga/Laje:** As fôrmas das 4 faces dos pilares foram computadas até a cota de fundo de viga (`2,98 m`), evitando dupla contagem de concreto ou fôrma no encontro com a laje.
+- [x] **Fundo de Viga/Laje:** Fôrmas das 4 faces dos pilares computadas na altura livre (`2,98 m`), eliminando dupla contagem nos nós estruturais.
+- [x] **Fôrmas Internas de Vigas:** Desconto da espessura de capa ($5\text{ cm}$) na face interna da fôrma de vigas, eliminando duplicidade com o assoalho de fundo de laje.
 
 ### 4. Checklist 4 — Unidade Comercial de Compra (UCC) e Perdas
-- [x] **Concreto Usinado C30 Total:** $96,06	ext{ m}^3$ líquidos de projeto ➔ Convertidos para **`101 m³`** (ou **13 caminhões betoneira de 8 m³**) considerando a perda regulamentar de $4\%$.
-- [x] **Aço Total (CA-50 e CA-60):** $3.012,8	ext{ kg}$ líquidos de projeto ➔ Convertidos para **`3.175,4 kg` (3,18 toneladas)** considerando $5\%$ de perda de corte/dobra/trespasse.
-- [x] **Fôrmas de Madeira (Compensado Resinado 17mm):** $821,08	ext{ m}^2$ líquidos de projeto ➔ Convertidos para **`903,19 m²`** (**304 chapas padrão de 1,10m x 2,20m**) considerando $10\%$ de perda de descarte.
+- [x] **Concreto Usinado C30 Supra:** $36,99\text{ m}^3$ líquidos ➔ **`38,84 m³`** (ou 5 betoneiras comerciais de 8 m³) considerando perda contratual de 5%.
+- [x] **Aço Supraestrutura (CA-50 + CA-60):** $2.879,90\text{ kg}$ líquidos ➔ **`3.023,90 kg`** (165 barras 12m CA-50 + 429 barras 12m CA-60) considerando 5% de perda.
+- [x] **Fôrmas Compensadas 17mm Supra:** $557,92\text{ m}^2$ líquidos ➔ **`613,71 m²`** (255 chapas $2,20\text{m} \times 1,10\text{m}$) com 10% de perda.
 
 ### 5. Checklist 5 — Varredura 360° de Pranchas (100% de Cobertura)
-- [x] **Varredura Completa:** 100% das pranchas da estrutura (`EGS-051`, `EGS-052`, `EGS-053`, `EGS-054`, `EGS-055`, `EGS-056`, `EGS-057`, `EGS-059` e `EGS-060`) foram varridas de ponta a ponta.
+- [x] **Varredura Completa:** 100% das pranchas da estrutura (`EGS-051`, `EGS-052`, `EGS-053`, `EGS-054`, `EGS-055`, `EGS-056`, `EGS-057`, `EGS-059` e `EGS-060`) varridas e conferidas.
 - [x] **Todos os Elementos Mapeados:**
-  - 32 Sapatas (SE1 a SE7, S7 a SE8, S1 a S24, S3 a S23)
-  - 18 Vigas Baldrames (VB1 a VB18)
+  - 32 Sapatas Isoladas (S1-S24 e SE1-SE8)
+  - 19 Vigas Baldrames (VB1 a VB19)
   - 24 Pilares (P1 a P24)
-  - 15 Vigas Elevadas (V101 a V115)
-  - 2 Pavimentos de Lajes Treliçadas (L1 e L2)
-  - Escoramento e Cimbramento metálico
+  - 10 Vigas Elevadas Principais e Cobertura (V101 a V115)
+  - 27 Painéis de Lajes Treliçadas H12 (L101 a L127)
+  - Cimbramento / Escoramento Metálico
+  - Miudezas segregadas na UCC (arame, espaçadores, desmoldante, pregos, sarrafos, lonas)
 
 ### 6. Checklist 6 — Formatação e Antifragilidade
-- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown limpo nativo, livres de erros de renderização KaTeX no VS Code.
+- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown nativo e blindadas contra truncamento no script mestre.
 
 ---
 
 ## 📊 Matriz Consolidada da Estrutura Completa (Infra + Supra)
 
-| Disciplina / Etapa | Concreto Armado C30 (m³) | Fôrma Compensado 17mm (m²) | Aço CA-50 / CA-60 (kg) | Escavação / Cimbramento |
+| Disciplina / Etapa | Concreto C30 / C15 (m³) | Fôrma Compensado 17mm (m²) | Aço CA-50 / CA-60 (kg) | Escavação / Cimbramento |
 | :--- | :---: | :---: | :---: | :---: |
-| **1. Infraestrutura (Fundações & Baldrames)** | 45,00 m³ | 231,66 m² | 1.047,4 kg | 86,40 m³ escavação |
-| **2. Supraestrutura (Pilares, Vigas & Lajes)** | 56,00 m³ | 671,53 m² | 2.128,0 kg | 368,40 m² cimbramento |
-| **TOTAL GERAL DE COMPRAS (UCC)** | **`101 m³`** | **`903 m²`** | **`3.175,4 kg`** | **304 chapas compensado** |
+| **1. Infraestrutura (Fundações & Baldrames)** | 27,49 m³ | 173,99 m² | 1.479,00 kg | 51,27 m³ escavação |
+| **2. Supraestrutura (Pilares, Vigas & Lajes)** | 36,99 m³ | 557,92 m² | 2.879,90 kg | 888,78 m²·m cimbramento |
+| **TOTAL GERAL AUDITADO (LÍQUIDO PROJETO)** | **`64,48 m³`** | **`731,91 m²`** | **`4.358,90 kg`** | **1.148 blocos EPS / 968,8m TR** |
+| **TOTAL PEDIDO COMPRAS (UCC C/ PERDAS)** | **`67,67 m³ (9 betoneiras)`** | **`805,10 m² (336 chapas)`** | **`4.576,85 kg (4,58 t)`** | **Lista Suprimentos Completa** |
 
 ---
 
