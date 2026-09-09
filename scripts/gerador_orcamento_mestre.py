@@ -188,6 +188,27 @@ def gerar_orcamento(json_path):
         print(f"  [OK] Células Calculadas e CSV Gerado: {csv_filename}")
 
         # Write Markdown de Memória de Cálculo
+        # Se já existe um MD com Seção 1 detalhada e não estamos gerando via equações dinâmicas,
+        # preservar a Seção 1 existente para não perder a demonstração geométrica/manual auditada
+        secao_1_preservada = ""
+        secao_3_preservada = ""
+        if not memoria_calculo_dinamica and os.path.exists(md_path):
+            try:
+                with open(md_path, 'r', encoding='utf-8') as f_existente:
+                    conteudo_anterior = f_existente.read()
+                    if "## 🧮 1." in conteudo_anterior:
+                        partes_1 = conteudo_anterior.split("## 🧮 1.")
+                        secao_1_resto = partes_1[1]
+                        if "## 📊 2." in secao_1_resto:
+                            secao_1_preservada = secao_1_resto.split("## 📊 2.")[0].strip()
+                        else:
+                            secao_1_preservada = secao_1_resto.strip()
+                    if "## 📋 3." in conteudo_anterior:
+                        partes_3 = conteudo_anterior.split("## 📋 3.")
+                        secao_3_preservada = partes_3[1].split("\n---\n")[0].strip()
+            except Exception as e:
+                print(f"  [AVISO] Não foi possível ler seções existentes de {md_path}: {e}")
+
         md_content = f"# 🏛️ Memória de Cálculo Auditável: {titulo_disc}\n\n"
         md_content += f"**Projeto:** {projeto}  \n"
         md_content += f"**Disciplina:** {titulo_disc}  \n"
@@ -199,6 +220,8 @@ def gerar_orcamento(json_path):
             md_content += "## 🧮 1. Demonstração Matemática Detalhada (Calculada via CPU)\n\n"
             md_content += "\n".join(memoria_calculo_dinamica)
             md_content += "\n\n---\n\n"
+        elif secao_1_preservada:
+            md_content += f"## 🧮 1.{secao_1_preservada}\n\n---\n\n"
         
         md_content += "## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)\n\n"
         md_content += "| Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |\n"
@@ -209,6 +232,9 @@ def gerar_orcamento(json_path):
 
         if subtotal_disc_financeiro > 0:
             md_content += f"\n> 💰 **Subtotal Financeiro da Disciplina:** `{formatar_moeda(subtotal_disc_financeiro)}`\n"
+
+        if secao_3_preservada:
+            md_content += f"\n---\n\n## 📋 3. {secao_3_preservada}\n"
 
         md_content += "\n---\n\n"
         md_content += f"*Data da última atualização:* {data_auditoria}\n"
