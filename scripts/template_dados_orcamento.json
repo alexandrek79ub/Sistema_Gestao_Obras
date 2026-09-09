@@ -15,6 +15,7 @@
           "unidade_ucc": "m³",
           "fator_conversao_ucc": 1.0,
           "ref_prancha": "EGS-01",
+          "preco_unitario": 65.00,
           "equacoes": [
             {
               "descricao_memoria": "Escavação das Sapatas S1 (1,0x1,0m -> Cava 1,4x1,4x0,7m)",
@@ -31,6 +32,22 @@
           ]
         },
         {
+          "codigo_eap": "1.1.2",
+          "descricao": "Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm)",
+          "unidade": "m³",
+          "perda_pct": 5,
+          "unidade_ucc": "m³",
+          "fator_conversao_ucc": 1.0,
+          "ref_prancha": "EGS-01",
+          "preco_unitario": 480.00,
+          "equacoes": [
+            {
+              "descricao_memoria": "Volume das 12 Estacas Brocas Ø30cm Prof=6,00m",
+              "expressao_matematica": "12 * pi * (0.30/2)**2 * 6.00"
+            }
+          ]
+        },
+        {
           "codigo_eap": "1.1.5",
           "descricao": "Aço CA-50 8.0mm Sapatas Isoladas",
           "unidade": "kg",
@@ -38,6 +55,7 @@
           "unidade_ucc": "barras 12m",
           "fator_conversao_ucc": 0.211,
           "ref_prancha": "EGS-02",
+          "preco_unitario": 58.50,
           "equacoes": [
             {
               "descricao_memoria": "Armação Inferior Sapatas S1",

@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 
-export async function GET() {
+export const dynamic = 'force-dynamic';
+
+export async function GET(request: Request) {
   try {
     const projetosPath = process.env.OBRA_PATH 
       ? path.resolve(process.env.OBRA_PATH, '..')

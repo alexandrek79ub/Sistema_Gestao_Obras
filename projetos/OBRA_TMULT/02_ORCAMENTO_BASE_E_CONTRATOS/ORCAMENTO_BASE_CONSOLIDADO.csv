@@ -1,4 +1,54 @@
 ﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
+1.1.1;Escavação Mecanizada/Manual de Cavas e Valas (Geometria Líquida);Infraestrutura;51.27;m³;0.0;51.27;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
+1.1.2;Apiloamento e Compactação do Fundo de Cava/Vala Líquido;Infraestrutura;60.74;m²;0.0;60.74;m²;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
+1.1.3;Lastro de Concreto Magro fck 15 MPa e=5cm sob Sapatas e Baldrames;Infraestrutura;3.04;m³;5.0;3.19;m³ (0.5 betoneira);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
+1.1.4;Concreto Usinado fck 30 MPa para 32 Sapatas Isoladas (S1-S24 e SE1-SE8);Infraestrutura;8.55;m³;5.0;8.98;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-052;-;-
+1.1.5;Fôrma Compensado Resinado 17mm para Sapatas Isoladas (Tronco);Infraestrutura;35.88;m²;10.0;17;chapas (41.14 m²);AÇU-3.DES-2.3100-11-EGS-052;-;-
+1.1.6;Concreto Usinado fck 30 MPa para Arranques dos Pilares P1-P24;Infraestrutura;1.86;m³;5.0;1.95;m³;AÇU-3.DES-2.3100-11-EGS-052;-;-
+1.1.7;Concreto Usinado fck 30 MPa para Vigas Baldrames VB1-VB19 (25x40cm - 140,44m);Infraestrutura;14.04;m³;5.0;14.74;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
+1.1.8;Fôrma Compensado Resinado 17mm para Vigas Baldrames (140,44m);Infraestrutura;112.35;m²;10.0;52;chapas (125.84 m²);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
+1.1.9;Armadura CA-50 Ø8,0mm (Armadura das 32 Sapatas Isoladas);Infraestrutura;256.00;kg;5.0;68;barras 12m (268.8 kg);AÇU-3.DES-2.3100-11-EGS-052;-;-
+1.1.10;Armadura CA-50 Ø6,3mm / Ø12,5mm (Arranques dos Pilares P1-P24);Infraestrutura;145.70;kg;5.0;38;barras 12m (153.0 kg);AÇU-3.DES-2.3100-11-EGS-052;-;-
+1.1.11;Armadura CA-50 Vigas Baldrames VB1-VB19 (EGS-053: 694,8kg + EGS-054: 382,5kg);Infraestrutura;1077.30;kg;5.0;199;barras 12m (1131.2 kg);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
+1.1.12;Arame Recozido BWG 18 para Amarrações de Fundação;Infraestrutura;16.45;kg;0.0;17.00;kg (17 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-052/053;-;-
+1.1.13;Espaçadores/Pastilhas de Concreto cobrimento 40mm/50mm;Infraestrutura;640.00;unid;5.0;672;unidades;AÇU-3.DES-2.3100-11-EGS-051/054;-;-
+1.1.14;Impermeabilização Tinta Asfáltica (Baldrames e Sapatas);Infraestrutura;183.36;m²;10.0;201.70;m² (12 galões 18L);AÇU-3.DES-2.3100-11-EGS-051/054;-;-
+1.1.15;Reaterro Compactado de Cavas e Valas c/ Maço/Sapo Líquido;Infraestrutura;31.17;m³;0.0;31.17;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
+1.1.16;Bota-fora e Carga de Terra c/ Empolamento 1,25 Líquido;Infraestrutura;20.10;m³;0.0;25.13;m³ (3 caminhões 12m³);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
+1.2.1;Concreto Usinado fck 30 MPa Pilares (P1 a P24 h=2,98m);Supraestrutura;18.60;m³;5.0;19.53;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.2;Concreto Usinado fck 30 MPa Vigas Superiores (V1 a V18);Supraestrutura;34.20;m³;5.0;35.91;m³ (5 betoneiras);AÇU-3.DES-2.3100-11-EGS-056;-;-
+1.2.3;Concreto Usinado fck 30 MPa Capa Laje Treliçada e=5cm;Supraestrutura;22.10;m³;5.0;23.21;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/056;-;-
+1.2.4;Fôrma Compensado Resinado 17mm Pilares (P1 a P24);Supraestrutura;248.00;m²;10.0;113;chapas (272.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.5;Fôrma Compensado Resinado 17mm Vigas Superiores;Supraestrutura;312.40;m²;10.0;142;chapas (343.64 m²);AÇU-3.DES-2.3100-11-EGS-056;-;-
+1.2.6;Fôrma Compensado Resinado 17mm Laje (Face Inferior);Supraestrutura;368.40;m²;10.0;168;chapas (405.24 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
+1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas (PD=3,20m);Supraestrutura;1178.88;m²·m;0.0;1178.88;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.8;Laje Treliçada H12 Vigotas TR 16745 c/ Enchimento EPS;Supraestrutura;968.80;m;5.0;1017.24;m (368.40 m² laje);AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.9;Armadura CA-60 Ø5,0mm TR 16745 (Vigotas Treliçadas H12);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.10;Armadura CA-50 Ø10,0mm / Ø12,5mm / Ø16,0mm (Pilares e Vigas);Supraestrutura;7840.00;kg;5.0;686;barras 12m (8232.0 kg);AÇU-3.DES-2.3100-11-EGS-057/060;-;-
+1.2.11;Arame Recozido BWG 18 para Amarrações de Superestrutura;Supraestrutura;132.60;kg;0.0;133.00;kg (133 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-057;-;-
+1.2.12;Espaçadores/Pastilhas Plásticas de Cobrimento 25mm/30mm;Supraestrutura;2850.00;unid;5.0;2993;unidades;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.13;Desmoldante Biodegradável para Fôrmas de Concreto;Supraestrutura;45.00;L;0.0;3;galões de 18L (54L);AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+2.1.1;Alvenaria de Vedação Bloco Concreto 14x19x39cm;Arquitetura;1061.44;m²;5.0;13931;blocos (1114.5 m²);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.4;Contrapiso de Regularização e=3cm;Arquitetura;368.40;m²;5.0;386.82;m² (11.6 m³ argamassa);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.5;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.40;m²;10.0;281;caixas (405.2 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.6;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.7;Rodapé Porcelanato h=10cm;Arquitetura;384.20;m;10.0;422.62;m;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.8;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
+2.1.9;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.10;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.11;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.20;m²;10.0;92.62;m² (19 caixas 18kg);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.2.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;419.42;m² (70 telhas de 6m);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.2;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.00;m;5.0;28;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.3;Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm);Cobertura;45.24;m²;5.0;594;blocos 9x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.4;Calha em Chapa Galvanizada nº 24 (Dev 80cm);Cobertura;52.00;m;5.0;54.60;m (19 peças de 3m);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.5;Rufo e Pingadeira Metálica de Platibanda (Dev 40cm);Cobertura;82.00;m;5.0;86.10;m (29 peças de 3m);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.6;Impermeabilização Manta Asfáltica 4mm em Calhas;Cobertura;62.00;m²;15.0;8;rolos de 10m² (71.3 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
+2.2.7;Ralo Hemisférico Tipo Abacaxi Inox Ø150mm para Calhas;Cobertura;8.0;unid;0.0;8;unidades;AÇU-3.DES-2.3100-15-EGS-015/017;-;-
+2.2.8;Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m);Cobertura;31.98;m²;5.0;420;blocos 14x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.9;Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda;Cobertura;74.62;m²;5.0;78.35;m² (16 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.10;Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda;Cobertura;74.62;m²;5.0;2;latas 18L (78.35 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
 3.1.1;Cabo Cobre Flexível 750V 2,5mm² (Iluminação/TUG);Elétrica;1850.0;m;10.0;21;rolos de 100m (2035m);AÇU-3.DES-2.3100-16-EGS-013;-;-
 3.1.2;Cabo Cobre Flexível 750V 4,0mm² (Tomadas TUG/TUE);Elétrica;640.0;m;10.0;8;rolos de 100m (704m);AÇU-3.DES-2.3100-16-EGS-013;-;-
 3.1.3;Cabo Cobre Flexível 750V 6,0mm² (Ar Condicionado);Elétrica;420.0;m;10.0;5;rolos de 100m (462m);AÇU-3.DES-2.3100-16-EGS-013;-;-

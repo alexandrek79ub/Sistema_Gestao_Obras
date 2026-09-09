@@ -1,3 +1,4 @@
-﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia
-1.1.1;Escavação Manual/Mecanizada de Sapatas e Baldrames;Infraestrutura e Fundações;35.5377;m³;0.0;35.54;m³;EGS-01
-1.1.5;Aço CA-50 8.0mm Sapatas Isoladas;Infraestrutura e Fundações;46.926;kg;5.0;10.4;barras 12m;EGS-02
+﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
+1.1.1;Escavação Manual/Mecanizada de Sapatas e Baldrames;Infraestrutura e Fundações;35.5377;m³;0.0;35.54;m³;EGS-01;R$ 65,00;R$ 2.310,10
+1.1.2;Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm);Infraestrutura e Fundações;5.0894;m³;5.0;5.34;m³;EGS-01;R$ 480,00;R$ 2.563,20
+1.1.5;Aço CA-50 8.0mm Sapatas Isoladas;Infraestrutura e Fundações;46.926;kg;5.0;11;barras 12m;EGS-02;R$ 58,50;R$ 643,50

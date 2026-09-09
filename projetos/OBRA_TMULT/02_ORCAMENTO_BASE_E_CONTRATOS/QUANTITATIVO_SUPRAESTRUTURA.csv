@@ -1,14 +1,14 @@
-﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia
-1.2.1;Concreto Usinado fck 30 MPa Pilares (P1 a P24 h=2,98m);Supraestrutura;18.60;m³;5.0;19.53;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-060
-1.2.2;Concreto Usinado fck 30 MPa Vigas Superiores (V1 a V18);Supraestrutura;34.20;m³;5.0;35.91;m³ (5 betoneiras);AÇU-3.DES-2.3100-11-EGS-056
-1.2.3;Concreto Usinado fck 30 MPa Capa Laje Treliçada e=5cm;Supraestrutura;22.10;m³;5.0;23.21;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/056
-1.2.4;Fôrma Compensado Resinado 17mm Pilares (P1 a P24);Supraestrutura;248.00;m²;10.0;113;chapas (272.80 m²);AÇU-3.DES-2.3100-11-EGS-060
-1.2.5;Fôrma Compensado Resinado 17mm Vigas Superiores;Supraestrutura;312.40;m²;10.0;142;chapas (343.64 m²);AÇU-3.DES-2.3100-11-EGS-056
-1.2.6;Fôrma Compensado Resinado 17mm Laje (Face Inferior);Supraestrutura;368.40;m²;10.0;168;chapas (405.24 m²);AÇU-3.DES-2.3100-11-EGS-055
-1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas (PD=3,20m);Supraestrutura;1178.88;m²·m;0.0;1178.88;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060
-1.2.8;Laje Treliçada H12 Vigotas TR 16745 c/ Enchimento EPS;Supraestrutura;968.80;m;5.0;1017.24;m (368.40 m² laje);AÇU-3.DES-2.3100-11-EGS-059
-1.2.9;Armadura CA-60 Ø5,0mm TR 16745 (Vigotas Treliçadas H12);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059
-1.2.10;Armadura CA-50 Ø10,0mm / Ø12,5mm / Ø16,0mm (Pilares e Vigas);Supraestrutura;7840.00;kg;5.0;686;barras 12m (8232.0 kg);AÇU-3.DES-2.3100-11-EGS-057/060
-1.2.11;Arame Recozido BWG 18 para Amarrações de Superestrutura;Supraestrutura;132.60;kg;0.0;133.00;kg (133 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-057
-1.2.12;Espaçadores/Pastilhas Plásticas de Cobrimento 25mm/30mm;Supraestrutura;2850.00;unid;5.0;2993;unidades;AÇU-3.DES-2.3100-11-EGS-055/060
-1.2.13;Desmoldante Biodegradável para Fôrmas de Concreto;Supraestrutura;45.00;L;0.0;3;galões de 18L (54L);AÇU-3.DES-2.3100-11-EGS-055/060
+﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
+1.2.1;Concreto Usinado fck 30 MPa Pilares (P1 a P24 h=2,98m);Supraestrutura;18.60;m³;5.0;19.53;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.2;Concreto Usinado fck 30 MPa Vigas Superiores (V1 a V18);Supraestrutura;34.20;m³;5.0;35.91;m³ (5 betoneiras);AÇU-3.DES-2.3100-11-EGS-056;-;-
+1.2.3;Concreto Usinado fck 30 MPa Capa Laje Treliçada e=5cm;Supraestrutura;22.10;m³;5.0;23.21;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/056;-;-
+1.2.4;Fôrma Compensado Resinado 17mm Pilares (P1 a P24);Supraestrutura;248.00;m²;10.0;113;chapas (272.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.5;Fôrma Compensado Resinado 17mm Vigas Superiores;Supraestrutura;312.40;m²;10.0;142;chapas (343.64 m²);AÇU-3.DES-2.3100-11-EGS-056;-;-
+1.2.6;Fôrma Compensado Resinado 17mm Laje (Face Inferior);Supraestrutura;368.40;m²;10.0;168;chapas (405.24 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
+1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas (PD=3,20m);Supraestrutura;1178.88;m²·m;0.0;1178.88;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.8;Laje Treliçada H12 Vigotas TR 16745 c/ Enchimento EPS;Supraestrutura;968.80;m;5.0;1017.24;m (368.40 m² laje);AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.9;Armadura CA-60 Ø5,0mm TR 16745 (Vigotas Treliçadas H12);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.10;Armadura CA-50 Ø10,0mm / Ø12,5mm / Ø16,0mm (Pilares e Vigas);Supraestrutura;7840.00;kg;5.0;686;barras 12m (8232.0 kg);AÇU-3.DES-2.3100-11-EGS-057/060;-;-
+1.2.11;Arame Recozido BWG 18 para Amarrações de Superestrutura;Supraestrutura;132.60;kg;0.0;133.00;kg (133 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-057;-;-
+1.2.12;Espaçadores/Pastilhas Plásticas de Cobrimento 25mm/30mm;Supraestrutura;2850.00;unid;5.0;2993;unidades;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.13;Desmoldante Biodegradável para Fôrmas de Concreto;Supraestrutura;45.00;L;0.0;3;galões de 18L (54L);AÇU-3.DES-2.3100-11-EGS-055/060;-;-

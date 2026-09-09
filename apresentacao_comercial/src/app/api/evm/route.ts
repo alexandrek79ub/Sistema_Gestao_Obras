@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
 import path from 'path';
+import fs from 'fs';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -10,20 +13,27 @@ export async function GET(request: Request) {
     ? process.env.OBRA_PATH.replace(/OBRA$/, obra)
     : path.resolve(process.cwd(), `../projetos/${obra}`);
     
-  const orcamentoPath = path.join(basePath, '02_ORCAMENTO_BASE_E_CONTRATOS', 'TEMPLATE_ORCAMENTO_BASE.csv');
+  const orcamentoDir = path.join(basePath, '02_ORCAMENTO_BASE_E_CONTRATOS');
+  const candidatosOrcamento = [
+    path.join(orcamentoDir, 'ORCAMENTO_BASE_CONSOLIDADO.csv'),
+    path.join(orcamentoDir, `ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv`),
+    path.join(orcamentoDir, 'TEMPLATE_ORCAMENTO_BASE.csv')
+  ];
+  const orcamentoPath = candidatosOrcamento.find(p => fs.existsSync(p)) || candidatosOrcamento[2];
   
   try {
     const data = parseCSV(orcamentoPath);
     
     // Calcula o BAC (Orçamento Total)
     let bac = 0;
-    const itens = data.filter((item: any) => item['CUSTO_TOTAL'] && item['CUSTO_TOTAL'].trim() !== '');
-    
-    itens.forEach((item: any) => {
-      const custoStr = item['CUSTO_TOTAL'].replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-      const custo = parseFloat(custoStr);
-      if (!isNaN(custo)) {
-        bac += custo;
+    data.forEach((item: any) => {
+      const rawCusto = item['CUSTO_TOTAL'] || item['Custo Total (R$)'] || item['Custo Total'] || '';
+      if (rawCusto && rawCusto.trim() !== '' && rawCusto !== '-') {
+        const custoStr = rawCusto.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
+        const custo = parseFloat(custoStr);
+        if (!isNaN(custo)) {
+          bac += custo;
+        }
       }
     });
 
