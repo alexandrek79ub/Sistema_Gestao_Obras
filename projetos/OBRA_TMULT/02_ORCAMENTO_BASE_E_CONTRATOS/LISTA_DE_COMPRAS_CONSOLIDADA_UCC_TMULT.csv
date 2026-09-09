@@ -1,0 +1,61 @@
+﻿Categoria / Disciplina;Descrição do Insumo / Miudeza de Canteiro;Quantidade Comercial UCC;Unidade Comercial;Observação Técnica / Aplicação
+Estrutura/Fôrmas;Chapa Compensado Resinado 17mm (2,20m x 1,10m);552;chapas;Substituição e reaproveitamento 3x para infra/supra
+Estrutura/Fôrmas;Prego c/ Cabeça 17x27mm (para Fôrmas);120;kg (6 caixas 20kg);Consumo 0,20 kg/m² de fôrma (597 m² fôrmas)
+Estrutura/Fôrmas;Prego c/ Cabeça 18x30mm (para Gravatas e Trava);80;kg (4 caixas 20kg);Consumo para travamento de pilares e vigas
+Estrutura/Fôrmas;Desmoldante Biodegradável para Fôrmas;90;L (5 galões 18L);Consumo 0,15 L/m² de fôrma
+Estrutura/Fôrmas;Tábua de 3ª 2,5x30cm Pinus/Eucalipto (Varas 3m);120;varas;Gravatas, sarrafos e alinhamento de fôrmas
+Estrutura/Fôrmas;Escoramento Metálico/Cimbramento;1178.88;m²·m;Locação por período para lajes e vigas
+Aço/Armadura;Aço CA-50 Ø10,0mm / Ø12,5mm / Ø16,0mm;988;barras de 12m;Infraestrutura (302 bar) + Supraestrutura (686 bar)
+Aço/Armadura;Aço CA-60 Ø5,0mm / Ø6,3mm (Estribos);1282;barras de 12m;Infraestrutura (373 bar) + Supraestrutura (909 bar)
+Aço/Armadura;Arame Recozido BWG 18 (Amarração);215;kg (215 rolos 1kg);Consumo 1,5% do peso de aço (14.856 kg)
+Aço/Armadura;Espaçador/Pastilha Concreto Cobrimento 40mm;1313;unidades;Blocos de coroamento e vigas baldrame
+Aço/Armadura;Espaçador Plástico de Cobrimento 25mm/30mm;2993;unidades;Pilares, vigas e laje de supraestrutura
+Concreto/Solo;Concreto Usinado fck 30 MPa (Bomba);124;m³ (16 betoneiras 8m³);Infraestrutura (45m³) + Supraestrutura (79m³)
+Concreto/Solo;Concreto Magro fck 15 MPa (Lastro);10;m³ (2 betoneiras 8m³);Lastro das cavas de fundação e baldrames
+Concreto/Solo;Argamassa Pronta p/ Emboço/Reboco (sacos 20kg);462;sacos de 20kg;Paredes internas e face interna da platibanda
+Concreto/Solo;Cimento Portland CP II-Z-32 (sacos 50kg);75;sacos de 50kg;Chapisco e regularizações de canteiro
+Alvenaria/Cobert;Bloco de Concreto 14x19x39cm;14351;unidades;Vedação (13.931 un) + Platibanda (420 un)
+Alvenaria/Cobert;Bloco de Concreto 9x19x39cm (Muretas Apoio);594;unidades;Muretas escalonadas de apoio de terças no entreforro
+Alvenaria/Cobert;Telha Termoacústica Sandwich 30mm EPS (6m x 1m);70;telhas (419.4 m²);Cobertura inclinada 15°
+Alvenaria/Cobert;Terça Metálica Perfil U 100x40x2,25mm (6m);28;barras (573,3 kg);Perfil enrijecido de apoio do telhado
+Alvenaria/Cobert;Calha Galvanizada nº 24 Dev 80cm (Peças 3m);19;peças (54.6 m);Captação pluvial com abas de fixação
+Alvenaria/Cobert;Rufo/Pingadeira Galvanizada Dev 40cm (Peças 3m);29;peças (86.1 m);Topo de platibanda
+Alvenaria/Cobert;Impermeabilização Manta Asfáltica 4mm (10m²);8;rolos (71,3 m²);Calhas e calhetões
+Alvenaria/Cobert;Ralo Hemisférico Abacaxi Inox Ø150mm;8;unidades;Entrada dos condutores pluviais
+Alvenaria/Cobert;Parafuso Auto-brocante 5.5 x 75mm c/ Vedação;850;unidades (9 caixas 100un);Fixação das telhas termoacústicas nas terças
+Acabamento/Piso;Piso Porcelanato Retificado 60x60cm;281;caixas (405.2 m²);Área útil interna com 10% perda recortes
+Acabamento/Piso;Argamassa Colante AC-II (sacos 20kg);105;sacos de 20kg;Assentamento de porcelanato (5kg/m²)
+Acabamento/Piso;Rejunte Flexível para Porcelanato (sacos 5kg);21;sacos de 5kg;Junta de 2mm (0,25 kg/m²)
+Acabamento/Piso;Espaçador/Nivelador de Piso 2mm c/ Cunhas;2500;unidades (25 pacotes 100un);Assentamento retificado de porcelanato
+Acabamento/Piso;Tinta Acrílica Premium Látex (Latas 18L);38;latas de 18L;Paredes internas/tetos (36 latas) + Platibanda (2 latas)
+Acabamento/Piso;Selador Acrílico para Parede (Latas 18L);14;latas de 18L;Primeira demão preparatória de pintura
+Acabamento/Piso;Lixa para Massa Grão 150/220;250;folhas;Lixamento de superfícies e emboço
+Acabamento/Piso;Fita Crepe de Proteção 48mm x 50m;40;rolos;Proteção de esquadrias e rodapés na pintura
+Elétrica/Telecom;Cabo Cobre Flexível 750V (2.5/4.0/6.0mm²);34;rolos de 100m;21 rolos 2,5mm² + 8 rolos 4,0mm² + 5 rolos 6,0mm²
+Elétrica/Telecom;Cabo Sintenax 0,6/1kV 35mm²;126;m;Alimentador geral da entrada
+Elétrica/Telecom;"Eletroduto Rígido PVC Ø3/4"" (25mm - 3m)";176;varas de 3m;Infraestrutura de teto e paredes
+Elétrica/Telecom;"Caixas de Embutir PVC (194un 4x2"" + 26un 4x4"" + 72un Octogonais)";292;unidades;Pontos de tomada, interruptor, luz e dados
+Elétrica/Telecom;"Módulos de Tomadas 10A/20A + Interruptores + Placas 4x2""";369;peças;142 tomadas + 33 interruptores + 194 placas/suportes
+Elétrica/Telecom;Cabo UTP Cat6 LSZH (Dados/Voz);16;rolos de 100m;Cabeamento estruturado de rede
+Elétrica/Telecom;"Kit Telecom (1 Rack 19"" 12U + 2 Patch Panels + 1 Switch PoE + 38 Keystones)";1;kit completo;Infraestrutura de dados de guarita e rede
+Elétrica/Telecom;Quadros Elétricos (1 QDG 150A + 2 QDF 24e + Disjuntor Moldado 150A);4;conjuntos;Distribuição trifásica de energia
+Elétrica/Telecom;Disjuntores DIN + DRs + DPSs;61;dispositivos;30 monopolares + 19 bipolares + 4 DRs 40A + 8 DPS
+Elétrica/Telecom;Painéis e Luminárias LED (72 Painéis 60x60 + 17 Herméticas + 14 Emergência);103;luminárias;Iluminação interna, externa e de emergência
+Elétrica/Telecom;Fita Isolante 3M 20m;30;rolos;Isolamento de conexões e caixas elétricas
+Elétrica/Telecom;Abraçadeira Nylon 200 x 4,8mm (Enforca-Gato);20;pacotes c/ 100un (2000un);Organização de cabos no rack e eletrodutos
+Elétrica/Telecom;"Abraçadeira Tipo D / Cunha 3/4"" de Aço Galvanizado";150;unidades;Fixação de eletrodutos aparentes
+Elétrica/Telecom;Parafuso c/ Bucha Nylon S8 (Caixas c/ 100un);10;caixas (1000un);Fixação de luminárias, quadros, suportes e calhas
+Hidráulica/Esgoto;Tubos PVC Soldável Água Fria (Ø25mm e Ø50mm - 6m);51;varas de 6m;33 varas Ø25mm + 18 varas Ø50mm
+Hidráulica/Esgoto;Tubos PVC Esgoto/Pluvial (Ø40/75/100/150mm - 6m);67;varas de 6m;12 varas Ø40mm + 8 varas Ø75mm + 26 varas Ø100mm + 21 varas Ø150mm
+Hidráulica/Esgoto;Conexões PVC Soldável Água Fria (Joelhos, Tês, Luvas, Transposição);217;unidades peça-a-peça;91 joelhos 90° Ø25 + 34 joelhos c/ latão + 51 tês + 15 curvas transposição + 26 outros
+Hidráulica/Esgoto;Conexões PVC Esgoto (Joelhos 90°/45°, Junções Y 45°, Tês Sanitários);94;unidades peça-a-peça;38 joelhos 90° Ø100 + 24 joelhos 45° Ø100 + 19 junções Y + 13 tês sanitários
+Hidráulica/Esgoto;"Registros c/ Canopla Cromada (12 Gaveta 3/4"" + 4 Gaveta 1.1/2"" + 6 Pressão)";22;registros cromados;Fecho geral e regulagem por ambiente
+Hidráulica/Esgoto;Reservatórios Polietileno 5.000 Litros c/ Tampa;2;unidades;Reserva de água potável
+Hidráulica/Esgoto;Kits Louças e Metais (10 Bacias C/ CA + 12 Lavatórios c/ Torneira Automática);22;conjuntos completos;Sanitários e apoio
+Hidráulica/Esgoto;Sifões Sanfonados Universais + Engates Inox 40cm + Válvulas Escoamento;51;peças;15 sifões + 24 engates flexíveis + 12 válvulas inox
+Hidráulica/Esgoto;Fita Veda-Rosca PTFE 18mm x 50m;12;rolos;Vedação de pontos roscados de metais e registros
+Hidráulica/Esgoto;Adesivo Plástico para PVC (Frascos 850g);8;frascos de 850g;Colagem de conexões de água e esgoto
+Hidráulica/Esgoto;Solução Preparadora para PVC (Frascos 850ml);6;frascos de 850ml;Limpeza e preparação de tubos antes da colagem
+Consumíveis/Canteiro;Disco de Corte Diamantado 110mm (Serra Mármore);15;unidades;Corte de blocos, cerâmica e porcelanato
+Consumíveis/Canteiro;"Disco de Corte para Aço 7"" (Esmerilhadeira)";25;unidades;Corte de vergalhões de aço e terças metálicas
+Consumíveis/Canteiro;Lona Preta de Proteção e Impermeabilização 4x50m;2;rolos;Proteção de materiais no canteiro e cura de concreto

@@ -4,6 +4,12 @@
 > **Normas:** NBR 6118 (Projeto de estruturas de concreto), NBR 14931 (Execução), NBR 7480 (Aço CA-50/CA-60)
 > **Fck padrão superestrutura:** C25 (CAA II — ambiente urbano normal)
 
+> [!CAUTION]
+> **REGRAS ABSOLUTAS DO PMO VIRTUAL (INVIOLÁVEIS)**
+> - **ZERO ESTIMATIVA / ZERO CHUTE:** É EXPRESSAMENTE PROIBIDO estimar, inferir ou chutar dimensões, comprimentos, áreas, volumes ou quantitativos de projeto de estruturas.
+> - **LEITURA OBRIGATÓRIA:** Toda cota DEVE ser lida 100% diretamente das pranchas. Se faltar cota ou prancha, PARE A EXECUÇÃO E SOLICITE AO USUÁRIO. O orçamento é executivo e a gestão de obras não admite achismos.
+> - **GRANULARIDADE 100% (PEÇA A PEÇA):** É PROIBIDO agrupar insumos (ex: "vigas V1 a V18"). O levantamento DEVE quantificar minuciosamente pilar por pilar, viga por viga, detalhando dimensões individuais.
+
 ---
 
 ## 🧭 Escopo deste Módulo

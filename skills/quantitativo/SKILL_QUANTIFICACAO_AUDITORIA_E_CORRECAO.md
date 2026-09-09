@@ -7,6 +7,9 @@
 ## 🎯 Objetivo Principal
 Garantir zero erros de leitura visual de pranchas, proibir deduções matemáticas equivocadas (como confundir espessura de parede com espessura de laje), impor a Geometria Líquida Executiva e validar se todas as regras da **[SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)** foram rigorosamente seguidas.
 
+> 🔄 **Protocolo Obrigatório de Carga Dinâmica (SSOT):**  
+> Ao auditar qualquer disciplina (Fundações, Estrutura, Arquitetura, Elétrica ou Hidráulica), o Agente DEVE obrigatoriamente carregar **esta Skill de Auditoria + a Skill Específica da Disciplina** (ex: `SKILL_QUANT_01_FUNDACOES.md`). A verificação confronta a memória de cálculo contra os 6 checklists de QA universais **E** contra as regras de negócio específicas daquela disciplina.
+
 ---
 
 ## 🔁 O Loop de QA de Quantificação (5 Etapas de Verificação)
@@ -77,7 +80,7 @@ Para garantir zero omissão de detalhes construtivos em qualquer disciplina:
 
 - [ ] **Varredura 100% da Prancha:** Todas as áreas da prancha (plantas baixas, cortes, elevações, quadros de notas, esquemas unifilares/isométricos e detalhes 01 a N) foram varridas exaustivamente. Nenhum detalhe foi esquecido ou omitido.
 - [ ] **Mapeamento de Chamadas de Detalhes:** Todas as pranchas de detalhes (callouts) foram rastreadas e vinculadas aos insumos/serviços correspondentes.
-- [ ] **Cadeia Completa de Insumos:** Todos os elementos secundários (pingadeiras, rufos, impermeabilizações, muretas de apoio, perfis metálicos, calhas, ralos) foram quantificados.
+- [ ] **Cadeia Completa de Insumos (Proibição Absoluta de Resumos):** Todos os elementos secundários (pingadeiras, rufos, impermeabilizações, muretas de apoio, perfis metálicos, calhas, ralos, conexões hidráulicas soldáveis/esgoto, caixas 4x2/4x4/octogonais, disjuntores DIN, DRs, DPSs, cabos de telecom Cat6, arame recozido, espaçadores) foram quantificados em 100% de detalhamento granular. **SE HOUVER QUALQUER RESUMO OU AGRUPAMENTO SINTÉTICO, A AUDITORIA REPROVA O LEVANTAMENTO IMEDIATAMENTE.**
 - [ ] **Interrogatório Técnico (Instrução Ausente na Skill):** Se algum detalhe ou especificação da prancha **não possuir regra direta ou instrução explícita nas Skills**, o agente **PAROU O LEVANTAMENTO E PERGUNTOU AO USUÁRIO** para definir a premissa antes de prosseguir. *PROIBIDO CHUTAR OU ASSUMIR SOBERANAMENTE.*
 
 ---
@@ -91,6 +94,8 @@ Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o
 3. ❌ Calcular vigas/cintas fechadas pelo perímetro de eixos sem desmembrar a espessura dos cantos.
 4. ❌ Apresentar resultado numérico sem a notação limpa de engenharia (com caracteres de programação/LaTeX).
 5. ❌ Omitir a fórmula ou as cotas lidas da prancha na memória de cálculo.
+6. ❌ Apresentar quantitativos resumidos, agrupados ou sintetizados omitindo conexões, caixas, disjuntores ou micro-componentes.
+
 
 ---
 

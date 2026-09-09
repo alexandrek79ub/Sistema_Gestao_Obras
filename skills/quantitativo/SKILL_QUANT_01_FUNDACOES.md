@@ -33,7 +33,7 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 | **05** | Fôrma de Fundação | m² | Perímetro lateral da peça $\times h_{\text{peça}} \times \text{Quant}$ |
 | **06** | Concreto Estrutural de Fundação | m³ | Volume líquido geométrico do elemento |
 | **07** | Armadura de Fundação (Aço) | kg | $V_{\text{concreto}} \times \text{Taxa\_Aço (kg/m³)}$ ou detalhamento |
-| **08** | Impermeabilização (Tinta Asfáltica) | m² | Face superior + faces laterais em contato com solo |
+| **08** | Impermeabilização (Tinta Asfáltica) | m² | Face superior + faces laterais. **🛑 REGRA DO NÓ:** Descontar rigorosamente a seção exata das vigas nas faces dos pilaretes onde há encosto, evitando dupla contagem de área envelopada. |
 | **09** | Reaterro Compactado | m³ | $V_{\text{escavado}} - V_{\text{concreto\_ocupado}}$ |
 | **10** | Bota-fora / Remoção de Terra | m³ | $V_{\text{escavado}} - V_{\text{reaterro}}$ (aplicar empolamento 1,25 a 1,35) |
 
@@ -56,12 +56,14 @@ V_bloco_3estacas = A_seção × H_altura_bloco × QUANT
 
 ### 2.2 Viga Baldrame / Cinta com Folga de Escavação e Impermeabilização
 
+> 🛑 **REGRA DO NÓ (Desconto de Apoios):** As vigas baldrames DEVEM ser calculadas APENAS em seus vãos livres (face a face dos pilaretes). É terminantemente proibido passar o comprimento do baldrame reto pelos apoios se os pilaretes/arranques já estão sendo levantados em sua altura total, para evitar duplicidade de concreto, fôrma e impermeabilização.
+
 ```text
-1. Dimensões da Peça: LARG, ALTURA, COMP, QUANT
+1. Dimensões da Peça: LARG, ALTURA, COMP_VAO_LIVRE, QUANT
 2. Folgas Operacionais de Vala: folga_larg = 0,20m, folga_alt = 0,20m
 
 3. Serviços Derivados de Baldrame:
-   - V_escavação = (LARG + 0,20m) × (ALTURA + 0,20m) × COMP × QUANT
+   - V_escavação = (LARG + 0,20m) × (ALTURA + 0,20m) × COMP_VAO_LIVRE × QUANT
    - A_apiloamento = (LARG + 0,20m) × COMP × QUANT
    - V_lastro_conc = (LARG + 0,20m) × 0,05m × COMP × QUANT
    - A_forma = (2 × ALTURA) × COMP × QUANT  (2 lados, sem fundo)

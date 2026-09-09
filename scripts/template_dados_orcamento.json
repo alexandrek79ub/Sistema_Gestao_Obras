@@ -1,0 +1,51 @@
+{
+  "projeto": "Residencial Alpha",
+  "base_dir": "c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/RESIDENCIAL_ALPHA/02_ORCAMENTO_BASE_E_CONTRATOS",
+  "data_auditoria": "09/09/2026",
+  "disciplinas": {
+    "infraestrutura": {
+      "titulo": "Infraestrutura e Fundações",
+      "pranchas_ref": "EGS-01, EGS-02",
+      "itens_orcamento": [
+        {
+          "codigo_eap": "1.1.1",
+          "descricao": "Escavação Manual/Mecanizada de Sapatas e Baldrames",
+          "unidade": "m³",
+          "perda_pct": 0,
+          "unidade_ucc": "m³",
+          "fator_conversao_ucc": 1.0,
+          "ref_prancha": "EGS-01",
+          "equacoes": [
+            {
+              "descricao_memoria": "Escavação das Sapatas S1 (1,0x1,0m -> Cava 1,4x1,4x0,7m)",
+              "expressao_matematica": "11 * 1.4 * 1.4 * 0.7"
+            },
+            {
+              "descricao_memoria": "Escavação das Sapatas S3 (1,1x1,1m -> Cava 1,5x1,5x0,7m)",
+              "expressao_matematica": "6 * 1.5 * 1.5 * 0.7"
+            },
+            {
+              "descricao_memoria": "Valas de Baldrames Livres (Descontando os nós das sapatas)",
+              "expressao_matematica": "54.30 * 0.45 * 0.45"
+            }
+          ]
+        },
+        {
+          "codigo_eap": "1.1.5",
+          "descricao": "Aço CA-50 8.0mm Sapatas Isoladas",
+          "unidade": "kg",
+          "perda_pct": 5,
+          "unidade_ucc": "barras 12m",
+          "fator_conversao_ucc": 0.211,
+          "ref_prancha": "EGS-02",
+          "equacoes": [
+            {
+              "descricao_memoria": "Armação Inferior Sapatas S1",
+              "expressao_matematica": "11 * 8 * 1.35 * 0.395"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -2,8 +2,9 @@
 
 Este é o **arquivo núcleo** do sistema de quantificação. Ele define os protocolos universais que se aplicam a **todas as disciplinas** (Fundações, Estrutura, Arquitetura, Elétrica, Hidráulica).
 
-> ✅ **Normas de Referência:** NBR 12721, NBR 6118, NBR 14931, TCPO 14ª Edição, SINAPI (IBGE/CEF).
-> Toda quantificação deve ser **rastreável, auditável e tecnicamente defensável**.
+> 🚨 **REGRA ABSOLUTA DO SISTEMA (INVIOLÁVEL):** JAMAIS, digo, JAMAIS, estimar quantidades. As quantidades são o sucesso ou o fracasso de uma obra, portanto precisam ser informações 100% retiradas do projeto, JAMAIS estimadas. É EXPRESSAMENTE PROIBIDO INFERIR OU CHUTAR DIMENSÕES, COMPRIMENTOS, ÁREAS OU VOLUMES. Se faltar cota ou prancha, PARE IMEDIATAMENTE A EXECUÇÃO E SOLICITE A INFORMAÇÃO AO USUÁRIO. AS MEMÓRIAS DEVEM SER EXECUTADAS COM 100% DE RIGOR E SERIEDADE TÉCNICA.
+
+---
 
 ## 📂 Módulos Disponíveis
 
@@ -53,6 +54,12 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 ## 📋 2. Modelos Universais de Memória de Cálculo
 
 O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. Não omitir etapas.
+
+> 🛑 **Padrão Obrigatório de Formatação Visual (Markdown Nativo Anti-Erro):**  
+> Para garantir que as memórias de cálculo sejam renderizadas de forma limpa, elegante e 100% livre de erros visuais em qualquer editor ou visualizador (incluindo o VS Code nativo sem plugins de LaTeX):  
+> 1. **Fórmulas e Equações:** Devem ser formatadas usando blocos de código nativos (ex: `V = N × (B × L × H)`) ou citações (`>`).  
+> 2. **Zero Dependência de KaTeX/LaTeX:** É **PROIBIDO** usar blocos `$$` ou comandos `\text{}` que geram mensagens vermelhas de *ParseError* em visualizadores padrão.  
+> 3. **Demonstrativo Auditável:** Exibir as substituições numéricas reais com unidades de forma legível e organizada.
 
 ### Modelo A — Revestimento de Parede / Teto:
 ```
@@ -308,16 +315,19 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 ## ⚠️ 5. Regras de Ouro — O Agente NUNCA deve:
 
 1. **Gerar quantidades sem transcrever a memória de cálculo** — fórmula, valores e critério de desconto de vão obrigatórios.
-2. **Misturar serviços de disciplinas diferentes na mesma memória** — Estrutura e Arquitetura são sempre separadas.
-3. **Omitir o Código CIA** em qualquer resultado.
-4. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
-5. **Usar taxas de perda sem registrar qual foi aplicada** — a taxa é parte da memória.
-6. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
-7. **Arredondar para baixo** — quantitativos arredondam para CIMA na compra.
-8. **Misturar área de teto com área de parede** — serviços separados, memórias separadas.
-9. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
-10. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
-11. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
+2. **Resumir, agrupar ou omitir insumos/acessórios** — O levantamento DEVE ser 100% granular e detalhado peça-a-peça em todas as disciplinas (caixas, conexões, ferragens, suportes, aterramentos, calhas, rufos, etc.).
+3. **Misturar serviços de disciplinas diferentes na mesma memória** — Estrutura e Arquitetura são sempre separadas.
+4. **Ignorar a Regra de Desconto de Apoios / Interseções** — Em cruzamentos de elementos (ex: vigas x pilares/pilaretes), é obrigatório descontar os apoios na viga para que ela seja levantada apenas nos vãos livres, se os pilaretes já foram ou serão levantados inteiros. Jamais gere duplicidade de concreto, fôrma ou impermeabilização no mesmo nó.
+5. **Omitir o Código CIA** em qualquer resultado.
+5. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
+6. **Usar taxas de perda sem registrar qual foi aplicada** — a taxa é parte da memória.
+7. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
+8. **Arredondar para baixo** — quantitativos arredondam para CIMA na compra.
+9. **Misturar área de teto com área de parede** — serviços separados, memórias separadas.
+10. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
+11. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
+12. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
+
 
 ---
 
