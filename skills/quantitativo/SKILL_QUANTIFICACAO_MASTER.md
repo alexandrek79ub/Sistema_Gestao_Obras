@@ -2,7 +2,14 @@
 
 Este é o **arquivo núcleo** do sistema de quantificação. Ele define os protocolos universais que se aplicam a **todas as disciplinas** (Fundações, Estrutura, Arquitetura, Elétrica, Hidráulica).
 
-> 🚨 **REGRA ABSOLUTA DO SISTEMA (INVIOLÁVEL):** JAMAIS, digo, JAMAIS, estimar quantidades. As quantidades são o sucesso ou o fracasso de uma obra, portanto precisam ser informações 100% retiradas do projeto, JAMAIS estimadas. É EXPRESSAMENTE PROIBIDO INFERIR OU CHUTAR DIMENSÕES, COMPRIMENTOS, ÁREAS OU VOLUMES. Se faltar cota ou prancha, PARE IMEDIATAMENTE A EXECUÇÃO E SOLICITE A INFORMAÇÃO AO USUÁRIO. AS MEMÓRIAS DEVEM SER EXECUTADAS COM 100% DE RIGOR E SERIEDADE TÉCNICA.
+> 🚨 **REGRA ABSOLUTA DO SISTEMA (INVIOLÁVEL — BLINDAGEM CONTRA QUANTITATIVOS ESTIMADOS):**  
+> 1. **JAMAIS ESTIMAR QUANTIDADES:** As quantidades são o fiel da balança de uma obra e definem seu sucesso ou fracasso. Portanto, precisam ser informações 100% extraídas e comprovadas em desenhos e pranchas executivas, **JAMAIS ESTIMADAS**. É expressamente PROIBIDO inferir, supor, adotar médias ou chutar dimensões, comprimentos, áreas ou volumes.  
+> 2. **DEVER FORMAL QUANDO FALTAR INFORMAÇÃO NO DESENHO:** Caso alguma informação, cota, elevação, espessura ou especificação técnica **NÃO CONSTE NO DESENHO**, é **DEVER OBRIGATÓRIO E INEGOCIÁVEL** do orçamentista:  
+>    - **NÃO quantificar o item** baseado em estimativa ou suposição.  
+>    - **Registrar obrigatoriamente uma observação formal na Memória de Cálculo e na Planilha de Orçamento:**  
+>      `⚠️ [ITEM NÃO LEVANTADO POR FALTA DE INFORMAÇÃO NO DESENHO - Prancha: [Ref] / Ambiente: [CIA] / Elemento: [Nome] - Aberta RFI nº XX].`  
+>    - **Emitir RFI / Solicitação de Esclarecimento** ao projetista ou usuário para definição formal da cota.  
+> 3. **RIGOR TÉCNICO E AUDITORIA:** Toda memória de cálculo é um documento jurídico-auditável. A presença de itens estimados sem respaldo no desenho resultará em REPROVAÇÃO IMEDIATA pela auditoria de qualidade.
 
 ---
 
@@ -82,7 +89,8 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 > Para garantir que as memórias de cálculo sejam renderizadas de forma limpa, elegante e 100% livre de erros visuais em qualquer editor ou visualizador (incluindo o VS Code nativo sem plugins de LaTeX):  
 > 1. **Fórmulas e Equações:** Devem ser formatadas usando blocos de código nativos (ex: `V = N × (B × L × H)`) ou citações (`>`).  
 > 2. **Zero Dependência de KaTeX/LaTeX:** É **PROIBIDO** usar blocos `$$` ou comandos `\text{}` que geram mensagens vermelhas de *ParseError* em visualizadores padrão.  
-> 3. **Demonstrativo Auditável:** Exibir as substituições numéricas reais com unidades de forma legível e organizada.
+> 3. **Demonstrativo Auditável:** Exibir as substituições numéricas reais com unidades de forma legível e organizada.  
+> 4. **Registro Mandatório de Falta de Informação em Desenho:** Caso falte qualquer cota, nível, detalhe ou especificação no projeto, é expressamente **PROIBIDO ESTIMAR OU INFERIR**. Deve constar obrigatoriamente a observação: `⚠️ [ITEM NÃO LEVANTADO POR FALTA DE INFORMAÇÃO NO DESENHO - Prancha: XX / Detalhe ausente: YY]` e abertura imediata de RFI.
 
 ### Modelo A — Revestimento de Parede / Teto:
 ```

@@ -3,6 +3,16 @@
 > **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)
 > **Normas:** NBR 12721 (Critérios de medição), TCPO 14ª Edição
 
+> 🛡️ **BLINDAGEM CONTRA QUANTITATIVOS ESTIMADOS (REGRA DE OURO INVIOLÁVEL):**  
+> - **PROIBIÇÃO TOTAL DE ESTIMATIVAS:** Todo levantamento quantitativo de arquitetura DEVE ser 100% embasado em cotas, níveis, especificações e detalhes geométricos extraídos diretamente das pranchas do projeto executivo. É **TERMINANTEMENTE PROIBIDO** estimar, supor, adotar médias genéricas ou inferir qualquer dimensão que não esteja comprovada em desenho.  
+> - **DEVER OBRIGATÓRIO NA FALTA DE INFORMAÇÃO NO DESENHO:** Se uma informação necessária (cota, espessura, pé-direito, especificação de acabamento, detalhe de pingadeira, soleira, etc.) **NÃO CONSTAR NO DESENHO**, é **DEVER ABSOLUTO E INEGOCIÁVEL** do orçamentista:  
+>   1. **NÃO LEVANTAR O ITEM** com base em números inventados, suposições ou estimativas.  
+>   2. **INSERIR OBRIGATORIAMENTE UMA OBSERVAÇÃO EXPLÍCITA NA MEMÓRIA DE CÁLCULO E NA PLANILHA:**  
+>      `⚠️ [ITEM NÃO LEVANTADO POR FALTA DE INFORMAÇÃO NO DESENHO - Prancha: [Código] / Ambiente: [Nome/CIA] / Elemento: [Descrição] - Necessária emissão de RFI para definição de cota/especificação].`  
+>   3. **REGISTRAR NO CSV/ORÇAMENTO COM QUANTIDADE ZERO OU PENDENTE**, acompanhado da ressalva técnica.  
+>   4. **EMITIR PENDÊNCIA TÉCNICA (RFI)** formal para cobrança junto aos projetistas ou ao cliente.  
+> - **TOLERÂNCIA ZERO NA AUDITORIA:** A inserção de qualquer quantitativo "estimado" sem respaldo direto no desenho acarreta a **REPROVAÇÃO SUMÁRIA** do levantamento pela auditoria de qualidade.
+
 ---
 
 ## 🧭 Escopo deste Módulo
@@ -37,9 +47,11 @@ A_bruta = P_alvenaria_líquido × H_pé-direito
 A_líquida = A_bruta − Σ Descontos de Vãos (NBR 12721 Art. 3)
 A_final = A_líquida × (1 + Taxa de Perda)
 ```
-> ⚠️ **Regras Obrigatórias de Alvenaria:**
+> ⚠️ **Regras Obrigatórias de Alvenaria (Anti-Duplicidade e Geometria Líquida):**
 > 1. **Desconto de Pilares de Concreto:** Em estruturas convencionais com pilares de concreto in loco embutidos na alvenaria, a largura de CADA pilar (`b_pilar`) DEVE ser subtraída do perímetro de alvenaria, pois não há tijolos/blocos onde existe concreto.
-> 2. **Desconto de Interseções de Canto:** No contorno de alvenaria, considera-se a dimensão externa em um dos sentidos (longitudinal ou transversal) e descontam-se as 2 espessuras de parede (`2 × e_parede`) no outro sentido, evitando sobreposição dos 4 cantos.
+> 2. **Desconto de Interseções nos Cantos em "L" (Perímetro Externo):** No contorno perimetral, para evitar sobreposição nos 4 cantos, mede-se um dos sentidos de ponta a ponta na face externa e desconta-se a espessura das duas paredes (`2 × e_parede`) no outro sentido: `P_ext_líquido = 2 × Comp_ext + 2 × (Larg_ext − 2 × e_parede)`.
+> 3. **Desconto de Interseções em "T" e "X" (Divisórias Internas):** Todas as paredes internas DEVEM ser medidas estritamente pelo **vão livre entre faces** (face interna a face interna de alvenaria ou pilares). A espessura da parede contínua interceptada (`e_parede = 0,14m`) DEVE ser integralmente descontada em cada nó de junção, sendo terminantemente proibido somar extensões de eixo a eixo ou por faces externas sem deduzir os nós.
+> 4. **Critério para Revestimentos e Pinturas:** Como os revestimentos de argamassa e pintura cobrem apenas as faces aparentes dos cômodos, as áreas internas dos nós de interseção e amarrações entre blocos NUNCA devem receber dupla camada de revestimento.
 
 **Pintura Externa da Fachada (Perímetro Bruto da Fachada):**
 ```
@@ -124,9 +136,11 @@ A_final = A_líquida × (1 + Taxa de Perda)
 ### 1.4 Métodos de Quantificação de Alvenaria: Paramétrico (Sem Paginação) vs. Executivo (Com Paginação)
 
 > ⚠️ **REGRAS DE MATURIDADE DO PROJETO:** O PMO Virtual deve identificar a fase do projeto antes de iniciar o levantamento de alvenaria.
+> 
+> 🛑 **ALERTA ABSOLUTO — PROJETO EXECUTIVO NÃO ADMITE ESTIMATIVAS:** Se existirem pranchas de arquitetura e desenhos executivos fornecidos, é **TERMINANTEMENTE VEDADO** usar estimativas paramétricas. Havendo omissão de cotas ou detalhes no desenho, o item **NÃO DEVE SER LEVANTADO**, registrando-se formalmente a observação de falta de informação no desenho na memória de cálculo e abrindo-se RFI.
 
-#### 🅰️ FASE 1: Orçamento Preliminar / Sem Paginação (Método Paramétrico por m²)
-Quando o projeto estrutural paginado **AINDA NÃO EXISTE** (fase de estudo de viabilidade, anteprojeto ou concorrência), utiliza-se o modelo paramétrico por m² com estimativa de insumos estruturais:
+#### 🅰️ FASE 1: Estudo Preliminar / Viabilidade (SEM PROJETO EXECUTIVO APENAS)
+Quando o projeto estrutural e de arquitetura executivo **AINDA NÃO EXISTEM** (fase inicial de estudo de viabilidade ou EVTE puro, com autorização expressa do cliente para estimativa preliminar):
 
 1. **Dupla Visão de Vãos (MAT vs. MDO):**
    - `MAT (Desconto Físico 100%):` Subtrai a área real total de portas e janelas para compra exata de blocos.
@@ -245,6 +259,76 @@ As colunas dos ambientes (`PLAN01`, `PLAN02`, `PLAN04`...) são somadas automati
 
 ---
 
+### 1.7 Protocolo de Registro de Omissão de Desenho e Padrão de Observação na Memória
+
+Sempre que uma informação necessária para a quantificação não estiver expressa nas pranchas (ex: falta de cota de peitoril, acabamento não especificado no memorial de acabamentos, falta de corte para altura de forro/platibanda):
+
+1. **Procedimento Técnico Imediato:**
+   - **NÃO chutar nem arbitrar dimensões.**
+   - O item não recebe quantidade fictícia (quantidade permanece `0` ou `PENDENTE`).
+2. **Modelo Obrigatório de Observação na Memória de Cálculo:**
+   ```text
+   > ⚠️ OBSERVAÇÃO DE AUDITORIA — ITEM NÃO LEVANTADO POR FALTA DE INFORMAÇÃO NO DESENHO:
+   > - Serviço/Elemento: [Ex: Rodapé em Porcelanato 10cm / Peitoril em Granito]
+   > - Ambiente / Localização: [Ex: Guarita Térreo / CIA T-001-GUA]
+   > - Prancha de Referência Analisada: [Ex: Prancha AÇU-3.DES-2.3100-15-EGS-018 Rev 01]
+   > - Motivo da Não Quantificação: Cota de vão e espessura do peitoril não indicadas na prancha de esquadrias nem no corte longitudinal.
+   > - Ação Requerida: Emissão de RFI (Pedido de Informação) nº [XX] para definição pelo projetista. O item será incorporado na revisão orçamentária após emissão de prancha revisada.
+   ```
+
+---
+
+### 1.8 Algoritmo de Desmembramento Obrigatório de Alvenaria em SKUs Comerciais (B144, B142, C144) e Insumos Estruturais
+
+> 🛑 **PROIBIÇÃO ABSOLUTA DE "BLOCO GENÉRICO":**  
+> É expressamente proibido orçar alvenaria de blocos de concreto como um item monolítico de "bloco 14x19x39cm". Uma obra que compra apenas blocos inteiros sofre desperdício catastrófico por quebra manual de blocos em cantos e vãos, ou paralisa por falta de canaletas para vergas e contravergas.  
+> O quantitativo de alvenaria DEVE ser desmembrado nos seguintes SKUs físicos:
+
+1. **Blocos Canaleta Inteiros (C144: 14×19×39cm ou C194: 19×19×39cm):**  
+   Calculados pela extensão linear total de **Vergas** (portas e janelas), **Contravergas** (janelas) e **Cintas de Amarração**:
+   ```text
+   L_vergas_portas = Σ (Largura_porta + 2 × 0,20m)
+   L_vergas_janelas = Σ (Largura_janela + 2 × 0,20m)
+   L_contravergas_janelas = Σ (Largura_janela + 2 × 0,20m)
+   L_cintas_amarração = Extensão linear de cintas indicadas em projeto
+   L_canaleta_total = L_vergas_portas + L_vergas_janelas + L_contravergas_janelas + L_cintas_amarração
+   N_canaletas_C144 = Ceil( L_canaleta_total / 0,40m ) × 1,05
+   ```
+2. **Graute Fino para Preenchimento de Canaletas (m³):**  
+   Volume interno da calha das canaletas preenchidas (`A_calha ≈ 0,09m × 0,14m = 0,0126 m²`):
+   ```text
+   V_graute = L_canaleta_total × 0,0126 m² × 1,05
+   ```
+3. **Armadura CA-50 de Vergas e Contravergas (kg e barras 12m):**  
+   2 barras longitudinais CA-50 Ø8,0mm por canaleta:
+   ```text
+   L_aço_canaleta = L_canaleta_total × 2 × 1,05
+   N_barras_12m = Ceil( L_aço_canaleta / 12,0m )
+   Peso_aço_canaleta = L_aço_canaleta × 0,395 kg/m
+   ```
+4. **Meios Blocos (B142: 14×19×19cm ou B192: 19×19×19cm):**  
+   Utilizados na amarração vertical de requadros de portas e janelas (1 meio bloco a cada 2 fiadas em cada ombreira) e em cantos/encontros em T sem corte:
+   ```text
+   N_meios_portas = Σ [ Floor( H_porta / 0,40m ) × 2 ombreiras ]
+   N_meios_janelas = Σ [ Floor( H_janela / 0,40m ) × 2 ombreiras ]
+   N_meios_cantos = N_encontros_L_T × Floor( H_parede / 0,40m )
+   N_meios_blocos_B142 = (N_meios_portas + N_meios_janelas + N_meios_cantos) × 1,05
+   ```
+5. **Blocos Inteiros Correntes (B144: 14×19×39cm ou B194: 19×19×39cm):**  
+   Dedução direta da equivalência de área das canaletas e meios blocos em relação ao total de blocos equivalentes da parede:
+   ```text
+   N_blocos_total_equivalente = A_alvenaria_líquida × 12,5 blocos/m²
+   N_blocos_inteiros_B144 = [ N_blocos_total_equivalente − N_canaletas_C144 − (N_meios_blocos_B142 / 2) ] × 1,05
+   ```
+6. **Argamassa de Assentamento dos Blocos (m³ ou sacos de cimento/cal):**  
+   Consumo normativo: 0,018 m³ de argamassa mista 1:2:8 por m² de alvenaria:
+   ```text
+   V_argamassa_assent = A_alvenaria_líquida × 0,018 m³/m² × 1,05
+   Cimento_assentamento = A_alvenaria_líquida × 5,2 kg/m² × 1,05 (sacos 50kg)
+   Cal_hidratada = A_alvenaria_líquida × 1,8 kg/m² × 1,05 (sacos 20kg)
+   Areia_média = A_alvenaria_líquida × 0,022 m³/m² × 1,05 (m³)
+   ```
+
 ---
 
 ## 📐 2. Pisos, Contrapisos e Revestimentos de Piso
@@ -352,6 +436,280 @@ Onde θ = inclinação do plano em graus
    - Verga (Topo do Vão): L_verga = (Largura + 2 × 0,20m) × Qtd_Total
    - Contraverga (Base da Janela): L_contraverga = (Largura + 2 × 0,20m) × Qtd_Janelas
 ```
+
+### 5.3 Algoritmo Matemático de Derivação Automática de Miudezas, Fixações e Acessórios de Arquitetura (Kits de Montagem 360°)
+
+> 🛑 **PROIBIÇÃO DE ORÇAMENTOS SINTÉTICOS:** Conforme a [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md), é terminantemente vedado orçar esquadrias, revestimentos, pinturas ou coberturas apenas por blocos agregados (ex: "conjuntos completos", "área global de pintura") omitindo parafusos, dobradiças, fechaduras, lixas, seladores, espaçadores, argamassas colantes, espumas expansivas, telas de amarração e insumos de fixação. Toda obra requer suprimentos granulares para não paralisar frentes de serviço.
+> 
+> As miudezas e kits de montagem **DEVEM ser calculados automaticamente por derivação matemática direta** dos elementos principais da arquitetura:
+
+#### A. Kit Esquadrias (Portas de Madeira/Alumínio e Janelas)
+1. **Dobradiças em Aço Inox / Zincado 3 ½" × 3" c/ Parafusos (unid):**  
+   Portas de abrir de 1 folha utilizam 3 dobradiças; portas de folha dupla utilizam 6 dobradiças (3 por folha):
+   ```text
+   N_dobradiças = Σ (3 × N_folhas_abrir) × 1,05
+   ```
+2. **Fechaduras Completas (Máquina + Cilindro/Chaves + Maçanetas + Rosetas/Espelhos - unid):**  
+   1 conjunto completo por porta, diferenciando tipologia (Externa com cilindro, Interna chave gorge ou WC tranqueta livre/ocupado):
+   ```text
+   N_fechaduras = N_portas_total
+   ```
+3. **Batedores de Porta de Piso c/ Amortecedor em Inox (unid):**  
+   1 batedor por folha de porta para proteção de alvenarias e marcenarias:
+   ```text
+   N_batedores = N_folhas_total
+   ```
+4. **Espuma de Poliuretano Expansiva 750ml para Fixação de Marcos/Batentes (tubos):**  
+   Fixação, isolamento termoacústico e preenchimento de folgas entre alvenaria e batente de porta (1 tubo rende a instalação de 2 a 3 marcos):
+   ```text
+   N_tubos_PU = Ceil( N_portas / 2,5 ) × 1,05
+   ```
+5. **Parafusos e Buchas S8 para Fixação de Batentes e Contramarcos (unid):**  
+   8 pontos de fixação mecânica por porta (4 por ombreira):
+   ```text
+   N_parafusos_marco = N_portas × 8 × 1,05
+   ```
+6. **Pregos de Aço sem Cabeça 12×12 ou 10×10 para Guarnições/Alizares (unid ou kg):**  
+   Fixação dos alizares de acabamento nos batentes (20 pregos por vão de porta):
+   ```text
+   N_pregos_alizar = N_portas × 20 × 1,05
+   ```
+7. **Cola Branca PVA D3 para Madeira (frascos 500g):**  
+   Colagem e travamento das meias-esquadrias (cortes em 45°) dos alizares (1 frasco a cada 8 portas):
+   ```text
+   N_frascos_cola = Ceil( N_portas / 8,0 ) × 1,05
+   ```
+8. **Selante PU 40 / Silicone Neutro para Calafetação Perimétrica de Caixilhos (tubos 310ml):**  
+   Vedação hidrófuga em todo o contorno perimétrico externo de janelas e portas externas contra infiltração pluvial (1 cartucho rende ~10 metros lineares de junta 5×5mm):
+   ```text
+   Perímetro_caixilhos_ext = Σ [ 2 × (Largura + Altura) ] das esquadrias externas
+   N_tubos_selante = Ceil( Perímetro_caixilhos_ext / 10,0m ) × 1,05
+   ```
+
+#### B. Kit Pintura, Regularização e Proteção de Superfícies
+1. **Selador Acrílico Base Água (L ou latas 18L):**  
+   Aplicação obrigatória como fundo selador sobre reboco novo ou alvenaria bruta antes da massa/tinta (consumo normativo: 0,10 L/m²):
+   ```text
+   V_selador = A_parede_nova × 0,10 L/m²
+   N_latas_selador = Ceil( V_selador / 18,0L ) × 1,05
+   ```
+2. **Fundo Preparador de Paredes (L ou latas 18L):**  
+   Aplicação em superfícies calcinadas, gesso liso ou drywall para aglutinar partículas e uniformizar absorção (consumo normativo: 0,10 L/m²):
+   ```text
+   V_fundo_prep = (A_gesso_liso + A_drywall) × 0,10 L/m²
+   N_latas_fundo_prep = Ceil( V_fundo_prep / 18,0L ) × 1,05
+   ```
+3. **Massa Corrida PVA (Interna Seca) ou Massa Acrílica (Externa / Áreas Úmidas - kg ou latas 25kg):**  
+   Regularização para pintura lisa acetinada em 2 demãos (consumo médio: 0,90 kg/m² para PVA; 1,20 kg/m² para Acrílica):
+   ```text
+   Massa_total = A_líquida_massa × Consumo_específico (kg/m²)
+   N_latas_massa = Ceil( Massa_total / 25,0kg ) × 1,05
+   ```
+4. **Lixas para Parede / Massa (folhas):**  
+   - **Lixa Grossa (Grão 80/100):** Quebra de arestas e grãos do reboco antes do selador (consumo: 0,05 folha/m²).  
+   - **Lixa Fina (Grão 150/220):** Lixamento entre demãos de massa corrida e acabamento final (consumo: 0,10 folha/m²):
+   ```text
+   N_folhas_lixa_grossa = Ceil( A_reboco × 0,05 ) × 1,05
+   N_folhas_lixa_fina = Ceil( A_massa_corrida × 0,10 ) × 1,05
+   ```
+5. **Fita Crepe 24mm e 48mm × 50m para Isolamento e Pintura (rolos):**  
+   Proteção de esquadrias, vidros, rodapés e peitoris contra respingos de tinta (1 rolo a cada 50 metros lineares protegidos):
+   ```text
+   L_proteção = Perímetro_rodapé + Perímetro_esquadrias + Perímetro_peitoris
+   N_rolos_crepe = Ceil( L_proteção / 50,0m ) × 1,05
+   ```
+6. **Lona Plástica Preta / Transparente para Proteção de Pisos (bobinas 100m²):**  
+   Forração de 100% dos pisos acabados durante os serviços de emboço, gesso e pintura:
+   ```text
+   N_bobinas_lona = Ceil( A_piso_útil / 100,0m² ) × 1,05
+   ```
+7. **Solvente / Aguarrás Mineral (litros):**  
+   Diluição de tintas esmalte sintético em portas e estruturas metálicas e limpeza de ferramentas (1 litro a cada 10 litros de esmalte):
+   ```text
+   V_aguarrás = Ceil( V_esmalte_sintético / 10,0L )
+   ```
+
+#### C. Kit Pisos, Contrapisos e Revestimentos Cerâmicos
+1. **Argamassa Colante / Cimentcola (sacos 20kg):**  
+   - Tipo AC-I (áreas secas internas): 5,0 kg/m² simples.  
+   - Tipo AC-II (áreas molhadas/externas): 5,0 kg/m² simples.  
+   - Tipo AC-III (porcelanatos grandes formatos ≥ 60×60cm ou fachadas - Dupla Colagem obrigatória): 10,0 kg/m²:
+   ```text
+   Peso_cimentcola = Σ [ A_revest_k × Consumo_k (5 ou 10 kg/m²) ]
+   N_sacos_cimentcola = Ceil( Peso_cimentcola / 20,0kg ) × 1,05
+   ```
+2. **Rejunte Cimentício / Acrílico / Epóxi (sacos 1kg ou 5kg):**  
+   Conforme especificação e tamanho de junta (consumo médio: 0,25 kg/m² para porcelanato junta 2mm; 0,50 kg/m² para cerâmica junta 3mm):
+   ```text
+   Peso_rejunte = Σ [ A_revest_k × Consumo_rejunte_k ]
+   N_sacos_rejunte = Ceil( Peso_rejunte / 5,0kg ) × 1,05
+   ```
+3. **Espaçadores / Cruzetas Plásticas (sacos com 100 unid):**  
+   Alinhamento de juntas de assentamento de pisos e azulejos (consumo normativo: 6 un/m²):
+   ```text
+   N_sacos_espaçador = Ceil( (A_piso_líq + A_azulejo_líq) × 6 / 100 )
+   ```
+4. **Clips e Cunhas Niveladoras para Porcelanatos Retificados (sacos com 100 unid):**  
+   Nivelamento de peças retificadas (formato ≥ 60×60cm: 4 clips por placa; cunhas reutilizáveis a 30% do total de clips para giro de frente):
+   ```text
+   N_peças = A_piso_porcelanato / A_peça
+   N_sacos_clips = Ceil( N_peças × 4 / 100 )
+   N_sacos_cunhas = Ceil( (N_peças × 4 × 0,30) / 100 )
+   ```
+5. **Soleiras e Peitoris em Granito/Mármore (metros lineares):**  
+   - Soleiras: transição de pisos sob portas (`L_soleira = Σ Largura_portas`).  
+   - Baguetes de Box: contenção de água no box do banheiro (`L_baguete = Largura_box`).  
+   - Peitoris: arremate inferior externo de janelas com pingadeira (`L_peitoril = Σ Largura_janelas + 0,10m`).
+
+#### D. Kit Impermeabilização e Estanqueidade
+1. **Primer Asfáltico / Emulsão Asfáltica de Imprimação (litros ou baldes 18L):**  
+   Pintura de aderência prévia para aplicação de mantas asfálticas (consumo normativo: 0,40 L/m²):
+   ```text
+   V_primer = A_impermeab_manta × 0,40 L/m²
+   N_baldes_primer = Ceil( V_primer / 18,0L ) × 1,05
+   ```
+2. **Tela de Poliéster / Véu de Fibra de Vidro para Reforço Estrutural (m² ou rolos 50m²):**  
+   Reforço elástico de cantos, meias-canas, ralos e juntas de dilatação em impermeabilização líquida polimérica ou asfáltica (consumo: 1,10 m²/m² em áreas críticas):
+   ```text
+   A_tela_reforço = A_impermeab_líquida × 1,10
+   N_rolos_tela = Ceil( A_tela_reforço / 50,0m² )
+   ```
+3. **Fita Asfáltica Autoadesiva Aluminizada (Fita Multiuso 10cm/20cm - rolos 10m):**  
+   Arremate de vedação estanque em calhas, rufos, tubulações passantes e transpasses de platibanda:
+   ```text
+   L_arremates = Σ (Perímetro de ralos passantes + juntas de calhas/rufos)
+   N_rolos_fita_asfáltica = Ceil( L_arremates / 10,0m ) × 1,05
+   ```
+4. **Gás GLP em Botijão P-13 / P-45 para Maçarico de Manta Asfáltica (unid):**  
+   Consumo de combustível térmico para soldagem de manta asfáltica armada (rendimento: 1 botijão P-13 para cada ~50 m² de manta instalada):
+   ```text
+   N_botijões_P13 = Ceil( A_manta_asfáltica / 50,0m² )
+   ```
+5. **Camada Separadora / Geotêxtil Não-Tecido (tipo Bidim RT-08 ou filme de polietileno - m²):**  
+   Camada de dessolidarização entre a manta impermeabilizante e o contrapiso de proteção mecânica (consumo: 1,10 m²/m²):
+   ```text
+   A_separadora = A_manta_horizontal × 1,10
+   ```
+
+#### E. Kit Alvenaria (Amarração Pilar-Parede, Encunhamento e Aditivos)
+1. **Telas Metálicas Eletrosoldadas Galvanizadas 15×50cm de Amarração (unid):**  
+   Travamento mecânico anti-fissura entre pilares de concreto armado e alvenaria de blocos, instaladas a cada 2 fiadas (a cada 0,40m de altura) em todas as interfaces pilar-parede:
+   ```text
+   N_fiadas_tela = Floor( H_livre / 0,40m )
+   N_telas_amarração = N_interfaces_pilar_alvenaria × N_fiadas_tela × 1,05
+   ```
+2. **Pinos de Aço c/ Arruela Cônica e Cartuchos de Festim para Finca-Pinos (unid):**  
+   2 pinos de aço e 2 disparos de cartucho festim por tela de amarração:
+   ```text
+   N_pinos_finca = N_telas_amarração × 2 × 1,05
+   N_cartuchos_festim = N_pinos_finca
+   ```
+3. **Encunhamento Flexível no Topo da Alvenaria (m):**  
+   Fechamento da folga de deformação no encontro do topo da alvenaria com o fundo de vigas/lajes (usando argamassa com aditivo expansor ou espuma adesiva estrutural para alvenaria):
+   ```text
+   L_encunhamento = Comprimento_total_paredes_topo (m)
+   ```
+4. **Aditivo Plastificante e Adesivo para Argamassas (tipo Bianco / Vedalit - baldes 18L):**  
+   Melhorador de aderência para chapiscos rolados e retenção de água de emboços (consumo médio: 0,20 L/m² de chapisco):
+   ```text
+   V_adesivo = A_chapisco × 0,20 L/m²
+   N_baldes_adesivo = Ceil( V_adesivo / 18,0L ) × 1,05
+   ```
+
+#### F. Kit Cobertura (Telhas Sandwich, Terças, Calhas e Rufos)
+1. **Parafusos Autobrocantes 12×1" ou 12×2" c/ Arruela EPDM/Neoprene (unid):**  
+   Fixação das telhas termoacústicas trapezoidais nas terças metálicas (densidade média: 4,5 parafusos por m² de área real de cobertura):
+   ```text
+   N_autobrocantes = Ceil( A_real_cobertura × 4,5 ) × 1,05
+   ```
+2. **Parafusos de Costura (Stitch) 10×3/4" c/ Arruela EPDM (unid):**  
+   Fixação e travamento da sobreposição lateral longitudinal das telhas (espaçados a cada 0,50 m na emenda):
+   ```text
+   N_costura = Ceil( L_terças × N_linhas_sobreposição / 0,50m ) × 1,05
+   ```
+3. **Fita de Vedação Butílica Autoadesiva 15mm (rolos de 10m):**  
+   Estanqueidade das sobreposições longitudinais de telhas e transpasse de calhas e rufos:
+   ```text
+   L_emendas = Comprimento_calhas + (N_linhas_telha × Extensão_transpasse)
+   N_rolos_butílica = Ceil( L_emendas / 10,0m ) × 1,05
+   ```
+4. **Chumbadores / Parabolts CBA 3/8" × 3" para Fixação de Terças Metálicas (unid):**  
+   Fixação das bases das terças de perfil U nas muretas escalonadas de alvenaria/concreto (2 por ponto de apoio):
+   ```text
+   N_parabolts = N_linhas_terças × N_muretas_apoio × 2 × 1,05
+   ```
+5. **Rebites de Repuxo em Alumínio 4,0×10mm para Calhas e Rufos (cento/milheiro):**  
+   União mecânica das emendas sobrepostas de chapas galvanizadas de calhas e rufos (10 rebites por metro de emenda):
+   ```text
+   N_rebites = Ceil( N_emendas_calha_rufo × 10 ) × 1,05
+   ```
+6. **Selante PU 40 / Mastique de Calha para Calafetação (tubos 310ml):**  
+   Vedação hidrófuga nas costuras rebitadas e junções de calhas e rufos (1 tubo a cada 5 metros lineares de junta):
+   ```text
+   N_tubos_selante_calha = Ceil( L_emendas_calha_rufo / 5,0m ) × 1,05
+   ```
+
+#### G. Kit Louças e Metais (Conexões e Acessórios Hidráulicos de Arquitetura)
+1. **Engates Flexíveis em Aço Inox Trançado 1/2" × 40cm (unid):**  
+   Alimentação de água fria/quente para lavatórios, bacias com caixa acoplada, pias de cozinha e bebedouros:
+   ```text
+   N_engates = N_bacias_cx_acoplada + (N_torneiras_lavatório) + (N_cubas_cozinha)
+   ```
+2. **Sifões Universais Sanfonados em Polipropileno / Metal Cromado (unid):**  
+   Escoamento de águas servidas de cubas, lavatórios, tanques e mictórios:
+   ```text
+   N_sifões = N_cubas + N_lavatórios + N_tanques + N_mictórios
+   ```
+3. **Válvulas de Escoamento (Click / Americana / Comum - unid):**  
+   1 válvula por ralo de cuba de lavatório, pia ou tanque:
+   ```text
+   N_válvulas = N_sifões
+   ```
+4. **Anel de Vedação de Cera com Guia Plástica para Bacia Sanitária (unid):**  
+   Vedação hermética anti-odor entre a saída da bacia e o tubo de esgoto de 100mm:
+   ```text
+   N_anéis_vedação = N_bacias_sanitárias_total
+   ```
+5. **Parafusos e Buchas em Latão / Inox B10/B12 para Fixação de Bacias e Lavatórios (pares):**  
+   Fixação no contrapiso/parede resistente à corrosão por urina e umidade (1 par por bacia e por lavatório com coluna):
+   ```text
+   N_pares_parafusos_wc = N_bacias + N_lavatórios
+   ```
+6. **Fita Veda Rosca PTFE 18mm × 25m (rolos):**  
+   Vedação de roscas macho de engates, torneiras e niples:
+   ```text
+   N_rolos_veda_rosca = Ceil( (N_torneiras + N_engates + N_registros) / 10 )
+   ```
+
+#### H. Kit Drywall e Forros de Gesso Acartonado (quando aplicável)
+1. **Parafusos Drywall Ponta Agulha GN 25 / GN 35 (cento/milheiro):**  
+   Fixação das placas de gesso acartonado nos perfis metálicos (consumo médio: 25 parafusos por m² de placa):
+   ```text
+   N_parafusos_GN = Ceil( A_placa_drywall × 25 ) × 1,05
+   ```
+2. **Parafusos Metal-Metal Ponta Broca LB 4,2×13mm (cento/milheiro):**  
+   Estruturação e união entre montantes verticais e guias horizontais (consumo: 6 parafusos por metro linear de montante):
+   ```text
+   N_parafusos_LB = Ceil( L_montantes × 6 ) × 1,05
+   ```
+3. **Fita de Papel Microperfurada ou Fita Telada de Fibra de Vidro (rolos 50m/150m):**  
+   Tratamento anti-trinca das juntas entre placas de gesso e forros (consumo: 1,50 metros lineares de fita por m² de drywall):
+   ```text
+   L_fita_drywall = A_drywall × 1,50 m/m²
+   N_rolos_fita_drywall = Ceil( L_fita_drywall / 50,0m ) × 1,05
+   ```
+4. **Massa Pronta para Tratamento de Juntas de Drywall (baldes 20kg):**  
+   Preenchimento e regularização das emendas com fita (consumo normativo: 0,50 kg/m² de placa):
+   ```text
+   Peso_massa_drywall = A_drywall × 0,50 kg/m²
+   N_baldes_massa_drywall = Ceil( Peso_massa_drywall / 20,0kg ) × 1,05
+   ```
+5. **Banda Acústica Autoadesiva em EVA (rolos 10m):**  
+   Isolamento acústico e estanqueidade sob as guias metálicas perimétricas no contato com piso, teto e paredes:
+   ```text
+   L_banda_acústica = Perímetro_guias_drywall
+   N_rolos_banda = Ceil( L_banda_acústica / 10,0m ) × 1,05
+   ```
 
 ---
 

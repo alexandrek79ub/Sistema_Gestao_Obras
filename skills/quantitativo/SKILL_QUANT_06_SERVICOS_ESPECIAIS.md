@@ -46,6 +46,12 @@
 - `Exaustores Axiais / Centrifugos de Banheiro (unid):` Renovadores de ar de exaustão em forro para ambientes sem janela.
 - `Dutos Flexíveis de Alumínio Isolado / Chapa Galvanizada (m ou m²):` Dutos de condução de ar exaurido até a fachada/ventilação externa c/ grelha veneziana de alumínio.
 
+### 3.3 Diretriz de Governança Técnica: Requisitos Mínimos de Projeto e Bloqueio Formal de HVAC
+> 🛑 **REGRA DE OURO CONTRA ESTIMATIVAS FICTÍCIAS DE CLIMATIZAÇÃO:**  
+> 1. **Separação de Escopo com a Elétrica:** Os pontos de alimentação de força (disjuntores bipolares de 25A, tomadas 20A ou caixas de espera embutidas na parede) pertencem estritamente à disciplina de Instalações Elétricas (SKILL 04).
+> 2. **Requisito Obrigatório de Projeto Executivo de HVAC:** Tubulações frigoríficas de cobre, drenos de condensado e os próprios aparelhos de ar-condicionado (Splits Hi-Wall, Cassete ou VRF) **SOMENTE PODEM SER QUANTIFICADOS se houver prancha executiva específica de climatização aprovada** (com cálculo de carga térmica em BTU/h e traçado geométrico cotado dos tubos de cobre até as condensadoras).
+> 3. **Proibição de Chute Paramétrico:** Se os equipamentos constarem apenas esquematicamente na planta de arquitetura sem projeto executivo de HVAC entregue pela projetista, **É TERMINANTEMENTE PROIBIDO CHUTAR METRAGENS DE COBRE OU MODELOS DE APARELHO**. O Agente deve registrar a tubulação frigorífica e os aparelhos como **BLOQUEADO / PENDÊNCIA TÉCNICA (RFI)**, mantendo a integridade auditável do orçamento.
+
 ---
 
 ## 4. Movimentação Vertical de Carga e Equipamentos de Canteiro

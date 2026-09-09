@@ -28,17 +28,44 @@ Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd C
 1.2.11;Arame Recozido BWG 18 para Amarrações de Superestrutura;Supraestrutura;132.60;kg;0.0;133.00;kg (133 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-057
 1.2.12;Espaçadores/Pastilhas Plásticas de Cobrimento 25mm/30mm;Supraestrutura;2850.00;unid;5.0;2993;unidades;AÇU-3.DES-2.3100-11-EGS-055/060
 1.2.13;Desmoldante Biodegradável para Fôrmas de Concreto;Supraestrutura;45.00;L;0.0;3;galões de 18L (54L);AÇU-3.DES-2.3100-11-EGS-055/060
-2.1.1;Alvenaria de Vedação Bloco Concreto 14x19x39cm;Arquitetura;1061.44;m²;5.0;13931;blocos (1114.5 m²);AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.1.A;Bloco Concreto Inteiro 14x19x39cm (B144) Corrente;Arquitetura;12733.0;unid;5.0;13370;blocos B144 (1069.6 m²);AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.1.B;Meio Bloco Concreto 14x19x19cm (B142) Amarrações;Arquitetura;508.0;unid;5.0;534;meios blocos B142 (21.4 m²);AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.1.C;Bloco Canaleta Concreto 14x19x39cm (C144) Vergas/Cintas;Arquitetura;281.0;unid;5.0;296;blocos C144 (118.4 m);AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.1.D;Graute Fino para Preenchimento de Canaletas;Arquitetura;1.42;m³;5.0;1.49;m³ (75 sacos 25kg);AÇU-3.DES-2.3100-15-EGS-015
+2.1.1.E;Armadura CA-50 Ø8,0mm Vergas e Contravergas;Arquitetura;224.80;m;5.0;20;barras 12m (93.2 kg);AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.1.F;Cimento CP II para Argamassa de Assentamento de Blocos;Arquitetura;5520.0;kg;5.0;116;sacos de 50kg;AÇU-3.DES-2.3100-15-EGS-015
+2.1.1.G;Cal Hidratada CH-I para Argamassa de Assentamento;Arquitetura;1910.0;kg;5.0;101;sacos de 20kg;AÇU-3.DES-2.3100-15-EGS-015
+2.1.1.H;Areia Média Lavada para Argamassa de Assentamento;Arquitetura;23.35;m³;5.0;24.5;m³;AÇU-3.DES-2.3100-15-EGS-015
 2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016
 2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016
 2.1.4;Contrapiso de Regularização e=3cm;Arquitetura;368.40;m²;5.0;386.82;m² (11.6 m³ argamassa);AÇU-3.DES-2.3100-15-EGS-015/018
 2.1.5;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.40;m²;10.0;282;caixas (405.2 m²);AÇU-3.DES-2.3100-15-EGS-015/016
-2.1.6;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018
+2.1.5.A;Argamassa Colante Cimentcola AC-III (Dupla Colagem);Arquitetura;3684.0;kg;5.0;194;sacos de 20kg;AÇU-3.DES-2.3100-15-EGS-015/016
+2.1.5.B;Rejunte para Porcelanato Junta 2mm;Arquitetura;92.1;kg;5.0;20;sacos de 5kg;AÇU-3.DES-2.3100-15-EGS-015/016
+2.1.6;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018
+2.1.6.A;Argamassa Colante Cimentcola AC-II (Parede WCs);Arquitetura;421.0;kg;5.0;23;sacos de 20kg;AÇU-3.DES-2.3100-15-EGS-018
+2.1.6.B;Rejunte para Cerâmica Junta 3mm;Arquitetura;25.3;kg;5.0;6;sacos de 5kg;AÇU-3.DES-2.3100-15-EGS-018
 2.1.7;Rodapé Porcelanato h=10cm;Arquitetura;384.20;m;10.0;422.62;m;AÇU-3.DES-2.3100-15-EGS-015/018
 2.1.8;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019
+2.1.8.A;Selador Acrílico Base Água para Reboco Novo;Arquitetura;212.3;L;5.0;13;latas 18L;AÇU-3.DES-2.3100-15-EGS-015/019
+2.1.8.B;Lixa Grossa para Reboco (Grão 80/100);Arquitetura;106.0;unid;5.0;112;folhas;AÇU-3.DES-2.3100-15-EGS-015
+2.1.8.C;Lixa Fina para Massa/Gesso (Grão 150/220);Arquitetura;249.0;unid;5.0;262;folhas;AÇU-3.DES-2.3100-15-EGS-015/019
 2.1.9;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24;conjuntos;AÇU-3.DES-2.3100-15-EGS-018
 2.1.10;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18;conjuntos;AÇU-3.DES-2.3100-15-EGS-018
 2.1.11;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.20;m²;10.0;92.62;m² (19 caixas 18kg);AÇU-3.DES-2.3100-15-EGS-015/016
+2.1.12;Dobradiças 3 ½" × 3" em Aço Inox c/ Parafusos;Arquitetura;78.0;unid;5.0;82;unidades;AÇU-3.DES-2.3100-15-EGS-018
+2.1.13;Fechaduras Completas c/ Maçaneta e Roseta;Arquitetura;24.0;unid;0.0;24;conjuntos completos;AÇU-3.DES-2.3100-15-EGS-018
+2.1.14;Batedores de Porta para Piso c/ Amortecedor Inox;Arquitetura;26.0;unid;0.0;26;unidades;AÇU-3.DES-2.3100-15-EGS-018
+2.1.15;Espuma de Poliuretano Expansiva 750ml para Marcos;Arquitetura;9.6;tubos;5.0;11;tubos 750ml;AÇU-3.DES-2.3100-15-EGS-018
+2.1.16;Parafusos e Buchas S8 para Fixação de Batentes;Arquitetura;192.0;unid;5.0;202;unidades (3 cx 100);AÇU-3.DES-2.3100-15-EGS-018
+2.1.17;Selante PU 40 / Silicone Neutro para Caixilhos Externos;Arquitetura;124.70;m;5.0;14;tubos 310ml;AÇU-3.DES-2.3100-15-EGS-018
+2.1.18;Telas Metálicas Eletrosoldadas Galvanizadas 15×50cm Amarração;Arquitetura;336.0;unid;5.0;353;unidades;AÇU-3.DES-2.3100-15-EGS-015
+2.1.19;Pinos de Aço c/ Arruela Cônica para Finca-Pinos à Pólvora;Arquitetura;706.0;unid;5.0;742;unidades (8 cx 100);AÇU-3.DES-2.3100-15-EGS-015
+2.1.20;Espaçadores / Cruzetas Plásticas para Juntas;Arquitetura;2715.0;unid;0.0;28;sacos c/ 100 un;AÇU-3.DES-2.3100-15-EGS-015/018
+2.1.21;Clips Niveladores para Porcelanato 60×60cm;Arquitetura;4096.0;unid;0.0;41;sacos c/ 100 un;AÇU-3.DES-2.3100-15-EGS-015
+2.1.22;Cunhas Niveladoras Reutilizáveis de Porcelanato;Arquitetura;1229.0;unid;0.0;13;sacos c/ 100 un;AÇU-3.DES-2.3100-15-EGS-015
+2.1.23;Fita Crepe 24mm × 50m para Pintura e Isolamento;Arquitetura;604.0;m;5.0;13;rolos 50m;AÇU-3.DES-2.3100-15-EGS-015/019
+2.1.24;Lona Plástica Preta para Proteção de Pisos;Arquitetura;368.40;m²;5.0;4;bobinas 100m²;AÇU-3.DES-2.3100-15-EGS-015
 2.2.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;419.42;m² (70 telhas de 6m);AÇU-3.DES-2.3100-15-EGS-017
 2.2.2;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.00;m;5.0;28;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017
 2.2.3;Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm);Cobertura;45.24;m²;5.0;594;blocos 9x19x39cm;AÇU-3.DES-2.3100-15-EGS-017
@@ -49,69 +76,56 @@ Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd C
 2.2.8;Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m);Cobertura;31.98;m²;5.0;420;blocos 14x19x39cm;AÇU-3.DES-2.3100-15-EGS-017
 2.2.9;Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda;Cobertura;74.62;m²;5.0;78.35;m² (16 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-017
 2.2.10;Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda;Cobertura;74.62;m²;5.0;2;latas 18L (78.35 m²);AÇU-3.DES-2.3100-15-EGS-017/019
-3.1.1;Cabo Cobre Flexível 750V 2,5mm² (Iluminação/TUG);Elétrica;1850.0;m;10.0;21;rolos de 100m (2035m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.2;Cabo Cobre Flexível 750V 4,0mm² (Tomadas TUG/TUE);Elétrica;640.0;m;10.0;8;rolos de 100m (704m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.3;Cabo Cobre Flexível 750V 6,0mm² (Ar Condicionado);Elétrica;420.0;m;10.0;5;rolos de 100m (462m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.4;Cabo Cobre Sintenax 0,6/1kV 35mm² (Alimentador);Elétrica;120.0;m;5.0;126.0;m;AÇU-3.DES-2.3100-16-EGS-013
-3.1.5;"Eletroduto Rígido PVC Ø3/4"" (25mm) c/ Conexões";Elétrica;480.0;m;10.0;176;varas de 3m (528m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.6;"Eletroduto Rígido PVC Ø1"" (32mm) c/ Conexões";Elétrica;210.0;m;10.0;77;varas de 3m (231m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.7;"Caixa de Embutir 4x2"" PVC Amarela para Parede";Elétrica;184.0;unid;5.0;194;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.8;"Caixa de Embutir 4x4"" PVC Amarela para Parede";Elétrica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.9;"Caixa Octogonal 3x3"" PVC para Teto";Elétrica;68.0;unid;5.0;72;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.10;"Conjunto Suporte + Placa 4x2"" c/ Parafusos";Elétrica;184.0;unid;5.0;194;conjuntos;AÇU-3.DES-2.3100-16-EGS-013
-3.1.11;Módulo de Tomada 2P+T 10A / 250V (Branca);Elétrica;110.0;unid;5.0;116;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.12;Módulo de Tomada 2P+T 20A / 250V (Vermelha TUE);Elétrica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.13;Módulo Interruptor Simples 10A;Elétrica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.14;Módulo Interruptor Paralelo (Three-Way) 10A;Elétrica;8.0;unid;5.0;9;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.15;Cabo UTP Cat6 LSZH 4 Pares (Dados/Voz);Telecom;1450.0;m;10.0;16;rolos de 100m (1600m);AÇU-3.DES-2.3100-16-EGS-013
-3.1.16;Módulo Tomada RJ45 Cat6 Keystone;Telecom;36.0;unid;5.0;38;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.17;"Rack Metalico Telecom 19"" 12U de Parede";Telecom;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013
-3.1.18;"Patch Panel 24 Portas Cat6 19""";Telecom;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.19;Switch Gigabit Ethernet 24 Portas PoE;Telecom;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013
-3.1.20;Quadro Geral de Distribuição QDG 150A Trifásico;Elétrica;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013
-3.1.21;Quadro de Distribuição de Luz QDF 24 Elementos embutir;Elétrica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.22;Disjuntor Geral Caixa Moldada 150A Trifásico;Elétrica;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013
-3.1.23;Disjuntor Termomagnético DIN Monopolar 10A/16A/20A;Elétrica;28.0;unid;5.0;30;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.24;Disjuntor Termomagnético DIN Bipolar/Tripolar 25A/32A;Elétrica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.25;Interruptor Diferencial Residual DR Tetrapolar 40A 30mA;Elétrica;4.0;unid;0.0;4;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.26;Dispositivo de Proteção contra Surtos DPS 20kA 275V;Elétrica;8.0;unid;0.0;8;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.27;Painel LED Embutir 60x60cm 40W 4000K;Elétrica;68.0;unid;5.0;72;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.28;Luminária Hermética LED 2x18W IP65 (Áreas Técnicas);Elétrica;16.0;unid;5.0;17;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.29;Bloco Iluminação de Emergência LED 2x8W c/ Bateria;Elétrica;14.0;unid;0.0;14;unidades;AÇU-3.DES-2.3100-16-EGS-013
-3.1.30;"Haste de Aterramento Copperweld 3/4"" x 3,00m + Malha";Elétrica;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-16-EGS-013
-3.2.1;"Tubo PVC Soldável Água Fria Ø25mm (3/4"")";Hidráulica;180.0;m;10.0;33;varas de 6m (198m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.2;"Tubo PVC Soldável Água Fria Ø50mm (1.1/2"")";Hidráulica;95.0;m;10.0;18;varas de 6m (108m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.3;Tubo PVC Esgoto Série Normal Ø40mm;Hidráulica;64.0;m;10.0;12;varas de 6m (72m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.4;Tubo PVC Esgoto Série Normal Ø75mm;Hidráulica;42.0;m;10.0;8;varas de 6m (48m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.5;Tubo PVC Esgoto Série Normal Ø100mm;Hidráulica;140.0;m;10.0;26;varas de 6m (156m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.6;Tubo PVC Pluvial Série Reforçada Ø150mm;Hidráulica;110.0;m;10.0;21;varas de 6m (126m);AÇU-3.DES-2.3100-16-EGS-015
-3.2.7;Joelho 90º PVC Soldável Ø25mm;Hidráulica;86.0;unid;5.0;91;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.8;"Joelho 90º c/ Bucha de Latão Ø25mm x 1/2""";Hidráulica;32.0;unid;5.0;34;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.9;Joelho 90º PVC Soldável Ø50mm;Hidráulica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.10;Tê 90º PVC Soldável Ø25mm;Hidráulica;48.0;unid;5.0;51;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.11;Tê 90º Redução PVC Soldável Ø50x25mm;Hidráulica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.12;Curva de Transposição PVC Soldável Ø25mm;Hidráulica;14.0;unid;5.0;15;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.13;Joelho 90º PVC Esgoto Ø100mm;Hidráulica;36.0;unid;5.0;38;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.14;Joelho 45º PVC Esgoto Ø100mm;Hidráulica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.15;Junção 45º Y PVC Esgoto Ø100x50mm;Hidráulica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.16;Tê Sanitário 90º PVC Esgoto Ø100x100mm;Hidráulica;12.0;unid;5.0;13;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.17;"Registro de Gaveta Bruto c/ Canopla Cromada Ø25mm (3/4"")";Hidráulica;12.0;unid;0.0;12;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.18;"Registro de Gaveta Bruto c/ Canopla Cromada Ø50mm (1.1/2"")";Hidráulica;4.0;unid;0.0;4;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.19;Registro de Pressão c/ Canopla Cromada Ø20mm (Chuveiros);Hidráulica;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.20;Válvula de Retenção Vertical Ø50mm;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.21;Reservatório de Água Potável Polietileno 5.000 L c/ Tampa;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.22;Ralo Sifonado PVC 150x150x50mm Grelha Inox;Hidráulica;14.0;unid;0.0;14;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.23;Caixa de Gordura Pré-moldada Concreto 100L;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.24;Caixa de Inspeção Esgoto Concreto 60x60x60cm c/ Tampa;Hidráulica;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.25;Bacia Sanitária c/ Caixa Acoplada 3/6L e Assento;Hidráulica;10.0;unid;0.0;10;conjuntos;AÇU-3.DES-2.3100-16-EGS-015
-3.2.26;Lavatório Louça Branca c/ Torneira Automática de Mesa;Hidráulica;12.0;unid;0.0;12;conjuntos;AÇU-3.DES-2.3100-16-EGS-015
-3.2.27;Sifão Sanfonado Universal PVC c/ Adaptador;Hidráulica;14.0;unid;5.0;15;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.28;"Engate Flexível Inox 1/2"" 40cm";Hidráulica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.29;"Válvula de Escoamento Inox 7/8"" para Lavatório";Hidráulica;12.0;unid;5.0;13;unidades;AÇU-3.DES-2.3100-16-EGS-015
-3.2.30;Fita Veda-Rosca PTFE 18mm x 50m;Hidráulica;12.0;rolo;0.0;12;rolos;AÇU-3.DES-2.3100-16-EGS-015
-3.3.1;Aparelho Split Cassete 36.000 BTU/h Inverter R410A;HVAC;4.0;unid;0.0;4;conjuntos;AÇU-3.DES-2.3100-64-EGS-008
-3.3.2;Aparelho Split Hi-Wall 18.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-64-EGS-008
-3.3.3;Aparelho Split Hi-Wall 12.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-64-EGS-008
-3.3.4;"Tubulação Cobre Flexível Ø3/8""+Ø5/8"" c/ Isolamento";HVAC;180.0;m;10.0;198.0;m;AÇU-3.DES-2.3100-64-EGS-008
-3.3.5;Tubo PVC Condensado Ø25mm c/ Isolamento;HVAC;120.0;m;10.0;22;varas de 6m (132m);AÇU-3.DES-2.3100-64-EGS-008
-3.3.6;Exaustor Axial de Parede/Teto 150 m³/h;HVAC;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-64-EGS-008
+2.2.11;Parafusos Autobrocantes 12×1" c/ Arruela EPDM p/ Telhas;Cobertura;1715.8;unid;5.0;1802;unidades (19 cx 100);AÇU-3.DES-2.3100-15-EGS-017
+2.2.12;Parafusos de Costura 10×3/4" c/ Arruela EPDM p/ Telhas;Cobertura;364.0;unid;5.0;383;unidades (4 cx 100);AÇU-3.DES-2.3100-15-EGS-017
+2.2.13;Fita de Vedação Butílica Autoadesiva 15mm;Cobertura;122.0;m;5.0;13;rolos 10m;AÇU-3.DES-2.3100-15-EGS-017
+2.2.14;Chumbadores Parabolts CBA 3/8" × 3" p/ Terças Metálicas;Cobertura;60.0;unid;5.0;63;unidades;AÇU-3.DES-2.3100-15-EGS-017
+2.2.15;Selante PU 40 para Calafetação de Calhas e Rufos;Cobertura;26.0;m;5.0;6;tubos 310ml;AÇU-3.DES-2.3100-15-EGS-017
+04.01.01.A;Cabo Cobre EPR 0,6/1kV 25mm² - Fase;Elétrica;195.0;m;5.0;204.0;m (3 lances 68m);AÇU-3.DES-2.3100-16-EGS-013 / EGS-015
+04.01.01.B;Cabo Cobre EPR 0,6/1kV 25mm² - Neutro;Elétrica;65.0;m;5.0;68.0;m (1 lance 68m);AÇU-3.DES-2.3100-16-EGS-013 / EGS-015
+04.01.01.C;Cabo Cobre EPR 0,6/1kV 16mm² - Terra;Elétrica;65.0;m;5.0;68.0;m (1 lance 68m);AÇU-3.DES-2.3100-16-EGS-013 / EGS-015
+04.01.02.A;Cabo Cobre Flexível 750V 2,5mm² - Fase;Elétrica;629.78;m;10.0;7.0;rolos de 100m (700m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.02.B;Cabo Cobre Flexível 750V 2,5mm² - Neutro;Elétrica;596.56;m;10.0;7.0;rolos de 100m (700m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.02.C;Cabo Cobre Flexível 750V 2,5mm² - Terra;Elétrica;596.56;m;10.0;7.0;rolos de 100m (700m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.02.D;Cabo Cobre Flexível 750V 2,5mm² - Retorno;Elétrica;116.70;m;10.0;2.0;rolos de 100m (200m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.03.A;Cabo Cobre Flexível 750V 4,0mm² - Fases;Elétrica;237.30;m;10.0;3.0;rolos de 100m (300m);AÇU-3.DES-2.3100-16-EGS-013 / EGS-015
+04.01.03.B;Cabo Cobre Flexível 750V 4,0mm² - Terra;Elétrica;118.65;m;10.0;2.0;rolos de 100m (200m);AÇU-3.DES-2.3100-16-EGS-013 / EGS-015
+04.01.04;Eletroduto Rígido PVC Ø3/4" (25mm);Elétrica;563.20;m;10.0;207.0;varas de 3m (621m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.05;Eletroduto Rígido PVC Ø1" (32mm);Elétrica;210.79;m;10.0;78.0;varas de 3m (234m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.06.A;Caixa de Embutir 4"x2" em PVC Amarela (Paredes);Elétrica;122.0;unid;5.0;128.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.06.B;Caixa Octogonal 4"x4" em PVC (Teto Luminárias);Elétrica;98.0;unid;5.0;103.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.06.C;Caixa de Passagem 4"x4" em PVC (Derivação Troncos);Elétrica;16.0;unid;5.0;17.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.07;Quadro de Distribuição QL-204 (24/30 polos);Elétrica;1.0;cj;0.0;1.0;conjunto completo;AÇU-3.DES-2.3100-16-EGS-015
+04.01.08;Disjuntor Geral Tripolar DIN 100A;Elétrica;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-015
+04.01.09;Disjuntores Monopolares DIN 10A Curva C;Elétrica;5.0;unid;0.0;5.0;unidades;AÇU-3.DES-2.3100-16-EGS-015
+04.01.10;Disjuntores Monopolares DIN 16A Curva C;Elétrica;13.0;unid;0.0;13.0;unidades;AÇU-3.DES-2.3100-16-EGS-015
+04.01.11;Disjuntores Bipolares DIN 25A Curva C;Elétrica;5.0;unid;0.0;5.0;unidades;AÇU-3.DES-2.3100-16-EGS-015
+04.01.12;Módulo Diferencial Residual (DDR) 16A 30mA;Elétrica;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-015
+04.01.13;Dispositivo de Proteção contra Surtos DPS Classe II 40kA 275V;Elétrica;4.0;unid;0.0;4.0;unidades;AÇU-3.DES-2.3100-16-EGS-015
+04.01.14.A;Cordoalha de Cobre Nu 50mm² (Malha Captura SPDA);SPDA;330.77;m;5.0;4.0;rolos de 100m (400m);AÇU-3.DES-2.3100-16-EGS-013
+04.01.14.B;Suporte Guia / Presilha Fixação Cordoalha Platibanda;SPDA;305.0;unid;5.0;320.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.14.C;Haste Aterramento Copperweld 3/4" x 3,00m (254µm);Aterramento;6.0;unid;0.0;6.0;barras;AÇU-3.DES-2.3100-16-EGS-013
+04.01.14.D;Conector Grampo Cabo-Haste em Latão 3/4";Aterramento;6.0;unid;0.0;6.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.14.E;Caixa de Inspeção de Solo PVC Ø300mm c/ Tampa;Aterramento;6.0;unid;0.0;6.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-013
+04.01.15;Painel LED Embutir 60x60cm 40W 4000K;Iluminação;68.0;unid;5.0;72.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.16;Luminária Hermética LED 2x18W IP65;Iluminação;16.0;unid;5.0;17.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.17;Bloco Emergência LED 2x8W c/ Bateria Autônoma;Iluminação;14.0;unid;0.0;14.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.18.A;Luva de Emenda PVC Rígido Ø3/4" (25mm);Miudezas;207.0;unid;5.0;218.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.18.B;Luva de Emenda PVC Rígido Ø1" (32mm);Miudezas;78.0;unid;5.0;82.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.19.A;Adaptador Box Reto PVC Ø3/4" p/ Caixa;Miudezas;420.0;unid;5.0;441.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.19.B;Adaptador Box Reto PVC Ø1" p/ Caixa/Quadro;Miudezas;110.0;unid;5.0;116.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.20;Abraçadeira Tipo D c/ Cunha e Parafuso S6;Miudezas;380.0;unid;5.0;400.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.21;Conjunto Suporte + Placa 4"x2" Acabamento;Aparelhagem;122.0;cj;5.0;128.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-013
+04.01.22;Módulo de Tomada 2P+T 10A / 250V;Aparelhagem;110.0;unid;5.0;116.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.23;Módulo de Tomada 2P+T 20A / 250V (TUE);Aparelhagem;12.0;unid;5.0;13.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.24;Módulo de Interruptor Simples / Paralelo 10A;Aparelhagem;30.0;unid;5.0;32.0;unidades;AÇU-3.DES-2.3100-16-EGS-013
+04.01.25;Conector de Emenda Rápida / Derivação Tipo Alavanca;Miudezas;800.0;unid;0.0;800.0;unidades;Infraestrutura Elétrica
+04.01.26;Fita Isolante Antichama 19mm x 20m;Miudezas;15.0;rolo;0.0;15.0;rolos 20m;Infraestrutura Elétrica
+04.01.27;Terminais Pré-Isolados Tipo Ilhós (2,5 e 4mm²);Miudezas;250.0;unid;0.0;250.0;unidades;Infraestrutura Elétrica
+04.02.01;Bacia Sanitária c/ Caixa Acoplada 3/6L e Assento;Hidráulica;6.0;cj;0.0;6.0;conjuntos montados;AÇU-3.DES-2.3100-16-EGS-018
+04.02.02;Lavatório / Cuba de Embutir com Torneira Clínica;Hidráulica;6.0;cj;0.0;6.0;conjuntos montados;AÇU-3.DES-2.3100-16-EGS-018
+04.02.03;Mictório Cerâmico com Válvula de Descarga;Hidráulica;2.0;cj;0.0;2.0;conjuntos montados;AÇU-3.DES-2.3100-16-EGS-018
+04.02.04;Caixa Sifonada PVC 150x150x50mm c/ Grelha Inox;Hidráulica;8.0;unid;0.0;8.0;unidades;AÇU-3.DES-2.3100-16-EGS-018
+BLOCKED.01;Rede de Distribuição de Água Fria (Tubos e Conexões PVC);Hidráulica;0.0;m;0.0;0.0;BLOQUEADO (Ausência de Projeto Executivo);Pendente Projetista
+BLOCKED.02;Rede de Coleta de Esgoto e Ventilação (Tubos e Conexões PVC);Hidráulica;0.0;m;0.0;0.0;BLOQUEADO (Ausência de Projeto Executivo);Pendente Projetista
+BLOCKED.03;Tubulação Frigorífica de Cobre e Drenos de Ar Condicionado;HVAC;0.0;m;0.0;0.0;BLOQUEADO (Ausência de Projeto Executivo);Pendente Projetista

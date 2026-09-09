@@ -44,25 +44,31 @@ Para cada caixa de passagem, tomada, interruptor ou luminária acessada pelo cir
 Metragem Total = [ Soma(Lk × Nfios_k) + (Ncaixas × 0,50m) + (NQDC × 1,00m) ] × (1 + 0,05)
 ```
 
-#### D. Tabela de Consolidação de Compras por Bitola e Cor (UCC - Rolos de 100m)
-| Circuito | Função do Circuito | Seção ($\text{mm}^2$) | Tipo | Cor do Isolamento | Metragem Líquida (m) | + Perda 5% (m) | Compras UCC (Rolos de 100m) |
+#### D. Exemplo Didático Ilustrativo de Consolidação de Compras por Bitola e Cor (UCC - Rolos de 100m)
+
+> [!CAUTION]
+> **AVISO CRÍTICO DE INTEGRIDADE E ANTI-CONTAMINAÇÃO (NÃO COPIAR OU REUTILIZAR ESTES DADOS):**
+> A tabela abaixo é **100% FICTÍCIA E MERAMENTE ILUSTRATIVA**, tendo como único objetivo exemplificar a formatação visual e a aplicação da regra de arredondamento comercial para rolos de 100 metros.
+> **É EXPRESSAMENTE PROIBIDO** utilizar, copiar, estimar ou assumir quaisquer números ou circuitos desta tabela em levantamentos reais. Cada obra DEVE extrair seus próprios circuitos, trajetos e bitolas exclusivamente a partir dos seus próprios desenhos e diagramas unifilares executivos.
+
+| Circuito (Exemplo Fictício) | Função Ilustrativa | Seção ($\text{mm}^2$) | Tipo | Cor do Isolamento | Metragem Líquida (m) | + Perda 5% (m) | Compras UCC (Rolos de 100m) |
 |---|---|---|---|---|---|---|---|
-| **Circ. 01** | Iluminação | 1,5 mm² | Fase | Preto | 142,50 m | 149,63 m | 2 Rolos (200m) |
-| **Circ. 01** | Iluminação | 1,5 mm² | Neutro | Azul Claro | 110,00 m | 115,50 m | 2 Rolos (200m) |
-| **Circ. 01** | Iluminação | 1,5 mm² | Retorno | Amarelo | 68,00 m | 71,40 m | 1 Rolo (100m) |
-| **Circ. 01** | Iluminação | 1,5 mm² | Terra | Verde | 142,50 m | 149,63 m | 2 Rolos (200m) |
-| **Circ. 02** | Tomadas TUG | 2,5 mm² | Fase | Vermelho | 215,00 m | 225,75 m | 3 Rolos (300m) |
-| **Circ. 02** | Tomadas TUG | 2,5 mm² | Neutro | Azul Claro | 215,00 m | 225,75 m | 3 Rolos (300m) |
-| **Circ. 02** | Tomadas TUG | 2,5 mm² | Terra | Verde | 215,00 m | 225,75 m | 3 Rolos (300m) |
-| **Circ. 03** | Chuveiro TUE | 6,0 mm² | Fase (2x) | Vermelho/Preto | 54,00 m | 56,70 m | 1 Rolo (100m) |
-| **Circ. 03** | Chuveiro TUE | 6,0 mm² | Terra | Verde | 27,00 m | 28,35 m | Fracionado ou 1 Rolo |
+| **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Fase | Preto | 142,50 m | 149,63 m | 2 Rolos (200m) |
+| **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Neutro | Azul Claro | 110,00 m | 115,50 m | 2 Rolos (200m) |
+| **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Retorno | Amarelo | 68,00 m | 71,40 m | 1 Rolo (100m) |
+| **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Terra | Verde | 142,50 m | 149,63 m | 2 Rolos (200m) |
+| **Circ. Exemplo B** | Tomadas TUG (Exemplo) | 2,5 mm² | Fase | Vermelho | 215,00 m | 225,75 m | 3 Rolos (300m) |
+| **Circ. Exemplo B** | Tomadas TUG (Exemplo) | 2,5 mm² | Neutro | Azul Claro | 215,00 m | 225,75 m | 3 Rolos (300m) |
+| **Circ. Exemplo B** | Tomadas TUG (Exemplo) | 2,5 mm² | Terra | Verde | 215,00 m | 225,75 m | 3 Rolos (300m) |
+| **Circ. Exemplo C** | Carga Especial (Exemplo) | 6,0 mm² | Fase (2x) | Vermelho/Preto | 54,00 m | 56,70 m | 1 Rolo (100m) |
+| **Circ. Exemplo C** | Carga Especial (Exemplo) | 6,0 mm² | Terra | Verde | 27,00 m | 28,35 m | Fracionado ou 1 Rolo |
 
 ### 2.3 Detalhamento Meticuloso de Pontos Elétricos (Caixas, Placas, Suportes, Módulos e Luminárias)
 Toda caixa de ponto de elétrica deve ser decomposta individualmente nos seus componentes de compra:
 - **Caixas de Embutir / Passagem:**
   - `Caixa 4x2" PVC Amarela / Termoplástica (unid):` Para pontos de tomadas e interruptores de parede.
-  - `Caixa 4x4" PVC (unid):` Para conjuntos de 4 ou 6 módulos ou blocos de tomada reforçados.
-  - `Caixa Octogonal 3x3" / 4x4" c/ Fundo Móvel para Teto (unid):` Para pontos de iluminação de laje/forro.
+  - `Caixa 4x4" PVC (unid):` Para conjuntos de 4 ou 6 módulos, blocos reforçados ou caixas de passagem e derivação de troncos em alvenaria.
+  - `Caixa Octogonal 3x3" / 4x4" c/ Fundo Móvel para Teto (unid):` **REGRA OBRIGATÓRIA (100% dos Pontos de Iluminação):** Toda e qualquer luminária de teto (painéis LED 60x60, sobrepor, plafons, luminárias herméticas industriais ou blocos autônomos de emergência) exige **obrigatoriamente 1 caixa octogonal de teto** para interligação mecânica dos eletrodutos e abrigo seguro dos drivers e conexões. Quantidade total: $N_{\text{caixas teto}} = \sum (\text{Luminárias de teto}) \times 1,05$.
 - **Placas, Suportes e Espelhos (Linha de Acabamento):**
   - `Suporte 4x2" / 4x4" c/ Parafusos (unid):` Estrutura de fixação dos módulos.
   - `Placa 4x2" Cega / 1 Posto / 2 Postos / 3 Postos (unid):` Espelho de acabamento frontal.
@@ -76,35 +82,69 @@ Toda caixa de ponto de elétrica deve ser decomposta individualmente nos seus co
   - `Módulo de Interruptor Intermediário (Four-Way) 10A (unid):` Para comando de 3 ou mais pontos.
   - `Módulo Pulsador de Campainha / Minuteria (unid).`
 - **Pontos de Iluminação e Luminárias:**
-  - `Luminária Painel LED Plafon de Embutir / Sobrepor (unid):` Especificar formato e potência ($18\text{W}, 24\text{W}, 32\text{W}, 48\text{W}$ / $30\times30\text{cm}, 60\times60\text{cm}, 30\times120\text{cm}$).
+  - `Luminária Painel LED Plafon de Embutir / Sobrepor (unid):` Especificar formato e potência ($18\text{W}, 24\text{W}, 32\text{W}, 40\text{W}, 48\text{W}$ / $30\times30\text{cm}, 60\times60\text{cm}, 30\times120\text{cm}$).
+  - `Luminária Hermética Industrial LED IP65 (unid):` Para áreas técnicas, depósitos e garagens ($2\times18\text{W}$ ou $2\times9\text{W}$).
+  - `Bloco de Iluminação de Emergência LED Autônomo c/ Bateria (unid):` Para rotas de fuga e saídas de emergência (Circuito LE).
   - `Spot LED Dicroica / PAR20 / Mini AR111 de Embutir (unid):` Spot direcionável c/ lâmpada/módulo LED.
   - `Fita de LED 12V / 24V c/ Fonte Driver (m / unid):` Fita LED flexível para sancas/marcenaria $+$ fonte driver dimerizável/convencional.
 
-## 3. Modelo de Memória de Cálculo (Elétrica)
-```text
-╔══════════════════════════════════════════════════════════════════╗
-║        MEMÓRIA DE CÁLCULO — INSTALAÇÕES ELÉTRICAS               ║
-╠══════════════════════════════════════════════════════════════════╣
-║  AMBIENTE: [T-101-SAL]   CIRCUITO: [Circuito 03 - Tomadas]      ║
-╠══════════════════════════════════════════════════════════════════╣
-║  ELETRODUTO (PVC Flexível 25mm - 3/4"):                         ║
-║    Teto: X,XX m | Descidas (3x): X,XX m                         ║
-║    Subtotal: X,XX m + Perda 10% = X,XX m                        ║
-║                                                                  ║
-║  CONDUTORES (Cabo Flex 2,5mm² - Fase/Neutro/Terra):             ║
-║    Trecho embutido: X,XX m × 3 = XX,XX m                        ║
-║    Pontas (4 caixas × 0,5m × 3 cabos): 6,00 m                   ║
-║    Ponta QDC (1,0m × 3 cabos): 3,00 m                           ║
-║    Subtotal: XX,XX m + Perda 5% = XX,XX m (Por Cor)             ║
-║                                                                  ║
-║  CAIXAS E MÓDULOS:                                               ║
-║    Caixa 4x2 PVC: 4 unid                                         ║
-║    Tomada Dupla 10A: 4 unid                                      ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+---
 
-## 4. Tabela Final de Compra (UCC)
-O relatório final deve arredondar para cima usando a UCC. Se a soma do projeto exigir 112 metros de cabo flexível azul 2,5mm², a SC (Solicitação de Compra) final será de **2 Rolos de 100m** (200m).
+### 2.4 Algoritmo Matemático de Derivação Automática de Miudezas e Conexões (Kits de Montagem)
+Para eliminar omissões e esquecimentos no orçamento de compras, as miudezas de fixação e conexão **DEVEM ser calculadas automaticamente por derivação matemática direta** dos elementos principais:
+
+1. **Luvas de Emenda para Eletroduto Rígido PVC (unid):**  
+   Os eletrodutos rígidos são fornecidos em varas de 3 metros. Cada vara requer 1 luva de união:
+   $$N_{\text{luvas}} = \lceil L_{\text{eletroduto}} / 3,00\text{m} \rceil \times 1,05$$
+2. **Adaptadores Box Reto em PVC para Caixas e Quadros (unid):**  
+   Cada caixa de parede/teto e cada chegada no quadro de distribuição exige adaptadores com rosca e porca para travamento mecânico:
+   $$N_{\text{adaptadores box}} = [ 2 \times (N_{\text{caixas 4x2}} + N_{\text{caixas 4x4}} + N_{\text{caixas octogonais}}) + N_{\text{circuitos QDC}} ] \times 1,05$$
+3. **Abraçadeiras Tipo D em Aço Galvanizado c/ Cunha e Parafusos/Buchas S6 (unid):**  
+   Para tubulações aparentes em teto, laje, entreforro ou perfilados, a fixação deve ocorrer no máximo a cada $1,50\text{ m}$:
+   $$N_{\text{abraçadeiras}} = \lceil L_{\text{eletroduto aparente/forro}} / 1,50\text{m} \rceil \times 1,05$$
+4. **Conectores de Emenda Rápida por Alavanca (tipo Wago / Derivação - unid):**  
+   Nas caixas de passagem e derivação de múltiplos circuitos:
+   $$N_{\text{conectores rápidos}} = 3 \times N_{\text{caixas de passagem e derivação}} + 2 \times N_{\text{luminárias de teto}}$$
+5. **Terminais Pré-Isolados Tipo Ilhós (Cobre Estanhado - unid):**  
+   Para terminação de condutores de 2,5mm² e 4,0mm² nos bornes de disjuntores e módulos de tomadas:
+   $$N_{\text{terminais ilhós}} = (2 \times N_{\text{polos de disjuntores}}) + (3 \times N_{\text{módulos de tomada}})$$
+6. **Fita Isolante Antichama 19mm x 20m (rolos):**  
+   $$N_{\text{rolos fita}} = \lceil (N_{\text{pontos elétricos total}}) / 50 \rceil \text{ rolos (mínimo 2 rolos por obra)}$$
+
+---
+
+## 3. Modelo de Memória de Cálculo Analítica por Circuito (Elétrica)
+O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a Circuito**, identificando:
+- Identificação do Circuito (ex: ALIM, L1-L4, T1-T13, AC1-AC5)
+- Destinação e Tensão / Amperagem do Disjuntor
+- Trecho Horizontal Medido em Planta (m)
+- Subidas e Descidas Verticais Eixo Z detalhadas (m)
+- Comprimento Total de Eletroduto (m)
+- Condutores discriminados individualmente por função: **Fase**, **Neutro**, **Retorno** e **Terra** (m)
+
+---
+
+## 4. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
+
+> 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA CONDUTORES E TUBULAÇÕES:**  
+> A unidade comercial de faturamento varia estritamente conforme o tipo de insumo e seu método de instalação:
+
+1. **Cabos de Potência / Alimentadores Pesados ($\ge 16\text{ mm}^2$, EPR 0,6/1kV):**  
+   * **Unidade Comercial:** **METRO LINEAR (`m`)**.  
+   * **Critério Técnico:** O fornecedor industrial corta e fatura a metragem exata fracionada de grandes bobinas. **A NBR 5410 proíbe emendas intermediárias em alimentadores subterrâneos**.  
+   * É estritamente **proibido arredondar para rolos fechados de 100m**, pois isso geraria lances picados inutilizáveis ou sobras caras de cobre de grande seção.
+2. **Condutores Prediais Flexíveis 750V ($\le 10\text{ mm}^2$ - 1,5mm², 2,5mm², 4,0mm², 6,0mm²):**  
+   * **Unidade Comercial:** **ROLOS LACRADOS DE 100 METROS (`rolos`)**.  
+   * **Critério Técnico:** A indústria não vende metragem fracionada avulsa para circuitos prediais. Toda solicitação de compra DEVE ser arredondada para cima pela função teto:
+     $$\text{Qtd. UCC (rolos)} = \lceil L_{\text{líquido}} \times (1 + \text{perda}) / 100 \rceil$$
+3. **Eletrodutos Rígidos de PVC:**  
+   * **Unidade Comercial:** **VARAS DE 3 METROS (`varas`)**. Arredondamento: $\lceil L_{\text{líquido}} \times (1 + \text{perda}) / 3 \rceil$.
+4. **Formatação da Tabela de Compras (Sem Ambiguidade):**  
+   A tabela de compras DEVE conter **obrigatoriamente duas colunas de unidade separadas**:
+   * `Unid. Proj.` (unidade da medição física líquida em metros ou unidades)
+   * `Qtd. UCC` (quantidade numérica da embalagem de fornecimento)
+   * `Unid. UCC` (unidade da embalagem comercial: `m`, `rolos`, `varas`, `un`, `cj`)
+   * `Embalagem de Fornecimento / Detalhe` (ex: "Metro linear sob medida", "Rolo lacrado de 100m", "Vara rígida de 3m")
 
 ---
 
@@ -213,6 +253,15 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 - **Barramentos de Equipotencialização (BEP / BEL):**
   - Barramento de cobre embutido em caixa metálica para interligação de todas as massas da obra.
 
+### 7.4 Tabela de Compra e Embalagem Comercial de SPDA (UCC)
+| Insumo SPDA | Unidade Medida | Critério de Quantificação | Unidade UCC | Embalagem de Compra |
+|---|---|---|---|---|
+| **Cordoalha Cobre Nu 50mm²** | m | Captação + Descidas + 5% perda | rolos | Rolos lacrados com 100m ($\lceil L / 100 \rceil$) |
+| **Presilhas / Suportes Guia Platibanda** | unid | 1 un a cada 1,00m de perímetro platibanda | un | Peça em bronze/inox c/ parafuso e bucha |
+| **Hastes de Aterramento Copperweld 3/4" x 3,00m** | unid / barra | 1 haste por prumada de descida de SPDA (camada 254µm) | barras | Barra de 3,00m |
+| **Conectores Grampo Cabo-Haste em Latão 3/4"** | unid | 1 conector por haste instalada | un | Peça em bronze/latão reforçado |
+| **Caixas de Inspeção de Solo PVC Ø300mm** | unid / cj | 1 conjunto por haste instalada | cj | Conjunto cilíndrico PVC c/ tampa reforçada |
+
 ---
 
 ## 8. Entrada de Energia, Padrão Concessionária, Subestação e Muro de Medidores (NBR 14039 / NBR 5410)
@@ -272,3 +321,13 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 - `Central de Interfonia Predial IP / PABX Digital (unid):` Central de comunicação IP c/ placas de ramais para todas as unidades.
 - `Porteiro Eletrônico Exterior c/ Câmera / Leitor Facial (unid):` Terminal de acesso de rua c/ câmera HD, teclado e leitor de Tag.
 - `Terminais de Interfone de Apartamento (unid):` Aparelho de interfone de parede c/ segredo / moradia (1 por unidade habitacional).
+
+---
+
+## 10. Diretriz Rígida de Governança Técnica: Proibição de Estimativas Fictícias e Bloqueio Formal
+
+> 🛑 **REGRA DE OURO CONTRA RETRABALHO E CHUTES PARAMÉTRICOS:**  
+> 1. O Agente **NUNCA DEVE INVENTAR QUANTITATIVOS OU EXECUTAR ESTIMATIVAS PARAMÉTRICAS POR MÉDIA** caso a disciplina não possua prancha executiva aprovada e entregue no acervo técnico da obra.
+> 2. Se uma disciplina não foi desenhada (ex: tubulações hidrossanitárias sem prancha isométrica, ou linhas frigoríficas de climatização sem projeto executivo de HVAC), o Agente **DEVE REGISTRAR OS ITENS FORMALMENTE COMO BLOQUEADOS / PENDÊNCIA TÉCNICA DA PROJETISTA (RFI)**.
+> 3. Essa diretriz blinda o orçamento, impede distorções em compras, elimina revisões desnecessárias e garante que cada linha da memória de cálculo seja 100% auditável por prancha e escala.
+

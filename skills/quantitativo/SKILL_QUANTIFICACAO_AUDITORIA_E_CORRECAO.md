@@ -82,6 +82,7 @@ Para garantir zero omissão de detalhes construtivos em qualquer disciplina:
 - [ ] **Mapeamento de Chamadas de Detalhes:** Todas as pranchas de detalhes (callouts) foram rastreadas e vinculadas aos insumos/serviços correspondentes.
 - [ ] **Cadeia Completa de Insumos (Proibição Absoluta de Resumos):** Todos os elementos secundários (pingadeiras, rufos, impermeabilizações, muretas de apoio, perfis metálicos, calhas, ralos, conexões hidráulicas soldáveis/esgoto, caixas 4x2/4x4/octogonais, disjuntores DIN, DRs, DPSs, cabos de telecom Cat6, arame recozido, espaçadores) foram quantificados em 100% de detalhamento granular. **SE HOUVER QUALQUER RESUMO OU AGRUPAMENTO SINTÉTICO, A AUDITORIA REPROVA O LEVANTAMENTO IMEDIATAMENTE.**
 - [ ] **Interrogatório Técnico (Instrução Ausente na Skill):** Se algum detalhe ou especificação da prancha **não possuir regra direta ou instrução explícita nas Skills**, o agente **PAROU O LEVANTAMENTO E PERGUNTOU AO USUÁRIO** para definir a premissa antes de prosseguir. *PROIBIDO CHUTAR OU ASSUMIR SOBERANAMENTE.*
+- [ ] **Auditoria de Omissões de Desenho & Proibição de Estimativas:** Nenhum item ausente ou sem cota nas pranchas foi estimado ou arbitrado. Para 100% dos elementos sem cota, corte ou especificação no projeto, consta obrigatoriamente a observação formal na memória de cálculo: `[NÃO LEVANTADO POR FALTA DE INFORMAÇÃO NO DESENHO]` com identificação da prancha e pendência técnica (RFI) aberta.
 
 ---
 
@@ -95,6 +96,8 @@ Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o
 4. ❌ Apresentar resultado numérico sem a notação limpa de engenharia (com caracteres de programação/LaTeX).
 5. ❌ Omitir a fórmula ou as cotas lidas da prancha na memória de cálculo.
 6. ❌ Apresentar quantitativos resumidos, agrupados ou sintetizados omitindo conexões, caixas, disjuntores ou micro-componentes.
+7. ❌ **Quantificar qualquer item com base em estimativa, suposição ou média paramétrica sem respaldo direto no desenho.**
+8. ❌ **Omitir a observação obrigatória na memória de cálculo informando que o item NÃO foi levantado por falta de informação no desenho.**
 
 
 ---
@@ -111,6 +114,7 @@ Após a verificação, o Agente de Auditoria deve emitir o seguinte bloco no rel
  [x] Checklist 2 — Geometria Líquida Executiva (Sem Duplicidade): APROVADO
  [x] Checklist 3 — Interface Pilar-Laje-Viga (Face Inferior): APROVADO
  [x] Checklist 4 — Conversão UCC e Arredondamentos: APROVADO
+ [x] Checklist 5 — Blindagem Anti-Estimativa e Registro de Omissões de Projeto: APROVADO
 ====================================================================
  STATUS: LEVANTAMENTO AUDITADO E LIBERADO PARA O ORÇAMENTO BASE
 ====================================================================

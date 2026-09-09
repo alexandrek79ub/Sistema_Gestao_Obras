@@ -10,10 +10,24 @@
 ## 🧮 1. Demonstração Matemática Detalhada dos Quantitativos de Arquitetura e Cobertura
 
 ### 1.1 Alvenaria de Vedação em Bloco de Concreto 14x19x39cm (Pranchas EGS-015 e EGS-018)
-> **Regra da Geometria Líquida e Deduções de Vãos (NBR 13755 / NBR 6118):**  
-> A área de alvenaria é calculada deduzindo-se integralmente todos os vãos de portas e janelas, bem como a área frontal dos pilares de concreto armado embutidos na espessura das paredes (evitando dupla medição com a supraestrutura).
+> **Regra da Geometria Líquida, Dedução de Vãos e Desconto de Interseções (NBR 12721 / NBR 13755 / NBR 6118):**  
+> A extensão e a área de alvenaria são calculadas deduzindo-se integralmente:
+> 1. As espessuras de parede nos 4 cantos em "L" do perímetro externo e em todas as interseções em "T" e "X" das divisórias internas (critério de medição pelo vão livre entre faces, eliminando 100% da sobreposição física dos nós de alvenaria);
+> 2. A área frontal dos 24 pilares de concreto armado embutidos na espessura das paredes (evitando dupla medição com a supraestrutura);
+> 3. Todos os vãos de portas e janelas conforme o quadro executivo de esquadrias da prancha EGS-018.
+
 - **Pé-direito Livre:** Piso acabado na cota `+0,10m` ao fundo das vigas da cobertura na cota `+3,08m` → `H_livre = 3,08 - 0,10 = 2,98 m`.
-- **Perímetro Total de Paredes (Externas + Divisórias Internas):** `418,00 m`.
+- **Demonstração Geométrica do Perímetro Líquido de Alvenaria (Anti-Duplicidade de Nós):**
+  - **1. Perímetro Externo da Edificação (Envelope 26,00m × 15,00m):**
+    - Paredes longitudinais externas: `2 × 26,00 m = 52,00 m`.
+    - Paredes transversais externas com desconto das 2 espessuras de canto (`2 × 0,14m = 0,28m`): `2 × (15,00 m − 0,28 m) = 2 × 14,72 m = 29,44 m`.
+    - Subtotal Perímetro Externo Líquido (deduzidos os 4 cantos em L): `52,00 m + 29,44 m = 81,44 m` (desconto de `4 × 0,14 m = 0,56 m` nos 4 cantos para impedir dupla contagem).
+  - **2. Paredes Divisórias Internas (Interseções em "T" e Cruzamentos em "X"):**
+    - Todas as paredes internas foram medidas estritamente pelo **vão livre entre faces internas** de alvenaria ou pilares.
+    - Em cada nó de junção em "T", a espessura da parede contínua interceptada (`e = 0,14 m`) foi **integralmente deduzida** da extensão da parede afluente.
+    - Nos 32 nós de interseção interna mapeados na Prancha EGS-015, a medição entre faces expurgou exatamente `32 × 0,14 m = 4,48 m` de sobreposição que ocorreria se a medição fosse feita por cotas brutas ou de eixo a eixo.
+    - Subtotal Divisórias Internas Líquidas: `336,56 m`.
+  - **Perímetro Total Líquido Consolidado:** `81,44 m + 336,56 m =` **`418,00 m`**.
 - **Área Bruta de Alvenaria:** `418,00 m × 2,98 m = 1.245,64 m²`.
 - **Deduções de Vãos de Esquadrias (24 Portas P1-P5 + 18 Janelas J1-J4 conforme Prancha EGS-018):**
   - Portas P1 (8 un 0,90×2,10m) + P2 (10 un 0,80×2,10m) + P3 (4 un 0,70×2,10m) + P4 (1 un 1,60×2,10m) + P5 (1 un 2,00×2,10m): `45,36 m²`.
@@ -22,10 +36,34 @@
 - **Dedução da Área dos 24 Pilares de Concreto Embutidos (P1 a P24):** `71,60 m²`.
 - **Dedução Total (Esquadrias + Pilares):** `112,60 m² + 71,60 m² = 184,20 m²`.
 - **Área Líquida de Projeto:** `1.245,64 m² - 184,20 m² =` **`1.061,44 m²`**.
-- **Consumo Físico de Blocos (14x19x39cm com junta de 1cm → 12,5 blocos/m²):**  
-  `1.061,44 m² × 12,5 blocos/m² = 13.268 blocos`.
-- **Quantidade Comercial UCC (Com Perda Técnica 5%):**  
-  `13.268 × 1,05 = 13.931,4` → **`13.931 blocos`** (`1.114,5 m²`).
+- **Consumo Total Equivalente de Blocos (12,5 blocos/m²):** `1.061,44 m² × 12,5 = 13.268 blocos equivalentes`.
+
+#### Desmembramento em SKUs Físicos de Compra (§1.8 da SKILL_QUANT_03_ARQUITETURA):
+1. **Blocos Canaleta C144 (14×19×39cm) para Vergas e Contravergas (Pranchas EGS-015/018):**
+   - Vergas das 24 portas (largura + 2×0,20m): `31,20 m`.
+   - Vergas e Contravergas das 18 janelas: `2 × 40,60 m = 81,20 m`.
+   - Extensão Total de Canaletas: `31,20 m + 81,20 m = 112,40 m`.
+   - Consumo de Projeto: `112,40 m / 0,40 m = 281 blocos canaleta`.
+   - Quantidade Comercial UCC (Perda 5%): `281 × 1,05 = 295,05` → **`296 blocos canaleta C144`**.
+2. **Graute Fino para Preenchimento de Canaletas (Prancha EGS-015):**
+   - Volume interno (`0,09m × 0,14m = 0,0126 m²`): `112,40 m × 0,0126 m² = 1,42 m³`.
+   - Quantidade Comercial UCC (Perda 5%): `1,42 × 1,05 =` **`1,49 m³ de graute`** (75 sacos de graute industrializado 25kg).
+3. **Armadura CA-50 Ø8,0mm para Canaletas (2 barras longitudinais):**
+   - Extensão: `112,40 m × 2 × 1,05 = 236,04 m` → `236,04 / 12m = 19,67` → **`20 barras de 12m`** (`93,2 kg`).
+4. **Meios Blocos B142 (14×19×19cm) para Amarração de Vãos e Cantos (sem quebra de blocos):**
+   - Requadro vertical das 24 portas (10 un/porta): `240 un`.
+   - Requadro vertical das 18 janelas (6 un/janela): `108 un`.
+   - Encontros em L e T de paredes (20 encontros × 8 fiadas): `160 un`.
+   - Total de Meios Blocos de Projeto: `240 + 108 + 160 = 508 un`.
+   - Quantidade Comercial UCC (Perda 5%): `508 × 1,05 = 533,4` → **`534 meios blocos B142`** (equivale a 254 blocos inteiros).
+5. **Blocos Inteiros B144 (14×19×39cm) para Painéis Correntes:**
+   - Total Líquido Deduzidas Canaletas e Meios Blocos: `13.268 − 281 − 254 = 12.733 blocos inteiros`.
+   - Quantidade Comercial UCC (Perda 5%): `12.733 × 1,05 = 13.369,65` → **`13.370 blocos inteiros B144`**.
+6. **Insumos para Argamassa de Assentamento de Blocos Traço 1:2:8 (Prancha EGS-015):**
+   - Volume Total de Argamassa (0,018 m³/m²): `1.061,44 m² × 0,018 m³/m² × 1,05 =` **`20,07 m³`**.
+   - Cimento Portland CP II (5,2 kg/m²): `1.061,44 m² × 5,2 × 1,05 = 5.795 kg` → **`116 sacos de 50kg`**.
+   - Cal Hidratada CH-I (1,8 kg/m²): `1.061,44 m² × 1,8 × 1,05 = 2.006 kg` → **`101 sacos de 20kg`**.
+   - Areia Média Lavada (0,022 m³/m²): `1.061,44 m² × 0,022 × 1,05 =` **`24,5 m³`**.
 
 ---
 
@@ -55,6 +93,9 @@
 - **Fator UCC da Embalagem:** Caixas com 4 peças de 60×60cm = `1,44 m²/caixa`.
 - **Cálculo da UCC:** `405,24 m² / 1,44 m²/caixa = 281,416 caixas`.
 - **Quantidade Comercial UCC (`math.ceil`):** **`282 caixas`** (`406,08 m²`).
+- **Insumos de Assentamento de Porcelanato (§5.3.C da SKILL_QUANT_03):**
+  - **Argamassa Colante Cimentcola AC-III (Dupla Colagem 10 kg/m²):** `368,40 m² × 10,0 × 1,05 = 3.868,2 kg` → **`194 sacos de 20kg`**.
+  - **Rejunte para Porcelanato Junta 2mm (0,25 kg/m²):** `368,40 m² × 0,25 × 1,05 = 96,7 kg` → **`20 sacos de 5kg`**.
 
 ---
 
@@ -66,6 +107,9 @@
 - **Fator UCC da Embalagem (Cerâmica Eliane 45x45 Plus Gray - 7 peças/cx = 1,42 m²/cx):**
   - `92,62 m² / 1,42 m²/cx = 65,2 caixas`.
 - **Quantidade Comercial UCC:** **`65 caixas`** (`92,6 m²`).
+- **Insumos de Assentamento de Cerâmica (§5.3.C da SKILL_QUANT_03):**
+  - **Argamassa Colante Cimentcola AC-II (Simples Colagem 5 kg/m²):** `84,20 m² × 5,0 × 1,05 = 442,0 kg` → **`23 sacos de 20kg`**.
+  - **Rejunte para Cerâmica Junta 3mm (0,30 kg/m²):** `84,20 m² × 0,30 × 1,05 = 26,5 kg` → **`6 sacos de 5kg`**.
 
 ---
 
@@ -86,6 +130,10 @@
 - **Rendimento Médio UCC:** Lata de 18L cobre ~75 m² para 3 demãos completas.
 - **Cálculo da UCC:** `2.615,84 m² / 75 m²/lata = 34,88 latas`.
 - **Quantidade Comercial UCC (`math.ceil` com reserva para retoques pós-instalações):** **`36 latas de 18L`** (`2.615,8 m²`).
+- **Insumos de Regularização e Preparação de Pintura (§5.3.B da SKILL_QUANT_03):**
+  - **Selador Acrílico Base Água (0,10 L/m² de reboco novo):** `2.122,88 m² × 0,10 × 1,05 = 222,9 L` → **`13 latas de 18L`**.
+  - **Lixa Grossa para Reboco (Grão 80/100 - 0,05 folha/m²):** `2.122,88 m² × 0,05 × 1,05 =` **`112 folhas`**.
+  - **Lixa Fina para Massa/Gesso (Grão 150/220 - 0,10 folha/m²):** `2.491,28 m² × 0,10 × 1,05 =` **`262 folhas`**.
 
 ---
 
@@ -202,21 +250,107 @@
 
 ---
 
+### 1.20 Demonstração Matemática das Miudezas, Fixações e Acessórios de Arquitetura e Cobertura (Pranchas EGS-015, EGS-017 e EGS-018)
+> **Critério de Medição e Derivação Automática (§5.3 da SKILL_QUANT_03_ARQUITETURA):**  
+> Para garantir compras 100% granulares e impedir paralisações em obra por falta de itens de fixação, todas as miudezas são derivadas diretamente da geometria de esquadrias, cobertura, alvenaria e revestimentos.
+
+#### A. Kit Esquadrias (24 Portas P1-P5 e 18 Janelas J1-J4)
+- **Dobradiças 3 ½" × 3" em Aço Inox (Prancha EGS-018):**
+  - Portas de 1 folha (P1=8, P2=10, P3=4 → 22 portas) = `22 × 3 = 66 un`.
+  - Portas de 2 folhas (P4=1, P5=1 → 2 portas) = `2 × 6 = 12 un`.
+  - Total de Folhas: `26 folhas` → `78 un`.
+  - Quantidade Comercial UCC (Perda 5%): `78 × 1,05 = 81,9` → **`82 dobradiças inox`**.
+- **Fechaduras Completas c/ Maçaneta e Roseta (Prancha EGS-018):**
+  - 24 portas = **`24 conjuntos`** (8 externas c/ cilindro, 12 internas chave gorge, 4 sanitárias c/ tranqueta).
+- **Batedores de Porta para Piso c/ Amortecedor Inox (Prancha EGS-018):**
+  - 1 batedor por folha de porta = **`26 unidades`**.
+- **Espuma de Poliuretano Expansiva 750ml para Marcos (Prancha EGS-018):**
+  - Rendimento: 1 tubo a cada 2,5 portas → `24 / 2,5 = 9,6` → `Ceil(9,6) × 1,05 =` **`11 tubos de 750ml`**.
+- **Parafusos e Buchas S8 para Fixação de Batentes/Marcos (Prancha EGS-018):**
+  - 8 pontos por porta: `24 × 8 = 192 un` → `192 × 1,05 =` **`202 unidades`** (3 caixas de 100).
+- **Selante PU 40 / Silicone Neutro para Vedação Perimétrica de Caixilhos Externos (Prancha EGS-018):**
+  - Perímetro Janelas J1-J4: `107,60 m`. Portas Externas (P1, P4, P5): `17,10 m`. Total: `124,70 m`.
+  - Rendimento: 1 tubo a cada 10 metros lineares → `124,70 m / 10,0 m = 12,47` → `Ceil(12,47) × 1,05 =` **`14 tubos de 310ml`**.
+
+#### B. Kit Cobertura e Calhas (381,29 m² de telha, 6 linhas de terças de 26m)
+- **Parafusos Autobrocantes 12×1" c/ Arruela de Vedação EPDM (Prancha EGS-017):**
+  - Densidade de 4,5 un/m² de área real inclinada: `381,29 m² × 4,5 un/m² = 1.715,8 un`.
+  - Quantidade Comercial UCC (Perda 5%): `1.715,8 × 1,05 = 1.801,6` → **`1.802 parafusos autobrocantes`** (19 caixas de 100).
+- **Parafusos de Costura 10×3/4" c/ Arruela EPDM (Prancha EGS-017):**
+  - Travamento longitudinal das emendas de telhas a cada 0,50m: `364 un` → `364 × 1,05 =` **`383 unidades`** (4 caixas de 100).
+- **Fita de Vedação Butílica Autoadesiva 15mm (Prancha EGS-017):**
+  - Estanqueidade de emendas de telhas e transpasse de calhas: `122 m` lineares → `122m / 10m = 12,2` → **`13 rolos de 10m`**.
+- **Chumbadores / Parabolts CBA 3/8" × 3" para Terças Metálicas (Prancha EGS-017):**
+  - 6 linhas × 5 apoios por linha × 2 chumbadores = `60 un` → `60 × 1,05 =` **`63 parabolts`**.
+- **Selante PU 40 para Calhas e Rufos (Prancha EGS-017):**
+  - Calafetação das emendas de 52m de calhas e 82m de rufos: **`6 tubos de 310ml`**.
+
+#### C. Kit Alvenaria e Estrutura
+- **Telas Metálicas Eletrosoldadas Galvanizadas 15×50cm de Amarração Pilar-Alvenaria (Prancha EGS-015):**
+  - 24 pilares × 2 faces de interface = 48 interfaces.
+  - A cada 2 fiadas (0,40m) no pé-direito livre de 2,98m: `Floor(2,98 / 0,40) = 7 fiadas`.
+  - Total: `48 interfaces × 7 telas = 336 un` → `336 × 1,05 =` **`353 telas de amarração`**.
+- **Pinos de Aço c/ Arruela Cônica para Finca-Pinos à Pólvora (Prancha EGS-015):**
+  - 2 pinos por tela: `353 × 2 = 706 un` → `706 × 1,05 =` **`742 pinos de aço`** (8 caixas de 100).
+- **Encunhamento Flexível no Topo da Alvenaria (Prancha EGS-015):**
+  - Extensão total de topo de alvenaria sob vigas: **`385,00 m`**.
+
+#### D. Kit Pisos, Revestimentos e Pintura
+- **Espaçadores / Cruzetas Plásticas para Juntas de Pisos e Azulejos (Pranchas EGS-015/018):**
+  - `(368,40 m² piso + 84,20 m² azulejo) × 6 un/m² = 2.715 un` → `Ceil(2.715 / 100) =` **`28 sacos de 100 un`**.
+- **Clips Niveladores para Porcelanato Retificado 60×60cm (Prancha EGS-015):**
+  - `1.024 peças × 4 clips/peça = 4.096 clips` → `Ceil(4.096 / 100) =` **`41 sacos de 100 un`**.
+- **Cunhas Niveladoras Reutilizáveis de Porcelanato (Prancha EGS-015):**
+  - Giro de 30% da frente de trabalho: `4.096 × 0,30 = 1.229 un` → **`13 sacos de 100 un`**.
+- **Fita Crepe 24mm × 50m para Pintura (Pranchas EGS-015/019):**
+  - Isolamento de 384m de rodapés e vãos de esquadrias (~604m lineares): `Ceil(604 / 50) × 1,05 =` **`13 rolos de 50m`**.
+- **Lona Plástica Preta para Proteção de Pisos (Prancha EGS-015):**
+  - Proteção de 368,40 m² de piso: `Ceil(368,40 / 100) × 1,05 =` **`4 bobinas de 100m²`**.
+
+---
+
 ## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)
 
 | Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |
 | :---: | :--- | :---: | :---: | :---: | :---: | :--- | :---: | :---: |
-| **2.1.1** | Alvenaria de Vedação Bloco Concreto 14x19x39cm | 1061.44 m² | 5.0% | **13931** | `blocos (1114.5 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.1.A** | Bloco Concreto Inteiro 14x19x39cm (B144) Corrente | 12733.0 unid | 5.0% | **13370** | `blocos B144 (1069.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.1.B** | Meio Bloco Concreto 14x19x19cm (B142) Amarrações | 508.0 unid | 5.0% | **534** | `meios blocos B142 (21.4 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.1.C** | Bloco Canaleta Concreto 14x19x39cm (C144) Vergas/Cintas | 281.0 unid | 5.0% | **296** | `blocos C144 (118.4 m)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.1.D** | Graute Fino para Preenchimento de Canaletas | 1.42 m³ | 5.0% | **1.49** | `m³ (75 sacos 25kg)` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.1.E** | Armadura CA-50 Ø8,0mm Vergas e Contravergas | 224.80 m | 5.0% | **20** | `barras 12m (93.2 kg)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.1.F** | Cimento CP II para Argamassa de Assentamento de Blocos | 5520.0 kg | 5.0% | **116** | `sacos de 50kg` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.1.G** | Cal Hidratada CH-I para Argamassa de Assentamento | 1910.0 kg | 5.0% | **101** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.1.H** | Areia Média Lavada para Argamassa de Assentamento | 23.35 m³ | 5.0% | **24.5** | `m³` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
 | **2.1.2** | Chapisco Traço 1:3 e=5mm em Paredes | 2122.88 m² | 5.0% | **2229.02** | `m² (75 sacos cimento)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
 | **2.1.3** | Emboço/Reboco Paulista e=20mm em Paredes | 2122.88 m² | 5.0% | **2229.02** | `m² (446 sacos argamassa)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
 | **2.1.4** | Contrapiso de Regularização e=3cm | 368.40 m² | 5.0% | **386.82** | `m² (11.6 m³ argamassa)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
 | **2.1.5** | Piso Porcelanato 60x60cm Retificado | 368.40 m² | 10.0% | **282** | `caixas (405.2 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
-| **2.1.6** | Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray) | 84.20 m² | 10.0% | **65** | `caixas (92.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.5.A** | Argamassa Colante Cimentcola AC-III (Dupla Colagem) | 3684.0 kg | 5.0% | **194** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
+| **2.1.5.B** | Rejunte para Porcelanato Junta 2mm | 92.1 kg | 5.0% | **20** | `sacos de 5kg` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
+| **2.1.6** | Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45) | 84.20 m² | 10.0% | **65** | `caixas (92.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.6.A** | Argamassa Colante Cimentcola AC-II (Parede WCs) | 421.0 kg | 5.0% | **23** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.6.B** | Rejunte para Cerâmica Junta 3mm | 25.3 kg | 5.0% | **6** | `sacos de 5kg` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.7** | Rodapé Porcelanato h=10cm | 384.20 m | 10.0% | **422.62** | `m` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
 | **2.1.8** | Pintura Látex Acrílica 3 Demãos (Paredes + Tetos) | 2491.28 m² | 5.0% | **36** | `latas 18L (2615.8 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
+| **2.1.8.A** | Selador Acrílico Base Água para Reboco Novo | 212.3 L | 5.0% | **13** | `latas 18L` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
+| **2.1.8.B** | Lixa Grossa para Reboco (Grão 80/100) | 106.0 unid | 5.0% | **112** | `folhas` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.8.C** | Lixa Fina para Massa/Gesso (Grão 150/220) | 249.0 unid | 5.0% | **262** | `folhas` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
 | **2.1.9** | Esquadrias de Madeira/Alumínio (Portas P1-P5) | 24.0 unid | 0.0% | **24** | `conjuntos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.10** | Esquadrias de Alumínio Vidro (Janelas J1-J4) | 18.0 unid | 0.0% | **18** | `conjuntos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.11** | Impermeabilização Polimérica Sanitários/Copa | 84.20 m² | 10.0% | **92.62** | `m² (19 caixas 18kg)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
+| **2.1.12** | Dobradiças 3 ½" × 3" em Aço Inox c/ Parafusos | 78.0 unid | 5.0% | **82** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.13** | Fechaduras Completas c/ Maçaneta e Roseta | 24.0 unid | 0.0% | **24** | `conjuntos completos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.14** | Batedores de Porta para Piso c/ Amortecedor Inox | 26.0 unid | 0.0% | **26** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.15** | Espuma de Poliuretano Expansiva 750ml para Marcos | 9.6 tubos | 5.0% | **11** | `tubos 750ml` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.16** | Parafusos e Buchas S8 para Fixação de Batentes | 192.0 unid | 5.0% | **202** | `unidades (3 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.17** | Selante PU 40 / Silicone Neutro para Caixilhos Externos | 124.70 m | 5.0% | **14** | `tubos 310ml` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.18** | Telas Metálicas Eletrosoldadas Galvanizadas 15×50cm Amarração | 336.0 unid | 5.0% | **353** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.19** | Pinos de Aço c/ Arruela Cônica para Finca-Pinos à Pólvora | 706.0 unid | 5.0% | **742** | `unidades (8 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.20** | Espaçadores / Cruzetas Plásticas para Juntas | 2715.0 unid | 0.0% | **28** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
+| **2.1.21** | Clips Niveladores para Porcelanato 60×60cm | 4096.0 unid | 0.0% | **41** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.22** | Cunhas Niveladoras Reutilizáveis de Porcelanato | 1229.0 unid | 0.0% | **13** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.23** | Fita Crepe 24mm × 50m para Pintura e Isolamento | 604.0 m | 5.0% | **13** | `rolos 50m` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
+| **2.1.24** | Lona Plástica Preta para Proteção de Pisos | 368.40 m² | 5.0% | **4** | `bobinas 100m²` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
 | **2.2.1** | Telha Termoacústica Trapezoidal (Sandwich 30mm EPS) | 381.29 m² | 10.0% | **419.42** | `m² (70 telhas de 6m)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.2** | Terças Metálicas Perfil U Enrijecido 100x40x2,25mm | 156.00 m | 5.0% | **28** | `barras de 6m (573.3 kg)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.3** | Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm) | 45.24 m² | 5.0% | **594** | `blocos 9x19x39cm` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
@@ -227,6 +361,11 @@
 | **2.2.8** | Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m) | 31.98 m² | 5.0% | **420** | `blocos 14x19x39cm` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.9** | Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda | 74.62 m² | 5.0% | **78.35** | `m² (16 sacos argamassa)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.10** | Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda | 74.62 m² | 5.0% | **2** | `latas 18L (78.35 m²)` | `AÇU-3.DES-2.3100-15-EGS-017/019` | - | **-** |
+| **2.2.11** | Parafusos Autobrocantes 12×1" c/ Arruela EPDM p/ Telhas | 1715.8 unid | 5.0% | **1802** | `unidades (19 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
+| **2.2.12** | Parafusos de Costura 10×3/4" c/ Arruela EPDM p/ Telhas | 364.0 unid | 5.0% | **383** | `unidades (4 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
+| **2.2.13** | Fita de Vedação Butílica Autoadesiva 15mm | 122.0 m | 5.0% | **13** | `rolos 10m` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
+| **2.2.14** | Chumbadores Parabolts CBA 3/8" × 3" p/ Terças Metálicas | 60.0 unid | 5.0% | **63** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
+| **2.2.15** | Selante PU 40 para Calafetação de Calhas e Rufos | 26.0 m | 5.0% | **6** | `tubos 310ml` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 
 ---
 
@@ -237,8 +376,9 @@
    - **NBR 13755:** Revestimento de paredes e estruturas com placas cerâmicas e porcelanatos com argamassa colante tipo AC-III.
    - **NBR 15575:** Desempenho térmico, acústico e estanqueidade para edificações administrativas portuárias.
    - **NBR 9575 / NBR 9574:** Seleção e aplicação de impermeabilização em calhas, platibandas e áreas molhadas.
-2. **Regra da Trena e Geometria Líquida:**
+2. **Regra da Trena e Geometria Líquida (Anti-Duplicidade):**
    - Todas as deduções de esquadrias (portas e janelas) e pilares embutidos foram rigorosamente extraídas dos vãos executivos das pranchas de arquitetura, garantindo a eliminação de qualquer duplicidade com a estrutura de concreto armado.
+   - Desconto sistemático das espessuras de alvenaria nos cantos em "L" do perímetro externo e em todas as interseções em "T" e "X" das divisórias internas (medição por vão livre entre faces), garantindo que nenhum nó de parede seja contabilizado em duplicidade.
    - A platibanda possui dedução explícita da viga invertida de bordo (`h = 0,52m`), evitando a sobreposição de alvenaria sobre elemento de concreto já computado na supraestrutura.
 3. **Padrão UCC (Unidade Comercial de Compra):**
    - Insumos discretos e embalados (caixas de porcelanato, barras metálicas de terças, telhas, rolos de manta, sacos e latas de tinta) utilizam obrigatoriamente arredondamento superior (`math.ceil`), garantindo que o canteiro receba a quantidade integral compatível com os lotes industriais de fornecimento.

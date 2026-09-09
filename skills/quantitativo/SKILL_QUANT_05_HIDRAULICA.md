@@ -40,30 +40,71 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
   - `Engate Flexível Inox / PVC (unid):` Rabicho flexível $40\text{cm} / 50\text{cm}$ (DN 1/2") para lavatórios, pias e bacias sanitárias.
   - `Sifão Sanfonado Universal / Sifão de Copo Cromado (unid):` Sifão para lavatório e pia de cozinha c/ adaptador rígido.
   - `Válvula de Escoamento / Ralo de Pia (unid):` Válvula inox $7/8"$ / $1 1/2"$ / $3 1/2"$ c/ tampão.
-  - `Fita Veda-Rosca PTFE (rolo):` Rolos de $18\text{mm} \times 50\text{m}$ (1 rolo a cada 15 pontos roscados).
+  - `Anel de Vedação de Cera c/ Guia (unid):` 1 por bacia sanitária (veda ligação de esgoto contra retorno de gases/odores).
+  - `Conjunto de Parafusos de Fixação de Bacia c/ Bucha S10 e Arruela Inox (cj):` 1 conjunto (2 parafusos) por bacia sanitária.
 
-## 3. Modelo de Memória de Cálculo (Hidráulica)
+---
+
+### 2.3 Algoritmo Matemático de Derivação de Miudezas e Consumíveis Hidráulicos
+Para eliminar omissões e garantir o kit completo de instalação:
+1. **Adesivo Plástico para PVC (frascos 175g ou 850g):**  
+   $$N_{\text{adesivo 175g}} = \lceil \sum (\text{Conexões Soldáveis}) / 30 \rceil \text{ frascos (mínimo 1 frasco por obra)}$$
+2. **Solução Preparadora / Limpadora PVC (frascos 200ml):**  
+   $$N_{\text{solução limpadora}} = \lceil N_{\text{frascos adesivo}} / 2 \rceil \text{ frascos}$$
+3. **Fita Veda-Rosca PTFE 18mm x 50m (rolos):**  
+   $$N_{\text{rolos veda-rosca}} = \lceil \sum (\text{Pontos Roscáveis, Registros e Torneiras}) / 15 \rceil \text{ rolos (mínimo 2 rolos)}$$
+4. **Pasta Lubrificante para Tubos de Esgoto com Junta Elástica (bisnagas 160g):**  
+   $$N_{\text{pasta lubrificante}} = \lceil \sum (\text{Tubos e Conexões de Esgoto c/ Bolsa}) / 20 \rceil \text{ bisnagas}$$
+5. **Anéis de Borracha para Esgoto (unid):**  
+   1 anel para cada bolsa de tubo ou conexão de esgoto (DN 40, 50, 75, 100, 150mm).
+6. **Abraçadeiras de Fixação para Prumadas e Tubulações Suspensas (unid):**  
+   Fixação a cada $1,50\text{ m}$ em prumadas verticais e trechos suspensos sob laje:
+   $$N_{\text{abraçadeiras}} = \lceil L_{\text{tubulação suspensa/prumada}} / 1,50\text{m} \rceil \times 1,05$$
+
+---
+
+## 3. Modelo de Memória de Cálculo Analítica (Hidráulica)
 ```text
 ╔══════════════════════════════════════════════════════════════════╗
 ║        MEMÓRIA DE CÁLCULO — INSTALAÇÕES HIDRÁULICAS             ║
 ╠══════════════════════════════════════════════════════════════════╣
-║  AMBIENTE: [T-101-BAN]   SISTEMA: [Esgoto Sanitário]            ║
+║  AMBIENTE: [T-101-BAN]   SISTEMA: [Esgoto Sanitário / Água]     ║
 ╠══════════════════════════════════════════════════════════════════╣
-║  TUBULAÇÃO (PVC Esgoto Série Normal DN 100mm):                  ║
-║    Trecho horizontal: X,XX m | Prumada: X,XX m                  ║
+║  TUBULAÇÃO LÍQUIDA MEDIDA (Planta Baixa + Prumada Vertical Z):  ║
+║    Horizontal: X,XX m | Vertical (Z): X,XX m                     ║
 ║    Subtotal: X,XX m + Perda 10% = X,XX m                        ║
 ║                                                                  ║
-║  CONEXÕES E ACESSÓRIOS:                                          ║
-║    Joelho 90º DN 100mm: 2 unid                                   ║
-║    Junção Y 100x50mm: 1 unid                                     ║
-║    Ralo Sifonado 150x150x50mm: 1 unid                            ║
-║    Vaso Sanitário com Caixa Acoplada: 1 conjunto                 ║
+║  CONEXÕES DETALHADAS PEÇA POR PEÇA:                              ║
+║    Joelho 90º DN 100mm: X unid                                   ║
+║    Junção Y 100x50mm: X unid                                     ║
+║    Ralo Sifonado 150x150x50mm: X unid                            ║
+║    Bacia Sanitária c/ Caixa Acoplada: X conjuntos montados       ║
+║                                                                  ║
+║  MIUDEZAS DE MONTAGEM E FIXAÇÃO:                                 ║
+║    Engates flexíveis inox 40cm: X unid                           ║
+║    Anel de vedação de cera: X unid                               ║
+║    Parafusos bacia S10 inox: X conjuntos                         ║
+║    Adesivo PVC + Fita veda-rosca: X frascos / rolos              ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
-## 4. Tabela Final de Compra (UCC)
-O relatório final deve somar o total em metros e transformar em barras inteiras.
-Exemplo: Se a obra precisa de 21 metros de Tubo Soldável 25mm, e a barra fornecida pela Tigre/Amanco é de 6 metros, a solicitação de compra final será de **4 Barras** (24m).
+---
+
+## 4. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
+
+> 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA MATERIAIS HIDRÁULICOS:**
+1. **Tubos Rígidos Soldáveis de Água Fria (PVC, PPR, CPVC):**  
+   * **Unidade Comercial:** **BARRAS DE 6 METROS (`barras`)** ou 3 metros conforme catálogo fabricante.  
+   * **Arredondamento:** $\text{Qtd. UCC} = \lceil L_{\text{total}} \times 1,10 / 6\text{m} \rceil$.
+2. **Tubos de Esgoto Série Normal e Série Reforçada (PVC):**  
+   * **Unidade Comercial:** **BARRAS DE 6 METROS COM BOLSA (`barras`)**.  
+   * **Arredondamento:** $\text{Qtd. UCC} = \lceil L_{\text{total}} \times 1,10 / 6\text{m} \rceil$.
+3. **Registros de Gaveta e Pressão:**  
+   * **Unidade Comercial:** **PEÇA / UNIDADE (`un`)**, especificando bruto ou com canopla cromada.
+4. **Louças Sanitárias e Metais:**  
+   * **Unidade Comercial:** **CONJUNTO MONTADO (`cj`)** ou **PEÇA (`un`)**, incluindo louça, assento, mecanismo interno e torneira.
+5. **Formatação da Tabela de Compras (Sem Ambiguidade):**  
+   Apresentar sempre as colunas: `Unid. Proj.` (metros ou unidades de projeto), `Qtd. UCC`, `Unid. UCC` (`barras`, `un`, `cj`, `rolos`, `frascos`) e `Embalagem de Fornecimento`.
 
 ---
 
@@ -205,3 +246,13 @@ Exemplo: Se a obra precisa de 21 metros de Tubo Soldável 25mm, e a barra fornec
   - `Regulador de Pressão de 2º Estágio (unid):` Regulador individual $kPa \to mmca$ (especificado para $2,8\text{ kPa}$ / $280\text{ mmca}$).
   - `Válvula de Esfera c/ Trava de Segurança (unid):` Válvula de fecho rápido para corte individual c/ furação para lacre.
   - `Chicote / Flexível de Latão de Ligação (unid):` Flexível metálico para acoplamento no medidor.
+
+---
+
+## 8. Diretriz Rígida de Governança Técnica: Bloqueio Formal contra Chutes Paramétricos
+
+> 🛑 **REGRA DE OURO CONTRA ESTIMATIVAS FICTÍCIAS DE TUBULAÇÕES:**  
+> 1. O levantamento de tubulações de água fria, esgoto sanitário, pluvial e gás **DEVE TER ORIGEM EXCLUSIVA em pranchas executivas específicas da disciplina** (Plantas Baixas de Tubulações com diâmetros cotados e Esquemas Isométricos com caixas de inspeção/sifonadas).
+> 2. Caso a projetista tenha entregue apenas pranchas de arquitetura (com a indicação de louças sanitárias, mas sem traçado de encanamento) ou se pranchas de outras disciplinas foram cadastradas equivocadamente na lista, **É TERMINANTEMENTE PROIBIDO GERAR METRAGENS DE TUBOS E CONEXÕES POR ESTIMATIVA MÉDIA OU CHUTE PARAMÉTRICO**.
+> 3. O Agente DEVE listar as redes de distribuição e coleta na seção de **BLOQUEIO FORMAL / PENDÊNCIA TÉCNICA DA PROJETISTA (RFI)**, mantendo a memória de cálculo 100% auditável e livre de riscos contratuais.
+
