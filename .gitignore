@@ -5,6 +5,14 @@ Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
 
+# Pranchas e arquivos pesados de engenharia (manter localmente / nuvem)
+*.pdf
+*.dwg
+*.dxf
+*.ifc
+*.rvt
+*.bak
+
 # Next.js / Node
 **/node_modules/
 **/.next/
