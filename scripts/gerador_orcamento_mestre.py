@@ -4,6 +4,8 @@ import json
 import argparse
 import ast
 import math
+import re
+import shutil
 
 def calcular_expressao(expressao):
     """
@@ -188,26 +190,74 @@ def gerar_orcamento(json_path):
         print(f"  [OK] Células Calculadas e CSV Gerado: {csv_filename}")
 
         # Write Markdown de Memória de Cálculo
-        # Se já existe um MD com Seção 1 detalhada e não estamos gerando via equações dinâmicas,
-        # preservar a Seção 1 existente para não perder a demonstração geométrica/manual auditada
-        secao_1_preservada = ""
+        # Preservação integral da memória técnica existente (se não estiver gerando via equações dinâmicas)
+        secao_memoria_preservada = ""
         secao_3_preservada = ""
-        if not memoria_calculo_dinamica and os.path.exists(md_path):
+        caution_block_preservado = ""
+        if os.path.exists(md_path):
             try:
                 with open(md_path, 'r', encoding='utf-8') as f_existente:
                     conteudo_anterior = f_existente.read()
-                    if "## 🧮 1." in conteudo_anterior:
-                        partes_1 = conteudo_anterior.split("## 🧮 1.")
-                        secao_1_resto = partes_1[1].lstrip()
-                        if "## 📊 2." in secao_1_resto:
-                            secao_1_preservada = secao_1_resto.split("## 📊 2.")[0].strip()
-                        else:
-                            secao_1_preservada = secao_1_resto.strip()
+                    
+                    if not memoria_calculo_dinamica:
+                        # 1. Preservar bloco de alerta inicial (CAUTION / WARNING / NOTE) se existir
+                        m_alert = re.search(r'(>\s*\[![A-Z]+\][\s\S]*?)(?=\n##|\Z)', conteudo_anterior)
+                        if m_alert:
+                            caution_block_preservado = m_alert.group(1).strip()
+                        
+                        # 2. Preservar toda a memória técnica que antecede a Tabela Consolidada Oficial
+                        marcador_tabela = ""
+                        if "## 📊 2. Tabela Consolidada" in conteudo_anterior:
+                            marcador_tabela = "## 📊 2. Tabela Consolidada"
+                        elif "## 📊 Tabela Consolidada" in conteudo_anterior:
+                            marcador_tabela = "## 📊 Tabela Consolidada"
+                        elif "## 📊 2." in conteudo_anterior:
+                            marcador_tabela = "## 📊 2."
+
+                        if marcador_tabela:
+                            partes = conteudo_anterior.split(marcador_tabela, 1)
+                            cabecalho_e_memoria = partes[0]
+                            resto_tabela = marcador_tabela + partes[1]
+                            
+                            # Extrai a memória após o cabeçalho inicial (após a primeira linha '---')
+                            if "\n---\n" in cabecalho_e_memoria:
+                                partes_cab = cabecalho_e_memoria.split("\n---\n", 1)
+                                memoria_bruta = partes_cab[1].strip()
+                            else:
+                                memoria_bruta = cabecalho_e_memoria.strip()
+                            
+                            # Remove o bloco de alerta da memória bruta se já foi capturado
+                            if caution_block_preservado and caution_block_preservado in memoria_bruta:
+                                memoria_bruta = memoria_bruta.replace(caution_block_preservado, "").strip()
+                                
+                            secao_memoria_preservada = memoria_bruta.rstrip("-").strip()
+                    
+                    # 3. Preservar seções de fechamento (Certificado / Checklists / Seção 3) para todas as disciplinas
                     if "## 📋 3." in conteudo_anterior:
-                        partes_3 = conteudo_anterior.split("## 📋 3.")
-                        secao_3_preservada = partes_3[1].split("\n---\n")[0].strip()
+                        s3_raw = "## 📋 3." + conteudo_anterior.split("## 📋 3.", 1)[1]
+                        s3_clean = re.split(r'\n---\s*\n\s*\*Data da última atualização', s3_raw, flags=re.IGNORECASE)[0].strip()
+                        secao_3_preservada = s3_clean.rstrip("-").strip()
+                    elif "CERTIFICADO DE AUDITORIA" in conteudo_anterior:
+                        m_cert = re.search(r'(\={20,}[\s\S]*?STATUS:[\s\S]*?\={20,})', conteudo_anterior)
+                        if m_cert:
+                            secao_3_preservada = m_cert.group(1).strip()
             except Exception as e:
                 print(f"  [AVISO] Não foi possível ler seções existentes de {md_path}: {e}")
+
+        # Trava de Segurança: se o arquivo existente tem mais de 40 linhas e a memória técnica não pôde ser lida nem gerada
+        if os.path.exists(md_path) and not memoria_calculo_dinamica and not secao_memoria_preservada:
+            with open(md_path, 'r', encoding='utf-8') as f_existente:
+                linhas_existente = len(f_existente.readlines())
+            if linhas_existente > 40:
+                print(f"  [TRAVA DE SEGURANÇA] Arquivo {md_filename} possui {linhas_existente} linhas detalhadas e a memória técnica não foi parseada com segurança. Sobrescrita abortada para evitar perda de dados!")
+                continue
+
+        # Backup de segurança antes de sobrescrever
+        if os.path.exists(md_path):
+            try:
+                shutil.copy2(md_path, md_path + ".bak")
+            except Exception:
+                pass
 
         md_content = f"# 🏛️ Memória de Cálculo Auditável: {titulo_disc}\n\n"
         md_content += f"**Projeto:** {projeto}  \n"
@@ -216,13 +266,15 @@ def gerar_orcamento(json_path):
         md_content += f"**Data da Auditoria:** {data_auditoria}  \n\n"
         md_content += "---\n\n"
         
+        if caution_block_preservado:
+            md_content += f"{caution_block_preservado}\n\n"
+
         if memoria_calculo_dinamica:
             md_content += "## 🧮 1. Demonstração Matemática Detalhada (Calculada via CPU)\n\n"
             md_content += "\n".join(memoria_calculo_dinamica)
             md_content += "\n\n---\n\n"
-        elif secao_1_preservada:
-            secao_1_clean = secao_1_preservada.rstrip("-").strip()
-            md_content += f"## 🧮 1. {secao_1_clean}\n\n---\n\n"
+        elif secao_memoria_preservada:
+            md_content += f"{secao_memoria_preservada}\n\n---\n\n"
         
         md_content += "## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)\n\n"
         md_content += "| Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |\n"
@@ -235,7 +287,10 @@ def gerar_orcamento(json_path):
             md_content += f"\n> 💰 **Subtotal Financeiro da Disciplina:** `{formatar_moeda(subtotal_disc_financeiro)}`\n"
 
         if secao_3_preservada:
-            md_content += f"\n---\n\n## 📋 3. {secao_3_preservada}\n"
+            if not secao_3_preservada.startswith("## 📋 3.") and not secao_3_preservada.startswith("="):
+                md_content += f"\n---\n\n## 📋 3. {secao_3_preservada}\n"
+            else:
+                md_content += f"\n---\n\n{secao_3_preservada}\n"
 
         md_content += "\n---\n\n"
         md_content += f"*Data da última atualização:* {data_auditoria}\n"

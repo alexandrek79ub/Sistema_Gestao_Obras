@@ -14,19 +14,17 @@
 1.1.13;Impermeabilização Tinta Asfáltica (Baldrames e Sapatas);Infraestrutura;183.36;m²;10.0;201.70;m² (12 galões 18L);AÇU-3.DES-2.3100-11-EGS-051/054;-;-
 1.1.14;Reaterro Compactado de Cavas e Valas c/ Maço/Sapo Líquido;Infraestrutura;31.17;m³;0.0;31.17;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
 1.1.15;Bota-fora e Carga de Terra c/ Empolamento 1,25 Líquido;Infraestrutura;20.10;m³;0.0;25.13;m³ (3 caminhões 12m³);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.2.1;Concreto Usinado fck 30 MPa Pilares (P1 a P24 h=2,98m);Supraestrutura;18.60;m³;5.0;19.53;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.2;Concreto Usinado fck 30 MPa Vigas Superiores (V1 a V18);Supraestrutura;34.20;m³;5.0;35.91;m³ (5 betoneiras);AÇU-3.DES-2.3100-11-EGS-056;-;-
-1.2.3;Concreto Usinado fck 30 MPa Capa Laje Treliçada e=5cm;Supraestrutura;22.10;m³;5.0;23.21;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/056;-;-
-1.2.4;Fôrma Compensado Resinado 17mm Pilares (P1 a P24);Supraestrutura;248.00;m²;10.0;113;chapas (272.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.5;Fôrma Compensado Resinado 17mm Vigas Superiores;Supraestrutura;312.40;m²;10.0;142;chapas (343.64 m²);AÇU-3.DES-2.3100-11-EGS-056;-;-
-1.2.6;Fôrma Compensado Resinado 17mm Laje (Face Inferior);Supraestrutura;368.40;m²;10.0;168;chapas (405.24 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
-1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas (PD=3,20m);Supraestrutura;1178.88;m²·m;0.0;1178.88;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
-1.2.8;Laje Treliçada H12 Vigotas TR 16745 c/ Enchimento EPS;Supraestrutura;968.80;m;5.0;1017.24;m (368.40 m² laje);AÇU-3.DES-2.3100-11-EGS-059;-;-
-1.2.9;Armadura CA-60 Ø5,0mm TR 16745 (Vigotas Treliçadas H12);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
-1.2.10;Armadura CA-50 Ø10,0mm / Ø12,5mm / Ø16,0mm (Pilares e Vigas);Supraestrutura;7840.00;kg;5.0;686;barras 12m (8232.0 kg);AÇU-3.DES-2.3100-11-EGS-057/060;-;-
-1.2.11;Arame Recozido BWG 18 para Amarrações de Superestrutura;Supraestrutura;132.60;kg;0.0;133.00;kg (133 rolos 1kg);AÇU-3.DES-2.3100-11-EGS-057;-;-
-1.2.12;Espaçadores/Pastilhas Plásticas de Cobrimento 25mm/30mm;Supraestrutura;2850.00;unid;5.0;2993;unidades;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
-1.2.13;Desmoldante Biodegradável para Fôrmas de Concreto;Supraestrutura;45.00;L;0.0;3;galões de 18L (54L);AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.1;Concreto Usinado fck 30 MPa para Pilares P1 a P24 (h=2,98m);Supraestrutura;6.44;m³;5.0;6.76;m³ (1 betoneira);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.2;Fôrma Compensado Resinado 17mm para Pilares P1 a P24 (4 faces);Supraestrutura;85.82;m²;10.0;40;chapas (96.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
+1.2.3;Concreto Usinado fck 30 MPa para Vigas Superiores e Cobertura (V101 a V115);Supraestrutura;17.38;m³;5.0;18.25;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
+1.2.4;Fôrma Compensado Resinado 17mm para Vigas Superiores (fundo e laterais líquidas);Supraestrutura;208.62;m²;10.0;95;chapas (229.90 m²);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
+1.2.5;Concreto Usinado fck 30 MPa para Capa de Laje Treliçada e=5cm;Supraestrutura;13.17;m³;5.0;13.83;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/059;-;-
+1.2.6;Fôrma Compensado Resinado 17mm para Lajes (Face Inferior / Fundo);Supraestrutura;263.48;m²;10.0;120;chapas (290.40 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
+1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas;Supraestrutura;888.78;m²·m;0.0;888.78;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
+1.2.8;Vigotas Treliçadas TR 16745 para Lajes H12;Supraestrutura;968.80;m;5.0;1017.24;m;AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148;unid;5.0;1206;unidades;AÇU-3.DES-2.3100-11-EGS-055;-;-
+1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.10;kg;5.0;165;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;-;-
+1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
 2.1.1;Alvenaria de Vedação Bloco Concreto 14x19x39cm;Arquitetura;1061.44;m²;5.0;13931;blocos (1114.5 m²);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
 2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
 2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016;-;-

@@ -9,6 +9,9 @@
 > - **ZERO ESTIMATIVA / ZERO CHUTE:** É EXPRESSAMENTE PROIBIDO estimar, inferir ou chutar dimensões, comprimentos, áreas, volumes ou quantitativos de projeto de estruturas.
 > - **LEITURA OBRIGATÓRIA:** Toda cota DEVE ser lida 100% diretamente das pranchas. Se faltar cota ou prancha, PARE A EXECUÇÃO E SOLICITE AO USUÁRIO. O orçamento é executivo e a gestão de obras não admite achismos.
 > - **GRANULARIDADE 100% (PEÇA A PEÇA):** É PROIBIDO agrupar insumos (ex: "vigas V1 a V18"). O levantamento DEVE quantificar minuciosamente pilar por pilar, viga por viga, detalhando dimensões individuais.
+> - **SEGREGAÇÃO MANDATÓRIA EAP vs. UCC (NÃO POLUIR A EAP):** 
+>   - **Na EAP de Superestrutura:** Devem constar **exclusivamente serviços puros de engenharia** (Concreto Usinado, Fôrmas, Aço Armado, Vigotas Treliçadas, Blocos de Enchimento EPS, Escoramento Metálico).
+>   - **Na UCC (Lista de Compras / BOM / Almoxarifado):** Devem ser discriminadas todas as **miudezas e insumos de apoio executivo** (Arame Recozido BWG 18, Espaçadores Plásticos de cobrimento, Desmoldante para fôrmas, Pregos 17x27/18x30, Sarrafos de madeira para gravatas, Lona de cura úmida). As miudezas NUNCA devem receber código de serviço da EAP.
 
 ---
 
