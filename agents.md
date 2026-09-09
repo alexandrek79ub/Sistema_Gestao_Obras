@@ -50,7 +50,7 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
 - 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento usando os arquivos locais como Banco de Dados.
-- 📐 **Extração de Carimbos e Lista de Desenhos**: Automação via `python scripts/extrair_carimbos.py` e `gerar_lista_desenhos.py` para recortar os carimbos de pranchas PDF e gerar a `LISTA_DE_DESENHOS.csv` e `.md` em segundos.
+- 📐 **Motor de Orçamento e Automações de Engenharia**: Execução via `python scripts/gerador_orcamento_mestre.py` (Motor Híbrido Cérebro/CPU v2.0 com AST) para resolver expressões matemáticas e gerar CSV/MD com trilha auditável, e `extrair_carimbos.py` / `gerar_lista_desenhos.py` para catalogar pranchas PDF.
 - 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API).
 
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
@@ -79,8 +79,8 @@ Sempre que receber um pedido, siga estes passos:
 - **NÃO** resuma uma skill ou POP. Leia-as e aplique-as na íntegra.
 - **NÃO** assuma dimensões, datas ou efetivo da obra sem confirmação do usuário.
 - **PROIBIDO** pagar por avanço presumido. A medição deve ser física (A Regra da Trena - POP 09).
-- **PROIBIDO** comprar quantidade fracionada ("quebrada"). Deve-se aplicar a regra da Unidade Comercial de Compra (UCC).
-- **MEMÓRIA DE CÁLCULO EM MARKDOWN NATIVO:** É OBRIGATÓRIO escrever todas as memórias de cálculo em Markdown nativo limpo (codeblocks e citações), sendo PROIBIDO o uso de blocos KaTeX ($$) ou \text{} que gerem mensagens de erro no VS Code.
-- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e gera o arquivo `template_dados_orcamento.json`. O script `gerador_orcamento_mestre.py` roda na CPU para calcular o resultado e gerar o CSV/MD.
+- **PROIBIDO** comprar quantidade fracionada ("quebrada"). Deve-se aplicar a regra da Unidade Comercial de Compra (UCC) com arredondamento estritamente para CIMA (`math.ceil`) para insumos discretos (caixas de pisos, barras de aço, sacos, latas, telhas, blocos, peças), garantindo que nunca falte material no canteiro.
+- **MEMÓRIA DE CÁLCULO AUDITÁVEL COMPLETA EM MARKDOWN NATIVO:** É OBRIGATÓRIO escrever todas as memórias em Markdown nativo limpo (codeblocks e citações), sendo PROIBIDO o uso de blocos KaTeX ($$) ou \text{}. Toda memória de cálculo DEVE conter a **Seção 1 (Demonstração Matemática Detalhada passo a passo com deduções de vãos, nós e trigonometria)** e a **Seção 2 (Tabela Consolidada UCC)**. O motor mestre preserva automaticamente demonstrações manuais auditadas existentes.
+- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final de cabeça. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e gera o arquivo `template_dados_orcamento.json`. O script `gerador_orcamento_mestre.py` roda na CPU para calcular o resultado e gerar o CSV/MD.
 - **O ORÇAMENTO É A LEI SUPREMA:** Toda despesa deve ser cruzada com a viabilidade financeira da obra (Skill ADM). Se a obra atrasa, afeta dinheiro e equipe de imediato. Ação e Reação.
 
