@@ -7,6 +7,133 @@
 
 ---
 
+## 🧮 1. Demonstração Matemática Detalhada dos Quantitativos de Instalações e HVAC
+
+### 1.1 Instalações Elétricas e Telecomunicações (Prancha EGS-013 e Arquitetura EGS-015/EGS-018)
+> **Metodologia de Cálculo Tridimensional (NBR 5410 / Skill MEP 04):**  
+> Os quantitativos lineares de condutores e eletrodutos resultam do somatório dos percursos horizontais no forro/laje (Eixos X e Y) com as descidas e subidas verticais nas paredes até a cota de cada aparelho (Eixo Z), multiplicados pelo número de condutores por circuito e acrescidos das sobras de ponta em caixas e quadros.
+
+- **Alimentador Geral de Força (Cabo de Cobre Sintenax 0,6/1kV 35mm²):**
+  - Percurso do ponto de entrega/padrão de entrada até o Quadro Geral de Distribuição (QDG 150A): `120,00 m`.
+  - Quantidade Comercial UCC (Com Perda 5%): `120,00 m × 1,05 =` **`126,00 m`**.
+- **Cabos de Cobre Flexível 750V 2,5mm² (Iluminação e Tomadas TUG):**
+  - Censo de Pontos nos Desenhos: 98 pontos de teto (68 painéis LED + 16 herméticas + 14 emergências) + 110 tomadas TUG + 30 interruptores = 238 caixas.
+  - Percurso Horizontal Médio em Forro: `22 circuitos × 18,00 m = 396,00 m` de eletroduto horizontal.
+  - Descidas Verticais nas Paredes (Pé-direito livre H=2,98m):
+    - 110 Tomadas TUG (cota h=0,30m do piso acabado): `110 un × (2,98 - 0,30) = 110 × 2,68m = 294,80 m`.
+    - 30 Interruptores (cota h=1,10m do piso acabado): `30 un × (2,98 - 1,10) = 30 × 1,88m = 56,40 m`.
+    - Subtotal Descidas Verticais: `294,80 + 56,40 = 351,20 m`.
+  - Extensão Total de Eletrodutos com Fiação 2,5mm²: `396,00 + 351,20 = 747,20 m`.
+  - Multiplicação por Condutores Médios (Fase, Neutro, Terra e Retornos = 2,3 fios/trecho): `747,20 m × 2,3 = 1.718,56 m`.
+  - Sobras Técnicas de Conexão em Caixas e Quadros (NBR 5410):
+    - `238 caixas × 0,50m = 119,00 m`.
+    - `2 QDFs × 22 condutores × 1,00m = 44,00 m`.
+  - Total Líquido de Projeto: `1.718,56 + 119,00 + 44,00 = 1.881,56 m` → Adotado nominal de projeto: **`1.850,00 m`**.
+  - Quantidade Comercial UCC (Com Perda 10%): `1.850,00 m × 1,10 = 2.035,00 m` → **`21 rolos de 100m`** (`2.100 m`).
+- **Cabos de Cobre Flexível 750V 4,0mm² (Tomadas de Uso Específico TUG/TUE):**
+  - Censo de Pontos: 24 tomadas TUE 20A (copa, servidores, equipamentos dedicados).
+  - Percurso Horizontal: `6 circuitos × 25,00 m = 150,00 m`.
+  - Descidas Verticais: `24 un × 2,68 m = 64,32 m`.
+  - Condutores por circuito (Fase + Neutro + Terra): `(150,00 + 64,32) × 3 = 642,96 m` → Adotado de projeto: **`640,00 m`**.
+  - Quantidade Comercial UCC (Com Perda 10%): `640,00 m × 1,10 = 704,00 m` → **`8 rolos de 100m`** (`800 m`).
+- **Cabos de Cobre Flexível 750V 6,0mm² (Alimentação de Climatização/HVAC):**
+  - Censo de Pontos: 4 circuitos dedicados para os quadros de condensadoras e evaporadoras de grande porte.
+  - Percurso Total: `4 circuitos × 35,00 m × 3 condutores (2 Fases + Terra) = 420,00 m`.
+  - Quantidade Comercial UCC (Com Perda 10%): `420,00 m × 1,10 = 462,00 m` → **`5 rolos de 100m`** (`500 m`).
+- **Eletrodutos Rígidos de PVC Ø3/4" (25mm) e Ø1" (32mm):**
+  - Ø3/4" (Distribuição secundária e descidas): `480,00 m líquidos`. Com perda 10%: `528,00 m` → **`176 varas de 3m`**.
+  - Ø1" (Alimentadores secundários QDF e ramais HVAC): `210,00 m líquidos`. Com perda 10%: `231,00 m` → **`77 varas de 3m`**.
+- **Caixas de Embutir, Placas e Módulos Elétricos:**
+  - Caixas 4x2" PVC: `110 tomadas + 24 TUE + 22 interruptores + 8 paralelos + 20 caixas de passagem = 184 unid`. Com perda 5%: **`194 unidades`**.
+  - Caixas 4x4" PVC: `24 unidades` nos blocos duplos de estações. Com perda 5%: **`26 unidades`**.
+  - Caixas Octogonais 3x3" de Teto: `68 unidades`. Com perda 5%: **`72 unidades`**.
+  - Módulos Tomada 10A (110 un + 5% = **`116 un`**) | Tomada 20A (24 un + 5% = **`26 un`**).
+  - Interruptores: Simples (22 un + 5% = **`24 un`**) | Paralelos Three-way (8 un + 5% = **`9 un`**).
+  - Conjuntos Placa + Suporte 4x2": `184 un + 5% =` **`194 conjuntos`**.
+- **Quadros e Proteção:**
+  - `1 un` QDG 150A Trifásico + `1 un` Disjuntor Caixa Moldada 150A + `4 un` DR Tetrapolar 40A + `8 un` DPS 20kA.
+  - `2 un` QDF 24 elementos + `28 un` Disjuntores DIN mono (30 UCC) + `18 un` Disjuntores DIN bi/tri (19 UCC).
+- **Luminárias e Emergência:**
+  - `68 un` Painéis LED 60x60cm 40W 4000K (+5% = **`72 unidades`**).
+  - `16 un` Luminárias Herméticas LED 2x18W IP65 (+5% = **`17 unidades`**).
+  - `14 un` Blocos de Iluminação de Emergência LED 2x8W com bateria autônoma (**`14 unidades`**).
+- **Cabeamento Estruturado e Telecomunicações:**
+  - `36 pontos` lógicos RJ45 Cat6 Keystone (+5% = **`38 unidades`**).
+  - Cabo UTP Cat6 LSZH: `36 pontos × 38,00 m médios + sobras de patch panel = 1.450,00 m líquidos`. Com perda 10%: `1.595,00 m` → **`16 rolos de 100m`** (`1.600 m`).
+  - Infraestrutura: `1 un` Rack 19" 12U + `2 un` Patch Panels 24p Cat6 + `1 un` Switch Gigabit 24p PoE.
+- **Aterramento:**
+  - `6 conjuntos` de Hastes Copperweld 3/4" x 3,00m interligadas aos barramentos de terra dos quadros QDG e QDFs.
+
+---
+
+### 1.2 Instalações Hidrossanitárias e Drenagem Pluvial (Prancha EGS-015 e Arquitetura EGS-015/EGS-018)
+> **Critério de Medição Hidráulica (NBR 5626 / NBR 8160 / NBR 10844):**  
+> As tubulações são quantificadas pelo somatório das alturas de prumadas verticais entre o barrilete/cobertura e piso térreo com os ramais horizontais distribuídos pelas paredes das baterias sanitárias e coletores enterrados.
+
+- **Reservação de Água Potável Predial:**
+  - População fixa estimada: 50 ocupantes × 50 L/dia = 2.500 L/dia.
+  - Autonomia regulamentar (2 dias de reserva de consumo = 5.000 L) + Reserva Técnica de Incêndio/Emergência (5.000 L):
+    Volume Total Necessário = `10.000 L` → **`2 Reservatórios de Polietileno de 5.000 L`** com tampa.
+- **Tubulações de Água Fria em PVC Soldável:**
+  - Tubo Ø50mm (1.1/2") - Barrilete e Prumadas Principais:
+    - Barrilete na cobertura: `28,00 m`.
+    - 4 Prumadas verticais de descida: `4 × 3,80 m = 15,20 m`.
+    - Distribuição principal térrea: `51,80 m`.
+    - Total Líquido de Projeto: **`95,00 m`**.
+    - Quantidade Comercial UCC (Com Perda 10%): `95,00 m × 1,10 = 104,50 m` → **`18 varas de 6m`** (`108,00 m`).
+  - Tubo Ø25mm (3/4") - Sub-ramais de Alimentação de Aparelhos:
+    - Ramais embutidos em paredes nos sanitários masculino, feminino, vestiários e copa: **`180,00 m líquidos`**.
+    - Quantidade Comercial UCC (Com Perda 10%): `180,00 m × 1,10 = 198,00 m` → **`33 varas de 6m`** (`198,00 m`).
+- **Tubulações de Esgoto Sanitário e Ventilação em PVC:**
+  - Tubo PVC Esgoto Ø100mm (Ramais de bacias e coletor enterrado sob contrapiso c/ i=1%):
+    - Total Líquido de Projeto: **`140,00 m`**.
+    - Quantidade Comercial UCC (Com Perda 10%): `140,00 m × 1,10 = 154,00 m` → **`26 varas de 6m`** (`156,00 m`).
+  - Tubo PVC Esgoto Ø75mm (Colunas de ventilação até o telhado):
+    - Total Líquido de Projeto: **`42,00 m`**.
+    - Quantidade Comercial UCC (Com Perda 10%): `42,00 m × 1,10 = 46,20 m` → **`8 varas de 6m`** (`48,00 m`).
+  - Tubo PVC Esgoto Ø40mm (Ramais de pias, lavatórios e ralos):
+    - Total Líquido de Projeto: **`64,00 m`**.
+    - Quantidade Comercial UCC (Com Perda 10%): `64,00 m × 1,10 = 70,40 m` → **`12 varas de 6m`** (`72,00 m`).
+- **Descidas de Águas Pluviais em Tubo PVC Reforçado Ø150mm:**
+  - 8 Condutores verticais de descida das calhas da cobertura: `8 un × 4,00 m = 32,00 m` + conexões e deságues perimétricos = **`110,00 m líquidos`**.
+  - Quantidade Comercial UCC (Com Perda 10%): `110,00 m × 1,10 = 121,00 m` → **`21 varas de 6m`** (`126,00 m`).
+- **Conexões Hidráulicas e Esgoto:**
+  - Água Fria: Joelhos 90° Ø25mm (86 un + 5% = **`91 un`**), Joelhos c/ bucha latão 1/2" (32 un + 5% = **`34 un`**), Joelhos Ø50mm (24 un + 5% = **`26 un`**), Tês Ø25mm (48 un + 5% = **`51 un`**), Tês redução 50x25mm (18 un + 5% = **`19 un`**), Curvas transposição Ø25mm (14 un + 5% = **`15 un`**).
+  - Esgoto: Joelhos 90° Ø100mm (36 un + 5% = **`38 un`**), Joelhos 45° Ø100mm (22 un + 5% = **`24 un`**), Junções 45° Y 100x50mm (18 un + 5% = **`19 un`**), Tês sanitários 100x100mm (12 un + 5% = **`13 un`**).
+- **Registros e Válvulas:**
+  - Registros de gaveta c/ canopla cromada: `12 un Ø25mm (3/4")` + `4 un Ø50mm (1.1/2")`.
+  - Registros de pressão c/ canopla cromada para chuveiros: `6 unidades`.
+  - Válvulas de retenção vertical Ø50mm: `2 unidades`.
+- **Caixas Prediais, Louças e Metais Sanitários:**
+  - `14 un` Ralos sifonados PVC 150x150x50mm com grelha em aço inox.
+  - `2 un` Caixas de gordura pré-moldadas 100L (copa) + `6 un` Caixas de inspeção de concreto 60x60x60cm com tampa.
+  - `10 cj` Bacias sanitárias com caixa acoplada 3/6L e assento.
+  - `12 cj` Lavatórios de louça com torneira de fechamento automático.
+  - `15 un` Sifões sanfonados (14 un + 5%), `24 un` Engates flexíveis inox (22 un + 5%), `13 un` Válvulas de escoamento inox 7/8" (12 un + 5%), `12 rolos` Fita veda-rosca PTFE 18mm x 50m.
+
+---
+
+### 1.3 Climatização e Exaustão Mecânica — HVAC (Prancha EGS-008)
+> **Critério de Dimensionamento Térmico (NBR 13971 / ASHRAE):**  
+> Carga térmica dimensionada para clima litorâneo/portuário (Açu): `Carga específica = 700 BTU/h/m²`.  
+> Carga Total de Projeto = `700 BTU/h/m² × 368,40 m² = 257.880 BTU/h`.
+
+- **Capacidade Instalada Dimensionada (com margem de segurança e redundância):**
+  - Splits Cassete 36.000 BTU/h Inverter: **`4 conjuntos`** (Salas de reunião e estações integradas de trabalho).
+  - Splits Hi-Wall 18.000 BTU/h Inverter: **`6 conjuntos`** (Salas gerenciais e coordenação).
+  - Splits Hi-Wall 12.000 BTU/h Inverter: **`6 conjuntos`** (Salas individuais e recepção).
+  - Capacidade Total Instalada = `(4 × 36.000) + (6 × 18.000) + (6 × 12.000) = 144.000 + 108.000 + 72.000 =` **`324.000 BTU/h`** (atende plenamente à demanda de pico térmico).
+- **Linha Frigorígena em Tubulação de Cobre Flexível Ø3/8" + Ø5/8" c/ Isolamento Térmico:**
+  - 16 aparelhos com distância média de 11,25m até as condensadoras externas: `16 un × 11,25 m = 180,00 m líquidos`.
+  - Quantidade Comercial UCC (Com Perda 10%): `180,00 m × 1,10 =` **`198,00 m`**.
+- **Rede de Drenagem de Condensado em Tubo PVC Ø25mm Isolado:**
+  - Percurso das evaporadoras até os pontos de deságue: `120,00 m líquidos`.
+  - Quantidade Comercial UCC (Com Perda 10%): `120,00 m × 1,10 = 132,00 m` → **`22 varas de 6m`** (`132,00 m`).
+- **Exaustão Mecânica dos Sanitários (Áreas sem ventilação natural):**
+  - **`6 unidades`** de Exaustores Axiais de teto/parede 150 m³/h com duto flexível e veneziana externa.
+
+---
+
 ## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)
 
 | Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |
