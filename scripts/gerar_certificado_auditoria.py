@@ -4,7 +4,7 @@ import csv
 dest_dir = r'c:\Users\Alexandre\Workspace\A11_SISTEMA_DE_GESTAO_OBRAS\projetos\OBRA_TMULT\02_ORCAMENTO_BASE_E_CONTRATOS'
 
 # Load Infra
-infra_csv = os.path.join(dest_dir, 'QUANTITATIVO_INFRAESTRUTURA_FUNDACOES.csv')
+infra_csv = os.path.join(dest_dir, 'QUANTITATIVO_INFRAESTRUTURA.csv')
 with open(infra_csv, 'r', encoding='utf-8') as f:
     infra_items = list(csv.DictReader(f))
 
@@ -65,7 +65,7 @@ cert_md = """# 🔍 Certificado de Auditoria e Verificação de Quantitativos
   - Escoramento e Cimbramento metálico
 
 ### 6. Checklist 6 — Formatação e Antifragilidade
-- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA_FUNDACOES.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown limpo nativo, livres de erros de renderização KaTeX no VS Code.
+- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown limpo nativo, livres de erros de renderização KaTeX no VS Code.
 
 ---
 

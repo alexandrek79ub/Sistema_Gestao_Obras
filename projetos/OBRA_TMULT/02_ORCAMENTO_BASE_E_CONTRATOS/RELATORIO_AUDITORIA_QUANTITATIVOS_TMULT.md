@@ -12,9 +12,9 @@
 
 Em obediência estrita às regras atualizadas da **`SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md`** e do manual **`AGENTS.md`**, foi realizada a re-auditoria completa sem qualquer agrupação ou resumo sintético.
 
-Todas as 4 disciplinas foram auditadas no nível micro-granular, contabilizando um total de **116 itens orçamentários auditados linha por linha**:
+Todas as 4 disciplinas foram auditadas no nível micro-granular, contabilizando um total de **115 itens orçamentários auditados linha por linha**:
 
-- **1. Infraestrutura e Fundações:** `16 itens granulares` (`MEMORIA_CALCULO_INFRAESTRUTURA_FUNDACOES.md`)
+- **1. Infraestrutura e Fundações:** `15 itens granulares` (`MEMORIA_CALCULO_INFRAESTRUTURA.md`)
 - **2. Supraestrutura:** `13 itens granulares` (`MEMORIA_CALCULO_SUPRAESTRUTURA.md`)
 - **3. Arquitetura, Cobertura & Platibanda:** `21 itens granulares` (`MEMORIA_CALCULO_ARQUITETURA.md`)
 - **4. Instalações Elétricas, Telecom & HVAC:** `66 itens granulares` (`MEMORIA_CALCULO_INSTALACOES_HVAC.md`)

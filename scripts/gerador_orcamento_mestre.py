@@ -198,7 +198,7 @@ def gerar_orcamento(json_path):
                     conteudo_anterior = f_existente.read()
                     if "## 🧮 1." in conteudo_anterior:
                         partes_1 = conteudo_anterior.split("## 🧮 1.")
-                        secao_1_resto = partes_1[1]
+                        secao_1_resto = partes_1[1].lstrip()
                         if "## 📊 2." in secao_1_resto:
                             secao_1_preservada = secao_1_resto.split("## 📊 2.")[0].strip()
                         else:
@@ -221,7 +221,8 @@ def gerar_orcamento(json_path):
             md_content += "\n".join(memoria_calculo_dinamica)
             md_content += "\n\n---\n\n"
         elif secao_1_preservada:
-            md_content += f"## 🧮 1.{secao_1_preservada}\n\n---\n\n"
+            secao_1_clean = secao_1_preservada.rstrip("-").strip()
+            md_content += f"## 🧮 1. {secao_1_clean}\n\n---\n\n"
         
         md_content += "## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)\n\n"
         md_content += "| Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |\n"

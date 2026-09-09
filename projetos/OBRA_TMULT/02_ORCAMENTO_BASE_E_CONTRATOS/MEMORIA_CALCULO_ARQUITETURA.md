@@ -309,48 +309,23 @@
 
 ---
 
+---
+
 ## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)
 
 | Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |
 | :---: | :--- | :---: | :---: | :---: | :---: | :--- | :---: | :---: |
-| **2.1.1.A** | Bloco Concreto Inteiro 14x19x39cm (B144) Corrente | 12733.0 unid | 5.0% | **13370** | `blocos B144 (1069.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
-| **2.1.1.B** | Meio Bloco Concreto 14x19x19cm (B142) Amarrações | 508.0 unid | 5.0% | **534** | `meios blocos B142 (21.4 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
-| **2.1.1.C** | Bloco Canaleta Concreto 14x19x39cm (C144) Vergas/Cintas | 281.0 unid | 5.0% | **296** | `blocos C144 (118.4 m)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
-| **2.1.1.D** | Graute Fino para Preenchimento de Canaletas | 1.42 m³ | 5.0% | **1.49** | `m³ (75 sacos 25kg)` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.1.E** | Armadura CA-50 Ø8,0mm Vergas e Contravergas | 224.80 m | 5.0% | **20** | `barras 12m (93.2 kg)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
-| **2.1.1.F** | Cimento CP II para Argamassa de Assentamento de Blocos | 5520.0 kg | 5.0% | **116** | `sacos de 50kg` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.1.G** | Cal Hidratada CH-I para Argamassa de Assentamento | 1910.0 kg | 5.0% | **101** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.1.H** | Areia Média Lavada para Argamassa de Assentamento | 23.35 m³ | 5.0% | **24.5** | `m³` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
+| **2.1.1** | Alvenaria de Vedação Bloco Concreto 14x19x39cm | 1061.44 m² | 5.0% | **13931** | `blocos (1114.5 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
 | **2.1.2** | Chapisco Traço 1:3 e=5mm em Paredes | 2122.88 m² | 5.0% | **2229.02** | `m² (75 sacos cimento)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
 | **2.1.3** | Emboço/Reboco Paulista e=20mm em Paredes | 2122.88 m² | 5.0% | **2229.02** | `m² (446 sacos argamassa)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
 | **2.1.4** | Contrapiso de Regularização e=3cm | 368.40 m² | 5.0% | **386.82** | `m² (11.6 m³ argamassa)` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
 | **2.1.5** | Piso Porcelanato 60x60cm Retificado | 368.40 m² | 10.0% | **282** | `caixas (405.2 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
-| **2.1.5.A** | Argamassa Colante Cimentcola AC-III (Dupla Colagem) | 3684.0 kg | 5.0% | **194** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
-| **2.1.5.B** | Rejunte para Porcelanato Junta 2mm | 92.1 kg | 5.0% | **20** | `sacos de 5kg` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
-| **2.1.6** | Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45) | 84.20 m² | 10.0% | **65** | `caixas (92.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.6.A** | Argamassa Colante Cimentcola AC-II (Parede WCs) | 421.0 kg | 5.0% | **23** | `sacos de 20kg` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.6.B** | Rejunte para Cerâmica Junta 3mm | 25.3 kg | 5.0% | **6** | `sacos de 5kg` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
+| **2.1.6** | Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray) | 84.20 m² | 10.0% | **65** | `caixas (92.6 m²)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.7** | Rodapé Porcelanato h=10cm | 384.20 m | 10.0% | **422.62** | `m` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
 | **2.1.8** | Pintura Látex Acrílica 3 Demãos (Paredes + Tetos) | 2491.28 m² | 5.0% | **36** | `latas 18L (2615.8 m²)` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
-| **2.1.8.A** | Selador Acrílico Base Água para Reboco Novo | 212.3 L | 5.0% | **13** | `latas 18L` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
-| **2.1.8.B** | Lixa Grossa para Reboco (Grão 80/100) | 106.0 unid | 5.0% | **112** | `folhas` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.8.C** | Lixa Fina para Massa/Gesso (Grão 150/220) | 249.0 unid | 5.0% | **262** | `folhas` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
 | **2.1.9** | Esquadrias de Madeira/Alumínio (Portas P1-P5) | 24.0 unid | 0.0% | **24** | `conjuntos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.10** | Esquadrias de Alumínio Vidro (Janelas J1-J4) | 18.0 unid | 0.0% | **18** | `conjuntos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
 | **2.1.11** | Impermeabilização Polimérica Sanitários/Copa | 84.20 m² | 10.0% | **92.62** | `m² (19 caixas 18kg)` | `AÇU-3.DES-2.3100-15-EGS-015/016` | - | **-** |
-| **2.1.12** | Dobradiças 3 ½" × 3" em Aço Inox c/ Parafusos | 78.0 unid | 5.0% | **82** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.13** | Fechaduras Completas c/ Maçaneta e Roseta | 24.0 unid | 0.0% | **24** | `conjuntos completos` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.14** | Batedores de Porta para Piso c/ Amortecedor Inox | 26.0 unid | 0.0% | **26** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.15** | Espuma de Poliuretano Expansiva 750ml para Marcos | 9.6 tubos | 5.0% | **11** | `tubos 750ml` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.16** | Parafusos e Buchas S8 para Fixação de Batentes | 192.0 unid | 5.0% | **202** | `unidades (3 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.17** | Selante PU 40 / Silicone Neutro para Caixilhos Externos | 124.70 m | 5.0% | **14** | `tubos 310ml` | `AÇU-3.DES-2.3100-15-EGS-018` | - | **-** |
-| **2.1.18** | Telas Metálicas Eletrosoldadas Galvanizadas 15×50cm Amarração | 336.0 unid | 5.0% | **353** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.19** | Pinos de Aço c/ Arruela Cônica para Finca-Pinos à Pólvora | 706.0 unid | 5.0% | **742** | `unidades (8 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.20** | Espaçadores / Cruzetas Plásticas para Juntas | 2715.0 unid | 0.0% | **28** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015/018` | - | **-** |
-| **2.1.21** | Clips Niveladores para Porcelanato 60×60cm | 4096.0 unid | 0.0% | **41** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.22** | Cunhas Niveladoras Reutilizáveis de Porcelanato | 1229.0 unid | 0.0% | **13** | `sacos c/ 100 un` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
-| **2.1.23** | Fita Crepe 24mm × 50m para Pintura e Isolamento | 604.0 m | 5.0% | **13** | `rolos 50m` | `AÇU-3.DES-2.3100-15-EGS-015/019` | - | **-** |
-| **2.1.24** | Lona Plástica Preta para Proteção de Pisos | 368.40 m² | 5.0% | **4** | `bobinas 100m²` | `AÇU-3.DES-2.3100-15-EGS-015` | - | **-** |
 | **2.2.1** | Telha Termoacústica Trapezoidal (Sandwich 30mm EPS) | 381.29 m² | 10.0% | **419.42** | `m² (70 telhas de 6m)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.2** | Terças Metálicas Perfil U Enrijecido 100x40x2,25mm | 156.00 m | 5.0% | **28** | `barras de 6m (573.3 kg)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.3** | Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm) | 45.24 m² | 5.0% | **594** | `blocos 9x19x39cm` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
@@ -361,11 +336,6 @@
 | **2.2.8** | Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m) | 31.98 m² | 5.0% | **420** | `blocos 14x19x39cm` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.9** | Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda | 74.62 m² | 5.0% | **78.35** | `m² (16 sacos argamassa)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 | **2.2.10** | Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda | 74.62 m² | 5.0% | **2** | `latas 18L (78.35 m²)` | `AÇU-3.DES-2.3100-15-EGS-017/019` | - | **-** |
-| **2.2.11** | Parafusos Autobrocantes 12×1" c/ Arruela EPDM p/ Telhas | 1715.8 unid | 5.0% | **1802** | `unidades (19 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
-| **2.2.12** | Parafusos de Costura 10×3/4" c/ Arruela EPDM p/ Telhas | 364.0 unid | 5.0% | **383** | `unidades (4 cx 100)` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
-| **2.2.13** | Fita de Vedação Butílica Autoadesiva 15mm | 122.0 m | 5.0% | **13** | `rolos 10m` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
-| **2.2.14** | Chumbadores Parabolts CBA 3/8" × 3" p/ Terças Metálicas | 60.0 unid | 5.0% | **63** | `unidades` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
-| **2.2.15** | Selante PU 40 para Calafetação de Calhas e Rufos | 26.0 m | 5.0% | **6** | `tubos 310ml` | `AÇU-3.DES-2.3100-15-EGS-017` | - | **-** |
 
 ---
 

@@ -15,17 +15,17 @@
 - [x] **Separação de Elementos:** Espessuras de lajes (`e=6cm` capa + nervuras `17cm`) e seções de pilares/vigas (`25×40cm`) foram mantidas 100% isoladas sem sobreposição.
 
 ### 2. Checklist 2 — Geometria Líquida Executiva (Sem Duplicidade de Cantos)
-- [x] **Eixos de Vigas Baldrames:** $L_{total} = 186,00 m$ conferidos em `EGS-053/054`.
-- [x] **Eixos de Vigas Elevadas:** $L_{total} = 142,00 m$ conferidos em `EGS-055/060`.
-- [x] **Área de Lajes:** $368,40 m^2$ conferida em planta `EGS-056`.
+- [x] **Eixos de Vigas Baldrames:** $L_{total} = 186,00	ext{ m}$ conferidos em `EGS-053/054`.
+- [x] **Eixos de Vigas Elevadas:** $L_{total} = 142,00	ext{ m}$ conferidos em `EGS-055/060`.
+- [x] **Área de Lajes:** $368,40	ext{ m}^2$ conferida em planta `EGS-056`.
 
 ### 3. Checklist 3 — Interface Pilar × Laje × Viga
 - [x] **Fundo de Viga/Laje:** As fôrmas das 4 faces dos pilares foram computadas até a cota de fundo de viga (`2,98 m`), evitando dupla contagem de concreto ou fôrma no encontro com a laje.
 
 ### 4. Checklist 4 — Unidade Comercial de Compra (UCC) e Perdas
-- [x] **Concreto Usinado C30 Total:** $96,06 m^3$ líquidos de projeto ➔ Convertidos para **`101 m³`** (ou **13 caminhões betoneira de 8 m³**) considerando a perda regulamentar de $4\%$.
-- [x] **Aço Total (CA-50 e CA-60):** $33.012,8 kg líquidos de projeto ➔ Convertidos para **`3.175,4 kg` (3,18 toneladas)** considerando $5\%$ de perda de corte/dobra/trespasse.
-- [x] **Fôrmas de Madeira (Compensado Resinado 17mm):** $821,08 m^2$ líquidos de projeto ➔ Convertidos para **`903,19 m²`** (**304 chapas padrão de 1,10m x 2,20m**) considerando $10\%$ de perda de descarte.
+- [x] **Concreto Usinado C30 Total:** $96,06	ext{ m}^3$ líquidos de projeto ➔ Convertidos para **`101 m³`** (ou **13 caminhões betoneira de 8 m³**) considerando a perda regulamentar de $4\%$.
+- [x] **Aço Total (CA-50 e CA-60):** $3.012,8	ext{ kg}$ líquidos de projeto ➔ Convertidos para **`3.175,4 kg` (3,18 toneladas)** considerando $5\%$ de perda de corte/dobra/trespasse.
+- [x] **Fôrmas de Madeira (Compensado Resinado 17mm):** $821,08	ext{ m}^2$ líquidos de projeto ➔ Convertidos para **`903,19 m²`** (**304 chapas padrão de 1,10m x 2,20m**) considerando $10\%$ de perda de descarte.
 
 ### 5. Checklist 5 — Varredura 360° de Pranchas (100% de Cobertura)
 - [x] **Varredura Completa:** 100% das pranchas da estrutura (`EGS-051`, `EGS-052`, `EGS-053`, `EGS-054`, `EGS-055`, `EGS-056`, `EGS-057`, `EGS-059` e `EGS-060`) foram varridas de ponta a ponta.
@@ -38,7 +38,7 @@
   - Escoramento e Cimbramento metálico
 
 ### 6. Checklist 6 — Formatação e Antifragilidade
-- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA_FUNDACOES.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown limpo nativo, livres de erros de renderização KaTeX no VS Code.
+- [x] **Markdown Nativo Limpo:** As memórias `MEMORIA_CALCULO_INFRAESTRUTURA.md` e `MEMORIA_CALCULO_SUPRAESTRUTURA.md` estão em Markdown limpo nativo, livres de erros de renderização KaTeX no VS Code.
 
 ---
 

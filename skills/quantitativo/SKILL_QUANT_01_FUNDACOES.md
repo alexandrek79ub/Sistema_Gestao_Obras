@@ -37,6 +37,25 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 | **09** | Reaterro Compactado | m³ | $V_{\text{escavado}} - V_{\text{concreto\_ocupado}}$ |
 | **10** | Bota-fora / Remoção de Terra | m³ | $V_{\text{escavado}} - V_{\text{reaterro}}$ (aplicar empolamento 1,25 a 1,35) |
 
+### 🔩 1.1 Matriz de Suprimentos: Miudezas e Insumos de Apoio (Exclusivo da Lista UCC / BOM)
+
+> 🛑 **REGRA DE OURO DA GOVERNANÇA: EAP É SERVIÇO, UCC É COMPRA!**  
+> Para **NÃO POLUIR A EAP**, as miudezas e insumos de apoio **NÃO SÃO CODIFICADOS COMO ITENS DE SERVIÇO NA EAP**.  
+> - **Na EAP (Cronograma e Medição):** Mantêm-se estritamente os **Pacotes de Trabalho / Serviços Executivos de Engenharia** (ex: *1.1.4 Concreto de Sapatas*, *1.1.5 Fôrma de Sapatas*, *1.1.10 Armação de Aço*). É por esses serviços que se afere o avanço físico e se paga a mão de obra/empreiteiro.  
+> - **Na Lista de Compras UCC (Bill of Materials - BOM):** O Agente DEVE OBRIGATORIAMENTE explodir e quantificar todas as **Miudezas e Insumos de Canteiro** derivados de cada serviço da EAP, garantindo que o almoxarifado/compras emita as Ordens de Compra completas sem compras emergenciais ou paralisações de frente de serviço:
+>
+> 1. **Vinculado aos Serviços de Armação (CA-50/CA-60):**
+>    - **Arame Recozido BWG 18:** $1,5\%$ a $2,0\%$ do peso total de aço (kg ou rolos de 1 kg).
+>    - **Espaçadores / Pastilhas de Concreto (Solo 40/50mm):** $4\text{ a }6\text{ un/m}^2$ de fundo de sapata/bloco ou $2\text{ a }3\text{ un/m}$ linear de viga baldrame (garantia de cobrimento NBR 6118 em contato com o solo).
+> 2. **Vinculado aos Serviços de Fôrmas de Madeira (Compensado):**
+>    - **Desmoldante para Fôrmas de Madeira:** Consumo paramétrico de $25\text{ a }30\text{ m}^2/\text{litro}$ sobre a área total de fôrmas (baldes/bombonas de 18L ou galões de 3,6L).
+>    - **Pregos com Cabeça para Fôrmas (17×27 ou 18×30):** $0,04\text{ a }0,05\text{ kg}$ por $\text{m}^2$ de fôrma de compensado (caixas de 10 kg ou pacotes de 1 kg).
+>    - **Sarrafos de Travamento e Gravatas (Pinus $2,5 \times 7,0\text{ cm}$ ou $2,5 \times 10\text{ cm}$):** $1,0\text{ a }1,2\text{ m}$ lineares por $\text{m}^2$ de fôrma para contenção do empuxo nas vigas e sapatas (metros lineares ou dúzias de peças de 3,00m).
+> 3. **Vinculado aos Serviços de Concretagem e Cura:**
+>    - **Lona Plástica Preta (Polietileno e=150µ a 200µ):** Forração de fundo de vala/lastro e proteção de cura úmida contínua de 7 dias exigida pelas notas de projeto estrutural (bobinas de $4\text{m} \times 50\text{m} = 200\text{ m}^2$).
+> 4. **Vinculado aos Serviços de Impermeabilização:**
+>    - **Acessórios de Pintura Asfáltica:** 1 rolo de lã de carneiro 23cm a cada $80\text{ m}^2$ impermeabilizados + trinchas de 2" para recorte de cantos e nós.
+
 ---
 
 ## 📐 2. Elementos de Fundação e Geometrias Especiais
