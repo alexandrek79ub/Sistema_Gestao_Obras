@@ -39,7 +39,7 @@ Para vigas baldrame, cintas, vigas de teto e paredes perimétricas:
 
 - [ ] **Desmembramento de Cantos:** O comprimento total NÃO foi calculado por simples soma de eixos (`2×C + 2×L`).
 - [ ] **Fórmula da Geometria Executiva Aplicada:**
-  $$\text{Comprimento Líquido} = (2 \times L_{\text{ext.long.}}) + 2 \times (L_{\text{ext.transv.}} - 2 \times e_{\text{peça}})$$
+  `Comprimento Líquido = (2 × L_ext.long.) + 2 × (L_ext.transv. - 2 × e_peça)`
 - [ ] **Zero Duplicidade:** O concreto e a fôrma dos 4 cantos de interseção foram contados exatamente 1 única vez.
 
 ---

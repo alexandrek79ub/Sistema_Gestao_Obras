@@ -105,38 +105,38 @@ Exemplo: Se a obra precisa de 21 metros de Tubo Soldável 25mm, e a barra fornec
    A_forma_total = A_forma_ext + A_forma_int + A_forma_tampa
 
 6. Concreto Estrutural da Caixa e Tampa (m³):
-   V_concreto_fundo = B × D × F
-   V_concreto_paredes = 2 × (C + B) × E × G
-   V_concreto_tampa = B × D × I
+   V_concreto_fundo = B * D * F
+   V_concreto_paredes = 2 * (C + B) * E * G
+   V_concreto_tampa = B * D * I
    V_concreto_total = V_concreto_fundo + V_concreto_paredes + V_concreto_tampa
 
 7. Revestimento Interno e Impermeabilização (m²):
-   A_imperm_int = (A × C × G) + (A × C)  (paredes internas + fundo)
+   A_imperm_int = (A * C * G) + (A * C)
 
 8. Armadura Aço CA-50 (kg):
-   Peso_aço = V_concreto_total × Taxa_Aço (kg/m³)
+   Peso_aço = V_concreto_total * Taxa_Aço
 ```
 
 ### 5.3 Comparativo Executivo: Caixa de Concreto vs. Caixa de Alvenaria
 
 #### A. Caixa de Concreto Armado (Moldada in loco / Pré-moldada)
-- **Aplicação:** Cavas profundas ($H > 1,00m$), solo com nível d'água ou áreas sujeitas a tráfego de veículos (garagens, pátios).
-- **Consumo de Paredes:** Paredes de Concreto Armado ($m³$) $+ \text{Fôrmas Dupla Face} \, (m²)$.
+- **Aplicação:** Cavas profundas (H > 1,00m), solo com nível d'água ou áreas sujeitas a tráfego de veículos.
+- **Consumo de Paredes:** Paredes de Concreto Armado (m³) + Fôrmas Dupla Face (m²).
 
 #### B. Caixa de Alvenaria (Tijolo Maciço ou Bloco de Concreto)
-- **Aplicação:** Caixas rasas a médias ($H \le 1,00m$) em passeios, jardins e áreas de pedestres (hidráulica e elétrica).
+- **Aplicação:** Caixas rasas a médias (H <= 1,00m) em passeios, jardins e áreas de pedestres.
 - **Sem Fôrma de Parede:** Elimina fôrmas nas paredes verticais.
-- **Fórmula da Paredes de Alvenaria (m²):**
-  $$A_{\text{alvenaria\_parede}} = 2 \cdot (B + C) \cdot G$$
-  *(Onde $B, C$ são as dimensões em planta das paredes e $G$ é a altura útil).*
+- **Fórmula de Paredes de Alvenaria (m²):**
+  `A_alvenaria_parede = 2 * (B + C) * G`
+  *(Onde B e C são as dimensões em planta das paredes e G é a altura útil).*
 - **Insumos Derivados de Caixa de Alvenaria:**
-  1. Escavação com Folga ($m³$) $+$ Talude NR-18 ($m³$)
-  2. Apiloamento ($m²$) $+$ Lastro de Concreto Magro / Brita ($m³$)
-  3. Laje de Fundo em Concreto ($m³$) $+$ Fôrma da Laje de Fundo ($m²$)
-  4. Paredes em Alvenaria de Tijolo Maciço ou Bloco ($m²$)
-  5. Revestimento Interno / Impermeabilização ($m²$)
+  1. Escavação com Folga (m³) + Talude NR-18 (m³)
+  2. Apiloamento (m²) + Lastro de Concreto Magro / Brita (m³)
+  3. Laje de Fundo em Concreto (m³) + Fôrma da Laje de Fundo (m²)
+  4. Paredes em Alvenaria de Tijolo Maciço ou Bloco (m²)
+  5. Revestimento Interno / Impermeabilização (m²)
   6. Tampa de Concreto Armado ou Ferro Fundido (FoFo)
-  7. Reaterro Compactado ($m³$) vs. Bota-Fora ($m³$)
+  7. Reaterro Compactado (m³) vs. Bota-Fora (m³)
 
 ---
 

@@ -14,33 +14,35 @@ O Agente deve extrair quantidades dos projetos unifilares elétricos, separando-
 
 ### 2.1 Cálculo de Eletrodutos e Descidas Verticais (Eixo Z)
 - **Trecho Horizontal (X, Y):** Medição da projeção em planta baixa do eletroduto no teto, forro ou piso.
-- **Descidas e Subidas Verticais ($\Delta Z$):** Calculadas obrigatoriamente pela diferença de cota entre o plano de caminhamento (forro/laje ou contrapiso) e a cota de instalação do ponto/caixa:
-  - `Tomada Baixa (h = 0,30m do piso):` Descida do teto = $H_{\text{pé-direito}} - 0,30\text{m}$.
-  - `Tomada Média / Interruptor (h = 1,10m do piso):` Descida do teto = $H_{\text{pé-direito}} - 1,10\text{m}$.
-  - `Tomada Alta (Chuveiro / Ar-condicionado / Exaustor h = 2,10m a 2,20m):` Descida do teto = $H_{\text{pé-direito}} - 2,10\text{m}$.
-  - `Prumadas de Shaft / Subestação:` Comprimento vertical da prumada entre pavimentos multiplicada pelo número de andares $+$ travessia de lajes.
+- **Descidas e Subidas Verticais (ΔZ):** Calculadas obrigatoriamente pela diferença de cota entre o plano de caminhamento (forro/laje ou contrapiso) e a cota de instalação do ponto/caixa:
+  - `Tomada Baixa (h = 0,30m do piso):` Descida do teto = `H_pé-direito - 0,30m`.
+  - `Tomada Média / Interruptor (h = 1,10m do piso):` Descida do teto = `H_pé-direito - 1,10m`.
+  - `Tomada Alta (Chuveiro / Ar-condicionado / Exaustor h = 2,10m a 2,20m):` Descida do teto = `H_pé-direito - 2,10m`.
+  - `Prumadas de Shaft / Subestação:` Comprimento vertical da prumada entre pavimentos multiplicada pelo número de andares + travessia de lajes.
 - **Taxa de Perda:** Adicionar **10%** sobre o comprimento total calculado.
 - **Regra UCC:** Comprar eletrodutos flexíveis sempre em múltiplos de **50 metros** (Rolo padrão). Tubos rígidos em múltiplos de **3 metros**.
 
 ### 2.2 Fios e Cabos — Método de Quantificação por Circuito (Fase, Neutro, Terra e Retorno)
-A metragem de condutores **NÃO é uma simples multiplicação do comprimento do eletroduto pelo número total de fios**. O levantamento DEVE ser feito **trecho a trecho, circuito por circuito**, multiplicando a extensão real do eletroduto (horizontal $+$ descidas verticais) pela quantidade de condutores de cada função presentes naquele trecho (indicados pela simbologia unifilar: Fase `|`, Neutro `┬`, Terra `┴`, Retorno `/`).
+A metragem de condutores **NÃO é uma simples multiplicação do comprimento do eletroduto pelo número total de fios**. O levantamento DEVE ser feito **trecho a trecho, circuito por circuito**, multiplicando a extensão real do eletroduto (horizontal + descidas verticais) pela quantidade de condutores de cada função presentes naquele trecho (indicados pela simbologia unifilar: Fase `|`, Neutro `┬`, Terra `┴`, Retorno `/`).
 
 #### A. Algoritmo de Cálculo por Trecho de Eletroduto
-Para cada trecho de eletroduto $k$ percorrido pelo circuito $c$:
-1. **Comprimento do Trecho ($L_k$):** $L_k = L_{\text{horizontal}(X,Y)} + \Delta Z_{\text{descida/subida}}$.
+Para cada trecho de eletroduto `k` percorrido pelo circuito `c`:
+1. **Comprimento do Trecho (Lk):** `Lk = L_horizontal(X,Y) + ΔZ_descida/subida`.
 2. **Cálculo da Metragem por Tipo de Condutor (Função e Cor NBR 5410):**
-   - **Fase (Preto / Vermelho / Castanho):** $L_{\text{fase}} = \sum (L_k \times N_{\text{condutores\_fase}_k})$.
-   - **Neutro (Azul Claro — Cor Obrigatória NBR 5410):** $L_{\text{neutro}} = \sum (L_k \times N_{\text{condutores\_neutro}_k})$.
-   - **Proteção / Terra (Verde ou Verde-Amarelo — Cor Obrigatória NBR 5410):** $L_{\text{terra}} = \sum (L_k \times N_{\text{condutores\_terra}_k})$.
-   - **Retorno (Amarelo / Branco):** $L_{\text{retorno}} = \sum (L_k \times N_{\text{condutores\_retorno}_k})$ (trechos entre interruptores e lâmpadas / Three-way / Four-way).
+   - **Fase (Preto / Vermelho / Castanho):** `L_fase = Soma(Lk × N_condutores_fase_k)`.
+   - **Neutro (Azul Claro — Cor Obrigatória NBR 5410):** `L_neutro = Soma(Lk × N_condutores_neutro_k)`.
+   - **Proteção / Terra (Verde ou Verde-Amarelo — Cor Obrigatória NBR 5410):** `L_terra = Soma(Lk × N_condutores_terra_k)`.
+   - **Retorno (Amarelo / Branco):** `L_retorno = Soma(Lk × N_condutores_retorno_k)` (trechos entre interruptores e lâmpadas / Three-way / Four-way).
 
 #### B. Sobras de Pontas (Folga Técnica Obrigatória)
 Para cada caixa de passagem, tomada, interruptor ou luminária acessada pelo circuito, e no Quadro de Distribuição (QDC), adicionar as sobras para desencapamento e conexão:
-- `Caixas de Tomada / Interruptor / Passagem / Luminária:` Adicionar **$+0,50 \, \text{m}$** por condutor para CADA caixa acessada pelo circuito.
-- `Quadro de Distribuição (QDC):` Adicionar **$+1,00 \, \text{m}$** por condutor dentro do QDC para penteamento e fixação no disjuntor/barramento.
+- `Caixas de Tomada / Interruptor / Passagem / Luminária:` Adicionar **+0,50 m** por condutor para CADA caixa acessada pelo circuito.
+- `Quadro de Distribuição (QDC):` Adicionar **+1,00 m** por condutor dentro do QDC para penteamento e fixação no disjuntor/barramento.
 
-#### C. Fórmula Consolidada por Bitola ($\text{mm}^2$) e Cor (UCC)
-$$\text{Metragem Total}_{\text{bitola, cor}} = \left[ \sum_{k} (L_k \times N_{\text{fios}_k}) + (N_{\text{caixas}} \times 0,50\text{m}) + (N_{\text{QDC}} \times 1,00\text{m}) \right] \times (1 + \text{Taxa de Perda 5\%})$$
+#### C. Fórmula Consolidada por Bitola (mm²) e Cor (UCC)
+```
+Metragem Total = [ Soma(Lk × Nfios_k) + (Ncaixas × 0,50m) + (NQDC × 1,00m) ] × (1 + 0,05)
+```
 
 #### D. Tabela de Consolidação de Compras por Bitola e Cor (UCC - Rolos de 100m)
 | Circuito | Função do Circuito | Seção ($\text{mm}^2$) | Tipo | Cor do Isolamento | Metragem Líquida (m) | + Perda 5% (m) | Compras UCC (Rolos de 100m) |

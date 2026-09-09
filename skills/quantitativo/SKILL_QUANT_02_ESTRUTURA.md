@@ -1,6 +1,6 @@
 # 🏗️ SKILL MÓDULO 02: Estrutura (Concreto Armado)
 
-> **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)
+> **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)
 > **Normas:** NBR 6118 (Projeto de estruturas de concreto), NBR 14931 (Execução), NBR 7480 (Aço CA-50/CA-60)
 > **Fck padrão superestrutura:** C25 (CAA II — ambiente urbano normal)
 

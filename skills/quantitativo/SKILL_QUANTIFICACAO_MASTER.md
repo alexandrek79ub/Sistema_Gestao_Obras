@@ -51,6 +51,29 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ---
 
+## 🤖 1.1. Arquitetura Híbrida de Quantitativo (Tool Use & Motor Python)
+
+Para garantir **zero alucinação matemática e precisão contábil absoluta**, o processo de levantamento quantitativo adota uma arquitetura híbrida em 2 etapas:
+
+1. **O Agente de IA (Extração e Regras):**  
+   - Lê as pranchas executivas em PDF ou imagem.
+   - Aplica as regras normativas desta Skill Master e dos Módulos Específicos.
+   - **NUNCA calcula o valor numérico final de cabeça.**
+   - Extrai as cotas e monta as expressões matemáticas no formato literal puro em um arquivo `.json` estruturado conforme o [template_dados_orcamento.json](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/template_dados_orcamento.json).
+   - *Exemplo de expressão no JSON:* `"12 * pi * (0.30/2)**2 * 6.00"` ou `"11 * 1.4 * 1.4 * 0.7"`.
+
+2. **O Motor Python na CPU ([gerador_orcamento_mestre.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/gerador_orcamento_mestre.py)):**  
+   - O Agente aciona a execução no terminal:
+     ```bash
+     python scripts/gerador_orcamento_mestre.py [caminho_do_json]
+     ```
+   - O script resolve a matemática na CPU via AST segura, aplica perdas percentuais, converte para Unidade Comercial de Compra (UCC) aplicando teto (`math.ceil`) em itens inteiros, e gera automaticamente:
+     - As Memórias de Cálculo em Markdown nativo (`MEMORIA_CALCULO_[DISC].md`);
+     - Os quantitativos em CSV por disciplina (`QUANTITATIVO_[DISC].csv`);
+     - O orçamento consolidado unificado (`ORCAMENTO_BASE_CONSOLIDADO.csv`), diretamente consumível pelo Dashboard Next.js.
+
+---
+
 ## 📋 2. Modelos Universais de Memória de Cálculo
 
 O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. Não omitir etapas.

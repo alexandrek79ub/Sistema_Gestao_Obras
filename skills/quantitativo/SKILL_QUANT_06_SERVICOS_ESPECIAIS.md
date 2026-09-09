@@ -22,14 +22,14 @@
 ## 2. Terraplenagem, Obras de Terra e Contenções (Arrimo)
 
 ### 2.1 Movimentação de Terra de Grande Porte
-- `Corte Mecanizado de Solo (m³):` Volume de escavação por curva de nível / platô ($V_{\text{corte}} = A_{\text{seção}} \times L$).
-- `Aterro Compactado c/ Controle Tecnológico (m³):` Ensaio Proctor Normal/Modificado ($\ge 95\%$ do grau de compactação).
-- `Bota-fora de Solo de Corte (m³):` $V_{\text{bota\_fora}} = V_{\text{corte}} \times \text{Empolamento (1,25 a 1,35)}$.
+- `Corte Mecanizado de Solo (m³):` Volume de escavação por curva de nível / platô (`V_corte = A_secao × L`).
+- `Aterro Compactado c/ Controle Tecnológico (m³):` Ensaio Proctor Normal/Modificado (>= 95% do grau de compactação).
+- `Bota-fora de Solo de Corte (m³):` `V_bota_fora = V_corte × Empolamento (1,25 a 1,35)`.
 
 ### 2.2 Estruturas de Contenção (Muros de Arrimo e Estacas)
-- `Muro de Arrimo de Concreto Armado (m³ / m²):` Sapata de arrimo $+$ parede de contenção $+$ barbacãs de drenagem em PVC 50mm c/ geotêxtil (Mantim/Bidim).
-- `Cortina de Estacas Secantes / Prancha (m² de face):` Perfuração de estacas contínuas $+$ viga de coroamento $+$ tirantes ancorados ($unid/kg$).
-- `Solo Grampeado / Concrete Projetado (m²):` Perfuração de chumbadores $+$ injeção de nata de cimento $+$ tela eletrosoldada $+$ concreto projetado ($e=7cm$ a $10cm$).
+- `Muro de Arrimo de Concreto Armado (m³ / m²):` Sapata de arrimo + parede de contenção + barbacãs de drenagem em PVC 50mm c/ geotêxtil (Mantim/Bidim).
+- `Cortina de Estacas Secantes / Prancha (m² de face):` Perfuração de estacas contínuas + viga de coroamento + tirantes ancorados (unid/kg).
+- `Solo Grampeado / Concreto Projetado (m²):` Perfuração de chumbadores + injeção de nata de cimento + tela eletrosoldada + concreto projetado (e=7cm a 10cm).
 
 ---
 

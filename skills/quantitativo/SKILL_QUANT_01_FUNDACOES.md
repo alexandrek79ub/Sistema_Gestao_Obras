@@ -1,6 +1,6 @@
 # 🏛️ SKILL MÓDULO 01: Fundações
 
-> **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_FREE%20LANCER%20ENGENHARIA/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)
+> **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)
 > **Normas:** NBR 6118, NBR 6122 (Projeto e execução de fundações), NBR 14931, TCPO 14ª Ed.
 > **Fck mínimo para fundações:** C30 (solo com agressividade II-III)
 
