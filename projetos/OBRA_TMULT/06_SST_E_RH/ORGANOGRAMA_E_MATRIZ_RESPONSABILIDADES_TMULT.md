@@ -12,6 +12,63 @@
 
 A estrutura organizacional do empreendimento estabelece linhas de reporte claras, separando a **Estratégia/Retaguarda (Sede & PMO Virtual)**, a **Gestão Tática de Engenharia (Canteiro)** e a **Execução Operacional das Frentes de Serviço**:
 
+### 1.1 Diagrama Visual Executivo
+![Organograma Executivo da Obra TMULT](./ORGANOGRAMA_TMULT.png)
+
+---
+
+### 1.2 Estrutura em Blocos Visuais de Campo
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     DIRETORIA DE OPERAÇÕES & CONTRATOS                      │
+│                            (Sponsor Executivo)                              │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+            ┌──────────────────────────┴──────────────────────────┐
+            ▼                                                     ▼
+┌───────────────────────────────┐             ┌───────────────────────────────┐
+│  PMO VIRTUAL & CONTROLADORIA  │             │   COORDENAÇÃO DE SUPRIMENTOS  │
+│(Planejamento, Custos & Curva S)│             │ (Compras & Logística Portuária│
+└───────────────┬───────────────┘             └───────────────┬───────────────┘
+                │   (Apoio & Controle)                        │ (Logística)
+                └──────────────────────┬──────────────────────┘
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        ENGENHEIRO RESIDENTE DE OBRA                         │
+│             (Responsável Técnico Legal - CREA/RJ | 60% Dedicação)            │
+└──────────────────────────────────────┬──────────────────────────────────────┘
+                                       │
+         ┌─────────────────────────────┼─────────────────────────────┐
+         ▼                             ▼                             ▼
+┌──────────────────┐         ┌──────────────────┐         ┌──────────────────┐
+│  SEGURANÇA (TST) │         │ MESTRE DE OBRAS  │         │   ALMOXARIFADO   │
+│  NR-18 e NR-35   │         │ (100% Presencial)│         │   & APONTAMENTO  │
+│Stop Work Authorit│         │Coordenação Campo │         │Recebimento de NFs│
+└──────────────────┘         └─────────┬────────┘         └────────┬─────────┘
+                                       │                           │
+         ┌─────────────────────────────┼────────────────┐          ▼
+         ▼                             ▼                ▼   ┌───────────────┐
+┌──────────────────┐         ┌──────────────────┐┌──────────┤ VIGIA NOTURNO │
+│ ENCARREGADO CIVIL│         │  ENC. INSTALAÇÕES││ENC. ACABA│ Segurança     │
+│Fundações/Estrutur│         │Elétrica/Hidr/HVAC││Porcelanat│ Patrimonial   │
+└────────┬─────────┘         └─────────┬────────┘└────┬─────┘└───────────────┘
+         │                             │              │
+         ▼                             ▼              ▼
+┌──────────────────┐         ┌──────────────────┐┌──────────────────┐
+│   EQUIPE CIVIL   │         │EQUIPE INSTALAÇÕES││EQUIPE ACABAMENTOS│
+│• 2 a 5 Pedreiros │         │• 2 Eletricistas  ││• 3 Ladrilhistas  │
+│• 4 Carpinteiros  │         │• 2 Encanadores   ││• 4 Pintores      │
+│• 3 Armadores     │         │• 2 Mecânicos HVAC││• 2 Marceneiros   │
+│• 3 Montadores Cob│         │• Instrumentistas ││• 2 Limpeza Fina  │
+│• 2 a 5 Serventes │         │                  ││                  │
+└──────────────────┘         └──────────────────┘└──────────────────┘
+```
+
+---
+
+### 1.3 Diagrama Mermaid Interativo
+
 ```mermaid
 graph TD
     classDef dir fill:#1B365D,stroke:#0B1E36,stroke-width:2px,color:#fff;
