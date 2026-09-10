@@ -1,0 +1,23 @@
+﻿Família de Insumo / Recurso Chave;Natureza de Custo;Custo Direto Total (R$);Qtd Macro;Unid;Referência / Aplicação na Obra;Pct_Individual;Pct_Acumulado;Classe_ABC
+Mão de Obra de Canteiro & Vivência (Alimentação / Transporte / EPIs);Gestão/MO;175565.82;6.0;mês;EAP 1.0.5 e 1.0.6 (16 operários);15.540612281419474;15.540612281419474;A
+Equipe Técnica & Supervisão (Engenheiro Residente + Mestre + TST);Gestão;175200.0;6.0;mês;EAP 1.0.1 e 1.0.2;15.508230882894471;31.048843164313944;A
+Argamassas e Serviços de Revestimento (Emboço / Reboco Paulista);Material/MO;93265.17;2122.88;m²;Argamassa usinada e aplicação;8.255580991394995;39.304424155708936;A
+Telhas Termoacústicas Trapezoidais Sandwich 30mm EPS;Material;86023.36;381.29;m²;Chapa pré-pintada e núcleo EPS;7.6145555262691165;46.91897968197805;A
+Aparelhos de Ar-Condicionado Split (Cassete 36k, Hi-Wall 18k/12k Inverter);Equipamento;78027.3;8.0;un;Equipamentos de climatização;6.906765887950182;53.82574556992823;A
+Blocos de Concreto Estrutural e Vedação (14x19x39cm);Material;73592.48;12733.0;un;Alvenaria e platibanda;6.514207597515946;60.33995316744418;A
+Concreto Usinado fck 30 MPa (Sapatas, Baldrames, Pilares, Vigas, Laje);Material;48102.5;61.44;m³;Fundações e supraestrutura;4.257903402080087;64.59785656952427;A
+Piso Porcelanato Retificado 60x60cm Polido/Acetinado;Material;45522.04;368.4;m²;Pisos internos;4.029488051257749;68.62734462078201;A
+Esquadrias de Madeira (Portas) e Alumínio/Vidro (Janelas);Material/MO;39336.56;30.0;cj;Portas completas e janelas caixilho;3.481966065175978;72.109310685958;A
+Locação de Módulos Habitáveis Containers NR-18 e Sanitários;Equipamento;38300.0;6.0;mês;4 containers + 2 sanitários químicos;3.390212573144168;75.49952325910216;A
+Fôrmas de Compensado Resinado 17mm e Cimbramento Metálico;Material;37340.2;480.0;m²;Madeiramento e escoras metálicas;3.3052536690265764;78.80477692812873;A
+Aço CA-50 / CA-60 Cortado e Dobrado (Fundações e Lajes);Material;36240.1;3110.0;kg;Armaduras estruturais;3.2078757877807305;82.01265271590947;B
+Vigotas Treliçadas TR 16745 e EPS para Lajes H12;Material;25673.16;968.8;m;Laje pré-moldada;2.2725187943692413;84.28517151027872;B
+Cabeamento Estruturado UTP Cat6 e Cabos Elétricos de Cobre Flexível;Material;34500.0;3600.0;m;Infraestrutura de força e telecom;3.0538468348165484;87.33901834509527;B
+Pintura Látex Acrílica 3 Demãos (Tintas, Selador, Massas e Lixas);Material;25800.0;2491.28;m²;Paredes internas e tetos;2.2837463286454187;89.62276467374069;B
+Impermeabilização (Manta Asfáltica 4mm em Calhas e Tinta Asfáltica);Material;18500.0;220.0;m²;Baldrames, calhas e áreas molhadas;1.6375700418581491;91.26033471559884;B
+Tubulações e Conexões PVC (Água Fria, Esgoto e Pluvial);Material;16400.0;450.0;m;Prumadas e ramais prediais;1.4516837127823594;92.7120184283812;B
+Disjuntores, Quadros QDG/QDF e Painéis de Iluminação LED 60x60;Material;15500.0;52.0;cj;Aparelhagem e luminárias;1.3720181431784493;94.08403657155965;B
+Louças Sanitárias, Cubas, Metais Nobres e Acessórios;Material;14800.0;24.0;cj;Bacias acopladas e torneiras;1.3100560334865194;95.39409260504617;C
+Estrutura Metálica de Cobertura (Perfis U Enrijecidos e Calhas);Material;11200.0;400.0;kg;Terças e rufos galvanizados;0.9913937550708796;96.38548636011704;C
+Contas de Consumo Provisórias de Canteiro (Energia / Água / Fibra);Gestão;14100.0;6.0;mês;Concessionárias locais;1.2480939237945894;97.63358028391163;C
+Outros Insumos Menores e Conexões Secundárias;Diversos;26733.98;1.0;vb;Fixações, parafusos, fitas, colas;2.366419716088374;100.0;C
