@@ -1,0 +1,18 @@
+ID_RE;EQUIPAMENTO;CENTRO_CUSTO;EAP;QTD;UNID;FORNECEDOR_VENCEDOR;VALOR_VENCEDOR;FORNECEDOR_CONCORRENTE;VALOR_CONCORRENTE;FORNECEDOR_3;VALOR_3;STATUS
+RE-001/2026;Módulo Habitável Escritório / Reuniões;CC-103;1.0.3;1;un;Rentcon Locações;1850.00;NHJ Brasil;1950.00;Brasanitas Módulos;2100.00;Homologado
+RE-002/2026;Módulo Vestiário / Sanitário NR-18;CC-103;1.0.3;1;un;Rentcon Locações;1750.00;NHJ Brasil;1800.00;Locker Container;1950.00;Homologado
+RE-003/2026;Módulo Refeitório NR-18;CC-103;1.0.3;1;un;Rentcon Locações;1550.00;NHJ Brasil;1600.00;Delta Containers;1720.00;Homologado
+RE-004/2026;Módulo Almoxarifado / Ferramentaria;CC-103;1.0.3;1;un;Rentcon Locações;950.00;NHJ Brasil;1000.00;LocaBox Açu;1150.00;Homologado
+RE-005/2026;Sanitários Químicos Portáteis (2 Cabines);CC-103;1.0.3;2;cabines;Brasquímica Sanitários;283.33;CleanBox Campos;320.00;Sanitex Açu;350.00;Homologado
+RE-006/2026;Retroescavadeira 4x4 cabinada c/ operador;CC-201;1.1.1, 1.1.2;1;un;Terramax Locações Açu;14000.00;Transloc Norte Fluminense;14800.00;TratorMáquinas Macaé;15500.00;Homologado
+RE-007/2026;Caminhão Basculante 6x4 (12m³) c/ motorista;CC-201;1.1.1, 1.1.2;1;un;Terramax Locações Açu;10500.00;Transloc Norte Fluminense;11200.00;Transportes São João;12000.00;Homologado
+RE-008/2026;Compactador de Percussão a gasolina (Sapo);CC-201;1.1.2;1;un;Casa do Construtor Campos;1450.00;Locafer Ferramentas;1550.00;Andaimes & Cia Macaé;1680.00;Homologado
+RE-009/2026;Betoneira Elétrica 400 Litros Trifásica;CC-404;1.3.3;1;un;Casa do Construtor Campos;750.00;Locafer Ferramentas;800.00;Dimaq Equipamentos;890.00;Homologado
+RE-010/2026;Cimbramento e Escoramento Metálico Regulável;CC-302;1.2.4, 1.2.6;888;m²·m;Mills Estruturas S.A.;14850.00;Rohr Estruturas;15600.00;SH Fôrmas e Andaimes;16200.00;Homologado
+RE-011/2026;Andaimes Tubulares Fachadeiros c/ Guarda-Corpo (200 m²);CC-403;1.3.4;200;m²;Loxam Degrau Locações;3200.00;Mills Estruturas;3400.00;Orguel Andaimes;3650.00;Homologado
+RE-012/2026;Máquina de Projeção Contínua de Argamassa;CC-405;1.5.2;1;un;Putzknecht Brasil Locações;5200.00;Locadora Técnica Macaé;5600.00;Casa do Construtor Campos;6100.00;Homologado
+RE-013/2026;Bomba Hidrostática de Teste de Pressão c/ Manômetro RBC;CC-601;2.1.6;1;un;Alusolda / TestLoc Macaé;1200.00;Casa do Construtor Campos;1350.00;Rothenberger Service;1500.00;Homologado
+RE-014/2026;Plataforma Elevatória Tesoura Elétrica 10m;CC-607;2.2.7, 2.3.1;1;un;Loxam Degrau Locações;6100.00;Mills Plataformas;6450.00;Orguel Equipamentos;6900.00;Homologado
+RE-015/2026;Bomba de Vácuo Duplo Estágio 10 CFM + Manifold Digital;CC-608;2.3.4;1;cj;Casa do Construtor Campos;1800.00;Frigocenter Refrigeração;1950.00;LocaFrio Macaé;2200.00;Homologado
+RE-016/2026;Caçambas Estacionárias de Entulho 5m³ (PGRCC) c/ CTR;CC-106;1.0.6;2;caçambas;EcoAçu Resíduos Ambientais;1666.67;Disk Entulho São João da Barra;1800.00;TransResíduos Norte Fluminense;1950.00;Homologado
+RE-017/2026;Grupo Gerador Diesel Silenciado 50 kVA c/ QTA;CC-104;1.0.4;1;un;Tecnogera Locação S.A. Macaé;6600.00;Geradores Brasil Macaé;6900.00;A Geradora Aluguel de Máquinas;7400.00;Homologado
