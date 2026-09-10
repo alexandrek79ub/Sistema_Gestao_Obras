@@ -234,4 +234,4 @@
 1. **100% dos Itens Rastreáveis:** Nenhum custo arbitrado sem fonte declarada (SINAPI SP 07/2026 desonerado e cotações de engenharia para canteiro).
 2. **Administração Local Planilhada:** Custo de canteiro, equipe técnica e vivência orçados para o prazo saudável de 6 meses.
 3. **BDI Analítico Auditável:** Segregação absoluta entre serviços civis (27,17%) e equipamentos especiais (15,00%), sem bitributação de encargos ou custos de canteiro.
-4. **Padrão Turnkey Certificado:** O valor final de **R$ 1.660.782,35 (R$ 4.508,10/m²)** contempla a entrega completa da obra limpa, climatizada, comissionada e testada.
+4. **Padrão Turnkey Certificado:** O valor final de **R$ 1.660.762,28 (R$ 4.508,04/m²)** contempla a entrega completa da obra limpa, climatizada, comissionada e testada.
