@@ -27,6 +27,14 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Versão de projeto, revisão de documento | `SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` |
 | Relatório/comunicação formal ao cliente/contratante | `SKILL_GESTAO_15_COMUNICACAO_CLIENTE.md` |
 | O que o agente pode decidir sozinho vs. o que pausa | `ADENDO_AGENTS_REGRAS_DE_AUTONOMIA.md` — **sempre consultar em paralelo**, nunca isolado |
+| Reprogramação de cronograma, gatilho de SPI sustentado | `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md` |
+| Plano de ataque / recuperação de prazo | `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md` |
+| Vencimento de PGR, PCMSO, LTCAT, ASO ou CA de EPI | `SKILL_GESTAO_17_VENCIMENTO_DOCUMENTAL_SEGURANCA.md` |
+| Trabalhador / empreiteira com documento de segurança vencido | `SKILL_GESTAO_17_VENCIMENTO_DOCUMENTAL_SEGURANCA.md` — prioridade máxima |
+| Custo unitário de serviço, composição SINAPI/cotação, BDI | `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md` — acionar sempre após levantamento para fechar o orçamento |
+| Informação faltante na prancha que bloqueia o quantitativo | `SKILL_ENGENHARIA_RFI.md` — abrir RFI antes de qualquer estimativa |
+| Acompanhar RFIs em aberto, prazo vencido, resposta de projetista | `SKILL_ENGENHARIA_RFI.md` |
+| Qual POP executar antes de liberar um serviço de campo | `SKILL_PRODUCAO_POP_BRIDGE.md` — consultar junto com SKILL_GESTAO_02 |
 
 ---
 
@@ -38,6 +46,11 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Retrabalho afetando RUP | `SKILL_GESTAO_11` (registra o retrabalho e seu custo separado) + `SKILL_GESTAO_08` (RUP não deve ser contaminado pelo retrabalho) | Custo e horas de retrabalho **saem** do cálculo de RUP normal do serviço — ver Seção 2 da `SKILL_GESTAO_11`. |
 | Encerramento de obra revisitando tudo | `SKILL_GESTAO_12` consome dado de `08`, `09`, `10`, `11` | `12` não recalcula nada sozinha — só consolida o que as outras já apuraram ao longo da obra. |
 | Nota fiscal sem pedido, precisa classificar | `SKILL_QUANTIFICACAO_CONCILIACAO_3_PONTAS` (fluxo principal) → cai em `SKILL_QUANTIFICACAO_PEDIDO_DE_COMPRA` (fluxo de exceção) | Conciliação é sempre tentada primeiro; só cai na classificação "do zero" quando não há PO. |
+| Reprogramação de cronograma afetando produtividade de frente | `SKILL_GESTAO_16` (decide SE e COMO reprogramar) + `SKILL_GESTAO_08` (fonte do RUP real que fundamenta as novas durações) | A 08 fornece o dado de produtividade; a 16 usa esse dado para recalcular as atividades restantes. A 08 **nunca reprograma** — só a 16 toma essa decisão. |
+| Vencimento documental de SST afetando presença no canteiro | `SKILL_GESTAO_17` (identifica e alerta o vencimento) + `SKILL_GESTAO_04` (define quais documentos são obrigatórios e qual ação de campo tomar) | A 04 define a obrigação; a 17 monitora a validade continuamente. Nunca checar só na entrada do trabalhador. |
+| Levantamento concluído, falta compor o custo | `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO` (hierarquia SINAPI → cotação → NF) + SKILL_QUANT da disciplina correspondente | Composição de preço nunca é feita dentro do skill de levantamento — é etapa separada e posterior. |
+| Falta informação na prancha que bloqueia quantitativo | `SKILL_ENGENHARIA_RFI` (abre e controla o ciclo da RFI) + SKILL_QUANT correspondente (retoma o item quando RFI for respondida) | O item bloqueado fica com `STATUS = PENDENTE_RFI` até a RFI ser incorporada. Nunca estimar para desbloquear. |
+| Liberação de frente de serviço no canteiro | `SKILL_GESTAO_02` (rotina de produção) + `SKILL_PRODUCAO_POP_BRIDGE` (identificar qual POP aplicar ao serviço) | Produção sem POP = processo sem guardrail. A bridge é consulta obrigatória antes de qualquer frente nova. |
 
 **Regra de ouro**: se o agente identificar uma situação que duas skills reivindicam sem que este
 índice resolva o conflito, ele deve **parar e perguntar** qual critério usar, e sugerir que esse
@@ -60,5 +73,14 @@ Quando nenhuma tabela acima resolve o conflito, esta é a ordem de precedência:
    quantitativo por conta própria, sinaliza a divergência de volta pra quantificação.
 
 ---
+
+## 4. Histórico de Atualizações
+
+| Data | Alteração |
+|---|---|
+| Criação inicial | Skills 00–15 + Adendo de Autonomia |
+| Atualização 2026-09 (1) | Adicionadas Skills 16 (Cronograma/Reprogramação) e 17 (Vencimento Documental SST) nas Seções 1 e 2 |
+| Atualização 2026-09 (2) | Adicionadas: `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO` (M5), `SKILL_ENGENHARIA_RFI` (M6), `SKILL_PRODUCAO_POP_BRIDGE` (M7) nas Seções 1 e 2 |
+
 *Este índice deve ser atualizado toda vez que uma skill nova for criada ou uma sobreposição nova
 for identificada durante o uso real do sistema.*

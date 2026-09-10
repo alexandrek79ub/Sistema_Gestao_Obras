@@ -9,12 +9,28 @@ Controlar a saúde financeira e os passivos da obra. Garantir que os materiais s
 ---
 
 ## 🧭 1. Princípios Financeiros (Regras Básicas)
-1. **O Orçamento é a Bíblia:** Nenhuma compra, contratação de terceiros ou despesa pode ser aprovada sem antes ser comparada com a verba prevista no Orçamento da Obra. Se o custo real superar o previsto, um alerta de estouro de budget deve ser gerado.
-2. **Unidade Comercial de Compra (UCC):** PROIBIDO comprar quantidades exatas de engenharia (ex: comprar 1,2 sacos de cimento ou 13,5 metros de tubo). Toda Solicitação de Compra deve ser previamente convertida e arredondada para cima respeitando a embalagem/fornecimento padrão da indústria (Saco, Caixa, Barra de 6m/12m).
-3. **Cotação Mínima:** Nenhuma compra relevante deve ser feita com menos de 3 cotações válidas, equalizadas tecnicamente (mesmo escopo, frete e prazo).
-4. **Medição por Avanço Físico:** Empreiteiros só recebem pelo que executaram e que foi aprovado pela Qualidade. Não pague serviços pela metade se o contrato for por etapa concluída.
-5. **Fluxo de Caixa:** Dinheiro no tempo certo. Um atraso de material gera atraso de obra, mas antecipar material demais compromete o caixa e gera custo de estoque.
-6. **Aditivos (Claims):** Qualquer serviço extra executado sem aprovação formal e aditivo de contrato não pode ser pago automaticamente.
+1. **O Orçamento é a Bíblia:** Nenhuma compra, contratação ou despesa sem comparação com o Orçamento Base. Estouro = alerta imediato.
+2. **Unidade Comercial de Compra (UCC):** PROIBIDO comprar quantidade exata de engenharia. Toda compra arredondada para CIMA na embalagem padrão (saco, caixa, barra 6m/12m).
+3. **Cotação Mínima:** 3 cotações válidas, equalizadas tecnicamente (mesmo escopo, frete e prazo).
+4. **Medição por Avanço Físico (Regra da Trena):** Empreiteiros só recebem pelo que foi medido fisicamente e aprovado pela Qualidade.
+5. **Fluxo de Caixa:** Consultar `SKILL_GESTAO_09_FLUXO_DE_CAIXA.md` para validação de timing de pagamentos.
+6. **Aditivos (Claims):** Qualquer serviço extra sem aprovação formal não pode ser pago. Consultar `SKILL_GESTAO_10_CONTRATOS.md`.
+
+### 1.1 Alçadas de Aprovação por Faixa de Valor
+
+| Valor da Compra / Contratação | Apó Cotação | Aprovador |
+|---|---|---|
+| Até R$ 1.000 | 1 cotação (urgente) | Consultora (Alexandre) |
+| R$ 1.001 a R$ 10.000 | 3 cotações equalizadas | Consultora (Alexandre) |
+| R$ 10.001 a R$ 50.000 | 3 cotações + comparação com Orçamento Base | Gestora/Diretoria do cliente |
+| Acima de R$ 50.000 | 3 cotações + justificativa técnica escrita | Diretoria + aprovação formal em ata |
+
+> **Regra:** Se a alçada não for definida pelo cliente no Kickoff, **perguntar antes de aprovar qualquer compra acima de R$ 10.000**.
+
+### 1.2 Regras de Retenção Técnica
+- **Taxa padrão:** 5% sobre cada medição, liberada após o prazo de garantia.
+- **Praço mínimo de garantia para liberar retenção:** 90 dias após entrega/conclusão do item, salvo contrato específico.
+- **Retenção nunca é liberada automaticamente** — requer inspeção física e parecer da Qualidade (SKILL_GESTAO_05). Consultar `SKILL_GESTAO_10_CONTRATOS.md` para detalhes.
 
 ---
 
@@ -46,4 +62,4 @@ Você devolve ao Gestor a seguinte análise:
 3. Impacto de atrasos no fluxo de caixa (multas ou pagamentos postergados).
 
 ---
-*Fim do Módulo Administrativo & Financeiro.*
+*Fim do Módulo Administrativo. Para fluxo de caixa consulte `SKILL_GESTAO_09`. Para contratos e aditivos consulte `SKILL_GESTAO_10`.*

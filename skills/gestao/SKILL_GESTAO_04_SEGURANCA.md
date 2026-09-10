@@ -10,9 +10,52 @@ Preservar a integridade física de todos os trabalhadores, garantir a conformida
 
 ## 🧭 1. Princípios de Segurança (Regras Básicas)
 1. **Risco Zero Absoluto:** Segurança vem antes de produção e cronograma. Nenhuma atividade inicia se houver risco grave e iminente à vida.
-2. **Precedência de Proteção:** Sempre priorizar a Proteção Coletiva (EPC - ex: guarda-corpo) sobre a Proteção Individual (EPI - ex: cinto de segurança).
-3. **Trabalho Específico:** Serviços em altura (NR-35), espaços confinados (NR-33) e eletricidade (NR-10) requerem treinamento específico, liberação (PT) e APR diária.
-4. **Isolamento:** Toda área com risco de queda de materiais deve ser isolada na projeção inferior.
+2. **Precedência de Proteção:** Sempre priorizar Proteção Coletiva (EPC: guarda-corpo, rede, andaime) sobre Proteção Individual (EPI: cinto de segurança).
+3. **Trabalho Específico:** Altura (NR-35), espaços confinados (NR-33), eletricidade (NR-10) exigem treinamento, Permissão de Trabalho (PT) e APR diária.
+4. **Isolamento:** Área com risco de queda de materiais isolada na projeção inferior.
+
+### 1.1 Critérios de Paralisação Imediata de Frente
+
+As seguintes situações exigem parada imediata do serviço, sem negociatação:
+
+| Situação | Ação imediata |
+|---|---|
+| Acidente com afastamento (qualquer) | Parar a frente. Registrar B.O. Acionar SESMT e cliente |
+| Quase-acidente (near miss) | Parar a frente. Investigar causa-raiz antes de retomar |
+| Trabalhador sem EPI adequado (em risco iminente) | Afastar do serviço até equipe do EPI ser regularizada |
+| Andaime ou guarda-corpo fora de norma | Paralisar trabalho em altura. Acionar SKILL_GESTAO_04 para APR corretiva |
+| Fiscalização do MTE com auto de infração | Parar o serviço notificado. Acionamento do serviço jurídico do cliente |
+
+### 1.2 Checklist de DDS Obrigatório por Fase da Obra
+
+| Fase | Temas obrigatórios no DDS |
+|---|---|
+| Implantação / Canteiro | Fluxo de circulação, áreas proibidas, uso de EPIs básicos |
+| Escavação e Fundação | Riscos de desmoronamento, proibição de descida em vala sem EPC |
+| Estrutura / Concretagem | Uso de cinto de segurança tipo paraquedista em altura, proibição de trabalho em andaime precipítio |
+| Alvenaria e Revestimentos | Cuidados com betoneira e argamassadeira, uso de óculos e luvas |
+| Instalações Elétricas | NR-10, proibição de improvisar ligações elétricas |
+| Cobertura | NR-35 (trabalho em altura), linha de vida, proibição de subir em telhado sem EPC |
+| Acabamentos / Pintura | Uso de máscara PFF2 na lixagem, ventilação de ambientes fechados |
+
+### 1.3 Fluxo de Comunicação de Acidente
+```
+[1] Acidente ocorre
+   ↓
+[2] Socorrer o trabalhador (chamar SAMU / 192 se necessário)
+   ↓
+[3] Preservar o local do acidente (não mexer até investigação)
+   ↓
+[4] Comunicar ao Consultor (Alexandre) em até 1 hora
+   ↓
+[5] Consultor comunica ao cliente/obra em até 2 horas
+   ↓
+[6] Emitir CAT (Comunicação de Acidente de Trabalho) em até 24h
+   ↓
+[7] Investigar causa-raiz com 5 Porquês
+   ↓
+[8] Registrar ação corretiva e bloquear reincidência
+```
 
 ---
 

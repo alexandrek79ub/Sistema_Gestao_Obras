@@ -10,9 +10,43 @@ Garantir que as frentes de serviço no canteiro de obras operem com máxima efic
 
 ## 🧭 1. Princípios de Produção (Regras Básicas)
 1. **Nunca parar a mão de obra:** A pior perda em uma obra é a equipe ociosa. Se uma frente for bloqueada, remaneje imediatamente para outra frente livre.
-2. **Just-in-Time logístico:** O material deve chegar o mais próximo possível do local de aplicação para evitar bi-tributação de movimentação (carregar o material duas vezes).
-3. **Análise de RDO:** O RDO deve refletir o clima, a mão de obra presente, os serviços executados e os impedimentos do dia.
-4. **Produtividade Diária (RUP - Razão Unitária de Produção):** Avaliar se a equipe está entregando a quantidade esperada de serviço por homem/hora (ex: 1 pedreiro deve fazer X m² de alvenaria/dia).
+2. **POP antes de executar:** Antes de iniciar qualquer serviço, o encarregado DEVE confirmar que conhece o POP correspondente. Consulte [`SKILL_PRODUCAO_POP_BRIDGE.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_PRODUCAO_POP_BRIDGE.md) para identificar qual POP acionar.
+3. **Just-in-Time logístico:** O material deve chegar o mais próximo possível do local de aplicação para evitar bi-tributação de movimentação.
+4. **Análise de RDO:** O RDO deve refletir o clima, a mão de obra presente, os serviços executados e os impedimentos do dia.
+5. **Produtividade Diária (RUP):** Avaliar se a equipe está entregando a quantidade esperada por homem/hora. Para cálculo e alertas de RUP, consultar `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md`.
+
+### 1.1 Critérios de Registro no RDO
+
+| Evento | Como registrar | Impacto |
+|---|---|---|
+| Chuva impede serviço externo | **Paralisação** — registrar horário início e fim | Não conta como improdutividade da equipe |
+| Falta de material impede frente | **Paralisação por suprimentos** — registrar qual material e desde quando | Acionar Skill ADM imediatamente |
+| Equipe trabalhando mas sem render | **Improdutividade** — registrar RUP cíclico do dia | Acionar Skill 08 se ocorrer 3+ dias seguidos |
+| Equipamento quebrado | **Paralisação mecânica** — registrar hora de parada e chamado de manutenção | Calcular custo de equipe ociosa |
+
+### 1.2 Template de RDO Mínimo
+```
+RDO — [Nome da Obra] — [Data]
+
+CLIMA: [ ] Sol | [ ] Nublado | [ ] Chuva parcial | [ ] Chuva total
+TEMPERATURA: [máx] / [mín]
+
+EFETIVO:
+  Pedreiros:  [N]   |  Serventes: [N]  |  Armadores: [N]
+  Eletricistas: [N] |  Encanadores: [N] | Terceiros: [N - Empresa X]
+
+SERVIÇOS EXECUTADOS:
+  [CIA]   [Serviço]   [Medido (m²/m³/kg)]   [RUP do dia]
+
+IMPEDIMENTOS:
+  [ ] Nenhum
+  [ ] Falta de material: [qual]
+  [ ] Equip. quebrado: [qual]
+  [ ] Chuva (h início: [HH:MM] / fim: [HH:MM])
+
+ALERTAS PARA AMANHÃ:
+  [Material a solicitar / Frente a liberar / Visita técnica]
+```
 
 ---
 
@@ -41,7 +75,7 @@ Ao ser acionado pelo Gestor para resolver problemas de campo, você deve:
 Você devolve ao Gestor a seguinte análise:
 1. Avaliação do rendimento da equipe (Bom/Ruim/Ocioso).
 2. Plano de remanejamento imediato de equipe.
-3. Alerta de materiais necessários para os próximos 3 a 5 dias.
+3. Alerta de materiais necessários para os próximos **5 dias** (não apenas 3): antecipão mínima de compra para evitar paralisação por falta de material.
 
 ---
-*Fim do Módulo Produção.*
+*Fim do Módulo Produção. Para cálculo de RUP e produtividade consulte [`SKILL_GESTAO_08`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md). Para o POP do serviço consulte [`SKILL_PRODUCAO_POP_BRIDGE`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_PRODUCAO_POP_BRIDGE.md).*

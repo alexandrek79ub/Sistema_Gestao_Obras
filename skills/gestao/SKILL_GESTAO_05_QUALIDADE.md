@@ -9,10 +9,46 @@ Garantir que os serviços e materiais aplicados na obra atendam rigorosamente à
 ---
 
 ## 🧭 1. Princípios de Qualidade (Regras Básicas)
-1. **Não aceitar defeito:** Se um serviço não atende à tolerância da norma (ex: prumo de um pilar), ele deve ser refeito. Reparos paliativos só com aval do projetista.
-2. **Inspeção em Etapas:** Nunca inspecione apenas o serviço pronto. Inspecione a base antes (ex: liberar a armação/fôrma antes de autorizar a concretagem).
-3. **Rastreabilidade Obrigatória:** Todo material estrutural (aço, concreto) deve ter um certificado de origem. Concreto exige controle do rompimento dos corpos de prova aos 7 e 28 dias.
-4. **Bloqueio de Pagamento:** Serviço reprovado na FVS não entra na medição financeira do empreiteiro (aciona a Skill ADM).
+1. **Não aceitar defeito:** Se um serviço não atende à tolerância da norma, deve ser refeito. Reparos paliativos só com aval do projetista.
+2. **Inspeção em Etapas:** Nunca inspecione apenas o serviço pronto. Inspecione a base antes (ex: liberar armação/fôrma antes de autorizar a concretagem).
+3. **Rastreabilidade Obrigatória:** Todo material estrutural (aço, concreto) tem certificado de origem. Concreto exige CPs aos 7 e 28 dias.
+4. **Bloqueio de Pagamento:** Serviço reprovado na FVS não entra na medição (aciona Skill ADM).
+
+### 1.1 Tolerâncias de Aceitação por Serviço (ABNT)
+
+| Serviço | Tolerância aceitável | Norma de referência |
+|---|---|---|
+| Prumo de parede (alvenaria/concreto) | ± 3 mm em 3,00 m | NBR 6118, NBR 15575 |
+| Nível de piso acabado | ± 3 mm em 2,00 m | NBR 15575 |
+| Planeza de revestimento (régua 2m) | ± 3 mm | NBR 13754 |
+| Espessura de emboço | 15 mm a 25 mm | NBR 7200 |
+| Fck de concreto (rompimento CP) | ≥ Fck projetado (ex: ≥ 25 MPa para C25) | NBR 6118 |
+| Taxa de compact. solo de aterro | ≥ 95% Proctor Normal | NBR 6457/6459 |
+| Prumo de esquadria (caixilho) | ± 2 mm em todo o vazio | NBR 10821 |
+| Desempenho térmico e acústico | Conforme memorial de especificações do projeto | NBR 15575 |
+
+### 1.2 Critério de Emissão de RNC (Registro de Não Conformidade)
+
+Emitirem obrigatoriamente uma RNC quando:
+1. Serviço estiver fora da tolerância da tabela acima.
+2. Material aplicado sem certificado ou divergente do memorial de especificações.
+3. Fck de concreto (28 dias) abaixo do Fck projetado.
+4. Ensaio de compactação de solo abaixo de 95% do Proctor Normal.
+5. Serviço oculto executado sem liberação prévia da FVS.
+
+### 1.3 Fluxo de Aceite / Rejeição de Serviço
+```
+[1] Produção solicita liberação do serviço
+   ↓
+[2] Qualidade inspeciona com checklist FVS
+   ↓
+   APROVADO? ┃ SIM → [3a] Assinar FVS. Liberar medição (Skill ADM)
+              ┃ NÃO → [3b] Emitir RNC com foto + descrição do defeito
+                              ↓
+                          [4] Empreiteiro retrabalha
+                              ↓
+                          [5] Qualidade reinspeciona (Loop até aprovado)
+```
 
 ---
 
