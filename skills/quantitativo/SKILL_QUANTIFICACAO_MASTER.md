@@ -350,14 +350,17 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 3. **Misturar serviços de disciplinas diferentes na mesma memória** — Estrutura e Arquitetura são sempre separadas.
 4. **Ignorar a Regra de Desconto de Apoios / Interseções** — Em cruzamentos de elementos (ex: vigas x pilares/pilaretes), é obrigatório descontar os apoios na viga para que ela seja levantada apenas nos vãos livres, se os pilaretes já foram ou serão levantados inteiros. Jamais gere duplicidade de concreto, fôrma ou impermeabilização no mesmo nó.
 5. **Omitir o Código CIA** em qualquer resultado.
-5. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
-6. **Usar taxas de perda sem registrar qual foi aplicada** — a taxa é parte da memória.
-7. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
-8. **Arredondar para baixo** — quantitativos arredondam para CIMA na compra.
-9. **Misturar área de teto com área de parede** — serviços separados, memórias separadas.
-10. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
-11. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
-12. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
+6. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
+7. **Usar taxas de perda sem registrar qual foi aplicada** — a taxa é parte da memória.
+8. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
+9. **Arredondar para baixo** — quantitativos arredondam para CIMA na compra.
+10. **Misturar área de teto com área de parede** — serviços separados, memórias separadas.
+11. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
+12. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
+13. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
+14. **Fechar a Tabela Consolidada sem antes varrer TODOS os Kits de Miudezas** de cada disciplina presente na obra (Kit Alvenaria §1.6 da SKILL_QUANT_03A, Kit Pintura §5, Kit Esquadrias §2.3 da SKILL_QUANT_03B, Kit Pisos §6, Kit Impermeabilização §1.5). A omissão de miudezas resulta em **REPROVAÇÃO IMEDIATA** pela auditoria.
+15. **Emitir Tabela Consolidada sem a Tabela de Serviços / EAP correspondente** — todo levantamento de compras DEVE ser acompanhado do mapeamento de insumos → serviços → pacotes de trabalho EAP para alimentar o cronograma e os contratos de empreitada.
+16. **Apresentar uma linha na Tabela Consolidada sem sua memória de cálculo detalhada** — cada insumo na tabela de compras DEVE ter sua expressão algébrica documentada na Seção 1 da Memória de Cálculo. Tabela sem memória correspondente = documento inválido.
 
 
 ---
@@ -392,13 +395,22 @@ Antes de encerrar qualquer levantamento:
 - [ ] Hierarquia completa preenchida (Obra > Pavimento > Unidade > Ambiente > Disciplina > Serviço)
 - [ ] Código CIA atribuído a cada ambiente
 - [ ] Quadro de Esquadrias gerado (se houver serviços de revestimento)
-- [ ] Memória de cálculo transcrita para cada serviço em cada ambiente
+- [ ] Memória de cálculo transcrita para **cada serviço em cada ambiente** — incluindo expressão algébrica para cada insumo
+- [ ] **Cada linha da Tabela Consolidada rastreada para sua memória de cálculo** (sem linha órfã)
 - [ ] Revestimento de PAREDE separado de TETO
 - [ ] Desconto de vãos aplicado (NBR 12721 — tabela de 3 faixas)
 - [ ] Taxas de perda explicitadas na memória
 - [ ] Pavimento Tipo com multiplicador aplicado (se houver)
 - [ ] Tabela Resumo por Disciplina gerada com subtotais
-- [ ] Tabela de Insumos para Compra gerada
+- [ ] Tabela de Insumos para Compra (BOM) gerada
+- [ ] **Kits de Miudezas varridos por disciplina** (verificar cada kit antes de fechar a BOM):
+  - [ ] Alvenaria: Kit §1.6 da SKILL_QUANT_03A (telas, pinos, adesivo, espuma de encunhamento)
+  - [ ] Pinturas: Kit §5 da SKILL_QUANT_03A (selador, lixas, fita crepe, lona)
+  - [ ] Pisos/Cerâmicos: Kit §6 da SKILL_QUANT_03B (cimentcola, rejunte, espaçadores, clips, cunhas)
+  - [ ] Esquadrias: Kit §2.3 da SKILL_QUANT_03B (dobradiças, fechaduras, batedores, espuma PU, paraf., pregos, cola, selante)
+  - [ ] Impermeabilização: Kit §1.5 da SKILL_QUANT_03B (primer, tela poliéster, fita asfáltica, GLP)
+  - [ ] Cobertura: Kit da SKILL_QUANT_03C (parafusos autobrocantes, fita butílica, parabolts, rebites, selante)
+- [ ] **Tabela de Serviços / EAP gerada** (mapeamento insumo → serviço → pacote de trabalho → cronograma)
 - [ ] Totais auditáveis (soma dos subtotais por ambiente)
 - [ ] Unidades de medida em todos os resultados
 - [ ] Precisão decimal: 2 casas para m², m³, kg

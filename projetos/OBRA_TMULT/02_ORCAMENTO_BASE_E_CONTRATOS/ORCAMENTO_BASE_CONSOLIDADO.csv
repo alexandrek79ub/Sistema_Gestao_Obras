@@ -1,4 +1,4 @@
-﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
+Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
 1.1.1;Escavação Mecanizada/Manual de Cavas e Valas (Geometria Líquida);Infraestrutura;51.27;m³;0.0;51.27;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
 1.1.2;Apiloamento e Compactação do Fundo de Cava/Vala Líquido;Infraestrutura;60.74;m²;0.0;60.74;m²;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
 1.1.3;Lastro de Concreto Magro fck 15 MPa e=5cm sob Sapatas e Baldrames;Infraestrutura;3.04;m³;5.0;3.19;m³ (0.5 betoneira);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
@@ -25,23 +25,62 @@
 1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148;unid;5.0;1206;unidades;AÇU-3.DES-2.3100-11-EGS-055;-;-
 1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.10;kg;5.0;165;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;-;-
 1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
-2.1.1;Alvenaria de Vedação Bloco Concreto 14x19x39cm;Arquitetura;1061.44;m²;5.0;13931;blocos (1114.5 m²);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.1.1;Bloco Concreto Inteiro B144 (14x19x39cm);Arquitetura;12733.0;unid;5.0;13370;blocos inteiros;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.1.2;Meio Bloco Concreto B142 (14x19x19cm);Arquitetura;508.0;unid;5.0;534;meios blocos;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.1.3;Bloco Canaleta Concreto C144 (14x19x39cm);Arquitetura;281.0;unid;5.0;296;blocos canaleta;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.1.4;Graute Fino Industrializado p/ Canaletas;Arquitetura;1.42;m³;5.0;75;sacos 25kg (1.49 m³);AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.5;Barra de Aço CA-50 Ø8,0mm p/ Vergas/Contravergas;Arquitetura;224.80;m;5.0;20;barras 12m (93.2 kg);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
+2.1.1.6;Cimento Portland CP II-E-32 (Argamassa Assentamento);Arquitetura;5519.0;kg;5.0;116;sacos 50kg;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.7;Cal Hidratada CH-I (Argamassa Assentamento);Arquitetura;1910.0;kg;5.0;101;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.8;Areia Média Lavada (Argamassa Assentamento);Arquitetura;23.35;m³;5.0;24.5;m³;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.9;Tela Metálica Galvanizada 15x50cm Amarração Pilar;Arquitetura;336.0;unid;5.0;353;telas de amarração;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.10;Pinos de Aço c/ Arruela p/ Finca-Pinos à Pólvora;Arquitetura;706.0;unid;5.0;8;caixas 100un (742 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.1.11;Encunhamento Flexível no Topo da Parede (sob vigas);Arquitetura;385.00;m;0.0;385;m;AÇU-3.DES-2.3100-15-EGS-015;-;-
 2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
 2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
 2.1.4;Contrapiso de Regularização e=3cm;Arquitetura;368.40;m²;5.0;386.82;m² (11.6 m³ argamassa);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.5;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.40;m²;10.0;282;caixas (405.2 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.6;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.5.1;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.40;m²;10.0;282;caixas (406.08 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.5.2;Argamassa Colante AC-III p/ Porcelanato (Dupla Colagem);Arquitetura;3684.0;kg;5.0;194;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.5.3;Rejunte Flexível p/ Porcelanato Junta 2mm;Arquitetura;92.1;kg;5.0;20;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.5.4;Clips Niveladores Plásticos p/ Porcelanato 60x60cm;Arquitetura;4096.0;unid;0.0;41;sacos 100un (4100 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.5.5;Cunhas Niveladoras Plásticas Reutilizáveis (Giro 30%);Arquitetura;1229.0;unid;0.0;13;sacos 100un (1300 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.5.6;Lona Plástica Preta p/ Proteção de Pisos Assentados;Arquitetura;368.40;m²;5.0;4;bobinas de 100m²;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.6.1;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.6.2;Argamassa Colante AC-II p/ Cerâmica Parede;Arquitetura;421.0;kg;5.0;23;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.6.3;Rejunte Cerâmico Antimofo Junta 3mm;Arquitetura;25.3;kg;5.0;6;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.6.4;Espaçadores / Cruzetas Plásticas 2mm e 3mm;Arquitetura;2715.0;unid;0.0;28;sacos 100un;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
 2.1.7;Rodapé Porcelanato h=10cm;Arquitetura;384.20;m;10.0;422.62;m;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.8;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
-2.1.9;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.10;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.11;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.20;m²;10.0;92.62;m² (19 caixas 18kg);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.2.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;419.42;m² (70 telhas de 6m);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.2;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.00;m;5.0;28;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.1.8.1;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
+2.1.8.2;Selador Acrílico Base Água p/ Reboco Novo;Arquitetura;212.3;L;5.0;13;latas 18L (223 L);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
+2.1.8.3;Lixa Grossa p/ Reboco (Grão 80/100);Arquitetura;106.0;unid;5.0;112;folhas;AÇU-3.DES-2.3100-15-EGS-015;-;-
+2.1.8.4;Lixa Fina p/ Massa/Gesso (Grão 150/220);Arquitetura;249.0;unid;5.0;262;folhas;AÇU-3.DES-2.3100-15-EGS-015/019;-;-
+2.1.8.5;Fita Crepe 24mm x 50m p/ Pintura e Proteções;Arquitetura;604.0;m;5.0;13;rolos de 50m;AÇU-3.DES-2.3100-15-EGS-015/019;-;-
+2.1.9.1;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.2;Dobradiças 3 ½" x 3" em Aço Inox (3 un/folha);Arquitetura;78.0;unid;5.0;82;dobradiças inox;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.3;Fechaduras Completas (Cilindro / Gorge / Tranqueta);Arquitetura;24.0;unid;0.0;24;conjuntos completos;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.4;Batedores de Porta para Piso c/ Amortecedor Inox;Arquitetura;26.0;unid;0.0;26;unidades;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.5;Espuma de Poliuretano Expansiva 750ml p/ Marcos;Arquitetura;9.6;unid;5.0;11;tubos de 750ml;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.6;Parafusos e Buchas Nylon S8 p/ Fixação Batentes;Arquitetura;192.0;unid;5.0;3;caixas 100un (202 un);AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.7;Pregos sem Cabeça 12x12 p/ Alizares/Guarnições;Arquitetura;480.0;unid;5.0;5;pacotes 100un (504 un);AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.9.8;Cola Branca PVA Madeira D3 (frascos 500g);Arquitetura;3.0;unid;5.0;4;frascos 500g;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.10.1;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.10.2;Selante PU 40 / Silicone Neutro 310ml p/ Caixilhos;Arquitetura;124.70;m;5.0;14;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-018;-;-
+2.1.11.1;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.20;m²;10.0;19;caixas 18kg (92.62 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.1.11.2;Tela de Poliéster / Véu de Reforço Impermeabilização;Arquitetura;92.60;m²;5.0;2;rolos de 50m²;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
+2.2.1.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;70;telhas 6m (419.42 m²);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.1.2;Parafusos Autobrocantes 12x1" c/ Arruela EPDM;Cobertura;1716.0;unid;5.0;19;caixas 100un (1802 un);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.1.3;Parafusos de Costura 10x3/4" c/ Arruela EPDM;Cobertura;364.0;unid;5.0;4;caixas 100un (383 un);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.1.4;Fita de Vedação Butílica Autoadesiva 15mm;Cobertura;122.00;m;5.0;13;rolos de 10m;AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.2.1;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.00;m;5.0;28;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.2.2;Chumbadores Parabolts CBA 3/8" x 3" p/ Terças;Cobertura;60.0;unid;5.0;63;unidades;AÇU-3.DES-2.3100-15-EGS-017;-;-
 2.2.3;Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm);Cobertura;45.24;m²;5.0;594;blocos 9x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.4;Calha em Chapa Galvanizada nº 24 (Dev 80cm);Cobertura;52.00;m;5.0;54.60;m (19 peças de 3m);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.5;Rufo e Pingadeira Metálica de Platibanda (Dev 40cm);Cobertura;82.00;m;5.0;86.10;m (29 peças de 3m);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.6;Impermeabilização Manta Asfáltica 4mm em Calhas;Cobertura;62.00;m²;15.0;8;rolos de 10m² (71.3 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
+2.2.4.1;Calha em Chapa Galvanizada nº 24 (Dev 80cm);Cobertura;52.00;m;5.0;19;peças de 3m (54.60 m);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.4.2;Rebites de Repuxo em Alumínio 4,0x10mm p/ Calhas/Rufos;Cobertura;440.0;unid;5.0;5;centos (500 rebites);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.4.3;Selante PU 40 p/ Calafetação de Calhas e Rufos;Cobertura;6.0;unid;5.0;6;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.5;Rufo e Pingadeira Metálica de Platibanda (Dev 40cm);Cobertura;82.00;m;5.0;29;peças de 3m (86.10 m);AÇU-3.DES-2.3100-15-EGS-017;-;-
+2.2.6.1;Impermeabilização Manta Asfáltica 4mm em Calhas;Cobertura;62.00;m²;15.0;8;rolos de 10m² (71.3 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
+2.2.6.2;Primer Asfáltico Base Solvente p/ Calhas;Cobertura;24.80;L;5.0;2;baldes de 18L (36 L);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
+2.2.6.3;Gás GLP P-13 p/ Maçarico de Manta Asfáltica;Cobertura;1.24;unid;0.0;2;botijões P-13;AÇU-3.DES-2.3100-15-EGS-017;-;-
 2.2.7;Ralo Hemisférico Tipo Abacaxi Inox Ø150mm para Calhas;Cobertura;8.0;unid;0.0;8;unidades;AÇU-3.DES-2.3100-15-EGS-015/017;-;-
 2.2.8;Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m);Cobertura;31.98;m²;5.0;420;blocos 14x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
 2.2.9;Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda;Cobertura;74.62;m²;5.0;78.35;m² (16 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-017;-;-

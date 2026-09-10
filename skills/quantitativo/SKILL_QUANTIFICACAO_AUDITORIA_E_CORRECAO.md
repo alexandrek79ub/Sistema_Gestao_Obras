@@ -86,6 +86,61 @@ Para garantir zero omissão de detalhes construtivos em qualquer disciplina:
 
 ---
 
+## 🛒 7. Checklist 7 — Varredura de Kits de Miudezas por Disciplina (Anti-Falta de Almoxarifado)
+
+> 🛑 **REGRA CRÍTICA:** A omissão de qualquer miudeza na Lista de Compras (BOM) causa paralisamento de frente de serviço em obra. Este checklist é obrigatório e deve ser executado antes de emitir o quantitativo final.
+
+Para cada disciplina presente no levantamento, verificar se o Kit de Miudezas correspondente foi integralmente aplicado:
+
+**Alvenaria (SKILL_QUANT_03A §1.6 + §1.8):**
+- [ ] Telas metálicas galvanizadas 15×50cm de amarração pilar-alvenaria
+- [ ] Pinos de aço c/ arruela cônica + cartuchos de pólvora para finca-pinos
+- [ ] Adesivo plastificante para chapisco (0,20 L/m²)
+- [ ] **Espuma de Poliuretano Expansiva PU 750ml** para encunhamento no topo das paredes
+- [ ] Insumos de argamassa de assentamento (cimento CP II, cal hidratada, areia média) convertidos em sacos/m³
+- [ ] Checklist §1.8 da SKILL_QUANT_03A percorrido e assinado
+
+**Pinturas (SKILL_QUANT_03A §5):**
+- [ ] Selador acrílico base água (0,10 L/m² de reboco novo)
+- [ ] Lixa grossa grão 80/100 (0,05 folha/m² de reboco)
+- [ ] Lixa fina grão 150/220 (0,10 folha/m² de massa/gesso)
+- [ ] Fita crepe 24mm×50m para proteção de rodapés e caixilhos
+- [ ] Lona plástica preta para proteção de pisos assentados (bobinas 100m²)
+
+**Pisos / Revestimentos Cerâmicos (SKILL_QUANT_03B §6):**
+- [ ] Cimentcola AC-I/II/III (tipo correto por área seca/úmida/dupla colagem)
+- [ ] Rejunte flexível (consumo varia por formato e largura de junta)
+- [ ] Espaçadores / cruzetas plásticas (6 un/m²)
+- [ ] Clips niveladores (obrigatórios para porcelanato ≥60×60cm)
+- [ ] Cunhas niveladoras reutilizáveis (30% dos clips)
+- [ ] Primer de contato acrílico (substratos novos e porosos)
+
+**Esquadrias (SKILL_QUANT_03B §2.3):**
+- [ ] Dobradiças aço inox 3½"×3" (3 por folha de abrir)
+- [ ] Fechaduras completas (máquina + cilindro + maçaneta)
+- [ ] Batedores de porta de piso c/ amortecedor inox
+- [ ] Espuma PU 750ml para marcos (1 tubo a cada 2,5 portas)
+- [ ] Parafusos + buchas nylon S8 para batentes (8/porta)
+- [ ] Pregos s/ cabeça 12×12 para alizares (20/vão)
+- [ ] Cola branca PVA D3 (1 frasco de 500g a cada 8 portas)
+- [ ] Selante PU 40 / silicone neutro para caixilhos externos
+
+**Impermeabilização (SKILL_QUANT_03B §1.5):**
+- [ ] Primer asfáltico base solvente (0,40 L/m² de manta)
+- [ ] Tela de poliéster / véu de fibra de vidro (reforço de cantos e ralos)
+- [ ] Fita asfáltica autoadesiva aluminizada (rolos 10m) para juntas e emendas
+- [ ] Gás GLP P-13 para maçarico de manta asfáltica (1 botijão/50m²)
+
+**Cobertura (SKILL_QUANT_03C):**
+- [ ] Parafusos autobrocantes c/ arruela EPDM (4,5 un/m² real inclinado)
+- [ ] Parafusos de costura c/ arruela EPDM (emendas longitudinais)
+- [ ] Fita de vedação butílica autoadesiva (transpasse de telhas e calhas)
+- [ ] Chumbadores / parabolts para terças metálicas (2/apoio)
+- [ ] Rebites de repuxo em alumínio para calhas e rufos
+- [ ] Selante PU 40 para calafetação de calhas, rufos e emendas
+
+---
+
 ## 🛑 Red Flags — Erros Críticos que Cancelam a Emissão do Quantitativo
 
 Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o levantamento e exige correção imediata:
@@ -98,6 +153,9 @@ Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o
 6. ❌ Apresentar quantitativos resumidos, agrupados ou sintetizados omitindo conexões, caixas, disjuntores ou micro-componentes.
 7. ❌ **Quantificar qualquer item com base em estimativa, suposição ou média paramétrica sem respaldo direto no desenho.**
 8. ❌ **Omitir a observação obrigatória na memória de cálculo informando que o item NÃO foi levantado por falta de informação no desenho.**
+9. ❌ **Emitir Tabela Consolidada sem a Tabela de Serviços / EAP** — lista de compras sem mapeamento de serviços é documento incompleto e não pode ser usado para cronograma ou contratos de empreitada.
+10. ❌ **Linha da Tabela Consolidada sem memória de cálculo correspondente** (linha órfã) — todo insumo na BOM deve ter expressão algébrica documentada na Seção 1.
+11. ❌ **Fechar a BOM sem percorrer o Checklist 7 de miudezas** — a omissão de kits de miudezas implica em reprovação automática da auditoria.
 
 
 ---
@@ -115,6 +173,10 @@ Após a verificação, o Agente de Auditoria deve emitir o seguinte bloco no rel
  [x] Checklist 3 — Interface Pilar-Laje-Viga (Face Inferior): APROVADO
  [x] Checklist 4 — Conversão UCC e Arredondamentos: APROVADO
  [x] Checklist 5 — Blindagem Anti-Estimativa e Registro de Omissões de Projeto: APROVADO
+ [x] Checklist 6 — Varredura 360° de Pranchas e Interrogatório Técnico: APROVADO
+ [x] Checklist 7 — Varredura de Kits de Miudezas por Disciplina: APROVADO
+ [x] Memória de Cálculo: toda linha da BOM rastreada para sua expressão algébrica: APROVADO
+ [x] Tabela de Serviços / EAP gerada e vinculada à BOM: APROVADO
 ====================================================================
  STATUS: LEVANTAMENTO AUDITADO E LIBERADO PARA O ORÇAMENTO BASE
 ====================================================================

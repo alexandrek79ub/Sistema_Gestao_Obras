@@ -174,10 +174,13 @@ Areia = A_alvenaria_líquida × 0,022 m³/m² × 1,05
 
 | Item | Cálculo | UCC |
 |---|---|---|
-| Telas de amarração galvanizadas (a cada 2 fiadas) | `N_interfaces_pilar × Floor(H/0,40m) × 1,05` | unid |
-| Pinos finca-pinos + cartuchos | `N_telas × 2 × 1,05` | unid |
+| Telas de amarração galvanizadas 15×50cm (a cada 2 fiadas) | `N_interfaces_pilar × Floor(H/0,40m) × 1,05` | unid |
+| Pinos finca-pinos + cartuchos de pólvora | `N_telas × 2 × 1,05` | unid |
 | Adesivo plastificante (0,20 L/m² de chapisco) | `A_chapisco × 0,20` | lata 18L ↑ |
-| Encunhamento (espuma/argamassa exp.) no topo das paredes | `L_total_paredes_topo` | m |
+| **Espuma de Poliuretano Expansiva PU 750ml** (encunhamento flexível sob vigas, laje e telhado) | `Ceil(L_total_topo / 3,0m) × 1,05` | tubo 750ml ↑ |
+| Argamassa de encunhamento industrializada (alternativa ao PU — trapo areia fina) | `L_total_topo × 0,14m × 0,05m × 2.000 kg/m³` | saco 20kg ↑ |
+
+> ⚠️ **Regra:** Usar Espuma PU quando o projeto especificar fechamento flexível; argamassa quando especificar graute rígido. Se não houver especificação, parar e emitir RFI.
 
 ---
 
@@ -200,7 +203,29 @@ Areia = A_alvenaria_líquida × 0,022 m³/m² × 1,05
 
 ---
 
-## 📐 2. Pisos, Contrapisos e Revestimentos de Piso
+### 1.8 Checklist Anti-Omissão de SKUs de Alvenaria (🚨 OBRIGATÓRIO ANTES DE FECHAR A TABELA CONSOLIDADA)
+
+> 🛑 **REGRA INVIOLÁVEL:** Nenhum levantamento de alvenaria pode ser entregue sem que todos os SKUs abaixo estejam presentes na Tabela Consolidada e na Memória de Cálculo. Este checklist deve ser percorrido item a item antes de emitir o quantitativo final.
+
+- [ ] **SKU Bloco Inteiro B144/B194** calculado com `A_alvenaria_líquida × 12,5 − canaletas − meios` e presente na tabela
+- [ ] **SKU Meio Bloco B142/B192** calculado (ombreiras de portas, janelas e cantos) e presente na tabela
+- [ ] **SKU Bloco Canaleta C144/C194** calculado (vergas + contravergas + cintas, conforme §1.5.1) e presente na tabela
+- [ ] **SKU Canaleta Meio C142/C192** calculado (fechamento de amarrações em cantos de canaleta) se houver indicado em projeto
+- [ ] **Graute industrializado p/ canaletas** calculado em m³ e convertido para sacos de 25kg, presente na tabela
+- [ ] **Armadura CA-50 Ø8,0mm** para canaletas calculada (barras de 12m e kg) e presente na tabela
+- [ ] **Bloco de concreto 9×19×39cm** para muretas de entreforro/apoio de cobertura (se houver estrutura de telhado metálico leve)
+- [ ] **Bloco de alvenaria de platibanda** (se houver platibanda) quantificado com desconto da viga invertida
+- [ ] **Kit Acessórios §1.6 integralmente varrido:**
+  - [ ] Telas de amarração galvanizadas 15×50cm
+  - [ ] Pinos de aço c/ arruela + cartuchos de pólvora
+  - [ ] Adesivo plastificante (chapisco)
+  - [ ] **Espuma de Poliuretano Expansiva PU 750ml** (encunhamento topo de parede)
+- [ ] **Insumos de argamassa de assentamento** (cimento, cal, areia) presentes na tabela com quantidades em UCC (sacos/m³)
+
+> Se algum item acima estiver ausente → **NÃO EMITIR A TABELA.** Calcular o item faltante e registrar memória de cálculo antes de prosseguir.
+
+---
+
 
 ### 2.1 Fórmulas
 

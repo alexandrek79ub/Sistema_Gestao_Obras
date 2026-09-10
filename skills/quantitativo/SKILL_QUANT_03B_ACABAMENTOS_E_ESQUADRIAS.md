@@ -172,6 +172,42 @@ A_total_COD_k = Σ (A_total_local para todas as ocorrências do CÓD k)
 | Espaçadores/cruzetas (sacos 100un) | `A_total × 6 / 100` | saco ↑ |
 | Clips niveladores (sacos 100un — porcelanato ≥60×60) | `N_peças × 4 / 100` | saco ↑ |
 | Cunhas niveladoras (30% dos clips) | `N_clips × 0,30 / 100` | saco ↑ |
+| **Primer de contato acrílico** (substrato poroso / contrapiso absorvente antes da cimentcola) | `A × 0,15 L/m²` | lata 18L ↑ |
+| **Argamassa de regularização / nivelamento local** (faixas mestre ou caimento forçado em pisos molhados) | conforme indicado em projeto | saco 20kg ↑ |
+| Lã de róckwool / junta de dilatacão PE expandido 5mm (porçat./grês > 3m lineares) | `Perím_amb × 1,05` | rolo 10m ↑ |
+
+> ⚠️ **Regra Primer:** Aplicar primer de contato sempre que o substrato (contrapiso ou concreto) for novo e poroso. Se o projeto não especificar, perguntar ao responsável antes de orçar ou omitir.
+
+---
+
+### 6.1 Checklist Anti-Omissão de Miudezas — Módulo 03B (🚨 OBRIGATÓRIO)
+
+Antes de fechar a Tabela Consolidada de qualquer serviço coberto por este módulo:
+
+**Impermeabilização (§1):**
+- [ ] Primer asfáltico base solvente calculado e na tabela (0,40 L/m²)
+- [ ] Tela de poliéster / véu de fibra de vidro calculado e na tabela
+- [ ] Fita asfáltica autoadesiva aluminizada (juntas e arremates) calculada e na tabela
+- [ ] Gás GLP P-13 para maçarico de manta (se manta asfáltica) calculado e na tabela
+
+**Esquadrias (§2.3):**
+- [ ] Dobradiças em aço inox (3 por folha) calculadas e na tabela
+- [ ] Fechaduras completas (máq + cilindro + maçaneta) calculadas e na tabela
+- [ ] Batedores de porta c/ amortecedor calculados e na tabela
+- [ ] Espuma PU 750ml para marcos calculada e na tabela
+- [ ] Parafusos + buchas S8 para batentes calculados e na tabela
+- [ ] Pregos s/ cabeça para alizares calculados e na tabela
+- [ ] Cola branca PVA D3 calculada e na tabela
+- [ ] Selante PU 40 / silicone neutro para caixilhos externos calculado e na tabela
+
+**Pisos e Revestimentos Cerâmicos (§6):**
+- [ ] Cimentcola AC-I/II/III calculada (escolher conforme área seca/úmida/dupla colagem)
+- [ ] Rejunte calculado (consumo varia por tipo de peça e junta)
+- [ ] Espaçadores/cruzetas calculados
+- [ ] Clips niveladores calculados (obrigatórios para porcelanato ≥60×60cm)
+- [ ] Cunhas niveladoras calculadas (30% dos clips)
+- [ ] Primer de contato avaliado (necessário em substratos absorventes)
+
 
 ---
 
