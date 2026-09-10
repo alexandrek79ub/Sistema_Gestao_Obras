@@ -13,11 +13,11 @@
 
 ### 2.1 Leitura Obrigatória de Isométricos e Cálculo de Prumadas Verticais (Eixo Z)
 - **Extensão Horizontal (X, Y):** Medição da tubulação em planta baixa (trecho embutido no piso/alvenaria ou aparente).
-- **Leitura de Desenhos Isométricos (Subidas e Descidas - $\Delta Z$):** Os trechos verticais **DEVEM ser extraídos diretamente dos Esquemas Isométricos de Água Fria/Quente e Prumadas de Esgoto/Gás**:
+- **Leitura de Desenhos Isométricos (Subidas e Descidas - ΔZ):** Os trechos verticais **DEVEM ser extraídos diretamente dos Esquemas Isométricos de Água Fria/Quente e Prumadas de Esgoto/Gás**:
   - `Ponto de Chuveiro (h = 2,10m a 2,20m do piso):` Subida vertical do ponto de distribuição ou ramal.
   - `Ponto de Lavatório / Pia de Cozinha (h = 0,60m a 1,10m do piso).`
   - `Ponto de Bacia Sanitária c/ Caixa Acoplada (h = 0,20m do piso) / Válvula de Descarga (h = 1,10m).`
-  - `Prumadas Verticais (Shafts):` $L_{\text{prumada}} = (H_{\text{pé-direito}} + e_{\text{laje}}) \times N_{\text{pavimentos}} + \text{Interligação Barrilete/Subsolo}$.
+  - `Prumadas Verticais (Shafts):` `L_prumada = (H_pé-direito + e_laje) × N_pavimentos + Interligação Barrilete/Subsolo`.
 - **Taxa de Perda:** Adicionar **10%** no total medido.
 - **Regra UCC:** 
   - Tubos Soldáveis (Água): Barras de **3 metros** ou **6 metros** (arredondar CIMA).
@@ -29,17 +29,17 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
   - `Registro de Gaveta Bruto / c/ Canopla (unid):` Registro de fecho geral de ambiente (DN 20mm/25mm/32mm / 3/4", 1", 1 1/4") c/ acabamento cromado.
   - `Registro de Pressão p/ Chuveiro c/ Canopla (unid):` Registro de regulagem de vazão de chuveiro (DN 20mm / 3/4") c/ acabamento cromado.
   - `Válvula de Retenção Vertical / Horizontal (unid):` Para prevenção de refluxo em saídas de reservatórios e recalques.
-  - `Válvula Redutora de Pressão - VRP (unid):` Para pavimentos inferiores com pressão manométrica acima de $40\text{ mca}$ (NBR 5626).
+  - `Válvula Redutora de Pressão - VRP (unid):` Para pavimentos inferiores com pressão manométrica acima de 40 mca (NBR 5626).
 - **Conexões Detalhadas do Isométrico (Peça por Peça):**
   - `Joelho / Cotovelo 90º e 45º (Soldável, PPR, Esgoto c/ Bolsa - unid).`
-  - `Joelho 90º c/ Bucha de Latão (unid):` Para transição soldável $\to$ roscável nas pontas de torneiras, chuveiros e duchas higiênicas ($25mm \times 1/2"$ / $20mm \times 1/2"$).
+  - `Joelho 90º c/ Bucha de Latão (unid):` Para transição soldável → roscável nas pontas de torneiras, chuveiros e duchas higiênicas (25mm × 1/2" / 20mm × 1/2").
   - `Tê 90º Igual / Tê de Redução / Tê c/ Bucha de Latão (unid).`
   - `Luva de Redução / Luva de Correr (unid).`
   - `Curva de Transposição (unid):` Peça especial para transpor cruzamento de tubulações embutidas sem colisão.
 - **Kits de Ligação e Terminais Sanitários:**
-  - `Engate Flexível Inox / PVC (unid):` Rabicho flexível $40\text{cm} / 50\text{cm}$ (DN 1/2") para lavatórios, pias e bacias sanitárias.
+  - `Engate Flexível Inox / PVC (unid):` Rabicho flexível 40cm / 50cm (DN 1/2") para lavatórios, pias e bacias sanitárias.
   - `Sifão Sanfonado Universal / Sifão de Copo Cromado (unid):` Sifão para lavatório e pia de cozinha c/ adaptador rígido.
-  - `Válvula de Escoamento / Ralo de Pia (unid):` Válvula inox $7/8"$ / $1 1/2"$ / $3 1/2"$ c/ tampão.
+  - `Válvula de Escoamento / Ralo de Pia (unid):` Válvula inox 7/8" / 1 1/2" / 3 1/2" c/ tampão.
   - `Anel de Vedação de Cera c/ Guia (unid):` 1 por bacia sanitária (veda ligação de esgoto contra retorno de gases/odores).
   - `Conjunto de Parafusos de Fixação de Bacia c/ Bucha S10 e Arruela Inox (cj):` 1 conjunto (2 parafusos) por bacia sanitária.
 
@@ -48,49 +48,49 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
 ### 2.3 Algoritmo Matemático de Derivação de Miudezas e Consumíveis Hidráulicos
 Para eliminar omissões e garantir o kit completo de instalação:
 1. **Adesivo Plástico para PVC (frascos 175g ou 850g):**  
-   $$N_{\text{adesivo 175g}} = \lceil \sum (\text{Conexões Soldáveis}) / 30 \rceil \text{ frascos (mínimo 1 frasco por obra)}$$
+   `N_adesivo_175g = ⌈ Σ (Conexões Soldáveis) / 30 ⌉ frascos (mínimo 1 frasco por obra)`
 2. **Solução Preparadora / Limpadora PVC (frascos 200ml):**  
-   $$N_{\text{solução limpadora}} = \lceil N_{\text{frascos adesivo}} / 2 \rceil \text{ frascos}$$
+   `N_solução_limpadora = ⌈ N_frascos_adesivo / 2 ⌉ frascos`
 3. **Fita Veda-Rosca PTFE 18mm x 50m (rolos):**  
-   $$N_{\text{rolos veda-rosca}} = \lceil \sum (\text{Pontos Roscáveis, Registros e Torneiras}) / 15 \rceil \text{ rolos (mínimo 2 rolos)}$$
+   `N_rolos_veda_rosca = ⌈ Σ (Pontos Roscáveis, Registros e Torneiras) / 15 ⌉ rolos (mínimo 2 rolos)`
 4. **Pasta Lubrificante para Tubos de Esgoto com Junta Elástica (bisnagas 160g):**  
-   $$N_{\text{pasta lubrificante}} = \lceil \sum (\text{Tubos e Conexões de Esgoto c/ Bolsa}) / 20 \rceil \text{ bisnagas}$$
+   `N_pasta_lubrificante = ⌈ Σ (Tubos e Conexões de Esgoto c/ Bolsa) / 20 ⌉ bisnagas`
 5. **Anéis de Borracha para Esgoto (unid):**  
    1 anel para cada bolsa de tubo ou conexão de esgoto (DN 40, 50, 75, 100, 150mm).
 6. **Abraçadeiras de Fixação para Prumadas e Tubulações Suspensas (unid):**  
-   Fixação a cada $1,50\text{ m}$ em prumadas verticais e trechos suspensos sob laje:
-   $$N_{\text{abraçadeiras}} = \lceil L_{\text{tubulação suspensa/prumada}} / 1,50\text{m} \rceil \times 1,05$$
+   Fixação a cada 1,50 m em prumadas verticais e trechos suspensos sob laje:
+   `N_abraçadeiras = ⌈ L_tubulação_suspensa/prumada / 1,50m ⌉ × 1,05`
 7. **Lixas d'Água Grão 100 e 120 (unid / folhas):**  
    Quebra de brilho e lixamento superficial dos tubos e bolsas de conexões PVC/CPVC antes da aplicação do adesivo:
-   $$N_{\text{folhas}} = \lceil N_{\text{conexões soldáveis}} / 25 \rceil \text{ folhas (mínimo 1 folha por sistema)}$$
+   `N_folhas = ⌈ N_conexões_soldáveis / 25 ⌉ folhas (mínimo 1 folha por sistema)`
 8. **Plugues Plásticos Roscáveis / Buchões de Vedação 1/2" e 3/4" (unid):**  
    Proteção provisória contra entrada de entulho e tamponamento para teste hidrostático pressurizado:
-   $$N_{\text{plugues}} = N_{\text{pontos de água (chuveiro, lavatório, bacia, torneiras)}} \times 1,05$$
+   `N_plugues = N_pontos_de_água (chuveiro, lavatório, bacia, torneiras) × 1,05`
 9. **Abraçadeiras Tipo Gota em Aço Galvanizado c/ Tirante 1/4" (unid):**  
    Suspensão sob laje de ramais horizontais de esgoto e águas pluviais:
-   $$N_{\text{abraçadeiras gota}} = \lceil L_{\text{esgoto suspenso sob laje}} / 1,50\text{m} \rceil \times 1,05$$
+   `N_abraçadeiras_gota = ⌈ L_esgoto_suspenso_sob_laje / 1,50m ⌉ × 1,05`
 10. **Selante Intumescente Corta-Fogo / Espuma de Vedação (bisnagas 310mL):**  
     Vedação estanque e corta-fogo em travessias de tubulações plásticas em lajes e paredes de compartimentação (NBR 14432):
-    $$N_{\text{bisnagas}} = \lceil N_{\text{travessias de laje DN} \ge 50\text{mm}} / 3 \rceil$$
+    `N_bisnagas = ⌈ N_travessias_de_laje_DN_≥_50mm / 3 ⌉`
 11. **Fita Aluminizada Autoadesiva com Proteção Anti-UV (m lineares):**  
     Proteção mecânica e bloqueio de degradação solar em tubulações aparentes de PVC/PPR instaladas em coberturas ou fachadas:
-    $$L_{\text{fita}} = L_{\text{tubulações externas expostas}} \times 1,10\text{ m}$$
+    `L_fita = L_tubulações_externas_expostas × 1,10 m`
 
 ### 🛡️ 2.4 Checklist Anti-Omissão de SKUs de Instalações Hidráulicas (15 SKUs Obrigatórios na UCC/BOM)
 
 > Antes de emitir a lista de compras ou relatório quantitativo de hidráulica, o PMO Virtual DEVE auditar e certificar a presença mandatória de todos os 15 insumos consumíveis na BOM:
 
-- [ ] **Adesivo Plástico para PVC Soldável (frascos 175g/850g):** $\lceil N_{\text{conexões soldáveis}} / 30 \rceil$ frascos.
-- [ ] **Solução Limpadora / Preparadora PVC (frascos 200mL):** $\lceil N_{\text{frascos adesivo}} / 2 \rceil$ frascos.
-- [ ] **Fita Veda-Rosca PTFE 18mm × 50m:** $\lceil N_{\text{pontos roscáveis}} / 15 \rceil$ rolos (mínimo 2 rolos).
-- [ ] **Pasta Lubrificante para Tubos de Esgoto c/ Bolsa (bisnagas 160g):** $\lceil N_{\text{bolsas esgoto}} / 20 \rceil$ bisnagas.
+- [ ] **Adesivo Plástico para PVC Soldável (frascos 175g/850g):** `⌈ N_conexões_soldáveis / 30 ⌉` frascos.
+- [ ] **Solução Limpadora / Preparadora PVC (frascos 200mL):** `⌈ N_frascos_adesivo / 2 ⌉` frascos.
+- [ ] **Fita Veda-Rosca PTFE 18mm × 50m:** `⌈ N_pontos_roscáveis / 15 ⌉` rolos (mínimo 2 rolos).
+- [ ] **Pasta Lubrificante para Tubos de Esgoto c/ Bolsa (bisnagas 160g):** `⌈ N_bolsas_esgoto / 20 ⌉` bisnagas.
 - [ ] **Anéis de Borracha para Esgoto (junta elástica):** 1 un por bolsa de tubo ou conexão (DN 40 a 150mm).
-- [ ] **Abraçadeiras de Fixação para Prumadas Verticais:** $\lceil L_{\text{prumada}} / 1,50\text{m} \rceil \times 1,05$.
-- [ ] **Lixas d'Água Grão 100/120:** $\lceil N_{\text{conexões soldáveis}} / 25 \rceil$ folhas.
+- [ ] **Abraçadeiras de Fixação para Prumadas Verticais:** `⌈ L_prumada / 1,50m ⌉ × 1,05`.
+- [ ] **Lixas d'Água Grão 100/120:** `⌈ N_conexões_soldáveis / 25 ⌉` folhas.
 - [ ] **Plugues Plásticos Roscáveis 1/2" e 3/4" (buchões de ensaio):** 1 un por saída de água fria/quente.
-- [ ] **Abraçadeiras Tipo Gota (esgoto suspenso sob laje):** $\lceil L_{\text{esgoto suspenso}} / 1,50\text{m} \rceil$.
-- [ ] **Selante Intumescente Corta-Fogo:** 1 bisnaga a cada 3 passagens de laje de prumadas DN $\ge$ 50mm.
-- [ ] **Fita Aluminizada Anti-UV:** Extensão igual à tubulação plástica aparente externa $+ 10\%$.
+- [ ] **Abraçadeiras Tipo Gota (esgoto suspenso sob laje):** `⌈ L_esgoto_suspenso / 1,50m ⌉`.
+- [ ] **Selante Intumescente Corta-Fogo:** 1 bisnaga a cada 3 passagens de laje de prumadas DN ≥ 50mm.
+- [ ] **Fita Aluminizada Anti-UV:** Extensão igual à tubulação plástica aparente externa + 10%.
 - [ ] **Anel de Vedação de Cera com Guia para Bacia Sanitária:** 1 un por bacia sanitária.
 - [ ] **Conjunto de Parafusos de Fixação de Bacia S10 Inox:** 1 conjunto (2 parafusos) por bacia instalada.
 - [ ] **Sifão Sanfonado Universal c/ Adaptador:** 1 un por cuba, lavatório, tanque ou pia.
@@ -152,10 +152,10 @@ Para eliminar omissões e garantir o kit completo de instalação:
 > 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA MATERIAIS HIDRÁULICOS:**
 1. **Tubos Rígidos Soldáveis de Água Fria (PVC, PPR, CPVC):**  
    * **Unidade Comercial:** **BARRAS DE 6 METROS (`barras`)** ou 3 metros conforme catálogo fabricante.  
-   * **Arredondamento:** $\text{Qtd. UCC} = \lceil L_{\text{total}} \times 1,10 / 6\text{m} \rceil$.
+   * **Arredondamento:** `Qtd. UCC = ⌈ L_total × 1,10 / 6m ⌉`.
 2. **Tubos de Esgoto Série Normal e Série Reforçada (PVC):**  
    * **Unidade Comercial:** **BARRAS DE 6 METROS COM BOLSA (`barras`)**.  
-   * **Arredondamento:** $\text{Qtd. UCC} = \lceil L_{\text{total}} \times 1,10 / 6\text{m} \rceil$.
+   * **Arredondamento:** `Qtd. UCC = ⌈ L_total × 1,10 / 6m ⌉`.
 3. **Registros de Gaveta e Pressão:**  
    * **Unidade Comercial:** **PEÇA / UNIDADE (`un`)**, especificando bruto ou com canopla cromada.
 4. **Louças Sanitárias e Metais:**  
@@ -167,18 +167,18 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ## 6. Caixas Enterradas de Infraestrutura Hidráulica/Elétrica (Concreto vs. Alvenaria)
 
-> ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo de caixas de inspeção, passagem, gordura, sabão, retenção e drenagem DEVE derivar automaticamente todos os insumos de escavação, **talude de segurança (NR-18 para $H > 1,25m$)**, fôrmas internas/externas, concreto, aço, emboço interno, impermeabilização e tampas.
+> ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo de caixas de inspeção, passagem, gordura, sabão, retenção e drenagem DEVE derivar automaticamente todos os insumos de escavação, **talude de segurança (NR-18 para H > 1,25m)**, fôrmas internas/externas, concreto, aço, emboço interno, impermeabilização e tampas.
 
 ### 5.1 Geometria e Parâmetros de Entrada da Caixa
 | Parâmetro | Descrição Técnica | Aplicação Geométrica |
 |---|---|---|
-| $A, C$ | Dimensões Internas em Planta (m) | Largura útil ($A$) e Comprimento útil ($C$) da caixa |
-| $B, D$ | Dimensões Externas em Planta (m) | $B = A + 2 \cdot E$ e $D = C + 2 \cdot E$ (inclui espessuras) |
-| $E$ | Espessura das Paredes da Caixa (m) | Tipicamente 0,10m a 0,15m (concreto) ou 0,12m/0,25m (alvenaria) |
-| $F$ | Espessura da Laje de Fundo (m) | Laje de fundo em concreto (tipicamente 0,08m a 0,15m) |
-| $G$ | Altura Interna Útil (m) | Projeção vertical útil do fluxo/inspeção |
-| $H$ | Altura Total Externa da Cava (m) | $H = G + F + I$ (profundidade total de escavação) |
-| $I$ | Espessura da Tampa de Concreto (m) | Tampa superior estrutural (tipicamente 0,07m a 0,10m) |
+| A, C | Dimensões Internas em Planta (m) | Largura útil (A) e Comprimento útil (C) da caixa |
+| B, D | Dimensões Externas em Planta (m) | B = A + 2 × E e D = C + 2 × E (inclui espessuras) |
+| E | Espessura das Paredes da Caixa (m) | Tipicamente 0,10m a 0,15m (concreto) ou 0,12m/0,25m (alvenaria) |
+| F | Espessura da Laje de Fundo (m) | Laje de fundo em concreto (tipicamente 0,08m a 0,15m) |
+| G | Altura Interna Útil (m) | Projeção vertical útil do fluxo/inspeção |
+| H | Altura Total Externa da Cava (m) | H = G + F + I (profundidade total de escavação) |
+| I | Espessura da Tampa de Concreto (m) | Tampa superior estrutural (tipicamente 0,07m a 0,10m) |
 
 ### 5.2 Fórmulas Integradas de Derivação de Serviços (Caixa de Concreto)
 ```text
@@ -244,16 +244,16 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ### 6.1 Redes Enterradas de Água, Esgoto e Drenagem (PVC, PEAD, Corrugado Dreno)
 - **Valas de Tubulação Subterrânea:**
-  - `Escavação de Vala (m³):` $V_{\text{escav}} = (\text{Diâmetro} + 0,30m) \times \text{Profundidade\_H} \times L_{\text{tubo}}$
-  - `Colchão de Areia Lavada (m³):` $V_{\text{areia}} = (\text{Diâmetro} + 0,30m) \times (0,10m_{\text{inferior}} + \text{Diâmetro} + 0,10m_{\text{superior}}) \times L_{\text{tubo}}$
-  - `Reaterro e Bota-fora (m³):` $V_{\text{reaterro}} = V_{\text{escav}} - V_{\text{areia}} - V_{\text{tubo}}$
+  - `Escavação de Vala (m³):` `V_escav = (Diâmetro + 0,30m) × Profundidade_H × L_tubo`
+  - `Colchão de Areia Lavada (m³):` `V_areia = (Diâmetro + 0,30m) × (0,10m_inferior + Diâmetro + 0,10m_superior) × L_tubo`
+  - `Reaterro e Bota-fora (m³):` `V_reaterro = V_escav − V_areia − V_tubo`
   - `Fita Sinalizadora (m):` Fita azul (Água) ou Fita marrom (Esgoto) a 30cm abaixo da superfície.
 - **Regra UCC:** Tubos rígidos em barras de 6m (PVC Soldável/Série Normal/Reforçada) ou rolos de 50m/100m (PEAD).
 
 ### 6.2 Rede de Combate a Incêndio Enterrada e Aparente (NBR 13714 / NBR 5580 / NBR 5590)
 - **Tubulações de Aço Carbono:**
   - `Aço Galvanizado c/ Costura / Sem Costura:` Diâmetros 2 1/2", 3", 4", 6" (conexões ranhuradas *Grooved* ou rosqueadas NPT/BSP em barras de 6m).
-  - `Proteção de Tubo de Incêndio Enterrado:` Pintura epóxi/antiferrugem + fita anticorrosiva de proteção mecânica (Fita Denso/Petrotape em $m$) + envelopamento de areia ou concreto magro.
+  - `Proteção de Tubo de Incêndio Enterrado:` Pintura epóxi/antiferrugem + fita anticorrosiva de proteção mecânica (Fita Denso/Petrotape em m) + envelopamento de areia ou concreto magro.
 - **Equipamentos de Hidrante:**
   - `Abrigos de Hidrante (unid):` Caixas de embutir/sobrepor em aço c/ visor vermelho e vidro.
   - `Válvulas Angulares 45º (unid), Mangueiras Tipo 2/3 (lanços de 15m) e Esguichos Reguláveis (unid).`
@@ -280,12 +280,12 @@ Para eliminar omissões e garantir o kit completo de instalação:
 - `Conjunto Cavalete e Registro Concessionária (unid):` Tubulação em tubos de ferro fundido / PPR / PVC Soldável DN 25mm a 75mm + registro de gaveta + torneira de tomada de ensaio + conexões de padrão de concessionária local (ex: Sabesp, Sanepar, Copasa, Cedae).
 
 ### 7.2 Reservatório Inferior (Cisterna) e Caixas D'Água
-- `Reservatório Inferior de Concreto Armado / Cisterna (m³ / m²):` Cava de escavação ($m³$) + estrutura de concreto armado C30 c/ aditivo impermeabilizante ($m³$) + fôrmas ($m²$) + armadura ($kg$) + impermeabilização dupla em argamassa polimérica flexível / resina termoplástica ($m²$).
+- `Reservatório Inferior de Concreto Armado / Cisterna (m³ / m²):` Cava de escavação (m³) + estrutura de concreto armado C30 c/ aditivo impermeabilizante (m³) + fôrmas (m²) + armadura (kg) + impermeabilização dupla em argamassa polimérica flexível / resina termoplástica (m²).
 - `Reservatórios em Polietileno / Fibra de Vidro (PRFV) / Aço Inox (unid ou volume m³):` Reservatórios industrializados de 500L, 1000L, 2000L, 5000L, 10.000L c/ tampas roscadas herméticas.
 - `Acessórios de Reservatórios (unid):` Torneira de boia de alto fluxo em latão (DN 3/4" a 2"), tubo extravasor (ladrão) em PVC, tubo de limpeza de fundo c/ registro de esfera e respiro de respiro c/ tela mosquiteira.
 
 ### 7.3 Castelo D'Água Elevado e Reservatórios de Torre
-- `Castelo D'Água Metálico Prismático / Taça (unid):` Reservatório metálico elevado em chapa de aço carbono c/ revestimento interno epóxi alimentício (atóxico) e pintura externa poliuretana ($5.000L$ a $100.000L$).
+- `Castelo D'Água Metálico Prismático / Taça (unid):` Reservatório metálico elevado em chapa de aço carbono c/ revestimento interno epóxi alimentício (atóxico) e pintura externa poliuretana (5.000L a 100.000L).
 - `Castelo D'Água Elevado em Concreto Armado (m³ / m²):` Pilar central/fuste de elevação + reservatório superior duplo (compartimento de Água Potável + Reserva Técnica de Incêndio - RTI).
 - `Acessórios de Torre e Segurança (unid ou m):`
   - Escada marinheiro metálica galvanizada c/ gaiola de proteção contra queda (NR-12 / NR-35).
@@ -295,12 +295,12 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ### 7.4 Medição Individualizada por Unidade Habitacional (Água e Gás por Apartamento/Casa/Loja)
 - **Kit de Medição Individualizada de Água (1 unid por Unidade Habitacional):**
-  - `Hidrômetro Individual da Unidade (unid):` Hidrômetro monojato/multijato DN 15mm ($1/2"$) ou DN 20mm ($3/4"$) c/ emissor de pulsos / leitor para telemetria sem fio (radiofrequência).
+  - `Hidrômetro Individual da Unidade (unid):` Hidrômetro monojato/multijato DN 15mm (1/2") ou DN 20mm (3/4") c/ emissor de pulsos / leitor para telemetria sem fio (radiofrequência).
   - `Caixa de Embutir de Medição no Hall / Shaft (unid):` Caixa em inox/metálica/plástica de sobrepor ou embutir no hall de circulação do andar.
   - `Registros de Corte e Conexões do Kit (unid):` Registro de esfera monobloco c/ borboleta + porca giratória c/ furo para lacre da concessionária/administração.
 - **Kit de Medição Individualizada de Gás Combustível (1 unid por Unidade Habitacional):**
-  - `Medidor de Gás Diafragma / Eletrônico da Unidade (unid):` Medidor residencial de vazão $1,5m³/h$ a $2,5m³/h$ (G1.6 / G2.5) especificando se é para GLP ou Gás Natural.
-  - `Regulador de Pressão de 2º Estágio (unid):` Regulador individual $kPa \to mmca$ (especificado para $2,8\text{ kPa}$ / $280\text{ mmca}$).
+  - `Medidor de Gás Diafragma / Eletrônico da Unidade (unid):` Medidor residencial de vazão 1,5m³/h a 2,5m³/h (G1.6 / G2.5) especificando se é para GLP ou Gás Natural.
+  - `Regulador de Pressão de 2º Estágio (unid):` Regulador individual kPa → mmca (especificado para 2,8 kPa / 280 mmca).
   - `Válvula de Esfera c/ Trava de Segurança (unid):` Válvula de fecho rápido para corte individual c/ furação para lacre.
   - `Chicote / Flexível de Latão de Ligação (unid):` Flexível metálico para acoplamento no medidor.
 

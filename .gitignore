@@ -12,6 +12,8 @@ $RECYCLE.BIN/
 *.ifc
 *.rvt
 *.bak
+*.zip
+*.xlsx
 
 # Next.js / Node
 **/node_modules/

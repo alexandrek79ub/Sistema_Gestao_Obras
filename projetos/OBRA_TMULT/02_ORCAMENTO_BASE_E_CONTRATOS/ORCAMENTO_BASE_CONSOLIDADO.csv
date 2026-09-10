@@ -1,153 +1,153 @@
-Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
-1.1.1;Escavação Mecanizada/Manual de Cavas e Valas (Geometria Líquida);Infraestrutura;51.27;m³;0.0;51.27;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.1.2;Apiloamento e Compactação do Fundo de Cava/Vala Líquido;Infraestrutura;60.74;m²;0.0;60.74;m²;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.1.3;Lastro de Concreto Magro fck 15 MPa e=5cm sob Sapatas e Baldrames;Infraestrutura;3.04;m³;5.0;3.19;m³ (0.5 betoneira);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.1.4;Concreto Usinado fck 30 MPa para 32 Sapatas Isoladas (S1-S24 e SE1-SE8);Infraestrutura;8.55;m³;5.0;8.98;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.5;Fôrma Compensado Resinado 17mm para Sapatas Isoladas (Tronco);Infraestrutura;35.88;m²;10.0;17;chapas (41.14 m²);AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.6;Concreto Usinado fck 30 MPa para Arranques dos Pilares P1-P24;Infraestrutura;1.86;m³;5.0;1.95;m³;AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.7;Fôrma Compensado Resinado 17mm para Arranques dos Pilares P1-P24;Infraestrutura;25.76;m²;10.0;12;chapas (29.04 m²);AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.8;Concreto Usinado fck 30 MPa para Vigas Baldrames VB1-VB19 (25x40cm - 140,44m);Infraestrutura;14.04;m³;5.0;14.74;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
-1.1.9;Fôrma Compensado Resinado 17mm para Vigas Baldrames (140,44m);Infraestrutura;112.35;m²;10.0;52;chapas (125.84 m²);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
-1.1.10;Armadura CA-50 Ø8,0mm (Armadura das 32 Sapatas Isoladas);Infraestrutura;256.00;kg;5.0;68;barras 12m (268.8 kg);AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.11;Armadura CA-50 Ø6,3mm / Ø12,5mm (Arranques dos Pilares P1-P24);Infraestrutura;145.70;kg;5.0;38;barras 12m (153.0 kg);AÇU-3.DES-2.3100-11-EGS-052;-;-
-1.1.12;Armadura CA-50 Vigas Baldrames VB1-VB19 (EGS-053: 694,8kg + EGS-054: 382,5kg);Infraestrutura;1077.30;kg;5.0;199;barras 12m (1131.2 kg);AÇU-3.DES-2.3100-11-EGS-053/054;-;-
-1.1.13;Impermeabilização Tinta Asfáltica (Baldrames e Sapatas);Infraestrutura;183.36;m²;10.0;201.70;m² (12 galões 18L);AÇU-3.DES-2.3100-11-EGS-051/054;-;-
-1.1.14;Reaterro Compactado de Cavas e Valas c/ Maço/Sapo Líquido;Infraestrutura;31.17;m³;0.0;31.17;m³;AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.1.15;Bota-fora e Carga de Terra c/ Empolamento 1,25 Líquido;Infraestrutura;20.10;m³;0.0;25.13;m³ (3 caminhões 12m³);AÇU-3.DES-2.3100-11-EGS-051/052;-;-
-1.2.1;Concreto Usinado fck 30 MPa para Pilares P1 a P24 (h=2,98m);Supraestrutura;6.44;m³;5.0;6.76;m³ (1 betoneira);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.2;Fôrma Compensado Resinado 17mm para Pilares P1 a P24 (4 faces);Supraestrutura;85.82;m²;10.0;40;chapas (96.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.3;Concreto Usinado fck 30 MPa para Vigas Superiores e Cobertura (V101 a V115);Supraestrutura;17.38;m³;5.0;18.25;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
-1.2.4;Fôrma Compensado Resinado 17mm para Vigas Superiores (fundo e laterais líquidas);Supraestrutura;208.62;m²;10.0;95;chapas (229.90 m²);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
-1.2.5;Concreto Usinado fck 30 MPa para Capa de Laje Treliçada e=5cm;Supraestrutura;13.17;m³;5.0;13.83;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/059;-;-
-1.2.6;Fôrma Compensado Resinado 17mm para Lajes (Face Inferior / Fundo);Supraestrutura;263.48;m²;10.0;120;chapas (290.40 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
-1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas;Supraestrutura;888.78;m²·m;0.0;888.78;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
-1.2.8;Vigotas Treliçadas TR 16745 para Lajes H12;Supraestrutura;968.80;m;5.0;1017.24;m;AÇU-3.DES-2.3100-11-EGS-059;-;-
-1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148;unid;5.0;1206;unidades;AÇU-3.DES-2.3100-11-EGS-055;-;-
-1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.10;kg;5.0;165;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;-;-
-1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
-2.1.1.1;Bloco Concreto Inteiro B144 (14x19x39cm);Arquitetura;12733.0;unid;5.0;13370;blocos inteiros;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.1.2;Meio Bloco Concreto B142 (14x19x19cm);Arquitetura;508.0;unid;5.0;534;meios blocos;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.1.3;Bloco Canaleta Concreto C144 (14x19x39cm);Arquitetura;281.0;unid;5.0;296;blocos canaleta;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.1.4;Graute Fino Industrializado p/ Canaletas;Arquitetura;1.42;m³;5.0;75;sacos 25kg (1.49 m³);AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.5;Barra de Aço CA-50 Ø8,0mm p/ Vergas/Contravergas;Arquitetura;224.80;m;5.0;20;barras 12m (93.2 kg);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.1.6;Cimento Portland CP II-E-32 (Argamassa Assentamento);Arquitetura;5519.0;kg;5.0;116;sacos 50kg;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.7;Cal Hidratada CH-I (Argamassa Assentamento);Arquitetura;1910.0;kg;5.0;101;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.8;Areia Média Lavada (Argamassa Assentamento);Arquitetura;23.35;m³;5.0;24.5;m³;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.9;Tela Metálica Galvanizada 15x50cm Amarração Pilar;Arquitetura;336.0;unid;5.0;353;telas de amarração;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.10;Pinos de Aço c/ Arruela p/ Finca-Pinos à Pólvora;Arquitetura;706.0;unid;5.0;8;caixas 100un (742 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.1.11;Encunhamento Flexível no Topo da Parede (sob vigas);Arquitetura;385.00;m;0.0;385;m;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.4;Contrapiso de Regularização e=3cm;Arquitetura;368.40;m²;5.0;386.82;m² (11.6 m³ argamassa);AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.5.1;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.40;m²;10.0;282;caixas (406.08 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.5.2;Argamassa Colante AC-III p/ Porcelanato (Dupla Colagem);Arquitetura;3684.0;kg;5.0;194;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.5.3;Rejunte Flexível p/ Porcelanato Junta 2mm;Arquitetura;92.1;kg;5.0;20;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.5.4;Clips Niveladores Plásticos p/ Porcelanato 60x60cm;Arquitetura;4096.0;unid;0.0;41;sacos 100un (4100 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.5.5;Cunhas Niveladoras Plásticas Reutilizáveis (Giro 30%);Arquitetura;1229.0;unid;0.0;13;sacos 100un (1300 un);AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.5.6;Lona Plástica Preta p/ Proteção de Pisos Assentados;Arquitetura;368.40;m²;5.0;4;bobinas de 100m²;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.6.1;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.20;m²;10.0;65;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.6.2;Argamassa Colante AC-II p/ Cerâmica Parede;Arquitetura;421.0;kg;5.0;23;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.6.3;Rejunte Cerâmico Antimofo Junta 3mm;Arquitetura;25.3;kg;5.0;6;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.6.4;Espaçadores / Cruzetas Plásticas 2mm e 3mm;Arquitetura;2715.0;unid;0.0;28;sacos 100un;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.7;Rodapé Porcelanato h=10cm;Arquitetura;384.20;m;10.0;422.62;m;AÇU-3.DES-2.3100-15-EGS-015/018;-;-
-2.1.8.1;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
-2.1.8.2;Selador Acrílico Base Água p/ Reboco Novo;Arquitetura;212.3;L;5.0;13;latas 18L (223 L);AÇU-3.DES-2.3100-15-EGS-015/019;-;-
-2.1.8.3;Lixa Grossa p/ Reboco (Grão 80/100);Arquitetura;106.0;unid;5.0;112;folhas;AÇU-3.DES-2.3100-15-EGS-015;-;-
-2.1.8.4;Lixa Fina p/ Massa/Gesso (Grão 150/220);Arquitetura;249.0;unid;5.0;262;folhas;AÇU-3.DES-2.3100-15-EGS-015/019;-;-
-2.1.8.5;Fita Crepe 24mm x 50m p/ Pintura e Proteções;Arquitetura;604.0;m;5.0;13;rolos de 50m;AÇU-3.DES-2.3100-15-EGS-015/019;-;-
-2.1.9.1;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.2;Dobradiças 3 ½" x 3" em Aço Inox (3 un/folha);Arquitetura;78.0;unid;5.0;82;dobradiças inox;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.3;Fechaduras Completas (Cilindro / Gorge / Tranqueta);Arquitetura;24.0;unid;0.0;24;conjuntos completos;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.4;Batedores de Porta para Piso c/ Amortecedor Inox;Arquitetura;26.0;unid;0.0;26;unidades;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.5;Espuma de Poliuretano Expansiva 750ml p/ Marcos;Arquitetura;9.6;unid;5.0;11;tubos de 750ml;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.6;Parafusos e Buchas Nylon S8 p/ Fixação Batentes;Arquitetura;192.0;unid;5.0;3;caixas 100un (202 un);AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.7;Pregos sem Cabeça 12x12 p/ Alizares/Guarnições;Arquitetura;480.0;unid;5.0;5;pacotes 100un (504 un);AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.9.8;Cola Branca PVA Madeira D3 (frascos 500g);Arquitetura;3.0;unid;5.0;4;frascos 500g;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.10.1;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.10.2;Selante PU 40 / Silicone Neutro 310ml p/ Caixilhos;Arquitetura;124.70;m;5.0;14;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-018;-;-
-2.1.11.1;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.20;m²;10.0;19;caixas 18kg (92.62 m²);AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.1.11.2;Tela de Poliéster / Véu de Reforço Impermeabilização;Arquitetura;92.60;m²;5.0;2;rolos de 50m²;AÇU-3.DES-2.3100-15-EGS-015/016;-;-
-2.2.1.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;70;telhas 6m (419.42 m²);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.1.2;Parafusos Autobrocantes 12x1" c/ Arruela EPDM;Cobertura;1716.0;unid;5.0;19;caixas 100un (1802 un);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.1.3;Parafusos de Costura 10x3/4" c/ Arruela EPDM;Cobertura;364.0;unid;5.0;4;caixas 100un (383 un);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.1.4;Fita de Vedação Butílica Autoadesiva 15mm;Cobertura;122.00;m;5.0;13;rolos de 10m;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.2.1;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.00;m;5.0;28;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.2.2;Chumbadores Parabolts CBA 3/8" x 3" p/ Terças;Cobertura;60.0;unid;5.0;63;unidades;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.3;Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm);Cobertura;45.24;m²;5.0;594;blocos 9x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.4.1;Calha em Chapa Galvanizada nº 24 (Dev 80cm);Cobertura;52.00;m;5.0;19;peças de 3m (54.60 m);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.4.2;Rebites de Repuxo em Alumínio 4,0x10mm p/ Calhas/Rufos;Cobertura;440.0;unid;5.0;5;centos (500 rebites);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.4.3;Selante PU 40 p/ Calafetação de Calhas e Rufos;Cobertura;6.0;unid;5.0;6;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.5;Rufo e Pingadeira Metálica de Platibanda (Dev 40cm);Cobertura;82.00;m;5.0;29;peças de 3m (86.10 m);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.6.1;Impermeabilização Manta Asfáltica 4mm em Calhas;Cobertura;62.00;m²;15.0;8;rolos de 10m² (71.3 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
-2.2.6.2;Primer Asfáltico Base Solvente p/ Calhas;Cobertura;24.80;L;5.0;2;baldes de 18L (36 L);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
-2.2.6.3;Gás GLP P-13 p/ Maçarico de Manta Asfáltica;Cobertura;1.24;unid;0.0;2;botijões P-13;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.7;Ralo Hemisférico Tipo Abacaxi Inox Ø150mm para Calhas;Cobertura;8.0;unid;0.0;8;unidades;AÇU-3.DES-2.3100-15-EGS-015/017;-;-
-2.2.8;Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m);Cobertura;31.98;m²;5.0;420;blocos 14x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.9;Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda;Cobertura;74.62;m²;5.0;78.35;m² (16 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-017;-;-
-2.2.10;Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda;Cobertura;74.62;m²;5.0;2;latas 18L (78.35 m²);AÇU-3.DES-2.3100-15-EGS-017/019;-;-
-3.1.1;Cabo Cobre Flexível 750V 2,5mm² (Iluminação/TUG);Elétrica;1850.0;m;10.0;21;rolos de 100m (2035m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.2;Cabo Cobre Flexível 750V 4,0mm² (Tomadas TUG/TUE);Elétrica;640.0;m;10.0;8;rolos de 100m (704m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.3;Cabo Cobre Flexível 750V 6,0mm² (Ar Condicionado);Elétrica;420.0;m;10.0;5;rolos de 100m (462m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.4;Cabo Cobre Sintenax 0,6/1kV 35mm² (Alimentador);Elétrica;120.0;m;5.0;126.0;m;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.5;"Eletroduto Rígido PVC Ø3/4"" (25mm) c/ Conexões";Elétrica;480.0;m;10.0;176;varas de 3m (528m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.6;"Eletroduto Rígido PVC Ø1"" (32mm) c/ Conexões";Elétrica;210.0;m;10.0;77;varas de 3m (231m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.7;"Caixa de Embutir 4x2"" PVC Amarela para Parede";Elétrica;184.0;unid;5.0;194;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.8;"Caixa de Embutir 4x4"" PVC Amarela para Parede";Elétrica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.9;"Caixa Octogonal 3x3"" PVC para Teto";Elétrica;68.0;unid;5.0;72;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.10;"Conjunto Suporte + Placa 4x2"" c/ Parafusos";Elétrica;184.0;unid;5.0;194;conjuntos;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.11;Módulo de Tomada 2P+T 10A / 250V (Branca);Elétrica;110.0;unid;5.0;116;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.12;Módulo de Tomada 2P+T 20A / 250V (Vermelha TUE);Elétrica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.13;Módulo Interruptor Simples 10A;Elétrica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.14;Módulo Interruptor Paralelo (Three-Way) 10A;Elétrica;8.0;unid;5.0;9;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.15;Cabo UTP Cat6 LSZH 4 Pares (Dados/Voz);Telecom;1450.0;m;10.0;16;rolos de 100m (1600m);AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.16;Módulo Tomada RJ45 Cat6 Keystone;Telecom;36.0;unid;5.0;38;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.17;"Rack Metalico Telecom 19"" 12U de Parede";Telecom;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.18;"Patch Panel 24 Portas Cat6 19""";Telecom;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.19;Switch Gigabit Ethernet 24 Portas PoE;Telecom;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.20;Quadro Geral de Distribuição QDG 150A Trifásico;Elétrica;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.21;Quadro de Distribuição de Luz QDF 24 Elementos embutir;Elétrica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.22;Disjuntor Geral Caixa Moldada 150A Trifásico;Elétrica;1.0;unid;0.0;1;unidade;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.23;Disjuntor Termomagnético DIN Monopolar 10A/16A/20A;Elétrica;28.0;unid;5.0;30;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.24;Disjuntor Termomagnético DIN Bipolar/Tripolar 25A/32A;Elétrica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.25;Interruptor Diferencial Residual DR Tetrapolar 40A 30mA;Elétrica;4.0;unid;0.0;4;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.26;Dispositivo de Proteção contra Surtos DPS 20kA 275V;Elétrica;8.0;unid;0.0;8;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.27;Painel LED Embutir 60x60cm 40W 4000K;Elétrica;68.0;unid;5.0;72;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.28;Luminária Hermética LED 2x18W IP65 (Áreas Técnicas);Elétrica;16.0;unid;5.0;17;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.29;Bloco Iluminação de Emergência LED 2x8W c/ Bateria;Elétrica;14.0;unid;0.0;14;unidades;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.1.30;"Haste de Aterramento Copperweld 3/4"" x 3,00m + Malha";Elétrica;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-16-EGS-013;-;-
-3.2.1;"Tubo PVC Soldável Água Fria Ø25mm (3/4"")";Hidráulica;180.0;m;10.0;33;varas de 6m (198m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.2;"Tubo PVC Soldável Água Fria Ø50mm (1.1/2"")";Hidráulica;95.0;m;10.0;18;varas de 6m (108m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.3;Tubo PVC Esgoto Série Normal Ø40mm;Hidráulica;64.0;m;10.0;12;varas de 6m (72m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.4;Tubo PVC Esgoto Série Normal Ø75mm;Hidráulica;42.0;m;10.0;8;varas de 6m (48m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.5;Tubo PVC Esgoto Série Normal Ø100mm;Hidráulica;140.0;m;10.0;26;varas de 6m (156m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.6;Tubo PVC Pluvial Série Reforçada Ø150mm;Hidráulica;110.0;m;10.0;21;varas de 6m (126m);AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.7;Joelho 90º PVC Soldável Ø25mm;Hidráulica;86.0;unid;5.0;91;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.8;"Joelho 90º c/ Bucha de Latão Ø25mm x 1/2""";Hidráulica;32.0;unid;5.0;34;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.9;Joelho 90º PVC Soldável Ø50mm;Hidráulica;24.0;unid;5.0;26;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.10;Tê 90º PVC Soldável Ø25mm;Hidráulica;48.0;unid;5.0;51;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.11;Tê 90º Redução PVC Soldável Ø50x25mm;Hidráulica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.12;Curva de Transposição PVC Soldável Ø25mm;Hidráulica;14.0;unid;5.0;15;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.13;Joelho 90º PVC Esgoto Ø100mm;Hidráulica;36.0;unid;5.0;38;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.14;Joelho 45º PVC Esgoto Ø100mm;Hidráulica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.15;Junção 45º Y PVC Esgoto Ø100x50mm;Hidráulica;18.0;unid;5.0;19;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.16;Tê Sanitário 90º PVC Esgoto Ø100x100mm;Hidráulica;12.0;unid;5.0;13;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.17;"Registro de Gaveta Bruto c/ Canopla Cromada Ø25mm (3/4"")";Hidráulica;12.0;unid;0.0;12;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.18;"Registro de Gaveta Bruto c/ Canopla Cromada Ø50mm (1.1/2"")";Hidráulica;4.0;unid;0.0;4;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.19;Registro de Pressão c/ Canopla Cromada Ø20mm (Chuveiros);Hidráulica;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.20;Válvula de Retenção Vertical Ø50mm;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.21;Reservatório de Água Potável Polietileno 5.000 L c/ Tampa;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.22;Ralo Sifonado PVC 150x150x50mm Grelha Inox;Hidráulica;14.0;unid;0.0;14;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.23;Caixa de Gordura Pré-moldada Concreto 100L;Hidráulica;2.0;unid;0.0;2;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.24;Caixa de Inspeção Esgoto Concreto 60x60x60cm c/ Tampa;Hidráulica;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.25;Bacia Sanitária c/ Caixa Acoplada 3/6L e Assento;Hidráulica;10.0;unid;0.0;10;conjuntos;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.26;Lavatório Louça Branca c/ Torneira Automática de Mesa;Hidráulica;12.0;unid;0.0;12;conjuntos;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.27;Sifão Sanfonado Universal PVC c/ Adaptador;Hidráulica;14.0;unid;5.0;15;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.28;"Engate Flexível Inox 1/2"" 40cm";Hidráulica;22.0;unid;5.0;24;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.29;"Válvula de Escoamento Inox 7/8"" para Lavatório";Hidráulica;12.0;unid;5.0;13;unidades;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.2.30;Fita Veda-Rosca PTFE 18mm x 50m;Hidráulica;12.0;rolo;0.0;12;rolos;AÇU-3.DES-2.3100-16-EGS-015;-;-
-3.3.1;Aparelho Split Cassete 36.000 BTU/h Inverter R410A;HVAC;4.0;unid;0.0;4;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;-;-
-3.3.2;Aparelho Split Hi-Wall 18.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;-;-
-3.3.3;Aparelho Split Hi-Wall 12.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;-;-
-3.3.4;"Tubulação Cobre Flexível Ø3/8""+Ø5/8"" c/ Isolamento";HVAC;180.0;m;10.0;198.0;m;AÇU-3.DES-2.3100-64-EGS-008;-;-
-3.3.5;Tubo PVC Condensado Ø25mm c/ Isolamento;HVAC;120.0;m;10.0;22;varas de 6m (132m);AÇU-3.DES-2.3100-64-EGS-008;-;-
-3.3.6;Exaustor Axial de Parede/Teto 150 m³/h;HVAC;6.0;unid;0.0;6;unidades;AÇU-3.DES-2.3100-64-EGS-008;-;-
+﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
+1.1.1;Escavação Mecanizada/Manual de Cavas e Valas (Geometria Líquida);Infraestrutura;51.27;m³;0.0;51.27;m³;AÇU-3.DES-2.3100-11-EGS-051/052;R$ 14,28;R$ 732,14
+1.1.2;Apiloamento e Compactação do Fundo de Cava/Vala Líquido;Infraestrutura;60.74;m²;0.0;60.74;m²;AÇU-3.DES-2.3100-11-EGS-051/052;R$ 8,65;R$ 525,40
+1.1.3;Lastro de Concreto Magro fck 15 MPa e=5cm sob Sapatas e Baldrames;Infraestrutura;3.04;m³;5.0;3.19;m³ (0.5 betoneira);AÇU-3.DES-2.3100-11-EGS-051/052;R$ 1.116,12;R$ 3.393,00
+1.1.4;Concreto Usinado fck 30 MPa para 32 Sapatas Isoladas (S1-S24 e SE1-SE8);Infraestrutura;8.55;m³;5.0;8.98;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-052;R$ 951,89;R$ 8.138,66
+1.1.5;Fôrma Compensado Resinado 17mm para Sapatas Isoladas (Tronco);Infraestrutura;35.88;m²;10.0;17.0;chapas (41.14 m²);AÇU-3.DES-2.3100-11-EGS-052;R$ 133,06;R$ 4.774,19
+1.1.6;Concreto Usinado fck 30 MPa para Arranques dos Pilares P1-P24;Infraestrutura;1.86;m³;5.0;1.95;m³;AÇU-3.DES-2.3100-11-EGS-052;R$ 830,15;R$ 1.544,08
+1.1.7;Fôrma Compensado Resinado 17mm para Arranques dos Pilares P1-P24;Infraestrutura;25.76;m²;10.0;12.0;chapas (29.04 m²);AÇU-3.DES-2.3100-11-EGS-052;R$ 176,13;R$ 4.537,11
+1.1.8;Concreto Usinado fck 30 MPa para Vigas Baldrames VB1-VB19 (25x40cm - 140,44m);Infraestrutura;14.04;m³;5.0;14.74;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-053/054;R$ 903,05;R$ 12.678,82
+1.1.9;Fôrma Compensado Resinado 17mm para Vigas Baldrames (140,44m);Infraestrutura;112.35;m²;10.0;52.0;chapas (125.84 m²);AÇU-3.DES-2.3100-11-EGS-053/054;R$ 146,75;R$ 16.487,36
+1.1.10;Armadura CA-50 Ø8,0mm (Armadura das 32 Sapatas Isoladas);Infraestrutura;256.0;kg;5.0;68.0;barras 12m (268.8 kg);AÇU-3.DES-2.3100-11-EGS-052;R$ 15,83;R$ 4.052,48
+1.1.11;Armadura CA-50 Ø6,3mm / Ø12,5mm (Arranques dos Pilares P1-P24);Infraestrutura;145.7;kg;5.0;38.0;barras 12m (153.0 kg);AÇU-3.DES-2.3100-11-EGS-052;R$ 10,58;R$ 1.541,51
+1.1.12;Armadura CA-50 Vigas Baldrames VB1-VB19 (EGS-053: 694,8kg + EGS-054: 382,5kg);Infraestrutura;1077.3;kg;5.0;199.0;barras 12m (1131.2 kg);AÇU-3.DES-2.3100-11-EGS-053/054;R$ 13,26;R$ 14.285,00
+1.1.13;Impermeabilização Tinta Asfáltica (Baldrames e Sapatas);Infraestrutura;183.36;m²;10.0;201.7;m² (12 galões 18L);AÇU-3.DES-2.3100-11-EGS-051/054;R$ 61,04;R$ 11.192,29
+1.1.14;Reaterro Compactado de Cavas e Valas c/ Maço/Sapo Líquido;Infraestrutura;31.17;m³;0.0;31.17;m³;AÇU-3.DES-2.3100-11-EGS-051/052;R$ 46,81;R$ 1.459,07
+1.1.15;Bota-fora e Carga de Terra c/ Empolamento 1,25 Líquido;Infraestrutura;20.1;m³;0.0;25.13;m³ (3 caminhões 12m³);AÇU-3.DES-2.3100-11-EGS-051/052;R$ 23,53;R$ 472,95
+1.2.1;Concreto Usinado fck 30 MPa para Pilares P1 a P24 (h=2,98m);Supraestrutura;6.44;m³;5.0;6.76;m³ (1 betoneira);AÇU-3.DES-2.3100-11-EGS-060;R$ 830,15;R$ 5.346,17
+1.2.2;Fôrma Compensado Resinado 17mm para Pilares P1 a P24 (4 faces);Supraestrutura;85.82;m²;10.0;40.0;chapas (96.80 m²);AÇU-3.DES-2.3100-11-EGS-060;R$ 176,13;R$ 15.115,48
+1.2.3;Concreto Usinado fck 30 MPa para Vigas Superiores e Cobertura (V101 a V115);Supraestrutura;17.38;m³;5.0;18.25;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/057;R$ 864,74;R$ 15.029,18
+1.2.4;Fôrma Compensado Resinado 17mm para Vigas Superiores (fundo e laterais líquidas);Supraestrutura;208.62;m²;10.0;95.0;chapas (229.90 m²);AÇU-3.DES-2.3100-11-EGS-055/057;R$ 146,75;R$ 30.614,99
+1.2.5;Concreto Usinado fck 30 MPa para Capa de Laje Treliçada e=5cm;Supraestrutura;13.17;m³;5.0;13.83;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/059;R$ 864,74;R$ 11.388,63
+1.2.6;Fôrma Compensado Resinado 17mm para Lajes (Face Inferior / Fundo);Supraestrutura;263.48;m²;10.0;120.0;chapas (290.40 m²);AÇU-3.DES-2.3100-11-EGS-055;R$ 124,88;R$ 32.903,38
+1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas;Supraestrutura;888.78;m²·m;0.0;888.78;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;R$ 23,53;R$ 20.912,99
+1.2.8;Vigotas Treliçadas TR 16745 para Lajes H12;Supraestrutura;968.8;m;5.0;1017.24;m;AÇU-3.DES-2.3100-11-EGS-059;R$ 33,70;R$ 32.648,56
+1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148.0;unid;5.0;1206.0;unidades;AÇU-3.DES-2.3100-11-EGS-055;R$ 0,13;R$ 149,24
+1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.1;kg;5.0;165.0;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;R$ 12,83;R$ 24.121,68
+1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.8;kg;5.0;429.0;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;R$ 12,04;R$ 12.037,59
+2.1.1.1;Bloco Concreto Inteiro B144 (14x19x39cm);Arquitetura;12733.0;unid;5.0;13370.0;blocos inteiros;AÇU-3.DES-2.3100-15-EGS-015/018;R$ 7,35;R$ 93.587,55
+2.1.1.2;Meio Bloco Concreto B142 (14x19x19cm);Arquitetura;508.0;unid;5.0;534.0;meios blocos;AÇU-3.DES-2.3100-15-EGS-015/018;R$ 4,90;R$ 2.489,20
+2.1.1.3;Bloco Canaleta Concreto C144 (14x19x39cm);Arquitetura;281.0;unid;5.0;296.0;blocos canaleta;AÇU-3.DES-2.3100-15-EGS-015/018;R$ 9,16;R$ 2.573,96
+2.1.1.4;Graute Fino Industrializado p/ Canaletas;Arquitetura;1.42;m³;5.0;75.0;sacos 25kg (1.49 m³);AÇU-3.DES-2.3100-15-EGS-015;R$ 1.682,40;R$ 2.389,01
+2.1.1.5;Barra de Aço CA-50 Ø8,0mm p/ Vergas/Contravergas;Arquitetura;224.8;m;5.0;20.0;barras 12m (93.2 kg);AÇU-3.DES-2.3100-15-EGS-015/018;R$ 3,34;R$ 750,83
+2.1.1.6;Cimento Portland CP II-E-32 (Argamassa Assentamento);Arquitetura;5519.0;kg;5.0;116.0;sacos 50kg;AÇU-3.DES-2.3100-15-EGS-015;R$ 0,89;R$ 4.911,91
+2.1.1.7;Cal Hidratada CH-I (Argamassa Assentamento);Arquitetura;1910.0;kg;5.0;101.0;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015;R$ 1,46;R$ 2.788,60
+2.1.1.8;Areia Média Lavada (Argamassa Assentamento);Arquitetura;23.35;m³;5.0;24.5;m³;AÇU-3.DES-2.3100-15-EGS-015;R$ 117,00;R$ 2.731,95
+2.1.1.9;Tela Metálica Galvanizada 15x50cm Amarração Pilar;Arquitetura;336.0;unid;5.0;353.0;telas de amarração;AÇU-3.DES-2.3100-15-EGS-015;R$ 5,72;R$ 1.921,92
+2.1.1.10;Pinos de Aço c/ Arruela p/ Finca-Pinos à Pólvora;Arquitetura;706.0;unid;5.0;8.0;caixas 100un (742 un);AÇU-3.DES-2.3100-15-EGS-015;R$ 0,83;R$ 585,98
+2.1.1.11;Encunhamento Flexível no Topo da Parede (sob vigas);Arquitetura;385.0;m;0.0;385.0;m;AÇU-3.DES-2.3100-15-EGS-015;R$ 16,28;R$ 6.267,80
+2.1.2;Chapisco Traço 1:3 e=5mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (75 sacos cimento);AÇU-3.DES-2.3100-15-EGS-015/016;R$ 7,87;R$ 16.707,07
+2.1.3;Emboço/Reboco Paulista e=20mm em Paredes;Arquitetura;2122.88;m²;5.0;2229.02;m² (446 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-015/016;R$ 55,87;R$ 118.605,31
+2.1.4;Contrapiso de Regularização e=3cm;Arquitetura;368.4;m²;5.0;386.82;m² (11.6 m³ argamassa);AÇU-3.DES-2.3100-15-EGS-015/018;R$ 43,89;R$ 16.169,08
+2.1.5.1;Piso Porcelanato 60x60cm Retificado;Arquitetura;368.4;m²;10.0;282.0;caixas (406.08 m²);AÇU-3.DES-2.3100-15-EGS-015/016;R$ 157,14;R$ 57.890,38
+2.1.5.2;Argamassa Colante AC-III p/ Porcelanato (Dupla Colagem);Arquitetura;3684.0;kg;5.0;194.0;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-015/016;R$ 2,81;R$ 10.352,04
+2.1.5.3;Rejunte Flexível p/ Porcelanato Junta 2mm;Arquitetura;92.1;kg;5.0;20.0;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-015/016;R$ 5,37;R$ 494,58
+2.1.5.4;Clips Niveladores Plásticos p/ Porcelanato 60x60cm;Arquitetura;4096.0;unid;0.0;41.0;sacos 100un (4100 un);AÇU-3.DES-2.3100-15-EGS-015;R$ 0,45;R$ 1.843,20
+2.1.5.5;Cunhas Niveladoras Plásticas Reutilizáveis (Giro 30%);Arquitetura;1229.0;unid;0.0;13.0;sacos 100un (1300 un);AÇU-3.DES-2.3100-15-EGS-015;R$ 1,08;R$ 1.327,32
+2.1.5.6;Lona Plástica Preta p/ Proteção de Pisos Assentados;Arquitetura;368.4;m²;5.0;4.0;bobinas de 100m²;AÇU-3.DES-2.3100-15-EGS-015;R$ 2,84;R$ 1.046,26
+2.1.6.1;Revestimento Cerâmico h=1,80m nos WCs (Eliane 45x45 Plus Gray);Arquitetura;84.2;m²;10.0;65.0;caixas (92.6 m²);AÇU-3.DES-2.3100-15-EGS-018;R$ 121,32;R$ 10.215,14
+2.1.6.2;Argamassa Colante AC-II p/ Cerâmica Parede;Arquitetura;421.0;kg;5.0;23.0;sacos 20kg;AÇU-3.DES-2.3100-15-EGS-018;R$ 1,70;R$ 715,70
+2.1.6.3;Rejunte Cerâmico Antimofo Junta 3mm;Arquitetura;25.3;kg;5.0;6.0;sacos 5kg;AÇU-3.DES-2.3100-15-EGS-018;R$ 5,37;R$ 135,86
+2.1.6.4;Espaçadores / Cruzetas Plásticas 2mm e 3mm;Arquitetura;2715.0;unid;0.0;28.0;sacos 100un;AÇU-3.DES-2.3100-15-EGS-015/018;R$ 0,19;R$ 515,85
+2.1.7;Rodapé Porcelanato h=10cm;Arquitetura;384.2;m;10.0;422.62;m;AÇU-3.DES-2.3100-15-EGS-015/018;R$ 36,24;R$ 13.923,41
+2.1.8.1;Pintura Látex Acrílica 3 Demãos (Paredes + Tetos);Arquitetura;2491.28;m²;5.0;36.0;latas 18L (2615.8 m²);AÇU-3.DES-2.3100-15-EGS-015/019;R$ 19,65;R$ 48.953,65
+2.1.8.2;Selador Acrílico Base Água p/ Reboco Novo;Arquitetura;212.3;L;5.0;13.0;latas 18L (223 L);AÇU-3.DES-2.3100-15-EGS-015/019;R$ 14,42;R$ 3.061,37
+2.1.8.3;Lixa Grossa p/ Reboco (Grão 80/100);Arquitetura;106.0;unid;5.0;112.0;folhas;AÇU-3.DES-2.3100-15-EGS-015;R$ 5,12;R$ 542,72
+2.1.8.4;Lixa Fina p/ Massa/Gesso (Grão 150/220);Arquitetura;249.0;unid;5.0;262.0;folhas;AÇU-3.DES-2.3100-15-EGS-015/019;R$ 63,59;R$ 15.833,91
+2.1.8.5;Fita Crepe 24mm x 50m p/ Pintura e Proteções;Arquitetura;604.0;m;5.0;13.0;rolos de 50m;AÇU-3.DES-2.3100-15-EGS-015/019;R$ 0,57;R$ 344,28
+2.1.9.1;Esquadrias de Madeira/Alumínio (Portas P1-P5);Arquitetura;24.0;unid;0.0;24.0;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;R$ 1.749,80;R$ 41.995,20
+2.1.9.2;"Dobradiças 3 ½"" x 3"" em Aço Inox (3 un/folha)";Arquitetura;78.0;unid;5.0;82.0;dobradiças inox;AÇU-3.DES-2.3100-15-EGS-018;R$ 23,53;R$ 1.835,34
+2.1.9.3;Fechaduras Completas (Cilindro / Gorge / Tranqueta);Arquitetura;24.0;unid;0.0;24.0;conjuntos completos;AÇU-3.DES-2.3100-15-EGS-018;R$ 82,66;R$ 1.983,84
+2.1.9.4;Batedores de Porta para Piso c/ Amortecedor Inox;Arquitetura;26.0;unid;0.0;26.0;unidades;AÇU-3.DES-2.3100-15-EGS-018;R$ 27,98;R$ 727,48
+2.1.9.5;Espuma de Poliuretano Expansiva 750ml p/ Marcos;Arquitetura;9.6;unid;5.0;11.0;tubos de 750ml;AÇU-3.DES-2.3100-15-EGS-018;R$ 34,34;R$ 329,66
+2.1.9.6;Parafusos e Buchas Nylon S8 p/ Fixação Batentes;Arquitetura;192.0;unid;5.0;3.0;caixas 100un (202 un);AÇU-3.DES-2.3100-15-EGS-018;R$ 0,57;R$ 109,44
+2.1.9.7;Pregos sem Cabeça 12x12 p/ Alizares/Guarnições;Arquitetura;480.0;unid;5.0;5.0;pacotes 100un (504 un);AÇU-3.DES-2.3100-15-EGS-018;R$ 0,10;R$ 48,00
+2.1.9.8;Cola Branca PVA Madeira D3 (frascos 500g);Arquitetura;3.0;unid;5.0;4.0;frascos 500g;AÇU-3.DES-2.3100-15-EGS-018;R$ 18,44;R$ 55,32
+2.1.10.1;Esquadrias de Alumínio Vidro (Janelas J1-J4);Arquitetura;18.0;unid;0.0;18.0;conjuntos;AÇU-3.DES-2.3100-15-EGS-018;R$ 467,79;R$ 8.420,22
+2.1.10.2;Selante PU 40 / Silicone Neutro 310ml p/ Caixilhos;Arquitetura;124.7;m;5.0;14.0;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-018;R$ 36,24;R$ 4.519,13
+2.1.11.1;Impermeabilização Polimérica Sanitários/Copa;Arquitetura;84.2;m²;10.0;19.0;caixas 18kg (92.62 m²);AÇU-3.DES-2.3100-15-EGS-015/016;R$ 66,64;R$ 5.611,09
+2.1.11.2;Tela de Poliéster / Véu de Reforço Impermeabilização;Arquitetura;92.6;m²;5.0;2.0;rolos de 50m²;AÇU-3.DES-2.3100-15-EGS-015/016;R$ 5,34;R$ 494,48
+2.2.1.1;Telha Termoacústica Trapezoidal (Sandwich 30mm EPS);Cobertura;381.29;m²;10.0;70.0;telhas 6m (419.42 m²);AÇU-3.DES-2.3100-15-EGS-017;R$ 286,91;R$ 109.395,91
+2.2.1.2;"Parafusos Autobrocantes 12x1"" c/ Arruela EPDM";Cobertura;1716.0;unid;5.0;19.0;caixas 100un (1802 un);AÇU-3.DES-2.3100-15-EGS-017;R$ 1,08;R$ 1.853,28
+2.2.1.3;"Parafusos de Costura 10x3/4"" c/ Arruela EPDM";Cobertura;364.0;unid;5.0;4.0;caixas 100un (383 un);AÇU-3.DES-2.3100-15-EGS-017;R$ 0,83;R$ 302,12
+2.2.1.4;Fita de Vedação Butílica Autoadesiva 15mm;Cobertura;122.0;m;5.0;13.0;rolos de 10m;AÇU-3.DES-2.3100-15-EGS-017;R$ 4,83;R$ 589,26
+2.2.2.1;Terças Metálicas Perfil U Enrijecido 100x40x2,25mm;Cobertura;156.0;m;5.0;28.0;barras de 6m (573.3 kg);AÇU-3.DES-2.3100-15-EGS-017;R$ 15,46;R$ 2.411,76
+2.2.2.2;"Chumbadores Parabolts CBA 3/8"" x 3"" p/ Terças";Cobertura;60.0;unid;5.0;63.0;unidades;AÇU-3.DES-2.3100-15-EGS-017;R$ 10,81;R$ 648,60
+2.2.3;Muretas Escalonadas de Apoio no Entreforro (Bloco 9x19x39cm);Cobertura;45.24;m²;5.0;594.0;blocos 9x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;R$ 79,48;R$ 3.595,68
+2.2.4.1;Calha em Chapa Galvanizada nº 24 (Dev 80cm);Cobertura;52.0;m;5.0;19.0;peças de 3m (54.60 m);AÇU-3.DES-2.3100-15-EGS-017;R$ 33,95;R$ 1.765,40
+2.2.4.2;Rebites de Repuxo em Alumínio 4,0x10mm p/ Calhas/Rufos;Cobertura;440.0;unid;5.0;5.0;centos (500 rebites);AÇU-3.DES-2.3100-15-EGS-017;R$ 0,32;R$ 140,80
+2.2.4.3;Selante PU 40 p/ Calafetação de Calhas e Rufos;Cobertura;6.0;unid;5.0;6.0;tubos de 310ml;AÇU-3.DES-2.3100-15-EGS-017;R$ 36,24;R$ 217,44
+2.2.5;Rufo e Pingadeira Metálica de Platibanda (Dev 40cm);Cobertura;82.0;m;5.0;29.0;peças de 3m (86.10 m);AÇU-3.DES-2.3100-15-EGS-017;R$ 41,33;R$ 3.389,06
+2.2.6.1;Impermeabilização Manta Asfáltica 4mm em Calhas;Cobertura;62.0;m²;15.0;8.0;rolos de 10m² (71.3 m²);AÇU-3.DES-2.3100-15-EGS-017/019;R$ 99,83;R$ 6.189,46
+2.2.6.2;Primer Asfáltico Base Solvente p/ Calhas;Cobertura;24.8;L;5.0;2.0;baldes de 18L (36 L);AÇU-3.DES-2.3100-15-EGS-017/019;R$ 23,53;R$ 583,54
+2.2.6.3;Gás GLP P-13 p/ Maçarico de Manta Asfáltica;Cobertura;1.24;unid;0.0;2.0;botijões P-13;AÇU-3.DES-2.3100-15-EGS-017;R$ 146,25;R$ 181,35
+2.2.7;Ralo Hemisférico Tipo Abacaxi Inox Ø150mm para Calhas;Cobertura;8.0;unid;0.0;8.0;unidades;AÇU-3.DES-2.3100-15-EGS-015/017;R$ 61,04;R$ 488,32
+2.2.8;Alvenaria de Platibanda Bloco Concreto 14x19x39cm (h=0,39m);Cobertura;31.98;m²;5.0;420.0;blocos 14x19x39cm;AÇU-3.DES-2.3100-15-EGS-017;R$ 92,58;R$ 2.960,71
+2.2.9;Chapisco e Emboço/Reboco e=20mm Face Interna da Platibanda;Cobertura;74.62;m²;5.0;78.35;m² (16 sacos argamassa);AÇU-3.DES-2.3100-15-EGS-017;R$ 55,87;R$ 4.169,02
+2.2.10;Pintura Acrílica Impermeável 3 Demãos Face Interna da Platibanda;Cobertura;74.62;m²;5.0;2.0;latas 18L (78.35 m²);AÇU-3.DES-2.3100-15-EGS-017/019;R$ 19,65;R$ 1.466,28
+3.1.1;Cabo Cobre Flexível 750V 2,5mm² (Iluminação/TUG);Elétrica;1850.0;m;10.0;21.0;rolos de 100m (2035m);AÇU-3.DES-2.3100-16-EGS-013;R$ 7,36;R$ 13.616,00
+3.1.2;Cabo Cobre Flexível 750V 4,0mm² (Tomadas TUG/TUE);Elétrica;640.0;m;10.0;8.0;rolos de 100m (704m);AÇU-3.DES-2.3100-16-EGS-013;R$ 10,75;R$ 6.880,00
+3.1.3;Cabo Cobre Flexível 750V 6,0mm² (Ar Condicionado);Elétrica;420.0;m;10.0;5.0;rolos de 100m (462m);AÇU-3.DES-2.3100-16-EGS-013;R$ 16,28;R$ 6.837,60
+3.1.4;Cabo Cobre Sintenax 0,6/1kV 35mm² (Alimentador);Elétrica;120.0;m;5.0;126.0;m;AÇU-3.DES-2.3100-16-EGS-013;R$ 87,11;R$ 10.453,20
+3.1.5;"Eletroduto Rígido PVC Ø3/4"" (25mm) c/ Conexões";Elétrica;480.0;m;10.0;176.0;varas de 3m (528m);AÇU-3.DES-2.3100-16-EGS-013;R$ 17,74;R$ 8.515,20
+3.1.6;"Eletroduto Rígido PVC Ø1"" (32mm) c/ Conexões";Elétrica;210.0;m;10.0;77.0;varas de 3m (231m);AÇU-3.DES-2.3100-16-EGS-013;R$ 23,14;R$ 4.859,40
+3.1.7;"Caixa de Embutir 4x2"" PVC Amarela para Parede";Elétrica;184.0;unid;5.0;194.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 4,07;R$ 748,88
+3.1.8;"Caixa de Embutir 4x4"" PVC Amarela para Parede";Elétrica;24.0;unid;5.0;26.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 7,38;R$ 177,12
+3.1.9;"Caixa Octogonal 3x3"" PVC para Teto";Elétrica;68.0;unid;5.0;72.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 5,72;R$ 388,96
+3.1.10;"Conjunto Suporte + Placa 4x2"" c/ Parafusos";Elétrica;184.0;unid;5.0;194.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-013;R$ 10,81;R$ 1.989,04
+3.1.11;Módulo de Tomada 2P+T 10A / 250V (Branca);Elétrica;110.0;unid;5.0;116.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 18,44;R$ 2.028,40
+3.1.12;Módulo de Tomada 2P+T 20A / 250V (Vermelha TUE);Elétrica;24.0;unid;5.0;26.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 21,36;R$ 512,64
+3.1.13;Módulo Interruptor Simples 10A;Elétrica;22.0;unid;5.0;24.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 15,90;R$ 349,80
+3.1.14;Módulo Interruptor Paralelo (Three-Way) 10A;Elétrica;8.0;unid;5.0;9.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 19,33;R$ 154,64
+3.1.15;Cabo UTP Cat6 LSZH 4 Pares (Dados/Voz);Telecom;1450.0;m;10.0;16.0;rolos de 100m (1600m);AÇU-3.DES-2.3100-16-EGS-013;R$ 11,94;R$ 17.313,00
+3.1.16;Módulo Tomada RJ45 Cat6 Keystone;Telecom;36.0;unid;5.0;38.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 49,79;R$ 1.792,44
+3.1.17;"Rack Metalico Telecom 19"" 12U de Parede";Telecom;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-013;R$ 862,50;R$ 862,50
+3.1.18;"Patch Panel 24 Portas Cat6 19""";Telecom;2.0;unid;0.0;2.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 1.331,45;R$ 2.662,90
+3.1.19;Switch Gigabit Ethernet 24 Portas PoE;Telecom;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-013;R$ 2.817,50;R$ 2.817,50
+3.1.20;Quadro Geral de Distribuição QDG 150A Trifásico;Elétrica;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-013;R$ 1.080,94;R$ 1.080,94
+3.1.21;Quadro de Distribuição de Luz QDF 24 Elementos embutir;Elétrica;2.0;unid;0.0;2.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 805,79;R$ 1.611,58
+3.1.22;Disjuntor Geral Caixa Moldada 150A Trifásico;Elétrica;1.0;unid;0.0;1.0;unidade;AÇU-3.DES-2.3100-16-EGS-013;R$ 534,11;R$ 534,11
+3.1.23;Disjuntor Termomagnético DIN Monopolar 10A/16A/20A;Elétrica;28.0;unid;5.0;30.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 24,04;R$ 673,12
+3.1.24;Disjuntor Termomagnético DIN Bipolar/Tripolar 25A/32A;Elétrica;18.0;unid;5.0;19.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 66,13;R$ 1.190,34
+3.1.25;Interruptor Diferencial Residual DR Tetrapolar 40A 30mA;Elétrica;4.0;unid;0.0;4.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 209,83;R$ 839,32
+3.1.26;Dispositivo de Proteção contra Surtos DPS 20kA 275V;Elétrica;8.0;unid;0.0;8.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 86,48;R$ 691,84
+3.1.27;Painel LED Embutir 60x60cm 40W 4000K;Elétrica;68.0;unid;5.0;72.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 99,83;R$ 6.788,44
+3.1.28;Luminária Hermética LED 2x18W IP65 (Áreas Técnicas);Elétrica;16.0;unid;5.0;17.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 146,25;R$ 2.340,00
+3.1.29;Bloco Iluminação de Emergência LED 2x8W c/ Bateria;Elétrica;14.0;unid;0.0;14.0;unidades;AÇU-3.DES-2.3100-16-EGS-013;R$ 78,85;R$ 1.103,90
+3.1.30;"Haste de Aterramento Copperweld 3/4"" x 3,00m + Malha";Elétrica;6.0;unid;0.0;6.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-013;R$ 184,40;R$ 1.106,40
+3.2.1;"Tubo PVC Soldável Água Fria Ø25mm (3/4"")";Hidráulica;180.0;m;10.0;33.0;varas de 6m (198m);AÇU-3.DES-2.3100-16-EGS-015;R$ 11,38;R$ 2.048,40
+3.2.2;"Tubo PVC Soldável Água Fria Ø50mm (1.1/2"")";Hidráulica;95.0;m;10.0;18.0;varas de 6m (108m);AÇU-3.DES-2.3100-16-EGS-015;R$ 28,99;R$ 2.754,05
+3.2.3;Tubo PVC Esgoto Série Normal Ø40mm;Hidráulica;64.0;m;10.0;12.0;varas de 6m (72m);AÇU-3.DES-2.3100-16-EGS-015;R$ 15,90;R$ 1.017,60
+3.2.4;Tubo PVC Esgoto Série Normal Ø75mm;Hidráulica;42.0;m;10.0;8.0;varas de 6m (48m);AÇU-3.DES-2.3100-16-EGS-015;R$ 24,04;R$ 1.009,68
+3.2.5;Tubo PVC Esgoto Série Normal Ø100mm;Hidráulica;140.0;m;10.0;26.0;varas de 6m (156m);AÇU-3.DES-2.3100-16-EGS-015;R$ 33,74;R$ 4.723,60
+3.2.6;Tubo PVC Pluvial Série Reforçada Ø150mm;Hidráulica;110.0;m;10.0;21.0;varas de 6m (126m);AÇU-3.DES-2.3100-16-EGS-015;R$ 53,41;R$ 5.875,10
+3.2.7;Joelho 90º PVC Soldável Ø25mm;Hidráulica;86.0;unid;5.0;91.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 2,35;R$ 202,10
+3.2.8;"Joelho 90º c/ Bucha de Latão Ø25mm x 1/2""";Hidráulica;32.0;unid;5.0;34.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 6,61;R$ 211,52
+3.2.9;Joelho 90º PVC Soldável Ø50mm;Hidráulica;24.0;unid;5.0;26.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 8,65;R$ 207,60
+3.2.10;Tê 90º PVC Soldável Ø25mm;Hidráulica;48.0;unid;5.0;51.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 3,69;R$ 177,12
+3.2.11;Tê 90º Redução PVC Soldável Ø50x25mm;Hidráulica;18.0;unid;5.0;19.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 10,81;R$ 194,58
+3.2.12;Curva de Transposição PVC Soldável Ø25mm;Hidráulica;14.0;unid;5.0;15.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 7,88;R$ 110,32
+3.2.13;Joelho 90º PVC Esgoto Ø100mm;Hidráulica;36.0;unid;5.0;38.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 11,95;R$ 430,20
+3.2.14;Joelho 45º PVC Esgoto Ø100mm;Hidráulica;22.0;unid;5.0;24.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 11,32;R$ 249,04
+3.2.15;Junção 45º Y PVC Esgoto Ø100x50mm;Hidráulica;18.0;unid;5.0;19.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 20,98;R$ 377,64
+3.2.16;Tê Sanitário 90º PVC Esgoto Ø100x100mm;Hidráulica;12.0;unid;5.0;13.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 23,14;R$ 277,68
+3.2.17;"Registro de Gaveta Bruto c/ Canopla Cromada Ø25mm (3/4"")";Hidráulica;12.0;unid;0.0;12.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 106,56;R$ 1.278,72
+3.2.18;"Registro de Gaveta Bruto c/ Canopla Cromada Ø50mm (1.1/2"")";Hidráulica;4.0;unid;0.0;4.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 180,58;R$ 722,32
+3.2.19;Registro de Pressão c/ Canopla Cromada Ø20mm (Chuveiros);Hidráulica;6.0;unid;0.0;6.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 87,11;R$ 522,66
+3.2.20;Válvula de Retenção Vertical Ø50mm;Hidráulica;2.0;unid;0.0;2.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 108,09;R$ 216,18
+3.2.21;Reservatório de Água Potável Polietileno 5.000 L c/ Tampa;Hidráulica;2.0;unid;0.0;2.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 3.047,50;R$ 6.095,00
+3.2.22;Ralo Sifonado PVC 150x150x50mm Grelha Inox;Hidráulica;14.0;unid;0.0;14.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 61,68;R$ 863,52
+3.2.23;Caixa de Gordura Pré-moldada Concreto 100L;Hidráulica;2.0;unid;0.0;2.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 483,25;R$ 966,50
+3.2.24;Caixa de Inspeção Esgoto Concreto 60x60x60cm c/ Tampa;Hidráulica;6.0;unid;0.0;6.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 368,79;R$ 2.212,74
+3.2.25;Bacia Sanitária c/ Caixa Acoplada 3/6L e Assento;Hidráulica;10.0;unid;0.0;10.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-015;R$ 750,35;R$ 7.503,50
+3.2.26;Lavatório Louça Branca c/ Torneira Automática de Mesa;Hidráulica;12.0;unid;0.0;12.0;conjuntos;AÇU-3.DES-2.3100-16-EGS-015;R$ 521,40;R$ 6.256,80
+3.2.27;Sifão Sanfonado Universal PVC c/ Adaptador;Hidráulica;14.0;unid;5.0;15.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 18,44;R$ 258,16
+3.2.28;"Engate Flexível Inox 1/2"" 40cm";Hidráulica;22.0;unid;5.0;24.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 27,98;R$ 615,56
+3.2.29;"Válvula de Escoamento Inox 7/8"" para Lavatório";Hidráulica;12.0;unid;5.0;13.0;unidades;AÇU-3.DES-2.3100-16-EGS-015;R$ 35,61;R$ 427,32
+3.2.30;Fita Veda-Rosca PTFE 18mm x 50m;Hidráulica;12.0;rolo;0.0;12.0;rolos;AÇU-3.DES-2.3100-16-EGS-015;R$ 10,81;R$ 129,72
+3.3.1;Aparelho Split Cassete 36.000 BTU/h Inverter R410A;HVAC;4.0;unid;0.0;4.0;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;R$ 11.818,64;R$ 47.274,56
+3.3.2;Aparelho Split Hi-Wall 18.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6.0;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;R$ 4.174,33;R$ 25.045,98
+3.3.3;Aparelho Split Hi-Wall 12.000 BTU/h Inverter R410A;HVAC;6.0;unid;0.0;6.0;conjuntos;AÇU-3.DES-2.3100-64-EGS-008;R$ 2.901,81;R$ 17.410,86
+3.3.4;"Tubulação Cobre Flexível Ø3/8""+Ø5/8"" c/ Isolamento";HVAC;180.0;m;10.0;198.0;m;AÇU-3.DES-2.3100-64-EGS-008;R$ 104,92;R$ 18.885,60
+3.3.5;Tubo PVC Condensado Ø25mm c/ Isolamento;HVAC;120.0;m;10.0;22.0;varas de 6m (132m);AÇU-3.DES-2.3100-64-EGS-008;R$ 31,42;R$ 3.770,40
+3.3.6;Exaustor Axial de Parede/Teto 150 m³/h;HVAC;6.0;unid;0.0;6.0;unidades;AÇU-3.DES-2.3100-64-EGS-008;R$ 253,00;R$ 1.518,00

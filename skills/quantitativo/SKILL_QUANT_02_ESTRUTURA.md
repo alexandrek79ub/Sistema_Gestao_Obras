@@ -243,7 +243,7 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 | **Espaçadores circulares tipo roda/estrela com garra (Pilares)** | 3 a 4 un/m² de área lateral de pilar (garantia de cobrimento NBR 6118) | Caixa 100 un |
 | **Espaçadores tipo cadeira/garra lateral (Vigas)** | 4 un/m linear de viga (2 no fundo + 2 nas laterais) | Caixa 100 un |
 | **Espaçadores tipo centopeia/torre (Lajes)** | 2 a 3 un/m² de laje (armadura positiva e negativa) | Caixa 100 un |
-| **Arame Recozido BWG 18** | $1,5\%$ a $2,0\%$ do peso total de aço CA-50/CA-60 ($kg$) | Rolo 1 kg |
+| **Arame Recozido BWG 18** | 1,5% a 2,0% do peso total de aço CA-50/CA-60 (kg) | Rolo 1 kg |
 | **Desmoldante para Compensado Resinado** | 1 L para cada 25 a 30 m² de fôrma de madeira | Bombona 18 L |
 | **Desmoldante para Compensado Plastificado** | 1 L para cada 35 a 40 m² de chapa plastificada | Bombona 18 L |
 | **Pregos com Cabeça 17×27 e 18×30** | 0,05 kg por m² de fôrma de compensado | Caixa 10 kg |
@@ -251,7 +251,7 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 | **Fita Adesiva Crepe Larga 48mm×50m (vedação de emendas)** | 1 rolo a cada 40 m² de fôrma (evita fuga de pasta/bicheiras) | Rolo 50 m |
 | **Membrana de Cura Química Líquida (aspersão — Sika Antisol)** | 1 L para cada 6 m² de laje ou viga exposta | Frasco 3,6 L / Balde 18 L |
 | **Lona Plástica Preta 200µ (cura úmida / proteção de lajes)** | 1 bobina (200 m²) a cada 200 m² de laje concretada | Bobina 200 m² |
-| **Agulhas / Tensores de Barra Roscada 1/2" c/ Porca Borboleta** | 2 tensores por m² de face de pilar alto ($H > 3,00\text{m}$) | Barra 1m + porcas |
+| **Agulhas / Tensores de Barra Roscada 1/2" c/ Porca Borboleta** | 2 tensores por m² de face de pilar alto (H > 3,00m) | Barra 1m + porcas |
 
 ---
 
@@ -274,7 +274,7 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 | **1.4.9** | Cura Contínua (úmida 7 dias ou membrana química) | m² | 1.4.8 FF+0d | Mínimo 7 dias ininterruptos (NBR 14931) |
 | **1.4.10** | Desforma Lateral de Pilares e Vigas | m² | 1.4.8 FF+3d | Mínimo 3 dias de cura |
 | **1.4.11** | Desforma de Fundo de Vigas e Lajes + Re-escoramento | m² | 1.4.8 FF+14d | Mínimo 14 dias com re-escoramento mantido |
-| **1.4.12** | Alívio Total de Escoramento (Retirada definitiva) | m² | 1.4.8 FF+28d | Mínimo 28 dias ($100\%$ do Fck alcançado) |
+| **1.4.12** | Alívio Total de Escoramento (Retirada definitiva) | m² | 1.4.8 FF+28d | Mínimo 28 dias (100% do Fck alcançado) |
 
 ### 🛡️ 4.2 Checklist Anti-Omissão de Superestrutura (10 SKUs Obrigatórios na UCC/BOM)
 
@@ -283,7 +283,7 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 - [ ] **Espaçadores de Pilar (tipo roda/estrela com garra):** 3 a 4 un/m² de pilar concretado.
 - [ ] **Espaçadores de Viga (tipo cadeira/garra):** 4 un/m linear de viga estrutural.
 - [ ] **Espaçadores de Laje (tipo centopeia/torre):** 2 a 3 un/m² de laje.
-- [ ] **Arame Recozido BWG 18:** $1,5\%$ a $2,0\%$ do peso total de aço ($kg$).
+- [ ] **Arame Recozido BWG 18:** 1,5% a 2,0% do peso total de aço (kg).
 - [ ] **Desmoldante para Fôrmas:** Tipo apropriado ao compensado (resinado ou plastificado), conforme taxa de consumo paramétrica.
 - [ ] **Pregos com Cabeça 17×27 / 18×30:** 0,05 kg por m² de fôrma.
 - [ ] **Sarrafos de Gravata e Travamento:** 1,2 m lineares por m² de fôrma de pilar/viga.

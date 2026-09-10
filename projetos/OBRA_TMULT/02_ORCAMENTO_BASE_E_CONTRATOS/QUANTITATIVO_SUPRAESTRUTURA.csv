@@ -1,12 +1,12 @@
 ﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$)
-1.2.1;Concreto Usinado fck 30 MPa para Pilares P1 a P24 (h=2,98m);Supraestrutura;6.44;m³;5.0;6.76;m³ (1 betoneira);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.2;Fôrma Compensado Resinado 17mm para Pilares P1 a P24 (4 faces);Supraestrutura;85.82;m²;10.0;40;chapas (96.80 m²);AÇU-3.DES-2.3100-11-EGS-060;-;-
-1.2.3;Concreto Usinado fck 30 MPa para Vigas Superiores e Cobertura (V101 a V115);Supraestrutura;17.38;m³;5.0;18.25;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
-1.2.4;Fôrma Compensado Resinado 17mm para Vigas Superiores (fundo e laterais líquidas);Supraestrutura;208.62;m²;10.0;95;chapas (229.90 m²);AÇU-3.DES-2.3100-11-EGS-055/057;-;-
-1.2.5;Concreto Usinado fck 30 MPa para Capa de Laje Treliçada e=5cm;Supraestrutura;13.17;m³;5.0;13.83;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/059;-;-
-1.2.6;Fôrma Compensado Resinado 17mm para Lajes (Face Inferior / Fundo);Supraestrutura;263.48;m²;10.0;120;chapas (290.40 m²);AÇU-3.DES-2.3100-11-EGS-055;-;-
-1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas;Supraestrutura;888.78;m²·m;0.0;888.78;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;-;-
-1.2.8;Vigotas Treliçadas TR 16745 para Lajes H12;Supraestrutura;968.80;m;5.0;1017.24;m;AÇU-3.DES-2.3100-11-EGS-059;-;-
-1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148;unid;5.0;1206;unidades;AÇU-3.DES-2.3100-11-EGS-055;-;-
-1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.10;kg;5.0;165;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;-;-
-1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.80;kg;5.0;429;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;-;-
+1.2.1;Concreto Usinado fck 30 MPa para Pilares P1 a P24 (h=2,98m);Supraestrutura;6.44;m³;5.0;6.76;m³ (1 betoneira);AÇU-3.DES-2.3100-11-EGS-060;R$ 830,15;R$ 5.346,17
+1.2.2;Fôrma Compensado Resinado 17mm para Pilares P1 a P24 (4 faces);Supraestrutura;85.82;m²;10.0;40.0;chapas (96.80 m²);AÇU-3.DES-2.3100-11-EGS-060;R$ 176,13;R$ 15.115,48
+1.2.3;Concreto Usinado fck 30 MPa para Vigas Superiores e Cobertura (V101 a V115);Supraestrutura;17.38;m³;5.0;18.25;m³ (3 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/057;R$ 864,74;R$ 15.029,18
+1.2.4;Fôrma Compensado Resinado 17mm para Vigas Superiores (fundo e laterais líquidas);Supraestrutura;208.62;m²;10.0;95.0;chapas (229.90 m²);AÇU-3.DES-2.3100-11-EGS-055/057;R$ 146,75;R$ 30.614,99
+1.2.5;Concreto Usinado fck 30 MPa para Capa de Laje Treliçada e=5cm;Supraestrutura;13.17;m³;5.0;13.83;m³ (2 betoneiras);AÇU-3.DES-2.3100-11-EGS-055/059;R$ 864,74;R$ 11.388,63
+1.2.6;Fôrma Compensado Resinado 17mm para Lajes (Face Inferior / Fundo);Supraestrutura;263.48;m²;10.0;120.0;chapas (290.40 m²);AÇU-3.DES-2.3100-11-EGS-055;R$ 124,88;R$ 32.903,38
+1.2.7;Escoramento/Cimbramento Metálico de Lajes e Vigas;Supraestrutura;888.78;m²·m;0.0;888.78;m²·m;AÇU-3.DES-2.3100-11-EGS-055/060;R$ 23,53;R$ 20.912,99
+1.2.8;Vigotas Treliçadas TR 16745 para Lajes H12;Supraestrutura;968.8;m;5.0;1017.24;m;AÇU-3.DES-2.3100-11-EGS-059;R$ 33,70;R$ 32.648,56
+1.2.9;Enchimento com Blocos de EPS B16/30/100 para Lajes H12;Supraestrutura;1148.0;unid;5.0;1206.0;unidades;AÇU-3.DES-2.3100-11-EGS-055;R$ 0,13;R$ 149,24
+1.2.10;Armadura CA-50 Pilares e Vigas (EGS-060: 395,0kg + EGS-056/057: 1.485,1kg);Supraestrutura;1880.1;kg;5.0;165.0;barras 12m (1974.1 kg);AÇU-3.DES-2.3100-11-EGS-056/057/060;R$ 12,83;R$ 24.121,68
+1.2.11;Armadura CA-60 para Lajes Treliçadas H12 (Prancha EGS-059);Supraestrutura;999.8;kg;5.0;429.0;barras 12m (1049.8 kg);AÇU-3.DES-2.3100-11-EGS-059;R$ 12,04;R$ 12.037,59

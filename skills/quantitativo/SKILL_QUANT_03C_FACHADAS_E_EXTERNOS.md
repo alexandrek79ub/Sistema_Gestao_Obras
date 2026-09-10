@@ -79,15 +79,15 @@ A_inclinada = A_horizontal / cos(θ)
 
 | Insumo / Miudeza | Fórmula de Cálculo Paramétrico | Unidade UCC |
 |---|---|:---:|
-| **Parafusos autobrocantes 12×1"/2" c/ arruela EPDM** | $\lceil A_{\text{real inclinada}} \times 4,5 \rceil \times 1,05$ | cento / unid |
-| **Parafusos de costura (stitch) 10×3/4" (a 0,50m na emenda)** | $\lceil L_{\text{terças}} \times N_{\text{linhas}} / 0,50\text{m} \rceil \times 1,05$ | cento / unid |
-| **Fita butílica autoadesiva 15mm (rolos 10m)** | $\lceil L_{\text{emendas}} / 10\text{m} \rceil \times 1,05$ | rolos |
-| **Chumbadores parabolts CBA 3/8"×3" fixação terças (2/apoio)** | $N_{\text{linhas}} \times N_{\text{muretas/apoios}} \times 2 \times 1,05$ | unid |
-| **Rebites de repuxo alumínio 4,0×10mm (10/m de emenda)** | $\lceil N_{\text{emendas calha/rufo}} \times 10 \rceil \times 1,05$ | cento |
-| **Selante PU 40 calhas/rufos/pingadeiras (1 tubo / 5m)** | $\lceil L_{\text{emendas calha/rufo}} / 5,0\text{m} \rceil \times 1,05$ | tubo 310mL |
-| **Mastique / Selante PU para Juntas de Dilatação de Fachada** | $\lceil L_{\text{juntas de dilatação}} / 3,0\text{m} \rceil \times 1,05$ | tubo 310mL |
-| **Selador Acrílico para Fachada** | $A_{\text{fachada}} \times 0,10\text{ L/m²}$ | balde 18L |
-| **Fita Crepe Larga 48mm para Demarcação de Frisos** | $\lceil L_{\text{frisos}} / 50\text{m} \rceil$ | rolo 50m |
+| **Parafusos autobrocantes 12×1"/2" c/ arruela EPDM** | `⌈A_real_inclinada × 4,5⌉ × 1,05` | cento / unid |
+| **Parafusos de costura (stitch) 10×3/4" (a 0,50m na emenda)** | `⌈L_terças × N_linhas / 0,50m⌉ × 1,05` | cento / unid |
+| **Fita butílica autoadesiva 15mm (rolos 10m)** | `⌈L_emendas / 10m⌉ × 1,05` | rolos |
+| **Chumbadores parabolts CBA 3/8"×3" fixação terças (2/apoio)** | `N_linhas × N_muretas/apoios × 2 × 1,05` | unid |
+| **Rebites de repuxo alumínio 4,0×10mm (10/m de emenda)** | `⌈N_emendas_calha/rufo × 10⌉ × 1,05` | cento |
+| **Selante PU 40 calhas/rufos/pingadeiras (1 tubo / 5m)** | `⌈L_emendas_calha/rufo / 5,0m⌉ × 1,05` | tubo 310mL |
+| **Mastique / Selante PU para Juntas de Dilatação de Fachada** | `⌈L_juntas_dilatacao / 3,0m⌉ × 1,05` | tubo 310mL |
+| **Selador Acrílico para Fachada** | `A_fachada × 0,10 L/m²` | balde 18L |
+| **Fita Crepe Larga 48mm para Demarcação de Frisos** | `⌈L_frisos / 50m⌉` | rolo 50m |
 | **Cantoneiras de PVC com Tela para Quinas de Fachada** | Metragem linear total de cantos e quinas externas expostas | barras 3m |
 
 ### 🛡️ 2.4 Checklist Anti-Omissão de Cobertura e Fachadas (10 SKUs Obrigatórios na UCC/BOM)

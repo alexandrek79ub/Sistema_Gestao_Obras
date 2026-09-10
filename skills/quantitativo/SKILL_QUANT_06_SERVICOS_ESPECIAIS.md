@@ -8,7 +8,7 @@
 ## 1. Serviços Preliminares e Canteiro de Obras (Mobilização)
 
 ### 1.1 Fechamento e Proteção do Terreno
-- `Tapume de Vedação (m ou m²):` Madeirite compensado 10mm ou Chapa trapezoidal metálica c/ estrutura de pontaletes de madeira/aço a cada 1,5m ($H=2,00m$ a $2,20m$).
+- `Tapume de Vedação (m ou m²):` Madeirite compensado 10mm ou Chapa trapezoidal metálica c/ estrutura de pontaletes de madeira/aço a cada 1,5m (H = 2,00m a 2,20m).
 - `Placa de Obra (m²):` Placa em chapa galvanizada c/ impressão vinílica (Exigência CREA/CAU e Financiamento Caixa/Bancos).
 - `Portão de Acesso de Veículos e Pedestres (m ou unid):` Portão basculante/deslizante metálico para canteiro.
 
@@ -23,17 +23,17 @@
 > Os itens de apoio, sinalização, EPIs e proteções de acabamento **NÃO recebem código EAP**. São derivados parametricamente da escala da obra e lançados na Lista de Compras (BOM / UCC):
 
 1. **Fechamento e Estruturação de Tapume:**
-   - **Pontaletes de Madeira Pinus $7,5 \times 7,5\text{cm}$ (mourões):** 1 pontalete a cada 1,50m de perímetro de tapume.
-   - **Chapas de Compensado Resinado 10mm:** $\lceil L_{\text{tapume}} / 2,20\text{m} \rceil$ chapas (para tapume com $H = 2,20\text{m}$).
+   - **Pontaletes de Madeira Pinus 7,5 × 7,5 cm (mourões):** 1 pontalete a cada 1,50m de perímetro de tapume.
+   - **Chapas de Compensado Resinado 10mm:** `⌈L_tapume / 2,20m⌉` chapas (para tapume com H = 2,20m).
    - **Arame Galvanizado BWG 14 / Pregos 18×30:** 0,05 kg por metro linear de tapume.
 2. **Proteção Coletiva e Sinalização NR-18:**
-   - **Tela de Segurança de Fachada Polipropileno Verde:** Área total de fachadas expostas $+ 10\%$ de sobreposição ($m²$).
-   - **Guarda-Corpo Provisório Tubular Metálico ou Madeira com Rodapé:** Perímetro de bordas de laje, caixas de elevador e escadas ($m$).
+   - **Tela de Segurança de Fachada Polipropileno Verde:** Área total de fachadas expostas + 10% de sobreposição (m²).
+   - **Guarda-Corpo Provisório Tubular Metálico ou Madeira com Rodapé:** Perímetro de bordas de laje, caixas de elevador e escadas (m).
    - **Extintores Provisórios de Canteiro (PQS ABC 2kg ou 4kg):** Mínimo 1 unidade por pavimento de trabalho e áreas de risco (marcenaria/solda).
    - **Cones de Sinalização Laranja Refletivos (75cm) + Fita Zebrada:** Isolamento de áreas de descarga e valas abertas.
    - **Placas de Sinalização de Segurança NR-18:** Kit obrigatório contendo "Uso Obrigatório de EPI", "Proibida Entrada de Pessoas Não Autorizadas", "Cuidado Carga Suspensa".
 3. **Proteção de Acabamentos e Superfícies Nobres (Fase Final):**
-   - **Papelão Ondulado 3mm para Piso:** Forração integral de porcelanatos e pisos acabados ($A_{\text{papelão}} = A_{\text{pisos acabados}} \times 1,08$).
+   - **Papelão Ondulado 3mm para Piso:** Forração integral de porcelanatos e pisos acabados (`A_papelao = A_pisos_acabados × 1,08`).
    - **Plástico Bolha de Alta Densidade:** Envelopamento de bancadas, tampos de granito/mármore e louças instaladas.
    - **Lona Plástica Transparente e Fita de Empacotamento:** Vedação de portas, janelas e caixilhos contra respingos de tinta e poeira.
 4. **Gestão de Resíduos (PGRCC / Conama 307):**
@@ -44,16 +44,16 @@
 
 > Antes de emitir o relatório de suprimentos gerais de canteiro, o PMO Virtual DEVE auditar e certificar a presença dos seguintes 12 SKUs na BOM:
 
-- [ ] **Tapume de Compensado 10mm com Estrutura de Pontaletes:** Metragem linear completa do perímetro da obra ($m$).
-- [ ] **Placa de Obra em Chapa Galvanizada com Impressão Vinílica:** Dimensão mínima normatizada ($unid$).
-- [ ] **Tela de Segurança de Fachada Polipropileno Verde:** Área total de projeção vertical de fachadas ($m²$).
-- [ ] **Guarda-Corpo Provisório com Rodapé (NR-18):** Metragem linear de vãos e aberturas em lajes ($m$).
-- [ ] **Extintores Provisórios de Canteiro 2kg/4kg PQS ABC:** 1 por pavimento de serviço ativo ($unid$).
+- [ ] **Tapume de Compensado 10mm com Estrutura de Pontaletes:** Metragem linear completa do perímetro da obra (m).
+- [ ] **Placa de Obra em Chapa Galvanizada com Impressão Vinílica:** Dimensão mínima normatizada (unid).
+- [ ] **Tela de Segurança de Fachada Polipropileno Verde:** Área total de projeção vertical de fachadas (m²).
+- [ ] **Guarda-Corpo Provisório com Rodapé (NR-18):** Metragem linear de vãos e aberturas em lajes (m).
+- [ ] **Extintores Provisórios de Canteiro 2kg/4kg PQS ABC:** 1 por pavimento de serviço ativo (unid).
 - [ ] **Cones de Sinalização Laranja Refletivos + Fita Zebrada:** Kit de sinalização viária e perimetral.
-- [ ] **Papelão Ondulado 3mm para Proteção de Pisos:** Área equivalente aos pisos cerâmicos/madeira $+ 8\%$ ($m²$).
-- [ ] **Plástico Bolha para Proteção de Bancadas e Louças:** Quantidade suficiente para tampos e cubas instaladas ($m²$).
-- [ ] **Lonas Plásticas e Fitas de Empacotamento para Caixilhos:** Proteção de todas as esquadrias instaladas ($cj$).
-- [ ] **Conjunto de Placas de Sinalização de Segurança NR-18:** Placas regulamentares em PVC refletivo ($cj$).
+- [ ] **Papelão Ondulado 3mm para Proteção de Pisos:** Área equivalente aos pisos cerâmicos/madeira + 8% (m²).
+- [ ] **Plástico Bolha para Proteção de Bancadas e Louças:** Quantidade suficiente para tampos e cubas instaladas (m²).
+- [ ] **Lonas Plásticas e Fitas de Empacotamento para Caixilhos:** Proteção de todas as esquadrias instaladas (cj).
+- [ ] **Conjunto de Placas de Sinalização de Segurança NR-18:** Placas regulamentares em PVC refletivo (cj).
 - [ ] **Caçambas de Entulho para Coleta Seletiva (5m³):** Previsão mensal conforme cronograma de obra.
 - [ ] **Lixeiras / Tambores Identificados para Resíduos Perigosos (tintas e solventes conforme PGRCC).**
 
@@ -68,6 +68,9 @@
 | **1.1.3** | Execução de Tapumes, Portão de Acesso e Placa de Obra | m / un | 1.1.2 | Isolamento perimetral de segurança |
 | **1.1.4** | Instalação de Containers (Escritório, Vestiário, Almoxarifado) | un / mês | 1.1.3 | Áreas de vivência e armazenagem NR-18 |
 | **1.1.5** | Ligações Provisórias de Água, Energia e Esgoto | un | 1.1.2 | Abastecimento inicial de obra |
+| **1.1.6** | Administração Local da Obra (Engenharia Residente, Mestre, TST, Vigia) | mês | 1.1.2 | Mão de obra indireta dedicada no canteiro |
+| **1.1.7** | Vivência, Alimentação e Logística (VR/VA, Transporte, Repúblicas/Alojamento) | mês | 1.1.2 | Benefícios e logística de pessoal de obra |
+| **1.1.8** | Equipamentos de Apoio Compartilhados (Grua, Cremalheira, Gerador) | mês | 1.1.4 | Logística vertical e fornecimento de apoio contínuo |
 | **1.2.1** | Desmate, Destocamento e Raspagem de Camada Vegetal | m² | 1.1.3 | Limpeza da camada orgânica superficial |
 | **1.2.2** | Corte Mecanizado, Aterro e Compactação (Terraplenagem) | m³ | 1.2.1 | Conformação de platôs e cotas de projeto |
 | **1.2.3** | Muros de Arrimo, Solo Grampeado e Estruturas de Contenção | m² | 1.2.2 | Estabilização geotécnica definitiva de taludes |
@@ -107,7 +110,7 @@
 - `Linha Frigorígena de Cobre (m):` Par de tubos de cobre flexível/rígido (sucção e descarga ex: Ø1/4" + Ø3/8", Ø1/4" + Ø1/2", Ø3/8" + Ø5/8") com isolamento térmico cego em elastômero expandido (Armaflex/Isotubo).
 - `Cabo de Comando Elétrico PP 4×1,5mm² (m):` Interligação de comando entre unidade evaporadora e condensadora.
 - `Dreno de Condensado em PVC / PPR DN 20mm / 25mm (m):` Tubulação de escoamento de água de condensação c/ isolamento térmico em trechos internos.
-- `Suporte de Condensadora (unid):` Suportes em aço inox / aço galvanizado c/ pintura epóxi $+$ coxins de borracha anti-vibratórios.
+- `Suporte de Condensadora (unid):` Suportes em aço inox / aço galvanizado c/ pintura epóxi + coxins de borracha anti-vibratórios.
 - `Carga de Gás Refrigerante R-410A / R-32 (kg):` Carga complementar por metro linear de linha estendida.
 
 ### 3.2 Exaustão Mecânica de Banheiros e Cozinhas (AVAC)
@@ -127,10 +130,10 @@
 ### 4.1 Elevador Cremalheira / Elevador de Carga
 - `Locação Mensal de Elevador Cremalheira (mês):` Capacidade de 1,5 a 2,0 toneladas.
 - `Montagem / Desmontagem e Ascensão de Torre (unid):` Adição de módulos verticais conforme avanço da estrutura.
-- `Gravatas de Travamento Estrutural (unid):` Fixação do elevador na fachada a cada 3 pavimentos ($9,00m$).
+- `Gravatas de Travamento Estrutural (unid):` Fixação do elevador na fachada a cada 3 pavimentos (9,00m).
 
 ### 4.2 Grua de Torre / Grua Ascensional
-- `Locação Mensal de Grua (mês):` Comprimento de lança ($30m$ a $50m$) e capacidade na ponta ($1,0$ a $2,0$ ton).
+- `Locação Mensal de Grua (mês):` Comprimento de lança (30m a 50m) e capacidade na ponta (1,0 a 2,0 ton).
 - `Base de Concreto da Grua (m³):` Bloco de fundação em concreto armado C30 para ancoragem da grua.
 - `Ancoragens Estruturais de Lança (unid):` Chumbadores e gravatas de travamento estrutural.
 
@@ -154,14 +157,14 @@
 - `Viga de Içamento de Máquinas (m ou kg):` Perfil metálico I/W instalado no teto da casa de máquinas para manutenção do motor.
 - `Ganchos de Içamento de Carga (unid):` Olhais/ganchos de aço estrutural chumbeados na laje de teto da caixa do elevador.
 - `Alçapão de Serviço e Grelha de Ventilação (unid ou m²):` Alçapão metálico de acesso c/ fecho e grelha de ventilação permanente c/ tela mosquiteira.
-- `Parachoques de Poço / Amortecedores (unid):` Amortecedores hidráulicos/molas no fundo do poço $+$ escada marinheiro metálica de poço.
+- `Parachoques de Poço / Amortecedores (unid):` Amortecedores hidráulicos/molas no fundo do poço + escada marinheiro metálica de poço.
 
 ---
 
 ## 7. Conjuntos Motobombas (Recalque, Incêndio e Submersas)
 
 ### 7.1 Sistema de Recalque de Água Potável
-- `Conjunto Motobomba de Recalque Centrifuga (unid):` Par de bombas (1 trabalho + 1 reserva) c/ motor elétrico trifásico (CV/HP), vazão ($m³/h$) e manométrica ($mca$).
+- `Conjunto Motobomba de Recalque Centrifuga (unid):` Par de bombas (1 trabalho + 1 reserva) c/ motor elétrico trifásico (CV/HP), vazão (m³/h) e manométrica (mca).
 - `Painel Elétrico de Alternância de Bombas (unid):` QDC elétrico c/ temporizador e chave comutadora automática de alternância.
 
 ### 7.2 Conjunto de Bombas de Combate a Incêndio (NBR 13714)
@@ -170,7 +173,7 @@
 - `Painel de Comando de Incêndio c/ Nóbreak (unid):` Painel de comando de combate a incêndio c/ sirene e sinalização de supervisão.
 
 ### 7.3 Bombas Submersíveis de Esgoto e Rebaixamento
-- `Bomba Submersível p/ Esgoto / Água Pluvial (unid):` Bomba submersa c/ triturador ou passagem livre de sólidos ($2"$).
+- `Bomba Submersível p/ Esgoto / Água Pluvial (unid):` Bomba submersa c/ triturador ou passagem livre de sólidos (2").
 - `Chaves de Boia Elétrica de Nível (unid):` Boias automáticas de nível mínimo, máximo e alarme de transbordo.
 
 ---
@@ -214,7 +217,7 @@
 ## 10. Paisagismo, Jardinagem e Urbanização Externa
 
 ### 10.1 Preparação do Solo e Drenagem
-- `Substrato / Terra Vegetal Adubada (m³):` Camada de terra preta adubada para plantio ($e=15cm$ a $30cm$).
+- `Substrato / Terra Vegetal Adubada (m³):` Camada de terra preta adubada para plantio (e = 15cm a 30cm).
 - `Manta Geotêxtil Bidim / Filtro (m²):` Proteção contra carregamento de finos nos canteiros e jardineiras.
 - `Argila Expandida / Brita para Drenagem (m³):` Camada drenante no fundo de jardineiras e canteiros.
 - `Limitador de Grama / Separador de Canteiro em PVC (m):` Perfil plastificado para divisão de gramados e forrações.
@@ -222,7 +225,7 @@
 ### 10.2 Espécies Vegetais e Forrações
 - `Grama em Placas / Rolos (m²):` Grama Esmeralda (*Zoysia japonica*), São Carlos, Amendoim ou Batatais, incluindo adubação de arranque.
 - `Mudas de Forração e Arbustos (unid):` Agapanto, Liríope, Pingos de Ouro, Buxinho, Azaleias, Bromélias (especificadas por porte/volume de vaso).
-- `Árvores e Palmeiras Ornamentais (unid):` Palmeira Azul, Palmeira Imperial, Ipê, Jabuticabeira (especificadas por altura do tronco $H_t$ e DAP).
+- `Árvores e Palmeiras Ornamentais (unid):` Palmeira Azul, Palmeira Imperial, Ipê, Jabuticabeira (especificadas por altura do tronco H_t e DAP).
 - `Pedrisco / Casca de Pinus / Brita Branca Ornamental (m³ ou sacos):` Cobertura decorativa de solo em canteiros.
 - `Piso Drenante / Pisograma / Concregrama (m²):` Blocos vazados de concreto c/ preenchimento de grama/pedrisco para permeabilidade.
 
@@ -237,13 +240,13 @@
 - `Teste de Estanqueidade da Piscina (unid):` Teste hidrostático de 72 horas c/ lâmina d'água cheia.
 
 ### 11.2 Revestimento e Acabamento da Piscina
-- `Revestimento Interno da Piscina (m²):` Pastilha cerâmica $5\times5cm$ / $10\times10cm$, porcelanato $20\times20cm$ ou pedras naturais (*Stone Hijau* / *Hitam*).
+- `Revestimento Interno da Piscina (m²):` Pastilha cerâmica 5×5cm / 10×10cm, porcelanato 20×20cm ou pedras naturais (*Stone Hijau* / *Hitam*).
 - `Rejunte Epóxi Antifúngico / Impermeável (kg ou m²):` Rejuntamento especial para imersão contínua em água clorada.
 - `Borda Atérmica Antiderrapante (m ou m²):` Peças cimentícias atérmicas retas e de canto para perímetro da piscina.
 - `Deck de Madeira / Madeira Plástica / Porcelanato Antiderrapante (m²):` Revestimento do solarium ao redor da piscina c/ barroteamento e fixação inox.
 
 ### 11.3 Casa de Máquinas e Equipamentos da Piscina
-- `Filtro de Areia p/ Piscina (unid):` Filtro em polietileno c/ carga de areia de quartzo dimensionado pela taxa de filtração ($m³/h$).
+- `Filtro de Areia p/ Piscina (unid):` Filtro em polietileno c/ carga de areia de quartzo dimensionado pela taxa de filtração (m³/h).
 - `Bomba de Filtração e Recirculação (unid):` Motobomba centrífuga auto-escorvante em termoplástico (CV/HP).
 - `Sistema de Desinfecção / Tratamento (unid):` Gerador de cloro por eletrólise de sal, sistema de tratamento por Ozônio ou lâmpadas UV.
 - `Aquecimento de Piscina (unid):` Sistema de Trocador de Calor (Bomba de Calor ar-água) ou Coletores Solares em PP c/ bomba de circulação dedicada.
@@ -257,12 +260,12 @@
 
 ### 12.1 Playground Infantil e Espaço Kids
 - `Brinquedos Integrados / Multi-parque (unid):` Torres c/ escorregador, balanço, escalada e ponte em madeira plástica / eucalipto tratado / plástico rotomoldado.
-- `Piso de Segurança Emborraxado (m²):` Placas de borracha vulcanizada reciclada ($e=20mm$ a $40mm$) para absorção de impacto (NBR 16071).
-- `Grama Sintética Decorativa / Esportiva (m²):` Grama sintética $20mm$ a $30mm$ c/ base drenante.
+- `Piso de Segurança Emborraxado (m²):` Placas de borracha vulcanizada reciclada (e = 20mm a 40mm) para absorção de impacto (NBR 16071).
+- `Grama Sintética Decorativa / Esportiva (m²):` Grama sintética 20mm a 30mm c/ base drenante.
 
 ### 12.2 Quadra Poliesportiva / Beach Tennis / Padel
 - `Piso Asfáltico / Concreto Polido c/ Pintura Epóxi (m²):` Camada de regularização + resina sintética acrílica/epóxi em múltiplas demãos c/ demarcação de linhas esportivas.
-- `Rede de Areia para Beach Tennis / Vôlei (m² ou m³):` Camada de areia quartzosa tratada de granulometria fina ($e=30cm$) $+$ caixilho de contenção em mureta.
+- `Rede de Areia para Beach Tennis / Vôlei (m² ou m³):` Camada de areia quartzosa tratada de granulometria fina (e = 30cm) + caixilho de contenção em mureta.
 - `Fechamento de Alambrado de Quadra (m²):` Estrutura de tubos de aço galvanizado h=4,00m a 6,00m c/ tela de arame galvanizado revestido em PVC verde.
 - `Rede de Proteção Superior de Nylon (m²):` Cobertura de quadra em malha de polietileno antiflamas c/ cabos de aço de tencionamento.
 - `Iluminação de Quadra c/ Refletores LED (unid):` Holofotes LED 200W a 400W montados em postes metálicos galvanizados a fogo.
@@ -275,5 +278,5 @@
 
 ### 12.4 Academia / Espaço Fitness
 - `Equipamentos de Musculação e Aeróbico (unid):` Esteiras profissionais, bicicletas ergométricas, elípticos, estações multifuncionais de musculação e suportes de halteres.
-- `Piso Emborrachado de Alta Densidade (m²):` Mantas ou placas de borracha $15mm$ a $20mm$ resistentes a queda de pesos.
-- `Espelhos de Parede Inteira (m²):` Espelhos bisotados/lapidados $5mm$ colados c/ silicone neutro sobre compensado ou alvenaria.
+- `Piso Emborrachado de Alta Densidade (m²):` Mantas ou placas de borracha 15mm a 20mm resistentes a queda de pesos.
+- `Espelhos de Parede Inteira (m²):` Espelhos bisotados/lapidados 5mm colados c/ silicone neutro sobre compensado ou alvenaria.

@@ -26,16 +26,16 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 
 | Service ID | Serviço de Infraestrutura | Unidade | Fórmula Base de Derivação |
 |---|---|---|---|
-| **01** | Escavação de Cava / Vala | m³ | $(b + \text{folga}) \times (L + \text{folga}) \times h_{\text{escav}} \times \text{Quant}$ |
-| **02** | Apiloamento do Fundo da Cava | m² | $(b + \text{folga}) \times (L + \text{folga}) \times \text{Quant}$ (compactação da base) |
-| **03** | Lastro de Concreto Magro | m³ | $A_{\text{cava}} \times e_{\text{lastro\_conc}}$ (tipicamente $e = 0,05m$) |
-| **04** | Lastro de Brita / Pedra Drenante | m³ | $A_{\text{cava}} \times e_{\text{brita}}$ (quando especificado no projeto) |
-| **05** | Fôrma de Fundação | m² | Perímetro lateral da peça $\times h_{\text{peça}} \times \text{Quant}$ |
+| **01** | Escavação de Cava / Vala | m³ | `(b + folga) × (L + folga) × h_escav × Quant` |
+| **02** | Apiloamento do Fundo da Cava | m² | `(b + folga) × (L + folga) × Quant` (compactação da base) |
+| **03** | Lastro de Concreto Magro | m³ | `A_cava × e_lastro_conc` (tipicamente e = 0,05m) |
+| **04** | Lastro de Brita / Pedra Drenante | m³ | `A_cava × e_brita` (quando especificado no projeto) |
+| **05** | Fôrma de Fundação | m² | Perímetro lateral da peça `× h_peça × Quant` |
 | **06** | Concreto Estrutural de Fundação | m³ | Volume líquido geométrico do elemento |
-| **07** | Armadura de Fundação (Aço) | kg | $V_{\text{concreto}} \times \text{Taxa\_Aço (kg/m³)}$ ou detalhamento |
+| **07** | Armadura de Fundação (Aço) | kg | `V_concreto × Taxa_Aço (kg/m³)` ou detalhamento de prancha |
 | **08** | Impermeabilização (Tinta Asfáltica) | m² | Face superior + faces laterais. **🛑 REGRA DO NÓ:** Descontar rigorosamente a seção exata das vigas nas faces dos pilaretes onde há encosto, evitando dupla contagem de área envelopada. |
-| **09** | Reaterro Compactado | m³ | $V_{\text{escavado}} - V_{\text{concreto\_ocupado}}$ |
-| **10** | Bota-fora / Remoção de Terra | m³ | $V_{\text{escavado}} - V_{\text{reaterro}}$ (aplicar empolamento 1,25 a 1,35) |
+| **09** | Reaterro Compactado | m³ | `V_escavado − V_concreto_ocupado` |
+| **10** | Bota-fora / Remoção de Terra | m³ | `V_escavado − V_reaterro` (aplicar empolamento 1,25 a 1,35) |
 
 ### 🔩 1.1 Matriz de Suprimentos: Miudezas e Insumos de Apoio (Exclusivo da Lista UCC / BOM)
 
@@ -45,16 +45,16 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 > - **Na Lista de Compras UCC (Bill of Materials - BOM):** O Agente DEVE OBRIGATORIAMENTE explodir e quantificar todas as **Miudezas e Insumos de Canteiro** derivados de cada serviço da EAP, garantindo que o almoxarifado/compras emita as Ordens de Compra completas sem compras emergenciais ou paralisações de frente de serviço:
 >
 > 1. **Vinculado aos Serviços de Armação (CA-50/CA-60):**
->    - **Arame Recozido BWG 18:** $1,5\%$ a $2,0\%$ do peso total de aço (kg ou rolos de 1 kg).
->    - **Espaçadores / Pastilhas de Concreto (Solo 40/50mm):** $4\text{ a }6\text{ un/m}^2$ de fundo de sapata/bloco ou $2\text{ a }3\text{ un/m}$ linear de viga baldrame (garantia de cobrimento NBR 6118 em contato com o solo).
+>    - **Arame Recozido BWG 18:** 1,5% a 2,0% do peso total de aço (kg ou rolos de 1 kg).
+>    - **Espaçadores / Pastilhas de Concreto (Solo 40/50mm):** 4 a 6 un/m² de fundo de sapata/bloco ou 2 a 3 un/m linear de viga baldrame (garantia de cobrimento NBR 6118 em contato com o solo).
 > 2. **Vinculado aos Serviços de Fôrmas de Madeira (Compensado):**
->    - **Desmoldante para Fôrmas de Madeira:** Consumo paramétrico de $25\text{ a }30\text{ m}^2/\text{litro}$ sobre a área total de fôrmas (baldes/bombonas de 18L ou galões de 3,6L).
->    - **Pregos com Cabeça para Fôrmas (17×27 ou 18×30):** $0,04\text{ a }0,05\text{ kg}$ por $\text{m}^2$ de fôrma de compensado (caixas de 10 kg ou pacotes de 1 kg).
->    - **Sarrafos de Travamento e Gravatas (Pinus $2,5 \times 7,0\text{ cm}$ ou $2,5 \times 10\text{ cm}$):** $1,0\text{ a }1,2\text{ m}$ lineares por $\text{m}^2$ de fôrma para contenção do empuxo nas vigas e sapatas (metros lineares ou dúzias de peças de 3,00m).
+>    - **Desmoldante para Fôrmas de Madeira:** Consumo paramétrico de 25 a 30 m²/litro sobre a área total de fôrmas (baldes/bombonas de 18L ou galões de 3,6L).
+>    - **Pregos com Cabeça para Fôrmas (17×27 ou 18×30):** 0,04 a 0,05 kg por m² de fôrma de compensado (caixas de 10 kg ou pacotes de 1 kg).
+>    - **Sarrafos de Travamento e Gravatas (Pinus 2,5 × 7,0 cm ou 2,5 × 10 cm):** 1,0 a 1,2 m lineares por m² de fôrma para contenção do empuxo nas vigas e sapatas (metros lineares ou dúzias de peças de 3,00m).
 > 3. **Vinculado aos Serviços de Concretagem e Cura:**
->    - **Lona Plástica Preta (Polietileno e=150µ a 200µ):** Forração de fundo de vala/lastro e proteção de cura úmida contínua de 7 dias exigida pelas notas de projeto estrutural (bobinas de $4\text{m} \times 50\text{m} = 200\text{ m}^2$).
+>    - **Lona Plástica Preta (Polietileno e=150µ a 200µ):** Forração de fundo de vala/lastro e proteção de cura úmida contínua de 7 dias exigida pelas notas de projeto estrutural (bobinas de 4m × 50m = 200 m²).
 > 4. **Vinculado aos Serviços de Impermeabilização:**
->    - **Acessórios de Pintura Asfáltica:** 1 rolo de lã de carneiro 23cm a cada $80\text{ m}^2$ impermeabilizados + trinchas de 2" para recorte de cantos e nós.
+>    - **Acessórios de Pintura Asfáltica:** 1 rolo de lã de carneiro 23cm a cada 80 m² impermeabilizados + trinchas de 2" para recorte de cantos e nós.
 
 ### 📋 1.2 Tabela Oficial de Serviços para EAP e Cronograma (Nível 1.3 — Fundações)
 
@@ -80,8 +80,10 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 ### ⛓️ 1.3 Sequência Lógica Construtiva e Predecessoras Críticas
 
 1. **Cadeia Executiva Contínua:**
-   $$\text{Locação (1.3.1)} \rightarrow \text{Escavação (1.3.4)} \rightarrow \text{Apiloamento (1.3.5)} \rightarrow \text{Lastro Magro (1.3.6)} \rightarrow \text{Fôrmas (1.3.7)} \rightarrow \text{Armação (1.3.8)} \rightarrow \text{Concretagem (1.3.9)}$$
-   $$\rightarrow \text{Cura 7 dias NBR 14931 (1.3.10)} \rightarrow \text{Desforma} \rightarrow \text{Impermeabilização (1.3.11)} \rightarrow \text{Drenagem (1.3.12)} \rightarrow \text{Reaterro (1.3.13)} \rightarrow \text{Bota-fora (1.3.14)}$$
+   ```text
+   Locação (1.3.1) → Escavação (1.3.4) → Apiloamento (1.3.5) → Lastro Magro (1.3.6) → Fôrmas (1.3.7) → Armação (1.3.8) → Concretagem (1.3.9)
+   → Cura 7 dias NBR 14931 (1.3.10) → Desforma → Impermeabilização (1.3.11) → Drenagem (1.3.12) → Reaterro (1.3.13) → Bota-fora (1.3.14)
+   ```
 
 2. **Predecessoras Críticas e Travas de Qualidade:**
    - 🛑 **A impermeabilização (1.3.11) é PREDECESSORA BLOQUEANTE do reaterro (1.3.13):** Jamais autorizar o reaterro de valas ou cavas sobre fundações sem a conclusão e liberação da pintura/manta asfáltica pela fiscalização de obra.
@@ -92,7 +94,7 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 
 > Antes de emitir o relatório de quantitativo e a lista de compras da infraestrutura, o PMO Virtual DEVE auditar e certificar a presença de todos os seguintes 12 insumos consumíveis na BOM:
 
-- [ ] **Arame Recozido BWG 18:** $1,5\%$ a $2,0\%$ do peso total de aço estrutural ($kg$).
+- [ ] **Arame Recozido BWG 18:** 1,5% a 2,0% do peso total de aço estrutural (kg).
 - [ ] **Espaçadores de Solo Tipo Pastilha 40mm ou 50mm:** 4 a 6 un/m² de sapata/bloco; 2 a 3 un/m linear de viga baldrame.
 - [ ] **Desmoldante para Fôrmas de Madeira:** 1 L a cada 25 a 30 m² de área de contato de fôrma (bombonas de 18L).
 - [ ] **Pregos com Cabeça 17×27 ou 18×30:** 0,04 a 0,05 kg/m² de fôrma de compensado (caixas de 10 kg).
@@ -103,7 +105,7 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 - [ ] **Trinchas de 2":** Para recortes de nós, arestas e cantos de vigas baldrames e pilaretes.
 - [ ] **Tubo Dreno Corrugado Perfurado DN 100mm (Dreno-flex):** 1 metro por metro linear de baldrame periférico projetado.
 - [ ] **Manta Geotêxtil Não-Tecida Bidim OP-30:** 1,20 m de largura por metro linear de dreno (envelopamento completo com transpasse de 20cm).
-- [ ] **Brita Drenante Nº 1:** Volume de envelopamento da vala drenante ($m³$).
+- [ ] **Brita Drenante Nº 1:** Volume de envelopamento da vala drenante (m³).
 
 ---
 

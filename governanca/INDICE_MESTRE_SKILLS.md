@@ -35,7 +35,38 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Informação faltante na prancha que bloqueia o quantitativo | `SKILL_ENGENHARIA_RFI.md` — abrir RFI antes de qualquer estimativa |
 | Acompanhar RFIs em aberto, prazo vencido, resposta de projetista | `SKILL_ENGENHARIA_RFI.md` |
 | Qual POP executar antes de liberar um serviço de campo | `SKILL_PRODUCAO_POP_BRIDGE.md` — consultar junto com SKILL_GESTAO_02 |
-| Montar a EAP (WBS) ou o cronograma de uma disciplina ou da obra completa | Consultar a Tabela Oficial de Serviços: §1.5 da `SKILL_QUANT_06` (níveis 1.1, 1.2 e 5.1) + §1.2 da `SKILL_QUANT_01` (nível 1.3) + §4.1 da `SKILL_QUANT_02` (nível 1.4) + §2 da `SKILL_QUANT_03` (níveis 2.1 e 2.2) + §3 da `SKILL_QUANT_04` (nível 3.1) + §3 da `SKILL_QUANT_05` (nível 3.2). Para cronograma executivo global, carregar todas as tabelas em sequência lógica |
+| Montar a EAP (WBS) ou o cronograma de uma disciplina ou da obra completa | Consultar a Cadeia Global Integrada na Seção 1.1 abaixo e as Tabelas Oficiais de Serviços: §1.5 da `SKILL_QUANT_06` (níveis 1.1, 1.2, 4.1, 4.2 e 5.1) + §1.2 da `SKILL_QUANT_01` (nível 1.3) + §4.1 da `SKILL_QUANT_02` (nível 1.4) + §2 da `SKILL_QUANT_03` (níveis 2.1 e 2.2) + §3 da `SKILL_QUANT_04` (nível 3.1) + §3 da `SKILL_QUANT_05` (nível 3.2). |
+
+---
+
+## 1.1 Cadeia Global Integrada da EAP (Níveis 1.1 a 5.1) e Predecessoras Interdisciplinares
+
+A governança do cronograma físico, da linha de balanço e da medição contratual exige a articulação harmoniosa de todas as disciplinas levantadas pelas skills quantitativas. A tabela abaixo sintetiza a macroestrutura da EAP Mestre da obra e mapeia os **Gargalos e Portões de Bloqueio Interdisciplinar**:
+
+| Nível EAP | Macroetapa / Disciplina | Skill de Origem | Unid. Avanço | Predecessoras Mestras & Bloqueios Críticos |
+|:---:|:---|:---:|:---:|:---|
+| **1.1** | Serviços Preliminares, Legalização e Mobilização | `SKILL_QUANT_06` (§1.5) | un / m | Marco Zero; libera terraplenagem (1.2) e locação de fundações (1.3) |
+| **1.2** | Terraplenagem e Obras de Contenção | `SKILL_QUANT_06` (§1.5) | m² / m³ | Conformação de platôs; precede a locação e cravamento de fundações |
+| **1.3** | Infraestrutura e Fundações (Estacas, Blocos, Baldrames) | `SKILL_QUANT_01` (§1.2) | m / m³ / kg | ⚠️ **1.3.11 (Impermeabilização)** é predecessora BLOQUEANTE de **1.3.13 (Reaterro)** |
+| **1.4** | Superestrutura (Ciclo de Pavimento Tipo: Pilares, Vigas, Lajes) | `SKILL_QUANT_02` (§4.1) | m² / m³ / kg | ⚠️ **1.4.12 (Desforma de Laje)** libera prumadas verticais de **3.1.7** e **3.2.8** |
+| **2.1** | Alvenaria e Vedações Verticais | `SKILL_QUANT_03` (§2.1) | m² | **2.1.1 (Marcação)** libera rasgos e caixas de **3.1.2** e **3.2.3** |
+| **3.1** | Instalações Elétricas, Automação, Dados e SPDA | `SKILL_QUANT_04` (§3) | m / un / pt | Concomitante com alvenaria; tubulações embutidas antes do emboço |
+| **3.2** | Instalações Hidrossanitárias, Gás e Drenagem | `SKILL_QUANT_05` (§3) | m / un / pt | 🛑 **3.2.7 (Teste Hidrostático 72h)** é BLOQUEANTE de **2.1.2 (Emboço/Reboco)** |
+| **2.2** | Revestimentos, Pisos, Pintura e Forros | `SKILL_QUANT_03` (§2.2) | m² | Depende de 3.2.7 aprovado e 3.1 eletrodutos embutidos e testados |
+| **4.1** | Sistemas Especiais (HVAC, Elevadores, SDAI, Bombas) | `SKILL_QUANT_06` (§1.5) | un / m | 4.1.3 depende de 1.4 (Poço); 4.1.4 depende de 3.2 (Barrilete/Reservatório) |
+| **4.2** | Urbanização Externa, Paisagismo, Piscinas e Lazer | `SKILL_QUANT_06` (§1.5) | m² / un | Executado após desimpedimento de canteiro civil e fachada |
+| **5.1** | Encerramento, Limpeza Pós-Obra, Comissionamento e Databook | `SKILL_QUANT_06` (§1.5) | un / m² | 5.1.3 integra 3.1.14 + 3.2.13; libera Vistoria, Habite-se e Entrega |
+
+### 🛑 Portões de Qualidade e Regras de Bloqueio Interdisciplinar (Zero Retrabalho)
+
+1. **Portão Geotécnico e Fundação (1.3.11 → 1.3.13):**
+   - É **expressamente proibido** realizar o reaterro e compactação de valas (`1.3.13`) antes da impermeabilização hidrófuga e cristalizante de vigas baldrame e blocos de coroamento (`1.3.11`), devidamente inspecionada e liberada por FVS.
+2. **Portão Estrutura → Prumadas Verticais (1.4.12 → 3.1.7 / 3.2.8):**
+   - A liberação de frentes de shafts verticais de esgoto, prumadas de água fria/incêndio e barramentos elétricos exige a desforma total e desaprumo do pavimento imediatamente superior (`1.4.12`), eliminando riscos de queda de materiais e impacto sobre tubulações plásticas.
+3. **Portão Hidráulico → Fechamento Civil (3.2.7 → 2.1.2) [REGRA DE OURO]:**
+   - **NUNCA chapiscar, emboçar, azulejar ou fechar forros e shafts** sobre tubulações de água fria, água quente ou gás sem a realização do **Teste Hidrostático de Estanqueidade sob Pressão (`3.2.7`) com manômetro calibrado durante no mínimo 72 horas**. Vazamentos descobertos após o revestimento geram quebra-quebra, desperdício e atrasos severos na linha de balanço.
+4. **Portão Civil → Dispositivos de Acabamento (2.2.8 → 3.1.9 / 3.2.11):**
+   - A instalação de espelhos, tomadas, interruptores finos (`3.1.9`), louças sanitárias, cubas e metais nobres (`3.2.11`) só pode ocorrer após a conclusão da 1ª demão de pintura e forração protetora de pisos (`2.2.8`), prevenindo danos por respingos e abrasão de ferramentas.
 
 ---
 
@@ -83,6 +114,7 @@ Quando nenhuma tabela acima resolve o conflito, esta é a ordem de precedência:
 | Atualização 2026-09 (1) | Adicionadas Skills 16 (Cronograma/Reprogramação) e 17 (Vencimento Documental SST) nas Seções 1 e 2 |
 | Atualização 2026-09 (2) | Adicionadas: `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO` (M5), `SKILL_ENGENHARIA_RFI` (M6), `SKILL_PRODUCAO_POP_BRIDGE` (M7) nas Seções 1 e 2 |
 | Atualização 2026-09 (3) | Adicionado roteamento para EAP / Cronograma Integrado (Tabelas Oficiais de Serviços das Skills 01 a 06) na Seção 1 |
+| Atualização 2026-09 (4) | Adicionada Seção 1.1 (Cadeia Global Integrada da EAP Níveis 1.1 a 5.1 e Portões de Bloqueio Interdisciplinar) |
 
 *Este índice deve ser atualizado toda vez que uma skill nova for criada ou uma sobreposição nova
 for identificada durante o uso real do sistema.*

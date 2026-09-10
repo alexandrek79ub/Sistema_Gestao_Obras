@@ -51,7 +51,7 @@ Metragem Total = [ Soma(Lk × Nfios_k) + (Ncaixas × 0,50m) + (NQDC × 1,00m) ] 
 > A tabela abaixo é **100% FICTÍCIA E MERAMENTE ILUSTRATIVA**, tendo como único objetivo exemplificar a formatação visual e a aplicação da regra de arredondamento comercial para rolos de 100 metros.
 > **É EXPRESSAMENTE PROIBIDO** utilizar, copiar, estimar ou assumir quaisquer números ou circuitos desta tabela em levantamentos reais. Cada obra DEVE extrair seus próprios circuitos, trajetos e bitolas exclusivamente a partir dos seus próprios desenhos e diagramas unifilares executivos.
 
-| Circuito (Exemplo Fictício) | Função Ilustrativa | Seção ($\text{mm}^2$) | Tipo | Cor do Isolamento | Metragem Líquida (m) | + Perda 5% (m) | Compras UCC (Rolos de 100m) |
+| Circuito (Exemplo Fictício) | Função Ilustrativa | Seção (mm²) | Tipo | Cor do Isolamento | Metragem Líquida (m) | + Perda 5% (m) | Compras UCC (Rolos de 100m) |
 |---|---|---|---|---|---|---|---|
 | **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Fase | Preto | 142,50 m | 149,63 m | 2 Rolos (200m) |
 | **Circ. Exemplo A** | Iluminação (Exemplo) | 1,5 mm² | Neutro | Azul Claro | 110,00 m | 115,50 m | 2 Rolos (200m) |
@@ -68,7 +68,7 @@ Toda caixa de ponto de elétrica deve ser decomposta individualmente nos seus co
 - **Caixas de Embutir / Passagem:**
   - `Caixa 4x2" PVC Amarela / Termoplástica (unid):` Para pontos de tomadas e interruptores de parede.
   - `Caixa 4x4" PVC (unid):` Para conjuntos de 4 ou 6 módulos, blocos reforçados ou caixas de passagem e derivação de troncos em alvenaria.
-  - `Caixa Octogonal 3x3" / 4x4" c/ Fundo Móvel para Teto (unid):` **REGRA OBRIGATÓRIA (100% dos Pontos de Iluminação):** Toda e qualquer luminária de teto (painéis LED 60x60, sobrepor, plafons, luminárias herméticas industriais ou blocos autônomos de emergência) exige **obrigatoriamente 1 caixa octogonal de teto** para interligação mecânica dos eletrodutos e abrigo seguro dos drivers e conexões. Quantidade total: $N_{\text{caixas teto}} = \sum (\text{Luminárias de teto}) \times 1,05$.
+  - `Caixa Octogonal 3x3" / 4x4" c/ Fundo Móvel para Teto (unid):` **REGRA OBRIGATÓRIA (100% dos Pontos de Iluminação):** Toda e qualquer luminária de teto (painéis LED 60x60, sobrepor, plafons, luminárias herméticas industriais ou blocos autônomos de emergência) exige **obrigatoriamente 1 caixa octogonal de teto** para interligação mecânica dos eletrodutos e abrigo seguro dos drivers e conexões. Quantidade total: `N_caixas_teto = Σ (Luminárias de teto) × 1,05`.
 - **Placas, Suportes e Espelhos (Linha de Acabamento):**
   - `Suporte 4x2" / 4x4" c/ Parafusos (unid):` Estrutura de fixação dos módulos.
   - `Placa 4x2" Cega / 1 Posto / 2 Postos / 3 Postos (unid):` Espelho de acabamento frontal.
@@ -82,11 +82,11 @@ Toda caixa de ponto de elétrica deve ser decomposta individualmente nos seus co
   - `Módulo de Interruptor Intermediário (Four-Way) 10A (unid):` Para comando de 3 ou mais pontos.
   - `Módulo Pulsador de Campainha / Minuteria (unid).`
 - **Pontos de Iluminação e Luminárias:**
-  - `Luminária Painel LED Plafon de Embutir / Sobrepor (unid):` Especificar formato e potência ($18\text{W}, 24\text{W}, 32\text{W}, 40\text{W}, 48\text{W}$ / $30\times30\text{cm}, 60\times60\text{cm}, 30\times120\text{cm}$).
-  - `Luminária Hermética Industrial LED IP65 (unid):` Para áreas técnicas, depósitos e garagens ($2\times18\text{W}$ ou $2\times9\text{W}$).
+  - `Luminária Painel LED Plafon de Embutir / Sobrepor (unid):` Especificar formato e potência (18W, 24W, 32W, 40W, 48W / 30×30cm, 60×60cm, 30×120cm).
+  - `Luminária Hermética Industrial LED IP65 (unid):` Para áreas técnicas, depósitos e garagens (2×18W ou 2×9W).
   - `Bloco de Iluminação de Emergência LED Autônomo c/ Bateria (unid):` Para rotas de fuga e saídas de emergência (Circuito LE).
   - `Spot LED Dicroica / PAR20 / Mini AR111 de Embutir (unid):` Spot direcionável c/ lâmpada/módulo LED.
-  - `Fita de LED 12V / 24V c/ Fonte Driver (m / unid):` Fita LED flexível para sancas/marcenaria $+$ fonte driver dimerizável/convencional.
+  - `Fita de LED 12V / 24V c/ Fonte Driver (m / unid):` Fita LED flexível para sancas/marcenaria + fonte driver dimerizável/convencional.
 
 ---
 
@@ -95,62 +95,62 @@ Para eliminar omissões e esquecimentos no orçamento de compras, as miudezas de
 
 1. **Luvas de Emenda para Eletroduto Rígido PVC (unid):**  
    Os eletrodutos rígidos são fornecidos em varas de 3 metros. Cada vara requer 1 luva de união:
-   $$N_{\text{luvas}} = \lceil L_{\text{eletroduto}} / 3,00\text{m} \rceil \times 1,05$$
+   `N_luvas = ⌈ L_eletroduto / 3,00m ⌉ × 1,05`
 2. **Adaptadores Box Reto em PVC para Caixas e Quadros (unid):**  
    Cada caixa de parede/teto e cada chegada no quadro de distribuição exige adaptadores com rosca e porca para travamento mecânico:
-   $$N_{\text{adaptadores box}} = [ 2 \times (N_{\text{caixas 4x2}} + N_{\text{caixas 4x4}} + N_{\text{caixas octogonais}}) + N_{\text{circuitos QDC}} ] \times 1,05$$
+   `N_adaptadores_box = [ 2 × (N_caixas_4x2 + N_caixas_4x4 + N_caixas_octogonais) + N_circuitos_QDC ] × 1,05`
 3. **Abraçadeiras Tipo D em Aço Galvanizado c/ Cunha e Parafusos/Buchas S6 (unid):**  
-   Para tubulações aparentes em teto, laje, entreforro ou perfilados, a fixação deve ocorrer no máximo a cada $1,50\text{ m}$:
-   $$N_{\text{abraçadeiras}} = \lceil L_{\text{eletroduto aparente/forro}} / 1,50\text{m} \rceil \times 1,05$$
+   Para tubulações aparentes em teto, laje, entreforro ou perfilados, a fixação deve ocorrer no máximo a cada 1,50 m:
+   `N_abraçadeiras = ⌈ L_eletroduto_aparente/forro / 1,50m ⌉ × 1,05`
 4. **Conectores de Emenda Rápida por Alavanca (tipo Wago / Derivação - unid):**  
    Nas caixas de passagem e derivação de múltiplos circuitos:
-   $$N_{\text{conectores rápidos}} = 3 \times N_{\text{caixas de passagem e derivação}} + 2 \times N_{\text{luminárias de teto}}$$
+   `N_conectores_rápidos = 3 × N_caixas_passagem + 2 × N_luminárias_teto`
 5. **Terminais Pré-Isolados Tipo Ilhós (Cobre Estanhado - unid):**  
    Para terminação de condutores de 2,5mm² e 4,0mm² nos bornes de disjuntores e módulos de tomadas:
-   $$N_{\text{terminais ilhós}} = (2 \times N_{\text{polos de disjuntores}}) + (3 \times N_{\text{módulos de tomada}})$$
+   `N_terminais_ilhós = (2 × N_polos_disjuntores) + (3 × N_módulos_tomada)`
 6. **Fita Isolante Antichama 19mm x 20m (rolos):**  
-   $$N_{\text{rolos fita}} = \lceil (N_{\text{pontos elétricos total}}) / 50 \rceil \text{ rolos (mínimo 2 rolos por obra)}$$
+   `N_rolos_fita = ⌈ N_pontos_elétricos_total / 50 ⌉ rolos (mínimo 2 rolos por obra)`
 7. **Parafusos Chipboard e Buchas de Nylon S6 / S8 (unid):**  
    Fixação de todas as caixas de embutir (4×2, 4×4, octogonais), quadros de distribuição e suportes de luminárias:
-   $$N_{\text{buchas}} = [ 2 \times (N_{\text{caixas 4x2}} + N_{\text{caixas 4x4}} + N_{\text{caixas octogonais}} + N_{\text{luminárias}}) + 4 \times N_{\text{quadros QDC}} ] \times 1,05$$
+   `N_buchas = [ 2 × (N_caixas_4x2 + N_caixas_4x4 + N_caixas_octogonais + N_luminárias) + 4 × N_quadros_QDC ] × 1,05`
 8. **Talco Industrial / Vaselina Líquida Neutra para Puxamento de Cabos:**  
    Facilitador de deslizamento para alimentação de circuitos pesados e longos sem danificar a isolação:
-   $$N_{\text{frascos 500mL}} = \lceil L_{\text{cabos } \ge 6\text{mm}^2} / 200\text{m} \rceil$$
+   `N_frascos_500mL = ⌈ L_cabos_≥_6mm² / 200m ⌉`
 9. **Guia de Tração (Passa-fio de Nylon/Aço Maleável com Ponteira Metálica):**  
    1 unidade por equipe de eletricistas (insumo/ferramental de canteiro, registrado na logística de obra).
 10. **Fita de Autofusão 19mm × 10m (Isolação de Alta Confiabilidade / Áreas Úmidas):**  
     Para impermeabilização e recomposição de isolação em caixas de passagem enterradas, poços e áreas molhadas:
-    $$N_{\text{rolos autofusão}} = \max(2; \, \lceil N_{\text{emendas subterrâneas}} / 5 \rceil)$$
+    `N_rolos_autofusão = max(2, ⌈ N_emendas_subterrâneas / 5 ⌉)`
 11. **Prensa-cabos Termoplásticos / Latão Rosca PG/Métrico IP68 (unid):**  
     Vedação estanque em cada entrada e saída de eletrodutos em caixas externas e quadros de força:
-    $$N_{\text{prensa-cabos}} = N_{\text{chegadas de eletroduto nos quadros e caixas externas}}$$
+    `N_prensa_cabos = N_chegadas_de_eletroduto_nos_quadros_e_caixas_externas`
 12. **Tirantes Roscados 1/4" × 1m c/ Porcas, Arruelas e Chumbadores (unid):**  
     Sustentação suspensa de perfilados perfurados e eletrocalhas metálicas sob lajes:
-    $$N_{\text{tirantes}} = \lceil L_{\text{eletrocalha / perfilado}} / 1,20\text{m} \rceil \times 1,05$$
+    `N_tirantes = ⌈ L_eletrocalha/perfilado / 1,20m ⌉ × 1,05`
 13. **Anilhas Plásticas Marcadoras Numeradas / Marcadores de Circuitos:**  
     Identificação padronizada de condutores nos barramentos e disjuntores: 1 jogo completo por QDC instalado.
 14. **Fita Plástica de Advertência Enterrada "PERIGO: REDE ELÉTRICA":**  
     Sinalização preventiva instalada 30cm acima do banco de dutos ou cabos diretamente enterrados:
-    $$L_{\text{fita}} = L_{\text{valas de dutos subterrâneos}} \times 1,10\text{ m}$$
+    `L_fita = L_valas_dutos_subterrâneos × 1,10 m`
 
 ### 🛡️ 2.5 Checklist Anti-Omissão de SKUs de Instalações Elétricas (15 SKUs Obrigatórios na UCC/BOM)
 
 > Antes de fechar o quantitativo e a requisição de compras de instalações elétricas, o PMO Virtual DEVE auditar e confirmar a presença de todos os 15 SKUs na BOM:
 
-- [ ] **Luvas de Emenda para Eletroduto Rígido PVC:** 1 luva por vara de 3m ($\lceil L_{\text{eletroduto}} / 3\text{m} \rceil \times 1,05$).
+- [ ] **Luvas de Emenda para Eletroduto Rígido PVC:** 1 luva por vara de 3m (`⌈ L_eletroduto / 3m ⌉ × 1,05`).
 - [ ] **Adaptadores Box Reto PVC c/ Rosca e Porca:** 2 por caixa 4×2/4×4/octogonal + chegadas de circuitos no QDC.
 - [ ] **Abraçadeiras Tipo D c/ Cunha e Buchas S6:** 1 a cada 1,50m de eletroduto aparente ou em entreforro.
 - [ ] **Conectores Rápidos por Alavanca (Wago ou similar):** 3 por caixa de passagem/derivação + 2 por ponto de iluminação.
-- [ ] **Terminais Pré-Isolados Tipo Ilhós:** $(2 \times \text{polos de disjuntores}) + (3 \times \text{módulos de tomada})$.
+- [ ] **Terminais Pré-Isolados Tipo Ilhós:** `(2 × polos de disjuntores) + (3 × módulos de tomada)`.
 - [ ] **Fita Isolante Antichama 19mm × 20m:** 1 rolo a cada 50 pontos elétricos (mínimo 2 rolos por obra).
 - [ ] **Parafusos Chipboard + Buchas S6/S8:** 2 por caixa embutida / suporte de luminária.
-- [ ] **Talco / Vaselina Líquida para Puxamento:** 1 frasco de 500mL a cada 200m de cabos de bitola $\ge 6\text{ mm}^2$.
+- [ ] **Talco / Vaselina Líquida para Puxamento:** 1 frasco de 500mL a cada 200m de cabos de bitola ≥ 6 mm².
 - [ ] **Fita de Autofusão 19mm × 10m:** Mínimo 2 rolos por obra; 1 rolo extra a cada 5 emendas em caixas subterrâneas.
 - [ ] **Prensa-cabos Termoplásticos IP68:** 1 por chegada de eletroduto nos quadros QDC/QG e caixas externas.
 - [ ] **Tirantes Roscados 1/4" + Porcas + Arruelas:** 1 conjunto a cada 1,20m de eletrocalha ou perfilado suspenso.
 - [ ] **Anilhas Numeradas / Marcadores de Identificação:** 1 estojo/jogo completo por QDC instalado.
 - [ ] **Espaçadores Plásticos Pente para Banco de Dutos:** 1 pente a cada 1,50m de vala por camada de tubos.
-- [ ] **Fita Plástica de Advertência Enterrada "REDE ELÉTRICA":** Metragem linear igual ao comprimento total de valas subterrâneas $+ 10\%$.
+- [ ] **Fita Plástica de Advertência Enterrada "REDE ELÉTRICA":** Metragem linear igual ao comprimento total de valas subterrâneas + 10%.
 - [ ] **Cartuchos de Solda Exotérmica e Moldes de Grafite (SPDA):** 1 cartucho por conexão de cabo de cobre na malha/hastes.
 
 ---
@@ -168,7 +168,7 @@ Para eliminar omissões e esquecimentos no orçamento de compras, as miudezas de
 | **3.1.5** | Bancos de Dutos e Envelopamento Subterrâneo | m | 1.2 — Terraplenagem | Executar preferencialmente junto com a fundação |
 | **3.1.6** | Caixas de Passagem Elétrica Enterradas (Concreto/Alvenaria) | un | 3.1.5 | Derivar escavação, lastro, alvenaria e tampa |
 | **3.1.7** | Prumadas em Shafts e Instalação de Eletrocalhas | m / m² | 1.4.12 — Desforma total de lajes | Após lajes liberadas para carga |
-| **3.1.8** | Enfiação de Cabos Alimentadores ($\ge 16\text{ mm}^2$) | m | 3.1.5 + 3.1.7 | Lances contínuos sem emendas (NBR 5410) |
+| **3.1.8** | Enfiação de Cabos Alimentadores (≥ 16 mm²) | m | 3.1.5 + 3.1.7 | Lances contínuos sem emendas (NBR 5410) |
 | **3.1.9** | Enfiação de Circuitos Terminais (Fase, Neutro, Terra, Retorno) | m | 2.1.8 — Pintura (1ª demão) | Evita danos e manchas na fiação |
 | **3.1.10** | Montagem e Conexão de Quadros (QDC, QG, QGVT) | un | 3.1.8 | Após alimentadores enfiados |
 | **3.1.11** | Instalação de Suportes, Módulos de Tomadas e Interruptores | un | 3.1.9 + 2.1.9 — Esquadrias | Após pintura final e portas montadas |
@@ -194,16 +194,16 @@ O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a 
 > 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA CONDUTORES E TUBULAÇÕES:**  
 > A unidade comercial de faturamento varia estritamente conforme o tipo de insumo e seu método de instalação:
 
-1. **Cabos de Potência / Alimentadores Pesados ($\ge 16\text{ mm}^2$, EPR 0,6/1kV):**  
+1. **Cabos de Potência / Alimentadores Pesados (≥ 16 mm², EPR 0,6/1kV):**  
    * **Unidade Comercial:** **METRO LINEAR (`m`)**.  
    * **Critério Técnico:** O fornecedor industrial corta e fatura a metragem exata fracionada de grandes bobinas. **A NBR 5410 proíbe emendas intermediárias em alimentadores subterrâneos**.  
    * É estritamente **proibido arredondar para rolos fechados de 100m**, pois isso geraria lances picados inutilizáveis ou sobras caras de cobre de grande seção.
-2. **Condutores Prediais Flexíveis 750V ($\le 10\text{ mm}^2$ - 1,5mm², 2,5mm², 4,0mm², 6,0mm²):**  
+2. **Condutores Prediais Flexíveis 750V (≤ 10 mm² - 1,5mm², 2,5mm², 4,0mm², 6,0mm²):**  
    * **Unidade Comercial:** **ROLOS LACRADOS DE 100 METROS (`rolos`)**.  
    * **Critério Técnico:** A indústria não vende metragem fracionada avulsa para circuitos prediais. Toda solicitação de compra DEVE ser arredondada para cima pela função teto:
-     $$\text{Qtd. UCC (rolos)} = \lceil L_{\text{líquido}} \times (1 + \text{perda}) / 100 \rceil$$
+     `Qtd. UCC (rolos) = ⌈ L_líquido × (1 + perda) / 100 ⌉`
 3. **Eletrodutos Rígidos de PVC:**  
-   * **Unidade Comercial:** **VARAS DE 3 METROS (`varas`)**. Arredondamento: $\lceil L_{\text{líquido}} \times (1 + \text{perda}) / 3 \rceil$.
+   * **Unidade Comercial:** **VARAS DE 3 METROS (`varas`)**. Arredondamento: `⌈ L_líquido × (1 + perda) / 3 ⌉`.
 4. **Formatação da Tabela de Compras (Sem Ambiguidade):**  
    A tabela de compras DEVE conter **obrigatoriamente duas colunas de unidade separadas**:
    * `Unid. Proj.` (unidade da medição física líquida em metros ou unidades)
@@ -223,17 +223,17 @@ O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a 
 | Tipo de Caixa Elétrica | Função Principal | Particularidade Construtiva |
 |---|---|---|
 | **Caixa de Passagem Elétrica** | Passagem de cabos alimentadores subterrâneos | Concreto ou Alvenaria c/ impermeabilização e tampa cega ("ELÉTRICA") |
-| **Caixa de Haste de Aterramento** | Inspeção da malha de aterramento (SPDA) | Fundo em **Lastro de Brita Drenante** ($m³$) sem laje de concreto no fundo |
+| **Caixa de Haste de Aterramento** | Inspeção da malha de aterramento (SPDA) | Fundo em **Lastro de Brita Drenante** (m³) sem laje de concreto no fundo |
 | **Caixa de Entrada Concessionária** | Ponto de entrega de energia (Média/Baixa Tensão) | Exige especificações da concessionária local e tampa reforçada FoFo |
 | **Caixa de Telecom / Lógica** | Passagem de cabos de fibra óptica e telefonia | Separada obrigatoriamente das caixas de energia (evitar interferência) |
 
 ### 5.2 Algoritmo de Derivação Automática de Serviços (Concreto vs. Alvenaria)
 As caixas de passagem elétrica utilizam a mesma memória de cálculo geométrica de [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md#L98):
-1. **Caixa de Concreto:** Paredes em concreto armado ($m³$) $+$ fôrmas dupla face ($m²$).
-2. **Caixa de Alvenaria:** Paredes em tijolo maciço/bloco ($A_{\text{alvenaria}} = 2 \cdot (B + C) \cdot G$ em $m²$) sem fôrmas nas paredes verticais.
-3. **Escavação e Talude NR-18 (quando $H > 1,25m$)**
+1. **Caixa de Concreto:** Paredes em concreto armado (m³) + fôrmas dupla face (m²).
+2. **Caixa de Alvenaria:** Paredes em tijolo maciço/bloco (`A_alvenaria = 2 × (B + C) × G` em m²) sem fôrmas nas paredes verticais.
+3. **Escavação e Talude NR-18 (quando H > 1,25m)**
 4. **Apiloamento do Fundo e Lastro Magro / Brita Drenante**
-5. **Revestimento Interno / Impermeabilização Interna ($m²$)**
+5. **Revestimento Interno / Impermeabilização Interna (m²)**
 6. **Reaterro Compactado vs. Bota-Fora**
 7. **Tampas Estruturais (Concreto ou Ferro Fundido - FoFo c/ inscrição "ELÉTRICA" ou "TELECOM")**
 
@@ -289,39 +289,39 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 
 ### 7.1 Subsistema de Captação Aérea (Cobertura e Platibanda)
 - **Método Gaiola de Faraday (Malha de Platibanda):**
-  - `Fita de Alumínio / Cobre Plana (25×3mm) ou Cabo Cobre Nu 35mm²/50mm² (m):` $L_{\text{captação}} = \text{Perímetro Platibanda} + \text{Linhas Intermediárias} \times (1 + 10\%\text{ perda})$.
-  - `Isoladores / Presilhas de Suporte (unid):` Espaçamento máximo de $1,00 \, m$ ao longo de toda a malha.
-  - `Terminais Aéreos de Aterramento (unid):` Haste de captação em inox/latão $h=30\text{cm}$ a $50\text{cm}$ nos cantos da edificação.
+  - `Fita de Alumínio / Cobre Plana (25×3mm) ou Cabo Cobre Nu 35mm²/50mm² (m):` `L_captação = (Perímetro Platibanda + Linhas Intermediárias) × (1 + 10% perda)`.
+  - `Isoladores / Presilhas de Suporte (unid):` Espaçamento máximo de 1,00 m ao longo de toda a malha.
+  - `Terminais Aéreos de Aterramento (unid):` Haste de captação em inox/latão h = 30cm a 50cm nos cantos da edificação.
 - **Método Franklin (Pára-raios de Mastro):**
-  - `Mastro de Aço Galvanizado a Fogo:` 2" $\times$ 6m com sapata de fixação, estais de aço inoxidável e sinalizador noturno de obstáculo.
+  - `Mastro de Aço Galvanizado a Fogo:` 2" × 6m com sapata de fixação, estais de aço inoxidável e sinalizador noturno de obstáculo.
   - `Captor Franklin 4 Pontas (unid):` Captor em latão cromado/cobre.
 
 ### 7.2 Subsistema de Descidas (Prumadas e Fachadas)
 - **Descidas Aparentes (Cabo Cobre Nu 35mm² / 50mm² ou Fita de Alumínio):**
-  - `Comprimento de Descida (m):` $L_{\text{descida}} = N_{\text{prumadas}} \times H_{\text{edificação}} \times (1 + 10\%)$.
-  - `Presilhas de Fixação de Descida (unid):` Espaçadas a cada $1,00 \, m$ a $1,50 \, m$ na fachada.
-  - `Proteção Mecânica de Base (unid):` Tubo de proteção em PVC rígido ou aço galvanizado $h=2,50 \, m$ na base de cada descida.
+  - `Comprimento de Descida (m):` `L_descida = N_prumadas × H_edificação × (1 + 10%)`.
+  - `Presilhas de Fixação de Descida (unid):` Espaçadas a cada 1,00 m a 1,50 m na fachada.
+  - `Proteção Mecânica de Base (unid):` Tubo de proteção em PVC rígido ou aço galvanizado h = 2,50 m na base de cada descida.
   - `Junta de Medição / Conector de Ensaio (unid):` Caixa de desconexão para teste de continuidade e resistência.
 - **Descidas Estruturais (Rebar / Armadura dos Pilares):**
   - Conectores de pressão tipo C / Solda para amarração no aço estrutural antes da concretagem dos pilares.
 
 ### 7.3 Subsistema de Aterramento Enterrado (Anel Perimetral, Hastes & Solda Exotérmica)
 - **Anel Perimetral de Aterramento Enterrado:**
-  - `Cabo de Cobre Nu 50mm² / 70mm² Enterrado (m):` $L_{\text{anel}} = \text{Perímetro Externo do Edifício} \times (1 + 10\%)$ enterrado a $h=0,50 \, m$ no solo.
+  - `Cabo de Cobre Nu 50mm² / 70mm² Enterrado (m):` `L_anel = Perímetro Externo do Edifício × (1 + 10%)` enterrado a h = 0,50 m no solo.
 - **Hastes de Aterramento Cobreadas (Copperweld):**
   - `Hastes de Cobre Ø5/8" ou Ø3/4" × 2,40m / 3,00m (unid):` Cravadas verticalmente nos vértices do anel perimetral.
 - **Solda Exotérmica e Conexões:**
   - `Cartuchos de Carga de Solda Exotérmica (unid):` Cargas nº 65, nº 90, nº 115 para fusão de conexões Tê, Cruzeta e Haste-Cabo.
   - `Alicate de Prensa + Moldes de Grafite (unid):` Moldes específicos por tipo de derivação.
 - **Caixas de Inspeção de Aterramento:**
-  - `Caixas de Inspeção de Solo (unid):` Caixas c/ tampa em ferro fundido ou concreto com **fundo em Lastro de Brita Drenante ($m³$)** para medição da resistência ($\le 10 \, \Omega$).
+  - `Caixas de Inspeção de Solo (unid):` Caixas c/ tampa em ferro fundido ou concreto com **fundo em Lastro de Brita Drenante (m³)** para medição da resistência (≤ 10 Ω).
 - **Barramentos de Equipotencialização (BEP / BEL):**
   - Barramento de cobre embutido em caixa metálica para interligação de todas as massas da obra.
 
 ### 7.4 Tabela de Compra e Embalagem Comercial de SPDA (UCC)
 | Insumo SPDA | Unidade Medida | Critério de Quantificação | Unidade UCC | Embalagem de Compra |
 |---|---|---|---|---|
-| **Cordoalha Cobre Nu 50mm²** | m | Captação + Descidas + 5% perda | rolos | Rolos lacrados com 100m ($\lceil L / 100 \rceil$) |
+| **Cordoalha Cobre Nu 50mm²** | m | Captação + Descidas + 5% perda | rolos | Rolos lacrados com 100m (`⌈ L / 100 ⌉`) |
 | **Presilhas / Suportes Guia Platibanda** | unid | 1 un a cada 1,00m de perímetro platibanda | un | Peça em bronze/inox c/ parafuso e bucha |
 | **Hastes de Aterramento Copperweld 3/4" x 3,00m** | unid / barra | 1 haste por prumada de descida de SPDA (camada 254µm) | barras | Barra de 3,00m |
 | **Conectores Grampo Cabo-Haste em Latão 3/4"** | unid | 1 conector por haste instalada | un | Peça em bronze/latão reforçado |
@@ -337,24 +337,24 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 - `Chaves Seccionadoras e Fusíveis Matheus / Base C (unid):` Chaves fusíveis de proteção de MT no topo do poste.
 
 ### 8.2 Subestação Abrigada / Aérea e Transformador
-- `Transformador de Potência (unid):` Transformador trifásico (a óleo mineral/vegetal ou a seco em resina epóxi) especificando a potência ($45\text{kVA}, 75\text{kVA}, 112.5\text{kVA}, 150\text{kVA}, 225\text{kVA}, 300\text{kVA}, 500\text{kVA}, 750\text{kVA}, 1000\text{kVA}$) e tensões ($13.8\text{kV} / 380-220\text{V}$ ou $220-127\text{V}$).
+- `Transformador de Potência (unid):` Transformador trifásico (a óleo mineral/vegetal ou a seco em resina epóxi) especificando a potência (45kVA, 75kVA, 112.5kVA, 150kVA, 225kVA, 300kVA, 500kVA, 750kVA, 1000kVA) e tensões (13.8kV / 380-220V ou 220-127V).
 - `Para-raios de Média Tensão (unid):` Para-raios de polímero / óxido metálico para proteção do transformador.
 - `Alvenaria e Portões da Subestação Abrigada (m² / unid):` Cubículo em alvenaria estrutural/concreto c/ portas de tela metálica galvanizada de proteção, canaletas para cabos c/ tampas pré-moldadas e iluminação blindada.
-- `Malha de Aterramento de Subestação (m / unid):` Malha de alta confiabilidade em cabo de cobre nu $50\text{mm}^2 / 70\text{mm}^2$ c/ hastes cravadas $3/4" \times 2,40m$ e conexões exotérmicas ($\le 5 \, \Omega$).
+- `Malha de Aterramento de Subestação (m / unid):` Malha de alta confiabilidade em cabo de cobre nu 50mm² / 70mm² c/ hastes cravadas 3/4" × 2,40m e conexões exotérmicas (≤ 5 Ω).
 
 ### 8.3 Muro de Medidores e Centro de Medição (QTM / QDCA)
 - `Muro de Medidores / Centro de Medição Agrupado (unid ou m²):` Muro em alvenaria revestida c/ nichos para caixas de medição da concessionária local (ex: Enel, CPFL, Light, Cemig, Copel).
 - `Caixas de Medição Monofásica / Trifásica / Policarbonato (unid):` Caixas padronizadas tipo M, T, N, H c/ visores de policarbonato e fecho de padrão concessionária.
 - `Barramento Blindado / Bus-way / Barramento de Cobre Nu (m ou kg):` Barramento de distribuição trifásica de alta amperagem c/ isoladores de epóxi.
-- `Disjuntor Geral de Entrada em Caixa Moldada (unid):` Disjuntor termomagnético ajustável / fixo ($100A, 150A, 225A, 400A, 630A, 800A, 1000A$).
+- `Disjuntor Geral de Entrada em Caixa Moldada (unid):` Disjuntor termomagnético ajustável / fixo (100A, 150A, 225A, 400A, 630A, 800A, 1000A).
 
 ### 8.4 Quadros Elétricos Individuais por Unidade Habitacional vs. Quadros Gerais
 - **Quadros Elétricos por Unidade Habitacional (QDC da Unidade — 1 unid por Apartamento/Casa/Loja):**
-  - `Quadro de Distribuição de Embutir (QDC da Unidade):` Quadro termoplástico/metálico c/ porta branca/fumê (especificado pela capacidade: 12, 18, 24, 36 ou 48 disjuntores DIN) $+$ barramentos isolados de Fase, Neutro e Terra.
-  - `Disjuntor Geral da Unidade (unid):` Disjuntor Bipolar ou Tripolar ($40A, 50A, 63A, 70A, 80A$).
+  - `Quadro de Distribuição de Embutir (QDC da Unidade):` Quadro termoplástico/metálico c/ porta branca/fumê (especificado pela capacidade: 12, 18, 24, 36 ou 48 disjuntores DIN) + barramentos isolados de Fase, Neutro e Terra.
+  - `Disjuntor Geral da Unidade (unid):` Disjuntor Bipolar ou Tripolar (40A, 50A, 63A, 70A, 80A).
   - `Dispositivos DR (Diferencial Residual) da Unidade (unid):` Interruptor DR Bipolar ou Tetrapolar 30mA (NBR 5410) para proteção contra choques elétricos em áreas molhadas.
-  - `Dispositivos DPS (Surto Elétrico) da Unidade (unid):` DPS Classe II $20\text{kA} / 45\text{kA}$ para proteção dos equipamentos da unidade.
-  - `Disjuntores Monopolares / Bipolares DIN (unid):` Disjuntores de $10A, 15A, 20A, 25A, 32A, 40A$ para iluminação, TUGs e TUEs (chuveiros, ar-condicionado, cooktop).
+  - `Dispositivos DPS (Surto Elétrico) da Unidade (unid):` DPS Classe II 20kA / 45kA para proteção dos equipamentos da unidade.
+  - `Disjuntores Monopolares / Bipolares DIN (unid):` Disjuntores de 10A, 15A, 20A, 25A, 32A, 40A para iluminação, TUGs e TUEs (chuveiros, ar-condicionado, cooktop).
 - **Quadros Gerais de Uso Comum e Serviços (Gerais da Obra):**
   - `QGVT / QG (Quadro Geral de Distribuição do Prédio):` Quadro autoportante ou de sobrepor metálico de grande capacidade.
   - `QDC-AC (Quadro de Áreas Comuns — 1 por Edifício/Bloco):` Distribuição de iluminação dos halls, garagens, portaria e bombas de recalque.
@@ -365,12 +365,12 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 ## 10. Cabeamento Estruturado, Telefonia, Dados, Fibra Óptica, CFTV e Interfonia (ANSI/TIA/EIA-568)
 
 ### 9.1 Cabeamento Estruturado, Racks e Dados
-- `Rack Telecom 19" de Parede ou Piso (unid):` Rack metálico c/ porta de acrílico/vidro (12U, 24U, 36U, 44U) especificando profundidade ($570mm / 800mm$).
+- `Rack Telecom 19" de Parede ou Piso (unid):` Rack metálico c/ porta de acrílico/vidro (12U, 24U, 36U, 44U) especificando profundidade (570mm / 800mm).
 - `Patch Panels 24 ou 48 Portas Cat6 / Cat6A (unid):` Painel de conexão c/ guias de cabos horizontais e organizadores.
 - `Switches Gigabit Ethernet PoE (unid):` Switch de 24/48 portas 10/100/1000Mbps c/ portas PoE (Power over Ethernet) para alimentação de câmeras e pontos Wi-Fi AP.
 - `Nobreak para Rack de Telecom (unid):` Nobreak senoidal de rack (1kVA, 2kVA, 3kVA) c/ banco de baterias seladas.
-- `Cabo UTP Cat6 / Cat6A LSZH (m):` Cabo de pares trançados 4 pares $23\text{ AWG}$ homologado Anatel c/ capa retardante de chama/zero halogênio ($L = \text{Trajeto} \times 1,10 + \text{Pontas } 1,50m$).
-- `Tomadas de Dados / Voz RJ45 Cat6 (unid):` Módulos Keystone RJ45 c/ espelho $4\times2"$.
+- `Cabo UTP Cat6 / Cat6A LSZH (m):` Cabo de pares trançados 4 pares 23 AWG homologado Anatel c/ capa retardante de chama/zero halogênio (`L = Trajeto × 1,10 + Pontas 1,50m`).
+- `Tomadas de Dados / Voz RJ45 Cat6 (unid):` Módulos Keystone RJ45 c/ espelho 4×2".
 
 ### 9.2 Backbone de Fibra Óptica e Prumada de Telecom
 - `Cabo de Fibra Óptica Monomodo / Multimodo OM3/OM4 (m):` Cabo dielétrico auto-sustentado (Tight Buffer ou Loose) para prumadas de shaft e conexão entre blocos.
@@ -378,7 +378,7 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 - `Cordões Ópticos / Patch Cords (unid):` Cordões de manobra LC-LC / SC-LC.
 
 ### 9.3 Circuito Fechado de TV (CFTV IP) e Controle de Acesso
-- `Câmeras IP Dome / Bullet Full HD / 4K (unid):` Câmeras de segurança c/ filtro IR night-vision, lente $2.8mm / 3.6mm$, carcaça IP66 antivandalismo (IK10).
+- `Câmeras IP Dome / Bullet Full HD / 4K (unid):` Câmeras de segurança c/ filtro IR night-vision, lente 2.8mm / 3.6mm, carcaça IP66 antivandalismo (IK10).
 - `Gravador NVR IP 16/32/64 Canais (unid):` Gravador digital IP c/ discos rígidos corporativos (HDs Surveillance 4TB / 8TB / 12TB).
 - `Monitores Industriais de Guarita (unid):` Monitores LED 24"/32" para vídeo-wall da portaria.
 
