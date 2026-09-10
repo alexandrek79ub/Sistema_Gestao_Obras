@@ -45,6 +45,7 @@ REQUISICOES_TRACKER = [
     {
         "id_rc": "RC-001/2026",
         "pacote": "Aço CA-50 e CA-60 Cortado e Dobrado (Fundações)",
+        "centro_custo": "CC-208 / CC-209 / CC-210",
         "disciplina": "Infraestrutura",
         "eap_itens": "1.1.10, 1.1.11, 1.1.12",
         "data_emissao": "12/09/2026",
@@ -62,6 +63,7 @@ REQUISICOES_TRACKER = [
     {
         "id_rc": "RC-002/2026",
         "pacote": "Concreto Usinado fck 30 MPa Bombeável e Lastro fck 15 MPa",
+        "centro_custo": "CC-202 / CC-203 / CC-205 / CC-206",
         "disciplina": "Infraestrutura",
         "eap_itens": "1.1.3, 1.1.4, 1.1.6, 1.1.8",
         "data_emissao": "14/09/2026",
@@ -79,6 +81,7 @@ REQUISICOES_TRACKER = [
     {
         "id_rc": "RC-003/2026",
         "pacote": "Compensado Resinado 17mm, Madeiramento e Consumíveis de Fôrma",
+        "centro_custo": "CC-204 / CC-205 / CC-207",
         "disciplina": "Infraestrutura",
         "eap_itens": "1.1.5, 1.1.7, 1.1.9",
         "data_emissao": "12/09/2026",
@@ -96,6 +99,7 @@ REQUISICOES_TRACKER = [
     {
         "id_rc": "RC-004/2026",
         "pacote": "Locação de Módulos Containers NR-18 e Sanitários Químicos (6 Meses)",
+        "centro_custo": "CC-103",
         "disciplina": "Canteiro e Vivência",
         "eap_itens": "1.0.3",
         "data_emissao": "10/09/2026",
@@ -120,7 +124,7 @@ def gerar_csv_tracker():
     with open(csv_path, mode="w", newline="", encoding="utf-8-sig") as f:
         writer = csv.writer(f, delimiter=";")
         writer.writerow([
-            "ID_RC", "Pacote_Insumo", "Disciplina", "EAP_Itens",
+            "ID_RC", "Pacote_Insumo", "Centro_Custo_CC", "Disciplina", "EAP_Itens",
             "Data_Emissao_Obra", "Data_Necessidade_Canteiro", "Lead_Time_Dias",
             "Estagio_Pipeline", "Responsavel_Atual", "Proxima_Acao_Gargalo",
             "Semaforo_Risco", "Budget_Custo_Direto_R$", "Fornecedor_PreQualificado",
@@ -128,7 +132,7 @@ def gerar_csv_tracker():
         ])
         for r in REQUISICOES_TRACKER:
             writer.writerow([
-                r["id_rc"], r["pacote"], r["disciplina"], r["eap_itens"],
+                r["id_rc"], r["pacote"], r["centro_custo"], r["disciplina"], r["eap_itens"],
                 r["data_emissao"], r["data_necessidade"], r["lead_time_dias"],
                 r["estagio_pipeline"], r["responsavel_atual"], r["proxima_acao"],
                 r["semaforo"], f"{r['orcamento_base_cd']:.2f}", r["fornecedor_homologado"],
@@ -170,12 +174,12 @@ def gerar_md_tracker():
     linhas.append("")
     linhas.append("## 📋 2. Matriz Viva de Rastreabilidade das Requisições de Compra (RCs) — Mês 1")
     linhas.append("")
-    linhas.append("| Nº RC | Pacote de Compra | Data Emissão | Data Limite Canteiro | Estágio Atual no Funil | Responsável Atual | Próxima Ação / Ponto de Atenção | Semáforo Lead Time |")
-    linhas.append("| :---: | :--- | :---: | :---: | :---: | :---: | :--- | :---: |")
+    linhas.append("| Nº RC | Pacote de Compra | Centro de Custo (CC) | Data Emissão | Data Limite Canteiro | Estágio Atual no Funil | Responsável Atual | Próxima Ação / Ponto de Atenção | Semáforo Lead Time |")
+    linhas.append("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: |")
     
     for r in REQUISICOES_TRACKER:
         linhas.append(
-            f"| **{r['id_rc']}** | {r['pacote']} | {r['data_emissao']} | **{r['data_necessidade']}** | "
+            f"| **{r['id_rc']}** | {r['pacote']} | `{r['centro_custo']}` | {r['data_emissao']} | **{r['data_necessidade']}** | "
             f"`{r['estagio_pipeline']}` | **{r['responsavel_atual']}** | {r['proxima_acao']} | {r['semaforo']} |"
         )
         
@@ -226,7 +230,7 @@ def gerar_template_rc():
     
     conteudo = """# 📋 MODELO PADRÃO: REQUISIÇÃO DE COMPRA (RC)
 > **Origem:** Engenharia de Obra (Campo) ➔ **Destino:** Setor de Suprimentos (Compras)  
-> **Referência Normativa:** POP 05 e Diretrizes de Governança A11
+> **Referência Normativa:** POP 05, Diretrizes de Governança A11 e Plano de Centros de Custo
 
 ---
 
@@ -239,6 +243,7 @@ def gerar_template_rc():
 | **Data de Emissão (Obra):** | `DD/MM/AAAA` |
 | **Data Necessária no Canteiro:** | **`DD/MM/AAAA`** *(Respeitar Lead Time mínimo do POP 05)* |
 | **Disciplina / EAP Vinculada:** | `Ex: Infraestrutura — EAP 1.1.4 e 1.1.8` |
+| **Centro de Custo (CC):** | **`Ex: CC-200 (Infraestrutura) / Analítico: CC-203 e CC-206`** |
 | **Local Exato de Aplicação (CIA):**| `Ex: Fundações — Sapatas Isoladas S1 a S24` |
 | **Engenheiro Solicitante:** | `Nome e CREA` |
 
@@ -246,13 +251,13 @@ def gerar_template_rc():
 
 ### 2. ESPECIFICAÇÃO TÉCNICA E QUANTIDADES EM UCC (Unidade Comercial de Compra)
 
-> ⚠️ **Regra Inviolável:** A Engenharia levanta em unidade de projeto, mas converte obrigatoriamente para a embalagem comercial da indústria (barras de 12m, sacos de 50kg, chapas inteiras, m³ dosado em central).
+> ⚠️ **Regra Inviolável:** A Engenharia levanta em unidade de projeto, mas converte obrigatoriamente para a embalagem comercial da indústria (barras de 12m, sacos de 50kg, chapas inteiras, m³ dosado em central). Toda linha carrega o Centro de Custo analítico para apropriação contábil.
 
-| Item | Descrição Técnica Completa e Normativa | Qtd Projeto | Und Proj | % Perda | Qtd Compra | Und UCC | Prancha Executiva / Ref. |
-| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
-| 01 | [Especificação exata: marca de ref., bitola, classe] | | | | | | |
-| 02 | | | | | | | |
-| 03 | | | | | | | |
+| Item | Centro de Custo (CC) | Descrição Técnica Completa e Normativa | Qtd Projeto | Und Proj | % Perda | Qtd Compra | Und UCC | Prancha Executiva / Ref. |
+| :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |
+| 01 | `CC-___` | [Especificação exata: marca de ref., bitola, classe] | | | | | | |
+| 02 | `CC-___` | | | | | | | |
+| 03 | `CC-___` | | | | | | | |
 
 ---
 
@@ -282,7 +287,7 @@ def gerar_template_pc():
     pc_path = os.path.join(OUTPUT_DIR, "TEMPLATE_PEDIDO_DE_COMPRA_PC.md")
     
     conteudo = """# 🛒 MODELO PADRÃO: PEDIDO DE COMPRA (PC / PO)
-> **Origem:** Setor de Suprimentos ➔ **Destino:** Fornecedor Vencedor (c/ cópia para Almoxarifado)  
+> **Origem:** Setor de Suprimentos ➔ **Destino:** Fornecedor Vencedor (c/ cópia para Almoxarifado e Financeiro)  
 > **Vínculo:** Autorizado pela Diretoria conforme Mapa de Cotação Equalizado
 
 ---
@@ -293,6 +298,7 @@ def gerar_template_pc():
 | :--- | :--- |
 | **Número do PC:** | `PC-___ / 2026` |
 | **Número da RC de Origem:** | `RC-___ / 2026` |
+| **Centro de Custo (CC):** | **`Ex: CC-200 (Infraestrutura) / Conta: 4.1.2.01`** |
 | **Data de Emissão:** | `DD/MM/AAAA` |
 | **Data Agendada para Entrega:**| **`DD/MM/AAAA`** *(Impreterível)* |
 | **Comprador Responsável:** | `Nome e Contato Direto` |
@@ -313,11 +319,11 @@ def gerar_template_pc():
 
 ### 3. ITENS CONTRATADOS & CONDIÇÕES COMERCIAIS
 
-| Item | Código / Descrição Detalhada do Produto | Und | Qtd Contratada | Preço Unit. (R$) | Preço Total (R$) |
-| :---: | :--- | :---: | :---: | :---: | :---: |
-| 01 | | | | | |
-| 02 | | | | | |
-| **TOTAL**| **VALOR TOTAL DO PEDIDO DE COMPRA (FATURAMENTO BRUTO):** | | | | **R$ ____________** |
+| Item | Centro de Custo (CC) | Código / Descrição Detalhada do Produto | Und | Qtd Contratada | Preço Unit. (R$) | Preço Total (R$) |
+| :---: | :---: | :--- | :---: | :---: | :---: | :---: |
+| 01 | `CC-___` | | | | | |
+| 02 | `CC-___` | | | | | | |
+| **TOTAL**| | **VALOR TOTAL DO PEDIDO DE COMPRA (FATURAMENTO BRUTO):** | | | | **R$ ____________** |
 
 ---
 
@@ -328,9 +334,10 @@ def gerar_template_pc():
 3. **Tipo de Frete:** `[X] CIF Canteiro de Obras (Incluso no Preço)`
 4. **Endereço Completo de Entrega:**  
    Terminal Multiuso TMULT (Porto do Açu), Estrada RJ-240, km 22, Canteiro Edifício Administrativo, São João da Barra / RJ.
-5. **Instruções Específicas de Faturamento:**  
-   A Nota Fiscal Eletrônica (NF-e) deve constar no campo Informações Complementares:  
-   *`"Material destinado à OBRA_TMULT - Contrato nº ___ - Pedido de Compra PC-___/2026"`*.
+5. **Instruções Obrigatórias de Faturamento (Nota Fiscal):**  
+   ⚠️ *A Nota Fiscal Eletrônica (NF-e) deve constar OBRIGATORIAMENTE no campo Dados Adicionais / Informações Complementares:*  
+   **`"Material destinado à OBRA_TMULT - Centro de Custo: [INSERIR CC AQUI] - Pedido de Compra PC-___/2026"`**.  
+   *Notas fiscais sem a indicação do Pedido de Compra e do Centro de Custo NÃO serão aceitas nem liberadas para pagamento pelo financeiro.*
 6. **Penalidades por Atraso:**  
    Multa moratória de 0,5% por dia útil de atraso injustificado sobre o valor total do pedido, dedutível na duplicata/faturamento.
 

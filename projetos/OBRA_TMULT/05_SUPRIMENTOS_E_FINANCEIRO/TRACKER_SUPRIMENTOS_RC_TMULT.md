@@ -25,12 +25,12 @@ Para construtoras enxutas, cada compra percorre obrigatoriamente 7 portas de con
 
 ## 📋 2. Matriz Viva de Rastreabilidade das Requisições de Compra (RCs) — Mês 1
 
-| Nº RC | Pacote de Compra | Data Emissão | Data Limite Canteiro | Estágio Atual no Funil | Responsável Atual | Próxima Ação / Ponto de Atenção | Semáforo Lead Time |
-| :---: | :--- | :---: | :---: | :---: | :---: | :--- | :---: |
-| **RC-001/2026** | Aço CA-50 e CA-60 Cortado e Dobrado (Fundações) | 12/09/2026 | **28/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar cotação formal para Gerdau, ArcelorMittal e Açofer | 🟢 NO PRAZO |
-| **RC-002/2026** | Concreto Usinado fck 30 MPa Bombeável e Lastro fck 15 MPa | 14/09/2026 | **01/10/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Solicitar proposta de fornecimento e bombeamento para Polimix e Supermix | 🟢 NO PRAZO |
-| **RC-003/2026** | Compensado Resinado 17mm, Madeiramento e Consumíveis de Fôrma | 12/09/2026 | **26/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar para Madenorte e Madeireira Real Açu (Atenção ao prazo de 14 dias) | 🟡 ATENÇÃO |
-| **RC-004/2026** | Locação de Módulos Containers NR-18 e Sanitários Químicos (6 Meses) | 10/09/2026 | **22/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar minuta de contrato para Rentcon e NHJ para entrega urgente no Mês 1 | 🟡 ATENÇÃO |
+| Nº RC | Pacote de Compra | Centro de Custo (CC) | Data Emissão | Data Limite Canteiro | Estágio Atual no Funil | Responsável Atual | Próxima Ação / Ponto de Atenção | Semáforo Lead Time |
+| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- | :---: |
+| **RC-001/2026** | Aço CA-50 e CA-60 Cortado e Dobrado (Fundações) | `CC-208 / CC-209 / CC-210` | 12/09/2026 | **28/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar cotação formal para Gerdau, ArcelorMittal e Açofer | 🟢 NO PRAZO |
+| **RC-002/2026** | Concreto Usinado fck 30 MPa Bombeável e Lastro fck 15 MPa | `CC-202 / CC-203 / CC-205 / CC-206` | 14/09/2026 | **01/10/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Solicitar proposta de fornecimento e bombeamento para Polimix e Supermix | 🟢 NO PRAZO |
+| **RC-003/2026** | Compensado Resinado 17mm, Madeiramento e Consumíveis de Fôrma | `CC-204 / CC-205 / CC-207` | 12/09/2026 | **26/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar para Madenorte e Madeireira Real Açu (Atenção ao prazo de 14 dias) | 🟡 ATENÇÃO |
+| **RC-004/2026** | Locação de Módulos Containers NR-18 e Sanitários Químicos (6 Meses) | `CC-103` | 10/09/2026 | **22/09/2026** | `1. PENDENTE_SUPRIMENTOS` | **Suprimentos (Comprador)** | Disparar minuta de contrato para Rentcon e NHJ para entrega urgente no Mês 1 | 🟡 ATENÇÃO |
 
 ---
 

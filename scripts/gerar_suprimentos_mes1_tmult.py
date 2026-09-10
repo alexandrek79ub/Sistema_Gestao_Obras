@@ -44,6 +44,7 @@ PACOTES = {
         "codigo": "RC-001/2026",
         "titulo": "Aço CA-50 e CA-60 Cortado e Dobrado para Fundações e Baldrames",
         "disciplina": "Infraestrutura (Fundações e Baldrames)",
+        "centro_custo": "CC-208 / CC-209 / CC-210",
         "eap_itens": ["1.1.10", "1.1.11", "1.1.12"],
         "data_emissao": "12/09/2026",
         "data_necessidade": "28/09/2026",  # Lead time 16 dias conforme POP 05
@@ -54,6 +55,7 @@ PACOTES = {
         "itens": [
             {
                 "subitem": "1.1",
+                "centro_custo": "CC-208",
                 "descricao": "Aço CA-50 Nervurado Ø8,0mm Cortado e Dobrado (Sapatas Isoladas S1 a S24 e SE1 a SE8)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-052",
                 "qtd_projeto": 256.0,
@@ -65,6 +67,7 @@ PACOTES = {
             },
             {
                 "subitem": "1.2",
+                "centro_custo": "CC-209",
                 "descricao": "Aço CA-50 Nervurado Ø6,3mm e Ø12,5mm Cortado e Dobrado (Arranques de Pilares P1 a P24)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-052",
                 "qtd_projeto": 145.7,
@@ -76,6 +79,7 @@ PACOTES = {
             },
             {
                 "subitem": "1.3",
+                "centro_custo": "CC-210",
                 "descricao": "Aço CA-50 (Ø10/12,5mm) e CA-60 (Ø5/6,3mm estribos) Cortado e Dobrado (Vigas Baldrames VB1 a VB19 - 140,44m)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-053/054",
                 "qtd_projeto": 1077.3,
@@ -87,6 +91,7 @@ PACOTES = {
             },
             {
                 "subitem": "1.4",
+                "centro_custo": "CC-210",
                 "descricao": "Arame Recozido Galvanizado BWG 18 para Armação",
                 "prancha": "Consumível Canteiro",
                 "qtd_projeto": 22.0,
@@ -98,6 +103,7 @@ PACOTES = {
             },
             {
                 "subitem": "1.5",
+                "centro_custo": "CC-208 / CC-210",
                 "descricao": "Espaçador Plástico Tipo Pastilha / Cadeira Cobrimento c=40mm",
                 "prancha": "Portão Qualidade NBR 6118",
                 "qtd_projeto": 1250.0,
@@ -155,6 +161,7 @@ PACOTES = {
         "codigo": "RC-002/2026",
         "titulo": "Concreto Usinado fck 30 MPa Bombeável e Concreto Magro fck 15 MPa",
         "disciplina": "Infraestrutura (Fundações e Baldrames)",
+        "centro_custo": "CC-202 / CC-203 / CC-205 / CC-206",
         "eap_itens": ["1.1.3", "1.1.4", "1.1.6", "1.1.8"],
         "data_emissao": "14/09/2026",
         "data_necessidade": "01/10/2026",  # Lead time 17 dias (programação com central)
@@ -165,6 +172,7 @@ PACOTES = {
         "itens": [
             {
                 "subitem": "2.1",
+                "centro_custo": "CC-202",
                 "descricao": "Concreto Magro fck 15 MPa (Lastro de Regularização sob Sapatas e Baldrames e=5cm)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-051/052",
                 "qtd_projeto": 3.04,
@@ -176,6 +184,7 @@ PACOTES = {
             },
             {
                 "subitem": "2.2",
+                "centro_custo": "CC-203",
                 "descricao": "Concreto Usinado fck 30 MPa Bombeável (32 Sapatas Isoladas S1-S24 e SE1-SE8)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-052",
                 "qtd_projeto": 8.55,
@@ -187,6 +196,7 @@ PACOTES = {
             },
             {
                 "subitem": "2.3",
+                "centro_custo": "CC-205",
                 "descricao": "Concreto Usinado fck 30 MPa Bombeável (Arranques de Pilares P1 a P24)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-052",
                 "qtd_projeto": 1.86,
@@ -198,6 +208,7 @@ PACOTES = {
             },
             {
                 "subitem": "2.4",
+                "centro_custo": "CC-206",
                 "descricao": "Concreto Usinado fck 30 MPa Bombeável (Vigas Baldrames VB1 a VB19 - 140,44m)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-053/054",
                 "qtd_projeto": 14.04,
@@ -209,6 +220,7 @@ PACOTES = {
             },
             {
                 "subitem": "2.5",
+                "centro_custo": "CC-203 / CC-206",
                 "descricao": "Taxa de Bombeamento de Concreto (Auto-Bomba Lança / Tubulação)",
                 "prancha": "Serviço Mecanizado",
                 "qtd_projeto": 2.0,
@@ -220,6 +232,7 @@ PACOTES = {
             },
             {
                 "subitem": "2.6",
+                "centro_custo": "CC-203 / CC-206",
                 "descricao": "Controle Tecnológico com Ensaio de Compressão Axial (CPs 7, 14 e 28 dias)",
                 "prancha": "POP 22 / NBR 12655",
                 "qtd_projeto": 1.0,
@@ -277,6 +290,7 @@ PACOTES = {
         "codigo": "RC-003/2026",
         "titulo": "Compensado Resinado 17mm, Madeiramento e Consumíveis de Fôrma",
         "disciplina": "Infraestrutura (Fôrmas de Fundações e Baldrames)",
+        "centro_custo": "CC-204 / CC-205 / CC-207",
         "eap_itens": ["1.1.5", "1.1.7", "1.1.9"],
         "data_emissao": "12/09/2026",
         "data_necessidade": "26/09/2026",  # Lead time 14 dias
@@ -287,6 +301,7 @@ PACOTES = {
         "itens": [
             {
                 "subitem": "3.1",
+                "centro_custo": "CC-204 / CC-207",
                 "descricao": "Chapa de Compensado Resinado Fenólico 17mm (2,44 x 1,22m = 2,977 m² / 5 a 6 usos)",
                 "prancha": "AÇU-3.DES-2.3100-11-EGS-051 a 054",
                 "qtd_projeto": 81.0,
@@ -298,6 +313,7 @@ PACOTES = {
             },
             {
                 "subitem": "3.2",
+                "centro_custo": "CC-207",
                 "descricao": "Tábua de Madeira de 3ª 2,5 x 30 cm (peças de 3,00m de comprimento)",
                 "prancha": "Travamentos e Gravatas",
                 "qtd_projeto": 100.0,
@@ -309,6 +325,7 @@ PACOTES = {
             },
             {
                 "subitem": "3.3",
+                "centro_custo": "CC-207",
                 "descricao": "Pontaletes / Sarrafos de Eucalipto 7,5 x 7,5 cm (peças de 3,00m)",
                 "prancha": "Escoramento Lateral",
                 "qtd_projeto": 50.0,
@@ -320,6 +337,7 @@ PACOTES = {
             },
             {
                 "subitem": "3.4",
+                "centro_custo": "CC-204 / CC-207",
                 "descricao": "Desmoldante Biodegradável para Fôrmas de Madeira (Galões de 18 Litros)",
                 "prancha": "POP 19 / Consumível",
                 "qtd_projeto": 75.0,
@@ -331,6 +349,7 @@ PACOTES = {
             },
             {
                 "subitem": "3.5",
+                "centro_custo": "CC-204 / CC-207",
                 "descricao": "Prego de Aço Polido com Cabeça Dupla/Simples 17 x 27 mm",
                 "prancha": "Consumível Canteiro",
                 "qtd_projeto": 100.0,
@@ -342,6 +361,7 @@ PACOTES = {
             },
             {
                 "subitem": "3.6",
+                "centro_custo": "CC-207",
                 "descricao": "Prego de Aço Polido com Cabeça 18 x 30 mm",
                 "prancha": "Consumível Canteiro",
                 "qtd_projeto": 65.0,
@@ -399,6 +419,7 @@ PACOTES = {
         "codigo": "RC-004/2026",
         "titulo": "Locação de Módulos Habitáveis Containers NR-18 e Sanitários Químicos (6 Meses)",
         "disciplina": "Administração Local e Canteiro de Obras",
+        "centro_custo": "CC-103",
         "eap_itens": ["1.0.3"],
         "data_emissao": "10/09/2026",
         "data_necessidade": "22/09/2026",  # Lead time 12 dias (instalação antes da entrada de operários)
@@ -409,6 +430,7 @@ PACOTES = {
         "itens": [
             {
                 "subitem": "4.1",
+                "centro_custo": "CC-103",
                 "descricao": "Locação de Módulo Escritório Técnico de Engenharia (6,00 x 2,40m) c/ Ar Split 12k BTU",
                 "prancha": "Layout Canteiro NR-18",
                 "qtd_projeto": 6.0,
@@ -420,6 +442,7 @@ PACOTES = {
             },
             {
                 "subitem": "4.2",
+                "centro_custo": "CC-103",
                 "descricao": "Locação de Módulo Refeitório NR-18 (6,00 x 2,40m) para 16 Operários",
                 "prancha": "Layout Canteiro NR-18",
                 "qtd_projeto": 6.0,
@@ -431,6 +454,7 @@ PACOTES = {
             },
             {
                 "subitem": "4.3",
+                "centro_custo": "CC-103",
                 "descricao": "Locação de Módulo Vestiário / Sanitário NR-18 (6,00 x 2,40m) com Chuveiros Aquecidos",
                 "prancha": "Layout Canteiro NR-18",
                 "qtd_projeto": 6.0,
@@ -442,6 +466,7 @@ PACOTES = {
             },
             {
                 "subitem": "4.4",
+                "centro_custo": "CC-103",
                 "descricao": "Locação de Módulo Almoxarifado / Ferramentaria Blindada (6,00 x 2,40m)",
                 "prancha": "Layout Canteiro NR-18",
                 "qtd_projeto": 6.0,
@@ -453,6 +478,7 @@ PACOTES = {
             },
             {
                 "subitem": "4.5",
+                "centro_custo": "CC-103",
                 "descricao": "Locação de 2 Cabines Sanitárias Químicas Portáteis com Higienização Semanal Programada",
                 "prancha": "Frente de Serviço Externa",
                 "qtd_projeto": 6.0,
@@ -464,6 +490,7 @@ PACOTES = {
             },
             {
                 "subitem": "4.6",
+                "centro_custo": "CC-103",
                 "descricao": "Frete Logístico de Mobilização (Mês 1) e Desmobilização (Mês 7) em Caminhão Munck Pesado",
                 "prancha": "Logística Operacional",
                 "qtd_projeto": 1.0,
@@ -969,6 +996,7 @@ def gerar_relatorio_rcs():
         linhas.append(f"| **Número da RC** | `{pac['codigo']}` |")
         linhas.append(f"| **Disciplina de Engenharia** | {pac['disciplina']} |")
         linhas.append(f"| **Itens da EAP Vinculados** | `{', '.join(pac['eap_itens'])}` |")
+        linhas.append(f"| **Centro de Custo Principal (CC)** | **`{pac.get('centro_custo', 'CC-200')}`** |")
         linhas.append(f"| **Data da Emissão** | {pac['data_emissao']} |")
         linhas.append(f"| **Data Necessária no Canteiro** | **{pac['data_necessidade']}** |")
         linhas.append(f"| **Local Exato de Aplicação (CIA)** | {pac['local_entrega']} |")
@@ -977,19 +1005,20 @@ def gerar_relatorio_rcs():
         linhas.append("")
         linhas.append("### Itens Técnicos Especificados (Unidades de Projeto vs UCC)")
         linhas.append("")
-        linhas.append("| Item | Descrição Técnica Completa e Normativa | Qtd Proj | Und Proj | Perda | Qtd Compra | Und UCC | Prancha Executiva / Referência |")
-        linhas.append("| :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |")
+        linhas.append("| Item | Centro de Custo (CC) | Descrição Técnica Completa e Normativa | Qtd Proj | Und Proj | Perda | Qtd Compra | Und UCC | Prancha Executiva / Referência |")
+        linhas.append("| :---: | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :--- |")
         
         for it in pac["itens"]:
+            cc_it = it.get("centro_custo", pac.get("centro_custo", "CC-200"))
             linhas.append(
-                f"| {it['subitem']} | {it['descricao']} | {it['qtd_projeto']:.2f} | {it['und_projeto']} | "
+                f"| {it['subitem']} | `{cc_it}` | {it['descricao']} | {it['qtd_projeto']:.2f} | {it['und_projeto']} | "
                 f"{it['perda_pct']:.1f}% | **{it['qtd_compra']:.2f}** | `{it['und_compra']}` | {it['prancha']} |"
             )
             
         linhas.append("")
         linhas.append("#### Requisitos Técnicos de Recebimento em Canteiro (POP 06):")
         for it in pac["itens"]:
-            linhas.append(f"- **Item {it['subitem']}:** {it['especificacao']}.")
+            linhas.append(f"- **Item {it['subitem']} (CC {it.get('centro_custo', pac.get('centro_custo'))}):** {it['especificacao']}.")
             
         linhas.append("")
         linhas.append("---")
