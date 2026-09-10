@@ -56,6 +56,55 @@ Cobre o quantitativo de **todos os elementos de fundação** de uma edificação
 > 4. **Vinculado aos Serviços de Impermeabilização:**
 >    - **Acessórios de Pintura Asfáltica:** 1 rolo de lã de carneiro 23cm a cada $80\text{ m}^2$ impermeabilizados + trinchas de 2" para recorte de cantos e nós.
 
+### 📋 1.2 Tabela Oficial de Serviços para EAP e Cronograma (Nível 1.3 — Fundações)
+
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**. As miudezas e insumos de apoio (pregos, arames, desmoldantes, espaçadores, fitas) NÃO recebem código EAP e pertencem à lista UCC/BOM derivada descrita na Seção 1.1 e Seção 1.4.
+
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Insumos BOM Derivados |
+|:---:|:---|:---:|:---:|:---|
+| **1.3.1** | Locação da Obra e Gabarito Topográfico | un | 1.1.2 Mobilização | Estacas de madeira, arame galvanizado, cal virgem (traçado), nível laser, trena |
+| **1.3.2** | Perfuração / Cravação de Estacas Pré-moldadas ou Raiz | un / m | 1.3.1 | Estacas pré-moldadas (un), graute estrutural, ponteiras de aço, nata de cimento, camisas metálicas |
+| **1.3.3** | Arrasamento e Descabeçamento de Estacas | un | 1.3.2 FF+5d cura | Ponteiros, marteletes, argamassa de reconstituição de topo |
+| **1.3.4** | Escavação Mecanizada / Manual de Valas e Cavas | m³ | 1.3.1 | — |
+| **1.3.5** | Apiloamento de Fundo da Cava | m² | 1.3.4 | — |
+| **1.3.6** | Lastro de Concreto Magro (C10/C15) ou Brita Drenante | m³ | 1.3.5 | Concreto magro C10 (m³), brita nº 1, lona plástica preta 200µ para separação |
+| **1.3.7** | Fôrmas de Sapatas, Blocos e Baldrames | m² | 1.3.6 | Chapas de compensado 17mm, sarrafos de gravata pinus (m), desmoldante (L), pregos 17×27 (kg), escoras |
+| **1.3.8** | Armação de Aço CA-50 / CA-60 | kg | 1.3.7 | Aço CA-50 (barras/kg), arame recozido BWG 18 (kg), espaçadores pastilha de solo 40/50mm (un) |
+| **1.3.9** | Concretagem Estrutural C30 | m³ | 1.3.8 | Concreto usinado fck ≥ 30 MPa (m³), vibrador de imersão, controle tecnológico (slump/corpos de prova) |
+| **1.3.10** | Desforma, Cura Úmida e Retirada de Escoramento | m² | 1.3.9 FF+3d | Lona plástica 200µ (bobinas), água de cura contínua, desmoldante de reaproveitamento |
+| **1.3.11** | Impermeabilização com Emulsão/Tinta Asfáltica | m² | 1.3.10 | Emulsão/tinta asfáltica (baldes 18L), rolos de lã de carneiro 23cm, trinchas 2" |
+| **1.3.12** | Drenagem Perimetral de Fundações | m | 1.3.10 | Tubo dreno corrugado perfurado DN 100mm (m), manta geotêxtil Bidim (m²), brita drenante nº 1 (m³) |
+| **1.3.13** | Reaterro Compactado com Controle de Camadas | m³ | 1.3.11 | Solo selecionado para reaterro (m³), soquete compactador mecânico |
+| **1.3.14** | Bota-fora de Terra Excedente | m³ | 1.3.13 | Transporte e bota-fora de terra empolada (m³) |
+
+### ⛓️ 1.3 Sequência Lógica Construtiva e Predecessoras Críticas
+
+1. **Cadeia Executiva Contínua:**
+   $$\text{Locação (1.3.1)} \rightarrow \text{Escavação (1.3.4)} \rightarrow \text{Apiloamento (1.3.5)} \rightarrow \text{Lastro Magro (1.3.6)} \rightarrow \text{Fôrmas (1.3.7)} \rightarrow \text{Armação (1.3.8)} \rightarrow \text{Concretagem (1.3.9)}$$
+   $$\rightarrow \text{Cura 7 dias NBR 14931 (1.3.10)} \rightarrow \text{Desforma} \rightarrow \text{Impermeabilização (1.3.11)} \rightarrow \text{Drenagem (1.3.12)} \rightarrow \text{Reaterro (1.3.13)} \rightarrow \text{Bota-fora (1.3.14)}$$
+
+2. **Predecessoras Críticas e Travas de Qualidade:**
+   - 🛑 **A impermeabilização (1.3.11) é PREDECESSORA BLOQUEANTE do reaterro (1.3.13):** Jamais autorizar o reaterro de valas ou cavas sobre fundações sem a conclusão e liberação da pintura/manta asfáltica pela fiscalização de obra.
+   - 🛑 **Regra NBR 14931 (Cura e Desforma):** Concretos de fundação em contato com solo agressivo (Classes de Agressividade Ambiental II a IV) exigem período mínimo de **7 dias de cura úmida contínua** (ou aplicação de membrana de cura líquida) antes da liberação de cargas ou retirada de contenções laterais críticas.
+   - 🛑 **Descabeçamento de Estacas (1.3.3):** Exige no mínimo 5 dias de cura após a moldagem da estaca para evitar fissuração do fuste pelo martelete ou ponteiro.
+
+### 🛡️ 1.4 Checklist Anti-Omissão de SKUs de Infraestrutura (12 SKUs Obrigatórios na UCC/BOM)
+
+> Antes de emitir o relatório de quantitativo e a lista de compras da infraestrutura, o PMO Virtual DEVE auditar e certificar a presença de todos os seguintes 12 insumos consumíveis na BOM:
+
+- [ ] **Arame Recozido BWG 18:** $1,5\%$ a $2,0\%$ do peso total de aço estrutural ($kg$).
+- [ ] **Espaçadores de Solo Tipo Pastilha 40mm ou 50mm:** 4 a 6 un/m² de sapata/bloco; 2 a 3 un/m linear de viga baldrame.
+- [ ] **Desmoldante para Fôrmas de Madeira:** 1 L a cada 25 a 30 m² de área de contato de fôrma (bombonas de 18L).
+- [ ] **Pregos com Cabeça 17×27 ou 18×30:** 0,04 a 0,05 kg/m² de fôrma de compensado (caixas de 10 kg).
+- [ ] **Sarrafos de Travamento e Gravatas Pinus 2,5×7,0cm:** 1,0 a 1,2 m lineares por m² de fôrma.
+- [ ] **Lona Plástica Preta 200µ:** Forração de fundo de cava/lastro + cobertura de proteção para cura úmida (bobinas de 200 m²).
+- [ ] **Emulsão Asfáltica 45% ou Tinta Asfáltica:** 1 L a cada 1,5 m² de superfície de concreto enterrada (latas de 18L).
+- [ ] **Rolos de Lã de Carneiro 23cm:** 1 rolo a cada 80 m² de impermeabilização executada.
+- [ ] **Trinchas de 2":** Para recortes de nós, arestas e cantos de vigas baldrames e pilaretes.
+- [ ] **Tubo Dreno Corrugado Perfurado DN 100mm (Dreno-flex):** 1 metro por metro linear de baldrame periférico projetado.
+- [ ] **Manta Geotêxtil Não-Tecida Bidim OP-30:** 1,20 m de largura por metro linear de dreno (envelopamento completo com transpasse de 20cm).
+- [ ] **Brita Drenante Nº 1:** Volume de envelopamento da vala drenante ($m³$).
+
 ---
 
 ## 📐 2. Elementos de Fundação e Geometrias Especiais

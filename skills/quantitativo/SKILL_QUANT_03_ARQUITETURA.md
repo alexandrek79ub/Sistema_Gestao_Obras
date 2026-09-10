@@ -98,6 +98,8 @@ Este módulo cobre o quantitativo de **toda a arquitetura e acabamentos** de uma
 | **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | Área | m² | Manta asfáltica 4mm (rl), Primer asfáltico (balde), GLP P-13 |
 | **2.2.7** | Revestimento de Fachada — Chapisco + Textura / Grafiato | Área | m² | Cimento, Selador ext., Textura/Grafiato (sc), Tinta elastomérica |
 | **2.2.8** | Pintura de Platibanda (Face Interna — Acrílica Impermeável) | Área | m² | Tinta impermeável (lt), Selador acrílico (lt) |
+| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | Comprimento / Unidades | m / un | Blocos de concreto, Baldrames, Chapins, Portões e Motores |
+| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | Área / Comprimento | m² / m | Paver intertravado, Sub-base BGS, Colchão de areia, Meio-fio |
 
 ### 2.3 Regras da Tabela de Serviços
 

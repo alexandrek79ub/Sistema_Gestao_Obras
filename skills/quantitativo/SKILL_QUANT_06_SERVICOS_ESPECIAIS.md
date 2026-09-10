@@ -17,6 +17,74 @@
 - `Bacias Sanitárias Químicas / Conectadas (unid/mês):` Conforme dimensionamento da NR-18 (1 bacia para cada 20 trabalhadores).
 - `Ligações Provisórias de Água, Energia e Esgoto (unid):` Padrão de entrada provisório de energia elétrico (trifásico/monofásico) e padrão de água.
 
+### 🔩 1.3 Matriz de Suprimentos, Consumíveis e Proteções de Canteiro (UCC / BOM)
+
+> 🛑 **REGRA DE OURO DA GOVERNANÇA: EAP É SERVIÇO, UCC É COMPRA!**  
+> Os itens de apoio, sinalização, EPIs e proteções de acabamento **NÃO recebem código EAP**. São derivados parametricamente da escala da obra e lançados na Lista de Compras (BOM / UCC):
+
+1. **Fechamento e Estruturação de Tapume:**
+   - **Pontaletes de Madeira Pinus $7,5 \times 7,5\text{cm}$ (mourões):** 1 pontalete a cada 1,50m de perímetro de tapume.
+   - **Chapas de Compensado Resinado 10mm:** $\lceil L_{\text{tapume}} / 2,20\text{m} \rceil$ chapas (para tapume com $H = 2,20\text{m}$).
+   - **Arame Galvanizado BWG 14 / Pregos 18×30:** 0,05 kg por metro linear de tapume.
+2. **Proteção Coletiva e Sinalização NR-18:**
+   - **Tela de Segurança de Fachada Polipropileno Verde:** Área total de fachadas expostas $+ 10\%$ de sobreposição ($m²$).
+   - **Guarda-Corpo Provisório Tubular Metálico ou Madeira com Rodapé:** Perímetro de bordas de laje, caixas de elevador e escadas ($m$).
+   - **Extintores Provisórios de Canteiro (PQS ABC 2kg ou 4kg):** Mínimo 1 unidade por pavimento de trabalho e áreas de risco (marcenaria/solda).
+   - **Cones de Sinalização Laranja Refletivos (75cm) + Fita Zebrada:** Isolamento de áreas de descarga e valas abertas.
+   - **Placas de Sinalização de Segurança NR-18:** Kit obrigatório contendo "Uso Obrigatório de EPI", "Proibida Entrada de Pessoas Não Autorizadas", "Cuidado Carga Suspensa".
+3. **Proteção de Acabamentos e Superfícies Nobres (Fase Final):**
+   - **Papelão Ondulado 3mm para Piso:** Forração integral de porcelanatos e pisos acabados ($A_{\text{papelão}} = A_{\text{pisos acabados}} \times 1,08$).
+   - **Plástico Bolha de Alta Densidade:** Envelopamento de bancadas, tampos de granito/mármore e louças instaladas.
+   - **Lona Plástica Transparente e Fita de Empacotamento:** Vedação de portas, janelas e caixilhos contra respingos de tinta e poeira.
+4. **Gestão de Resíduos (PGRCC / Conama 307):**
+   - **Caçambas Estacionárias de Entulho (5m³):** Locação por rotatividade conforme volume estimado de bota-fora e sobras.
+   - **Lixeiras Seletivas e Tambores para Resíduos Classe A, B, C e D (tintas/solventes).**
+
+### 🛡️ 1.4 Checklist Anti-Omissão de Canteiro e Fechamento (12 SKUs Obrigatórios na UCC/BOM)
+
+> Antes de emitir o relatório de suprimentos gerais de canteiro, o PMO Virtual DEVE auditar e certificar a presença dos seguintes 12 SKUs na BOM:
+
+- [ ] **Tapume de Compensado 10mm com Estrutura de Pontaletes:** Metragem linear completa do perímetro da obra ($m$).
+- [ ] **Placa de Obra em Chapa Galvanizada com Impressão Vinílica:** Dimensão mínima normatizada ($unid$).
+- [ ] **Tela de Segurança de Fachada Polipropileno Verde:** Área total de projeção vertical de fachadas ($m²$).
+- [ ] **Guarda-Corpo Provisório com Rodapé (NR-18):** Metragem linear de vãos e aberturas em lajes ($m$).
+- [ ] **Extintores Provisórios de Canteiro 2kg/4kg PQS ABC:** 1 por pavimento de serviço ativo ($unid$).
+- [ ] **Cones de Sinalização Laranja Refletivos + Fita Zebrada:** Kit de sinalização viária e perimetral.
+- [ ] **Papelão Ondulado 3mm para Proteção de Pisos:** Área equivalente aos pisos cerâmicos/madeira $+ 8\%$ ($m²$).
+- [ ] **Plástico Bolha para Proteção de Bancadas e Louças:** Quantidade suficiente para tampos e cubas instaladas ($m²$).
+- [ ] **Lonas Plásticas e Fitas de Empacotamento para Caixilhos:** Proteção de todas as esquadrias instaladas ($cj$).
+- [ ] **Conjunto de Placas de Sinalização de Segurança NR-18:** Placas regulamentares em PVC refletivo ($cj$).
+- [ ] **Caçambas de Entulho para Coleta Seletiva (5m³):** Previsão mensal conforme cronograma de obra.
+- [ ] **Lixeiras / Tambores Identificados para Resíduos Perigosos (tintas e solventes conforme PGRCC).**
+
+### 📋 1.5 Tabela Oficial de Serviços para EAP e Cronograma (Níveis 1.1, 1.2, 4.1, 4.2 e 5.1)
+
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela estrutura as fases de abertura de canteiro, contenções, sistemas especiais e o encerramento da obra. Miudezas e insumos de apoio constam da UCC (§1.3 e §1.4).
+
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Observação Executiva |
+|:---:|:---|:---:|:---:|:---|
+| **1.1.1** | Projetos, Licenciamento e Legalização (Alvará, CREA, ART/RRT) | un | Início do empreendimento | Marco zero legal e contratual |
+| **1.1.2** | Mobilização de Canteiro e Locação do Terreno | un | 1.1.1 | Predecessora de 1.3.1 (Locação de Fundações) |
+| **1.1.3** | Execução de Tapumes, Portão de Acesso e Placa de Obra | m / un | 1.1.2 | Isolamento perimetral de segurança |
+| **1.1.4** | Instalação de Containers (Escritório, Vestiário, Almoxarifado) | un / mês | 1.1.3 | Áreas de vivência e armazenagem NR-18 |
+| **1.1.5** | Ligações Provisórias de Água, Energia e Esgoto | un | 1.1.2 | Abastecimento inicial de obra |
+| **1.2.1** | Desmate, Destocamento e Raspagem de Camada Vegetal | m² | 1.1.3 | Limpeza da camada orgânica superficial |
+| **1.2.2** | Corte Mecanizado, Aterro e Compactação (Terraplenagem) | m³ | 1.2.1 | Conformação de platôs e cotas de projeto |
+| **1.2.3** | Muros de Arrimo, Solo Grampeado e Estruturas de Contenção | m² | 1.2.2 | Estabilização geotécnica definitiva de taludes |
+| **4.1.1** | Infraestrutura de Ar-Condicionado (Linhas Frigorígenas e Suportes) | m / un | 2.1.1 — Alvenaria concluída | Passagem de tubulações frigoríficas e drenos |
+| **4.1.2** | Equipamentos de Climatização (Splits, VRF, Cassetes) | un | 4.1.1 + Pintura pronta | Instalação de evaporadoras e condensadoras |
+| **4.1.3** | Instalação de Elevadores (Cabine, Portas, Cabos e Quadro) | un | 1.4.12 — Desforma total do poço | Após torre e poço estrutural liberados |
+| **4.1.4** | Conjuntos Motobombas (Recalque, Incêndio, Submersa) | un | 3.2.9 — Barrilete pronto | Instalação na casa de máquinas/reservatório |
+| **4.1.5** | SDAI — Alarme de Incêndio, Detectores e Sirenes | un | 3.1.12 — Elétrica de forro | Instalação após forros e pintura de teto |
+| **4.1.6** | Extintores Definitivos, Mangueiras e Sinalização de Emergência | un | 4.1.5 | Atendimento integral ao PPCI / AVCB Bombeiros |
+| **4.2.1** | Piscinas, Espelhos d'Água e Casa de Máquinas de Lazer | un | 1.3.11 — Fundações e impermeabilização | Lazer externo e áreas comuns |
+| **4.2.2** | Paisagismo, Jardins, Gramados e Urbanização Externa | m² | 5.1.1 — Limpeza de canteiro | Recomposição vegetal final e calçadas |
+| **5.1.1** | Limpeza Pesada de Canteiro e Remoção de Entulho | m² | Toda obra civil concluída | Remoção de restos e desobstrução geral |
+| **5.1.2** | Limpeza Fina Pós-Obra (Vidros, Porcelanatos, Caixilhos) | m² | 5.1.1 | Padrão de entrega para vistoria do cliente |
+| **5.1.3** | Testes Integrados e Comissionamento de Todas as Instalações | un | 3.1.14 + 3.2.13 | Teste em carga e validação funcional |
+| **5.1.4** | Desmobilização de Canteiro, Retirada de Tapumes e Containers | un | 5.1.1 | Liberação total do terreno |
+| **5.1.5** | Elaboração de As-Built, DataBook e Habite-se / AVCB | un | 5.1.3 + 5.1.4 | Conclusão e entrega documental da obra |
+
 ---
 
 ## 2. Terraplenagem, Obras de Terra e Contenções (Arrimo)

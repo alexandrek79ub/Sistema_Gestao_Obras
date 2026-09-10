@@ -110,10 +110,75 @@ Para eliminar omissões e esquecimentos no orçamento de compras, as miudezas de
    $$N_{\text{terminais ilhós}} = (2 \times N_{\text{polos de disjuntores}}) + (3 \times N_{\text{módulos de tomada}})$$
 6. **Fita Isolante Antichama 19mm x 20m (rolos):**  
    $$N_{\text{rolos fita}} = \lceil (N_{\text{pontos elétricos total}}) / 50 \rceil \text{ rolos (mínimo 2 rolos por obra)}$$
+7. **Parafusos Chipboard e Buchas de Nylon S6 / S8 (unid):**  
+   Fixação de todas as caixas de embutir (4×2, 4×4, octogonais), quadros de distribuição e suportes de luminárias:
+   $$N_{\text{buchas}} = [ 2 \times (N_{\text{caixas 4x2}} + N_{\text{caixas 4x4}} + N_{\text{caixas octogonais}} + N_{\text{luminárias}}) + 4 \times N_{\text{quadros QDC}} ] \times 1,05$$
+8. **Talco Industrial / Vaselina Líquida Neutra para Puxamento de Cabos:**  
+   Facilitador de deslizamento para alimentação de circuitos pesados e longos sem danificar a isolação:
+   $$N_{\text{frascos 500mL}} = \lceil L_{\text{cabos } \ge 6\text{mm}^2} / 200\text{m} \rceil$$
+9. **Guia de Tração (Passa-fio de Nylon/Aço Maleável com Ponteira Metálica):**  
+   1 unidade por equipe de eletricistas (insumo/ferramental de canteiro, registrado na logística de obra).
+10. **Fita de Autofusão 19mm × 10m (Isolação de Alta Confiabilidade / Áreas Úmidas):**  
+    Para impermeabilização e recomposição de isolação em caixas de passagem enterradas, poços e áreas molhadas:
+    $$N_{\text{rolos autofusão}} = \max(2; \, \lceil N_{\text{emendas subterrâneas}} / 5 \rceil)$$
+11. **Prensa-cabos Termoplásticos / Latão Rosca PG/Métrico IP68 (unid):**  
+    Vedação estanque em cada entrada e saída de eletrodutos em caixas externas e quadros de força:
+    $$N_{\text{prensa-cabos}} = N_{\text{chegadas de eletroduto nos quadros e caixas externas}}$$
+12. **Tirantes Roscados 1/4" × 1m c/ Porcas, Arruelas e Chumbadores (unid):**  
+    Sustentação suspensa de perfilados perfurados e eletrocalhas metálicas sob lajes:
+    $$N_{\text{tirantes}} = \lceil L_{\text{eletrocalha / perfilado}} / 1,20\text{m} \rceil \times 1,05$$
+13. **Anilhas Plásticas Marcadoras Numeradas / Marcadores de Circuitos:**  
+    Identificação padronizada de condutores nos barramentos e disjuntores: 1 jogo completo por QDC instalado.
+14. **Fita Plástica de Advertência Enterrada "PERIGO: REDE ELÉTRICA":**  
+    Sinalização preventiva instalada 30cm acima do banco de dutos ou cabos diretamente enterrados:
+    $$L_{\text{fita}} = L_{\text{valas de dutos subterrâneos}} \times 1,10\text{ m}$$
+
+### 🛡️ 2.5 Checklist Anti-Omissão de SKUs de Instalações Elétricas (15 SKUs Obrigatórios na UCC/BOM)
+
+> Antes de fechar o quantitativo e a requisição de compras de instalações elétricas, o PMO Virtual DEVE auditar e confirmar a presença de todos os 15 SKUs na BOM:
+
+- [ ] **Luvas de Emenda para Eletroduto Rígido PVC:** 1 luva por vara de 3m ($\lceil L_{\text{eletroduto}} / 3\text{m} \rceil \times 1,05$).
+- [ ] **Adaptadores Box Reto PVC c/ Rosca e Porca:** 2 por caixa 4×2/4×4/octogonal + chegadas de circuitos no QDC.
+- [ ] **Abraçadeiras Tipo D c/ Cunha e Buchas S6:** 1 a cada 1,50m de eletroduto aparente ou em entreforro.
+- [ ] **Conectores Rápidos por Alavanca (Wago ou similar):** 3 por caixa de passagem/derivação + 2 por ponto de iluminação.
+- [ ] **Terminais Pré-Isolados Tipo Ilhós:** $(2 \times \text{polos de disjuntores}) + (3 \times \text{módulos de tomada})$.
+- [ ] **Fita Isolante Antichama 19mm × 20m:** 1 rolo a cada 50 pontos elétricos (mínimo 2 rolos por obra).
+- [ ] **Parafusos Chipboard + Buchas S6/S8:** 2 por caixa embutida / suporte de luminária.
+- [ ] **Talco / Vaselina Líquida para Puxamento:** 1 frasco de 500mL a cada 200m de cabos de bitola $\ge 6\text{ mm}^2$.
+- [ ] **Fita de Autofusão 19mm × 10m:** Mínimo 2 rolos por obra; 1 rolo extra a cada 5 emendas em caixas subterrâneas.
+- [ ] **Prensa-cabos Termoplásticos IP68:** 1 por chegada de eletroduto nos quadros QDC/QG e caixas externas.
+- [ ] **Tirantes Roscados 1/4" + Porcas + Arruelas:** 1 conjunto a cada 1,20m de eletrocalha ou perfilado suspenso.
+- [ ] **Anilhas Numeradas / Marcadores de Identificação:** 1 estojo/jogo completo por QDC instalado.
+- [ ] **Espaçadores Plásticos Pente para Banco de Dutos:** 1 pente a cada 1,50m de vala por camada de tubos.
+- [ ] **Fita Plástica de Advertência Enterrada "REDE ELÉTRICA":** Metragem linear igual ao comprimento total de valas subterrâneas $+ 10\%$.
+- [ ] **Cartuchos de Solda Exotérmica e Moldes de Grafite (SPDA):** 1 cartucho por conexão de cabo de cobre na malha/hastes.
 
 ---
 
-## 3. Modelo de Memória de Cálculo Analítica por Circuito (Elétrica)
+## 📋 3. Tabela Oficial de Serviços para EAP e Cronograma de Elétrica (Nível 3.1 — 5 Fases Civis)
+
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**. Os consumíveis (luvas, adaptadores box, conectores rápidos, fitas, terminais, talco) NÃO recebem código EAP e pertencem à lista UCC/BOM derivada (§2.4 e §2.5).
+
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Civil | Observação Executiva |
+|:---:|:---|:---:|:---:|:---|
+| **3.1.1** | Eletrodutos em Lajes (embutidos antes da concretagem) | m | 1.4.7 — Fôrma Lateral de Laje | Imediatamente antes de 1.4.8 Concretagem |
+| **3.1.2** | Rasgos em Paredes de Alvenaria para Eletrodutos | m | 2.1.1 — Alvenaria concluída | Após cura da argamassa de assentamento |
+| **3.1.3** | Instalação de Caixas 4×2, 4×4 e Octogonais em Parede | un | 3.1.2 | Antes do chapisco/emboço das paredes |
+| **3.1.4** | Passagem de Eletrodutos em Paredes e Chumbamento | m | 3.1.3 | Antes do chapisco — predecessora de 2.1.2 |
+| **3.1.5** | Bancos de Dutos e Envelopamento Subterrâneo | m | 1.2 — Terraplenagem | Executar preferencialmente junto com a fundação |
+| **3.1.6** | Caixas de Passagem Elétrica Enterradas (Concreto/Alvenaria) | un | 3.1.5 | Derivar escavação, lastro, alvenaria e tampa |
+| **3.1.7** | Prumadas em Shafts e Instalação de Eletrocalhas | m / m² | 1.4.12 — Desforma total de lajes | Após lajes liberadas para carga |
+| **3.1.8** | Enfiação de Cabos Alimentadores ($\ge 16\text{ mm}^2$) | m | 3.1.5 + 3.1.7 | Lances contínuos sem emendas (NBR 5410) |
+| **3.1.9** | Enfiação de Circuitos Terminais (Fase, Neutro, Terra, Retorno) | m | 2.1.8 — Pintura (1ª demão) | Evita danos e manchas na fiação |
+| **3.1.10** | Montagem e Conexão de Quadros (QDC, QG, QGVT) | un | 3.1.8 | Após alimentadores enfiados |
+| **3.1.11** | Instalação de Suportes, Módulos de Tomadas e Interruptores | un | 3.1.9 + 2.1.9 — Esquadrias | Após pintura final e portas montadas |
+| **3.1.12** | Instalação de Luminárias, Painéis LED e Refletores | un | 3.1.11 | Após conclusão dos forros e pintura de teto |
+| **3.1.13** | Malha de Aterramento, SPDA e Hastes Copperweld | m / un | 1.3.4 — Escavação | Antes do reaterro de fundação / valas |
+| **3.1.14** | Testes de Isolamento, Continuidade e Energização Final | un | 3.1.10 + 3.1.12 + 3.1.13 | Marco de comissionamento elétrico |
+
+---
+
+## 4. Modelo de Memória de Cálculo Analítica por Circuito (Elétrica)
 O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a Circuito**, identificando:
 - Identificação do Circuito (ex: ALIM, L1-L4, T1-T13, AC1-AC5)
 - Destinação e Tensão / Amperagem do Disjuntor
@@ -124,7 +189,7 @@ O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a 
 
 ---
 
-## 4. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
+## 5. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
 
 > 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA CONDUTORES E TUBULAÇÕES:**  
 > A unidade comercial de faturamento varia estritamente conforme o tipo de insumo e seu método de instalação:
@@ -148,7 +213,7 @@ O levantamento elétrico DEVE ser estruturado em **Tabela Analítica Circuito a 
 
 ---
 
-## 5. Caixas Enterradas de Infraestrutura Elétrica, Aterramento e Telecom (Concreto vs. Alvenaria)
+## 6. Caixas Enterradas de Infraestrutura Elétrica, Aterramento e Telecom (Concreto vs. Alvenaria)
 
 > 🛑 **REGRA RÍGIDA DE SEPARAÇÃO FÍSICA:** É **PROIBIDO POR NORMA (NBR 5410 / NBR 8160)** passar tubulações hidráulicas e condutores elétricos dentro da mesma caixa ou vala. As redes elétricas e hidráulicas são **FISICAMENTE SEPARADAS E INDEPENDENTES**.
 > 
@@ -174,7 +239,7 @@ As caixas de passagem elétrica utilizam a mesma memória de cálculo geométric
 
 ---
 
-## 6. Banco de Dutos e Envelopamento Elétrico Subterrâneo (NBR 5410 / NBR 14039)
+## 7. Banco de Dutos e Envelopamento Elétrico Subterrâneo (NBR 5410 / NBR 14039)
 
 > ⚠️ **REGRA DE BANCO DE DUTOS:** A tubulação elétrica enterrada em valas DEVE ser quantificada a partir do **Corte Geométrico do Banco de Dutos (Corte 1, Corte 2... Corte 6)**, derivando os eletrodutos, o volume de envelopamento de concreto (ou colchão de areia), fôrmas laterais, proteção mecânica e fita de advertência.
 
@@ -218,7 +283,7 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 
 ---
 
-## 7. Sistema de Proteção contra Descargas Atmosféricas (SPDA & Aterramento - NBR 5419)
+## 8. Sistema de Proteção contra Descargas Atmosféricas (SPDA & Aterramento - NBR 5419)
 
 > ⚠️ **REGRA DE SPDA E ATERRAMENTO:** O levantamento de SPDA DEVE desmembrar os **3 subsistemas normativos**: Captação Aérea, Descidas de Prumada e Malha de Aterramento Enterrada com Hastes de Cobre e Solda Exotérmica.
 
@@ -264,7 +329,7 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 
 ---
 
-## 8. Entrada de Energia, Padrão Concessionária, Subestação e Muro de Medidores (NBR 14039 / NBR 5410)
+## 9. Entrada de Energia, Padrão Concessionária, Subestação e Muro de Medidores (NBR 14039 / NBR 5410)
 
 ### 8.1 Padrão de Entrada e Poste da Concessionária
 - `Poste Particular da Concessionária (unid):` Poste de concreto armado (Duplo T de 9m / 11m, classe 300daN a 1000daN) ou poste metálico galvanizado c/ cabeçote e roldanas.
@@ -297,7 +362,7 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 
 ---
 
-## 9. Cabeamento Estruturado, Telefonia, Dados, Fibra Óptica, CFTV e Interfonia (ANSI/TIA/EIA-568)
+## 10. Cabeamento Estruturado, Telefonia, Dados, Fibra Óptica, CFTV e Interfonia (ANSI/TIA/EIA-568)
 
 ### 9.1 Cabeamento Estruturado, Racks e Dados
 - `Rack Telecom 19" de Parede ou Piso (unid):` Rack metálico c/ porta de acrílico/vidro (12U, 24U, 36U, 44U) especificando profundidade ($570mm / 800mm$).
@@ -324,7 +389,7 @@ Utilizado para alimentadores em áreas gramadas ou passeios com pouca carga supe
 
 ---
 
-## 10. Diretriz Rígida de Governança Técnica: Proibição de Estimativas Fictícias e Bloqueio Formal
+## 11. Diretriz Rígida de Governança Técnica: Proibição de Estimativas Fictícias e Bloqueio Formal
 
 > 🛑 **REGRA DE OURO CONTRA RETRABALHO E CHUTES PARAMÉTRICOS:**  
 > 1. O Agente **NUNCA DEVE INVENTAR QUANTITATIVOS OU EXECUTAR ESTIMATIVAS PARAMÉTRICAS POR MÉDIA** caso a disciplina não possua prancha executiva aprovada e entregue no acervo técnico da obra.

@@ -72,18 +72,55 @@ A_inclinada = A_horizontal / cos(θ)
 - Calhas e rufos: m linear
 - Cumeeiras: m linear
 
-### 2.3 Kit Cobertura (Miudezas Obrigatórias)
+### 2.3 Kit Cobertura e Fachada (Matriz de Suprimentos UCC / BOM)
 
-> 🛑 **PROIBIDO orçar telhado sem os acessórios de fixação e estanqueidade.**
+> 🛑 **REGRA DE OURO DA GOVERNANÇA: EAP É SERVIÇO, UCC É COMPRA!**  
+> Os acessórios de fixação, estanqueidade e proteção NÃO recebem código EAP. São derivados parametricamente da área real inclinada, juntas e comprimentos de calhas/rufos e lançados na Lista de Compras (BOM / UCC):
 
-| Item | Cálculo | UCC |
-|---|---|---|
-| Parafusos autobrocantes 12×1"/2" c/ arruela EPDM | `Ceil(A_real × 4,5) × 1,05` | unid |
-| Parafusos de costura (stitch) 10×3/4" (a 0,50m na emenda) | `Ceil(L_terças × N_linhas / 0,50) × 1,05` | unid |
-| Fita butílica autoadesiva 15mm (rolos 10m) | `Ceil(L_emendas / 10) × 1,05` | rolo |
-| Chumbadores parabolts CBA 3/8"×3" fixação terças (2/apoio) | `N_linhas × N_muretas × 2 × 1,05` | unid |
-| Rebites de repuxo alumínio 4,0×10mm (10/m de emenda) | `Ceil(N_emendas × 10) × 1,05` | cento |
-| Selante PU 40 calhas/rufos (1 tubo / 5m de junta) | `Ceil(L_emendas_calha / 5,0) × 1,05` | tubo |
+| Insumo / Miudeza | Fórmula de Cálculo Paramétrico | Unidade UCC |
+|---|---|:---:|
+| **Parafusos autobrocantes 12×1"/2" c/ arruela EPDM** | $\lceil A_{\text{real inclinada}} \times 4,5 \rceil \times 1,05$ | cento / unid |
+| **Parafusos de costura (stitch) 10×3/4" (a 0,50m na emenda)** | $\lceil L_{\text{terças}} \times N_{\text{linhas}} / 0,50\text{m} \rceil \times 1,05$ | cento / unid |
+| **Fita butílica autoadesiva 15mm (rolos 10m)** | $\lceil L_{\text{emendas}} / 10\text{m} \rceil \times 1,05$ | rolos |
+| **Chumbadores parabolts CBA 3/8"×3" fixação terças (2/apoio)** | $N_{\text{linhas}} \times N_{\text{muretas/apoios}} \times 2 \times 1,05$ | unid |
+| **Rebites de repuxo alumínio 4,0×10mm (10/m de emenda)** | $\lceil N_{\text{emendas calha/rufo}} \times 10 \rceil \times 1,05$ | cento |
+| **Selante PU 40 calhas/rufos/pingadeiras (1 tubo / 5m)** | $\lceil L_{\text{emendas calha/rufo}} / 5,0\text{m} \rceil \times 1,05$ | tubo 310mL |
+| **Mastique / Selante PU para Juntas de Dilatação de Fachada** | $\lceil L_{\text{juntas de dilatação}} / 3,0\text{m} \rceil \times 1,05$ | tubo 310mL |
+| **Selador Acrílico para Fachada** | $A_{\text{fachada}} \times 0,10\text{ L/m²}$ | balde 18L |
+| **Fita Crepe Larga 48mm para Demarcação de Frisos** | $\lceil L_{\text{frisos}} / 50\text{m} \rceil$ | rolo 50m |
+| **Cantoneiras de PVC com Tela para Quinas de Fachada** | Metragem linear total de cantos e quinas externas expostas | barras 3m |
+
+### 🛡️ 2.4 Checklist Anti-Omissão de Cobertura e Fachadas (10 SKUs Obrigatórios na UCC/BOM)
+
+> Antes de emitir o relatório quantitativo de cobertura e fachada, o PMO Virtual DEVE auditar e certificar a presença de todos os 10 SKUs na BOM:
+
+- [ ] **Parafusos Autobrocantes 12×1"/2" c/ Arruela EPDM:** Mínimo 4,5 un/m² de área real inclinada.
+- [ ] **Parafusos de Costura (Stitch) 10×3/4":** Emendas longitudinais e costuras de sobreposição a cada 50cm.
+- [ ] **Fita de Vedação Butílica Autoadesiva 15mm:** Vedação estanque de transpasses de telhas e calhas.
+- [ ] **Chumbadores Parabolts CBA 3/8"×3":** Fixação de terças e perfis nas muretas e apoios de concreto.
+- [ ] **Rebites de Repuxo em Alumínio 4,0×10mm:** 10 un por metro de emenda de calhas e rufos.
+- [ ] **Selante PU 40 para Calhas e Rufos:** 1 tubo de 310mL a cada 5m lineares de emenda e rufo.
+- [ ] **Mastique / Selante de Poliuretano para Juntas de Fachada:** 1 tubo a cada 3m de junta de dilatação.
+- [ ] **Selador Acrílico Pigmentado:** Fundo preparador para textura/grafiato na proporção de 0,10 L/m².
+- [ ] **Fita Crepe Larga para Demarcação de Frisos:** 1 rolo de 50m a cada 50m lineares de friso projetado.
+- [ ] **Cantoneiras de PVC com Tela de Fibra:** Reforço estrutural anti-fissuração em todas as quinas de fachada.
+
+### 📋 2.5 Tabela Oficial de Serviços para EAP e Cronograma (Nível 2.2 — Cobertura e Fachada)
+
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela alinha os pacotes executivos de obras externas e envoltória da edificação, em consonância direta com o nível 2.2 da EAP padronizada em `SKILL_QUANT_03_ARQUITETURA.md`. Miudezas constam exclusivamente da UCC (§2.3 e §2.4).
+
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Insumos BOM Derivados |
+|:---:|:---|:---:|:---:|:---|
+| **2.2.1** | Cobertura — Telhas (área inclinada real) | m² | 2.2.2 Estrutura de Cobertura | Telhas (un), parafusos autobrocantes, parafusos costura, fitas butílicas |
+| **2.2.2** | Estrutura Metálica de Cobertura — Terças / Caibros | kg / m | 1.4.12 Desforma lajes | Perfis metálicos, chumbadores parabolts CBA |
+| **2.2.3** | Muretas de Apoio e Alvenaria de Entreforro | m² | 1.4.8 Concretagem laje | Blocos 9×19×39cm, argamassa de assentamento |
+| **2.2.4** | Alvenaria de Platibanda | m² | 1.4.8 Concretagem laje | Blocos 14×19×39cm, canaletas, graute |
+| **2.2.5** | Calhas e Rufos em Chapa Galvanizada | m | 2.2.1 Telhas montadas | Chapas galvanizadas, rebites de repuxo, selante PU 40 |
+| **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | m² | 2.2.5 Calhas instaladas | Manta asfáltica 4mm, primer asfáltico, gás GLP P-13 |
+| **2.2.7** | Revestimento de Fachada — Chapisco + Textura / Grafiato | m² | 2.1.1 Alvenaria externa | Selador acrílico, textura/grafiato, cantoneiras c/ tela |
+| **2.2.8** | Pintura de Platibanda (Face Interna — Acrílica Impermeável) | m² | 2.2.4 Platibanda rebocada | Tinta acrílica impermeabilizante, selador acrílico |
+| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | m / un | 1.3.11 Baldrame do muro | Blocos, concreto baldrame, chapins, portões e motores |
+| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | m² / m | 2.2.9 Muro + 3.2.1 Drenagem | Paver intertravado, sub-base BGS, areia, meio-fio |
 
 ---
 

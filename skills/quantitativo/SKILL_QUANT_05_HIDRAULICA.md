@@ -60,10 +60,67 @@ Para eliminar omissões e garantir o kit completo de instalação:
 6. **Abraçadeiras de Fixação para Prumadas e Tubulações Suspensas (unid):**  
    Fixação a cada $1,50\text{ m}$ em prumadas verticais e trechos suspensos sob laje:
    $$N_{\text{abraçadeiras}} = \lceil L_{\text{tubulação suspensa/prumada}} / 1,50\text{m} \rceil \times 1,05$$
+7. **Lixas d'Água Grão 100 e 120 (unid / folhas):**  
+   Quebra de brilho e lixamento superficial dos tubos e bolsas de conexões PVC/CPVC antes da aplicação do adesivo:
+   $$N_{\text{folhas}} = \lceil N_{\text{conexões soldáveis}} / 25 \rceil \text{ folhas (mínimo 1 folha por sistema)}$$
+8. **Plugues Plásticos Roscáveis / Buchões de Vedação 1/2" e 3/4" (unid):**  
+   Proteção provisória contra entrada de entulho e tamponamento para teste hidrostático pressurizado:
+   $$N_{\text{plugues}} = N_{\text{pontos de água (chuveiro, lavatório, bacia, torneiras)}} \times 1,05$$
+9. **Abraçadeiras Tipo Gota em Aço Galvanizado c/ Tirante 1/4" (unid):**  
+   Suspensão sob laje de ramais horizontais de esgoto e águas pluviais:
+   $$N_{\text{abraçadeiras gota}} = \lceil L_{\text{esgoto suspenso sob laje}} / 1,50\text{m} \rceil \times 1,05$$
+10. **Selante Intumescente Corta-Fogo / Espuma de Vedação (bisnagas 310mL):**  
+    Vedação estanque e corta-fogo em travessias de tubulações plásticas em lajes e paredes de compartimentação (NBR 14432):
+    $$N_{\text{bisnagas}} = \lceil N_{\text{travessias de laje DN} \ge 50\text{mm}} / 3 \rceil$$
+11. **Fita Aluminizada Autoadesiva com Proteção Anti-UV (m lineares):**  
+    Proteção mecânica e bloqueio de degradação solar em tubulações aparentes de PVC/PPR instaladas em coberturas ou fachadas:
+    $$L_{\text{fita}} = L_{\text{tubulações externas expostas}} \times 1,10\text{ m}$$
+
+### 🛡️ 2.4 Checklist Anti-Omissão de SKUs de Instalações Hidráulicas (15 SKUs Obrigatórios na UCC/BOM)
+
+> Antes de emitir a lista de compras ou relatório quantitativo de hidráulica, o PMO Virtual DEVE auditar e certificar a presença mandatória de todos os 15 insumos consumíveis na BOM:
+
+- [ ] **Adesivo Plástico para PVC Soldável (frascos 175g/850g):** $\lceil N_{\text{conexões soldáveis}} / 30 \rceil$ frascos.
+- [ ] **Solução Limpadora / Preparadora PVC (frascos 200mL):** $\lceil N_{\text{frascos adesivo}} / 2 \rceil$ frascos.
+- [ ] **Fita Veda-Rosca PTFE 18mm × 50m:** $\lceil N_{\text{pontos roscáveis}} / 15 \rceil$ rolos (mínimo 2 rolos).
+- [ ] **Pasta Lubrificante para Tubos de Esgoto c/ Bolsa (bisnagas 160g):** $\lceil N_{\text{bolsas esgoto}} / 20 \rceil$ bisnagas.
+- [ ] **Anéis de Borracha para Esgoto (junta elástica):** 1 un por bolsa de tubo ou conexão (DN 40 a 150mm).
+- [ ] **Abraçadeiras de Fixação para Prumadas Verticais:** $\lceil L_{\text{prumada}} / 1,50\text{m} \rceil \times 1,05$.
+- [ ] **Lixas d'Água Grão 100/120:** $\lceil N_{\text{conexões soldáveis}} / 25 \rceil$ folhas.
+- [ ] **Plugues Plásticos Roscáveis 1/2" e 3/4" (buchões de ensaio):** 1 un por saída de água fria/quente.
+- [ ] **Abraçadeiras Tipo Gota (esgoto suspenso sob laje):** $\lceil L_{\text{esgoto suspenso}} / 1,50\text{m} \rceil$.
+- [ ] **Selante Intumescente Corta-Fogo:** 1 bisnaga a cada 3 passagens de laje de prumadas DN $\ge$ 50mm.
+- [ ] **Fita Aluminizada Anti-UV:** Extensão igual à tubulação plástica aparente externa $+ 10\%$.
+- [ ] **Anel de Vedação de Cera com Guia para Bacia Sanitária:** 1 un por bacia sanitária.
+- [ ] **Conjunto de Parafusos de Fixação de Bacia S10 Inox:** 1 conjunto (2 parafusos) por bacia instalada.
+- [ ] **Sifão Sanfonado Universal c/ Adaptador:** 1 un por cuba, lavatório, tanque ou pia.
+- [ ] **Engates Flexíveis Inox 40cm / 50cm:** 1 a 2 un por ponto de água de torneiras, lavatórios e bacias.
 
 ---
 
-## 3. Modelo de Memória de Cálculo Analítica (Hidráulica)
+## 📋 3. Tabela Oficial de Serviços para EAP e Cronograma de Hidráulica (Nível 3.2 — 5 Fases Civis + Marco de Teste)
+
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**. Os consumíveis (cola, veda-rosca, plugues, lixas, abraçadeiras) NÃO recebem código EAP e pertencem à lista UCC/BOM derivada (§2.3 e §2.4).
+
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Civil | Observação Crítica |
+|:---:|:---|:---:|:---:|:---|
+| **3.2.1** | Redes Enterradas de Esgoto Sanitário e Pluvial | m | 1.3.4 — Escavação | Antes da laje de piso / contrapiso |
+| **3.2.2** | Caixas de Gordura, Passagem e Inspeção Enterradas | un | 3.2.1 | Derivar insumos pelo §6 da própria skill |
+| **3.2.3** | Tubos-Luva e Passagens em Lajes e Vigas de Concreto | un | 1.4.7 — Fôrma Lateral de Laje | Instalar antes de 1.4.8 Concretagem |
+| **3.2.4** | Rasgos em Alvenaria para Ramais de Água e Esgoto | m | 2.1.1 — Alvenaria concluída | Após cura da argamassa de assentamento |
+| **3.2.5** | Instalação de Ramais de Água Fria e Água Quente | m | 3.2.4 | Antes do chapisco/emboço |
+| **3.2.6** | Instalação de Ramais de Esgoto e Coluna de Ventilação | m | 3.2.4 | Antes do chapisco/emboço |
+| **3.2.7** | 🔴 TESTE HIDROSTÁTICO (24h sob 1,5× pressão de trabalho) | un | 3.2.5 + 3.2.6 | **PREDECESSORA BLOQUEANTE de 2.1.2 (chapisco/emboço)** |
+| **3.2.8** | Prumadas Verticais de Água, Esgoto e Pluvial em Shafts | m | 1.4.12 — Desforma total | Após lajes liberadas para carga |
+| **3.2.9** | Barrilete, Conexões de Reservatório e Bombas de Recalque | m / un | 3.2.8 | Após prumadas instaladas |
+| **3.2.10** | Instalação de Bacias Sanitárias, Lavatórios, Pias e Cubas | un | 2.1.5 — Piso assentado + Esquadrias | Fase final de acabamentos |
+| **3.2.11** | Instalação de Metais, Torneiras, Duchas e Registros | un | 3.2.10 | Após louças fixadas |
+| **3.2.12** | Instalação de Sifões, Engates e Vedações | un | 3.2.11 | Interligação final hidráulica |
+| **3.2.13** | Teste Final de Escoamento, Estanqueidade e Desinfecção da Rede | un | 3.2.12 | Marco de comissionamento hidráulico |
+
+---
+
+## 4. Modelo de Memória de Cálculo Analítica (Hidráulica)
 ```text
 ╔══════════════════════════════════════════════════════════════════╗
 ║        MEMÓRIA DE CÁLCULO — INSTALAÇÕES HIDRÁULICAS             ║
@@ -90,7 +147,7 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ---
 
-## 4. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
+## 5. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
 
 > 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA MATERIAIS HIDRÁULICOS:**
 1. **Tubos Rígidos Soldáveis de Água Fria (PVC, PPR, CPVC):**  
@@ -108,7 +165,7 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ---
 
-## 5. Caixas Enterradas de Infraestrutura Hidráulica/Elétrica (Concreto vs. Alvenaria)
+## 6. Caixas Enterradas de Infraestrutura Hidráulica/Elétrica (Concreto vs. Alvenaria)
 
 > ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo de caixas de inspeção, passagem, gordura, sabão, retenção e drenagem DEVE derivar automaticamente todos os insumos de escavação, **talude de segurança (NR-18 para $H > 1,25m$)**, fôrmas internas/externas, concreto, aço, emboço interno, impermeabilização e tampas.
 
@@ -181,7 +238,7 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ---
 
-## 6. Redes Subterrâneas e Tubulações de Água, Esgoto, Incêndio e Gás Combustível
+## 7. Redes Subterrâneas e Tubulações de Água, Esgoto, Incêndio e Gás Combustível
 
 > ⚠️ **SISTEMAS MEP ENTERRADOS E ESPECIAIS:** Além das caixas, o levantamento DEVE quantificar as tubulações enterradas e especiais para Água, Esgoto, Incêndio e Gás (Cobre Rígido, Cobre Recozido Flexível e Multicamada PEX-Gas).
 
@@ -216,7 +273,7 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ---
 
-## 7. Entrada de Água Potável, Cavalete, Cisternas, Caixas D'Água e Castelo D'Água Elevado (NBR 5626 / NBR 12218)
+## 8. Entrada de Água Potável, Cavalete, Cisternas, Caixas D'Água e Castelo D'Água Elevado (NBR 5626 / NBR 12218)
 
 ### 7.1 Cavalete e Padrão de Entrada da Concessionária de Água
 - `Abrigo de Hidrômetro / Cavalete (unid):` Nicho em alvenaria revestida ou caixa pré-fabricada em policarbonato c/ porta em alumínio e grade.
@@ -249,7 +306,7 @@ Para eliminar omissões e garantir o kit completo de instalação:
 
 ---
 
-## 8. Diretriz Rígida de Governança Técnica: Bloqueio Formal contra Chutes Paramétricos
+## 9. Diretriz Rígida de Governança Técnica: Bloqueio Formal contra Chutes Paramétricos
 
 > 🛑 **REGRA DE OURO CONTRA ESTIMATIVAS FICTÍCIAS DE TUBULAÇÕES:**  
 > 1. O levantamento de tubulações de água fria, esgoto sanitário, pluvial e gás **DEVE TER ORIGEM EXCLUSIVA em pranchas executivas específicas da disciplina** (Plantas Baixas de Tubulações com diâmetros cotados e Esquemas Isométricos com caixas de inspeção/sifonadas).

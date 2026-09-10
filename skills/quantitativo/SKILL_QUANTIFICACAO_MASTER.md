@@ -358,10 +358,10 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 11. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
 12. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
 13. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
-14. **Fechar a Tabela Consolidada sem antes varrer TODOS os Kits de Miudezas** de cada disciplina presente na obra (Kit Alvenaria §1.6 da SKILL_QUANT_03A, Kit Pintura §5, Kit Esquadrias §2.3 da SKILL_QUANT_03B, Kit Pisos §6, Kit Impermeabilização §1.5). A omissão de miudezas resulta em **REPROVAÇÃO IMEDIATA** pela auditoria.
+14. **Fechar a Tabela Consolidada sem antes varrer TODOS os Kits de Miudezas** de cada disciplina presente na obra: Fundações (§1.4 SKILL 01), Estrutura (§4.2 SKILL 02), Alvenaria (§1.6/§1.8 SKILL 03A), Pintura (§5 SKILL 03A), Esquadrias (§2.3 SKILL 03B), Pisos (§6 SKILL 03B), Impermeabilização (§1.5 SKILL 03B), Cobertura/Fachada (§2.4 SKILL 03C), Elétrica (§2.5 SKILL 04), Hidráulica (§2.4 SKILL 05) e Canteiro (§1.4 SKILL 06). A omissão de miudezas resulta em **REPROVAÇÃO IMEDIATA** pela auditoria.
 15. **Emitir Tabela Consolidada sem a Tabela de Serviços / EAP correspondente** — todo levantamento de compras DEVE ser acompanhado do mapeamento de insumos → serviços → pacotes de trabalho EAP para alimentar o cronograma e os contratos de empreitada.
 16. **Apresentar uma linha na Tabela Consolidada sem sua memória de cálculo detalhada** — cada insumo na tabela de compras DEVE ter sua expressão algébrica documentada na Seção 1 da Memória de Cálculo. Tabela sem memória correspondente = documento inválido.
-
+17. **Emitir o documento final sem auditar a Tabela de Serviços / EAP e o Checklist Anti-Omissão de SKUs da disciplina correspondente** — O Agente DEVE confirmar na SKILL da disciplina quantificada se a Tabela de Serviços / EAP e o Checklist Anti-Omissão de SKUs foram gerados e rubricados. As skills 01 (§1.2, §1.4), 02 (§4.1, §4.2), 03 (§2), 03C (§2.4, §2.5), 04 (§2.5, §3), 05 (§2.4, §3) e 06 (§1.4, §1.5) contêm os artefatos mandatórios desta verificação.
 
 ---
 
@@ -403,13 +403,18 @@ Antes de encerrar qualquer levantamento:
 - [ ] Pavimento Tipo com multiplicador aplicado (se houver)
 - [ ] Tabela Resumo por Disciplina gerada com subtotais
 - [ ] Tabela de Insumos para Compra (BOM) gerada
-- [ ] **Kits de Miudezas varridos por disciplina** (verificar cada kit antes de fechar a BOM):
-  - [ ] Alvenaria: Kit §1.6 da SKILL_QUANT_03A (telas, pinos, adesivo, espuma de encunhamento)
-  - [ ] Pinturas: Kit §5 da SKILL_QUANT_03A (selador, lixas, fita crepe, lona)
-  - [ ] Pisos/Cerâmicos: Kit §6 da SKILL_QUANT_03B (cimentcola, rejunte, espaçadores, clips, cunhas)
-  - [ ] Esquadrias: Kit §2.3 da SKILL_QUANT_03B (dobradiças, fechaduras, batedores, espuma PU, paraf., pregos, cola, selante)
-  - [ ] Impermeabilização: Kit §1.5 da SKILL_QUANT_03B (primer, tela poliéster, fita asfáltica, GLP)
-  - [ ] Cobertura: Kit da SKILL_QUANT_03C (parafusos autobrocantes, fita butílica, parabolts, rebites, selante)
+- [ ] **Kits de Miudezas varridos por disciplina** (verificar cada checklist antes de fechar a BOM):
+  - [ ] **Fundações:** Kit §1.4 da [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) (arame, espaçadores solo, desmoldante, pregos, sarrafos, lona, emulsão, rolos/trinchas, dreno, manta, brita)
+  - [ ] **Superestrutura:** Kit §4.2 da [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) (espaçadores pilar/viga/laje, arame, desmoldante, pregos, sarrafos, fita crepe, tensores, membrana de cura)
+  - [ ] **Alvenaria:** Kit §1.6 + §1.8 da [SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md) (telas amarração, pinos/finca-pinos, adesivo, espuma PU encunhamento)
+  - [ ] **Pinturas:** Kit §5 da [SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md) (selador, lixas, fita crepe, lona proteção)
+  - [ ] **Pisos / Cerâmicos:** Kit §6 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (cimentcola, rejunte, espaçadores, clips niveladores, cunhas)
+  - [ ] **Esquadrias:** Kit §2.3 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (dobradiças, fechaduras, batedores, espuma PU, parafusos, pregos, cola PVA, selante)
+  - [ ] **Impermeabilização:** Kit §1.5 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (primer, tela poliéster, fita asfáltica, GLP)
+  - [ ] **Coberturas e Fachadas:** Kit §2.4 da [SKILL_QUANT_03C_FACHADAS_E_EXTERNOS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03C_FACHADAS_E_EXTERNOS.md) (autobrocantes, costura, fita butílica, parabolts, rebites, selante PU, mastique, selador fachada, cantoneiras tela)
+  - [ ] **Instalações Elétricas:** Kit §2.5 da [SKILL_QUANT_04_ELETRICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md) (luvas, adaptadores box, abraçadeiras D, conectores Wago, terminais ilhós, fita isolante, buchas/parafusos, talco, autofusão, prensa-cabos, tirantes, anilhas, fita perigo, solda exotérmica)
+  - [ ] **Instalações Hidrossanitárias:** Kit §2.4 da [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md) (cola PVC, preparador, veda-rosca, lubrificante esgoto, anéis borracha, abraçadeiras prumada, lixas, plugues teste, abraçadeiras gota, selante intumescente, anel cera bacia, parafusos inox, sifões, engates)
+  - [ ] **Canteiro e Logística:** Kit §1.4 da [SKILL_QUANT_06_SERVICOS_ESPECIAIS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_06_SERVICOS_ESPECIAIS.md) (tapume, placa de obra, tela fachada, guarda-corpo, extintores provisórios, cones/fita zebrada, papelão piso, plástico bolha tampos, caçambas)
 - [ ] **Tabela de Serviços / EAP gerada** (mapeamento insumo → serviço → pacote de trabalho → cronograma)
 - [ ] Totais auditáveis (soma dos subtotais por ambiente)
 - [ ] Unidades de medida em todos os resultados

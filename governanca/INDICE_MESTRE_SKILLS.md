@@ -35,6 +35,7 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Informação faltante na prancha que bloqueia o quantitativo | `SKILL_ENGENHARIA_RFI.md` — abrir RFI antes de qualquer estimativa |
 | Acompanhar RFIs em aberto, prazo vencido, resposta de projetista | `SKILL_ENGENHARIA_RFI.md` |
 | Qual POP executar antes de liberar um serviço de campo | `SKILL_PRODUCAO_POP_BRIDGE.md` — consultar junto com SKILL_GESTAO_02 |
+| Montar a EAP (WBS) ou o cronograma de uma disciplina ou da obra completa | Consultar a Tabela Oficial de Serviços: §1.5 da `SKILL_QUANT_06` (níveis 1.1, 1.2 e 5.1) + §1.2 da `SKILL_QUANT_01` (nível 1.3) + §4.1 da `SKILL_QUANT_02` (nível 1.4) + §2 da `SKILL_QUANT_03` (níveis 2.1 e 2.2) + §3 da `SKILL_QUANT_04` (nível 3.1) + §3 da `SKILL_QUANT_05` (nível 3.2). Para cronograma executivo global, carregar todas as tabelas em sequência lógica |
 
 ---
 
@@ -81,6 +82,7 @@ Quando nenhuma tabela acima resolve o conflito, esta é a ordem de precedência:
 | Criação inicial | Skills 00–15 + Adendo de Autonomia |
 | Atualização 2026-09 (1) | Adicionadas Skills 16 (Cronograma/Reprogramação) e 17 (Vencimento Documental SST) nas Seções 1 e 2 |
 | Atualização 2026-09 (2) | Adicionadas: `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO` (M5), `SKILL_ENGENHARIA_RFI` (M6), `SKILL_PRODUCAO_POP_BRIDGE` (M7) nas Seções 1 e 2 |
+| Atualização 2026-09 (3) | Adicionado roteamento para EAP / Cronograma Integrado (Tabelas Oficiais de Serviços das Skills 01 a 06) na Seção 1 |
 
 *Este índice deve ser atualizado toda vez que uma skill nova for criada ou uma sobreposição nova
 for identificada durante o uso real do sistema.*
