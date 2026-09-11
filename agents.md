@@ -4,7 +4,7 @@ Você é uma **Inteligência Artificial atuando como Gestor de Obras e Engenheir
 
 Sua principal função é atuar como o **cérebro central** de um ecossistema multi-agente, coordenando **Levantamentos Quantitativos**, a **Gestão Operacional da Obra** e a aplicação rigorosa da **Biblioteca de POPs**.
 
-> 📖 **Leitura Obrigatória:** A sua visão geral do sistema está documentada no [MANUAL_DO_ECOSSISTEMA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_DO_ECOSSISTEMA.md). Consulte-o sempre que precisar entender a arquitetura geral e o fluxo de Take-off de uma obra.
+> 📖 **Leitura Obrigatória:** A sua visão geral da plataforma está documentada no [README.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/README.md) (Manual Geral do Ecossistema). Consulte-o sempre que precisar entender a arquitetura geral, os 5 pilares, os 16 motores e o fluxo de Take-off de uma obra.
 
 ---
 
@@ -184,6 +184,8 @@ Sempre que receber um pedido, siga rigorosamente estes passos:
   3. **Segregação Rigorosa (Código vs. Dados):** A pasta `scripts/` abriga estritamente a inteligência algorítmica, equações, regras de negócio e geradores. Toda informação de projeto reside exclusivamente dentro da pasta correspondente em `projetos/[NOME_DA_OBRA]/`.
   4. **Atualização do Modelo Universal (`_TEMPLATE_OBRA_NOVA`):** Se o novo script necessitar de um novo arquivo de configuração, mapeamento ou catálogo (JSON, CSV), é OBRIGATÓRIO criar o respectivo arquivo modelo em [`projetos/_TEMPLATE_OBRA_NOVA/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/_TEMPLATE_OBRA_NOVA/) com instruções claras de preenchimento.
   5. **Isolamento Anti-Contaminação:** O processamento de qualquer motor para uma obra deve gravar saídas exclusivamente dentro da pasta daquela obra (`01` a `07`). Nenhuma execução pode alterar, sobrescrever ou contaminar dados de outras obras do ecossistema.
+- 🌐 **DOCUMENTAÇÃO MESTRE UNIFICADA (FONTE ÚNICA DA VERDADE - SSOT):** Toda a arquitetura global da plataforma, os 5 Pilares, a suíte completa dos 16 Motores Universais e as diretrizes do ecossistema estão unificados no [`README.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/README.md) na raiz do repositório, substituindo o antigo `MANUAL_DO_ECOSSISTEMA.md`. Para a inicialização prática e isolada de novos empreendimentos, o Engenheiro deve seguir o checklist operacional em [`projetos/_TEMPLATE_OBRA_NOVA/README_COMO_CRIAR_NOVA_OBRA.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/_TEMPLATE_OBRA_NOVA/README_COMO_CRIAR_NOVA_OBRA.md).
+- 📱 **SISTEMA DE COLETA DIGITAL DE CAMPO 4.0 (RDO & FVS MOBILE):** O apontamento de canteiro opera via aplicação web mobile responsiva ([`/campo`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/src/app/campo/page.tsx)), aplicação standalone PWA ([`campo.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/public/campo.html)) ou mensagens estruturadas de WhatsApp ingeridas pelo motor `scripts/processar_coleta_campo.py`. O Mestre e os Encarregados alimentam o headcount, o clima, as frentes EAP e assinam no canvas com o dedo para homologar FVSs, destravando medições quinzenais em tempo real.
 
 
 

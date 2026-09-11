@@ -68,6 +68,24 @@ python scripts/gerar_planilha_medicao.py --obra OBRA_NOVA
 
 # 10. Gerar o Dossiê Executivo (Histogramas de MO/Equipamentos e Curva ABC Dupla)
 python scripts/gerar_dossie_contratacao.py --obra OBRA_NOVA
+
+# 11. Gerar o Sistema de RDO e Painel de Produção Diária (04_PRODUCAO_E_AVANCO)
+python scripts/gerar_rdo.py --obra OBRA_NOVA
+
+# 12. Gerar o Caderno de FVSs Bloqueantes e Matriz de Qualidade (04_PRODUCAO_E_AVANCO)
+python scripts/gerar_fvs_bloqueantes.py --obra OBRA_NOVA
+
+# 13. Gerar o Acompanhamento de Avanço Físico e Curva S Real EVM/SPI (04_PRODUCAO_E_AVANCO)
+python scripts/gerar_tracker_avanco_fisico.py --obra OBRA_NOVA
+
+# 14. Gerar o Painel de Compliance SST, Controle de ASOs e NRs (06_SST_E_RH)
+python scripts/gerar_compliance_sst.py --obra OBRA_NOVA
+
+# 15. Gerar a Estrutura de DataBook, As-Built e Encerramento Closeout (07_DATABOOK_E_ASBUILT)
+python scripts/gerar_estrutura_databook.py --obra OBRA_NOVA
+
+# 16. Ingerir Coleta Digital de Campo e Mensagens de WhatsApp (04_PRODUCAO_E_AVANCO)
+python scripts/processar_coleta_campo.py --obra OBRA_NOVA --texto "RDO 29/09/2026: 8 pedreiros, 4 serventes..."
 ```
 
 ---

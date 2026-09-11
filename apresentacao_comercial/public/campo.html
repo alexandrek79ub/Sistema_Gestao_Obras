@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Coleta Digital de Campo 4.0 — PMO Virtual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { -webkit-tap-highlight-color: transparent; }
+    .tab-active-rdo { background-color: #2563eb; color: #ffffff; }
+    .tab-active-fvs { background-color: #059669; color: #ffffff; }
+    .tab-active-wpp { background-color: #047857; color: #ffffff; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 min-h-screen pb-20 select-none">
+
+  <!-- CABEÇALHO -->
+  <header class="sticky top-0 z-50 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 px-4 py-3 shadow-lg">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white font-black shadow-md">
+          A11
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-white flex items-center">
+            Coleta Digital
+            <span class="ml-1.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+              4.0
+            </span>
+          </h1>
+          <p class="text-xs text-zinc-400">Mestre & Encarregados</p>
+        </div>
+      </div>
+      <select id="selectObra" class="bg-zinc-800 text-xs text-zinc-200 border border-zinc-700 rounded-lg px-2.5 py-1.5 font-medium outline-none">
+        <option value="OBRA_TMULT">TMULT (Porto do Açu)</option>
+        <option value="_TEMPLATE_OBRA_NOVA">Obra Nova (Template)</option>
+      </select>
+    </div>
+  </header>
+
+  <!-- ABAS -->
+  <div class="max-w-md mx-auto px-4 pt-3">
+    <div class="grid grid-cols-3 gap-1 bg-zinc-900 p-1 rounded-xl border border-zinc-800">
+      <button id="btnTabRdo" onclick="switchTab('rdo')" class="py-2 text-xs font-bold rounded-lg text-white tab-active-rdo">
+        📋 RDO Diário
+      </button>
+      <button id="btnTabFvs" onclick="switchTab('fvs')" class="py-2 text-xs font-bold rounded-lg text-zinc-400">
+        🛡️ FVS Qualidade
+      </button>
+      <button id="btnTabWpp" onclick="switchTab('wpp')" class="py-2 text-xs font-bold rounded-lg text-zinc-400">
+        💬 WhatsApp
+      </button>
+    </div>
+  </div>
+
+  <!-- ALERTA / FEEDBACK -->
+  <div id="feedbackAlert" class="max-w-md mx-auto px-4 mt-3 hidden">
+    <div id="feedbackBox" class="p-3 rounded-xl text-xs flex items-center shadow-lg"></div>
+  </div>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <main class="max-w-md mx-auto px-4 mt-3 space-y-4">
+
+    <!-- ABA 1: RDO -->
+    <div id="sectionRdo" class="space-y-4">
+      <!-- DATA -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Data do Diário</label>
+        <input type="date" id="inputData" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-white outline-none">
+      </div>
+
+      <!-- CLIMA -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Clima de Hoje</label>
+        <div class="grid grid-cols-2 gap-2 mb-3">
+          <div>
+            <span class="text-[11px] text-zinc-500 block mb-1">Manhã</span>
+            <div class="grid grid-cols-2 gap-1.5" id="groupClimaM">
+              <button type="button" onclick="setClima('M', 'Sol')" class="clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-blue-600 text-white border-blue-500">Sol</button>
+              <button type="button" onclick="setClima('M', 'Nublado')" class="clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Nublado</button>
+              <button type="button" onclick="setClima('M', 'Chuva Leve')" class="clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Chuva</button>
+              <button type="button" onclick="setClima('M', 'Temporal')" class="clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Temporal</button>
+            </div>
+          </div>
+          <div>
+            <span class="text-[11px] text-zinc-500 block mb-1">Tarde</span>
+            <div class="grid grid-cols-2 gap-1.5" id="groupClimaT">
+              <button type="button" onclick="setClima('T', 'Sol')" class="clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-blue-600 text-white border-blue-500">Sol</button>
+              <button type="button" onclick="setClima('T', 'Nublado')" class="clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Nublado</button>
+              <button type="button" onclick="setClima('T', 'Chuva Leve')" class="clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Chuva</button>
+              <button type="button" onclick="setClima('T', 'Temporal')" class="clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800">Temporal</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-2 border-t border-zinc-800">
+          <div class="flex justify-between text-xs mb-1">
+            <span class="text-zinc-300">Horas de Paralisação por Chuva:</span>
+            <span id="lblHorasParal" class="font-bold text-rose-400 font-mono">0.0 h</span>
+          </div>
+          <input type="range" id="rangeParal" min="0" max="8.8" step="0.5" value="0" oninput="updateHorasParal(this.value)" class="w-full accent-rose-500">
+        </div>
+      </div>
+
+      <!-- EFETIVO -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm space-y-3">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Efetivo no Canteiro</label>
+          <span id="badgeTotalEfetivo" class="bg-zinc-800 px-2.5 py-1 rounded-lg text-xs font-bold text-emerald-400">Total: 17 (149.6 HH)</span>
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-300">Pedreiros de Alvenaria</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCount('pedreiros', -1)" class="w-8 h-8 rounded-lg bg-zinc-800 font-black text-sm">-</button>
+              <span id="val_pedreiros" class="w-7 text-center font-bold text-sm text-white font-mono">6</span>
+              <button onclick="changeCount('pedreiros', 1)" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-sm">+</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-300">Serventes / Ajudantes</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCount('serventes', -1)" class="w-8 h-8 rounded-lg bg-zinc-800 font-black text-sm">-</button>
+              <span id="val_serventes" class="w-7 text-center font-bold text-sm text-white font-mono">4</span>
+              <button onclick="changeCount('serventes', 1)" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-sm">+</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-300">Carpinteiros de Fôrma</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCount('carpinteiros', -1)" class="w-8 h-8 rounded-lg bg-zinc-800 font-black text-sm">-</button>
+              <span id="val_carpinteiros" class="w-7 text-center font-bold text-sm text-white font-mono">2</span>
+              <button onclick="changeCount('carpinteiros', 1)" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-sm">+</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-300">Armadores de Ferragem</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCount('armadores', -1)" class="w-8 h-8 rounded-lg bg-zinc-800 font-black text-sm">-</button>
+              <span id="val_armadores" class="w-7 text-center font-bold text-sm text-white font-mono">2</span>
+              <button onclick="changeCount('armadores', 1)" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-sm">+</button>
+            </div>
+          </div>
+
+          <div class="flex justify-between items-center bg-zinc-950 px-3 py-2 rounded-xl border border-zinc-800">
+            <span class="text-xs text-zinc-300">Equipe de Gestão (Mestre/TST/Almox)</span>
+            <div class="flex items-center space-x-2">
+              <button onclick="changeCount('gestao', -1)" class="w-8 h-8 rounded-lg bg-zinc-800 font-black text-sm">-</button>
+              <span id="val_gestao" class="w-7 text-center font-bold text-sm text-white font-mono">3</span>
+              <button onclick="changeCount('gestao', 1)" class="w-8 h-8 rounded-lg bg-blue-600 text-white font-black text-sm">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FRENTES EAP -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Frentes de Serviço em Andamento</label>
+        <div class="space-y-1.5" id="listaEap">
+          <label class="flex items-center p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-xs cursor-pointer">
+            <input type="checkbox" value="1.3.1 Locação Topográfica" class="mr-2.5 accent-blue-600"> Locação e Eixos de Gabarito
+          </label>
+          <label class="flex items-center p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-xs cursor-pointer">
+            <input type="checkbox" checked value="1.3.2 Escavação e Lastro" class="mr-2.5 accent-blue-600"> Escavação Mecânica e Manual de Sapatas
+          </label>
+          <label class="flex items-center p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-xs cursor-pointer">
+            <input type="checkbox" value="1.3.3 Armaduras e Formas" class="mr-2.5 accent-blue-600"> Armação e Montagem de Fôrmas
+          </label>
+          <label class="flex items-center p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl text-xs cursor-pointer">
+            <input type="checkbox" value="2.1.1 Alvenaria Vedação" class="mr-2.5 accent-blue-600"> Elevação de Alvenaria de Vedação
+          </label>
+        </div>
+      </div>
+
+      <!-- OCORRÊNCIAS -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Diário de Bordo / Ocorrências</label>
+        <textarea id="txtOcorrencias" rows="3" placeholder="Insira aqui eventos relevantes, entregas de materiais ou desvios..." class="w-full bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs text-zinc-200 outline-none focus:border-blue-500"></textarea>
+      </div>
+
+      <!-- BOTÃO ENVIAR -->
+      <button onclick="enviarRdo()" class="w-full py-4 rounded-2xl bg-blue-600 hover:bg-blue-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2">
+        <span>🚀 Gravar e Transmitir RDO Diário</span>
+      </button>
+    </div>
+
+    <!-- ABA 2: FVS -->
+    <div id="sectionFvs" class="space-y-4 hidden">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Ficha de Verificação (FVS)</label>
+        <select id="selectFvs" class="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-white outline-none mb-3">
+          <option value="FVS-01">FVS-01: Topografia e Locação de Eixos</option>
+          <option value="FVS-02">FVS-02: Fundações e Escavação de Valas</option>
+          <option value="FVS-03">FVS-03: Estrutura, Fôrmas e Concretagem</option>
+          <option value="FVS-04">FVS-04: Alvenaria de Vedação</option>
+          <option value="FVS-05">FVS-05: Impermeabilização e Estanqueidade 72h</option>
+          <option value="FVS-06">FVS-06: Instalações Hidráulicas (Pressão)</option>
+          <option value="FVS-07">FVS-07: Instalações Elétricas e SPDA</option>
+          <option value="FVS-08">FVS-08: Cobertura e Esquadrias</option>
+        </select>
+
+        <div class="grid grid-cols-2 gap-2">
+          <button type="button" id="btnFvsAprov" onclick="setFvsStatus(true)" class="py-2.5 px-3 rounded-xl text-xs font-bold border bg-emerald-600 text-white border-emerald-500">
+            🟢 Aprovado (Liberar)
+          </button>
+          <button type="button" id="btnFvsReprov" onclick="setFvsStatus(false)" class="py-2.5 px-3 rounded-xl text-xs font-bold border bg-zinc-950 text-zinc-400 border-zinc-800">
+            🔴 Reprovado (Bloquear)
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Medição com Trena / Tolerância NBR</label>
+        <input type="text" id="txtTolerancia" value="Desvio medido < 2mm" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-white outline-none">
+      </div>
+
+      <!-- ASSINATURA -->
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <div class="flex justify-between items-center mb-2">
+          <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Assinatura Digital no Dedo</label>
+          <button onclick="limparCanvas()" class="text-[11px] text-zinc-500 hover:text-zinc-300">Limpar</button>
+        </div>
+        <div class="bg-zinc-950 border border-zinc-800 rounded-xl overflow-hidden relative">
+          <canvas id="canvasAssinatura" width="340" height="130" class="w-full h-32 cursor-crosshair"></canvas>
+          <div id="lblPlaceholder" class="absolute inset-0 flex items-center justify-center pointer-events-none text-zinc-600 text-xs font-medium">
+            Assine aqui com o dedo
+          </div>
+        </div>
+      </div>
+
+      <button onclick="enviarFvs()" class="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
+        <span>🛡️ Homologar FVS e Liberar Medição</span>
+      </button>
+    </div>
+
+    <!-- ABA 3: WHATSAPP -->
+    <div id="sectionWpp" class="space-y-4 hidden">
+      <div class="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+        <label class="text-xs font-semibold text-emerald-400 uppercase tracking-wider block mb-2">Texto Estruturado para o WhatsApp</label>
+        <div id="txtPreviewWpp" class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-xs font-mono text-zinc-300 whitespace-pre-wrap leading-relaxed"></div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <button onclick="copiarWpp()" class="py-3.5 px-3 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold flex items-center justify-center space-x-1.5">
+          <span id="lblCopiar">📋 Copiar Texto</span>
+        </button>
+        <button onclick="abrirWpp()" class="py-3.5 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-md shadow-emerald-600/30">
+          <span>💬 Abrir WhatsApp</span>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Inicializar Data
+    document.getElementById('inputData').value = new Date().toISOString().split('T')[0];
+
+    let state = {
+      climaM: 'Sol',
+      climaT: 'Sol',
+      hParal: 0,
+      efetivo: { pedreiros: 6, serventes: 4, carpinteiros: 2, armadores: 2, gestao: 3 },
+      fvsStatus: true,
+      hasSignature: false
+    };
+
+    function switchTab(tab) {
+      document.getElementById('sectionRdo').classList.add('hidden');
+      document.getElementById('sectionFvs').classList.add('hidden');
+      document.getElementById('sectionWpp').classList.add('hidden');
+
+      document.getElementById('btnTabRdo').className = 'py-2 text-xs font-bold rounded-lg text-zinc-400';
+      document.getElementById('btnTabFvs').className = 'py-2 text-xs font-bold rounded-lg text-zinc-400';
+      document.getElementById('btnTabWpp').className = 'py-2 text-xs font-bold rounded-lg text-zinc-400';
+
+      if (tab === 'rdo') {
+        document.getElementById('sectionRdo').classList.remove('hidden');
+        document.getElementById('btnTabRdo').className = 'py-2 text-xs font-bold rounded-lg text-white tab-active-rdo';
+      } else if (tab === 'fvs') {
+        document.getElementById('sectionFvs').classList.remove('hidden');
+        document.getElementById('btnTabFvs').className = 'py-2 text-xs font-bold rounded-lg text-white tab-active-fvs';
+      } else if (tab === 'wpp') {
+        document.getElementById('sectionWpp').classList.remove('hidden');
+        document.getElementById('btnTabWpp').className = 'py-2 text-xs font-bold rounded-lg text-white tab-active-wpp';
+        gerarPreviewWpp();
+      }
+    }
+
+    function setClima(periodo, val) {
+      if (periodo === 'M') {
+        state.climaM = val;
+        document.querySelectorAll('.clima-btn-m').forEach(btn => {
+          btn.className = btn.innerText === val 
+            ? 'clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-blue-600 text-white border-blue-500'
+            : 'clima-btn-m py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800';
+        });
+      } else {
+        state.climaT = val;
+        document.querySelectorAll('.clima-btn-t').forEach(btn => {
+          btn.className = btn.innerText === val 
+            ? 'clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-blue-600 text-white border-blue-500'
+            : 'clima-btn-t py-2 text-xs rounded-xl font-semibold border bg-zinc-950 text-zinc-400 border-zinc-800';
+        });
+      }
+    }
+
+    function updateHorasParal(val) {
+      state.hParal = parseFloat(val);
+      document.getElementById('lblHorasParal').innerText = state.hParal.toFixed(1) + ' h';
+      recalcEfetivo();
+    }
+
+    function changeCount(key, delta) {
+      state.efetivo[key] = Math.max(0, state.efetivo[key] + delta);
+      document.getElementById('val_' + key).innerText = state.efetivo[key];
+      recalcEfetivo();
+    }
+
+    function recalcEfetivo() {
+      const tot = state.efetivo.pedreiros + state.efetivo.serventes + state.efetivo.carpinteiros + state.efetivo.armadores + state.efetivo.gestao;
+      const hh = Math.max(0, tot * 8.8 - state.hParal * tot).toFixed(1);
+      document.getElementById('badgeTotalEfetivo').innerText = `Total: ${tot} (${hh} HH)`;
+    }
+
+    function setFvsStatus(aprov) {
+      state.fvsStatus = aprov;
+      if (aprov) {
+        document.getElementById('btnFvsAprov').className = 'py-2.5 px-3 rounded-xl text-xs font-bold border bg-emerald-600 text-white border-emerald-500';
+        document.getElementById('btnFvsReprov').className = 'py-2.5 px-3 rounded-xl text-xs font-bold border bg-zinc-950 text-zinc-400 border-zinc-800';
+      } else {
+        document.getElementById('btnFvsAprov').className = 'py-2.5 px-3 rounded-xl text-xs font-bold border bg-zinc-950 text-zinc-400 border-zinc-800';
+        document.getElementById('btnFvsReprov').className = 'py-2.5 px-3 rounded-xl text-xs font-bold border bg-rose-600 text-white border-rose-500';
+      }
+    }
+
+    // Canvas de Assinatura
+    const canvas = document.getElementById('canvasAssinatura');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+
+    function getCoords(e) {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+      const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+      return { x, y };
+    }
+
+    function startDraw(e) {
+      drawing = true;
+      const p = getCoords(e);
+      ctx.beginPath();
+      ctx.moveTo(p.x, p.y);
+      document.getElementById('lblPlaceholder').style.display = 'none';
+      state.hasSignature = true;
+    }
+
+    function doDraw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const p = getCoords(e);
+      ctx.lineTo(p.x, p.y);
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    function stopDraw() { drawing = false; }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', doDraw);
+    canvas.addEventListener('mouseup', stopDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', doDraw, { passive: false });
+    canvas.addEventListener('touchend', stopDraw);
+
+    function limparCanvas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      document.getElementById('lblPlaceholder').style.display = 'flex';
+      state.hasSignature = false;
+    }
+
+    function showFeedback(sucesso, msg) {
+      const box = document.getElementById('feedbackAlert');
+      const inner = document.getElementById('feedbackBox');
+      box.classList.remove('hidden');
+      if (sucesso) {
+        inner.className = 'bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 p-3 rounded-xl text-xs flex items-center shadow-lg';
+        inner.innerHTML = '✅ ' + msg;
+      } else {
+        inner.className = 'bg-rose-500/10 border border-rose-500/30 text-rose-300 p-3 rounded-xl text-xs flex items-center shadow-lg';
+        inner.innerHTML = '❌ ' + msg;
+      }
+      setTimeout(() => box.classList.add('hidden'), 5000);
+    }
+
+    function getEapSelecionada() {
+      const checks = document.querySelectorAll('#listaEap input[type=checkbox]:checked');
+      return Array.from(checks).map(c => c.value).join('; ') || 'Serviços Gerais';
+    }
+
+    async function enviarRdo() {
+      const obra = document.getElementById('selectObra').value;
+      const dataFormatada = document.getElementById('inputData').value.split('-').reverse().join('/');
+      const totTerc = state.efetivo.pedreiros + state.efetivo.serventes + state.efetivo.carpinteiros + state.efetivo.armadores;
+      const totEfetivo = totTerc + state.efetivo.gestao;
+      const hh = Math.max(0, totEfetivo * 8.8 - state.hParal * totEfetivo);
+
+      const payload = {
+        tipo: 'rdo',
+        obra: obra,
+        data: dataFormatada,
+        clima_m: state.climaM,
+        clima_t: state.climaT,
+        h_paral: state.hParal,
+        ef_prop: state.efetivo.gestao,
+        ef_terc: totTerc,
+        hh: hh,
+        eap: getEapSelecionada(),
+        fvs: 'FVS-01',
+        fvs_status: 'Conforme',
+        obs: document.getElementById('txtOcorrencias').value || 'Apontamento registrado via app mobile.'
+      };
+
+      try {
+        const res = await fetch('/api/apontamento-campo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const d = await res.json();
+        if (d.success) {
+          showFeedback(true, 'RDO transmitido com sucesso!');
+        } else {
+          showFeedback(false, d.error || 'Erro na transmissão');
+        }
+      } catch (e) {
+        // Modo offline / salvamento local
+        localStorage.setItem('ultimo_rdo_' + Date.now(), JSON.stringify(payload));
+        showFeedback(true, 'Salvo no dispositivo (modo offline)! Transmita quando houver rede.');
+      }
+    }
+
+    async function enviarFvs() {
+      const obra = document.getElementById('selectObra').value;
+      const cod = document.getElementById('selectFvs').value;
+      const payload = {
+        tipo: 'fvs',
+        obra: obra,
+        codigo: cod,
+        data: document.getElementById('inputData').value.split('-').reverse().join('/'),
+        status: state.fvsStatus ? '🟢 Aprovado' : '🔴 Reprovado',
+        responsavel: 'Mestre de Obras / Eng. Residente',
+        medicao_tolerancia: document.getElementById('txtTolerancia').value,
+        itens_conferidos: ['Conformidade com POP e Projeto'],
+        observacoes: 'Inspeção validada via dispositivo móvel no canteiro.',
+        assinatura: state.hasSignature ? 'Assinado na tela' : 'Não assinado'
+      };
+
+      try {
+        const res = await fetch('/api/apontamento-campo', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const d = await res.json();
+        if (d.success) {
+          showFeedback(true, `FVS ${cod} homologada e medição liberada!`);
+        } else {
+          showFeedback(false, d.error || 'Erro na homologação da FVS');
+        }
+      } catch (e) {
+        localStorage.setItem('ultima_fvs_' + Date.now(), JSON.stringify(payload));
+        showFeedback(true, 'FVS salva no dispositivo (modo offline)!');
+      }
+    }
+
+    function gerarTextoWpp() {
+      const obra = document.getElementById('selectObra').value;
+      const dt = document.getElementById('inputData').value.split('-').reverse().join('/');
+      const totTerc = state.efetivo.pedreiros + state.efetivo.serventes + state.efetivo.carpinteiros + state.efetivo.armadores;
+      const totEfetivo = totTerc + state.efetivo.gestao;
+      const hh = Math.max(0, totEfetivo * 8.8 - state.hParal * totEfetivo).toFixed(1);
+      const eap = getEapSelecionada();
+      const obs = document.getElementById('txtOcorrencias').value || 'Dia produtivo dentro da meta.';
+
+      return `*📋 RDO DIÁRIO — ${obra}*
+📅 Data: ${dt}
+☀️ Clima: Manhã ${state.climaM} | Tarde ${state.climaT}
+👷 Efetivo Total: ${totEfetivo} (${state.efetivo.gestao} Gestão / ${totTerc} Terceirizados)
+⏱️ Produção: ${hh} HH ${state.hParal > 0 ? `(⚠️ ${state.hParal}h chuva)` : '(Sem paralisação)'}
+🔨 Frentes: ${eap}
+📝 Ocorrências: ${obs}
+_Enviado via Antigravity Mobile 4.0_`;
+    }
+
+    function gerarPreviewWpp() {
+      document.getElementById('txtPreviewWpp').innerText = gerarTextoWpp();
+    }
+
+    function copiarWpp() {
+      navigator.clipboard.writeText(gerarTextoWpp());
+      document.getElementById('lblCopiar').innerText = '✅ Copiado!';
+      setTimeout(() => document.getElementById('lblCopiar').innerText = '📋 Copiar Texto', 2000);
+    }
+
+    function abrirWpp() {
+      const encoded = encodeURIComponent(gerarTextoWpp());
+      window.open('https://api.whatsapp.com/send?text=' + encoded, '_blank');
+    }
+  </script>
+</body>
+</html>
