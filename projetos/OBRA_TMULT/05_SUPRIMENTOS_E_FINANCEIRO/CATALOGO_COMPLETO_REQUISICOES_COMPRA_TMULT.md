@@ -1,14 +1,12 @@
-# 🛒 CATÁLOGO MESTRE: 24 REQUISIÇÕES DE COMPRA (RC-001 A RC-024)
+# 🛒 CATÁLOGO MESTRE: REQUISIÇÕES DE COMPRA (TMULT)
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Porto do Açu (SJB/RJ)  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.4 m²)  
 > **Finalidade:** Banco de Dados Oficial de Suprimentos com Rastreabilidade EAP e Centros de Custo  
-> **Custo Direto Base Auditado dos Materiais:** R$ 583.673,79 | **Status:** Aprovado para Emissão Sequencial
+> **Custo Direto Base Auditado dos Materiais:** R$ 567.973,79
 
 ---
 
 ## 1. Visão Geral das 24 Requisições de Compra
-
-Todas as 24 RCs foram estruturadas pela Engenharia contendo a unidade comercial de fornecimento (UCC), a amarração ao centro de custo para faturamento e os lead times do POP 05:
 
 | Nº RC | Pacote de Compra | Centro Custo | EAP Vinculada | Quantidade em UCC | Disparo RC (Eng) | Data Limite na Obra | Lead | Custo Direto (R$) |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -41,23 +39,10 @@ Todas as 24 RCs foram estruturadas pela Engenharia contendo a unidade comercial 
 
 ---
 
-## 2. Dossiês Detalhados por Mês de Execução (Fichas Formais de Engenharia)
+## 2. Instruções para Compradores e Almoxarifado
 
-Todas as 24 RCs possuem dossiês analíticos com discriminação técnica, pranchas executivas de referência, tolerâncias normativas e critérios de recebimento (POP 06):
-
-- 📦 **[MÊS 1 — Partida de Obras (RC-001 a RC-004)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES1_TMULT.md):** Aço Fundações, Concreto Sapatas/Baldrames, Fôrmas Compensadas e Módulos Containers NR-18;
-- 📦 **[MÊS 2 — Superestrutura e Laje (RC-005 a RC-008)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES2_TMULT.md):** Cimbramento Metálico, Laje Treliçada EPS H12, Aço Pilares/Vigas e Concreto Bomb. Capa de Laje;
-- 📦 **[MÊS 3 — Alvenaria e Cobertura (RC-009 a RC-012)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES3_TMULT.md):** Blocos B144, Cimento/Areia/Aditivos, Andaimes Fachadeiros NR-18 e Telhas Sandwich PIR/Calhas;
-- 📦 **[MÊS 4 — Instalações e Esquadrias (RC-013 a RC-016)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES4_TMULT.md):** Tubulações PVC Água/Esgoto, Eletrodutos Rígidos, Argamassa Projeção e Esquadrias Alumínio/Vidros;
-- 📦 **[MÊS 5 — Pisos, Portas e Elétrica (RC-017 a RC-020)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES5_TMULT.md):** Porcelanatos 60x60/AC-III, Kits Porta Pronta WPC, Cabos Cobre Flexível e Quadros QDG/QDF;
-- 📦 **[MÊS 6 — Finalização e Closeout (RC-021 a RC-024)](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/05_SUPRIMENTOS_E_FINANCEIRO/REQUISICOES_DE_COMPRA_MES6_TMULT.md):** Louças Deca/Metais Docol, Climatização Splits Inverter R-32, Tintas Acrílicas Premium e Limpeza Fina.
-
----
-
-## 3. Instruções para os Compradores e Almoxarifado
-
-1. **Rastreabilidade Obrigatória nas Notas Fiscais:** Toda NF-e emitida pelos fornecedores deve conter em Informações Complementares: `Material destinado à OBRA_TMULT - Centro de Custo: [CC CORRESPONDENTE] - Pedido de Compra: [Nº PC]`;
-2. **Conferência Física no Canteiro (POP 06):** O Almoxarife e a Engenharia conferem lote a lote com o romaneio e certificados de qualidade antes de assinar o canhoto da NF;
-3. **Alçadas de Governança (Skill 03):** Valores até R$ 15.000 (Comprador + Eng. Residente); Valores de R$ 15.000 a R$ 50.000 (Gerente de Operações / Consultor Alexandre); Acima de R$ 50.000 (Diretoria Executiva).
+1. **Rastreabilidade Obrigatória nas Notas Fiscais:** Toda NF-e emitida pelos fornecedores deve conter em Informações Complementares: `Material destinado à TMULT - Centro de Custo: [CC] - Pedido de Compra: [Nº PC]`;
+2. **Conferência Física no Canteiro (POP 06):** Almoxarife e Engenharia conferem lote a lote com o romaneio e certificados de qualidade antes de assinar o canhoto da NF;
+3. **Alçadas de Governança (Skill 03):** Valores até R$ 15.000 (Comprador + Eng. Residente); de R$ 15.000 a R$ 50.000 (Gerente de Operações); acima de R$ 50.000 (Diretoria Executiva).
 
 *Catálogo Mestre pronto para integração com o ERP da construtora.*

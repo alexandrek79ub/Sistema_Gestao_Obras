@@ -1,0 +1,6 @@
+﻿Código EAP;Item / Descricao;Disciplina;Qtd Projeto;Unidade Proj;Perda (%);Qtd Comercial UCC;Unidade UCC;Prancha Referencia;Preço Unitário (R$);Custo Total (R$);Preco_Total;Preco_Unit;Pct_Individual;Pct_Acumulado;Classe_ABC
+1.0.1;Engenheiro Residente (50%) + Mestre de Obras (100%);Administração Local e Canteiro;4.0;mês;0.0;4.0;mês;EAP 1.1 / Planejamento 4 Meses;R$ 17.803,80;R$ 71.215,20;71215.2;17803.8;75.28197759908937;75.28197759908937;A
+1.0.2;Locação de Containers NR-18 + Sanitário Químico;Administração Local e Canteiro;4.0;mês;0.0;4.0;mês;EAP 1.1 / Canteiro;R$ 4.069,44;R$ 16.277,76;16277.76;4069.44;17.207309165506143;92.48928676459552;B
+1.1.5;Aço CA-50 8.0mm Sapatas Isoladas;Infraestrutura e Fundações;46.926;kg;5.0;11.0;barras 12m;EGS-02;R$ 74,39;R$ 3.490,83;3490.83;74.39;3.690175494307805;96.17946225890333;C
+1.1.2;Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm);Infraestrutura e Fundações;5.0894;m³;5.0;5.34;m³;EGS-01;R$ 610,42;R$ 3.106,67;3106.67;610.42;3.284077856240845;99.46354011514417;C
+1.1.1;Escavação Manual/Mecanizada de Sapatas e Baldrames;Infraestrutura e Fundações;35.5377;m³;0.0;35.54;m³;EGS-01;R$ 14,28;R$ 507,48;507.48;14.28;0.5364598848558437;100.00000000000001;C

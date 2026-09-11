@@ -243,3 +243,23 @@ Após compor os preços, preencher obrigatoriamente no `ORCAMENTO_BASE_CONSOLIDA
 2. **Proibição de Estimativa sem Fonte:** Nenhum custo unitário (CCU) é arbitrado sem fonte declarada (SINAPI, cotação formal de 3 fornecedores ou contrato de empreitada). Ausência de fonte gera pendência formal (RFI), não estimativa.
 3. **Transparência de BDI:** O percentual de BDI é sempre declarado de forma explícita e justificado por categoria (serviço vs. fornecimento de equipamentos), nunca embutido silenciosamente no preço unitário.
 4. **Sincronismo com Revisões (`SKILL_GESTAO_14`):** Qualquer alteração de quantidade decorrente de revisão de projeto deve atualizar imediatamente o orçamento vinculado ao respectivo CIA.
+
+---
+
+## 🤖 10. Automação e Motor Universal de Precificação (`precificar_obra.py`)
+
+O ecossistema dispõe do motor universal em Python (`scripts/precificar_obra.py`) que automatiza a aplicação de preços oficiais SINAPI SP e cotações locais em escala multi-obra:
+
+```bash
+# Execução por obra:
+python scripts/precificar_obra.py --obra [NOME_DA_OBRA]
+
+# Exemplos:
+python scripts/precificar_obra.py --obra OBRA_TMULT
+python scripts/precificar_obra.py --obra RESIDENCIAL_ALPHA
+```
+
+### Arquitetura de Desacoplamento (Data vs. Engine):
+1. **Configuração da Obra (`projetos/[OBRA]/config_obra.json`):** Define prazos, área em m², taxas de BDI (serviços e equipamentos nobres) e o dimensionamento da equipe e canteiro (Administração Local - EAP 1.0).
+2. **Tabela De-Para (`projetos/[OBRA]/02_ORCAMENTO_BASE_E_CONTRATOS/mapeamento_sinapi.csv`):** Conecta cada código EAP ao seu código SINAPI correspondente ou cotação homologada.
+3. **Idempotência e Blindagem:** O motor pode ser executado sucessivas vezes de forma determinística, sem duplicação de itens de canteiro e com isolamento total entre obras.

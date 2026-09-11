@@ -1,0 +1,181 @@
+[
+  {
+    "cod": "LOC-01",
+    "nome_arquivo": "CONTRATO_LOC01_MODULOS_HABITAVEIS_NR18.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE MÓDULOS HABITÁVEIS CONTAINERS E SANITÁRIOS QUÍMICOS NR-18",
+    "itens_equip": "EQ-01 (Escritório), EQ-02 (Vestiário), EQ-03 (Refeitório), EQ-04 (Almoxarifado) e EQ-05 (Sanitários Químicos)",
+    "locador": "Rentcon Locações de Módulos Habitáveis Ltda / NHJ Brasil",
+    "cnpj": "12.345.678/0001-90",
+    "periodo": "22/09/2026 a 10/03/2027 (6 Meses / Semanas S01 a S26)",
+    "cc": "CC-103 (Canteiro e Vivência NR-18)",
+    "eap": "1.0.3",
+    "valor_total": 38299.98,
+    "valor_mensal": 6383.33,
+    "escopo": [
+      "1 Módulo Escritório 6,00x2,40m termoacústico c/ AC 12.000 BTU, janelas c/ grade, iluminação LED e mesa de reuniões",
+      "1 Módulo Vestiário 6,00x2,40m com 4 chuveiros elétricos blindados, lavatórios, bancos e armários NR-18",
+      "1 Módulo Refeitório 6,00x2,40m climatizado com mesas, bancos laváveis, pia de inox e bebedouro refrigerado",
+      "1 Módulo Almoxarifado/Ferramentaria Dry 20 pés com prateleiras reforçadas e tranca tetra quádrupla",
+      "2 Cabines de sanitários químicos portáteis em polietileno com 2 manutenções e sucções de efluentes semanais"
+    ],
+    "obrigacoes_locador": [
+      "Transporte com caminhão munck e içamento seguro no canteiro da OBRA_TMULT no Porto do Açu em 22/09/2026",
+      "ART de fabricação e laudo de habitabilidade elétrica e térmica conforme NR-18 e NR-10",
+      "Manutenção e sucção sanitária semanal dos químicos com destinação licenciada pelo INEA/RJ",
+      "Substituição imediata de ar-condicionado ou fiação em caso de defeito em até 24 horas úteis"
+    ],
+    "obrigacoes_locatario": [
+      "Execução prévia dos apoios de concreto nivelados para assentamento dos containers",
+      "Ponto de energia 220V trifásico e água potável no limite de 5 metros dos módulos",
+      "Zelo e conservação das instalações elétricas, fechaduras e esquadrias durante o período de locação"
+    ]
+  },
+  {
+    "cod": "LOC-02",
+    "nome_arquivo": "CONTRATO_LOC02_TERRAPLENAGEM_E_TRANSPORTE.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE MAQUINÁRIO PESADO DE TERRAPLENAGEM COM OPERADOR E COMBUSTÍVEL",
+    "itens_equip": "EQ-06 (Retroescavadeira 4x4) e EQ-07 (Caminhão Basculante 12m³ Traçado 6x4)",
+    "locador": "Terramax Locações e Terraplenagem do Norte Fluminense Ltda",
+    "cnpj": "23.456.789/0001-01",
+    "periodo": "19/09/2026 a 08/10/2026 (3 Semanas / Semanas S01 a S03)",
+    "cc": "CC-201 (Escavação e Movimento de Terra)",
+    "eap": "1.1.1, 1.1.2",
+    "valor_total": 24500.0,
+    "valor_mensal": 24500.0,
+    "escopo": [
+      "1 Retroescavadeira 4x4 cabinada c/ caçamba frontal 1,0m³ e retro 0,25m³ c/ operador habilitado e qualificado",
+      "1 Caminhão Basculante 6x4 traçado caçamba 12m³ com motorista habilitado e MTR para bota-fora de terra excedente",
+      "Operação contínua de escavação mecânica de 32 cavas de sapatas e 140,44m de valas de baldrames",
+      "Transporte de 180 m³ de material excedente para bota-fora licenciado no Complexo do Porto do Açu"
+    ],
+    "obrigacoes_locador": [
+      "Fornecimento de operador e motorista com ASO, integração de segurança e treinamento NR-12/NR-18 válidos",
+      "Máquinas com alarme sonoro de ré, cinto de segurança, extintor inspecionado e plano de manutenção preventiva",
+      "Combustível diesel S-10, lubrificantes e manutenção mecânica por conta exclusiva da locadora",
+      "Substituição de máquina defeituosa em no máximo 12 horas para não paralisar as fundações"
+    ],
+    "obrigacoes_locatario": [
+      "Acompanhamento topográfico com marcação a laser e gabaritos de eixos pelo Engenheiro e Topógrafo",
+      "Liberação do acesso de veículos pesados e segurança patrimonial na área portuária",
+      "Emissão de CTR / MTR eletrônico para destinação de resíduos de escavação"
+    ]
+  },
+  {
+    "cod": "LOC-03",
+    "nome_arquivo": "CONTRATO_LOC03_GRUPO_GERADOR_SILENCIADO.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE GRUPO GERADOR DIESEL SILENCIADO 50 kVA AUTOMÁTICO",
+    "itens_equip": "EQ-17 (Grupo Gerador Diesel Silenciado 50 kVA c/ Bacia de Contenção)",
+    "locador": "Tecnogera Locação de Geradores e Energia Temporária S.A. / Macaé",
+    "cnpj": "34.567.890/0001-12",
+    "periodo": "18/09/2026 a 10/12/2026 (3 Meses / Semanas S01 a S12)",
+    "cc": "CC-104 (Energia Temporária e Utilidades)",
+    "eap": "1.0.4",
+    "valor_total": 19800.0,
+    "valor_mensal": 6600.0,
+    "escopo": [
+      "1 Grupo Gerador Diesel 50 kVA silenciado (nível de ruído < 70 dB a 7m), trifásico 220/127V 60Hz",
+      "Quadro de Transferência Automática (QTA) com chave reversora e disjuntor de proteção geral",
+      "Bacia de contenção ecológica em chapa metálica de 110% do volume do tanque contra vazamentos de óleo/diesel",
+      "Cabo de força flexível 50mm² (3 fases + neutro + terra) com 30 metros de extensão"
+    ],
+    "obrigacoes_locador": [
+      "Entrega, içamento e start-up elétrico no canteiro com teste de carga e emissão de ART",
+      "Manutenção preventiva a cada 250 horas de operação (troca de filtros de óleo, ar, combustível e correias)",
+      "Plantão técnico 24/7 com atendimento presencial em até 4 horas no Porto do Açu"
+    ],
+    "obrigacoes_locatario": [
+      "Abastecimento com diesel marítimo S-10 limpo e filtrado",
+      "Aterramento elétrico temporário do chassi e neutro com hastes cobreadas de 5/8\" e cabo 35mm²",
+      "Operação diária conforme manual do fabricante e registro horímetro na planilha de RDO"
+    ]
+  },
+  {
+    "cod": "LOC-04",
+    "nome_arquivo": "CONTRATO_LOC04_CIMBRAMENTO_E_ESCORAMENTO.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE SISTEMA DE CIMBRAMENTO E ESCORAMENTO METÁLICO REGULÁVEL",
+    "itens_equip": "EQ-10 (Sistema de Cimbramento Metálico e Torres para Vigas e Laje)",
+    "locador": "Mills Estruturas e Serviços de Engenharia S.A.",
+    "cnpj": "45.678.901/0001-23",
+    "periodo": "25/10/2026 a 28/11/2026 (35 Dias Corridos / Semanas S05 a S09)",
+    "cc": "CC-302 (Fôrmas e Escoramentos Estruturais)",
+    "eap": "1.2.4, 1.2.6",
+    "valor_total": 14850.0,
+    "valor_mensal": 14850.0,
+    "escopo": [
+      "888 m²·m de escoras metálicas telescópicas ajustáveis (capacidade 2.000 kgf cada) com pinos de trava",
+      "Vigas metálicas de alumínio de alta resistência para suporte dos painéis compensados das vigas V101-V115",
+      "Forcados simples e duplos, cruzetas reguláveis e sapatas articuladas de nivelamento milimétrico",
+      "Projeto de cimbramento estruturado com memorial de cálculo de cargas e ART recolhida por Engenheiro Mecânico/Civil"
+    ],
+    "obrigacoes_locador": [
+      "Entrega de materiais 100% inspecionados, retos, sem corrosão e com roscas lubrificadas",
+      "Projeto de modulação de escoras indicando espaçamentos máximos de 1,20m e contra-flechas de L/300",
+      "Vistoria técnica presencial no canteiro antes da concretagem para liberação formal da montagem"
+    ],
+    "obrigacoes_locatario": [
+      "Montagem rigorosamente conforme o projeto da Mills, respeitando prumos e travamentos diagonais",
+      "Proteção das peças contra respingos diretos de concreto e proibição de soldas nas escoras",
+      "Devolução com peças limpas e organizadas em pallets/feixes amarrados"
+    ]
+  },
+  {
+    "cod": "LOC-05",
+    "nome_arquivo": "CONTRATO_LOC05_ANDAIMES_E_PLATAFORMA_ELEVATORIA.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE ANDAIMES FACHADEIROS NR-18 E PLATAFORMA TESOURA ELÉTRICA 10M",
+    "itens_equip": "EQ-11 (200m² Andaimes Fachadeiros Tubulares) e EQ-14 (Plataforma Elevatória Tesoura Elétrica)",
+    "locador": "Loxam Degrau Locação de Equipamentos e Plataformas S.A.",
+    "cnpj": "56.789.012/0001-34",
+    "periodo": "20/11/2026 a 20/02/2027 (3 Meses / Semanas S10 a S24)",
+    "cc": "CC-403 (Andaimes e Fachadas) e CC-607 (Elevação em Altura)",
+    "eap": "1.3.4, 2.2.7, 2.3.1",
+    "valor_total": 21800.0,
+    "valor_mensal": 7266.67,
+    "escopo": [
+      "200 m² de andaime tubular fachadeiro com piso metálico antiderrapante, rodapés de 20cm e escadas internas c/ alçapão",
+      "Guarda-corpo duplo (1,20m e 0,70m) e tela de proteção em polietileno fachadeira 100% fechada conforme NR-18",
+      "1 Plataforma aérea tipo tesoura elétrica autopropelida (altura de trabalho 10 metros, capacidade 230 kg)",
+      "Carregador de bateria inteligente bivolt integrado e pneus de borracha maciça que não marcam o porcelanato"
+    ],
+    "obrigacoes_locador": [
+      "Equipamentos em conformidade integral com NR-18 e NR-35, acompanhados de laudos e ART",
+      "Treinamento de operação da plataforma elevatória para 2 colaboradores da obra com certificado emitido",
+      "Manutenção preventiva mensal das baterias, sensores de inclinação e freios eletromagnéticos"
+    ],
+    "obrigacoes_locatario": [
+      "Utilização exclusiva por operadores treinados e portando cinto tipo paraquedista com talabarte duplo",
+      "Proibição de operar a plataforma em rampas superiores a 25% ou em solo desnivelado/lama",
+      "Ancoragem dos andaimes fachadeiros na estrutura de concreto a cada 4 metros com parafusos parabolt"
+    ]
+  },
+  {
+    "cod": "LOC-06",
+    "nome_arquivo": "CONTRATO_LOC06_EQUIPAMENTOS_ESPECIAIS_CANTEIRO.md",
+    "titulo": "CONTRATO DE LOCAÇÃO DE EQUIPAMENTOS MECÂNICOS DE PRODUÇÃO, TESTES E CAÇAMBAS PGRCC",
+    "itens_equip": "EQ-08 (Compactador Sapo), EQ-09 (Betoneira 400L), EQ-12 (Projetora Argamassa), EQ-13 (Bomba Teste), EQ-15 (Bomba Vácuo) e EQ-16 (Caçambas)",
+    "locador": "Casa do Construtor Locação de Ferramentas / EcoAçu Resíduos Ltda",
+    "cnpj": "67.890.123/0001-45",
+    "periodo": "18/09/2026 a 25/02/2027 (Sob Demanda / Semanas S01 a S25)",
+    "cc": "CC-106, CC-201, CC-404, CC-405, CC-601, CC-608",
+    "eap": "1.0.6, 1.1.2, 1.3.3, 1.5.2, 2.1.6, 2.3.4",
+    "valor_total": 22650.0,
+    "valor_mensal": 4530.0,
+    "escopo": [
+      "1 Compactador de percussão a gasolina 4 tempos (força de impacto 14 kN) para cavas e reaterro",
+      "1 Betoneira elétrica 400 litros trifásica com grade protetora de cremalheira e botão de parada de emergência",
+      "1 Máquina de projeção contínua de argamassa de emboço (capacidade 1,5 m³/h) com mangueira de 25m",
+      "1 Bomba de teste hidrostático manual/elétrica com manômetro com certificado de calibração RBC (Portão 3)",
+      "1 Bomba de vácuo duplo estágio 10 CFM com vacuômetro digital de alta precisão (< 500 microns) para HVAC",
+      "2 Caçambas estacionárias metálicas 5 m³ para entulho com troca e transporte licenciado com emissão de CTR"
+    ],
+    "obrigacoes_locador": [
+      "Equipamentos revisados, limpos, com cabos e tomadas industriais blindadas padrão steck",
+      "Manômetro de ensaio hidrostático com laudo do laboratório RBC emitido há menos de 6 meses",
+      "Destinação legal do entulho em aterro Classe A no Norte Fluminense com comprovação documental mensal"
+    ],
+    "obrigacoes_locatario": [
+      "Limpeza das máquinas ao final de cada jornada de trabalho (proibido acúmulo de argamassa seca)",
+      "Segregação adequada do entulho nas caçambas, proibindo queima ou mistura com lixo contaminado Classe D",
+      "Operação restrita a profissionais treinados e utilizando os EPIs mandatórios do POP 03"
+    ]
+  }
+]

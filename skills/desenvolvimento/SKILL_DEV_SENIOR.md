@@ -121,6 +121,7 @@ Só comunique a entrega depois de todos os checks da Etapa 4 aprovados. O relat�
 | **Desacoplamento** | Lógica de negócio em hooks (`/hooks`) ou utils (`/lib`). Componentes React são "burros" — só recebem props e renderizam. |
 | **Tipagem Forte** | Interfaces e Types para todos os dados que vêm das APIs. Nenhum `any` implícito. |
 | **Consistência** | Siga o padrão de naming, estrutura de pastas e estilo visual já estabelecido no projeto. Não invente novos padrões sem alinhamento. |
+| **Motores Python Escaláveis** | Scripts na pasta `scripts/` DEVEM ser motores universais agnósticos e multi-obras (`--obra [OBRA]` / `--dir [DIR]`). É expressamente proibido chumbar caminhos ou dados fixos de uma obra específica no código. |
 
 ---
 

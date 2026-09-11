@@ -1,0 +1,36 @@
+[
+  {
+    "item": "EQ-01",
+    "nome": "Módulo Habitável Escritório / Reuniões",
+    "tipo": "Container 6,00x2,40m climatizado",
+    "qtd": 1,
+    "und": "un",
+    "meses": "M1 a M6",
+    "semanas": "S01 a S26",
+    "cc": "CC-103",
+    "lead_dias": 12,
+    "data_solic": "10/09/2026",
+    "data_mobil": "22/09/2026",
+    "data_desmob": "10/03/2027",
+    "modalidade": "Locação Mensal",
+    "fornecedor_alvo": "Rentcon Locações / NHJ Brasil",
+    "funcao": "Apoio técnico da Engenharia e reuniões com a Fiscalização do Porto do Açu"
+  },
+  {
+    "item": "EQ-02",
+    "nome": "Módulo Vestiário / Sanitário NR-18",
+    "tipo": "Container c/ 3 chuveiros e armários",
+    "qtd": 1,
+    "und": "un",
+    "meses": "M1 a M6",
+    "semanas": "S01 a S26",
+    "cc": "CC-103",
+    "lead_dias": 12,
+    "data_solic": "10/09/2026",
+    "data_mobil": "22/09/2026",
+    "data_desmob": "10/03/2027",
+    "modalidade": "Locação Mensal",
+    "fornecedor_alvo": "Rentcon Locações / NHJ Brasil",
+    "funcao": "Higiene e vivência para até 20 operários simultâneos conforme NR-18"
+  }
+]

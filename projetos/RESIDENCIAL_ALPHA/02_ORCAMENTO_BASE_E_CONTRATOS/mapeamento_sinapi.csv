@@ -1,0 +1,6 @@
+codigo_eap;tipo_fonte;cod_referencia;preco_override;categoria_bdi;descricao_referencia
+1.0.1;COT;COT-ADM-01;14000.00;SERVICO;Engenheiro Residente (50%) + Mestre de Obras (100%)
+1.0.2;COT;COT-ADM-02;3200.00;SERVICO;Locação de Containers NR-18 + Sanitário Químico
+1.1.1;COMP;90082;;SERVICO;Escavação mecanizada de vala prof até 1,5m
+1.1.2;COMP;96624;480.00;SERVICO;Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm)
+1.1.5;COMP;104919;58.50;SERVICO;Aço CA-50 8.0mm Sapatas Isoladas

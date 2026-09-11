@@ -1,24 +1,78 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gera o Organograma Visual da OBRA_TMULT em PNG de alta resolução e em SVG vetorial.
+Motor Universal de Organograma Executivo & Estrutura Funcional de Campo Multi-Obra
+Ecossistema de Gestão de Obras & PMO Virtual
+
+Gera o Organograma em PNG de alta resolução e em SVG vetorial nativo
+diretamente na pasta 06_SST_E_RH da obra selecionada.
+
+Uso:
+    python scripts/gerar_organograma_visual.py --obra OBRA_TMULT
+    python scripts/gerar_organograma_visual.py --obra RESIDENCIAL_ALPHA
+    python scripts/gerar_organograma_visual.py --dir /caminho/personalizado/da/obra
 """
 
 import os
+import sys
+import json
+import argparse
+import html
 from PIL import Image, ImageDraw, ImageFont
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUTPUT_DIR = os.path.join(BASE_DIR, "projetos", "OBRA_TMULT", "06_SST_E_RH")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+if sys.platform == "win32":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
 
-PNG_PATH = os.path.join(OUTPUT_DIR, "ORGANOGRAMA_TMULT.png")
-SVG_PATH = os.path.join(OUTPUT_DIR, "ORGANOGRAMA_TMULT.svg")
+def obter_dados_obra(proj_dir, obra_id):
+    config_path = os.path.join(proj_dir, "config_obra.json")
+    config = {}
+    if os.path.exists(config_path):
+        try:
+            with open(config_path, "r", encoding="utf-8") as f:
+                config = json.load(f)
+        except Exception as e:
+            print(f"[AVISO] Não foi possível ler config_obra.json: {e}")
+
+    nome_obra = config.get("nome_obra", obra_id)
+    sigla_obra = config.get("sigla_obra", obra_id)
+
+    # Dedicação do Engenheiro Residente
+    dedicacao_eng = "Dedicação 60% (EAP 1.0.1) • Gestão Técnica, Qualidade & Fiscalização"
+    for item in config.get("administracao_local", []):
+        desc = item.get("descricao", "")
+        if "engenheiro" in desc.lower():
+            if "50%" in desc:
+                dedicacao_eng = "Dedicação 50% (EAP 1.0.1) • Gestão Técnica, Qualidade & Fiscalização"
+            elif "100%" in desc:
+                dedicacao_eng = "Dedicação 100% (EAP 1.0.1) • Gestão Técnica, Qualidade & Fiscalização"
+            elif "dedicação" in desc.lower():
+                dedicacao_eng = desc
+            break
+
+    if sigla_obra == "TMULT":
+        subtitulo = "EDIFÍCIO ADMINISTRATIVO TMULT (PORTO DO AÇU) — BASELINE 01"
+    else:
+        subtitulo = f"{nome_obra.upper()} — BASELINE 01"
+
+    return {
+        "nome_obra": nome_obra,
+        "sigla_obra": sigla_obra,
+        "subtitulo": subtitulo,
+        "dedicacao_eng": dedicacao_eng
+    }
 
 # ==============================================================================
 # 1. GERAÇÃO EM SVG VETORIAL (NATIVO, ULTRA NÍTIDO)
 # ==============================================================================
-def gerar_svg():
-    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="100%" height="100%" style="background-color: #FFFFFF; font-family: 'Segoe UI', Arial, sans-serif;">
+def gerar_svg(svg_path, info):
+    subtitulo_xml = html.escape(info["subtitulo"])
+    dedicacao_eng_xml = html.escape(info["dedicacao_eng"])
+
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 950" width="100%" height="100%" style="background-color: #FFFFFF; font-family: 'Segoe UI', Arial, sans-serif;">
   <defs>
     <!-- Gradientes e Sombras -->
     <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
@@ -49,7 +103,7 @@ def gerar_svg():
   <!-- Cabeçalho do Diagrama -->
   <rect x="0" y="0" width="1200" height="70" fill="url(#gradNavy)" />
   <text x="600" y="32" font-size="20" font-weight="bold" fill="#FFFFFF" text-anchor="middle" letter-spacing="1">ORGANOGRAMA EXECUTIVO &amp; ESTRUTURA FUNCIONAL DE CAMPO</text>
-  <text x="600" y="55" font-size="13" fill="#D99B26" text-anchor="middle">EDIFÍCIO ADMINISTRATIVO TMULT (PORTO DO AÇU) — BASELINE 01</text>
+  <text x="600" y="55" font-size="13" fill="#D99B26" text-anchor="middle">{subtitulo_xml}</text>
 
   <!-- LINHAS DE CONEXÃO -->
   <!-- Linha Central Sede -> Residente -->
@@ -104,9 +158,9 @@ def gerar_svg():
   <g filter="url(#shadow)">
     <rect x="380" y="230" width="440" height="80" rx="8" fill="url(#gradBlue)" stroke="#1B365D" stroke-width="2" />
     <rect x="380" y="230" width="440" height="26" rx="8" fill="#1B365D" />
-    <text x="600" y="248" font-size="13" font-weight="bold" fill="#D99B26" text-anchor="middle">RESPONSÁVEL TÉCNICO LEGAL — CREA/RJ</text>
+    <text x="600" y="248" font-size="13" font-weight="bold" fill="#D99B26" text-anchor="middle">RESPONSÁVEL TÉCNICO LEGAL — CREA/CAU</text>
     <text x="600" y="278" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ENGENHEIRO RESIDENTE DE OBRA</text>
-    <text x="600" y="298" font-size="11" fill="#E2E8F0" text-anchor="middle">Dedicação 60% (EAP 1.0.1) • Gestão Técnica, Qualidade &amp; Fiscalização</text>
+    <text x="600" y="298" font-size="11" fill="#E2E8F0" text-anchor="middle">{dedicacao_eng_xml}</text>
   </g>
 
   <!-- ==================== NÍVEL 3: SUPERVISÃO OPERACIONAL ==================== -->
@@ -204,14 +258,14 @@ def gerar_svg():
   </g>
 </svg>
 """
-    with open(SVG_PATH, "w", encoding="utf-8") as f:
+    with open(svg_path, "w", encoding="utf-8") as f:
         f.write(svg)
-    print(f"-> SVG vetorial gerado com sucesso: {SVG_PATH}")
+    print(f"-> SVG vetorial gerado: {svg_path}")
 
 # ==============================================================================
 # 2. GERAÇÃO EM PNG DE ALTA RESOLUÇÃO VIA PILLOW (PIL)
 # ==============================================================================
-def gerar_png():
+def gerar_png(png_path, info):
     width, height = 1200, 960
     img = Image.new("RGB", (width, height), color=(255, 255, 255))
     draw = ImageDraw.Draw(img)
@@ -235,7 +289,7 @@ def gerar_png():
         font_box_title = ImageFont.truetype("arialbd.ttf", 14)
         font_box_sub = ImageFont.truetype("arial.ttf", 11)
         font_box_desc = ImageFont.truetype("arial.ttf", 10)
-    except:
+    except Exception:
         font_title = ImageFont.load_default()
         font_sub = ImageFont.load_default()
         font_box_title = ImageFont.load_default()
@@ -245,7 +299,7 @@ def gerar_png():
     # Barra de Título
     draw.rectangle([(0, 0), (width, 70)], fill=c_navy)
     draw.text((width // 2, 22), "ORGANOGRAMA EXECUTIVO & ESTRUTURA FUNCIONAL DE CAMPO", fill=(255, 255, 255), font=font_title, anchor="mm")
-    draw.text((width // 2, 50), "EDIFÍCIO ADMINISTRATIVO TMULT (PORTO DO AÇU) — BASELINE 01", fill=c_gold, font=font_sub, anchor="mm")
+    draw.text((width // 2, 50), info["subtitulo"], fill=c_gold, font=font_sub, anchor="mm")
 
     # Linhas de Conexão
     draw.line([(600, 150), (600, 230)], fill=c_line, width=3)
@@ -288,9 +342,9 @@ def gerar_png():
     # Nível 2: Engenheiro Residente
     draw.rounded_rectangle([(380, 230), (820, 310)], radius=8, fill=c_blue, outline=c_navy, width=2)
     draw.rounded_rectangle([(380, 230), (820, 256)], radius=6, fill=c_navy)
-    draw.text((600, 243), "RESPONSÁVEL TÉCNICO LEGAL — CREA/RJ", fill=c_gold, font=font_box_desc, anchor="mm")
+    draw.text((600, 243), "RESPONSÁVEL TÉCNICO LEGAL — CREA/CAU", fill=c_gold, font=font_box_desc, anchor="mm")
     draw.text((600, 273), "ENGENHEIRO RESIDENTE DE OBRA", fill=(255, 255, 255), font=font_box_title, anchor="mm")
-    draw.text((600, 295), "Dedicação 60% (EAP 1.0.1) • Gestão Técnica, Qualidade & Fiscalização", fill=(226, 232, 240), font=font_box_desc, anchor="mm")
+    draw.text((600, 295), info["dedicacao_eng"], fill=(226, 232, 240), font=font_box_desc, anchor="mm")
 
     # Nível 3: Supervisores
     # TST
@@ -378,9 +432,52 @@ def gerar_png():
     draw.rounded_rectangle([(845, 875), (1115, 905)], radius=4, fill=(226, 232, 240))
     draw.text((980, 890), "Atuação concentrada: M5 e M6", fill=c_blue, font=font_box_desc, anchor="mm")
 
-    img.save(PNG_PATH, "PNG", quality=95)
-    print(f"-> PNG de alta resolução gerado com sucesso: {PNG_PATH}")
+    img.save(png_path, "PNG", quality=95)
+    print(f"-> PNG de alta resolução gerado: {png_path}")
+
+def gerar_organograma(obra_nome="OBRA_TMULT", custom_dir=None):
+    base_repo_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+    if custom_dir:
+        proj_dir = os.path.abspath(custom_dir)
+        obra_id = os.path.basename(proj_dir)
+    elif obra_nome:
+        proj_dir = os.path.join(base_repo_dir, "projetos", obra_nome)
+        obra_id = obra_nome
+    else:
+        proj_dir = os.path.join(base_repo_dir, "projetos", "OBRA_TMULT")
+        obra_id = "OBRA_TMULT"
+
+    if not os.path.exists(proj_dir):
+        raise FileNotFoundError(f"Diretório da obra não encontrado: {proj_dir}")
+
+    output_dir = os.path.join(proj_dir, "06_SST_E_RH")
+    os.makedirs(output_dir, exist_ok=True)
+
+    info = obter_dados_obra(proj_dir, obra_id)
+    sigla = info["sigla_obra"]
+
+    png_path = os.path.join(output_dir, f"ORGANOGRAMA_{sigla}.png")
+    svg_path = os.path.join(output_dir, f"ORGANOGRAMA_{sigla}.svg")
+
+    print(f"\n=======================================================")
+    print(f"Gerando Organograma Executivo: {info['nome_obra']}")
+    print(f"Destino: {output_dir}")
+    print(f"=======================================================")
+
+    gerar_svg(svg_path, info)
+    gerar_png(png_path, info)
+    print("✅ Organograma visual gerado com sucesso!\n")
+
+    return {
+        "png_path": png_path,
+        "svg_path": svg_path
+    }
 
 if __name__ == "__main__":
-    gerar_svg()
-    gerar_png()
+    parser = argparse.ArgumentParser(description="Motor Universal de Organograma Executivo Multi-Obra")
+    parser.add_argument("--obra", default="OBRA_TMULT", help="Nome da pasta da obra em /projetos/ (default: OBRA_TMULT)")
+    parser.add_argument("--dir", help="Caminho direto para a pasta da obra")
+    args = parser.parse_args()
+
+    gerar_organograma(obra_nome=args.obra, custom_dir=args.dir)

@@ -1,10 +1,10 @@
 # 🚜 ÍNDICE MESTRE: CONTRATOS DE LOCAÇÃO DE EQUIPAMENTOS & MÁQUINAS
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Porto do Açu (SJB/RJ)  
-> **Volume de Locação:** 17 Famílias de Equipamentos em 6 Macro-Pacotes Contratuais  
-> **Valor Total Consolidado das Locações:** **R$ 141.499,98**  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.40 m²) — `TMULT`  
+> **Volume de Locação:** 6 Macro-Pacotes Contratuais  
+> **Valor Total Consolidado das Locações:** **R$ 141,899.98**  
 > **Governança:** POP 04 (Equipamentos), POP 06 (Recebimento), NR-12, NR-18 e NR-35  
-> **Planilha de Gestão e Controle:** [`PLANILHA_GESTAO_LOCACAO_EQUIPAMENTOS.xlsx`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/02_ORCAMENTO_BASE_E_CONTRATOS/CONTRATOS_EQUIPAMENTOS/PLANILHA_GESTAO_LOCACAO_EQUIPAMENTOS.xlsx)
+> **Planilha de Gestão e Controle:** [`PLANILHA_GESTAO_LOCACAO_EQUIPAMENTOS.xlsx`](file:///C:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/02_ORCAMENTO_BASE_E_CONTRATOS/CONTRATOS_EQUIPAMENTOS/PLANILHA_GESTAO_LOCACAO_EQUIPAMENTOS.xlsx)
 
 ---
 
@@ -25,7 +25,7 @@
 
 ## 2. Protocolo de Entrada e Segurança de Equipamentos no Canteiro (POP 04)
 
-Antes de qualquer equipamento iniciar operação no canteiro da OBRA_TMULT no Porto do Açu, o Engenheiro Residente e o Técnico de Segurança do Trabalho (TST) devem exigir:
+Antes de qualquer equipamento iniciar operação no canteiro da TMULT, o Engenheiro Residente e o Técnico de Segurança do Trabalho (TST) devem exigir:
 
 1. **Checklist de Conformidade NR-12 / NR-18:**
    - Botões de parada de emergência funcionais e acessíveis;
@@ -37,7 +37,7 @@ Antes de qualquer equipamento iniciar operação no canteiro da OBRA_TMULT no Po
    - Certificado de treinamento de operador de máquinas pesadas / plataformas (NR-11, NR-12, NR-18 e NR-35);
    - Ficha de entrega de EPIs com CAs vigentes.
 3. **ART de Responsabilidade Técnica:**
-   - Obrigatória para o Cimbramento Metálico (`LOC-04`), Andaimes Fachadeiros (`LOC-05`), Instalações de Containers (`LOC-01`) e Grupo Gerador (`LOC-03`).
+   - Obrigatória para o Cimbramento Metálico, Andaimes Fachadeiros, Instalações de Containers e Grupo Gerador.
 
 ---
 
@@ -45,9 +45,9 @@ Antes de qualquer equipamento iniciar operação no canteiro da OBRA_TMULT no Po
 
 | Pacote | Manutenção Programada | Tempo Máximo de Atendimento (SLA) | Penalidade por Indisponibilidade |
 | :--- | :--- | :---: | :--- |
-| **LOC-01 Módulos** | Sucção e limpeza sanitária 2x por semana | Até 24 horas úteis | Glosa diária de 5% sobre a locação |
-| **LOC-02 Terraplenagem** | Revisão diária de graxa e nível de óleo pelo operador | Até 12 horas úteis | Desconto das horas paralisadas + reposição de maquinário |
-| **LOC-03 Gerador** | Troca de filtros e óleo a cada 250 horas | Até 4 horas (Plantão 24/7) | Multa por risco de paralisação de concretagem |
-| **LOC-04 Cimbramento** | Vistoria técnica antes da concretagem | Até 24 horas antes do lançamento | Bloqueio do Portão de Qualidade da Laje |
-| **LOC-05 Andaimes/Plat.** | Carga de baterias e verificação mensal | Até 24 horas úteis | Substituição imediata por plataforma reserva |
-| **LOC-06 Produção** | Limpeza diária e aferição de manômetros | Até 12 horas úteis | Troca imediata da bomba de argamassa |
+| **Módulos / Canteiro** | Sucção e limpeza sanitária 2x por semana | Até 24 horas úteis | Glosa diária de 5% sobre a locação |
+| **Terraplenagem** | Revisão diária de graxa e nível de óleo pelo operador | Até 12 horas úteis | Desconto das horas paralisadas + reposição de maquinário |
+| **Grupo Gerador** | Troca de filtros e óleo a cada 250 horas | Até 4 horas (Plantão 24/7) | Multa por risco de paralisação de concretagem |
+| **Cimbramento** | Vistoria técnica antes da concretagem | Até 24 horas antes do lançamento | Bloqueio do Portão de Qualidade da Laje |
+| **Andaimes / Plataformas** | Carga de baterias e verificação mensal | Até 24 horas úteis | Substituição imediata por plataforma reserva |
+| **Equipamentos Produção** | Limpeza diária e aferição de manômetros | Até 12 horas úteis | Troca imediata da bomba de argamassa |

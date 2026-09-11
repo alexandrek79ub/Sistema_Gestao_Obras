@@ -1,7 +1,7 @@
 # 🚜 INSTRUMENTO PARTICULAR DE CONTRATO DE LOCAÇÃO DE EQUIPAMENTOS: LOC-01
 ### CONTRATO DE LOCAÇÃO DE MÓDULOS HABITÁVEIS CONTAINERS E SANITÁRIOS QUÍMICOS NR-18
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Terminal Multiuso (Porto do Açu - SJB/RJ)  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.40 m²) — `TMULT`  
 > **Locatária:** CONSTRUTORA EXECUTIVA DO PORTO LTDA  
 > **Locadora:** Rentcon Locações de Módulos Habitáveis Ltda / NHJ Brasil | **CNPJ:** 12.345.678/0001-90  
 > **Valor Total do Contrato:** R$ 38,299.98 | **Centro de Custo:** CC-103 (Canteiro e Vivência NR-18)  
@@ -11,14 +11,14 @@
 ---
 
 ## CLÁUSULA PRIMEIRA — DO OBJETO E EQUIPAMENTOS LOCADOS
-1.1. O presente instrumento tem por objeto a locação das máquinas, equipamentos e instalações provisórias descritos abaixo, correspondentes ao pacote **LOC-01** da Linha de Base 01 da OBRA_TMULT:
+1.1. O presente instrumento tem por objeto a locação das máquinas, equipamentos e instalações provisórias descritos abaixo, correspondentes ao pacote **LOC-01** da Linha de Base 01 da TMULT:
 - 1 Módulo Escritório 6,00x2,40m termoacústico c/ AC 12.000 BTU, janelas c/ grade, iluminação LED e mesa de reuniões;
 - 1 Módulo Vestiário 6,00x2,40m com 4 chuveiros elétricos blindados, lavatórios, bancos e armários NR-18;
 - 1 Módulo Refeitório 6,00x2,40m climatizado com mesas, bancos laváveis, pia de inox e bebedouro refrigerado;
 - 1 Módulo Almoxarifado/Ferramentaria Dry 20 pés com prateleiras reforçadas e tranca tetra quádrupla;
 - 2 Cabines de sanitários químicos portáteis em polietileno com 2 manutenções e sucções de efluentes semanais;
 
-1.2. Os equipamentos destinam-se exclusivamente ao atendimento das obras de construção civil do Edifício Administrativo do Terminal Multiuso no Porto do Açu, sendo vedada a sublocação ou desvio de finalidade sem anuência prévia da LOCATÁRIA.
+1.2. Os equipamentos destinam-se exclusivamente ao atendimento das obras de construção civil do empreendimento TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo, sendo vedada a sublocação ou desvio de finalidade sem anuência prévia da LOCATÁRIA.
 
 ## CLÁUSULA SEGUNDA — DOS VALORES E FORMA DE PAGAMENTO
 2.1. Pela locação dos bens, a LOCATÁRIA pagará à LOCADORA o valor global de **R$ 38,299.98**, em parcelas mensais vinculadas ao relatório de medição e efetiva disponibilidade operacional no canteiro.
@@ -42,7 +42,7 @@
 
 ## CLÁUSULA SEXTA — DA SEGURANÇA DO TRABALHO E PORTÃO DE ENTRADA (POP 04 / NR-18)
 6.1. Todos os equipamentos deverão ser submetidos à vistoria de entrada no canteiro, com preenchimento da **Ficha de Inspeção de Equipamento (FIE)** pelo TST da obra.
-6.2. Nenhum operador da LOCADORA poderá adentrar o Porto do Açu sem portar o crachá de identificação, ASO com aptidão específica, certificados NR-11/12/18 e EPIs obrigatórios com CA válido.
+6.2. Nenhum operador da LOCADORA poderá adentrar o canteiro sem portar o crachá de identificação, ASO com aptidão específica, certificados NR-11/12/18 e EPIs obrigatórios com CA válido.
 
 ---
 
@@ -58,4 +58,4 @@
 
 ---
 
-*Contrato pré-criado e auditado conforme a Linha de Base 01 da OBRA_TMULT.*
+*Contrato pré-criado e auditado conforme a Linha de Base 01 da TMULT.*

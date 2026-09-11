@@ -1,26 +1,24 @@
 # 📅 CRONOGRAMA MESTRE DE SUPRIMENTOS: MATERIAIS & EQUIPAMENTOS
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Porto do Açu (SJB/RJ)  
-> **Horizonte Temporal:** 6 Meses (26 Semanas / 180 Dias Corridos) — Linha de Base 01  
-> **Custo Direto Base Auditado:** R$ 1.314.562,67 | **Governança:** POP 05, POP 06, POP 17 e Skill Gestão 03  
-> **Data da Linha de Base:** 10/09/2026 | **Engenheiro Chefe:** PMO Virtual A11
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.4 m²)  
+> **Horizonte Temporal:** 6 Meses (26 Semanas / 180 Dias Corridos) — Linha de Base  
+> **Governança:** POP 05, POP 06, POP 17 e Skill Gestão 03  
+> **Data de Atualização:** 11/09/2026 | **Engenheiro Chefe:** PMO Virtual
 
 ---
 
 ## 1. Premissas Operacionais & Regras de Gatilho (POP 05)
 
-Para garantir o abastecimento contínuo do canteiro no Porto do Açu sem atrasos logísticos e sem sobrecarga do fluxo de caixa, a Engenharia e Suprimentos operam sob a regra de **Gatilho de Disparo Antecipado**:
+Para garantir o abastecimento contínuo do canteiro sem atrasos logísticos e sem sobrecarga do fluxo de caixa, a Engenharia e Suprimentos operam sob a regra de **Gatilho de Disparo Antecipado**:
 
 - **Data Gatilho da RC (Engenharia):** Prazo limite para a obra emitir a RC técnica com quantidades em UCC, EAP e Centro de Custo;
-- **Lead Time de Suprimentos:** Tempo regulamentar para cotação de 3 propostas, equalização técnica, aprovação da Diretoria (Skill 03) e fabricação/transporte pelo fornecedor homologado;
-- **Data de Necessidade Física no Canteiro:** Momento exato em que o insumo deve estar descarregado e inspecionado (POP 06) para alimentar a frente de serviço do Caminho Crítico (CPM);
-- **Regra de Pagamento Padrão:** Faturamento D+30 após entrega física (sem sinal antecipado), preservando a saúde financeira da construtora.
+- **Lead Time de Suprimentos:** Tempo regulamentar para cotação de 3 propostas, equalização técnica, aprovação da Diretoria (Skill 03) e entrega;
+- **Data de Necessidade Física no Canteiro:** Momento exato em que o insumo deve estar descarregado e inspecionado (POP 06);
+- **Regra de Pagamento Padrão:** Faturamento D+30 após entrega física aprovada.
 
 ---
 
-## 2. Cronograma de Suprimentos — MATERIAIS E INSUMOS CRÍTICOS (M1 a M6)
-
-Abaixo está o sequenciamento cronológico completo dos **24 Pacotes de Compra**, ordenados pela data de necessidade física no canteiro:
+## 2. Cronograma de Suprimentos — MATERIAIS E INSUMOS CRÍTICOS (24 Pacotes)
 
 | Nº RC | Pacote de Fornecimento | Centro Custo | Qtd Comercial UCC | Disparo RC | Emissão PC | Entrega Obra | Sem. | Lead | Custo Direto Base | Critério de Recebimento (POP 06) |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -49,13 +47,11 @@ Abaixo está o sequenciamento cronológico completo dos **24 Pacotes de Compra**
 | **RC-023/2026** | Tintas Acrílicas Laváveis Premium, Selador Acrílico e Massa PVA | `CC-706` | 42 latas 18L / 24 baldes massa | 25/01/2027 | 02/02/2027 | **18/02/2027** | `S23` | 24d | R$ 14.200,00 | Suvinil/Coral fosco aveludado cor Branco Neve e Gelo; laudo de rendimento e lavabilidade NBR 15079 |
 | **RC-024/2026** | Limpeza Fina Pós-Obra, Testes Globais e Desmobilização Geral | `CC-105` | Serviço global (368,40 m²) | 05/02/2027 | 12/02/2027 | **25/02/2027** | `S25` | 20d | R$ 9.400,00 | Polimento de porcelanatos, limpeza química de vidros sem riscos, entrega de chaves e databook físico/digital |
 
-**Custo Direto Orçado dos 24 Pacotes de Materiais:** R$ 567.973,79
+**Custo Direto Orçado dos Materiais:** R$ 567.973,79
 
 ---
 
-## 3. Cronograma de Suprimentos — EQUIPAMENTOS & INSTALAÇÕES PROVISÓRIAS
-
-Planejamento de mobilização, operação e desmobilização das **17 famílias de equipamentos** baseadas no `HISTOGRAMA_EQUIPAMENTOS_TMULT.csv`:
+## 3. Cronograma de Suprimentos — EQUIPAMENTOS & INSTALAÇÕES PROVISÓRIAS (17 Itens)
 
 | Item | Equipamento / Instalação | Qtd | Un | Meses | Semanas | Centro Custo | Lead | Disparo Pedido | Mobilização | Desmobilização | Modalidade Contratual | Fornecedor Alvo / Função |
 | :---: | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--- |
@@ -79,35 +75,10 @@ Planejamento de mobilização, operação e desmobilização das **17 famílias 
 
 ---
 
-## 4. Matriz Semanal de Linha do Tempo (Visão Gantt: Semanas S01 a S26)
+## 4. Plano de Ação Imediato para a Equipe de Suprimentos
 
-```
-Fase / Pacote                     | S01 S02 S03 S04 S05 S06 S07 S08 S09 S10 S11 S12 S13 S14 S15 S16 S17 S18 S19 S20 S21 S22 S23 S24 S25 S26
-----------------------------------+---------------------------------------------------------------------------------------------------------
-[CANTEIRO] Containers e Vivência  | [== Mobilização ==]=======================================================================>[Desmob.]
-[INFRA] Retroescavadeira e Basc.  | [==== Operação ====]                                                                                    
-[INFRA] Aço, Fôrma e Concreto     |     [====== Execução Fundações ======]                                                                  
-[SUPRA] Cimbramento Metálico      |                 [========= Montagem e Concretagem Laje =========]                                       
-[SUPRA] Aço e Concreto Vigas/Laje|                     [========== Supraestrutura Concluída ==========]                                    
-[ALVENARIA] Blocos e Andaimes     |                                   [============== Alvenaria B144 e Fachadas ==============]             
-[COBERTURA] Telhas Sandwich PIR   |                                         [======= Montagem Telhas e Calhas =======]                      
-[HIDRÁULICA] Tubos e Teste 72h    |                                                           [========= Tubulações e Teste 10 bar =======] 
-[REBOCO] Projeção de Argamassa    |                                                               [======= Emboço Projetado =======]        
-[ESQUADRIAS] Alumínio e Vidros    |                                                                     [====== Fixação Janelas ======]     
-[PISOS] Porcelanato 60x60 e AC3   |                                                                           [======= Assentamento ======] 
-[ELÉTRICA] Cabos e Quadros QDG    |                                                                           [========= Fiação e Painéis =]
-[HVAC] Ar-Condicionado Splits     |                                                                                       [==== Climatiz. ==]
-[PINTURA] Selador e Látex Branco  |                                                                                       [==== Pintura ====]
-[ENTREGA] Limpeza Fina e Databook |                                                                                               [== Turnkey ==]
-```
+1. **Disparo Antecipado de RCs:** Respeitar rigorosamente a matriz D-30 (cotação), D-15 (pedido) e D-0 (canteiro);
+2. **Homologação Prévia de Terceiros:** Coleta de documentação SST (POP 17 / NR-18) com 30 dias de antecedência;
+3. **Acompanhamento no Tracker Kanban:** Manter os semáforos verdes através de revisão semanal no comitê de obras.
 
----
-
-## 5. Próximas Ações Imediatas da Engenharia & Suprimentos
-
-1. **Disparo Imediato das RCs do Mês 1:** Emitir e homologar os Pedidos de Compra de Aço (RC-001), Concreto (RC-002), Fôrmas (RC-003) e Containers (RC-004);
-2. **Homologação dos Empreiteiros SUB-01 (Estrutura) e SUB-02 (Alvenaria):** Coleta de documentação SST (POP 17 / NR-18) e assinaturas com 30 dias de antecedência;
-3. **Reserva do Cimbramento Metálico (RC-005):** Travar negociação comercial com a Mills/Rohr para chegada na Semana S06 sem falta de peças;
-4. **Acompanhamento no Tracker Kanban:** Manter os semáforos verdes através da revisão semanal no comitê de obras.
-
-*Documento oficial gerado e auditado pelo Sistema de Gestão de Obras (PMO Virtual A11).*
+*Documento oficial gerado e auditado pelo Sistema de Gestão de Obras (PMO Virtual).*

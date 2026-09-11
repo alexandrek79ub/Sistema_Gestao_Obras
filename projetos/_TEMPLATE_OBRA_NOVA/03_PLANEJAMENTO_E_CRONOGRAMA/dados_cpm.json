@@ -1,0 +1,227 @@
+{
+  "atividades": [
+    {
+      "id": "A01_MOB_CANTEIRO",
+      "duracao_dias": 10,
+      "predecessoras": []
+    },
+    {
+      "id": "A02_ESCAV_INFRA",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A01_MOB_CANTEIRO"
+      ]
+    },
+    {
+      "id": "A03_SAPATAS_CONC",
+      "duracao_dias": 7,
+      "predecessoras": [
+        "A02_ESCAV_INFRA"
+      ]
+    },
+    {
+      "id": "A04_BALDRAMES_CONC",
+      "duracao_dias": 8,
+      "predecessoras": [
+        "A03_SAPATAS_CONC"
+      ]
+    },
+    {
+      "id": "A05_IMPERM_BALDRAME",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A04_BALDRAMES_CONC"
+      ]
+    },
+    {
+      "id": "A06_REATERRO_INFRA",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A05_IMPERM_BALDRAME"
+      ]
+    },
+    {
+      "id": "A07_PILARES_SUPRA",
+      "duracao_dias": 9,
+      "predecessoras": [
+        "A06_REATERRO_INFRA"
+      ]
+    },
+    {
+      "id": "A08_VIGAS_LAJE_FORMA",
+      "duracao_dias": 8,
+      "predecessoras": [
+        "A07_PILARES_SUPRA"
+      ]
+    },
+    {
+      "id": "A09_CONCRET_LAJE_H12",
+      "duracao_dias": 1,
+      "predecessoras": [
+        "A08_VIGAS_LAJE_FORMA"
+      ]
+    },
+    {
+      "id": "A10_CURA_DESFORMA",
+      "duracao_dias": 12,
+      "predecessoras": [
+        "A09_CONCRET_LAJE_H12"
+      ]
+    },
+    {
+      "id": "A11_ESTRUT_TERCAS_COB",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A10_CURA_DESFORMA"
+      ]
+    },
+    {
+      "id": "A12_ALVENARIA_VEDACAO",
+      "duracao_dias": 20,
+      "predecessoras": [
+        "A10_CURA_DESFORMA"
+      ]
+    },
+    {
+      "id": "A13_TELHAS_SANDWICH_PLAT",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A11_ESTRUT_TERCAS_COB",
+        "A12_ALVENARIA_VEDACAO"
+      ]
+    },
+    {
+      "id": "A14_ELET_EMBUTIDA",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A13_TELHAS_SANDWICH_PLAT"
+      ]
+    },
+    {
+      "id": "A15_HIDR_EMBUTIDA",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A13_TELHAS_SANDWICH_PLAT"
+      ]
+    },
+    {
+      "id": "A16_TESTE_HIDROSTATICO_72H",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A15_HIDR_EMBUTIDA"
+      ]
+    },
+    {
+      "id": "A17_EMBOCO_REBOCO",
+      "duracao_dias": 14,
+      "predecessoras": [
+        "A16_TESTE_HIDROSTATICO_72H",
+        "A14_ELET_EMBUTIDA"
+      ]
+    },
+    {
+      "id": "A18_IMPERM_WCS",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "id": "A19_CONTRAPISO",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "id": "A20_INFRA_DUTOS_HVAC",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "id": "A21_ESQUADRIAS_FIX",
+      "duracao_dias": 8,
+      "predecessoras": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "id": "A22_PISO_PORCELANATO",
+      "duracao_dias": 14,
+      "predecessoras": [
+        "A19_CONTRAPISO",
+        "A18_IMPERM_WCS"
+      ]
+    },
+    {
+      "id": "A23_FIACAO_TELECOM",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "id": "A24_RODAPES_ACAB",
+      "duracao_dias": 4,
+      "predecessoras": [
+        "A22_PISO_PORCELANATO"
+      ]
+    },
+    {
+      "id": "A25_PINTURA_1A_DEMAO",
+      "duracao_dias": 5,
+      "predecessoras": [
+        "A24_RODAPES_ACAB",
+        "A20_INFRA_DUTOS_HVAC",
+        "A21_ESQUADRIAS_FIX",
+        "A23_FIACAO_TELECOM"
+      ]
+    },
+    {
+      "id": "A26_APARELHOS_HVAC",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A25_PINTURA_1A_DEMAO"
+      ]
+    },
+    {
+      "id": "A27_LOUCAS_METAIS",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A25_PINTURA_1A_DEMAO"
+      ]
+    },
+    {
+      "id": "A28_LUMINARIAS_ESPELHOS",
+      "duracao_dias": 5,
+      "predecessoras": [
+        "A25_PINTURA_1A_DEMAO"
+      ]
+    },
+    {
+      "id": "A29_PINTURA_FINAL",
+      "duracao_dias": 7,
+      "predecessoras": [
+        "A26_APARELHOS_HVAC",
+        "A27_LOUCAS_METAIS",
+        "A28_LUMINARIAS_ESPELHOS"
+      ]
+    },
+    {
+      "id": "A30_COMISSIONAMENTO",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A29_PINTURA_FINAL"
+      ]
+    },
+    {
+      "id": "A31_LIMPEZA_ENTREGA",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A30_COMISSIONAMENTO"
+      ]
+    }
+  ]
+}

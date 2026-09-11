@@ -1,0 +1,450 @@
+[
+  {
+    "cc_codigo": "CC-100",
+    "nivel": "Sintético",
+    "descricao": "CANTEIRO DE OBRAS & ADMINISTRAÇÃO LOCAL",
+    "eap_macro": "1.0",
+    "natureza": "Custo Direto Canteiro",
+    "conta_contabil": "4.1.1.01"
+  },
+  {
+    "cc_codigo": "CC-101",
+    "nivel": "Analítico",
+    "descricao": "Gestão Técnica de Obra (Eng. Residente e Mestre)",
+    "eap_macro": "1.0.1",
+    "natureza": "Mão de Obra Indireta",
+    "conta_contabil": "4.1.1.01.01"
+  },
+  {
+    "cc_codigo": "CC-102",
+    "nivel": "Analítico",
+    "descricao": "Apoio e Segurança (TST, Almoxarife, Vigia)",
+    "eap_macro": "1.0.2",
+    "natureza": "Mão de Obra Indireta",
+    "conta_contabil": "4.1.1.01.02"
+  },
+  {
+    "cc_codigo": "CC-103",
+    "nivel": "Analítico",
+    "descricao": "Locação de Containers Habitáveis e Sanitários Químicos",
+    "eap_macro": "1.0.3",
+    "natureza": "Locação de Equipamentos",
+    "conta_contabil": "4.1.1.01.03"
+  },
+  {
+    "cc_codigo": "CC-104",
+    "nivel": "Analítico",
+    "descricao": "Contas de Consumo Canteiro (Energia, Água Pipa, Fibra)",
+    "eap_macro": "1.0.4",
+    "natureza": "Utilidades e Serviços",
+    "conta_contabil": "4.1.1.01.04"
+  },
+  {
+    "cc_codigo": "CC-105",
+    "nivel": "Analítico",
+    "descricao": "Vivência, Alimentação (16 operários) e Transporte",
+    "eap_macro": "1.0.5",
+    "natureza": "Benefícios Operacionais",
+    "conta_contabil": "4.1.1.01.05"
+  },
+  {
+    "cc_codigo": "CC-106",
+    "nivel": "Analítico",
+    "descricao": "SST, PGR/PCMSO, EPIs, Caçambas e Apoio",
+    "eap_macro": "1.0.6",
+    "natureza": "Segurança e Descarte",
+    "conta_contabil": "4.1.1.01.06"
+  },
+  {
+    "cc_codigo": "CC-200",
+    "nivel": "Sintético",
+    "descricao": "INFRAESTRUTURA & FUNDAÇÕES",
+    "eap_macro": "1.1",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.01"
+  },
+  {
+    "cc_codigo": "CC-201",
+    "nivel": "Analítico",
+    "descricao": "Escavação Mecanizada/Manual e Compactação de Valas",
+    "eap_macro": "1.1.1 e 1.1.2",
+    "natureza": "Serviço de Terraplenagem",
+    "conta_contabil": "4.1.2.01.01"
+  },
+  {
+    "cc_codigo": "CC-202",
+    "nivel": "Analítico",
+    "descricao": "Lastro de Concreto Magro fck 15 MPa (e=5cm)",
+    "eap_macro": "1.1.3",
+    "natureza": "Material - Concreto",
+    "conta_contabil": "4.1.2.01.02"
+  },
+  {
+    "cc_codigo": "CC-203",
+    "nivel": "Analítico",
+    "descricao": "Concreto Usinado fck 30 MPa - Sapatas Isoladas",
+    "eap_macro": "1.1.4",
+    "natureza": "Material - Concreto Usinado",
+    "conta_contabil": "4.1.2.01.03"
+  },
+  {
+    "cc_codigo": "CC-204",
+    "nivel": "Analítico",
+    "descricao": "Fôrmas Compensado 17mm - Sapatas Isoladas",
+    "eap_macro": "1.1.5",
+    "natureza": "Material - Madeira e Fôrmas",
+    "conta_contabil": "4.1.2.01.04"
+  },
+  {
+    "cc_codigo": "CC-205",
+    "nivel": "Analítico",
+    "descricao": "Concreto e Fôrmas - Arranques de Pilares P1-P24",
+    "eap_macro": "1.1.6 e 1.1.7",
+    "natureza": "Material - Concreto e Fôrmas",
+    "conta_contabil": "4.1.2.01.05"
+  },
+  {
+    "cc_codigo": "CC-206",
+    "nivel": "Analítico",
+    "descricao": "Concreto Usinado fck 30 MPa - Vigas Baldrames",
+    "eap_macro": "1.1.8",
+    "natureza": "Material - Concreto Usinado",
+    "conta_contabil": "4.1.2.01.06"
+  },
+  {
+    "cc_codigo": "CC-207",
+    "nivel": "Analítico",
+    "descricao": "Fôrmas Compensado 17mm - Vigas Baldrames (140m)",
+    "eap_macro": "1.1.9",
+    "natureza": "Material - Madeira e Fôrmas",
+    "conta_contabil": "4.1.2.01.07"
+  },
+  {
+    "cc_codigo": "CC-208",
+    "nivel": "Analítico",
+    "descricao": "Armadura CA-50 Cortada/Dobrada - Sapatas Isoladas",
+    "eap_macro": "1.1.10",
+    "natureza": "Material - Aço Estrutural",
+    "conta_contabil": "4.1.2.01.08"
+  },
+  {
+    "cc_codigo": "CC-209",
+    "nivel": "Analítico",
+    "descricao": "Armadura CA-50 Cortada/Dobrada - Arranques de Pilares",
+    "eap_macro": "1.1.11",
+    "natureza": "Material - Aço Estrutural",
+    "conta_contabil": "4.1.2.01.09"
+  },
+  {
+    "cc_codigo": "CC-210",
+    "nivel": "Analítico",
+    "descricao": "Armadura CA-50 Cortada/Dobrada - Vigas Baldrames",
+    "eap_macro": "1.1.12",
+    "natureza": "Material - Aço Estrutural",
+    "conta_contabil": "4.1.2.01.10"
+  },
+  {
+    "cc_codigo": "CC-211",
+    "nivel": "Analítico",
+    "descricao": "Impermeabilização Tinta Asfáltica (Baldrames e Sapatas)",
+    "eap_macro": "1.1.13",
+    "natureza": "Material - Impermeabilizantes",
+    "conta_contabil": "4.1.2.01.11"
+  },
+  {
+    "cc_codigo": "CC-212",
+    "nivel": "Analítico",
+    "descricao": "Reaterro Compactado e Bota-Fora de Cavas",
+    "eap_macro": "1.1.14 e 1.1.15",
+    "natureza": "Serviço de Terraplenagem",
+    "conta_contabil": "4.1.2.01.12"
+  },
+  {
+    "cc_codigo": "CC-300",
+    "nivel": "Sintético",
+    "descricao": "SUPRAESTRUTURA (PILARES, VIGAS E LAJES)",
+    "eap_macro": "1.2",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.02"
+  },
+  {
+    "cc_codigo": "CC-301",
+    "nivel": "Analítico",
+    "descricao": "Concreto Usinado fck 30 MPa - Pilares P1 a P24",
+    "eap_macro": "1.2.1",
+    "natureza": "Material - Concreto Usinado",
+    "conta_contabil": "4.1.2.02.01"
+  },
+  {
+    "cc_codigo": "CC-302",
+    "nivel": "Analítico",
+    "descricao": "Fôrmas Compensado 17mm - Pilares P1 a P24",
+    "eap_macro": "1.2.2",
+    "natureza": "Material - Madeira e Fôrmas",
+    "conta_contabil": "4.1.2.02.02"
+  },
+  {
+    "cc_codigo": "CC-303",
+    "nivel": "Analítico",
+    "descricao": "Concreto Usinado fck 30 MPa - Vigas Superiores e Cobertura",
+    "eap_macro": "1.2.3",
+    "natureza": "Material - Concreto Usinado",
+    "conta_contabil": "4.1.2.02.03"
+  },
+  {
+    "cc_codigo": "CC-304",
+    "nivel": "Analítico",
+    "descricao": "Fôrmas Compensado 17mm - Vigas Superiores",
+    "eap_macro": "1.2.4",
+    "natureza": "Material - Madeira e Fôrmas",
+    "conta_contabil": "4.1.2.02.04"
+  },
+  {
+    "cc_codigo": "CC-305",
+    "nivel": "Analítico",
+    "descricao": "Concreto Usinado fck 30 MPa - Capa de Laje Treliçada e=5cm",
+    "eap_macro": "1.2.5",
+    "natureza": "Material - Concreto Usinado",
+    "conta_contabil": "4.1.2.02.05"
+  },
+  {
+    "cc_codigo": "CC-306",
+    "nivel": "Analítico",
+    "descricao": "Fôrmas e Escoramento Metálico - Lajes e Vigas",
+    "eap_macro": "1.2.6 e 1.2.7",
+    "natureza": "Locação de Equipamentos / Fôrma",
+    "conta_contabil": "4.1.2.02.06"
+  },
+  {
+    "cc_codigo": "CC-307",
+    "nivel": "Analítico",
+    "descricao": "Vigotas Treliçadas TR 16745 e EPS para Lajes H12",
+    "eap_macro": "1.2.8 e 1.2.9",
+    "natureza": "Material - Laje Premoldada",
+    "conta_contabil": "4.1.2.02.07"
+  },
+  {
+    "cc_codigo": "CC-308",
+    "nivel": "Analítico",
+    "descricao": "Armadura CA-50 Pilares e Vigas + CA-60 Lajes",
+    "eap_macro": "1.2.10 e 1.2.11",
+    "natureza": "Material - Aço Estrutural",
+    "conta_contabil": "4.1.2.02.08"
+  },
+  {
+    "cc_codigo": "CC-400",
+    "nivel": "Sintético",
+    "descricao": "ARQUITETURA, ALVENARIAS E ACABAMENTOS",
+    "eap_macro": "2.1",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.03"
+  },
+  {
+    "cc_codigo": "CC-401",
+    "nivel": "Analítico",
+    "descricao": "Alvenaria de Vedação (Blocos de Concreto 14x19x39)",
+    "eap_macro": "2.1.1",
+    "natureza": "Material - Blocos e Argamassas",
+    "conta_contabil": "4.1.2.03.01"
+  },
+  {
+    "cc_codigo": "CC-402",
+    "nivel": "Analítico",
+    "descricao": "Chapisco e Emboço/Reboco Paulista 20mm",
+    "eap_macro": "2.1.2 e 2.1.3",
+    "natureza": "Material/MO Revestimentos",
+    "conta_contabil": "4.1.2.03.02"
+  },
+  {
+    "cc_codigo": "CC-403",
+    "nivel": "Analítico",
+    "descricao": "Contrapiso e Porcelanato Retificado 60x60cm",
+    "eap_macro": "2.1.4, 2.1.5 e 2.1.7",
+    "natureza": "Material - Pisos e Argamassas",
+    "conta_contabil": "4.1.2.03.03"
+  },
+  {
+    "cc_codigo": "CC-404",
+    "nivel": "Analítico",
+    "descricao": "Revestimento Cerâmico de Paredes WCs (45x45)",
+    "eap_macro": "2.1.6",
+    "natureza": "Material - Cerâmica e Argamassa",
+    "conta_contabil": "4.1.2.03.04"
+  },
+  {
+    "cc_codigo": "CC-405",
+    "nivel": "Analítico",
+    "descricao": "Pintura Látex Acrílica 3 Demãos (Paredes e Tetos)",
+    "eap_macro": "2.1.8",
+    "natureza": "Material - Tintas e Acessórios",
+    "conta_contabil": "4.1.2.03.05"
+  },
+  {
+    "cc_codigo": "CC-406",
+    "nivel": "Analítico",
+    "descricao": "Esquadrias de Madeira (Portas P1 a P5 completas)",
+    "eap_macro": "2.1.9",
+    "natureza": "Material - Esquadrias Madeira",
+    "conta_contabil": "4.1.2.03.06"
+  },
+  {
+    "cc_codigo": "CC-407",
+    "nivel": "Analítico",
+    "descricao": "Esquadrias de Alumínio e Vidro (Janelas J1 a J4)",
+    "eap_macro": "2.1.10",
+    "natureza": "Material - Esquadrias Alumínio",
+    "conta_contabil": "4.1.2.03.07"
+  },
+  {
+    "cc_codigo": "CC-408",
+    "nivel": "Analítico",
+    "descricao": "Impermeabilização Polimérica WCs e Copa",
+    "eap_macro": "2.1.11",
+    "natureza": "Material - Impermeabilizantes",
+    "conta_contabil": "4.1.2.03.08"
+  },
+  {
+    "cc_codigo": "CC-500",
+    "nivel": "Sintético",
+    "descricao": "COBERTURA, ESTRUTURA METÁLICA E CALHAS",
+    "eap_macro": "2.2",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.04"
+  },
+  {
+    "cc_codigo": "CC-501",
+    "nivel": "Analítico",
+    "descricao": "Telhas Termoacústicas Sandwich EPS 30mm",
+    "eap_macro": "2.2.1",
+    "natureza": "Material - Cobertura",
+    "conta_contabil": "4.1.2.04.01"
+  },
+  {
+    "cc_codigo": "CC-502",
+    "nivel": "Analítico",
+    "descricao": "Estrutura Metálica de Apoio (Terças Perfil U)",
+    "eap_macro": "2.2.2 e 2.2.3",
+    "natureza": "Material - Perfis Metálicos",
+    "conta_contabil": "4.1.2.04.02"
+  },
+  {
+    "cc_codigo": "CC-503",
+    "nivel": "Analítico",
+    "descricao": "Calhas, Rufos e Impermeabilização com Manta 4mm",
+    "eap_macro": "2.2.4 a 2.2.7",
+    "natureza": "Material - Calhas e Mantas",
+    "conta_contabil": "4.1.2.04.03"
+  },
+  {
+    "cc_codigo": "CC-504",
+    "nivel": "Analítico",
+    "descricao": "Alvenaria e Revestimento de Platibanda",
+    "eap_macro": "2.2.8 a 2.2.10",
+    "natureza": "Material/MO Platibanda",
+    "conta_contabil": "4.1.2.04.04"
+  },
+  {
+    "cc_codigo": "CC-600",
+    "nivel": "Sintético",
+    "descricao": "INSTALAÇÕES ELÉTRICAS, CABEAMENTO E TELECOM",
+    "eap_macro": "3.1 e 3.3",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.05"
+  },
+  {
+    "cc_codigo": "CC-601",
+    "nivel": "Analítico",
+    "descricao": "Cabos de Cobre, Eletrodutos e Caixas de Embutir",
+    "eap_macro": "3.1.1 a 3.1.7",
+    "natureza": "Material - Elétrica Básica",
+    "conta_contabil": "4.1.2.05.01"
+  },
+  {
+    "cc_codigo": "CC-602",
+    "nivel": "Analítico",
+    "descricao": "Quadros QDG/QDF, Disjuntores DIN, DR e DPS",
+    "eap_macro": "3.1.8 e 3.1.10",
+    "natureza": "Material - Dispositivos Elétricos",
+    "conta_contabil": "4.1.2.05.02"
+  },
+  {
+    "cc_codigo": "CC-603",
+    "nivel": "Analítico",
+    "descricao": "Interruptores, Tomadas e Luminárias LED 60x60",
+    "eap_macro": "3.1.9 e 3.1.11",
+    "natureza": "Material - Acabamento Elétrico",
+    "conta_contabil": "4.1.2.05.03"
+  },
+  {
+    "cc_codigo": "CC-604",
+    "nivel": "Analítico",
+    "descricao": "Cabeamento Estruturado Cat6, Rack 12U e Switch",
+    "eap_macro": "3.3.1 a 3.3.4",
+    "natureza": "Material - Redes e Telecom",
+    "conta_contabil": "4.1.2.05.04"
+  },
+  {
+    "cc_codigo": "CC-700",
+    "nivel": "Sintético",
+    "descricao": "INSTALAÇÕES HIDROSSANITÁRIAS E PLUVIAIS",
+    "eap_macro": "3.2",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.06"
+  },
+  {
+    "cc_codigo": "CC-701",
+    "nivel": "Analítico",
+    "descricao": "Tubos e Conexões PVC Água Fria, Esgoto e Ventilação",
+    "eap_macro": "3.2.1 a 3.2.8",
+    "natureza": "Material - Tubulações PVC",
+    "conta_contabil": "4.1.2.06.01"
+  },
+  {
+    "cc_codigo": "CC-702",
+    "nivel": "Analítico",
+    "descricao": "Registros de Gaveta/Pressão e Caixas de Gordura",
+    "eap_macro": "3.2.9 e 3.2.10",
+    "natureza": "Material - Válvulas e Caixas",
+    "conta_contabil": "4.1.2.06.02"
+  },
+  {
+    "cc_codigo": "CC-703",
+    "nivel": "Analítico",
+    "descricao": "Louças Sanitárias, Cubas, Torneiras e Acessórios",
+    "eap_macro": "3.2.11 e 3.2.12",
+    "natureza": "Material - Louças e Metais",
+    "conta_contabil": "4.1.2.06.03"
+  },
+  {
+    "cc_codigo": "CC-704",
+    "nivel": "Analítico",
+    "descricao": "Reservatórios de Polietileno 5.000L",
+    "eap_macro": "3.2.13",
+    "natureza": "Material - Reservatórios",
+    "conta_contabil": "4.1.2.06.04"
+  },
+  {
+    "cc_codigo": "CC-800",
+    "nivel": "Sintético",
+    "descricao": "CLIMATIZAÇÃO E HVAC",
+    "eap_macro": "4.1",
+    "natureza": "Custo Direto Físico",
+    "conta_contabil": "4.1.2.07"
+  },
+  {
+    "cc_codigo": "CC-801",
+    "nivel": "Analítico",
+    "descricao": "Aparelhos Split Cassete 36.000 e Hi-Wall Inverter",
+    "eap_macro": "4.1.1 e 4.1.2",
+    "natureza": "Equipamentos de Climatização",
+    "conta_contabil": "4.1.2.07.01"
+  },
+  {
+    "cc_codigo": "CC-802",
+    "nivel": "Analítico",
+    "descricao": "Linhas Frigorígenas, Cobre e Instalação HVAC",
+    "eap_macro": "4.1.3",
+    "natureza": "Serviço Especializado HVAC",
+    "conta_contabil": "4.1.2.07.02"
+  }
+]

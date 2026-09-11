@@ -1,7 +1,7 @@
 # 🚜 INSTRUMENTO PARTICULAR DE CONTRATO DE LOCAÇÃO DE EQUIPAMENTOS: LOC-02
 ### CONTRATO DE LOCAÇÃO DE MAQUINÁRIO PESADO DE TERRAPLENAGEM COM OPERADOR E COMBUSTÍVEL
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Terminal Multiuso (Porto do Açu - SJB/RJ)  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.40 m²) — `TMULT`  
 > **Locatária:** CONSTRUTORA EXECUTIVA DO PORTO LTDA  
 > **Locadora:** Terramax Locações e Terraplenagem do Norte Fluminense Ltda | **CNPJ:** 23.456.789/0001-01  
 > **Valor Total do Contrato:** R$ 24,500.00 | **Centro de Custo:** CC-201 (Escavação e Movimento de Terra)  
@@ -11,13 +11,13 @@
 ---
 
 ## CLÁUSULA PRIMEIRA — DO OBJETO E EQUIPAMENTOS LOCADOS
-1.1. O presente instrumento tem por objeto a locação das máquinas, equipamentos e instalações provisórias descritos abaixo, correspondentes ao pacote **LOC-02** da Linha de Base 01 da OBRA_TMULT:
+1.1. O presente instrumento tem por objeto a locação das máquinas, equipamentos e instalações provisórias descritos abaixo, correspondentes ao pacote **LOC-02** da Linha de Base 01 da TMULT:
 - 1 Retroescavadeira 4x4 cabinada c/ caçamba frontal 1,0m³ e retro 0,25m³ c/ operador habilitado e qualificado;
 - 1 Caminhão Basculante 6x4 traçado caçamba 12m³ com motorista habilitado e MTR para bota-fora de terra excedente;
 - Operação contínua de escavação mecânica de 32 cavas de sapatas e 140,44m de valas de baldrames;
 - Transporte de 180 m³ de material excedente para bota-fora licenciado no Complexo do Porto do Açu;
 
-1.2. Os equipamentos destinam-se exclusivamente ao atendimento das obras de construção civil do Edifício Administrativo do Terminal Multiuso no Porto do Açu, sendo vedada a sublocação ou desvio de finalidade sem anuência prévia da LOCATÁRIA.
+1.2. Os equipamentos destinam-se exclusivamente ao atendimento das obras de construção civil do empreendimento TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo, sendo vedada a sublocação ou desvio de finalidade sem anuência prévia da LOCATÁRIA.
 
 ## CLÁUSULA SEGUNDA — DOS VALORES E FORMA DE PAGAMENTO
 2.1. Pela locação dos bens, a LOCATÁRIA pagará à LOCADORA o valor global de **R$ 24,500.00**, em parcelas mensais vinculadas ao relatório de medição e efetiva disponibilidade operacional no canteiro.
@@ -41,7 +41,7 @@
 
 ## CLÁUSULA SEXTA — DA SEGURANÇA DO TRABALHO E PORTÃO DE ENTRADA (POP 04 / NR-18)
 6.1. Todos os equipamentos deverão ser submetidos à vistoria de entrada no canteiro, com preenchimento da **Ficha de Inspeção de Equipamento (FIE)** pelo TST da obra.
-6.2. Nenhum operador da LOCADORA poderá adentrar o Porto do Açu sem portar o crachá de identificação, ASO com aptidão específica, certificados NR-11/12/18 e EPIs obrigatórios com CA válido.
+6.2. Nenhum operador da LOCADORA poderá adentrar o canteiro sem portar o crachá de identificação, ASO com aptidão específica, certificados NR-11/12/18 e EPIs obrigatórios com CA válido.
 
 ---
 
@@ -57,4 +57,4 @@
 
 ---
 
-*Contrato pré-criado e auditado conforme a Linha de Base 01 da OBRA_TMULT.*
+*Contrato pré-criado e auditado conforme a Linha de Base 01 da TMULT.*

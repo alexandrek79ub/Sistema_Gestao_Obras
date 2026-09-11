@@ -98,18 +98,21 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
 - 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento usando os arquivos locais como Banco de Dados.
-- 📐 **Motores de Orçamento, Planejamento, Suprimentos e Contratos**: Execução via:
+- 📐 **Motores Universais de Engenharia, Planejamento, Suprimentos e Finanças (CLI `--obra [NOME_OBRA]` ou `--dir [CAMINHO]`):**
+  - `python scripts/precificar_obra.py --obra [NOME_OBRA]`: Motor Universal de precificação e fechamento Turnkey com base SINAPI SP, parametrizado por `config_obra.json` e `mapeamento_sinapi.csv`.
+  - `python scripts/gerar_plano_centros_custo.py --obra [NOME_OBRA]`: Motor Universal de mapeamento da estrutura de centros de custos (CC-100 a CC-900) e amarração contábil com a EAP.
+  - `python scripts/gerar_cronograma.py --obra [NOME_OBRA]`: Motor Universal de cronograma físico-financeiro, Curva S, Excel executivo, MS Project XML e Dashboard HTML interativo.
+  - `python scripts/gerar_cronograma_suprimentos.py --obra [NOME_OBRA]`: Motor Universal de suprimentos, RCs de materiais, REs de locações e matriz de subcontratos.
+  - `python scripts/gerar_tracker_suprimentos.py --obra [NOME_OBRA]`: Motor Universal de gestão do pipeline de compras, Kanban e semáforos de lead time.
+  - `python scripts/gerar_fluxo_caixa.py --obra [NOME_OBRA]`: Motor Universal de modelagem de fluxo de caixa, curvas de desembolso e análise de capital de giro em 3 cenários.
+  - `python scripts/gerar_contratos_empreiteiros.py --obra [NOME_OBRA]`: Motor Universal de geração de minutas contratuais de empreiteiros com cadernos de encargos e FVS bloqueante.
+  - `python scripts/gerar_contratos_locacao.py --obra [NOME_OBRA]`: Motor Universal de contratos de locação de equipamentos, SLAs e painel de controle.
+  - `python scripts/gerar_planilha_medicao.py --obra [NOME_OBRA]`: Motor Universal da Planilha Master de medição quinzenal evolutiva com fórmulas SOMARPRODUTO e retenção contratual de 5%.
+  - `python scripts/gerar_dossie_contratacao.py --obra [NOME_OBRA]`: Motor Universal do dossiê executivo com histogramas de mão de obra (HH), equipamentos e Curva ABC Dupla.
   - `python scripts/gerador_orcamento_mestre.py`: Motor Híbrido Cérebro/CPU v2.0 com AST para resolver expressões matemáticas e gerar CSV/MD auditáveis.
-  - `python scripts/precificar_obra_tmult.py`: Automação de precificação e fechamento Turnkey com base SINAPI SP.
-  - `python scripts/consultar_sinapi.py`: Busca instantânea de insumos e composições SINAPI SP.
-  - `python scripts/gerar_cronograma_tmult.py`: Cronograma físico-financeiro, Curva S em Excel com gráficos e MS Project XML.
-  - `python scripts/gerar_cronograma_suprimentos_tmult.py`: Cronograma integrado de suprimentos e geração das RCs de compras e locações.
-  - `python scripts/gerar_dossie_contratacao_tmult.py`: Histogramas de mão de obra/equipamentos e Curvas ABC duplas em CSV/XLSX.
-  - `python scripts/gerar_planilha_medicao_empreiteiros.py`: Planilha Master multi-contrato de medições quinzenais evolutivas com fórmulas SOMARPRODUTO, congelamento de painéis e retenção de 5%.
-  - `python scripts/gerar_fluxo_caixa_tmult.py`: Fluxo de caixa analítico, curva de desembolso, gráficos Excel nativos e análise de capital de giro em 3 cenários.
-  - `python scripts/gerar_organograma_visual.py`: Organograma funcional em PNG alta resolução e SVG vetorial.
-  - `python scripts/gerar_plano_centro_custos_tmult.py`: Mapeamento da estrutura de centros de custos (CC-100 a CC-900).
-  - `extrair_carimbos.py` / `gerar_lista_desenhos.py`: Catalogação e extração de pranchas PDF.
+  - `python scripts/gerar_organograma_visual.py --obra [NOME_OBRA]`: Motor Universal de Organograma funcional em PNG alta resolução e SVG vetorial nativo em `06_SST_E_RH/`.
+  - `python scripts/gerar_lista_desenhos.py --obra [NOME_OBRA]`: Motor Universal de catalogação de pranchas PDF, títulos de desenhos e geração de `LISTA_DE_DESENHOS.csv/md` em `01_ENGENHARIA_E_PROJETOS/`.
+  - `python scripts/gerar_certificado_auditoria.py --obra [NOME_OBRA]`: Motor Universal de auditoria estrutural e QA dos 6 checklists em Markdown puro em `02_ORCAMENTO_BASE_E_CONTRATOS/`.
 - 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API).
 
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
@@ -167,5 +170,13 @@ Sempre que receber um pedido, siga estes passos:
   1. **Requisições de Compra de Materiais (RCs):** Quantificação em Unidade Comercial de Compra (UCC), marcas de referência, EAP, Centro de Custo, Lead Time de entrega e critérios de recebimento em canteiro (POP 08).
   2. **Requisições de Locação de Equipamentos (REs):** Emitidas pela Engenharia antes da assinatura contratual, detalhando: família do equipamento, regime de locação (mensal/quinzenal/diário), franquia horária, operador incluso/excluso, combustível/energia provisória, normas regulamentadoras aplicáveis (NR-10, NR-11, NR-12 com laudo/ART, NR-18, NR-35) e Checklist de Admissão de Máquinas (POP 04).
   3. **Equalização de Mercado & Tracker Integrado:** Todo item (RC ou RE) deve conter mapa de cotação equalizado com no mínimo 3 fornecedores/locadoras e constar obrigatoriamente no Tracker Mestre Unificado de Suprimentos com semáforo de risco e amarrações com a Linha de Base.
+- 🚀 **REGRA MANDATÓRIA DE CÓDIGO: MOTORES UNIVERSAIS ESCALONÁVEIS (PADRÃO MULTI-OBRAS INVIOLÁVEL):**
+  É TERMINANTEMENTE PROIBIDO criar scripts Python específicos, monolíticos ou engessados para uma única obra na pasta `scripts/`. Todo e qualquer novo script Python DEVE ser concebido e implementado como um **Motor Universal Escalonável Multi-Obras**, respeitando 5 mandamentos:
+  1. **Interface CLI Obrigatória:** Todo script novo DEVE implementar `argparse` com suporte aos parâmetros `--obra [NOME_DA_OBRA]` (buscando em `projetos/[NOME]/`) e `--dir [CAMINHO_DIRETO]` (para caminhos absolutos ou customizados).
+  2. **Zero Hardcoding de Projetos:** É terminantemente proibido chumbar no código caminhos fixos de pastas de obras (ex: `projetos/OBRA_TMULT/...`), títulos fixos de projetos, valores monetários fixos ou prazos fixos. Todo dado de entrada deve ser lido dinamicamente da pasta da obra (ex: `config_obra.json`).
+  3. **Segregação Rigorosa (Código vs. Dados):** A pasta `scripts/` abriga estritamente a inteligência algorítmica, equações, regras de negócio e geradores. Toda informação de projeto reside exclusivamente dentro da pasta correspondente em `projetos/[NOME_DA_OBRA]/`.
+  4. **Atualização do Modelo Universal (`_TEMPLATE_OBRA_NOVA`):** Se o novo script necessitar de um novo arquivo de configuração, mapeamento ou catálogo (JSON, CSV), é OBRIGATÓRIO criar o respectivo arquivo modelo em [`projetos/_TEMPLATE_OBRA_NOVA/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/_TEMPLATE_OBRA_NOVA/) com instruções claras de preenchimento.
+  5. **Isolamento Anti-Contaminação:** O processamento de qualquer motor para uma obra deve gravar saídas exclusivamente dentro da pasta daquela obra (`01` a `07`). Nenhuma execução pode alterar, sobrescrever ou contaminar dados de outras obras do ecossistema.
+
 
 

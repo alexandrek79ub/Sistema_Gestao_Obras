@@ -1,0 +1,11 @@
+codigo_eap;tipo_fonte;cod_referencia;preco_override;categoria_bdi;descricao_referencia
+1.0.1;COT;COT-ADM-01;15000.00;SERVICO;Equipe de Gestão Técnica de Obra
+1.0.2;COT;COT-ADM-02;9000.00;SERVICO;Equipe de Apoio e Segurança
+1.0.3;COT;COT-ADM-03;4500.00;SERVICO;Locação de Containers NR-18
+1.0.4;COT;COT-ADM-04;2000.00;SERVICO;Contas Provisórias de Consumo de Canteiro
+1.0.5;COT;COT-ADM-05;12000.00;SERVICO;Vivência e Alimentação de Operários
+1.0.6;COT;COT-ADM-06;3500.00;SERVICO;Saúde Ocupacional e EPIs
+1.1.1;COMP;90082;;SERVICO;Escavação mecanizada de vala prof até 1,5m
+1.1.2;COMP;96624;6.80;SERVICO;Apiloamento e compactação de fundo vala
+1.1.3;COMP;96616;;SERVICO;Lastro concreto magro fck 15 MPa
+1.1.4;COMP;96558;;SERVICO;Concretagem de sapata fck 30 MPa com bomba

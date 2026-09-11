@@ -1,6 +1,6 @@
 # 📑 PLANO MESTRE DE CENTROS DE CUSTO & APROPRIAÇÃO CONTÁBIL
 
-**Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Porto do Açu (SJB/RJ)
+**Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.4 m²)
 **Função:** Rastreabilidade unívoca de Requisições de Compra (RC), Pedidos de Compra (PC) e Notas Fiscais (NF-e)
 **Padrão do Ecossistema:** SKILL_QUANTIFICACAO_CONCILIACAO_3_PONTAS & SKILL_GESTAO_03_ADMINISTRATIVO
 
@@ -77,17 +77,4 @@ Em construtoras organizadas, **nenhum material é comprado e nenhuma nota fiscal
 | `CC-802` | Analítico | Linhas Frigorígenas, Cobre e Instalação HVAC | `4.1.3` | Serviço Especializado HVAC | `4.1.2.07.02` |
 
 ---
-
-## 🛒 3. Centros de Custo Aplicados aos Suprimentos Críticos do Mês 1
-
-Para os 4 pacotes de compra de partida da obra, os Centros de Custo obrigatórios a constar nas RCs e nos PCs são:
-
-| Pacote / RC | Insumo / Serviço Contratado | Centro de Custo (CC) | Conta Contábil | Orçado Custo Direto |
-| :---: | :--- | :---: | :---: | :---: |
-| **RC-001/2026** | Aço CA-50 Fundações (Sapatas e Baldrames) | `CC-208` e `CC-210` | 4.1.2.01.08 / 10 | R$ 15.635,66 |
-| **RC-002/2026** | Concreto Usinado fck 30 MPa e Lastro | `CC-202`, `CC-203` e `CC-206` | 4.1.2.01.02 / 03 / 06 | R$ 20.252,08 |
-| **RC-003/2026** | Compensado 17mm e Fôrmas de Madeira | `CC-204` e `CC-207` | 4.1.2.01.04 / 07 | R$ 20.286,07 |
-| **RC-004/2026** | Containers Habitáveis NR-18 (6 Meses) | `CC-103` | 4.1.1.01.03 | R$ 38.299,98 |
-
----
-*Plano auditado e vinculado à Linha de Base SINAPI SP 07/2026.*
+*Plano auditado e vinculado à Linha de Base e Governança do Ecossistema.*

@@ -1,0 +1,58 @@
+[
+  {
+    "cc_codigo": "CC-100",
+    "nivel": "Sintético",
+    "descricao": "CANTEIRO DE OBRAS & ADMINISTRAÇÃO LOCAL",
+    "eap_macro": "1.0",
+    "natureza": "Custo Direto Canteiro",
+    "conta_contabil": "4.1.1.01"
+  },
+  {
+    "cc_codigo": "CC-101",
+    "nivel": "Analítico",
+    "descricao": "Gestão Técnica de Obra (Eng. Residente e Mestre)",
+    "eap_macro": "1.0.1",
+    "natureza": "Mão de Obra Indireta",
+    "conta_contabil": "4.1.1.01.01"
+  },
+  {
+    "cc_codigo": "CC-102",
+    "nivel": "Analítico",
+    "descricao": "Apoio e Segurança (TST, Almoxarife, Vigia)",
+    "eap_macro": "1.0.2",
+    "natureza": "Mão de Obra Indireta",
+    "conta_contabil": "4.1.1.01.02"
+  },
+  {
+    "cc_codigo": "CC-103",
+    "nivel": "Analítico",
+    "descricao": "Locação de Containers Habitáveis e Sanitários Químicos",
+    "eap_macro": "1.0.3",
+    "natureza": "Locação de Equipamentos",
+    "conta_contabil": "4.1.1.01.03"
+  },
+  {
+    "cc_codigo": "CC-104",
+    "nivel": "Analítico",
+    "descricao": "Contas de Consumo Canteiro (Energia, Água Pipa, Fibra)",
+    "eap_macro": "1.0.4",
+    "natureza": "Utilidades e Serviços",
+    "conta_contabil": "4.1.1.01.04"
+  },
+  {
+    "cc_codigo": "CC-105",
+    "nivel": "Analítico",
+    "descricao": "Vivência, Alimentação (16 operários) e Transporte",
+    "eap_macro": "1.0.5",
+    "natureza": "Benefícios Operacionais",
+    "conta_contabil": "4.1.1.01.05"
+  },
+  {
+    "cc_codigo": "CC-106",
+    "nivel": "Analítico",
+    "descricao": "SST, PGR/PCMSO, EPIs, Caçambas e Apoio",
+    "eap_macro": "1.0.6",
+    "natureza": "Segurança e Descarte",
+    "conta_contabil": "4.1.1.01.06"
+  }
+]

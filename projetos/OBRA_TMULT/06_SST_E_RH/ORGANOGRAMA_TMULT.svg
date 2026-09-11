@@ -84,9 +84,9 @@
   <g filter="url(#shadow)">
     <rect x="380" y="230" width="440" height="80" rx="8" fill="url(#gradBlue)" stroke="#1B365D" stroke-width="2" />
     <rect x="380" y="230" width="440" height="26" rx="8" fill="#1B365D" />
-    <text x="600" y="248" font-size="13" font-weight="bold" fill="#D99B26" text-anchor="middle">RESPONSÁVEL TÉCNICO LEGAL — CREA/RJ</text>
+    <text x="600" y="248" font-size="13" font-weight="bold" fill="#D99B26" text-anchor="middle">RESPONSÁVEL TÉCNICO LEGAL — CREA/CAU</text>
     <text x="600" y="278" font-size="16" font-weight="bold" fill="#FFFFFF" text-anchor="middle">ENGENHEIRO RESIDENTE DE OBRA</text>
-    <text x="600" y="298" font-size="11" fill="#E2E8F0" text-anchor="middle">Dedicação 60% (EAP 1.0.1) • Gestão Técnica, Qualidade &amp; Fiscalização</text>
+    <text x="600" y="298" font-size="11" fill="#E2E8F0" text-anchor="middle">Dedicação 100% (EAP 1.0.1) • Gestão Técnica, Qualidade &amp; Fiscalização</text>
   </g>
 
   <!-- ==================== NÍVEL 3: SUPERVISÃO OPERACIONAL ==================== -->

@@ -1,0 +1,8 @@
+﻿Codigo_CC;Nivel;Descricao_Centro_Custo;EAP_Macro_Vinculada;Natureza_Gasto;Conta_Contabil
+CC-100;Sintético;CANTEIRO DE OBRAS & ADMINISTRAÇÃO LOCAL;1.0;Custo Direto Canteiro;4.1.1.01
+CC-101;Analítico;Gestão Técnica de Obra (Eng. Residente e Mestre);1.0.1;Mão de Obra Indireta;4.1.1.01.01
+CC-102;Analítico;Apoio e Segurança (TST, Almoxarife, Vigia);1.0.2;Mão de Obra Indireta;4.1.1.01.02
+CC-103;Analítico;Locação de Containers Habitáveis e Sanitários Químicos;1.0.3;Locação de Equipamentos;4.1.1.01.03
+CC-104;Analítico;Contas de Consumo Canteiro (Energia, Água Pipa, Fibra);1.0.4;Utilidades e Serviços;4.1.1.01.04
+CC-105;Analítico;Vivência, Alimentação (16 operários) e Transporte;1.0.5;Benefícios Operacionais;4.1.1.01.05
+CC-106;Analítico;SST, PGR/PCMSO, EPIs, Caçambas e Apoio;1.0.6;Segurança e Descarte;4.1.1.01.06

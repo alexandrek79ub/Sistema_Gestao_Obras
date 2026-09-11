@@ -1,0 +1,98 @@
+[
+  {
+    "cod": "SUB-01",
+    "nome": "Empreitada de Fundações e Estrutura de Concreto Armado",
+    "mes": "Mês 1 a Mês 2",
+    "semanas": "S01 a S09",
+    "pico": "12 operários (4 Carpinteiros, 3 Armadores, 5 Serventes)",
+    "cc": "CC-200 / CC-300",
+    "medicao": "Avanço Físico (m³ concretado e m² fôrma desformada c/ FVS aprovada)",
+    "retencao": "5% retida na NF liberada após 90 dias e laudo CPs 28 dias fck >= 30 MPa",
+    "escopo": "Fôrmas compensadas, corte/dobra/amarração de aço CA-50/60, lançamento e vibração de concreto, cura e desforma",
+    "valor_base": 195400.0
+  },
+  {
+    "cod": "SUB-02",
+    "nome": "Empreitada de Alvenaria de Vedação e Revestimentos de Parede",
+    "mes": "Mês 3 a Mês 4",
+    "semanas": "S10 a S17",
+    "pico": "10 operários (5 Pedreiros e 5 Serventes)",
+    "cc": "CC-400",
+    "medicao": "Produção Efetiva (m² alvenaria aprumada e m² emboço sarrafeado)",
+    "retencao": "5% retida até entrega da FVS de prumo/planeza e teste de percussão acústico",
+    "escopo": "Elevação de blocos de concreto B144, vergas/contravergas, chapisco rolado e emboço mecanizado com máquina de projeção",
+    "valor_base": 138600.0
+  },
+  {
+    "cod": "SUB-03",
+    "nome": "Empreitada Especializada de Cobertura Termoacústica",
+    "mes": "Mês 3 a Mês 4",
+    "semanas": "S10 a S15",
+    "pico": "3 montadores especialistas certificados NR-35",
+    "cc": "CC-500",
+    "medicao": "m² montado e estanque aprovado sob teste de aspersão de água 100%",
+    "retencao": "5% retida até primeira chuva forte sem vazamento ou 60 dias",
+    "escopo": "Içamento mecânico, fixação com parafusos autobrocantes, montagem de cumeeiras, calhas galvanizadas e rufos perimétricos",
+    "valor_base": 42500.0
+  },
+  {
+    "cod": "SUB-04",
+    "nome": "Empreitada de Pisos e Pavimentações",
+    "mes": "Mês 5",
+    "semanas": "S18 a S21",
+    "pico": "3 ladrilhistas / azulejistas qualificados",
+    "cc": "CC-704",
+    "medicao": "m² assentado com niveladores de piso e rejuntado sem dentes",
+    "retencao": "5% retida até teste de percussão (eliminação de peças com som oco)",
+    "escopo": "Contrapiso autonivelante, dupla colagem porcelanato 60x60, aplicação de rodapés e rejunte epóxi em sanitários",
+    "valor_base": 36800.0
+  },
+  {
+    "cod": "SUB-05",
+    "nome": "Empreitada de Instalações Elétricas, Telecom e SPDA",
+    "mes": "Mês 3 a Mês 5",
+    "semanas": "S12 a S21",
+    "pico": "2 eletricistas industriais oficiais",
+    "cc": "CC-604 / CC-605 / CC-606",
+    "medicao": "Etapas Físicas Concluídas (Infra, Enfiamento, Fechamento de Quadros)",
+    "retencao": "5% retida até energização geral e laudo de conformidade NBR 5410 emitido c/ ART",
+    "escopo": "Chumbamento de caixas, enfiação de condutores de cobre, crimpagem de terminais, montagem dos quadros QDG/QDF e rede Cat6",
+    "valor_base": 48200.0
+  },
+  {
+    "cod": "SUB-06",
+    "nome": "Empreitada de Instalações Hidrossanitárias e Drenagem",
+    "mes": "Mês 3 a Mês 5",
+    "semanas": "S12 a S20",
+    "pico": "2 encanadores industriais oficiais",
+    "cc": "CC-601 / CC-602 / CC-603",
+    "medicao": "Pontos Executados e Aprovados no Teste Hidrostático (Portão 3)",
+    "retencao": "5% retida até teste de pressão hidrostática 72h registrado em laudo fotográfico",
+    "escopo": "Montagem de ramais de água fria soldável, prumadas de esgoto em PVC série reforçada, caixas de gordura e esgoto",
+    "valor_base": 38900.0
+  },
+  {
+    "cod": "SUB-07",
+    "nome": "Empreitada de Climatização HVAC (Instalação e Start-up)",
+    "mes": "Mês 5 a Mês 6",
+    "semanas": "S20 a S24",
+    "pico": "2 mecânicos de refrigeração c/ ART",
+    "cc": "CC-608",
+    "medicao": "Unidades instaladas, desidratadas, comissionadas e operando em regime",
+    "retencao": "5% retida até teste de carga térmica e aceitação da fiscalização",
+    "escopo": "Passagem de tubulações de cobre, isolamento térmico elastomérico, dreno, pressurização com N2, vácuo 500 microns e start-up",
+    "valor_base": 24800.0
+  },
+  {
+    "cod": "SUB-08",
+    "nome": "Empreitada de Pintura Predial e Acabamentos",
+    "mes": "Mês 5 a Mês 6",
+    "semanas": "S20 a S25",
+    "pico": "4 pintores prediais experientes",
+    "cc": "CC-706",
+    "medicao": "m² com selador + 2 demãos de massa corrida lixada + 2 demãos de tinta acrílica",
+    "retencao": "5% retida até vistoria de entrega sem manchas ou imperfeições sob luz rasante",
+    "escopo": "Lixamento mecanizado com aspirador, aplicação de fundo preparador, emassamento e pintura látex acrílica premium",
+    "valor_base": 39500.0
+  }
+]

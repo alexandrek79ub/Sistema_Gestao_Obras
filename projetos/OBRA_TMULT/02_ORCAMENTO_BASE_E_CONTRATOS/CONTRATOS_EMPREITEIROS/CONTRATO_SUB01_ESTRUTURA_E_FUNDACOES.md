@@ -1,7 +1,7 @@
 # 📄 INSTRUMENTO PARTICULAR DE CONTRATO DE EMPREITADA CIVIL: SUB-01
 ### EMPREITADA DE FUNDAÇÕES E ESTRUTURA DE CONCRETO ARMADO
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Terminal Multiuso (Porto do Açu - SJB/RJ)  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.40 m²) — `TMULT`  
 > **Contratante:** CONSTRUTORA EXECUTIVA DO PORTO LTDA  
 > **Contratada:** [NOME DA EMPRESA EMPREITEIRA HOMOLOGADA] | **CNPJ:** [__.__.___/____-__]  
 > **Valor Total do Contrato:** R$ 195.400,00 | **Centro de Custo:** CC-200 (Infraestrutura) e CC-300 (Supraestrutura)  
@@ -10,7 +10,7 @@
 ---
 
 ## CLÁUSULA PRIMEIRA — DO OBJETO
-1.1. O presente contrato tem por objeto a execução, sob o regime de **Empreitada por Preço Unitário**, dos serviços de **Empreitada de Fundações e Estrutura de Concreto Armado**, correspondente ao pacote **SUB-01** da Linha de Base 01 da OBRA_TMULT.
+1.1. O presente contrato tem por objeto a execução, sob o regime de **Empreitada por Preço Unitário**, dos serviços de **Empreitada de Fundações e Estrutura de Concreto Armado**, correspondente ao pacote **SUB-01** da Linha de Base 01 da TMULT.
 1.2. O escopo compreende: Execução completa de fôrmas compensadas 17mm, armação de aço CA-50/60 cortado e dobrado, lançamento, adensamento vibrado e cura de concreto usinado fck 30 MPa para 32 sapatas isoladas, 140m de vigas baldrames, 24 pilares P1-P24, vigas superiores V101-V115 e laje treliçada H12 (298,25 m²), estritamente de acordo com as especificações técnicas, projetos executivos, cadernos de encargos e normas vigentes.
 
 ## CLÁUSULA SEGUNDA — DO VALOR E DA FORMA DE PAGAMENTO
@@ -26,7 +26,7 @@
 3.3. O não cumprimento das metas quinzenais do cronograma por culpa exclusiva da CONTRATADA sujeitará a aplicação de multa moratória de 0,5% por dia de atraso sobre o saldo contratual remanescente.
 
 ## CLÁUSULA QUARTA — DA SEGURANÇA DO TRABALHO E SAÚDE (POP 17 / NR-18)
-4.1. NENHUM funcionário da CONTRATADA poderá adentrar o Complexo Portuário do Açu ou o canteiro sem antes cumprir integralmente o **Portão de Segurança SST (POP 17)**:
+4.1. NENHUM funcionário da CONTRATADA poderá adentrar o canteiro sem antes cumprir integralmente o **Portão de Segurança SST (POP 17)**:
     a) Atestado de Saúde Ocupacional (ASO) apto para a função e para trabalho em altura (se aplicável);
     b) Certificados válidos de treinamento de NR-18 e NR-35 assinados por instrutor habilitado;
     c) Ficha de Entrega de EPIs com indicação do Certificado de Aprovação (CA) válido de cada item;
@@ -55,7 +55,7 @@
 | `1.2.5` | Lançamento e sarrafeamento de concreto usinado na capa de laje e=5cm | m³ | 13,17 | R$ 110,00 | **R$ 1.448,70** | `CC-301` |
 | `1.2.6` | Montagem de escoramento metálico e assoalho compensado para laje treliçada | m² | 263,48 | R$ 45,00 | **R$ 11.856,60** | `CC-302` |
 | `1.2.8` | Montagem de vigotas treliçadas TR 16745, lajotas EPS H12 e armadura de capeamento | m² | 298,25 | R$ 35,00 | **R$ 10.438,75** | `CC-303` |
-| `1.2.10` | Mão de obra global de cura úmida (7 dias) e desforma gradual das estruturas | vb | 1,00 | R$ 128.363,08 | **R$ 128.363,08** | `CC-300` |
+| `1.2.10` | Mão de obra global de cura úmida (7 dias) e desforma gradual das estruturas | vb | 1,00 | R$ 128.567,03 | **R$ 128.567,03** | `CC-300` |
 
 **VALOR TOTAL DO ANEXO I (REMUNERAÇÃO DA EMPREITADA):** **R$ 195.400,00**
 
@@ -63,7 +63,7 @@
 
 ## ANEXO II: CADERNO DE ENCARGOS TÉCNICOS & SEQUÊNCIA CONSTRUTIVA
 
-A CONTRATADA deverá seguir rigorosamente a **sequência executiva de 12 a 16 passos** padronizada pelo PMO Virtual A11:
+A CONTRATADA deverá seguir rigorosamente a sequência executiva padronizada pelo PMO Virtual:
 
 - 1. Mobilização da equipe no canteiro, validação dos ASOs de altura e integração de segurança NR-18/NR-35;
 - 2. Conferência topográfica de eixos estruturais e cotas de arrasamento conforme pranchas EGS-051 e EGS-052;
@@ -101,9 +101,9 @@ A CONTRATADA deverá seguir rigorosamente a **sequência executiva de 12 a 16 pa
 
 ---
 
-São João da Barra / Porto do Açu, _____ de _________________ de 2026.
+TMULT, _____ de _________________ de 2026.
 
 ____________________________________________       ____________________________________________
 **Pela CONTRATANTE: Construtora Executiva**          **Pela CONTRATADA: Empreiteiro Responsável**
-Nome: Eng. Alexandre (Residente TMULT)             Nome: Representante Legal
+Nome: Eng. Residente (TMULT)                       Nome: Representante Legal
 CREA: ___________________                          CPF/CNPJ: __________________

@@ -1,0 +1,41 @@
+{
+  "nome_obra": "Residencial Alpha — Condomínio Fechado",
+  "sigla_obra": "RESIDENCIAL_ALPHA",
+  "area_construida_m2": 220.00,
+  "prazo_meses": 4.0,
+  "bdi_servico_pct": 27.17,
+  "bdi_equipamento_pct": 15.00,
+  "data_auditoria": "11/09/2026",
+  "administracao_local": [
+    {
+      "eap": "1.0.1",
+      "descricao": "Engenheiro Residente (50%) + Mestre de Obras (100%)",
+      "disciplina": "Administração Local e Canteiro",
+      "quantidade": 4.0,
+      "unidade": "mês",
+      "perda_pct": 0.0,
+      "qtd_ucc": 4.0,
+      "unidade_ucc": "mês",
+      "prancha": "EAP 1.1 / Planejamento 4 Meses",
+      "tipo_fonte": "COT",
+      "cod_fonte": "COT-ADM-01",
+      "custo_unitario": 14000.00,
+      "categoria_bdi": "SERVICO"
+    },
+    {
+      "eap": "1.0.2",
+      "descricao": "Locação de Containers NR-18 + Sanitário Químico",
+      "disciplina": "Administração Local e Canteiro",
+      "quantidade": 4.0,
+      "unidade": "mês",
+      "perda_pct": 0.0,
+      "qtd_ucc": 4.0,
+      "unidade_ucc": "mês",
+      "prancha": "EAP 1.1 / Canteiro",
+      "tipo_fonte": "COT",
+      "cod_fonte": "COT-ADM-02",
+      "custo_unitario": 3200.00,
+      "categoria_bdi": "SERVICO"
+    }
+  ]
+}

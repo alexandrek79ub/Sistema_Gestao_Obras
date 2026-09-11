@@ -1,7 +1,7 @@
 # 📄 INSTRUMENTO PARTICULAR DE CONTRATO DE EMPREITADA CIVIL: SUB-04
 ### EMPREITADA DE PISOS E PAVIMENTAÇÕES
 
-> **Empreendimento:** Edifício Administrativo TMULT (368,40 m²) — Terminal Multiuso (Porto do Açu - SJB/RJ)  
+> **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.40 m²) — `TMULT`  
 > **Contratante:** CONSTRUTORA EXECUTIVA DO PORTO LTDA  
 > **Contratada:** [NOME DA EMPRESA EMPREITEIRA HOMOLOGADA] | **CNPJ:** [__.__.___/____-__]  
 > **Valor Total do Contrato:** R$ 36.800,00 | **Centro de Custo:** CC-704 (Pisos e Pavimentações)  
@@ -10,7 +10,7 @@
 ---
 
 ## CLÁUSULA PRIMEIRA — DO OBJETO
-1.1. O presente contrato tem por objeto a execução, sob o regime de **Empreitada por Preço Unitário**, dos serviços de **Empreitada de Pisos e Pavimentações**, correspondente ao pacote **SUB-04** da Linha de Base 01 da OBRA_TMULT.
+1.1. O presente contrato tem por objeto a execução, sob o regime de **Empreitada por Preço Unitário**, dos serviços de **Empreitada de Pisos e Pavimentações**, correspondente ao pacote **SUB-04** da Linha de Base 01 da TMULT.
 1.2. O escopo compreende: Execução de regularização de contrapiso autonivelante e=3cm, assentamento de 368,40 m² de porcelanato 60x60cm retificado com argamassa AC-III dupla colagem, rodapés de porcelanato h=10cm e rejuntamento epóxi/resinado, estritamente de acordo com as especificações técnicas, projetos executivos, cadernos de encargos e normas vigentes.
 
 ## CLÁUSULA SEGUNDA — DO VALOR E DA FORMA DE PAGAMENTO
@@ -26,7 +26,7 @@
 3.3. O não cumprimento das metas quinzenais do cronograma por culpa exclusiva da CONTRATADA sujeitará a aplicação de multa moratória de 0,5% por dia de atraso sobre o saldo contratual remanescente.
 
 ## CLÁUSULA QUARTA — DA SEGURANÇA DO TRABALHO E SAÚDE (POP 17 / NR-18)
-4.1. NENHUM funcionário da CONTRATADA poderá adentrar o Complexo Portuário do Açu ou o canteiro sem antes cumprir integralmente o **Portão de Segurança SST (POP 17)**:
+4.1. NENHUM funcionário da CONTRATADA poderá adentrar o canteiro sem antes cumprir integralmente o **Portão de Segurança SST (POP 17)**:
     a) Atestado de Saúde Ocupacional (ASO) apto para a função e para trabalho em altura (se aplicável);
     b) Certificados válidos de treinamento de NR-18 e NR-35 assinados por instrutor habilitado;
     c) Ficha de Entrega de EPIs com indicação do Certificado de Aprovação (CA) válido de cada item;
@@ -51,7 +51,7 @@
 
 ## ANEXO II: CADERNO DE ENCARGOS TÉCNICOS & SEQUÊNCIA CONSTRUTIVA
 
-A CONTRATADA deverá seguir rigorosamente a **sequência executiva de 12 a 16 passos** padronizada pelo PMO Virtual A11:
+A CONTRATADA deverá seguir rigorosamente a sequência executiva padronizada pelo PMO Virtual:
 
 - 1. Limpeza pesada do piso da laje de concreto com remoção mecânica de crostas de argamassa e lavagem;
 - 2. Execução das taliscas do contrapiso com nível a laser observando caimento de 1% em banheiros e copa;
@@ -85,9 +85,9 @@ A CONTRATADA deverá seguir rigorosamente a **sequência executiva de 12 a 16 pa
 
 ---
 
-São João da Barra / Porto do Açu, _____ de _________________ de 2026.
+TMULT, _____ de _________________ de 2026.
 
 ____________________________________________       ____________________________________________
 **Pela CONTRATANTE: Construtora Executiva**          **Pela CONTRATADA: Empreiteiro Responsável**
-Nome: Eng. Alexandre (Residente TMULT)             Nome: Representante Legal
+Nome: Eng. Residente (TMULT)                       Nome: Representante Legal
 CREA: ___________________                          CPF/CNPJ: __________________
