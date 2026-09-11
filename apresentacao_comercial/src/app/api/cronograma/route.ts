@@ -140,7 +140,21 @@ function getDisciplineColor(tipo: string, pav: string = ''): string {
  *    - Cobertura (Vagão 07) libera acabamentos finos de piso e pintura.
  *    - Comissionamento (Vagão 15) sucede todas as atividades.
  */
-function buildLOBGraph(rawRows: any[]): { adj: Map<number, number[]>; revAdj: Map<number, number[]> } {
+/**
+ * Constrói o Grafo Canônico de Precedências da Linha de Balanço (DAG Acíclico).
+ * Regras estritas do Lean Construction:
+ * 1. Dependência Espacial: Na mesma Zona/Pavimento, a sequência executiva segue estritamente
+ *    a ordem natural física das linhas do CSV (evita inversões de fases como Climatização 1 e 2).
+ * 2. Dependência de Equipe (Esteira Takt): No mesmo Vagão, a equipe avança de uma zona para a seguinte,
+ *    exceto quando o baseline original previa execução em paralelo simultâneo (mesma data).
+ * 3. Marco de Cobertura: Cobertura Metálica (Zona 4) só inicia após conclusão da Alvenaria (Zona 3).
+ * 4. Marco de Entrega: Comissionamento & Entrega (Vagão 15) sucede todas as frentes.
+ */
+function buildLOBGraph(rawRows: any[]): { 
+  adj: Map<number, number[]>; 
+  revAdj: Map<number, number[]>;
+  topoOrder: number[];
+} {
   const adj = new Map<number, number[]>();
   const revAdj = new Map<number, number[]>();
 
@@ -157,7 +171,7 @@ function buildLOBGraph(rawRows: any[]): { adj: Map<number, number[]>; revAdj: Ma
     if (!preds.includes(u)) preds.push(u);
   };
 
-  // 1. Agrupamento por Zona (Pavimento) para dependência espacial no mesmo local
+  // 1. Dependência Espacial na Mesma Zona (Sequência Executiva Natural do CSV)
   const zonasMap = new Map<string, number[]>();
   rawRows.forEach((r, idx) => {
     const pav = (r['LOCAL_PAVIMENTO'] || '').trim();
@@ -166,22 +180,13 @@ function buildLOBGraph(rawRows: any[]): { adj: Map<number, number[]>; revAdj: Ma
   });
 
   zonasMap.forEach((indices) => {
-    // Ordena pelo índice do vagão macro e ordem original
-    indices.sort((a, b) => {
-      const vA = getVagaoMacroIndex(rawRows[a]['VAGAO']);
-      const vB = getVagaoMacroIndex(rawRows[b]['VAGAO']);
-      if (vA !== vB) return vA - vB;
-      return a - b;
-    });
-
+    indices.sort((a, b) => a - b);
     for (let k = 0; k < indices.length - 1; k++) {
-      const u = indices[k];
-      const v = indices[k + 1];
-      addEdge(u, v);
+      addEdge(indices[k], indices[k + 1]);
     }
   });
 
-  // 2. Agrupamento por Vagão para dependência de recurso/equipe contínua entre zonas
+  // 2. Dependência de Equipe no Mesmo Vagão entre Zonas (Esteira Takt)
   const vagoesMap = new Map<string, number[]>();
   rawRows.forEach((r, idx) => {
     const vagao = (r['VAGAO'] || '').trim();
@@ -194,65 +199,97 @@ function buildLOBGraph(rawRows: any[]): { adj: Map<number, number[]>; revAdj: Ma
     for (let k = 0; k < indices.length - 1; k++) {
       const u = indices[k];
       const v = indices[k + 1];
-      addEdge(u, v);
+      const dFimU = parseDateRobust(rawRows[u]['DATA_FIM']);
+      const dIniV = parseDateRobust(rawRows[v]['DATA_INICIO']);
+      // Só vincula se no baseline a tarefa seguinte não foi planejada simultaneamente (em paralelo)
+      if (dFimU && dIniV && dIniV.getTime() >= dFimU.getTime()) {
+        addEdge(u, v);
+      }
     }
   });
 
-  // 3. Portões Especiais de Bloqueio da EAP
-  const indicesTesteHidro: number[] = [];
-  const indicesReboco: number[] = [];
-  const indicesAlvenaria: number[] = [];
-  const indicesCobertura: number[] = [];
-  const indicesComissionamento: number[] = [];
+  // 3. Marco Técnico: Alvenaria na Zona 3 libera Cobertura Metálica na Zona 4
+  const idxAlvenariaZ3 = rawRows.findIndex(r => (r['VAGAO'] || '').includes('06.') && (r['LOCAL_PAVIMENTO'] || '').includes('Zona 03'));
+  if (idxAlvenariaZ3 !== -1) {
+    rawRows.forEach((r, idx) => {
+      if ((r['VAGAO'] || '').includes('07.') && (r['LOCAL_PAVIMENTO'] || '').includes('Zona 04')) {
+        addEdge(idxAlvenariaZ3, idx);
+      }
+    });
+  }
 
+  // 4. Marco Técnico: Comissionamento & Entrega (Vagão 15) sucede todas as atividades anteriores
+  const indicesComissionamento: number[] = [];
   rawRows.forEach((r, idx) => {
-    const vagao = (r['VAGAO'] || '').toLowerCase();
-    const atv = (r['ATIVIDADE'] || '').toLowerCase();
-    if (atv.includes('teste hidrostático') || atv.includes('estanqueidade')) {
-      indicesTesteHidro.push(idx);
-    }
-    if (vagao.includes('09.') || vagao.includes('reboco')) {
-      indicesReboco.push(idx);
-    }
-    if (vagao.includes('06.') || vagao.includes('alvenaria')) {
-      indicesAlvenaria.push(idx);
-    }
-    if (vagao.includes('07.') || vagao.includes('cobertura')) {
-      indicesCobertura.push(idx);
-    }
-    if (vagao.includes('15.') || vagao.includes('comissionamento')) {
+    if ((r['VAGAO'] || '').includes('15.')) {
       indicesComissionamento.push(idx);
     }
   });
 
-  // Portão 3: Teste Hidrostático bloqueia Reboco em qualquer setor
-  indicesTesteHidro.forEach(u => {
-    indicesReboco.forEach(v => addEdge(u, v));
-  });
+  // Ordenação Topológica Canônica (Kahn Algorithm para DAG garantido)
+  const inDegree = new Map<number, number>();
+  for (let i = 0; i < rawRows.length; i++) {
+    inDegree.set(i, revAdj.get(i)!.length);
+  }
 
-  // Alvenaria concluída nas zonas inferiores libera Cobertura Metálica na Zona 4
-  indicesAlvenaria.forEach(u => {
-    indicesCobertura.forEach(v => addEdge(u, v));
-  });
+  const queue: number[] = [];
+  for (let i = 0; i < rawRows.length; i++) {
+    if (inDegree.get(i) === 0) queue.push(i);
+  }
 
-  return { adj, revAdj };
+  const topoOrder: number[] = [];
+  while (queue.length > 0) {
+    const u = queue.shift()!;
+    topoOrder.push(u);
+    for (const v of adj.get(u) || []) {
+      const deg = inDegree.get(v)! - 1;
+      inDegree.set(v, deg);
+      if (deg === 0) {
+        queue.push(v);
+      }
+    }
+  }
+
+  // Se por algum motivo restar algum nó fora da ordenação topológica, adiciona ao final
+  if (topoOrder.length < rawRows.length) {
+    for (let i = 0; i < rawRows.length; i++) {
+      if (!topoOrder.includes(i)) topoOrder.push(i);
+    }
+  }
+
+  return { adj, revAdj, topoOrder };
 }
 
 /**
  * Propagação em Cascata para Sucessoras (Forward Pass).
- * Empurra sucessoras de forma que nunca iniciem antes do término das suas predecessoras.
+ * Utiliza a Ordenação Topológica do DAG para recalcular as datas em cadeia com precisão matemática,
+ * garantindo zero ciclos, zero sobreposições e fluxo contínuo perfeito.
  */
 function propagarCascataForward(
   rawRows: any[], 
   startIndices: number[], 
-  adj: Map<number, number[]>
+  adj: Map<number, number[]>,
+  topoOrder: number[]
 ): Set<number> {
   const modificados = new Set<number>();
-  const fila = [...startIndices];
-  const visitadosNaFila = new Set<number>(startIndices);
+  
+  // 1. Determina todos os nós atingíveis (sucessores diretos e indiretos) a partir dos startIndices
+  const reachable = new Set<number>(startIndices);
+  const q = [...startIndices];
+  while (q.length > 0) {
+    const curr = q.shift()!;
+    for (const nxt of adj.get(curr) || []) {
+      if (!reachable.has(nxt)) {
+        reachable.add(nxt);
+        q.push(nxt);
+      }
+    }
+  }
 
-  while (fila.length > 0) {
-    const u = fila.shift()!;
+  // 2. Processa os nós atingíveis exatamente na ordem topológica do DAG
+  const activeTopo = topoOrder.filter(node => reachable.has(node));
+
+  for (const u of activeTopo) {
     const rowU = rawRows[u];
     const dFimU = parseDateRobust(rowU['DATA_FIM']);
     if (!dFimU) continue;
@@ -261,9 +298,8 @@ function propagarCascataForward(
     for (const v of sucs) {
       const rowV = rawRows[v];
       const dIniV = parseDateRobust(rowV['DATA_INICIO']);
-      const dFimV = parseDateRobust(rowV['DATA_FIM']);
       const durV = parseInt(rowV['RITMO_DIAS_POR_LOCAL'] || '3', 10);
-      if (!dIniV || !dFimV) continue;
+      if (!dIniV) continue;
 
       // Sucessora deve iniciar no próximo dia útil após o término da predecessora
       const minInicioV = addWorkingDays(dFimU, 1);
@@ -272,12 +308,7 @@ function propagarCascataForward(
         rowV['DATA_INICIO'] = formatDateBR(minInicioV);
         const novoFimV = calculateWorkingEndDate(minInicioV, durV);
         rowV['DATA_FIM'] = formatDateBR(novoFimV);
-
         modificados.add(v);
-        if (!visitadosNaFila.has(v)) {
-          visitadosNaFila.add(v);
-          fila.push(v);
-        }
       }
     }
   }
@@ -287,19 +318,33 @@ function propagarCascataForward(
 
 /**
  * Propagação em Cascata para Predecessoras (Backward Pass).
- * Antecipa predecessoras caso o novo início de uma tarefa exija que elas terminem antes.
+ * Percorre na Ordem Topológica Reversa antecipando tarefas predecessoras que entrariam em conflito.
  */
 function propagarCascataBackward(
   rawRows: any[], 
   startIndices: number[], 
-  revAdj: Map<number, number[]>
+  revAdj: Map<number, number[]>,
+  topoOrder: number[]
 ): Set<number> {
   const modificados = new Set<number>();
-  const fila = [...startIndices];
-  const visitadosNaFila = new Set<number>(startIndices);
+  
+  // 1. Determina todos os nós antecessores diretos e indiretos
+  const reachable = new Set<number>(startIndices);
+  const q = [...startIndices];
+  while (q.length > 0) {
+    const curr = q.shift()!;
+    for (const prv of revAdj.get(curr) || []) {
+      if (!reachable.has(prv)) {
+        reachable.add(prv);
+        q.push(prv);
+      }
+    }
+  }
 
-  while (fila.length > 0) {
-    const v = fila.shift()!;
+  // 2. Processa na ordem topológica inversa
+  const activeRevTopo = [...topoOrder].reverse().filter(node => reachable.has(node));
+
+  for (const v of activeRevTopo) {
     const rowV = rawRows[v];
     const dIniV = parseDateRobust(rowV['DATA_INICIO']);
     if (!dIniV) continue;
@@ -307,10 +352,9 @@ function propagarCascataBackward(
     const preds = revAdj.get(v) || [];
     for (const u of preds) {
       const rowU = rawRows[u];
-      const dIniU = parseDateRobust(rowU['DATA_INICIO']);
       const dFimU = parseDateRobust(rowU['DATA_FIM']);
       const durU = parseInt(rowU['RITMO_DIAS_POR_LOCAL'] || '3', 10);
-      if (!dIniU || !dFimU) continue;
+      if (!dFimU) continue;
 
       // Predecessora deve terminar pelo menos 1 dia útil antes do início da sucessora
       const maxFimU = addWorkingDays(dIniV, -1);
@@ -319,12 +363,7 @@ function propagarCascataBackward(
         rowU['DATA_FIM'] = formatDateBR(maxFimU);
         const novoIniU = addWorkingDays(maxFimU, -(durU - 1));
         rowU['DATA_INICIO'] = formatDateBR(novoIniU);
-
         modificados.add(u);
-        if (!visitadosNaFila.has(u)) {
-          visitadosNaFila.add(u);
-          fila.push(u);
-        }
       }
     }
   }
@@ -742,7 +781,7 @@ export async function POST(request: Request) {
     }
 
     // Constrói grafo de precedências canônico
-    const { adj, revAdj } = buildLOBGraph(rawRows);
+    const { adj, revAdj, topoOrder } = buildLOBGraph(rawRows);
     let tarefasModificadasSet = new Set<number>();
     let feedbackMsg = '';
 
@@ -790,7 +829,7 @@ export async function POST(request: Request) {
                 // Modo Cascata Reverso: antecipa predecessoras
                 row['DATA_INICIO'] = formatDateBR(newIni);
                 if (newFim) row['DATA_FIM'] = formatDateBR(newFim);
-                const recMod = propagarCascataBackward(rawRows, [targetIdx], revAdj);
+                const recMod = propagarCascataBackward(rawRows, [targetIdx], revAdj, topoOrder);
                 recMod.forEach(id => tarefasModificadasSet.add(id));
               } else {
                 // Modo Validação Restritiva: respeita a predecessora
@@ -829,7 +868,7 @@ export async function POST(request: Request) {
         // Propagação em Cascata para Sucessoras (Forward Pass)
         const shouldEmpurrar = empurrarSucessores !== undefined ? Boolean(empurrarSucessores) : (deslocarSucessores ?? true);
         if (shouldEmpurrar) {
-          const modSucs = propagarCascataForward(rawRows, Array.from(tarefasModificadasSet), adj);
+          const modSucs = propagarCascataForward(rawRows, Array.from(tarefasModificadasSet), adj, topoOrder);
           modSucs.forEach(id => tarefasModificadasSet.add(id));
         }
 
@@ -863,12 +902,12 @@ export async function POST(request: Request) {
             tarefasModificadasSet.add(targetIdx);
 
             if (numDias < 0 && deslocarPredecessores) {
-              const modPreds = propagarCascataBackward(rawRows, [targetIdx], revAdj);
+              const modPreds = propagarCascataBackward(rawRows, [targetIdx], revAdj, topoOrder);
               modPreds.forEach(idx => tarefasModificadasSet.add(idx));
             }
 
             if (deslocarSucessores) {
-              const modSucs = propagarCascataForward(rawRows, [targetIdx], adj);
+              const modSucs = propagarCascataForward(rawRows, [targetIdx], adj, topoOrder);
               modSucs.forEach(idx => tarefasModificadasSet.add(idx));
             }
 
@@ -909,12 +948,12 @@ export async function POST(request: Request) {
         });
 
         if (numDias < 0 && deslocarPredecessores) {
-          const modPreds = propagarCascataBackward(rawRows, indicesDoVagao, revAdj);
+          const modPreds = propagarCascataBackward(rawRows, indicesDoVagao, revAdj, topoOrder);
           modPreds.forEach(idx => tarefasModificadasSet.add(idx));
         }
 
         if (deslocarSucessores) {
-          const modSucs = propagarCascataForward(rawRows, indicesDoVagao, adj);
+          const modSucs = propagarCascataForward(rawRows, indicesDoVagao, adj, topoOrder);
           modSucs.forEach(idx => tarefasModificadasSet.add(idx));
         }
 

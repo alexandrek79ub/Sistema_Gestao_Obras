@@ -741,15 +741,10 @@ export default function LinhaDeBalanco() {
 
       // Se moveu pelo menos 1 dia útil:
       if (Math.abs(finalDelta) >= 1 && taskId) {
-        // 1. ATUALIZAÇÃO OTIMISTA IMEDIATA:
+        // 1. ATUALIZAÇÃO OTIMISTA DA TAREFA ALVO:
         setTarefas(prevTarefas => {
           return prevTarefas.map(t => {
-            const isTarget = t.id === taskId;
-            // Apenas empurra sucessores se atrasou (finalDelta > 0).
-            // Se adiantou (finalDelta < 0), APENAS a tarefa alvo se move na folga existente!
-            const isSuccessor = finalDelta > 0 && t.id > taskId;
-
-            if (isTarget || isSuccessor) {
+            if (t.id === taskId) {
               const dIni = parseDateBR(t.dataInicio || '');
               const newStartDay = Math.max(1, t.start + finalDelta);
               if (dIni) {
@@ -768,14 +763,12 @@ export default function LinhaDeBalanco() {
           });
         });
 
-        // Atualiza também os pontos de vagoesFluxo em memória
+        // Atualiza também os pontos de vagoesFluxo em memória para o ponto alvo
         setVagoesFluxo(prevVagoes => {
           return prevVagoes.map(v => {
             let mod = false;
             const novosPontos = v.pontos.map(p => {
-              const isTarget = p.id === taskId;
-              const isSuccessor = finalDelta > 0 && p.id > taskId;
-              if (isTarget || isSuccessor) {
+              if (p.id === taskId) {
                 mod = true;
                 const dIni = parseDateBR(p.dataInicio || '');
                 const newStart = Math.max(1, p.start + finalDelta);
