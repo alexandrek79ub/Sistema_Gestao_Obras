@@ -118,6 +118,7 @@ Quando o assunto envolver demonstração de dados para Diretoria ou automações
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
 Quando o sistema exigir criação, manutenção ou auditoria do código (Next.js, APIs), garantindo as melhores práticas e a qualidade da entrega técnica.
 - 👨‍💻 **[Desenvolvedor Sênior e Tech Lead](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md)**: Skill de entrada da frente. O agente aplica o "Loop de QA" e mantém a locomotiva nos trilhos.
+- 📘 **[Manual de Boas Práticas de Codificação](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md)**: Guia oficial de arquitetura e qualidade para Python (CLI, UTF-8, Regex), Next.js, CSVs (`utf-8-sig`) e Markdown Puro.
 - 🗂️ **[Schema dos CSVs](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md)**: Fonte da verdade dos dados. Consultar antes de qualquer leitura ou escrita de CSV no dashboard.
 - 🏗️ **[Arquitetura Next.js](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_ARQUITETURA_NEXTJS.md)**: Mapa de pastas, padrões de naming, contextos React, fluxo de fetch e checklist para adicionar novos relatórios.
 - 🧪 **[Testes e Qualidade](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_TESTES_E_QUALIDADE.md)**: Verificações obrigatórias, edge cases por componente e checklist pré-entrega.
