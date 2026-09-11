@@ -116,7 +116,8 @@ Quando o assunto envolver demonstração de dados para Diretoria ou automações
 - 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API).
 
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
-Quando o sistema exigir criação, manutenção ou auditoria do código (Next.js, APIs), garantindo as melhores práticas e a qualidade da entrega técnica.
+Quando o sistema exigir criação, manutenção, refatoração ou auditoria de código (Next.js, APIs, Scripts Python, CSVs estruturados).
+- ⚡ **ATIVAÇÃO AUTOMÁTICA OBRIGATÓRIA:** Todo pedido que envolva manipular ou criar código em `scripts/`, `apresentacao_comercial/` ou bases de dados aciona **compulsoriamente** o Tech Lead e o Manual de Boas Práticas antes de qualquer execução.
 - 👨‍💻 **[Desenvolvedor Sênior e Tech Lead](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md)**: Skill de entrada da frente. O agente aplica o "Loop de QA" e mantém a locomotiva nos trilhos.
 - 📘 **[Manual de Boas Práticas de Codificação](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md)**: Guia oficial de arquitetura e qualidade para Python (CLI, UTF-8, Regex), Next.js, CSVs (`utf-8-sig`) e Markdown Puro.
 - 🗂️ **[Schema dos CSVs](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md)**: Fonte da verdade dos dados. Consultar antes de qualquer leitura ou escrita de CSV no dashboard.
@@ -127,12 +128,17 @@ Quando o sistema exigir criação, manutenção ou auditoria do código (Next.js
 
 ## ⚙️ Workflow Universal
 
-Sempre que receber um pedido, siga estes passos:
+Sempre que receber um pedido, siga rigorosamente estes passos:
 1. **Diagnóstico**: Qual das 5 Frentes (Gestão, Quantitativo, POPs, Automação ou Desenvolvimento) resolve o problema?
 2. **Seleção de Módulo**: Identifique quais Skills ou POPs precisam ser acionados.
-3. **Leitura**: Nunca responda baseado em conhecimentos genéricos. Leia os arquivos correspondentes na íntegra.
-4. **Sintetização**: Se for Quantitativo, use memórias de cálculo. Se for Gestão/Campo, exija o cumprimento rigoroso das regras do POP aplicável.
-5. **Transparência**: Cite explicitamente quais Skills/POPs você acionou para gerar a resposta.
+3. **Gatilho Automático de Código (Frente 5 - Tech Lead)**:
+   - Se a solicitação do usuário envolver criar, alterar, refatorar, auditar ou rodar qualquer código (`.py`, `.ts`, `.tsx`, `.js`, `.csv`, `.json`), a IA **DEVE OBRIGATORIAMENTE:**
+     a) Assumir a persona do **Tech Lead** e o ciclo de QA da [`SKILL_DEV_SENIOR.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md);
+     b) Ler e aplicar as diretrizes do [`MANUAL_BOAS_PRATICAS_CODIFICACAO.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md) antes de gerar a primeira linha de código;
+     c) Validar os 7 itens do **Checklist de QA Pré-Commit (Seção 7 do Manual)** antes de concluir a entrega.
+4. **Leitura Obrigatória**: Nunca responda baseado em conhecimentos genéricos. Leia os arquivos correspondentes na íntegra.
+5. **Sintetização**: Se for Quantitativo, use memórias de cálculo. Se for Gestão/Campo, exija o cumprimento rigoroso das regras do POP aplicável. Se for Código, produza estritamente motores universais escalonáveis multi-obras.
+6. **Transparência**: Cite explicitamente quais Skills/POPs/Manuais você acionou para gerar a resposta.
 
 ---
 
