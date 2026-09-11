@@ -643,7 +643,8 @@ export async function GET(request: Request) {
         .sort((a, b) => a.startMin - b.startMin);
     }
 
-    const sobreposicaoPath = path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'RELATORIO_SOBREPOSICAO_LOB.json');
+    const actualBasePath = path.dirname(path.dirname(filePath));
+    const sobreposicaoPath = path.join(actualBasePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'RELATORIO_SOBREPOSICAO_LOB.json');
     let relatorioSobreposicao: any = null;
     if (fs.existsSync(sobreposicaoPath)) {
       try {
@@ -653,7 +654,7 @@ export async function GET(request: Request) {
       }
     }
 
-    const cpmPath = path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'dados_cpm.json');
+    const cpmPath = path.join(actualBasePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'dados_cpm.json');
     let cpmAtividades: any[] = [];
     if (fs.existsSync(cpmPath)) {
       try {

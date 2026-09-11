@@ -578,29 +578,20 @@ export default function LinhaDeBalanco() {
     tarefasDoSetor.forEach((t, idx) => {
       const vNome = t.vagao || t.tipo;
       const tEnd = t.start + t.duration;
-      const ultimo = lotes[lotes.length - 1];
-
-      // Mescla apenas se for do mesmo vagão E for contíguo no tempo (gap <= 2 dias úteis/domingo)
-      if (ultimo && ultimo.vagaoNome === vNome && (t.start - ultimo.end <= 2)) {
-        ultimo.end = Math.max(ultimo.end, tEnd);
-        ultimo.duration = ultimo.end - ultimo.start;
-        if (t.dataFim) ultimo.dataFim = t.dataFim;
-      } else {
-        lotes.push({
-          id: `${pav}-${vNome}-${t.start}-${idx}`,
-          tarefaId: t.id,
-          tarefa: t,
-          pav,
-          vagaoNome: vNome,
-          equipe: t.equipe,
-          start: t.start,
-          end: tEnd,
-          duration: t.duration,
-          dataInicio: t.dataInicio,
-          dataFim: t.dataFim,
-          color: t.color
-        });
-      }
+      lotes.push({
+        id: `${pav}-${vNome}-${t.start}-${idx}`,
+        tarefaId: t.id,
+        tarefa: t,
+        pav,
+        vagaoNome: vNome,
+        equipe: t.equipe,
+        start: t.start,
+        end: tEnd,
+        duration: t.duration,
+        dataInicio: t.dataInicio,
+        dataFim: t.dataFim,
+        color: t.color
+      });
     });
 
     return {

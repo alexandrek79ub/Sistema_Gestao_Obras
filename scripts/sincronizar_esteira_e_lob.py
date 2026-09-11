@@ -112,9 +112,9 @@ def normalizar_zona(etapa_zona_str):
     if "térreo geral" in s or "todos os setores" in s or "geral" in s or "áreas secas" in s or "paredes internas" in s:
         return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
         
-    # 4. Serviços de comissionamento/turnkey geral -> Cobrem toda a edificação
+    # 4. Serviços de comissionamento/turnkey geral -> Cobrem as 3 zonas do edifício
     if "turnkey" in s or "edifício" in s or "vistoria" in s or "entrega" in s or "canteiro" in s:
-        return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio", "Zona 04 - Cobertura e Platibanda"]
+        return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
         
     return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
 
@@ -225,14 +225,42 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
         if ":" in nome_atividade:
             nome_atividade = nome_atividade.split(":", 1)[1].strip()
             
-        for zona in zonas_dest:
+        # Dias úteis reais dentro do lote de 3 dias
+        dias_uteis = []
+        cur_d = cal['dt_inicio']
+        while cur_d <= cal['dt_fim']:
+            if cur_d.weekday() != 6:
+                dias_uteis.append(cur_d)
+            cur_d += datetime.timedelta(days=1)
+            
+        # Fluxo Lean Nivelado (Heijunka): se o lote contempla as 3 zonas e 3 dias úteis,
+        # a equipe avança sequencialmente 1 dia em cada zona (Z1 -> Z2 -> Z3),
+        # garantindo zero sobreposição de equipes e zero conflito espacial.
+        if len(zonas_dest) == 3 and len(dias_uteis) == 3:
+            for z_i, zona in enumerate(zonas_dest):
+                dia = dias_uteis[z_i]
+                linhas_lob.append({
+                    "LOCAL_PAVIMENTO": zona,
+                    "SEQUENCIA": len(linhas_lob) + 1,
+                    "VAGAO": vagao_macro,
+                    "ATIVIDADE": nome_atividade,
+                    "EQUIPE_RESPONSAVEL": equipe,
+                    "RITMO_DIAS_POR_LOCAL": 1,
+                    "DATA_INICIO": dia.strftime("%d/%m/%Y"),
+                    "DATA_FIM": dia.strftime("%d/%m/%Y"),
+                    "_dt_ini": dia,
+                    "_dt_fim": dia,
+                    "_cod_lote": cod_lote,
+                    "_headcount": headcount
+                })
+        elif len(zonas_dest) == 1:
             linhas_lob.append({
-                "LOCAL_PAVIMENTO": zona,
+                "LOCAL_PAVIMENTO": zonas_dest[0],
                 "SEQUENCIA": len(linhas_lob) + 1,
                 "VAGAO": vagao_macro,
                 "ATIVIDADE": nome_atividade,
                 "EQUIPE_RESPONSAVEL": equipe,
-                "RITMO_DIAS_POR_LOCAL": 3,
+                "RITMO_DIAS_POR_LOCAL": len(dias_uteis),
                 "DATA_INICIO": cal['str_inicio'],
                 "DATA_FIM": cal['str_fim'],
                 "_dt_ini": cal['dt_inicio'],
@@ -240,6 +268,24 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
                 "_cod_lote": cod_lote,
                 "_headcount": headcount
             })
+        else:
+            for z_i, zona in enumerate(zonas_dest):
+                dia_idx = min(z_i, len(dias_uteis) - 1)
+                dia = dias_uteis[dia_idx]
+                linhas_lob.append({
+                    "LOCAL_PAVIMENTO": zona,
+                    "SEQUENCIA": len(linhas_lob) + 1,
+                    "VAGAO": vagao_macro,
+                    "ATIVIDADE": nome_atividade,
+                    "EQUIPE_RESPONSAVEL": equipe,
+                    "RITMO_DIAS_POR_LOCAL": 1,
+                    "DATA_INICIO": dia.strftime("%d/%m/%Y"),
+                    "DATA_FIM": dia.strftime("%d/%m/%Y"),
+                    "_dt_ini": dia,
+                    "_dt_fim": dia,
+                    "_cod_lote": cod_lote,
+                    "_headcount": headcount
+                })
             
     df_lob = pd.DataFrame(linhas_lob)
     
@@ -503,18 +549,21 @@ def main():
         
     print(f"[*] Sincronizador Bidirecional Esteira Takt <-> Linha de Balanço | Obra: {args.obra}")
     
-    # Se usuário chamou somente --analisar-sobreposicao ou --verificar
-    if args.analisar_sobreposicao or args.verificar:
+    # Se usuário chamou somente --verificar
+    if args.verificar:
         analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)
         return
         
     if args.modo == "esteira_para_lob":
         esteira_para_lob(obra_dir, args.data_inicio)
-        analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)
+        if args.analisar_sobreposicao or True:
+            analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)
     elif args.modo == "lob_para_esteira":
         lob_para_esteira(obra_dir, args.permitir_sobreposicao)
     elif args.modo == "ambos":
         esteira_para_lob(obra_dir, args.data_inicio)
+        analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)
+    elif args.analisar_sobreposicao:
         analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)
 
 if __name__ == "__main__":
