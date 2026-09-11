@@ -35,6 +35,8 @@ pergunta/situação, e destrava conflito quando duas skills tocam o mesmo tema.
 | Informação faltante na prancha que bloqueia o quantitativo | `SKILL_ENGENHARIA_RFI.md` — abrir RFI antes de qualquer estimativa |
 | Acompanhar RFIs em aberto, prazo vencido, resposta de projetista | `SKILL_ENGENHARIA_RFI.md` |
 | Qual POP executar antes de liberar um serviço de campo | `SKILL_PRODUCAO_POP_BRIDGE.md` — consultar junto com SKILL_GESTAO_02 |
+| Cockpit Executivo Web, Dashboards Next.js e relatórios 5D interativos | `SKILL_DEV_ARQUITETURA_NEXTJS.md` e `SKILL_GESTAO_06_RELATORIOS.md` |
+| Coleta digital de campo, apontamento móvel (RDO / FVS) e WhatsApp | `SKILL_GESTAO_02_PRODUCAO.md` e `SKILL_DEV_ARQUITETURA_NEXTJS.md` |
 | Montar a EAP (WBS) ou o cronograma de uma disciplina ou da obra completa | Consultar a Cadeia Global Integrada na Seção 1.1 abaixo e as Tabelas Oficiais de Serviços: §1.5 da `SKILL_QUANT_06` (níveis 1.1, 1.2, 4.1, 4.2 e 5.1) + §1.2 da `SKILL_QUANT_01` (nível 1.3) + §4.1 da `SKILL_QUANT_02` (nível 1.4) + §2 da `SKILL_QUANT_03` (níveis 2.1 e 2.2) + §3 da `SKILL_QUANT_04` (nível 3.1) + §3 da `SKILL_QUANT_05` (nível 3.2). |
 
 ---

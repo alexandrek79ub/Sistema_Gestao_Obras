@@ -14,7 +14,7 @@ O sistema substitui planilhas soltas e controles manuais por uma **arquitetura h
 - **Trilha de Auditoria Contínua:** Commits do Git atuam como registro inalterável de conformidade (Compliance);
 - **Motores Universais em Python:** 16 motores analíticos em `scripts/` que operam via CLI (`--obra` e `--dir`), sem código hardcoded;
 - **Chão de Fábrica Conectado:** Aplicativo móvel responsivo ([`/campo`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/src/app/campo/page.tsx) e PWA offline) conectando Mestre e Encarregados ao escritório;
-- **Apresentação Executiva:** Dashboard em Next.js para visualização em tempo real de Curva S (EVM), SPI e medições.
+- **Apresentação Executiva:** Cockpit Web Next.js ([`apresentacao_comercial/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/)) com **8 visões operacionais integradas**: EVM, Orçamento, Linha de Balanço, RDO Diário, FVS Bloqueantes, Fluxo de Caixa/Suprimentos, Compliance SST e DataBook/Closeout.
 
 ---
 
@@ -29,12 +29,12 @@ O sistema substitui planilhas soltas e controles manuais por uma **arquitetura h
          ┌───────────────────┬────────────────────┼───────────────────┬───────────────────┐
          ▼                   ▼                    ▼                   ▼                   ▼
 ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐ ┌─────────────────┐
-│  PILAR 1: CUSTOS │ │ PILAR 2: GESTÃO │ │ PILAR 3: CHÃO   │ │ PILAR 4: MOTORES│ │ PILAR 5: APPS   │
-│   E ORÇAMENTO   │ │   BACKOFFICE    │ │    DE FÁBRICA   │ │  UNIVERSAIS CLI │ │    MOBILE 4.0   │
+│  PILAR 1: CUSTOS │ │ PILAR 2: GESTÃO │ │ PILAR 3: CHÃO   │ │ PILAR 4: MOTORES│ │ PILAR 5: WEB 5D │
+│   E ORÇAMENTO   │ │   BACKOFFICE    │ │    DE FÁBRICA   │ │  UNIVERSAIS CLI │ │  & MOBILE 4.0   │
 │                 │ │                 │ │                 │ │                 │ │                 │
-│ • SINAPI SP     │ │ • Linha de Base │ │ • 25 POPs       │ │ • 16 Scripts    │ │ • Web /campo    │
-│ • BDI Analítico │ │ • Fluxo Caixa   │ │ • PBQP-H        │ │ • CSV / XLSX    │ │ • PWA Offline   │
-│ • Regra UCC     │ │ • 8 Subcontratos│ │ • Trena e FVS   │ │ • MS Project    │ │ • Bot WhatsApp  │
+│ • SINAPI SP     │ │ • Linha de Base │ │ • 25 POPs       │ │ • 16 Scripts    │ │ • 8 Telas Web   │
+│ • BDI Analítico │ │ • Fluxo Caixa   │ │ • PBQP-H        │ │ • CSV / XLSX    │ │ • Web /campo    │
+│ • Regra UCC     │ │ • 8 Subcontratos│ │ • Trena e FVS   │ │ • MS Project    │ │ • PWA Offline   │
 └─────────────────┘ └─────────────────┘ └─────────────────┘ └─────────────────┘ └─────────────────┘
 ```
 
@@ -69,10 +69,18 @@ A pasta `procedimentos/` contém os manuais inegociáveis de campo:
 - **Canteiro Pesado e SESMT:** POP 19 (Fôrmas e Cimbramento), POP 20 (Andaimes Fachadeiros), POP 21 (Topografia a Laser), POP 22 (Controle Tecnológico de Concreto), POP 23 (SESMT e Treinamentos).
 - **Acabamentos Externos:** POP 24 (Cobertura Metálica/Telhados), POP 25 (Esquadrias de Alumínio e Vidros).
 
-### 🤖 Pilar 5: Engenharia 4.0 e Coleta Digital Mobile
-- **App de Campo Responsivo ([`/campo`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/src/app/campo/page.tsx)):** Interface escura de alto contraste com contadores rápidos de efetivo, botões de clima, seleção de serviços EAP, canvas de assinatura digital no dedo para FVS e gerador de mensagem instantânea de WhatsApp.
-- **PWA Standalone ([`campo.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/public/campo.html)):** Funciona 100% offline em qualquer smartphone salvando os apontamentos em LocalStorage.
-- **Ingestão Inteligente via WhatsApp:** Mensagens enviadas pelo Mestre no WhatsApp são lidas e interpretadas pelo motor Python `processar_coleta_campo.py`.
+### 🖥️📱 Pilar 5: Cockpit Web PMO 5D & Coleta Digital Mobile 4.0
+O ecossistema disponibiliza uma suíte executiva completa em Next.js com 8 visões operacionais dinâmicas integradas via context `useObra()`:
+- 📊 **Painel Executivo EVM ([`/dashboard`](http://localhost:3000/dashboard)):** Curva S acumulada, indicadores de prazo/custo (SPI/CPI) e semáforo gerencial.
+- 💰 **Orçamento Base ([`/dashboard/orcamento`](http://localhost:3000/dashboard/orcamento)):** 158 itens de EAP com custo unitário SINAPI SP, BDI segregado e curvas ABC.
+- 📅 **Linha de Balanço ([`/dashboard/cronograma`](http://localhost:3000/dashboard/cronograma)):** Ritmo de avanço e cálculo determinístico de Caminho Crítico (CPM).
+- 🏗️ **Produção & RDOs ([`/dashboard/rdo`](http://localhost:3000/dashboard/rdo)):** Diários dinâmicos de obra, histórico de HH, efetivo e clima.
+- 🛡️ **Qualidade & FVS ([`/dashboard/qualidade`](http://localhost:3000/dashboard/qualidade)):** Caderno das 8 FVSs normativas ABNT e matriz de travas contratuais de pagamento (`SUB-01` a `SUB-08`).
+- 💵 **Caixa & Suprimentos ([`/dashboard/financeiro`](http://localhost:3000/dashboard/financeiro)):** Gráfico de fluxo de caixa em Recharts, tracker de compras UCC e quadro das 12 medições com retenção técnica de 5%.
+- 🦺 **Segurança & SST ([`/dashboard/sst`](http://localhost:3000/dashboard/sst)):** Semáforo de portaria com ASOs em D-30, programas legais (PGR/PCMSO) e matriz de NRs.
+- 🏆 **DataBook & Closeout ([`/dashboard/databook`](http://localhost:3000/dashboard/databook)):** As 5 pastas canônicas de entrega, matriz de garantias NBR 15575 e roteiro D-45 a D+15.
+- 📱 **App de Coleta de Campo ([`/campo`](http://localhost:3000/campo)):** Interface mobile escura para smartphone com contadores rápidos de efetivo, clima, assinatura digital no canvas touch e gerador de mensagem WhatsApp.
+- 📱 **PWA Standalone ([`campo.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/public/campo.html)):** Versão estática offline pronta para rodar em qualquer celular sem dependências.
 
 ---
 
@@ -96,6 +104,7 @@ Todos os motores implementam interface de linha de comando (`argparse`) com par�
 | **12** | `gerar_fvs_bloqueantes.py` | Caderno de 8 FVSs com bloqueio de medições | `CADERNO_FVS_BLOQUEANTES.md` e planilha |
 | **13** | `gerar_tracker_avanco_fisico.py` | Acompanhamento de avanço físico e SPI (EVM) | `ACOMPANHAMENTO_AVANCO_FISICO.xlsx/md` |
 | **14** | `gerar_compliance_sst.py` | Painel SST, controle de ASOs e matriz de NRs | `PAINEL_COMPLIANCE_SST.xlsx/md` |
+| **15** | `gerar_estrutura_databook.py` | Estruturação e controle das 5 pastas de closeout | Acervo permanente em `07_DATABOOK_E_ASBUILT/` |
 | **16** | `processar_coleta_campo.py` | Ingestão de apontamentos via Mobile e WhatsApp | Atualização atômica de RDOs e FVSs |
 
 #### 🛠️ Motores Auxiliares e Utilitários:
@@ -110,14 +119,20 @@ Todos os motores implementam interface de linha de comando (`argparse`) com par�
 
 Dependendo do seu perfil, utilize a porta de entrada adequada:
 
-- 👷 **Sou Engenheiro de Obra e quero criar/rodar uma obra nova:**
+- 💻 **Sou Engenheiro / Gestor e quero rodar o Cockpit Web Executivo:**
+  ```bash
+  cd apresentacao_comercial
+  npm run dev
+  ```
+  ➔ Acesse: [`http://localhost:3000/dashboard`](http://localhost:3000/dashboard)
+- 📱 **Quero testar o Aplicativo de Coleta Móvel de Campo (RDO & FVS 4.0):**
+  ➔ Acesse no navegador ou celular conectado no Wi-Fi: [`http://localhost:3000/campo`](http://localhost:3000/campo) ou abra o PWA offline [`apresentacao_comercial/public/campo.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/public/campo.html).
+- 👷 **Quero criar ou inicializar uma obra nova no ecossistema:**
   ➔ Siga o checklist do [`projetos/_TEMPLATE_OBRA_NOVA/README_COMO_CRIAR_NOVA_OBRA.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/_TEMPLATE_OBRA_NOVA/README_COMO_CRIAR_NOVA_OBRA.md).
-- 💻 **Sou Desenvolvedor e vou criar scripts ou mexer no Next.js:**
-  ➔ Siga rigorosamente o [`MANUAL_BOAS_PRATICAS_CODIFICACAO.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md).
+- 👨‍💻 **Sou Desenvolvedor e vou criar scripts ou alterar o Next.js:**
+  ➔ Siga rigorosamente o [`MANUAL_BOAS_PRATICAS_CODIFICACAO.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md) e a [`SKILL_DEV_SENIOR.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md).
 - 🤖 **Instruções da IA do PMO Virtual:**
   ➔ Consulte as regras de precedência e autonomia em [`agents.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/agents.md).
-- 📱 **Acessar o Aplicativo de Coleta Móvel de Campo:**
-  ➔ Inicie a aplicação comercial em `apresentacao_comercial/` e acesse a rota [`/campo`](http://localhost:3000/campo) ou abra diretamente no celular o arquivo [`apresentacao_comercial/public/campo.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apresentacao_comercial/public/campo.html).
 
 ---
 

@@ -94,3 +94,15 @@ python scripts/processar_coleta_campo.py --obra OBRA_NOVA --texto "RDO 29/09/202
 - Nenhum script em `scripts/` contém dados fixos ou códigos de obra hardcoded.
 - Todas as saídas (CSVs, Excels, XMLs, Dashboards HTML e Relatórios MD) são geradas exclusivamente dentro da pasta da sua obra em `projetos/OBRA_NOVA/`.
 - Diferentes obras podem ser executadas em paralelo ou sequencialmente sem contaminação cruzada.
+
+---
+
+## 6. Visualizar no Cockpit Web e Coleta Mobile 4.0
+Após rodar os scripts da sua obra, inicie a aplicação web:
+```bash
+cd apresentacao_comercial
+npm run dev
+```
+1. Acesse [`http://localhost:3000/dashboard`](http://localhost:3000/dashboard) e selecione `OBRA_NOVA` no seletor do cabeçalho.
+2. Navegue pelas **8 visões integradas**: EVM, Orçamento Base, Linha de Balanço, RDO Diário, Qualidade e FVS, Fluxo de Caixa, Compliance SST e DataBook/Closeout.
+3. Para apontamentos em tempo real de canteiro, acesse [`http://localhost:3000/campo`](http://localhost:3000/campo) do seu smartphone ou emulador.

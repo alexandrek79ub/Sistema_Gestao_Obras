@@ -101,7 +101,7 @@ $$P_{aço} = L_{total\_barra} \times \rho_{bitola} \times (1 + Perda)$$
 - **Total de Escavação de Terra:**  
   $$V_{esc\_total} = 35,40 + 51,00 = \mathbf{86,40\text{ m}^3}$$
 
-- **Lastro de Concreto Magro de Regularização ($e = 5\text{ cm}$):**  
+- **Lastro de Concreto Magro de Regularização ($e = 5	ext{ cm}$):**  
   $$A_{lastro} = 32,60\text{ m}^2 \implies V_{lastro} = 32,60 \times 0,05 = \mathbf{1,63\text{ m}^3}$$  
   Com perda de 5%: **1,71 m³**
 
@@ -115,19 +115,19 @@ $$P_{aço} = L_{total\_barra} \times \rho_{bitola} \times (1 + Perda)$$
 
 - **Aço Ø 6,3 mm (Estribos):**  
   $$P_{líquido} = 467,50\text{ m} \times 0,245\text{ kg/m} = \mathbf{114,40\text{ kg}}$$  
-  Com perda de 5%: $114,40 \times 1,05 = \mathbf{120,10\text{ kg}}$ ➔ **41 barras de 12m**
+  Com perda de 5%: $114,40 	imes 1,05 = \mathbf{120,10	ext{ kg}}$ ➔ **41 barras de 12m**
 
 - **Aço Ø 8,0 mm (Armação de Sapatas + Baldrames):**  
   $$P_{líquido} = (256,00 + 157,70)\text{ kg} = \mathbf{413,70\text{ kg}}$$  
-  Com perda de 5%: $413,70 \times 1,05 = \mathbf{434,40\text{ kg}}$ ➔ **92 barras de 12m**
+  Com perda de 5%: $413,70 	imes 1,05 = \mathbf{434,40	ext{ kg}}$ ➔ **92 barras de 12m**
 
 - **Aço Ø 12,5 mm (Longitudinal Baldrames):**  
   $$P_{líquido} = 273,20\text{ m} \times 0,963\text{ kg/m} = \mathbf{263,20\text{ kg}}$$  
-  Com perda de 5%: $263,20 \times 1,05 = \mathbf{276,40\text{ kg}}$ ➔ **24 barras de 12m**
+  Com perda de 5%: $263,20 	imes 1,05 = \mathbf{276,40	ext{ kg}}$ ➔ **24 barras de 12m**
 
 - **Aço Ø 16,0 mm (Reforços Baldrames VB114/VB115):**  
   $$P_{líquido} = 130,70\text{ m} \times 1,578\text{ kg/m} = \mathbf{206,20\text{ kg}}$$  
-  Com perda de 5%: $206,20 \times 1,05 = \mathbf{216,50\text{ kg}}$ ➔ **12 barras de 12m**
+  Com perda de 5%: $206,20 	imes 1,05 = \mathbf{216,50	ext{ kg}}$ ➔ **12 barras de 12m**
 
 ---
 

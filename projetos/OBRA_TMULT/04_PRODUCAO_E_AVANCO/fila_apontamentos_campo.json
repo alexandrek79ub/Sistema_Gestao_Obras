@@ -41,5 +41,28 @@
       "observacoes": "Fundação liberada para concretagem das sapatas S11 a S20",
       "assinatura": "Assinado digitalmente na tela do celular pelo Mestre"
     }
+  },
+  {
+    "id": "APONT-RDO-008",
+    "timestamp": "2026-09-11T10:27:28.611266",
+    "tipo": "RDO",
+    "rdo_gerado": "RDO_008_11-09-2026.md",
+    "dados": {
+      "tipo": "rdo",
+      "data": "11/09/2026",
+      "dia": "Friday",
+      "clima_m": "Ensolarado",
+      "clima_t": "Ensolarado",
+      "cond": "Próprio",
+      "h_paral": 0.0,
+      "ef_prop": 5,
+      "ef_terc": 16,
+      "hh": 184.8,
+      "equip": "1x Betoneira 400L, 1x Vibrador de Imersão, Ferramental Manual",
+      "eap": "EAP 1.3 / Fundações e Estrutura",
+      "fvs": "FVS-02",
+      "fvs_status": "🟢 Aprovado",
+      "obs": "RDO 11/09/2026: 8 pedreiros, 6 serventes e 2 carpinteiros. Clima de sol manha e tarde. Escavacao sapatas S21 a S28. FVS-02 aprovada com sucesso. Sem paralisacoes."
+    }
   }
 ]

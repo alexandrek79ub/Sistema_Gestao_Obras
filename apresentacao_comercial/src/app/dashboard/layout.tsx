@@ -1,5 +1,4 @@
-import Link from 'next/link';
-import { LayoutDashboard, LineChart, FileText, CalendarDays, Wallet, Menu } from 'lucide-react';
+import SidebarNav from '@/components/SidebarNav';
 import { ObraProvider } from '@/context/ObraContext';
 import ProjectSelector from '@/components/ProjectSelector';
 
@@ -17,37 +16,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
             <span className="font-bold text-lg tracking-tight">PMO Virtual</span>
           </div>
           
-          <div className="p-4">
-            <p className="text-xs font-semibold text-zinc-500 uppercase tracking-wider mb-4 px-2">Gestão 5D</p>
-            <nav className="space-y-1">
-              <Link href="/dashboard" className="flex items-center px-3 py-2.5 bg-blue-600/10 text-blue-400 hover:text-white hover:bg-blue-600/20 rounded-lg group transition-colors">
-                <LayoutDashboard className="w-5 h-5 mr-3" />
-                <span className="font-medium">Painel EVM</span>
-              </Link>
-              
-              <Link href="/dashboard/orcamento" className="flex items-center px-3 py-2.5 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-lg group transition-colors">
-                <Wallet className="w-5 h-5 mr-3" />
-                <span className="font-medium">Orçamento Base</span>
-              </Link>
-              
-              <Link href="/dashboard/cronograma" className="flex items-center px-3 py-2.5 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-lg group transition-colors">
-                <CalendarDays className="w-5 h-5 mr-3" />
-                <span className="font-medium">Linha de Balanço</span>
-              </Link>
+          <SidebarNav />
 
-              <Link href="/dashboard/rdo" className="flex items-center px-3 py-2.5 text-zinc-400 hover:text-white hover:bg-zinc-800/50 rounded-lg group transition-colors">
-                <FileText className="w-5 h-5 mr-3" />
-                <span className="font-medium">Medições e RDO</span>
-              </Link>
-            </nav>
-          </div>
-
-          <div className="mt-auto p-4 border-t border-zinc-800">
+          <div className="p-4 border-t border-zinc-800 bg-zinc-900/60">
             <div className="flex items-center">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-500 to-blue-500"></div>
-              <div className="ml-3">
-                <p className="text-sm font-medium text-white">Alexandre</p>
-                <p className="text-xs text-zinc-500">Consultor PMO</p>
+              <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-indigo-500 flex items-center justify-center text-xs font-bold text-white shadow-sm">
+                PMO
+              </div>
+              <div className="ml-3 min-w-0">
+                <p className="text-xs font-semibold text-white truncate">Eng. Alexandre</p>
+                <p className="text-[10px] text-zinc-400 truncate">Consultoria PMO Virtual</p>
               </div>
             </div>
           </div>

@@ -96,8 +96,17 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 - *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro) e **[Manual de Boas Práticas](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_EXECUCAO.md)** (Checkpoints topográficos).
 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
-Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
-- 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento usando os arquivos locais como Banco de Dados.
+Quando o assunto envolver demonstração de dados para Diretoria, cockpit gerencial ou automações sistêmicas.
+- 📈 **Cockpit Executivo Web Next.js (8 Visões Operacionais Integradas):** Utilização da arquitetura web em React/TypeScript (`apresentacao_comercial/`) alimentada por APIs REST dedicadas conectadas aos arquivos locais da obra ativa (`useObra()`):
+  - 📊 `/dashboard`: Painel Executivo EVM (Curva S, SPI, CPI e Alertas);
+  - 💰 `/dashboard/orcamento`: Orçamento Base Consolidado (158 itens, SINAPI SP, BDI segregado e Curvas ABC);
+  - 📅 `/dashboard/cronograma`: Linha de Balanço (LOB) e sequenciamento de Caminho Crítico (CPM);
+  - 🏗️ `/dashboard/rdo`: Produção e Relatórios Diários de Obra dinâmicos, headcount e HH acumulado;
+  - 🛡️ `/dashboard/qualidade`: Caderno das 8 FVSs Normativas ABNT e matriz de travas contratuais de pagamento (`SUB-01` a `SUB-08`);
+  - 💵 `/dashboard/financeiro`: Curva de Fluxo de Caixa Recharts em 7 meses, tracker de compras UCC e quadro das 12 medições com retenção de 5%;
+  - 🦺 `/dashboard/sst`: Semáforo de portaria com ASOs em D-30, programas legais (PGR/PCMSO) e matriz de conformidade das NRs;
+  - 🏆 `/dashboard/databook`: As 5 pastas canônicas de closeout, matriz de prazos de garantia NBR 15575 e roteiro D-45 a D+15;
+  - 📱 `/campo` & `campo.html`: Coleta Digital de Campo 4.0 responsiva e PWA offline para apontamento mobile de RDO e assinatura digital de FVS.
 - 📐 **Motores Universais de Engenharia, Planejamento, Suprimentos e Finanças (CLI `--obra [NOME_OBRA]` ou `--dir [CAMINHO]`):**
   - `python scripts/precificar_obra.py --obra [NOME_OBRA]`: Motor Universal de precificação e fechamento Turnkey com base SINAPI SP, parametrizado por `config_obra.json` e `mapeamento_sinapi.csv`.
   - `python scripts/gerar_plano_centros_custo.py --obra [NOME_OBRA]`: Motor Universal de mapeamento da estrutura de centros de custos (CC-100 a CC-900) e amarração contábil com a EAP.
@@ -109,6 +118,12 @@ Quando o assunto envolver demonstração de dados para Diretoria ou automações
   - `python scripts/gerar_contratos_locacao.py --obra [NOME_OBRA]`: Motor Universal de contratos de locação de equipamentos, SLAs e painel de controle.
   - `python scripts/gerar_planilha_medicao.py --obra [NOME_OBRA]`: Motor Universal da Planilha Master de medição quinzenal evolutiva com fórmulas SOMARPRODUTO e retenção contratual de 5%.
   - `python scripts/gerar_dossie_contratacao.py --obra [NOME_OBRA]`: Motor Universal do dossiê executivo com histogramas de mão de obra (HH), equipamentos e Curva ABC Dupla.
+  - `python scripts/gerar_rdo.py --obra [NOME_OBRA]`: Motor Universal de geração de diários de obra e alimentação de painel de produção.
+  - `python scripts/gerar_fvs_bloqueantes.py --obra [NOME_OBRA]`: Motor Universal de governança de qualidade com as 8 FVSs bloqueantes e travas de pagamento.
+  - `python scripts/gerar_tracker_avanco_fisico.py --obra [NOME_OBRA]`: Motor Universal de avanço físico real x planejado e apuração de métricas EVM (SPI/CPI).
+  - `python scripts/gerar_compliance_sst.py --obra [NOME_OBRA]`: Motor Universal de governança SST, controle de ASOs e conformidade de NRs.
+  - `python scripts/gerar_estrutura_databook.py --obra [NOME_OBRA]`: Motor Universal de compilação das 5 pastas de closeout e matriz de garantias NBR 15575.
+  - `python scripts/processar_coleta_campo.py --obra [NOME_OBRA]`: Motor Universal de ingestão de dados de campo móveis (RDO, FVS e WhatsApp).
   - `python scripts/gerador_orcamento_mestre.py`: Motor Híbrido Cérebro/CPU v2.0 com AST para resolver expressões matemáticas e gerar CSV/MD auditáveis.
   - `python scripts/gerar_organograma_visual.py --obra [NOME_OBRA]`: Motor Universal de Organograma funcional em PNG alta resolução e SVG vetorial nativo em `06_SST_E_RH/`.
   - `python scripts/gerar_lista_desenhos.py --obra [NOME_OBRA]`: Motor Universal de catalogação de pranchas PDF, títulos de desenhos e geração de `LISTA_DE_DESENHOS.csv/md` em `01_ENGENHARIA_E_PROJETOS/`.

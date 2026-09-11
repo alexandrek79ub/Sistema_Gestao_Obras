@@ -13,23 +13,41 @@ apresentacao_comercial/
 │   ├── app/                          # Next.js App Router
 │   │   ├── layout.tsx                # Root layout (metadata, providers globais)
 │   │   ├── page.tsx                  # Landing/home page (apresentação comercial)
-│   │   ├── globals.css               # Estilos globais
-│   │   ├── dashboard/                # Área logada de gestão
-│   │   │   ├── layout.tsx            # Layout do dashboard (sidebar, header)
-│   │   │   ├── page.tsx              # Dashboard principal (KPIs, EVM, Curva S)
-│   │   │   ├── orcamento/            # Página de orçamento detalhado
-│   │   │   ├── cronograma/           # Página de cronograma e Linha de Balanço
-│   │   │   └── rdo/                  # Página de Relatório Diário de Obra
-│   │   └── api/                      # API Routes (Server-side)
-│   │       └── obras/                # Endpoint: lista as obras disponíveis
+│   │   ├── globals.css               # Estilos globais Tailwind v4
+│   │   ├── campo/                    # Coleta Móvel de Campo 4.0 (RDO, FVS, WhatsApp)
+│   │   │   └── page.tsx              # Interface touch mobile responsiva
+│   │   ├── dashboard/                # Cockpit Executivo de Gestão 5D
+│   │   │   ├── layout.tsx            # Layout central (SidebarNav, ProjectSelector, header)
+│   │   │   ├── page.tsx              # Painel EVM Executivo (Curva S, SPI/CPI)
+│   │   │   ├── orcamento/            # Orçamento Base Consolidado (158 itens e Curvas ABC)
+│   │   │   ├── cronograma/           # Planejamento, Linha de Balanço e CPM
+│   │   │   ├── rdo/                  # Diários de Obra dinâmicos, HH e Headcount
+│   │   │   ├── qualidade/            # 8 FVSs Normativas e travas financeiras dos subcontratos
+│   │   │   ├── financeiro/           # Fluxo de Caixa Recharts, Suprimentos e Retenção 5%
+│   │   │   ├── sst/                  # Segurança do Trabalho, Semáforo ASO e Programas Legais
+│   │   │   └── databook/             # As 5 Pastas de Closeout e Matriz de Garantias NBR 15575
+│   │   └── api/                      # API Routes REST (Server-side com fallback)
+│   │       ├── apontamento-campo/    # Ingestão de apontamentos móveis
+│   │       ├── cronograma/           # Dados de linha de base e avanço físico
+│   │       ├── databook/             # Status do acervo das 5 pastas e NBR 15575
+│   │       ├── evm/                  # Métricas de valor agregado e Curva S
+│   │       ├── financeiro/           # Fluxo de caixa analítico e compras UCC
+│   │       ├── obras/                # Listagem dinâmica de obras em /projetos/
+│   │       ├── orcamento/            # Dados de orçamento e custos SINAPI
+│   │       ├── qualidade/            # Status das 8 FVSs e bloqueio de contratos
+│   │       ├── rdo/                  # Leitura de diários de obra e fila de campo
+│   │       └── sst/                  # Semáforo de ASOs e conformidade de NRs
 │   ├── components/                   # Componentes React reutilizáveis
+│   │   ├── SidebarNav.tsx            # Navegação lateral modular por blocos e atalho mobile
+│   │   ├── ProjectSelector.tsx       # Seletor de obra ativa multi-projetos
 │   │   ├── TabelaOrcamento.tsx       # Tabela de orçamento detalhada
-│   │   ├── LinhaDeBalanco.tsx        # Gráfico de Linha de Balanço
-│   │   └── ProjectSelector.tsx       # Seletor de obra ativa
+│   │   └── LinhaDeBalanco.tsx        # Gráfico de Linha de Balanço
 │   ├── context/
 │   │   └── ObraContext.tsx           # Contexto global: obra selecionada e lista de obras
 │   └── lib/
-│       └── csvParser.ts              # Utilitário de leitura de CSV (separador: `;`)
+│       └── csvParser.ts              # Utilitário de leitura de CSV (separador: `;`, utf-8-sig)
+├── public/
+│   └── campo.html                    # PWA Standalone Offline para coleta de campo
 └── package.json
 ```
 
