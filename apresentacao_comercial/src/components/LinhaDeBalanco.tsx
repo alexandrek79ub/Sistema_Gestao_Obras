@@ -4,7 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { 
   ZoomIn, ZoomOut, Maximize2, Minimize2, Calendar, User, Clock, 
   ArrowUpRight, CheckCircle2, AlertTriangle, TrendingUp, Layers, Info, X,
-  ShieldCheck, HelpCircle, Edit3, Save, Sliders, FastForward, Rewind, Check, RefreshCw, Loader2
+  ShieldCheck, HelpCircle, Edit3, Save, Sliders, FastForward, Rewind, Check, RefreshCw, Loader2,
+  Users, Zap
 } from 'lucide-react';
 import { useObra } from '@/context/ObraContext';
 
@@ -19,6 +20,10 @@ interface TarefaLOB {
   equipe: string;
   dataInicio?: string;
   dataFim?: string;
+  predecessores?: number[];
+  sucessores?: number[];
+  predecessoresNomes?: string[];
+  sucessoresNomes?: string[];
 }
 
 interface PontoVagao {
@@ -28,6 +33,8 @@ interface PontoVagao {
   duration: number;
   dataInicio?: string;
   dataFim?: string;
+  predecessoresNomes?: string[];
+  sucessoresNomes?: string[];
 }
 
 interface VagaoFluxo {
@@ -40,6 +47,8 @@ interface VagaoFluxo {
   endMax: number;
   dataInicioGlobal?: string;
   dataFimGlobal?: string;
+  predecessoresNomes?: string[];
+  sucessoresNomes?: string[];
 }
 
 interface ConflitoVisual {
@@ -109,6 +118,25 @@ const COR_HEX_VAGOES: Record<string, { stroke: string; fill: string; badge: stri
   "13": { stroke: "#eab308", fill: "rgba(234, 179, 8, 0.28)", badge: "bg-yellow-500", bgCard: "bg-yellow-950/70", border: "border-yellow-500" }, // Acabamentos Elétr./Hidr.
   "14": { stroke: "#d946ef", fill: "rgba(217, 70, 239, 0.28)", badge: "bg-fuchsia-600", bgCard: "bg-fuchsia-950/70", border: "border-fuchsia-500" }, // Pintura Acrílica Final
   "15": { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.30)", badge: "bg-teal-600", bgCard: "bg-teal-950/70", border: "border-teal-500" }, // Comissionamento & Entrega
+};
+
+// Headcount padrão planejado por vagão (baseline de produtividade e dimensionamento RUP)
+const HEADCOUNT_PADRAO_VAGAO: Record<string, number> = {
+  "01": 7,  // Topografia & Canteiro
+  "02": 7,  // Fundações Sapatas
+  "03": 8,  // Vigas Baldrames
+  "04": 14, // Pilares Supraestrutura
+  "05": 14, // Vigas & Laje H12
+  "06": 10, // Alvenaria de Vedação
+  "07": 9,  // Cobertura Metálica
+  "08": 8,  // Instalações Embutidas
+  "09": 8,  // Reboco Paulista
+  "10": 10, // Pisos & Porcelanato
+  "11": 6,  // Esquadrias de Alumínio
+  "12": 6,  // Climatização HVAC
+  "13": 8,  // Acabamentos Elétr./Hidr.
+  "14": 8,  // Pintura Acrílica Final
+  "15": 12  // Comissionamento & Entrega
 };
 
 function getCorVagao(nomeVagao: string) {
@@ -206,7 +234,7 @@ export default function LinhaDeBalanco() {
   const [showAjuda, setShowAjuda] = useState(false);
   const [showBannerConflito, setShowBannerConflito] = useState(false);
 
-  // Estados de Edição Interativa e Autonomia do Usuário
+  // Estados de Edição Interativa, Autonomia e RUP
   const [isEditando, setIsEditando] = useState(false);
   const [pontoEditando, setPontoEditando] = useState<PontoVagao | null>(null);
   const [editVagaoNome, setEditVagaoNome] = useState('');
@@ -214,7 +242,14 @@ export default function LinhaDeBalanco() {
   const [editDataFim, setEditDataFim] = useState('');
   const [editEquipe, setEditEquipe] = useState('');
   const [editDuracao, setEditDuracao] = useState(3);
+  const [origDuracao, setOrigDuracao] = useState(3);
+  const [baseHeadcount, setBaseHeadcount] = useState(8);
+  const [editHeadcount, setEditHeadcount] = useState(8);
   const [empurrarSucessores, setEmpurrarSucessores] = useState(true);
+  const [deslocarPredecessores, setDeslocarPredecessores] = useState(false);
+  const [aplicarEmTodoVagao, setAplicarEmTodoVagao] = useState(false);
+  const [predecessoresAtuais, setPredecessoresAtuais] = useState<string[]>([]);
+  const [sucessoresAtuais, setSucessoresAtuais] = useState<string[]>([]);
   const [salvando, setSalvando] = useState(false);
   const [toastMsg, setToastMsg] = useState<{ tipo: 'success' | 'error' | 'info'; texto: string } | null>(null);
 
@@ -270,6 +305,13 @@ export default function LinhaDeBalanco() {
     setEditDataInicio(ponto.dataInicio || '');
     const dur = ponto.duration || 3;
     setEditDuracao(dur);
+    setOrigDuracao(dur);
+    
+    const prefix = (vagao.nome || '').slice(0, 2);
+    const baseHc = HEADCOUNT_PADRAO_VAGAO[prefix] || 8;
+    setBaseHeadcount(baseHc);
+    setEditHeadcount(baseHc);
+
     // Recalcular data de término consistente com o início e a duração
     const computedFim = ponto.dataInicio && dur > 0 
       ? calcularDataFim(ponto.dataInicio, dur) 
@@ -277,6 +319,14 @@ export default function LinhaDeBalanco() {
     setEditDataFim(computedFim);
     setEditEquipe(vagao.equipe || 'SUB-01 Estruturas e Concreto');
     setEmpurrarSucessores(true);
+    setDeslocarPredecessores(false);
+    setAplicarEmTodoVagao(false);
+
+    // Mapeia predecessoras e sucessoras da frente específica
+    const tOrig = tarefas.find(t => t.id === ponto.id);
+    setPredecessoresAtuais(tOrig?.predecessoresNomes || vagao.predecessoresNomes || []);
+    setSucessoresAtuais(tOrig?.sucessoresNomes || vagao.sucessoresNomes || []);
+
     setIsEditando(true);
   };
 
@@ -296,18 +346,19 @@ export default function LinhaDeBalanco() {
             dataInicio: editDataInicio,
             dataFim: editDataFim,
             equipe: editEquipe,
-            duration: editDuracao
+            duration: editDuracao,
+            headcount: editHeadcount
           },
-          empurrarSucessores: empurrarSucessores
+          empurrarSucessores,
+          deslocarPredecessores,
+          aplicarEmTodoVagao
         })
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setToastMsg({ 
           tipo: 'success', 
-          texto: empurrarSucessores 
-            ? '✅ Alteração salva no CSV e propagada em cascata para os sucessores!' 
-            : '✅ Alteração salva no LINHA_DE_BALANCO.csv!' 
+          texto: data.message || '✅ Alteração salva no CSV e sincronizada com sucesso!'
         });
         setIsEditando(false);
         carregarDadosCronograma();
@@ -321,7 +372,7 @@ export default function LinhaDeBalanco() {
     }
   };
 
-  const handleDeslocarVagao = async (dias: number, deslocarSucessores: boolean = false) => {
+  const handleDeslocarVagao = async (dias: number, deslocarSucessores: boolean = true) => {
     if (!vagaoSelecionado || vagaoSelecionado.pontos.length === 0) return;
     setSalvando(true);
     try {
@@ -334,18 +385,52 @@ export default function LinhaDeBalanco() {
           acao: 'deslocar',
           id: primeiroPonto.id,
           dias,
-          deslocarSucessores
+          deslocarSucessores,
+          deslocarPredecessores: dias < 0
         })
       });
       const data = await res.json();
       if (res.ok && data.success) {
         setToastMsg({ 
           tipo: 'success', 
-          texto: `✅ Deslocamento de ${dias > 0 ? '+' : ''}${dias} dias salvo no CSV e sincronizado!` 
+          texto: `✅ Deslocamento de ${dias > 0 ? '+' : ''}${dias} dias salvo no CSV e propagado!` 
         });
         carregarDadosCronograma();
       } else {
         setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao deslocar' });
+      }
+    } catch (err) {
+      setToastMsg({ tipo: 'error', texto: 'Falha ao conectar com o backend' });
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  const handleDeslocarVagaoInteiro = async (dias: number, deslocarSucessores: boolean = true, deslocarPredecessores: boolean = false) => {
+    if (!vagaoSelecionado || vagaoSelecionado.pontos.length === 0) return;
+    setSalvando(true);
+    try {
+      const res = await fetch('/api/cronograma', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          obra: obraAtiva,
+          acao: 'deslocar_vagao',
+          vagaoNome: vagaoSelecionado.nome,
+          dias,
+          deslocarSucessores,
+          deslocarPredecessores
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setToastMsg({ 
+          tipo: 'success', 
+          texto: `✅ Vagão '${vagaoSelecionado.nome.replace(/^\d+\.\s*/, '')}' deslocado em ${dias > 0 ? '+' : ''}${dias} dias em todas as zonas com cascata!` 
+        });
+        carregarDadosCronograma();
+      } else {
+        setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao deslocar vagão' });
       }
     } catch (err) {
       setToastMsg({ tipo: 'error', texto: 'Falha ao conectar com o backend' });
@@ -550,7 +635,7 @@ export default function LinhaDeBalanco() {
     taskInfo: { id: number; pav: string; tipo: string; vagao?: string; equipe: string; start: number; duration: number; dataInicio?: string; dataFim?: string }
   ) => {
     if (e.button !== 0) return;
-    e.preventDefault();
+    // Não executa e.preventDefault() aqui para permitir que o evento de clique selecione o vagão!
     e.stopPropagation();
 
     const ini = taskInfo.dataInicio || '';
@@ -596,8 +681,10 @@ export default function LinhaDeBalanco() {
     const onGlobalPointerMove = (ev: PointerEvent) => {
       if (!dragRef.current.active) return;
       const dx = ev.clientX - dragRef.current.startX;
-      if (Math.abs(dx) > 3) {
+      const dy = ev.clientY - dragRef.current.startY;
+      if (Math.hypot(dx, dy) > 5) {
         dragRef.current.hasMoved = true;
+        ev.preventDefault();
       }
       const pxPerDay = chartWidth / totalDias;
       const deltaDays = Math.round(dx / pxPerDay);
@@ -1748,34 +1835,34 @@ export default function LinhaDeBalanco() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
               <span className="text-xs font-bold uppercase text-zinc-300 tracking-wider flex items-center gap-1.5">
                 <Sliders className="w-4 h-4 text-blue-400" />
-                Ajuste Direto de Prazos (Gravação no CSV):
+                Ajuste Rápido do Vagão Inteiro (Gravação no CSV):
               </span>
               
-              {/* ATALHOS DE DESLOCAMENTO EM BLOCO */}
-              <div className="flex items-center gap-2">
+              {/* ATALHOS DE DESLOCAMENTO EM BLOCO SINCRONIZADO */}
+              <div className="flex items-center gap-2 flex-wrap">
                 <button 
-                  onClick={() => handleDeslocarVagao(-3, false)}
+                  onClick={() => handleDeslocarVagaoInteiro(-3, false, true)}
                   disabled={salvando}
-                  className="px-2.5 py-1 text-xs rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 flex items-center gap-1 transition-colors cursor-pointer"
-                  title="Adiantar este vagão em 3 dias úteis"
+                  className="px-2.5 py-1 text-xs rounded-md bg-zinc-900 hover:bg-zinc-800 text-amber-300 border border-amber-500/40 flex items-center gap-1 transition-colors cursor-pointer"
+                  title="Adiantar todo este vagão em 3 dias úteis puxando predecessoras se necessário"
                 >
-                  <Rewind className="w-3 h-3 text-amber-400" /> -3 Dias
+                  <Rewind className="w-3 h-3 text-amber-400" /> Mover Vagão (-3d)
                 </button>
                 <button 
-                  onClick={() => handleDeslocarVagao(3, false)}
+                  onClick={() => handleDeslocarVagaoInteiro(3, false, false)}
                   disabled={salvando}
                   className="px-2.5 py-1 text-xs rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 flex items-center gap-1 transition-colors cursor-pointer"
-                  title="Atrasar este vagão em 3 dias úteis"
+                  title="Atrasar todo este vagão em 3 dias úteis sem empurrar sucessoras"
                 >
-                  <FastForward className="w-3 h-3 text-emerald-400" /> +3 Dias
+                  <FastForward className="w-3 h-3 text-emerald-400" /> Mover Vagão (+3d)
                 </button>
                 <button 
-                  onClick={() => handleDeslocarVagao(3, true)}
+                  onClick={() => handleDeslocarVagaoInteiro(3, true, false)}
                   disabled={salvando}
-                  className="px-2.5 py-1 text-xs rounded-md bg-purple-950/60 hover:bg-purple-900/60 text-purple-200 border border-purple-700/60 flex items-center gap-1 transition-colors cursor-pointer font-medium"
-                  title="Empurrar este vagão e todas as atividades posteriores em +3 dias"
+                  className="px-2.5 py-1 text-xs rounded-md bg-purple-950/70 hover:bg-purple-900/70 text-purple-200 border border-purple-500/60 flex items-center gap-1.5 transition-colors cursor-pointer font-medium shadow-sm"
+                  title="Empurrar este vagão e todas as atividades sucessoras em cascata (+3d)"
                 >
-                  <FastForward className="w-3 h-3 text-purple-400" /> +3d em Cascata
+                  <FastForward className="w-3 h-3 text-purple-400" /> Cascata Completa (+3d)
                 </button>
               </div>
             </div>
@@ -1788,21 +1875,44 @@ export default function LinhaDeBalanco() {
                   className="p-3 bg-zinc-900/80 rounded-lg border border-zinc-800 hover:border-zinc-700 flex flex-col justify-between transition-all"
                 >
                   <div>
-                    <span className="text-[11px] font-semibold text-zinc-200 truncate block">
-                      {p.pav}
-                    </span>
-                    <div className="text-[11px] text-zinc-400 font-mono mt-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="text-[11px] font-bold text-zinc-200 truncate block">
+                        {p.pav}
+                      </span>
+                      <span className="text-[10px] text-zinc-400 bg-zinc-800 px-1.5 py-0.5 rounded font-mono">
+                        ID: {p.id}
+                      </span>
+                    </div>
+                    <div className="text-[11px] text-zinc-300 font-mono mt-1">
                       📅 {p.dataInicio || 'Início'} ➔ {p.dataFim || 'Fim'}
                     </div>
-                    <span className="text-[10px] text-emerald-400 font-medium mt-0.5 block">
-                      Ritmo: {p.duration} dias úteis
-                    </span>
+                    <div className="flex items-center justify-between text-[10px] mt-1 text-zinc-400">
+                      <span className="text-emerald-400 font-medium">
+                        Ritmo: {p.duration} dias úteis
+                      </span>
+                    </div>
+
+                    {/* BADGES DE PRECEDÊNCIAS */}
+                    <div className="mt-2 pt-2 border-t border-zinc-800/80 space-y-1 text-[10px]">
+                      {p.predecessoresNomes && p.predecessoresNomes.length > 0 && (
+                        <div className="text-amber-400/90 truncate flex items-center gap-1" title={`Predecessoras: ${p.predecessoresNomes.join(', ')}`}>
+                          <span className="font-bold">⬅ Pred:</span>
+                          <span className="truncate">{p.predecessoresNomes.join(', ')}</span>
+                        </div>
+                      )}
+                      {p.sucessoresNomes && p.sucessoresNomes.length > 0 && (
+                        <div className="text-blue-400/90 truncate flex items-center gap-1" title={`Sucessoras: ${p.sucessoresNomes.join(', ')}`}>
+                          <span className="font-bold">➡ Suc:</span>
+                          <span className="truncate">{p.sucessoresNomes.join(', ')}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <button
                     onClick={() => handleAbrirEdicao(p, vagaoSelecionado)}
-                    className="mt-2.5 w-full py-1 text-[11px] rounded bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 flex items-center justify-center gap-1.5 font-medium transition-colors cursor-pointer"
+                    className="mt-3 w-full py-1.5 text-[11px] rounded bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 flex items-center justify-center gap-1.5 font-medium transition-colors cursor-pointer"
                   >
-                    <Edit3 className="w-3 h-3" /> Editar Datas no CSV
+                    <Edit3 className="w-3 h-3" /> Editar Prazos & RUP
                   </button>
                 </div>
               ))}
@@ -1821,7 +1931,7 @@ export default function LinhaDeBalanco() {
                 <span className="text-zinc-400 font-normal">Clique em qualquer linha colorida ou bloco no gráfico acima</span>
               </p>
               <p className="text-[11px] text-zinc-400 mt-0.5">
-                Ao clicar em um serviço (vagão), abrirá aqui o painel de <strong>ajuste rápido (-3 Dias, +3 Dias, +3d em Cascata)</strong> e o <strong>botão para editar datas de início/fim e trocar o subempreiteiro no CSV</strong>.
+                Ao clicar em um vagão, abrirá aqui o painel de <strong>ajuste rápido (-3d, +3d, Cascata Completa)</strong>, <strong>redimensionamento de equipe via RUP</strong> e <strong>sincronização automática com o Curto Prazo (52 Lotes)</strong>.
               </p>
             </div>
           </div>
@@ -1833,20 +1943,25 @@ export default function LinhaDeBalanco() {
         </div>
       )}
 
-      {/* MODAL DE EDIÇÃO DIRETA DA TAREFA NO BACKEND */}
+      {/* MODAL DE EDIÇÃO DIRETA DA TAREFA NO BACKEND COM REDIMENSIONAMENTO RUP */}
       {isEditando && pontoEditando && (
-        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
-          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-150">
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-150 overflow-y-auto">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 max-w-lg w-full shadow-2xl animate-in zoom-in-95 duration-150 my-auto">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold">
-                  Edição Direta no CSV
-                </span>
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold">
+                    Edição LOB & Curto Prazo
+                  </span>
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 font-bold">
+                    Cálculo RUP Ativo
+                  </span>
+                </div>
                 <h4 className="text-base font-bold text-white mt-1.5">
                   {editVagaoNome}
                 </h4>
                 <p className="text-xs text-zinc-400 mt-0.5">
-                  Setor: <strong className="text-zinc-200">{pontoEditando.pav}</strong>
+                  Frente: <strong className="text-zinc-200">{pontoEditando.pav}</strong>
                 </p>
               </div>
               <button 
@@ -1857,7 +1972,8 @@ export default function LinhaDeBalanco() {
               </button>
             </div>
 
-            <div className="space-y-3.5 text-xs">
+            <div className="space-y-4 text-xs">
+              {/* DATAS DE INÍCIO E FIM */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-zinc-400 mb-1 font-medium">Data Início (DD/MM/AAAA)</label>
@@ -1890,6 +2006,9 @@ export default function LinhaDeBalanco() {
                       if (val.length === 10 && editDataInicio.length === 10) {
                         const newDur = calcularDuracaoDias(editDataInicio, val);
                         setEditDuracao(newDur);
+                        // Recalcula Headcount pela RUP
+                        const hc = Math.max(1, Math.ceil(baseHeadcount * (origDuracao / (newDur || 1))));
+                        setEditHeadcount(hc);
                       }
                     }}
                     placeholder="03/10/2026"
@@ -1898,10 +2017,11 @@ export default function LinhaDeBalanco() {
                 </div>
               </div>
 
+              {/* DURAÇÃO E CONTROLES DE RITMO */}
               <div>
                 <label className="block text-zinc-400 mb-1 font-medium flex items-center justify-between">
                   <span>Ritmo / Duração (Dias Úteis)</span>
-                  <span className="text-[10px] text-blue-400">Pula Domingos</span>
+                  <span className="text-[10px] text-blue-400">Pula Domingos (Calendário Lean)</span>
                 </label>
                 <div className="flex items-center gap-2">
                   <input 
@@ -1910,6 +2030,9 @@ export default function LinhaDeBalanco() {
                     onChange={(e) => {
                       const dur = parseInt(e.target.value, 10) || 1;
                       setEditDuracao(dur);
+                      // Recalcula RUP Dinâmica
+                      const hc = Math.max(1, Math.ceil(baseHeadcount * (origDuracao / dur)));
+                      setEditHeadcount(hc);
                       if (editDataInicio) {
                         const newFim = calcularDataFim(editDataInicio, dur);
                         if (newFim) setEditDataFim(newFim);
@@ -1925,10 +2048,12 @@ export default function LinhaDeBalanco() {
                       onClick={() => {
                         const newDur = Math.max(1, editDuracao - 1);
                         setEditDuracao(newDur);
+                        const hc = Math.max(1, Math.ceil(baseHeadcount * (origDuracao / newDur)));
+                        setEditHeadcount(hc);
                         if (editDataInicio) setEditDataFim(calcularDataFim(editDataInicio, newDur));
                       }}
-                      className="px-2 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold"
-                      title="Diminuir 1 dia útil"
+                      className="px-2.5 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold transition-colors cursor-pointer"
+                      title="Diminuir 1 dia útil (Crashing - Aumenta equipe)"
                     >
                       -1d
                     </button>
@@ -1937,10 +2062,12 @@ export default function LinhaDeBalanco() {
                       onClick={() => {
                         const newDur = editDuracao + 1;
                         setEditDuracao(newDur);
+                        const hc = Math.max(1, Math.ceil(baseHeadcount * (origDuracao / newDur)));
+                        setEditHeadcount(hc);
                         if (editDataInicio) setEditDataFim(calcularDataFim(editDataInicio, newDur));
                       }}
-                      className="px-2 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold"
-                      title="Aumentar 1 dia útil"
+                      className="px-2.5 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold transition-colors cursor-pointer"
+                      title="Aumentar 1 dia útil (Leveling - Reduz equipe)"
                     >
                       +1d
                     </button>
@@ -1948,25 +2075,154 @@ export default function LinhaDeBalanco() {
                 </div>
               </div>
 
-              {/* CHECKBOX EFEITO CASCATA / PRECEDÊNCIAS */}
-              <div className="p-3 bg-blue-950/40 border border-blue-800/50 rounded-lg flex items-start gap-2.5">
-                <input 
-                  type="checkbox" 
-                  id="empurrar-sucessores-modal"
-                  checked={empurrarSucessores}
-                  onChange={(e) => setEmpurrarSucessores(e.target.checked)}
-                  className="mt-0.5 rounded border-zinc-700 bg-zinc-950 text-blue-500 focus:ring-0 cursor-pointer w-4 h-4"
-                />
-                <label htmlFor="empurrar-sucessores-modal" className="cursor-pointer select-none">
-                  <span className="font-semibold text-white block text-xs">
-                    Empurrar atividades sucessoras (Efeito Cascata Lean)
+              {/* CARD DE REDIMENSIONAMENTO DE EQUIPE BASEADO NA RUP */}
+              <div className="p-3.5 bg-zinc-950/80 border border-zinc-800 rounded-xl space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold text-zinc-200 flex items-center gap-1.5">
+                    <Users className="w-4 h-4 text-purple-400" />
+                    Dimensionamento de Efetivo (RUP):
                   </span>
-                  <span className="text-[11px] text-zinc-400 block mt-0.5 leading-tight">
-                    Ao alterar a duração ou término, recalcula e desloca todas as tarefas posteriores para preservar o fluxo e evitar sobreposições.
+                  <span className={`text-[10px] font-mono px-2 py-0.5 rounded font-bold ${
+                    editDuracao < origDuracao
+                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
+                      : editDuracao > origDuracao
+                      ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
+                      : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                  }`}>
+                    {editDuracao < origDuracao 
+                      ? '⚡ Crashing (Aceleração)' 
+                      : editDuracao > origDuracao 
+                      ? '⚖️ Nivelamento (Diluição)' 
+                      : '✓ Ritmo Nominal'}
                   </span>
-                </label>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 items-center pt-1">
+                  <div>
+                    <label className="text-[11px] text-zinc-400 block mb-1">
+                      Efetivo Previsto (Headcount):
+                    </label>
+                    <div className="flex items-center gap-2">
+                      <input 
+                        type="number"
+                        min={1}
+                        max={50}
+                        value={editHeadcount}
+                        onChange={(e) => setEditHeadcount(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                        className="w-20 px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-700 text-zinc-100 font-mono text-xs font-bold focus:outline-none focus:border-purple-500"
+                      />
+                      <span className="text-zinc-400 text-xs">operários</span>
+                    </div>
+                  </div>
+                  <div className="text-[11px] text-zinc-400 border-l border-zinc-800 pl-3">
+                    <div className="text-zinc-300 font-medium">
+                      Base: <span className="font-mono text-zinc-100">{baseHeadcount} op.</span> ({origDuracao}d)
+                    </div>
+                    <div className="text-[10px] text-zinc-500 mt-0.5">
+                      Fórmula: H = ⌈H₀ × (D₀ / D)⌉
+                    </div>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-zinc-500 pt-1 leading-tight">
+                  ℹ️ Atualiza automaticamente o <strong>PROGRAMACAO_CURTO_PRAZO (52 Lotes)</strong> com a nova duração e efetivo proporcional.
+                </p>
               </div>
 
+              {/* PRECEDÊNCIAS / SUCESSORAS CONECTADAS */}
+              {(predecessoresAtuais.length > 0 || sucessoresAtuais.length > 0) && (
+                <div className="p-3 bg-zinc-950/60 border border-zinc-800/80 rounded-xl space-y-2 text-[11px]">
+                  <span className="font-semibold text-zinc-300 block">
+                    Conexões na Rede LOB:
+                  </span>
+                  {predecessoresAtuais.length > 0 && (
+                    <div className="text-amber-300/90">
+                      <span className="font-bold">⬅ Predecessoras Imediatas:</span>
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {predecessoresAtuais.map((p, i) => (
+                          <span key={i} className="px-1.5 py-0.5 rounded bg-amber-950/60 border border-amber-800/50 text-[10px] font-mono">
+                            {p}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {sucessoresAtuais.length > 0 && (
+                    <div className="text-blue-300/90 pt-1">
+                      <span className="font-bold">➡ Sucessoras Imediatas:</span>
+                      <div className="mt-1 flex flex-wrap gap-1">
+                        {sucessoresAtuais.map((s, i) => (
+                          <span key={i} className="px-1.5 py-0.5 rounded bg-blue-950/60 border border-blue-800/50 text-[10px] font-mono">
+                            {s}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* OPÇÕES DE PROPAGAÇÃO EM CASCATA */}
+              <div className="space-y-2 pt-1">
+                {/* CHECKBOX SUCESSORES (FORWARD) */}
+                <div className="p-2.5 bg-blue-950/30 border border-blue-800/40 rounded-lg flex items-start gap-2.5">
+                  <input 
+                    type="checkbox" 
+                    id="empurrar-sucessores-modal"
+                    checked={empurrarSucessores}
+                    onChange={(e) => setEmpurrarSucessores(e.target.checked)}
+                    className="mt-0.5 rounded border-zinc-700 bg-zinc-950 text-blue-500 focus:ring-0 cursor-pointer w-4 h-4"
+                  />
+                  <label htmlFor="empurrar-sucessores-modal" className="cursor-pointer select-none">
+                    <span className="font-semibold text-white block text-xs">
+                      Empurrar atividades sucessoras (Forward - Cascata Lean)
+                    </span>
+                    <span className="text-[10px] text-zinc-400 block mt-0.5 leading-tight">
+                      Recalcula e desloca as tarefas posteriores para preservar a folga mínima e evitar sobreposição física.
+                    </span>
+                  </label>
+                </div>
+
+                {/* CHECKBOX PREDECESSORES (BACKWARD) */}
+                <div className="p-2.5 bg-amber-950/30 border border-amber-800/40 rounded-lg flex items-start gap-2.5">
+                  <input 
+                    type="checkbox" 
+                    id="deslocar-predecessores-modal"
+                    checked={deslocarPredecessores}
+                    onChange={(e) => setDeslocarPredecessores(e.target.checked)}
+                    className="mt-0.5 rounded border-zinc-700 bg-zinc-950 text-amber-500 focus:ring-0 cursor-pointer w-4 h-4"
+                  />
+                  <label htmlFor="deslocar-predecessores-modal" className="cursor-pointer select-none">
+                    <span className="font-semibold text-amber-200 block text-xs">
+                      Antecipar predecessoras se houver conflito de início (Backward)
+                    </span>
+                    <span className="text-[10px] text-zinc-400 block mt-0.5 leading-tight">
+                      Se puxar a data para antes do término da antecessora, antecipa a antecessora mantendo o vínculo.
+                    </span>
+                  </label>
+                </div>
+
+                {/* CHECKBOX REPLICAR EM TODO O VAGÃO */}
+                <div className="p-2.5 bg-zinc-950/60 border border-zinc-800 rounded-lg flex items-start gap-2.5">
+                  <input 
+                    type="checkbox" 
+                    id="aplicar-todo-vagao-modal"
+                    checked={aplicarEmTodoVagao}
+                    onChange={(e) => setAplicarEmTodoVagao(e.target.checked)}
+                    className="mt-0.5 rounded border-zinc-700 bg-zinc-950 text-purple-500 focus:ring-0 cursor-pointer w-4 h-4"
+                  />
+                  <label htmlFor="aplicar-todo-vagao-modal" className="cursor-pointer select-none">
+                    <span className="font-semibold text-zinc-200 block text-xs">
+                      Replicar esta duração e equipe em TODAS as 4 Zonas deste vagão
+                    </span>
+                    <span className="text-[10px] text-zinc-400 block mt-0.5 leading-tight">
+                      Garante Takt Time uniforme (produção em linha Heijunka sem quebra de ritmo entre setores).
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* SELEÇÃO DE EQUIPE */}
               <div>
                 <label className="block text-zinc-400 mb-1 font-medium">Equipe / Subempreiteiro Responsável</label>
                 <select
@@ -2005,12 +2261,12 @@ export default function LinhaDeBalanco() {
                 {salvando ? (
                   <>
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                    Gravando no CSV...
+                    Gravando no CSV & Sincronizando...
                   </>
                 ) : (
                   <>
                     <Save className="w-3.5 h-3.5" />
-                    Gravar Alteração no CSV
+                    Salvar e Sincronizar LOB + Curto Prazo
                   </>
                 )}
               </button>
