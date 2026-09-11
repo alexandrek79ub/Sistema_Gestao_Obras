@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   ZoomIn, ZoomOut, Maximize2, Minimize2, Calendar, User, Clock, 
   ArrowUpRight, CheckCircle2, AlertTriangle, TrendingUp, Layers, Info, X,
-  ShieldCheck, HelpCircle
+  ShieldCheck, HelpCircle, Edit3, Save, Sliders, FastForward, Rewind, Check, RefreshCw, Loader2
 } from 'lucide-react';
 import { useObra } from '@/context/ObraContext';
 
@@ -42,21 +42,71 @@ interface VagaoFluxo {
   dataFimGlobal?: string;
 }
 
+interface ConflitoVisual {
+  id: string;
+  tipo: 'equipe_dupla' | 'conflito_espacial';
+  equipe?: string;
+  setor?: string;
+  setores: string[];
+  diaInicio: number;
+  diaFim: number;
+  tarefasIds: number[];
+  descricao: string;
+}
+
+interface DragState {
+  active: boolean;
+  taskId: number | null;
+  taskName: string;
+  pav: string;
+  equipe: string;
+  origStartDay: number;
+  origDuration: number;
+  origIniDate: string;
+  origFimDate: string;
+  startX: number;
+  startY: number;
+  currentX: number;
+  currentY: number;
+  deltaDays: number;
+  projectedIniDate: string;
+  projectedFimDate: string;
+}
+
+const initialDragState: DragState = {
+  active: false,
+  taskId: null,
+  taskName: '',
+  pav: '',
+  equipe: '',
+  origStartDay: 0,
+  origDuration: 3,
+  origIniDate: '',
+  origFimDate: '',
+  startX: 0,
+  startY: 0,
+  currentX: 0,
+  currentY: 0,
+  deltaDays: 0,
+  projectedIniDate: '',
+  projectedFimDate: ''
+};
+
 // Paleta de cores vibrantes, contrastantes e oficiais para Linhas de Balanço Lean
 const COR_HEX_VAGOES: Record<string, { stroke: string; fill: string; badge: string; bgCard: string; border: string }> = {
-  "01": { stroke: "#0284c7", fill: "rgba(2, 132, 199, 0.28)", badge: "bg-sky-600", bgCard: "bg-sky-950/70", border: "border-sky-500" }, // Topografia & Canteiro
-  "02": { stroke: "#2563eb", fill: "rgba(37, 99, 235, 0.28)", badge: "bg-blue-600", bgCard: "bg-blue-950/70", border: "border-blue-500" }, // Fundações Sapatas
-  "03": { stroke: "#1d4ed8", fill: "rgba(29, 78, 216, 0.28)", badge: "bg-blue-700", bgCard: "bg-blue-950/70", border: "border-blue-600" }, // Vigas Baldrames
-  "04": { stroke: "#6366f1", fill: "rgba(99, 102, 241, 0.28)", badge: "bg-indigo-600", bgCard: "bg-indigo-950/70", border: "border-indigo-500" }, // Pilares Supraestrutura
-  "05": { stroke: "#7c3aed", fill: "rgba(124, 58, 237, 0.28)", badge: "bg-violet-600", bgCard: "bg-violet-950/70", border: "border-violet-500" }, // Vigas & Laje H12
-  "06": { stroke: "#f59e0b", fill: "rgba(245, 158, 11, 0.30)", badge: "bg-amber-600", bgCard: "bg-amber-950/70", border: "border-amber-500" }, // Alvenaria de Vedação
-  "07": { stroke: "#06b6d4", fill: "rgba(6, 182, 212, 0.30)", badge: "bg-cyan-600", bgCard: "bg-cyan-950/70", border: "border-cyan-500" }, // Cobertura Metálica
-  "08": { stroke: "#10b981", fill: "rgba(16, 185, 129, 0.28)", badge: "bg-emerald-600", bgCard: "bg-emerald-950/70", border: "border-emerald-500" }, // Instalações Embutidas
-  "09": { stroke: "#ea580c", fill: "rgba(234, 88, 12, 0.30)", badge: "bg-orange-600", bgCard: "bg-orange-950/70", border: "border-orange-500" }, // Reboco Paulista
-  "10": { stroke: "#e11d48", fill: "rgba(225, 29, 72, 0.28)", badge: "bg-rose-600", bgCard: "bg-rose-950/70", border: "border-rose-500" }, // Pisos & Porcelanato
-  "11": { stroke: "#9333ea", fill: "rgba(147, 51, 234, 0.28)", badge: "bg-purple-600", bgCard: "bg-purple-950/70", border: "border-purple-500" }, // Esquadrias de Alumínio
-  "12": { stroke: "#0ea5e9", fill: "rgba(14, 165, 233, 0.28)", badge: "bg-sky-500", bgCard: "bg-sky-950/70", border: "border-sky-400" }, // Climatização HVAC
-  "13": { stroke: "#eab308", fill: "rgba(234, 179, 8, 0.30)", badge: "bg-yellow-500", bgCard: "bg-yellow-950/70", border: "border-yellow-400" }, // Acabamentos Elétr./Hidr.
+  "01": { stroke: "#38bdf8", fill: "rgba(56, 189, 248, 0.28)", badge: "bg-sky-500", bgCard: "bg-sky-950/70", border: "border-sky-500" }, // Topografia & Canteiro
+  "02": { stroke: "#3b82f6", fill: "rgba(59, 130, 246, 0.28)", badge: "bg-blue-600", bgCard: "bg-blue-950/70", border: "border-blue-500" }, // Fundações Sapatas
+  "03": { stroke: "#2563eb", fill: "rgba(37, 99, 235, 0.28)", badge: "bg-blue-700", bgCard: "bg-blue-950/70", border: "border-blue-600" }, // Vigas Baldrames
+  "04": { stroke: "#6366f1", fill: "rgba(99, 102, 241, 0.28)", badge: "bg-indigo-500", bgCard: "bg-indigo-950/70", border: "border-indigo-500" }, // Pilares Supraestrutura
+  "05": { stroke: "#8b5cf6", fill: "rgba(139, 92, 246, 0.28)", badge: "bg-purple-500", bgCard: "bg-purple-950/70", border: "border-purple-500" }, // Vigas & Laje H12
+  "06": { stroke: "#f59e0b", fill: "rgba(245, 158, 11, 0.28)", badge: "bg-amber-500", bgCard: "bg-amber-950/70", border: "border-amber-500" }, // Alvenaria de Vedação
+  "07": { stroke: "#06b6d4", fill: "rgba(6, 182, 212, 0.28)", badge: "bg-cyan-500", bgCard: "bg-cyan-950/70", border: "border-cyan-500" }, // Cobertura Metálica
+  "08": { stroke: "#10b981", fill: "rgba(16, 185, 129, 0.28)", badge: "bg-emerald-500", bgCard: "bg-emerald-950/70", border: "border-emerald-500" }, // Instalações Embutidas
+  "09": { stroke: "#f97316", fill: "rgba(249, 115, 22, 0.28)", badge: "bg-orange-500", bgCard: "bg-orange-950/70", border: "border-orange-500" }, // Reboco Paulista
+  "10": { stroke: "#ef4444", fill: "rgba(239, 68, 68, 0.28)", badge: "bg-red-500", bgCard: "bg-red-950/70", border: "border-red-500" }, // Pisos & Porcelanato
+  "11": { stroke: "#a855f7", fill: "rgba(168, 85, 247, 0.28)", badge: "bg-purple-600", bgCard: "bg-purple-950/70", border: "border-purple-500" }, // Esquadrias de Alumínio
+  "12": { stroke: "#0284c7", fill: "rgba(2, 132, 199, 0.28)", badge: "bg-sky-600", bgCard: "bg-sky-950/70", border: "border-sky-600" }, // Climatização HVAC
+  "13": { stroke: "#eab308", fill: "rgba(234, 179, 8, 0.28)", badge: "bg-yellow-500", bgCard: "bg-yellow-950/70", border: "border-yellow-500" }, // Acabamentos Elétr./Hidr.
   "14": { stroke: "#d946ef", fill: "rgba(217, 70, 239, 0.28)", badge: "bg-fuchsia-600", bgCard: "bg-fuchsia-950/70", border: "border-fuchsia-500" }, // Pintura Acrílica Final
   "15": { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.30)", badge: "bg-teal-600", bgCard: "bg-teal-950/70", border: "border-teal-500" }, // Comissionamento & Entrega
 };
@@ -73,6 +123,68 @@ function getCorVagao(nomeVagao: string) {
     bgCard: "bg-zinc-900/80", 
     border: "border-zinc-600" 
   };
+}
+
+function parseDateBR(dateStr: string): Date | null {
+  if (!dateStr) return null;
+  const clean = dateStr.trim().replace(/^"|"$/g, '');
+  if (clean.includes('/')) {
+    const parts = clean.split('/');
+    if (parts.length === 3) {
+      const [d, m, y] = parts;
+      const fullYear = y.length === 2 ? `20${y}` : y;
+      return new Date(parseInt(fullYear, 10), parseInt(m, 10) - 1, parseInt(d, 10));
+    }
+  } else if (clean.includes('-')) {
+    const parts = clean.split('-');
+    if (parts.length === 3) {
+      const [y, m, d] = parts;
+      return new Date(parseInt(y, 10), parseInt(m, 10) - 1, parseInt(d, 10));
+    }
+  }
+  return null;
+}
+
+function formatDateBR(d: Date): string {
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+function addWorkingDays(date: Date, days: number): Date {
+  const current = new Date(date);
+  let added = 0;
+  const step = days >= 0 ? 1 : -1;
+  const absDays = Math.abs(days);
+  while (added < absDays) {
+    current.setDate(current.getDate() + step);
+    if (current.getDay() !== 0) { // Sunday = 0
+      added++;
+    }
+  }
+  return current;
+}
+
+function calcularDataFim(dataInicioStr: string, duracaoDias: number): string {
+  const d = parseDateBR(dataInicioStr);
+  if (!d || isNaN(d.getTime()) || duracaoDias <= 0) return '';
+  if (duracaoDias === 1) return formatDateBR(d);
+  const end = addWorkingDays(d, duracaoDias - 1);
+  return formatDateBR(end);
+}
+
+function calcularDuracaoDias(dataInicioStr: string, dataFimStr: string): number {
+  const dIni = parseDateBR(dataInicioStr);
+  const dFim = parseDateBR(dataFimStr);
+  if (!dIni || !dFim || isNaN(dIni.getTime()) || isNaN(dFim.getTime()) || dFim < dIni) return 3;
+  let count = 0;
+  const cur = new Date(dIni);
+  while (cur <= dFim) {
+    if (cur.getDay() !== 0) count++;
+    cur.setDate(cur.getDate() + 1);
+  }
+  return Math.max(1, count);
 }
 
 export default function LinhaDeBalanco() {
@@ -92,9 +204,22 @@ export default function LinhaDeBalanco() {
   const [vagaoHover, setVagaoHover] = useState<string | null>(null);
   const [relatorioSobreposicao, setRelatorioSobreposicao] = useState<any>(null);
   const [showAjuda, setShowAjuda] = useState(false);
+  const [showBannerConflito, setShowBannerConflito] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
+  // Estados de Edição Interativa e Autonomia do Usuário
+  const [isEditando, setIsEditando] = useState(false);
+  const [pontoEditando, setPontoEditando] = useState<PontoVagao | null>(null);
+  const [editVagaoNome, setEditVagaoNome] = useState('');
+  const [editDataInicio, setEditDataInicio] = useState('');
+  const [editDataFim, setEditDataFim] = useState('');
+  const [editEquipe, setEditEquipe] = useState('');
+  const [editDuracao, setEditDuracao] = useState(3);
+  const [empurrarSucessores, setEmpurrarSucessores] = useState(true);
+  const [salvando, setSalvando] = useState(false);
+  const [toastMsg, setToastMsg] = useState<{ tipo: 'success' | 'error' | 'info'; texto: string } | null>(null);
+
+  const carregarDadosCronograma = (silent = false) => {
+    if (!silent) setLoading(true);
     fetch(`/api/cronograma?obra=${encodeURIComponent(obraAtiva)}`)
       .then(res => res.json())
       .then(data => {
@@ -110,18 +235,248 @@ export default function LinhaDeBalanco() {
             if (end > maxDay) maxDay = end;
           });
           setTotalDias(Math.max(182, maxDay));
+
+          if (vagaoSelecionado && data.vagoesFluxo) {
+            const atualizado = data.vagoesFluxo.find((v: VagaoFluxo) => v.nome === vagaoSelecionado.nome);
+            if (atualizado) setVagaoSelecionado(atualizado);
+          }
         } else {
           setTarefas([]);
           setVagoesFluxo([]);
           setPavimentos([]);
         }
-        setLoading(false);
+        if (!silent) setLoading(false);
       })
       .catch(err => {
         console.error('Erro ao buscar cronograma', err);
-        setLoading(false);
+        if (!silent) setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    carregarDadosCronograma();
   }, [obraAtiva]);
+
+  useEffect(() => {
+    if (toastMsg) {
+      const timer = setTimeout(() => setToastMsg(null), 4000);
+      return () => clearTimeout(timer);
+    }
+  }, [toastMsg]);
+
+  const handleAbrirEdicao = (ponto: PontoVagao, vagao: VagaoFluxo) => {
+    setPontoEditando(ponto);
+    setEditVagaoNome(vagao.nome);
+    setEditDataInicio(ponto.dataInicio || '');
+    const dur = ponto.duration || 3;
+    setEditDuracao(dur);
+    // Recalcular data de término consistente com o início e a duração
+    const computedFim = ponto.dataInicio && dur > 0 
+      ? calcularDataFim(ponto.dataInicio, dur) 
+      : (ponto.dataFim || '');
+    setEditDataFim(computedFim);
+    setEditEquipe(vagao.equipe || 'SUB-01 Estruturas e Concreto');
+    setEmpurrarSucessores(true);
+    setIsEditando(true);
+  };
+
+  const handleSalvarEdicao = async () => {
+    if (!pontoEditando) return;
+    setSalvando(true);
+    try {
+      const res = await fetch('/api/cronograma', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          obra: obraAtiva,
+          acao: 'atualizar_tarefa',
+          tarefa: {
+            id: pontoEditando.id,
+            pav: pontoEditando.pav,
+            dataInicio: editDataInicio,
+            dataFim: editDataFim,
+            equipe: editEquipe,
+            duration: editDuracao
+          },
+          empurrarSucessores: empurrarSucessores
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setToastMsg({ 
+          tipo: 'success', 
+          texto: empurrarSucessores 
+            ? '✅ Alteração salva no CSV e propagada em cascata para os sucessores!' 
+            : '✅ Alteração salva no LINHA_DE_BALANCO.csv!' 
+        });
+        setIsEditando(false);
+        carregarDadosCronograma();
+      } else {
+        setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao salvar alteração' });
+      }
+    } catch (err) {
+      setToastMsg({ tipo: 'error', texto: 'Erro de conexão com o servidor' });
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  const handleDeslocarVagao = async (dias: number, deslocarSucessores: boolean = false) => {
+    if (!vagaoSelecionado || vagaoSelecionado.pontos.length === 0) return;
+    setSalvando(true);
+    try {
+      const primeiroPonto = vagaoSelecionado.pontos[0];
+      const res = await fetch('/api/cronograma', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          obra: obraAtiva,
+          acao: 'deslocar',
+          id: primeiroPonto.id,
+          dias,
+          deslocarSucessores
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setToastMsg({ 
+          tipo: 'success', 
+          texto: `✅ Deslocamento de ${dias > 0 ? '+' : ''}${dias} dias salvo no CSV e sincronizado!` 
+        });
+        carregarDadosCronograma();
+      } else {
+        setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao deslocar' });
+      }
+    } catch (err) {
+      setToastMsg({ tipo: 'error', texto: 'Falha ao conectar com o backend' });
+    } finally {
+      setSalvando(false);
+    }
+  };
+
+  // Estado de Arraste Interativo Direto (Drag & Drop)
+  const [dragState, setDragState] = useState<DragState>(initialDragState);
+
+  // Detecção Dinâmica de Sobreposição de Equipes (Dupla Frente) e Conflitos Espaciais
+  const conflitosVisuais = React.useMemo(() => {
+    if (!tarefas || tarefas.length === 0) return [];
+    
+    const conflitosPorDia: { dia: number; tipo: 'equipe_dupla' | 'conflito_espacial'; equipe?: string; setor?: string; tarefas: TarefaLOB[] }[] = [];
+    
+    for (let d = 1; d <= totalDias; d++) {
+      const ativas = tarefas.filter(t => d >= t.start && d < t.start + t.duration);
+      
+      // 1. Detectar mesma equipe em múltiplos setores no mesmo dia
+      const mapEquipe = new Map<string, TarefaLOB[]>();
+      ativas.forEach(t => {
+        if (t.equipe && !t.equipe.toLowerCase().includes('própria') && !t.equipe.toLowerCase().includes('turnkey')) {
+          const list = mapEquipe.get(t.equipe) || [];
+          list.push(t);
+          mapEquipe.set(t.equipe, list);
+        }
+      });
+
+      mapEquipe.forEach((taskList, eq) => {
+        const setores = new Set(taskList.map(t => t.pav));
+        if (setores.size > 1) {
+          conflitosPorDia.push({
+            dia: d,
+            tipo: 'equipe_dupla',
+            equipe: eq,
+            tarefas: taskList
+          });
+        }
+      });
+
+      // 2. Detectar equipes diferentes no mesmo setor no mesmo dia
+      const mapSetor = new Map<string, TarefaLOB[]>();
+      ativas.forEach(t => {
+        const list = mapSetor.get(t.pav) || [];
+        list.push(t);
+        mapSetor.set(t.pav, list);
+      });
+
+      mapSetor.forEach((taskList, pav) => {
+        const eqDistintas = new Set(taskList.map(t => t.equipe));
+        if (taskList.length > 1 && eqDistintas.size > 1) {
+          conflitosPorDia.push({
+            dia: d,
+            tipo: 'conflito_espacial',
+            setor: pav,
+            tarefas: taskList
+          });
+        }
+      });
+    }
+
+    if (conflitosPorDia.length === 0) return [];
+
+    // Agrupar dias contíguos
+    const conflitosConsolidados: ConflitoVisual[] = [];
+    const agrupados = new Map<string, typeof conflitosPorDia>();
+
+    conflitosPorDia.forEach(item => {
+      const chave = item.tipo === 'equipe_dupla' ? `eq_${item.equipe}` : `setor_${item.setor}`;
+      const list = agrupados.get(chave) || [];
+      list.push(item);
+      agrupados.set(chave, list);
+    });
+
+    agrupados.forEach((itens, chave) => {
+      itens.sort((a, b) => a.dia - b.dia);
+      let dIni = itens[0].dia;
+      let dPrev = itens[0].dia;
+      let tIds = new Set<number>(itens[0].tarefas.map(t => t.id));
+      let setSet = new Set<string>(itens[0].tarefas.map(t => t.pav));
+
+      for (let i = 1; i < itens.length; i++) {
+        const cur = itens[i];
+        if (cur.dia === dPrev + 1) {
+          dPrev = cur.dia;
+          cur.tarefas.forEach(t => {
+            tIds.add(t.id);
+            setSet.add(t.pav);
+          });
+        } else {
+          const sample = itens[i - 1];
+          conflitosConsolidados.push({
+            id: `${chave}_${dIni}_${dPrev}`,
+            tipo: sample.tipo,
+            equipe: sample.equipe,
+            setor: sample.setor,
+            setores: Array.from(setSet),
+            diaInicio: dIni,
+            diaFim: dPrev + 1,
+            tarefasIds: Array.from(tIds),
+            descricao: sample.tipo === 'equipe_dupla'
+              ? `⚠️ Dupla Frente: ${sample.equipe} em ${setSet.size} setores simultâneos (+1 equipe necessária)`
+              : `⚠️ Conflito Espacial no setor ${sample.setor}`
+          });
+          dIni = cur.dia;
+          dPrev = cur.dia;
+          tIds = new Set<number>(cur.tarefas.map(t => t.id));
+          setSet = new Set<string>(cur.tarefas.map(t => t.pav));
+        }
+      }
+
+      const last = itens[itens.length - 1];
+      conflitosConsolidados.push({
+        id: `${chave}_${dIni}_${dPrev}`,
+        tipo: last.tipo,
+        equipe: last.equipe,
+        setor: last.setor,
+        setores: Array.from(setSet),
+        diaInicio: dIni,
+        diaFim: dPrev + 1,
+        tarefasIds: Array.from(tIds),
+        descricao: last.tipo === 'equipe_dupla'
+          ? `⚠️ Dupla Frente: ${last.equipe} em ${setSet.size} setores simultâneos (+1 equipe necessária)`
+          : `⚠️ Conflito Espacial (${Array.from(setSet).join(', ')})`
+      });
+    });
+
+    return conflitosConsolidados;
+  }, [tarefas, totalDias]);
 
   const handleZoomInX = () => setZoomX(prev => Math.min(prev + 0.5, 3));
   const handleZoomOutX = () => setZoomX(prev => Math.max(prev - 0.5, 0.5));
@@ -153,6 +508,257 @@ export default function LinhaDeBalanco() {
     return idx * rowHeight + rowHeight / 2;
   };
 
+  // Referência de Arraste Global para precisão máxima sem perda de ponteiro
+  const dragRef = useRef<{
+    active: boolean;
+    taskId: number | null;
+    taskName: string;
+    pav: string;
+    equipe: string;
+    origStartDay: number;
+    origDuration: number;
+    origIniDate: string;
+    origFimDate: string;
+    startX: number;
+    startY: number;
+    currentX: number;
+    currentY: number;
+    deltaDays: number;
+    hasMoved: boolean;
+  }>({
+    active: false,
+    taskId: null,
+    taskName: '',
+    pav: '',
+    equipe: '',
+    origStartDay: 0,
+    origDuration: 3,
+    origIniDate: '',
+    origFimDate: '',
+    startX: 0,
+    startY: 0,
+    currentX: 0,
+    currentY: 0,
+    deltaDays: 0,
+    hasMoved: false
+  });
+  const justFinishedDragRef = useRef(false);
+
+  // Manipulador de Arraste Global (Pointer Events com Atualização Otimista Imediata)
+  const handlePointerDown = (
+    e: React.PointerEvent,
+    taskInfo: { id: number; pav: string; tipo: string; vagao?: string; equipe: string; start: number; duration: number; dataInicio?: string; dataFim?: string }
+  ) => {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    const ini = taskInfo.dataInicio || '';
+    const fim = taskInfo.dataFim || '';
+
+    dragRef.current = {
+      active: true,
+      taskId: taskInfo.id,
+      taskName: taskInfo.vagao || taskInfo.tipo,
+      pav: taskInfo.pav,
+      equipe: taskInfo.equipe,
+      origStartDay: taskInfo.start,
+      origDuration: taskInfo.duration,
+      origIniDate: ini,
+      origFimDate: fim,
+      startX: e.clientX,
+      startY: e.clientY,
+      currentX: e.clientX,
+      currentY: e.clientY,
+      deltaDays: 0,
+      hasMoved: false
+    };
+
+    setDragState({
+      active: true,
+      taskId: taskInfo.id,
+      taskName: taskInfo.vagao || taskInfo.tipo,
+      pav: taskInfo.pav,
+      equipe: taskInfo.equipe,
+      origStartDay: taskInfo.start,
+      origDuration: taskInfo.duration,
+      origIniDate: ini,
+      origFimDate: fim,
+      startX: e.clientX,
+      startY: e.clientY,
+      currentX: e.clientX,
+      currentY: e.clientY,
+      deltaDays: 0,
+      projectedIniDate: ini,
+      projectedFimDate: fim
+    });
+
+    const onGlobalPointerMove = (ev: PointerEvent) => {
+      if (!dragRef.current.active) return;
+      const dx = ev.clientX - dragRef.current.startX;
+      if (Math.abs(dx) > 3) {
+        dragRef.current.hasMoved = true;
+      }
+      const pxPerDay = chartWidth / totalDias;
+      const deltaDays = Math.round(dx / pxPerDay);
+
+      dragRef.current.currentX = ev.clientX;
+      dragRef.current.currentY = ev.clientY;
+      dragRef.current.deltaDays = deltaDays;
+
+      let projIni = dragRef.current.origIniDate;
+      let projFim = dragRef.current.origFimDate;
+
+      if (dragRef.current.origIniDate) {
+        const dIni = parseDateBR(dragRef.current.origIniDate);
+        if (dIni) {
+          const shiftedIni = addWorkingDays(dIni, deltaDays);
+          projIni = formatDateBR(shiftedIni);
+          projFim = calcularDataFim(projIni, dragRef.current.origDuration);
+        }
+      }
+
+      setDragState(prev => ({
+        ...prev,
+        currentX: ev.clientX,
+        currentY: ev.clientY,
+        deltaDays,
+        projectedIniDate: projIni,
+        projectedFimDate: projFim
+      }));
+    };
+
+    const onGlobalPointerUp = async (ev: PointerEvent) => {
+      window.removeEventListener('pointermove', onGlobalPointerMove);
+      window.removeEventListener('pointerup', onGlobalPointerUp);
+      window.removeEventListener('pointercancel', onGlobalPointerUp);
+
+      if (!dragRef.current.active) return;
+
+      const dx = ev.clientX - dragRef.current.startX;
+      const pxPerDay = chartWidth / totalDias;
+      const finalDelta = Math.round(dx / pxPerDay);
+      const taskId = dragRef.current.taskId;
+      const taskName = dragRef.current.taskName;
+      const hasMoved = dragRef.current.hasMoved;
+
+      dragRef.current.active = false;
+      setDragState(initialDragState);
+
+      if (hasMoved) {
+        justFinishedDragRef.current = true;
+        setTimeout(() => {
+          justFinishedDragRef.current = false;
+        }, 300);
+      }
+
+      // Se moveu pelo menos 1 dia útil:
+      if (Math.abs(finalDelta) >= 1 && taskId) {
+        // 1. ATUALIZAÇÃO OTIMISTA IMEDIATA:
+        setTarefas(prevTarefas => {
+          return prevTarefas.map(t => {
+            const isTarget = t.id === taskId;
+            // Apenas empurra sucessores se atrasou (finalDelta > 0).
+            // Se adiantou (finalDelta < 0), APENAS a tarefa alvo se move na folga existente!
+            const isSuccessor = finalDelta > 0 && t.id > taskId;
+
+            if (isTarget || isSuccessor) {
+              const dIni = parseDateBR(t.dataInicio || '');
+              const newStartDay = Math.max(1, t.start + finalDelta);
+              if (dIni) {
+                const newIniDate = formatDateBR(addWorkingDays(dIni, finalDelta));
+                const newFimDate = calcularDataFim(newIniDate, t.duration);
+                return {
+                  ...t,
+                  start: newStartDay,
+                  dataInicio: newIniDate,
+                  dataFim: newFimDate
+                };
+              }
+              return { ...t, start: newStartDay };
+            }
+            return t;
+          });
+        });
+
+        // Atualiza também os pontos de vagoesFluxo em memória
+        setVagoesFluxo(prevVagoes => {
+          return prevVagoes.map(v => {
+            let mod = false;
+            const novosPontos = v.pontos.map(p => {
+              const isTarget = p.id === taskId;
+              const isSuccessor = finalDelta > 0 && p.id > taskId;
+              if (isTarget || isSuccessor) {
+                mod = true;
+                const dIni = parseDateBR(p.dataInicio || '');
+                const newStart = Math.max(1, p.start + finalDelta);
+                if (dIni) {
+                  const newIniDate = formatDateBR(addWorkingDays(dIni, finalDelta));
+                  const newFimDate = calcularDataFim(newIniDate, p.duration);
+                  return {
+                    ...p,
+                    start: newStart,
+                    dataInicio: newIniDate,
+                    dataFim: newFimDate
+                  };
+                }
+                return { ...p, start: newStart };
+              }
+              return p;
+            });
+
+            if (mod) {
+              const sMin = Math.min(...novosPontos.map(p => p.start));
+              const eMax = Math.max(...novosPontos.map(p => p.start + p.duration));
+              return { ...v, pontos: novosPontos, startMin: sMin, endMax: eMax };
+            }
+            return v;
+          });
+        });
+
+        // 2. Notificação e Envio ao Backend em Background
+        setToastMsg({
+          tipo: 'info',
+          texto: `💾 Gravando no CSV: '${taskName}' (${finalDelta > 0 ? '+' : ''}${finalDelta}d)...`
+        });
+
+        try {
+          const res = await fetch('/api/cronograma', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              obra: obraAtiva,
+              acao: 'deslocar',
+              id: taskId,
+              dias: finalDelta,
+              deslocarSucessores: finalDelta > 0,
+              deslocarPredecessores: false
+            })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            setToastMsg({
+              tipo: 'success',
+              texto: `✅ Deslocamento fixado no CSV! (${finalDelta > 0 ? '+' : ''}${finalDelta}d${finalDelta > 0 ? ' com cascata' : ' na folga'})`
+            });
+            // Sincronização SILENCIOSA (sem fechar o gráfico nem dar spinner na tela inteira)
+            carregarDadosCronograma(true);
+          } else {
+            setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao salvar deslocamento no CSV' });
+            carregarDadosCronograma(false);
+          }
+        } catch (err) {
+          setToastMsg({ tipo: 'error', texto: 'Falha de comunicação com o servidor ao salvar no CSV' });
+          carregarDadosCronograma(false);
+        }
+      }
+    };
+
+    window.addEventListener('pointermove', onGlobalPointerMove);
+    window.addEventListener('pointerup', onGlobalPointerUp);
+    window.addEventListener('pointercancel', onGlobalPointerUp);
+  };
+
   // Agrupamento para a visão de "Blocos por Lotes"
   // Consolida tarefas contíguas do mesmo vagão no setor (folga <= 2 dias de fim de semana).
   // Tarefas com intervalo real de espera formam lotes distintos, preservando a diagonal ascendente Lean ↗.
@@ -160,6 +766,8 @@ export default function LinhaDeBalanco() {
     const tarefasDoSetor = [...tarefas.filter(t => t.pav === pav)].sort((a, b) => a.start - b.start);
     const lotes: {
       id: string;
+      tarefaId: number;
+      tarefa: TarefaLOB;
       pav: string;
       vagaoNome: string;
       equipe: string;
@@ -184,6 +792,8 @@ export default function LinhaDeBalanco() {
       } else {
         lotes.push({
           id: `${pav}-${vNome}-${t.start}-${idx}`,
+          tarefaId: t.id,
+          tarefa: t,
           pav,
           vagaoNome: vNome,
           equipe: t.equipe,
@@ -279,6 +889,17 @@ export default function LinhaDeBalanco() {
             </button>
           </div>
 
+          {/* BOTÃO DE RECARREGAR / SINCRONIZAR */}
+          <button
+            onClick={() => carregarDadosCronograma(false)}
+            disabled={loading || salvando}
+            className="px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 text-xs flex items-center gap-1.5 transition-colors font-medium cursor-pointer"
+            title="Recarregar dados do backend e verificar sincronização"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 text-blue-400 ${loading ? 'animate-spin' : ''}`} />
+            Sincronizar
+          </button>
+
           {/* CONTROLES DE ZOOM */}
           <div className="flex space-x-2">
             <div className="flex items-center space-x-1.5 bg-zinc-950/80 px-2 py-1 rounded-lg border border-zinc-800">
@@ -320,6 +941,45 @@ export default function LinhaDeBalanco() {
               <strong className="text-zinc-200">3. Sem Cruzamento Indevido:</strong> Quando as faixas não se cruzam no mesmo setor, significa que os subempreiteiros trabalham em harmonia sem disputar espaço físico.
             </div>
           </div>
+        </div>
+      )}
+
+      {/* BANNER DISCRETO E COLAPSÁVEL DE CONFLITOS DE ORÇAMENTO (NÃO BLOQUEIA EDIÇÃO) */}
+      {conflitosVisuais.length > 0 && (
+        <div className="mb-4 bg-zinc-950/90 border border-zinc-800 rounded-xl overflow-hidden shadow-md text-xs">
+          <div className="px-4 py-2.5 flex items-center justify-between gap-3 bg-zinc-900/60">
+            <div className="flex items-center gap-2 text-zinc-300">
+              <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span className="font-medium text-zinc-200">
+                Sobreposições de Equipe Mapeadas no Orçamento Baseline:
+              </span>
+              <span className="font-mono text-zinc-400">
+                {conflitosVisuais.length} intervalo{conflitosVisuais.length > 1 ? 's' : ''} pré-existente{conflitosVisuais.length > 1 ? 's' : ''}
+              </span>
+            </div>
+            <button
+              onClick={() => setShowBannerConflito(!showBannerConflito)}
+              className="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer flex items-center gap-1"
+            >
+              {showBannerConflito ? 'Ocultar Detalhes ▲' : 'Ver Detalhes ▼'}
+            </button>
+          </div>
+
+          {showBannerConflito && (
+            <div className="p-4 border-t border-zinc-800/80 bg-zinc-950/80 space-y-2 animate-in fade-in duration-150">
+              <p className="text-zinc-400">
+                Intervalos onde a mesma equipe está alocada em frentes simultâneas no orçamento original (ex: fundações/estruturas). 
+                Ao mover atividades com folga, o sistema permite ajustar livremente os prazos sem gerar travas.
+              </p>
+              <div className="flex flex-wrap gap-2 pt-1">
+                {conflitosVisuais.map((c, idx) => (
+                  <span key={idx} className="px-2 py-1 rounded bg-zinc-900 border border-zinc-700/60 text-[11px] text-zinc-300 font-mono">
+                    <strong className="text-amber-400">{c.equipe}</strong> ({c.setores.join(', ')}): Dias {c.diaInicio} a {c.diaFim}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -450,10 +1110,57 @@ export default function LinhaDeBalanco() {
                     <filter id="glow-line" x="-20%" y="-20%" width="140%" height="140%">
                       <feDropShadow dx="0" dy="0" stdDeviation="4" floodColor="#38bdf8" floodOpacity="0.7" />
                     </filter>
+                    <filter id="glow-conflito" x="-20%" y="-20%" width="140%" height="140%">
+                      <feDropShadow dx="0" dy="0" stdDeviation="6" floodColor="#ef4444" floodOpacity="0.9" />
+                    </filter>
                     <pattern id="stripe-comissionamento" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
                       <line x1="0" y1="0" x2="0" y2="12" stroke="#14b8a6" strokeWidth="2" strokeOpacity="0.25" />
                     </pattern>
+                    <pattern id="stripe-sobreposicao" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                      <line x1="0" y1="0" x2="0" y2="12" stroke="#ef4444" strokeWidth="2.5" strokeOpacity="0.45" />
+                    </pattern>
                   </defs>
+
+                  {/* CAMADA VISUAL DE CONFLITOS E SOBREPOSIÇÃO DE EQUIPES (DUPLA FRENTE) */}
+                  {conflitosVisuais.map((c) => {
+                    const xIni = getX(c.diaInicio);
+                    const xFim = getX(c.diaFim);
+                    const w = Math.max(34, xFim - xIni);
+                    return (
+                      <g key={c.id} className="animate-in fade-in">
+                        {/* Faixa vertical hachurada com destaque de risco */}
+                        <rect
+                          x={xIni}
+                          y={4}
+                          width={w}
+                          height={chartHeight - 8}
+                          fill="url(#stripe-sobreposicao)"
+                          stroke="#ef4444"
+                          strokeWidth={1.5}
+                          strokeDasharray="4 3"
+                          rx={6}
+                          opacity={0.55}
+                          className="pointer-events-none"
+                        />
+                        {/* Pin / Badge Flutuante no Topo com aviso de demanda de equipe */}
+                        <foreignObject
+                          x={Math.max(4, xIni + w / 2 - 120)}
+                          y={6}
+                          width={240}
+                          height={36}
+                          className="overflow-visible pointer-events-auto"
+                        >
+                          <div 
+                            className="px-2.5 py-1 rounded-full bg-rose-950/95 border border-rose-500 text-rose-200 text-[10px] font-bold shadow-2xl flex items-center justify-center gap-1.5 ring-2 ring-rose-500/40 backdrop-blur-md cursor-help hover:scale-105 transition-transform"
+                            title={c.descricao}
+                          >
+                            <AlertTriangle className="w-3.5 h-3.5 text-rose-400 shrink-0 animate-bounce" />
+                            <span className="truncate">{c.descricao}</span>
+                          </div>
+                        </foreignObject>
+                      </g>
+                    );
+                  })}
 
                   {/* 1. RENDERIZAR AS FAIXAS E VAGÕES DE FLUXO */}
                   {vagoesFluxo.map((vagao) => {
@@ -515,15 +1222,35 @@ export default function LinhaDeBalanco() {
                       const yTop = 8;
                       const yBottom = chartHeight - 8;
                       const height = yBottom - yTop;
+                      const ponto0 = vagao.pontos[0];
+                      const temConflito1 = ponto0 ? conflitosVisuais.some(c => c.tarefasIds.includes(ponto0.id)) : false;
 
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-pointer transition-opacity duration-200"
+                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.4 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => setVagaoSelecionado(vagao)}
+                          onClick={() => {
+                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
+                            setVagaoSelecionado(vagao);
+                          }}
+                          onPointerDown={(e) => {
+                            if (ponto0) {
+                              handlePointerDown(e, {
+                                id: ponto0.id,
+                                pav: ponto0.pav,
+                                tipo: vagao.nome,
+                                vagao: vagao.nome,
+                                equipe: vagao.equipe,
+                                start: vagao.startMin,
+                                duration: vagao.endMax - vagao.startMin,
+                                dataInicio: ponto0.dataInicio,
+                                dataFim: ponto0.dataFim
+                              });
+                            }
+                          }}
                         >
                           <rect 
                             x={xIni} 
@@ -532,10 +1259,10 @@ export default function LinhaDeBalanco() {
                             height={height} 
                             rx={10}
                             fill="url(#stripe-comissionamento)" 
-                            stroke={cor.stroke} 
-                            strokeWidth={isHovered || isSelected ? 3 : 1.5}
+                            stroke={temConflito1 ? "#ef4444" : cor.stroke} 
+                            strokeWidth={temConflito1 ? 3 : (isHovered || isSelected ? 3 : 1.5)}
                             strokeDasharray="6 4"
-                            filter={isHovered ? "url(#glow-line)" : undefined}
+                            filter={temConflito1 ? "url(#glow-conflito)" : (isHovered ? "url(#glow-line)" : undefined)}
                           />
                           <rect 
                             x={xIni} 
@@ -589,15 +1316,35 @@ export default function LinhaDeBalanco() {
                       const yCenter = getYCenter(z.pav);
                       const height = 36;
                       const yTop = yCenter - height / 2;
+                      const pontoZ = vagao.pontos.find(p => p.pav === z.pav) || vagao.pontos[0];
+                      const temConflito2 = pontoZ ? conflitosVisuais.some(c => c.tarefasIds.includes(pontoZ.id)) : false;
 
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-pointer transition-opacity duration-200"
+                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.4 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => setVagaoSelecionado(vagao)}
+                          onClick={() => {
+                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
+                            setVagaoSelecionado(vagao);
+                          }}
+                          onPointerDown={(e) => {
+                            if (pontoZ) {
+                              handlePointerDown(e, {
+                                id: pontoZ.id,
+                                pav: z.pav,
+                                tipo: vagao.nome,
+                                vagao: vagao.nome,
+                                equipe: vagao.equipe,
+                                start: z.start,
+                                duration: z.duration,
+                                dataInicio: z.dataInicio,
+                                dataFim: z.dataFim
+                              });
+                            }
+                          }}
                         >
                           <rect 
                             x={xIni} 
@@ -606,9 +1353,10 @@ export default function LinhaDeBalanco() {
                             height={height} 
                             rx={8}
                             fill={cor.fill} 
-                            stroke={cor.stroke} 
-                            strokeWidth={isHovered || isSelected ? 3 : 1.5}
-                            filter={isHovered ? "url(#glow-line)" : undefined}
+                            stroke={temConflito2 ? "#ef4444" : cor.stroke} 
+                            strokeWidth={temConflito2 ? 3.5 : (isHovered || isSelected ? 3 : 1.5)}
+                            strokeDasharray={temConflito2 ? "4 2" : undefined}
+                            filter={temConflito2 ? "url(#glow-conflito)" : (isHovered ? "url(#glow-line)" : undefined)}
                           />
                           <foreignObject 
                             x={xIni} 
@@ -618,7 +1366,8 @@ export default function LinhaDeBalanco() {
                             className="overflow-visible pointer-events-none"
                           >
                             <div className="flex items-center justify-center h-full px-2">
-                              <span className="text-[10px] font-bold text-white truncate drop-shadow">
+                              <span className="text-[10px] font-bold text-white truncate drop-shadow flex items-center gap-1">
+                                {temConflito2 && <span className="animate-bounce">⚠️</span>}
                                 {vagao.nome.replace(/^\d+\.\s*/, '')} ({z.duration}d)
                               </span>
                             </div>
@@ -644,9 +1393,6 @@ export default function LinhaDeBalanco() {
                         centerPoints.push({ x: xMid, y });
                       });
 
-                      // Constrói o polígono da fita:
-                      // Frente de início subindo da base ao topo, e frente de conclusão descendo do topo à base.
-                      // Como Y diminui estritamente e xStart < xEnd em cada zona, este polígono NUNCA se auto-intercepta!
                       const polygonPoints = [
                         ...leftPoints.map(p => `${p.x},${p.y}`),
                         ...[...rightPoints].reverse().map(p => `${p.x},${p.y}`)
@@ -656,33 +1402,54 @@ export default function LinhaDeBalanco() {
                       const pathEnd = rightPoints.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
                       const pathCenter = centerPoints.map((p, idx) => `${idx === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
 
-                      // Ponto central mediano para rotulagem
                       const midIdx = Math.floor(centerPoints.length / 2);
                       const labelPonto = centerPoints[midIdx];
+                      const primeiroP = vagao.pontos[0];
+                      const temConflito3 = vagao.pontos.some(p => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
 
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-pointer transition-opacity duration-200"
+                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.35 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => setVagaoSelecionado(vagao)}
+                          onClick={() => {
+                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
+                            setVagaoSelecionado(vagao);
+                          }}
+                          onPointerDown={(e) => {
+                            if (primeiroP) {
+                              handlePointerDown(e, {
+                                id: primeiroP.id,
+                                pav: primeiroP.pav,
+                                tipo: vagao.nome,
+                                vagao: vagao.nome,
+                                equipe: vagao.equipe,
+                                start: vagao.startMin,
+                                duration: vagao.endMax - vagao.startMin,
+                                dataInicio: primeiroP.dataInicio,
+                                dataFim: primeiroP.dataFim
+                              });
+                            }
+                          }}
                         >
                           {/* FAIXA INCLINADA TRANSLÚCIDA (RIBBON ↗) */}
                           <polygon 
                             points={polygonPoints} 
                             fill={cor.fill} 
-                            stroke="none"
-                            filter={isHovered ? "url(#glow-line)" : undefined}
+                            stroke={temConflito3 ? "#ef4444" : "none"}
+                            strokeWidth={temConflito3 ? 2 : 0}
+                            filter={temConflito3 ? "url(#glow-conflito)" : (isHovered ? "url(#glow-line)" : undefined)}
                             className="transition-all"
                           />
 
                           {/* LINHA DE INÍCIO DA FRENTE (BORDA ESQUERDA) */}
                           <path 
                             d={pathStart} 
-                            stroke={cor.stroke} 
-                            strokeWidth={isHovered || isSelected ? 3.5 : 2.5}
+                            stroke={temConflito3 ? "#ef4444" : cor.stroke} 
+                            strokeWidth={temConflito3 ? 4 : (isHovered || isSelected ? 3.5 : 2.5)}
+                            strokeDasharray={temConflito3 ? "6 3" : undefined}
                             strokeLinecap="round"
                             strokeLinejoin="round"
                           />
@@ -707,19 +1474,39 @@ export default function LinhaDeBalanco() {
                             strokeOpacity={0.4}
                           />
 
-                          {/* NÓS/MARCADORES EM CADA SETOR */}
-                          {centerPoints.map((p, idx) => (
-                            <circle 
-                              key={idx} 
-                              cx={p.x} 
-                              cy={p.y} 
-                              r={isHovered ? 5.5 : 4} 
-                              fill="#ffffff" 
-                              stroke={cor.stroke} 
-                              strokeWidth={2.5} 
-                              className="transition-transform"
-                            />
-                          ))}
+                          {/* NÓS/MARCADORES EM CADA SETOR COM ARRASTE DIRETO POR SETOR */}
+                          {centerPoints.map((p, idx) => {
+                            const z = zonasConsolidadas[idx];
+                            const pontoZ = vagao.pontos.find(pt => pt.pav === z?.pav) || vagao.pontos[0];
+                            return (
+                              <circle 
+                                key={idx} 
+                                cx={p.x} 
+                                cy={p.y} 
+                                r={isHovered ? 6 : 4.5} 
+                                fill="#ffffff" 
+                                stroke={temConflito3 ? "#ef4444" : cor.stroke} 
+                                strokeWidth={2.5} 
+                                className="cursor-grab active:cursor-grabbing hover:scale-125 transition-transform"
+                                onPointerDown={(e) => {
+                                  e.stopPropagation();
+                                  if (pontoZ && z) {
+                                    handlePointerDown(e, {
+                                      id: pontoZ.id,
+                                      pav: z.pav,
+                                      tipo: vagao.nome,
+                                      vagao: vagao.nome,
+                                      equipe: vagao.equipe,
+                                      start: z.start,
+                                      duration: z.duration,
+                                      dataInicio: z.dataInicio,
+                                      dataFim: z.dataFim
+                                    });
+                                  }
+                                }}
+                              />
+                            );
+                          })}
 
                           {/* ETIQUETA / BADGE FLUTUANTE NA LINHA */}
                           <foreignObject 
@@ -731,10 +1518,11 @@ export default function LinhaDeBalanco() {
                           >
                             <div className="flex justify-center items-center h-full">
                               <span 
-                                className={`px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-xl whitespace-nowrap border border-white/30 ${
-                                  cor.badge
+                                className={`px-2.5 py-1 rounded-full text-[10px] font-bold text-white shadow-xl whitespace-nowrap border ${
+                                  temConflito3 ? 'bg-rose-950 border-rose-500 ring-2 ring-rose-500 animate-pulse' : `${cor.badge} border-white/30`
                                 } ${isHovered ? 'scale-110 ring-2 ring-white' : ''} transition-transform flex items-center gap-1`}
                               >
+                                {temConflito3 && <span>⚠️</span>}
                                 <span>{vagao.nome.replace(/^\d+\.\s*/, '')}</span>
                                 <span className="text-[9px] opacity-75 font-normal">
                                   ({zonasConsolidadas.reduce((acc, cur) => acc + cur.duration, 0)}d)
@@ -748,6 +1536,24 @@ export default function LinhaDeBalanco() {
 
                     return null;
                   })}
+
+                  {/* PREVIEW DO ARRASTE GHOST (SE ATIVO) */}
+                  {dragState.active && (
+                    <g className="pointer-events-none">
+                      <rect
+                        x={getX(dragState.origStartDay + dragState.deltaDays)}
+                        y={getYCenter(dragState.pav) - 22}
+                        width={Math.max(40, getX(dragState.origStartDay + dragState.deltaDays + dragState.origDuration) - getX(dragState.origStartDay + dragState.deltaDays))}
+                        height={44}
+                        rx={8}
+                        fill="rgba(59, 130, 246, 0.45)"
+                        stroke="#60a5fa"
+                        strokeWidth={3}
+                        strokeDasharray="6 3"
+                        className="animate-pulse"
+                      />
+                    </g>
+                  )}
                 </svg>
               ) : (
                 /* MODO BLOCOS: VISÃO POR LOTES CONSOLIDADOS POR SETOR COM TEXTO LEGÍVEL */
@@ -767,25 +1573,49 @@ export default function LinhaDeBalanco() {
                           const width = Math.max(22, rawWidth > 4 ? rawWidth - 2 : rawWidth);
                           const cor = getCorVagao(lote.vagaoNome);
                           const prefix = (lote.vagaoNome || '').slice(0, 2);
+                          const temConflito = conflitosVisuais.some(c => c.tarefasIds.includes(lote.tarefaId));
+                          const isDraggingThis = dragState.active && dragState.taskId === lote.tarefaId;
 
                           return (
                             <div
                               key={lote.id}
-                              onClick={() => {
+                              onPointerDown={(e) => {
+                                handlePointerDown(e, {
+                                  id: lote.tarefaId,
+                                  pav: lote.pav,
+                                  tipo: lote.vagaoNome,
+                                  vagao: lote.vagaoNome,
+                                  equipe: lote.equipe,
+                                  start: lote.start,
+                                  duration: lote.duration,
+                                  dataInicio: lote.dataInicio,
+                                  dataFim: lote.dataFim
+                                });
+                              }}
+                              onClick={(e) => {
+                                if (justFinishedDragRef.current || dragRef.current.hasMoved) {
+                                  e.stopPropagation();
+                                  return;
+                                }
                                 const vEncontrado = vagoesFluxo.find(v => v.nome === lote.vagaoNome);
                                 if (vEncontrado) setVagaoSelecionado(vEncontrado);
                               }}
                               style={{ 
                                 left: `${xIni}px`, 
-                                width: `${width}px`,
-                                height: `${rowHeight - 28}px`
+                                width: `${width}px`, 
+                                height: `${rowHeight - 28}px`,
+                                transform: isDraggingThis ? `translateX(${dragState.currentX - dragState.startX}px)` : undefined,
+                                opacity: isDraggingThis ? 0.8 : 1
                               }}
-                              className={`absolute ${cor.badge} border border-white/20 rounded-lg shadow-md flex flex-col items-center justify-center text-white px-1.5 cursor-pointer hover:ring-2 hover:ring-white hover:scale-105 transition-all z-10`}
-                              title={`${lote.vagaoNome} (${lote.dataInicio} a ${lote.dataFim}) - ${lote.duration} dias`}
+                              className={`absolute ${cor.badge} border ${
+                                temConflito ? 'border-rose-400 ring-2 ring-rose-500 animate-pulse' : 'border-white/20'
+                              } rounded-lg shadow-md flex flex-col items-center justify-center text-white px-1.5 cursor-grab active:cursor-grabbing hover:ring-2 hover:ring-white hover:scale-[1.02] transition-transform z-10 select-none`}
+                              title={`${lote.vagaoNome} (${lote.dataInicio} a ${lote.dataFim}) - ${lote.duration} dias. Arraste horizontalmente para deslocar!`}
                             >
                               {width >= 90 ? (
                                 <>
-                                  <span className="text-[10px] font-bold leading-tight truncate w-full text-center">
+                                  <span className="text-[10px] font-bold leading-tight truncate w-full text-center flex items-center justify-center gap-1">
+                                    {temConflito && <span>⚠️</span>}
                                     {lote.vagaoNome.replace(/^\d+\.\s*/, '')}
                                   </span>
                                   <span className="text-[9px] text-white/80 font-mono">
@@ -794,7 +1624,8 @@ export default function LinhaDeBalanco() {
                                 </>
                               ) : width >= 48 ? (
                                 <>
-                                  <span className="text-[10px] font-bold leading-tight">
+                                  <span className="text-[10px] font-bold leading-tight flex items-center gap-0.5">
+                                    {temConflito && <span>⚠️</span>}
                                     V{prefix}
                                   </span>
                                   <span className="text-[8px] text-white/80 font-mono">
@@ -802,7 +1633,8 @@ export default function LinhaDeBalanco() {
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-[10px] font-bold">
+                                <span className="text-[10px] font-bold flex items-center gap-0.5">
+                                  {temConflito && <span>⚠️</span>}
                                   V{prefix}
                                 </span>
                               )}
@@ -835,8 +1667,8 @@ export default function LinhaDeBalanco() {
         )}
       </div>
 
-      {/* PAINEL INFERIOR: DETALHES DO VAGÃO / LINHA SELECIONADA */}
-      {vagaoSelecionado && (
+      {/* PAINEL INFERIOR: DETALHES DO VAGÃO OU GUIA DE INTERAÇÃO */}
+      {vagaoSelecionado ? (
         <div className="mt-6 p-5 bg-zinc-950 border border-zinc-800 rounded-xl animate-in fade-in slide-in-from-bottom-2 shadow-2xl">
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-3">
@@ -910,6 +1742,338 @@ export default function LinhaDeBalanco() {
               </span>
             </div>
           </div>
+
+          {/* PAINEL DE AJUSTE DIRETO POR ZONA / DESLOCAMENTO DO VAGÃO (AUTONOMIA DO USUÁRIO) */}
+          <div className="mt-5 pt-4 border-t border-zinc-800/90">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+              <span className="text-xs font-bold uppercase text-zinc-300 tracking-wider flex items-center gap-1.5">
+                <Sliders className="w-4 h-4 text-blue-400" />
+                Ajuste Direto de Prazos (Gravação no CSV):
+              </span>
+              
+              {/* ATALHOS DE DESLOCAMENTO EM BLOCO */}
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={() => handleDeslocarVagao(-3, false)}
+                  disabled={salvando}
+                  className="px-2.5 py-1 text-xs rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 flex items-center gap-1 transition-colors cursor-pointer"
+                  title="Adiantar este vagão em 3 dias úteis"
+                >
+                  <Rewind className="w-3 h-3 text-amber-400" /> -3 Dias
+                </button>
+                <button 
+                  onClick={() => handleDeslocarVagao(3, false)}
+                  disabled={salvando}
+                  className="px-2.5 py-1 text-xs rounded-md bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 flex items-center gap-1 transition-colors cursor-pointer"
+                  title="Atrasar este vagão em 3 dias úteis"
+                >
+                  <FastForward className="w-3 h-3 text-emerald-400" /> +3 Dias
+                </button>
+                <button 
+                  onClick={() => handleDeslocarVagao(3, true)}
+                  disabled={salvando}
+                  className="px-2.5 py-1 text-xs rounded-md bg-purple-950/60 hover:bg-purple-900/60 text-purple-200 border border-purple-700/60 flex items-center gap-1 transition-colors cursor-pointer font-medium"
+                  title="Empurrar este vagão e todas as atividades posteriores em +3 dias"
+                >
+                  <FastForward className="w-3 h-3 text-purple-400" /> +3d em Cascata
+                </button>
+              </div>
+            </div>
+
+            {/* CARTÕES DE CADA SETOR DO VAGÃO COM BOTÃO DE EDIÇÃO */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+              {vagaoSelecionado.pontos.map((p) => (
+                <div 
+                  key={p.id}
+                  className="p-3 bg-zinc-900/80 rounded-lg border border-zinc-800 hover:border-zinc-700 flex flex-col justify-between transition-all"
+                >
+                  <div>
+                    <span className="text-[11px] font-semibold text-zinc-200 truncate block">
+                      {p.pav}
+                    </span>
+                    <div className="text-[11px] text-zinc-400 font-mono mt-1">
+                      📅 {p.dataInicio || 'Início'} ➔ {p.dataFim || 'Fim'}
+                    </div>
+                    <span className="text-[10px] text-emerald-400 font-medium mt-0.5 block">
+                      Ritmo: {p.duration} dias úteis
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => handleAbrirEdicao(p, vagaoSelecionado)}
+                    className="mt-2.5 w-full py-1 text-[11px] rounded bg-blue-600/20 hover:bg-blue-600/30 text-blue-300 border border-blue-500/30 flex items-center justify-center gap-1.5 font-medium transition-colors cursor-pointer"
+                  >
+                    <Edit3 className="w-3 h-3" /> Editar Datas no CSV
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-6 p-4 bg-zinc-950/80 border border-dashed border-blue-500/30 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-zinc-300 animate-in fade-in">
+          <div className="flex items-center gap-3">
+            <span className="p-2.5 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 shrink-0">
+              <Sliders className="w-5 h-5" />
+            </span>
+            <div>
+              <p className="font-semibold text-white flex items-center gap-2">
+                <span>🖱️ Modo Interativo Ativo:</span>
+                <span className="text-zinc-400 font-normal">Clique em qualquer linha colorida ou bloco no gráfico acima</span>
+              </p>
+              <p className="text-[11px] text-zinc-400 mt-0.5">
+                Ao clicar em um serviço (vagão), abrirá aqui o painel de <strong>ajuste rápido (-3 Dias, +3 Dias, +3d em Cascata)</strong> e o <strong>botão para editar datas de início/fim e trocar o subempreiteiro no CSV</strong>.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <span className="text-[11px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-3 py-1 rounded-lg">
+              Gravação Direta no CSV Ativa
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* MODAL DE EDIÇÃO DIRETA DA TAREFA NO BACKEND */}
+      {isEditando && pontoEditando && (
+        <div className="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-zinc-900 border border-zinc-700 rounded-2xl p-6 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-blue-500/20 text-blue-400 border border-blue-500/30 font-bold">
+                  Edição Direta no CSV
+                </span>
+                <h4 className="text-base font-bold text-white mt-1.5">
+                  {editVagaoNome}
+                </h4>
+                <p className="text-xs text-zinc-400 mt-0.5">
+                  Setor: <strong className="text-zinc-200">{pontoEditando.pav}</strong>
+                </p>
+              </div>
+              <button 
+                onClick={() => setIsEditando(false)}
+                className="p-1 text-zinc-500 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3.5 text-xs">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-zinc-400 mb-1 font-medium">Data Início (DD/MM/AAAA)</label>
+                  <input 
+                    type="text" 
+                    value={editDataInicio} 
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditDataInicio(val);
+                      if (val.length === 10 && editDuracao > 0) {
+                        const newFim = calcularDataFim(val, editDuracao);
+                        if (newFim) setEditDataFim(newFim);
+                      }
+                    }}
+                    placeholder="01/10/2026"
+                    className="w-full px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-zinc-100 focus:outline-none focus:border-blue-500 font-mono text-xs"
+                  />
+                </div>
+                <div>
+                  <label className="block text-zinc-400 mb-1 font-medium flex items-center justify-between">
+                    <span>Data Fim (DD/MM/AAAA)</span>
+                    <span className="text-[10px] text-emerald-400 font-mono">Auto-calculada</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    value={editDataFim} 
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditDataFim(val);
+                      if (val.length === 10 && editDataInicio.length === 10) {
+                        const newDur = calcularDuracaoDias(editDataInicio, val);
+                        setEditDuracao(newDur);
+                      }
+                    }}
+                    placeholder="03/10/2026"
+                    className="w-full px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-zinc-100 focus:outline-none focus:border-blue-500 font-mono text-xs"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-zinc-400 mb-1 font-medium flex items-center justify-between">
+                  <span>Ritmo / Duração (Dias Úteis)</span>
+                  <span className="text-[10px] text-blue-400">Pula Domingos</span>
+                </label>
+                <div className="flex items-center gap-2">
+                  <input 
+                    type="number" 
+                    value={editDuracao} 
+                    onChange={(e) => {
+                      const dur = parseInt(e.target.value, 10) || 1;
+                      setEditDuracao(dur);
+                      if (editDataInicio) {
+                        const newFim = calcularDataFim(editDataInicio, dur);
+                        if (newFim) setEditDataFim(newFim);
+                      }
+                    }}
+                    min={1}
+                    max={60}
+                    className="w-full px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-zinc-100 focus:outline-none focus:border-blue-500 font-mono text-xs"
+                  />
+                  <div className="flex items-center gap-1 shrink-0">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newDur = Math.max(1, editDuracao - 1);
+                        setEditDuracao(newDur);
+                        if (editDataInicio) setEditDataFim(calcularDataFim(editDataInicio, newDur));
+                      }}
+                      className="px-2 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold"
+                      title="Diminuir 1 dia útil"
+                    >
+                      -1d
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newDur = editDuracao + 1;
+                        setEditDuracao(newDur);
+                        if (editDataInicio) setEditDataFim(calcularDataFim(editDataInicio, newDur));
+                      }}
+                      className="px-2 py-1.5 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-bold"
+                      title="Aumentar 1 dia útil"
+                    >
+                      +1d
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* CHECKBOX EFEITO CASCATA / PRECEDÊNCIAS */}
+              <div className="p-3 bg-blue-950/40 border border-blue-800/50 rounded-lg flex items-start gap-2.5">
+                <input 
+                  type="checkbox" 
+                  id="empurrar-sucessores-modal"
+                  checked={empurrarSucessores}
+                  onChange={(e) => setEmpurrarSucessores(e.target.checked)}
+                  className="mt-0.5 rounded border-zinc-700 bg-zinc-950 text-blue-500 focus:ring-0 cursor-pointer w-4 h-4"
+                />
+                <label htmlFor="empurrar-sucessores-modal" className="cursor-pointer select-none">
+                  <span className="font-semibold text-white block text-xs">
+                    Empurrar atividades sucessoras (Efeito Cascata Lean)
+                  </span>
+                  <span className="text-[11px] text-zinc-400 block mt-0.5 leading-tight">
+                    Ao alterar a duração ou término, recalcula e desloca todas as tarefas posteriores para preservar o fluxo e evitar sobreposições.
+                  </span>
+                </label>
+              </div>
+
+              <div>
+                <label className="block text-zinc-400 mb-1 font-medium">Equipe / Subempreiteiro Responsável</label>
+                <select
+                  value={editEquipe}
+                  onChange={(e) => setEditEquipe(e.target.value)}
+                  className="w-full px-3 py-2 rounded-lg bg-zinc-950 border border-zinc-700 text-zinc-100 focus:outline-none focus:border-blue-500 text-xs"
+                >
+                  <option value="SUB-01 Estruturas e Concreto">SUB-01 Estruturas e Concreto</option>
+                  <option value="SUB-01 Topografia e Locação">SUB-01 Topografia e Locação</option>
+                  <option value="SUB-02 Alvenaria e Revestimento">SUB-02 Alvenaria e Revestimento</option>
+                  <option value="SUB-03 Elétrica e Lógica">SUB-03 Elétrica e Lógica</option>
+                  <option value="SUB-04 Hidráulica e Sanitários">SUB-04 Hidráulica e Sanitários</option>
+                  <option value="SUB-05 Acabamentos e Pisos">SUB-05 Acabamentos e Pisos</option>
+                  <option value="SUB-06 Pintura">SUB-06 Pintura</option>
+                  <option value="SUB-07 Coberturas Metálicas">SUB-07 Coberturas Metálicas</option>
+                  <option value="SUB-07 Caixilharia e Esquadrias">SUB-07 Caixilharia e Esquadrias</option>
+                  <option value="SUB-08 Climatização e HVAC">SUB-08 Climatização e HVAC</option>
+                  <option value="Equipe Própria / Turnkey">Equipe Própria / Turnkey</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 mt-6 pt-4 border-t border-zinc-800">
+              <button 
+                onClick={() => setIsEditando(false)}
+                disabled={salvando}
+                className="px-4 py-2 text-xs font-semibold text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors cursor-pointer"
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={handleSalvarEdicao}
+                disabled={salvando}
+                className="px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-500 rounded-lg shadow-md flex items-center gap-1.5 transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {salvando ? (
+                  <>
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                    Gravando no CSV...
+                  </>
+                ) : (
+                  <>
+                    <Save className="w-3.5 h-3.5" />
+                    Gravar Alteração no CSV
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* TOOLTIP FLUTUANTE DE ARRASTE INTERATIVO (PREVIEW DINÂMICO) */}
+      {dragState.active && (
+        <div 
+          style={{ 
+            left: `${dragState.currentX + 16}px`, 
+            top: `${dragState.currentY + 16}px` 
+          }}
+          className="fixed z-50 pointer-events-none px-3.5 py-2.5 bg-zinc-950/95 backdrop-blur-md border border-blue-500/80 rounded-xl shadow-2xl text-xs text-white flex flex-col gap-1 min-w-[230px]"
+        >
+          <div className="flex items-center justify-between font-bold border-b border-zinc-800 pb-1">
+            <span className="text-blue-400 truncate max-w-[150px]">{dragState.taskName}</span>
+            <span className={`font-mono px-1.5 py-0.5 rounded text-[10px] font-bold ${
+              dragState.deltaDays > 0 
+                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' 
+                : dragState.deltaDays < 0 
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
+                : 'bg-zinc-800 text-zinc-300'
+            }`}>
+              {dragState.deltaDays > 0 ? `+${dragState.deltaDays} dias` : dragState.deltaDays < 0 ? `${dragState.deltaDays} dias` : '0 dias'}
+            </span>
+          </div>
+          <div className="flex justify-between text-[11px] text-zinc-400">
+            <span>Setor: <strong className="text-zinc-200">{dragState.pav}</strong></span>
+            <span>Equipe: <strong className="text-zinc-200">{dragState.equipe}</strong></span>
+          </div>
+          <div className="flex justify-between text-[11px] font-mono text-zinc-300 pt-0.5">
+            <span>{dragState.projectedIniDate}</span>
+            <span className="text-blue-400">➔</span>
+            <span>{dragState.projectedFimDate}</span>
+          </div>
+          <div className="text-[10px] font-medium flex items-center gap-1 pt-1 border-t border-zinc-800/60">
+            {dragState.deltaDays < 0 ? (
+              <span className="text-emerald-400">✅ Reduzindo folga na esteira (aproveitando ritmo sem cascata)</span>
+            ) : dragState.deltaDays > 0 ? (
+              <span className="text-amber-400">➡️ Movendo atividade para a frente</span>
+            ) : (
+              <span className="text-zinc-400">Arraste para ajustar na folga</span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* NOTIFICAÇÃO TOAST FLUTUANTE */}
+      {toastMsg && (
+        <div className={`fixed bottom-6 right-6 z-50 p-4 rounded-xl shadow-2xl border flex items-center gap-2.5 text-xs font-semibold animate-in slide-in-from-bottom-5 duration-200 ${
+          toastMsg.tipo === 'success'
+            ? 'bg-emerald-950/90 border-emerald-500 text-emerald-200'
+            : toastMsg.tipo === 'error'
+            ? 'bg-red-950/90 border-red-500 text-red-200'
+            : 'bg-zinc-900 border-zinc-700 text-zinc-200'
+        }`}>
+          {toastMsg.tipo === 'success' && <Check className="w-4 h-4 text-emerald-400" />}
+          {toastMsg.tipo === 'error' && <AlertTriangle className="w-4 h-4 text-red-400" />}
+          {toastMsg.tipo === 'info' && <Info className="w-4 h-4 text-blue-400" />}
+          <span>{toastMsg.texto}</span>
         </div>
       )}
     </div>

@@ -223,6 +223,9 @@ export default function CronogramaPage() {
         >
           <Layers className="w-4 h-4" />
           Longo Prazo: Linha de Balanço (LOB 180 Dias)
+          <span className="text-[10px] bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider animate-pulse">
+            Interativo • Editar CSV
+          </span>
         </button>
 
         <button

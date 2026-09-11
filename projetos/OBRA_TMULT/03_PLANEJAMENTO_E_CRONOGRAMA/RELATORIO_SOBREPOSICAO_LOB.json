@@ -1,12 +1,37 @@
 {
   "obra": "OBRA_TMULT",
-  "data_analise": "11/09/2026 15:07:46",
-  "total_dias_analisados": 182,
-  "headcount_pico_diario": 24,
-  "headcount_medio_diario": 10.6,
-  "total_conflitos_espaciais": 0,
-  "total_disciplinas_com_frentes_duplas": 0,
-  "conflitos_espaciais": [],
-  "frentes_duplicadas": [],
-  "status_aprovacao": "CONFORME_FLUXO_NIVELADO"
+  "data_analise": "11/09/2026 18:44:39",
+  "total_dias_analisados": 327,
+  "headcount_pico_diario": 20,
+  "headcount_medio_diario": 5.9,
+  "total_conflitos_espaciais": 1,
+  "total_disciplinas_com_frentes_duplas": 1,
+  "conflitos_espaciais": [
+    {
+      "setor": "Zona 01 - Recepção/Diretoria",
+      "dias_totais": 2,
+      "periodo": "06/10/2026 a 07/10/2026",
+      "atividades": [
+        "Carpintaria & Armação",
+        "Escavação & Pré-Armação de Bancada"
+      ],
+      "equipes": [
+        "SUB-01 Estruturas e Concreto"
+      ]
+    }
+  ],
+  "frentes_duplicadas": [
+    {
+      "equipe": "SUB-01 Estruturas e Concreto",
+      "frentes_simultaneas": 2,
+      "dias_com_sobreposicao": 5,
+      "periodo": "06/10/2026 a 15/10/2026",
+      "setores": [
+        "Zona 02 - Salas Técnicas/CPD",
+        "Zona 01 - Recepção/Diretoria",
+        "Zona 03 - Sanitários e Apoio"
+      ]
+    }
+  ],
+  "status_aprovacao": "ALERTA_SOBREPOSICAO_PENDENTE"
 }

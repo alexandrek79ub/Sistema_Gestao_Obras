@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
 import path from 'path';
 import fs from 'fs';
+import { execSync } from 'child_process';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,6 +25,54 @@ function parseDateRobust(dateStr: string): Date | null {
     }
   }
   return null;
+}
+
+function formatDateBR(d: Date): string {
+  const day = String(d.getDate()).padStart(2, '0');
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const year = d.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+function addWorkingDays(date: Date, days: number): Date {
+  const current = new Date(date);
+  let added = 0;
+  const step = days >= 0 ? 1 : -1;
+  const absDays = Math.abs(days);
+  while (added < absDays) {
+    current.setDate(current.getDate() + step);
+    if (current.getDay() !== 0) {
+      added++;
+    }
+  }
+  return current;
+}
+
+function calculateWorkingEndDate(startDate: Date, durationDays: number): Date {
+  if (durationDays <= 1) return new Date(startDate);
+  return addWorkingDays(startDate, durationDays - 1);
+}
+
+function countWorkingDaysBetween(startDate: Date, endDate: Date): number {
+  const d1 = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+  const d2 = new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate());
+  if (d1.getTime() === d2.getTime()) return 0;
+  
+  const isForward = d2 > d1;
+  const step = isForward ? 1 : -1;
+  const current = new Date(d1);
+  let count = 0;
+  
+  while (
+    (isForward && current < d2) ||
+    (!isForward && current > d2)
+  ) {
+    current.setDate(current.getDate() + step);
+    if (current.getDay() !== 0) { // Sunday = 0
+      count += step;
+    }
+  }
+  return count;
 }
 
 function getDisciplineColor(tipo: string, pav: string = ''): string {
@@ -308,6 +357,203 @@ export async function GET(request: Request) {
       obra,
       tarefas: [], 
       pavimentos: [] 
+    }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const { 
+      obra = 'OBRA_TMULT', 
+      acao = 'atualizar_tarefa', 
+      tarefa, 
+      tarefas, 
+      id, 
+      dias, 
+      deslocarSucessores = true,
+      deslocarPredecessores = false,
+      empurrarSucessores,
+      permitirSobreposicao = false
+    } = body;
+    
+    const basePath = process.env.OBRA_PATH 
+      ? process.env.OBRA_PATH.replace(/OBRA.*$/, obra)
+      : path.resolve(process.cwd(), `../projetos/${obra}`);
+      
+    const possiblePaths = [
+      path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv'),
+      path.resolve(process.cwd(), `../projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv`),
+      path.resolve(process.cwd(), `projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv`),
+    ];
+    const filePath = possiblePaths.find(p => fs.existsSync(p));
+    if (!filePath) {
+      return NextResponse.json({ error: `Arquivo LINHA_DE_BALANCO.csv não encontrado para ${obra}` }, { status: 404 });
+    }
+
+    const rawRows = parseCSV(filePath);
+    if (rawRows.length === 0) {
+      return NextResponse.json({ error: 'Arquivo CSV vazio' }, { status: 400 });
+    }
+
+    // 1. Ação: Salvar todas as tarefas editadas
+    if (acao === 'salvar_todas' && Array.isArray(tarefas)) {
+      const updatedMap = new Map<number, any>();
+      tarefas.forEach((t: any) => {
+        if (t.id) updatedMap.set(Number(t.id), t);
+      });
+      rawRows.forEach((row: any, idx: number) => {
+        const rowId = idx + 1;
+        const up = updatedMap.get(rowId);
+        if (up) {
+          if (up.dataInicio) row['DATA_INICIO'] = up.dataInicio;
+          if (up.dataFim) row['DATA_FIM'] = up.dataFim;
+          if (up.equipe) row['EQUIPE_RESPONSAVEL'] = up.equipe;
+          if (up.duration) row['RITMO_DIAS_POR_LOCAL'] = String(up.duration);
+          if (up.pav) row['LOCAL_PAVIMENTO'] = up.pav;
+        }
+      });
+    } 
+    // 2. Ação: Atualizar uma única tarefa ou vagão com recálculo e efeito cascata opcional
+    else if (acao === 'atualizar_tarefa' && tarefa && tarefa.id) {
+      const targetIdx = Number(tarefa.id) - 1;
+      if (targetIdx >= 0 && targetIdx < rawRows.length) {
+        const row = rawRows[targetIdx];
+        const oldIni = parseDateRobust(row['DATA_INICIO']);
+        const oldFim = parseDateRobust(row['DATA_FIM']);
+        const oldDuration = parseInt(row['RITMO_DIAS_POR_LOCAL'] || '3', 10);
+
+        let newIni = tarefa.dataInicio ? parseDateRobust(tarefa.dataInicio) : oldIni;
+        const newDuration = tarefa.duration ? parseInt(String(tarefa.duration), 10) : oldDuration;
+
+        // Se a duração foi alterada ou se a dataFim fornecida não foi ajustada, recalcula a data de término
+        let newFim = tarefa.dataFim ? parseDateRobust(tarefa.dataFim) : null;
+        if (newIni && newDuration > 0) {
+          const autoFim = calculateWorkingEndDate(newIni, newDuration);
+          // Se não veio dataFim ou se veio a data antiga mas a duração mudou, prioriza a data calculada pela nova duração
+          if (!newFim || (oldFim && newFim.getTime() === oldFim.getTime() && newDuration !== oldDuration)) {
+            newFim = autoFim;
+          }
+        }
+
+        if (newIni) row['DATA_INICIO'] = formatDateBR(newIni);
+        if (newFim) row['DATA_FIM'] = formatDateBR(newFim);
+        if (tarefa.equipe) row['EQUIPE_RESPONSAVEL'] = tarefa.equipe;
+        row['RITMO_DIAS_POR_LOCAL'] = String(newDuration);
+        if (tarefa.pav) row['LOCAL_PAVIMENTO'] = tarefa.pav;
+
+        // Efeito Cascata / Propagação de Precedências:
+        // Padrão: empurrar sucessores automaticamente se a duração ou data fim aumentou/diminuiu
+        const shouldEmpurrar = empurrarSucessores !== undefined ? Boolean(empurrarSucessores) : (deslocarSucessores ?? true);
+        if (shouldEmpurrar && oldFim && newFim) {
+          const deltaDias = countWorkingDaysBetween(oldFim, newFim);
+          if (deltaDias !== 0) {
+            for (let i = targetIdx + 1; i < rawRows.length; i++) {
+              const sucIni = parseDateRobust(rawRows[i]['DATA_INICIO']);
+              const sucFim = parseDateRobust(rawRows[i]['DATA_FIM']);
+              if (sucIni && sucFim) {
+                rawRows[i]['DATA_INICIO'] = formatDateBR(addWorkingDays(sucIni, deltaDias));
+                rawRows[i]['DATA_FIM'] = formatDateBR(addWorkingDays(sucFim, deltaDias));
+              }
+            }
+          }
+        }
+      }
+    } 
+    // 3. Ação: Deslocar por N dias (respeitando folgas e sem empurrar tarefas quando dentro da folga)
+    else if (acao === 'deslocar') {
+      const numId = Number(id);
+      const numDias = Number(dias);
+      if (!isNaN(numId) && !isNaN(numDias) && numDias !== 0) {
+        const targetIdx = numId - 1;
+        if (targetIdx >= 0 && targetIdx < rawRows.length) {
+          const targetRow = rawRows[targetIdx];
+          const dIni = parseDateRobust(targetRow['DATA_INICIO']);
+          const dFim = parseDateRobust(targetRow['DATA_FIM']);
+          if (dIni && dFim) {
+            targetRow['DATA_INICIO'] = formatDateBR(addWorkingDays(dIni, numDias));
+            targetRow['DATA_FIM'] = formatDateBR(addWorkingDays(dFim, numDias));
+          }
+
+          // Se estiver atrasando (numDias > 0) E foi solicitado empurrar sucessores:
+          if (numDias > 0 && deslocarSucessores) {
+            for (let i = targetIdx + 1; i < rawRows.length; i++) {
+              const sIni = parseDateRobust(rawRows[i]['DATA_INICIO']);
+              const sFim = parseDateRobust(rawRows[i]['DATA_FIM']);
+              if (sIni && sFim) {
+                rawRows[i]['DATA_INICIO'] = formatDateBR(addWorkingDays(sIni, numDias));
+                rawRows[i]['DATA_FIM'] = formatDateBR(addWorkingDays(sFim, numDias));
+              }
+            }
+          }
+          // Se numDias < 0 (adiantando / aproveitando folga entre zonas),
+          // NENHUMA outra tarefa é deslocada! Apenas a tarefa alvo aproveita a folga existente!
+        }
+      }
+    }
+
+    // Regravar o CSV com formatação limpa e rigorosa
+    const headers = ['LOCAL_PAVIMENTO', 'SEQUENCIA', 'VAGAO', 'ATIVIDADE', 'EQUIPE_RESPONSAVEL', 'RITMO_DIAS_POR_LOCAL', 'DATA_INICIO', 'DATA_FIM'];
+    const lines = [headers.join(';')];
+    rawRows.forEach((r: any, idx: number) => {
+      const seq = r['SEQUENCIA'] || String(idx + 1);
+      const line = [
+        r['LOCAL_PAVIMENTO'] || '',
+        seq,
+        r['VAGAO'] || '',
+        r['ATIVIDADE'] || '',
+        r['EQUIPE_RESPONSAVEL'] || '',
+        r['RITMO_DIAS_POR_LOCAL'] || '3',
+        r['DATA_INICIO'] || '',
+        r['DATA_FIM'] || ''
+      ].join(';');
+      lines.push(line);
+    });
+
+    fs.writeFileSync(filePath, lines.join('\n') + '\n', 'utf-8');
+
+    // Executar análise de sobreposição e sincronização rápida em background
+    let relatorioSobreposicao = null;
+    try {
+      const possibleScriptPaths = [
+        path.resolve(process.cwd(), 'scripts', 'sincronizar_esteira_e_lob.py'),
+        path.resolve(process.cwd(), '..', 'scripts', 'sincronizar_esteira_e_lob.py')
+      ];
+      const scriptSync = possibleScriptPaths.find(p => fs.existsSync(p));
+      if (scriptSync) {
+        const rootDir = path.dirname(path.dirname(scriptSync));
+        const cmd = `python "${scriptSync}" --obra "${obra}" --analisar-sobreposicao ${permitirSobreposicao ? '--permitir-sobreposicao' : ''}`;
+        execSync(cmd, {
+          cwd: rootDir,
+          timeout: 8000,
+          encoding: 'utf-8'
+        });
+      }
+    } catch (scriptErr) {
+      console.warn('Aviso: Execução do script de sincronização:', scriptErr);
+    }
+
+    try {
+      const actualBasePath = path.dirname(path.dirname(filePath));
+      const sobreposicaoPath = path.join(actualBasePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'RELATORIO_SOBREPOSICAO_LOB.json');
+      if (fs.existsSync(sobreposicaoPath)) {
+        relatorioSobreposicao = JSON.parse(fs.readFileSync(sobreposicaoPath, 'utf-8'));
+      }
+    } catch (readErr) {
+      console.warn('Aviso ao carregar relatório de sobreposição:', readErr);
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Linha de Balanço salva e validada com sucesso no backend!',
+      totalTarefas: rawRows.length,
+      relatorioSobreposicao
+    });
+  } catch (error) {
+    console.error('Erro ao salvar cronograma:', error);
+    return NextResponse.json({
+      error: 'Erro ao salvar alterações no cronograma',
+      details: String(error)
     }, { status: 500 });
   }
 }
