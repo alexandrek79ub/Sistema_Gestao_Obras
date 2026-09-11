@@ -153,10 +153,12 @@ export default function LinhaDeBalanco() {
     return idx * rowHeight + rowHeight / 2;
   };
 
-  // Agrupamento para a visão de "Blocos por Lotes" (consolidado por vagão em cada setor)
+  // Agrupamento para a visão de "Blocos por Lotes"
+  // Consolida tarefas contíguas do mesmo vagão no setor (folga <= 2 dias de fim de semana).
+  // Tarefas com intervalo real de espera formam lotes distintos, preservando a diagonal ascendente Lean ↗.
   const lotesConsolidadosPorSetor = pavimentosOrdenados.map((pav, rowIdx) => {
-    const tarefasDoSetor = tarefas.filter(t => t.pav === pav);
-    const gruposMap = new Map<string, {
+    const tarefasDoSetor = [...tarefas.filter(t => t.pav === pav)].sort((a, b) => a.start - b.start);
+    const lotes: {
       id: string;
       pav: string;
       vagaoNome: string;
@@ -167,14 +169,21 @@ export default function LinhaDeBalanco() {
       dataInicio?: string;
       dataFim?: string;
       color: string;
-    }>();
+    }[] = [];
 
-    tarefasDoSetor.forEach(t => {
+    tarefasDoSetor.forEach((t, idx) => {
       const vNome = t.vagao || t.tipo;
       const tEnd = t.start + t.duration;
-      if (!gruposMap.has(vNome)) {
-        gruposMap.set(vNome, {
-          id: `${pav}-${vNome}-${t.start}`,
+      const ultimo = lotes[lotes.length - 1];
+
+      // Mescla apenas se for do mesmo vagão E for contíguo no tempo (gap <= 2 dias úteis/domingo)
+      if (ultimo && ultimo.vagaoNome === vNome && (t.start - ultimo.end <= 2)) {
+        ultimo.end = Math.max(ultimo.end, tEnd);
+        ultimo.duration = ultimo.end - ultimo.start;
+        if (t.dataFim) ultimo.dataFim = t.dataFim;
+      } else {
+        lotes.push({
+          id: `${pav}-${vNome}-${t.start}-${idx}`,
           pav,
           vagaoNome: vNome,
           equipe: t.equipe,
@@ -185,19 +194,13 @@ export default function LinhaDeBalanco() {
           dataFim: t.dataFim,
           color: t.color
         });
-      } else {
-        const g = gruposMap.get(vNome)!;
-        g.start = Math.min(g.start, t.start);
-        g.end = Math.max(g.end, tEnd);
-        g.duration = g.end - g.start;
-        if (t.dataFim) g.dataFim = t.dataFim;
       }
     });
 
     return {
       pav,
       rowIdx,
-      lotes: Array.from(gruposMap.values())
+      lotes
     };
   });
 
@@ -365,7 +368,7 @@ export default function LinhaDeBalanco() {
             {/* COLUNA ESQUERDA: EIXO VERTICAL Y COM OS SETORES FÍSICOS DA OBRA */}
             <div className="w-60 shrink-0 border-r border-zinc-800 bg-zinc-950 sticky left-0 z-30 shadow-2xl flex flex-col justify-between">
               <div>
-                <div className="p-3 border-b border-zinc-800 text-[11px] uppercase tracking-wider font-bold text-zinc-400 flex items-center justify-between bg-zinc-900/60">
+                <div className="h-10 px-3 border-b border-zinc-800 text-[11px] uppercase tracking-wider font-bold text-zinc-400 flex items-center justify-between bg-zinc-900/60">
                   <span>Setores Físicos</span>
                   <span className="text-[10px] text-zinc-500 font-mono">Pavimento (Y)</span>
                 </div>
@@ -389,45 +392,58 @@ export default function LinhaDeBalanco() {
                   </div>
                 ))}
               </div>
-              <div className="p-3 border-t border-zinc-800 text-[11px] font-mono text-zinc-400 bg-zinc-950 flex items-center justify-between">
+              <div className="h-10 px-3 border-t border-zinc-800 text-[11px] font-mono text-zinc-400 bg-zinc-950 flex items-center justify-between">
                 <span>Eixo Y: Setor ↗</span>
                 <span className="text-[10px] text-zinc-600">4 Zonas</span>
               </div>
             </div>
 
             {/* ÁREA GRÁFICA: SVG COM AS LINHAS INCLINADAS DE BALANÇO */}
-            <div className="flex-1 relative overflow-hidden" style={{ width: `${chartWidth}px`, height: `${chartHeight + 48}px` }}>
-              {/* GRADE DE FUNDO: LINHAS HORIZONTAIS DE CADA PAVIMENTO */}
-              <div className="absolute inset-0 pointer-events-none" style={{ height: `${chartHeight}px` }}>
-                {pavimentosOrdenados.map((pav, idx) => (
-                  <div 
-                    key={pav} 
-                    style={{ height: `${rowHeight}px` }}
-                    className={`w-full border-b border-zinc-800/60 transition-colors ${
-                      idx % 2 === 0 ? 'bg-zinc-900/15' : 'bg-transparent'
-                    }`}
-                  ></div>
-                ))}
-              </div>
-
-              {/* GRADE DE FUNDO: LINHAS VERTICAIS SEMANAIS */}
-              <div className="absolute inset-0 pointer-events-none flex" style={{ height: `${chartHeight}px` }}>
+            <div className="flex-1 relative overflow-hidden" style={{ width: `${chartWidth}px` }}>
+              {/* CABEÇALHO SUPERIOR TEMPORAL (ALINHADO COM O CABEÇALHO DOS SETORES) */}
+              <div 
+                className="h-10 border-b border-zinc-800 bg-zinc-900/60 flex items-center sticky top-0 z-20"
+                style={{ width: `${chartWidth}px` }}
+              >
                 {Array.from({ length: totalSemanas }).map((_, i) => (
                   <div 
                     key={i} 
-                    className="flex-1 border-r border-dashed border-zinc-800/40 h-full relative"
+                    className="flex-1 text-center text-[10px] font-mono text-zinc-400 border-r border-dashed border-zinc-800/60"
                   >
-                    <span className="absolute top-1 left-1.5 text-[9px] font-mono text-zinc-600 select-none">
-                      S{i + 1}
-                    </span>
+                    S{i + 1}
                   </div>
                 ))}
               </div>
 
-              {/* CAMADA VETORIAL SVG COM AS LINHAS DE BALANÇO (LOB REAL ↗) */}
-              {estiloLOB === 'linhas' ? (
-                <svg 
-                  className="absolute inset-0 w-full"
+              {/* CORPO DO GRÁFICO (LINHAS / BLOCOS) */}
+              <div className="relative" style={{ width: `${chartWidth}px`, height: `${chartHeight}px` }}>
+                {/* GRADE DE FUNDO: LINHAS HORIZONTAIS DE CADA PAVIMENTO */}
+                <div className="absolute inset-0 pointer-events-none" style={{ height: `${chartHeight}px` }}>
+                  {pavimentosOrdenados.map((pav, idx) => (
+                    <div 
+                      key={pav} 
+                      style={{ height: `${rowHeight}px` }}
+                      className={`w-full border-b border-zinc-800/60 transition-colors ${
+                        idx % 2 === 0 ? 'bg-zinc-900/15' : 'bg-transparent'
+                      }`}
+                    ></div>
+                  ))}
+                </div>
+
+                {/* GRADE DE FUNDO: LINHAS VERTICAIS SEMANAIS */}
+                <div className="absolute inset-0 pointer-events-none flex" style={{ height: `${chartHeight}px` }}>
+                  {Array.from({ length: totalSemanas }).map((_, i) => (
+                    <div 
+                      key={i} 
+                      className="flex-1 border-r border-dashed border-zinc-800/40 h-full relative"
+                    ></div>
+                  ))}
+                </div>
+
+                {/* CAMADA VETORIAL SVG COM AS LINHAS DE BALANÇO (LOB REAL ↗) */}
+                {estiloLOB === 'linhas' ? (
+                  <svg 
+                    className="absolute inset-0 w-full"
                   style={{ height: `${chartHeight}px` }}
                 >
                   <defs>
@@ -746,7 +762,9 @@ export default function LinhaDeBalanco() {
                         {lotes.map((lote) => {
                           const xIni = getX(lote.start);
                           const xFim = getX(lote.end);
-                          const width = Math.max(38, xFim - xIni);
+                          const rawWidth = Math.max(0, xFim - xIni);
+                          // Garante respiro de 2px entre lotes sequenciais contíguos sem colisão visual
+                          const width = Math.max(22, rawWidth > 4 ? rawWidth - 2 : rawWidth);
                           const cor = getCorVagao(lote.vagaoNome);
                           const prefix = (lote.vagaoNome || '').slice(0, 2);
 
@@ -796,10 +814,11 @@ export default function LinhaDeBalanco() {
                   })}
                 </div>
               )}
+              </div>
 
               {/* RÉGUA DO EIXO TEMPO (EIXO X INFERIOR) */}
               <div 
-                className="absolute bottom-0 left-0 right-0 h-10 border-t-2 border-zinc-700 bg-zinc-950 flex items-center z-20 shadow-lg"
+                className="h-10 border-t-2 border-zinc-700 bg-zinc-950 flex items-center z-20 shadow-lg"
                 style={{ width: `${chartWidth}px` }}
               >
                 {Array.from({ length: totalColunas }).map((_, i) => (
