@@ -63,43 +63,6 @@ interface ConflitoVisual {
   descricao: string;
 }
 
-interface DragState {
-  active: boolean;
-  taskId: number | null;
-  taskName: string;
-  pav: string;
-  equipe: string;
-  origStartDay: number;
-  origDuration: number;
-  origIniDate: string;
-  origFimDate: string;
-  startX: number;
-  startY: number;
-  currentX: number;
-  currentY: number;
-  deltaDays: number;
-  projectedIniDate: string;
-  projectedFimDate: string;
-}
-
-const initialDragState: DragState = {
-  active: false,
-  taskId: null,
-  taskName: '',
-  pav: '',
-  equipe: '',
-  origStartDay: 0,
-  origDuration: 3,
-  origIniDate: '',
-  origFimDate: '',
-  startX: 0,
-  startY: 0,
-  currentX: 0,
-  currentY: 0,
-  deltaDays: 0,
-  projectedIniDate: '',
-  projectedFimDate: ''
-};
 
 // Paleta de cores vibrantes, contrastantes e oficiais para Linhas de Balanço Lean
 const COR_HEX_VAGOES: Record<string, { stroke: string; fill: string; badge: string; bgCard: string; border: string }> = {
@@ -439,8 +402,6 @@ export default function LinhaDeBalanco() {
     }
   };
 
-  // Estado de Arraste Interativo Direto (Drag & Drop)
-  const [dragState, setDragState] = useState<DragState>(initialDragState);
 
   // Detecção Dinâmica de Sobreposição de Equipes (Dupla Frente) e Conflitos Espaciais
   const conflitosVisuais = React.useMemo(() => {
@@ -593,251 +554,6 @@ export default function LinhaDeBalanco() {
     return idx * rowHeight + rowHeight / 2;
   };
 
-  // Referência de Arraste Global para precisão máxima sem perda de ponteiro
-  const dragRef = useRef<{
-    active: boolean;
-    taskId: number | null;
-    taskName: string;
-    pav: string;
-    equipe: string;
-    origStartDay: number;
-    origDuration: number;
-    origIniDate: string;
-    origFimDate: string;
-    startX: number;
-    startY: number;
-    currentX: number;
-    currentY: number;
-    deltaDays: number;
-    hasMoved: boolean;
-  }>({
-    active: false,
-    taskId: null,
-    taskName: '',
-    pav: '',
-    equipe: '',
-    origStartDay: 0,
-    origDuration: 3,
-    origIniDate: '',
-    origFimDate: '',
-    startX: 0,
-    startY: 0,
-    currentX: 0,
-    currentY: 0,
-    deltaDays: 0,
-    hasMoved: false
-  });
-  const justFinishedDragRef = useRef(false);
-
-  // Manipulador de Arraste Global (Pointer Events com Atualização Otimista Imediata)
-  const handlePointerDown = (
-    e: React.PointerEvent,
-    taskInfo: { id: number; pav: string; tipo: string; vagao?: string; equipe: string; start: number; duration: number; dataInicio?: string; dataFim?: string }
-  ) => {
-    if (e.button !== 0) return;
-    // Não executa e.preventDefault() aqui para permitir que o evento de clique selecione o vagão!
-    e.stopPropagation();
-
-    const ini = taskInfo.dataInicio || '';
-    const fim = taskInfo.dataFim || '';
-
-    dragRef.current = {
-      active: true,
-      taskId: taskInfo.id,
-      taskName: taskInfo.vagao || taskInfo.tipo,
-      pav: taskInfo.pav,
-      equipe: taskInfo.equipe,
-      origStartDay: taskInfo.start,
-      origDuration: taskInfo.duration,
-      origIniDate: ini,
-      origFimDate: fim,
-      startX: e.clientX,
-      startY: e.clientY,
-      currentX: e.clientX,
-      currentY: e.clientY,
-      deltaDays: 0,
-      hasMoved: false
-    };
-
-    setDragState({
-      active: true,
-      taskId: taskInfo.id,
-      taskName: taskInfo.vagao || taskInfo.tipo,
-      pav: taskInfo.pav,
-      equipe: taskInfo.equipe,
-      origStartDay: taskInfo.start,
-      origDuration: taskInfo.duration,
-      origIniDate: ini,
-      origFimDate: fim,
-      startX: e.clientX,
-      startY: e.clientY,
-      currentX: e.clientX,
-      currentY: e.clientY,
-      deltaDays: 0,
-      projectedIniDate: ini,
-      projectedFimDate: fim
-    });
-
-    const onGlobalPointerMove = (ev: PointerEvent) => {
-      if (!dragRef.current.active) return;
-      const dx = ev.clientX - dragRef.current.startX;
-      const dy = ev.clientY - dragRef.current.startY;
-      if (Math.hypot(dx, dy) > 5) {
-        dragRef.current.hasMoved = true;
-        ev.preventDefault();
-      }
-      const pxPerDay = chartWidth / totalDias;
-      const deltaDays = Math.round(dx / pxPerDay);
-
-      dragRef.current.currentX = ev.clientX;
-      dragRef.current.currentY = ev.clientY;
-      dragRef.current.deltaDays = deltaDays;
-
-      let projIni = dragRef.current.origIniDate;
-      let projFim = dragRef.current.origFimDate;
-
-      if (dragRef.current.origIniDate) {
-        const dIni = parseDateBR(dragRef.current.origIniDate);
-        if (dIni) {
-          const shiftedIni = addWorkingDays(dIni, deltaDays);
-          projIni = formatDateBR(shiftedIni);
-          projFim = calcularDataFim(projIni, dragRef.current.origDuration);
-        }
-      }
-
-      setDragState(prev => ({
-        ...prev,
-        currentX: ev.clientX,
-        currentY: ev.clientY,
-        deltaDays,
-        projectedIniDate: projIni,
-        projectedFimDate: projFim
-      }));
-    };
-
-    const onGlobalPointerUp = async (ev: PointerEvent) => {
-      window.removeEventListener('pointermove', onGlobalPointerMove);
-      window.removeEventListener('pointerup', onGlobalPointerUp);
-      window.removeEventListener('pointercancel', onGlobalPointerUp);
-
-      if (!dragRef.current.active) return;
-
-      const dx = ev.clientX - dragRef.current.startX;
-      const pxPerDay = chartWidth / totalDias;
-      const finalDelta = Math.round(dx / pxPerDay);
-      const taskId = dragRef.current.taskId;
-      const taskName = dragRef.current.taskName;
-      const hasMoved = dragRef.current.hasMoved;
-
-      dragRef.current.active = false;
-      setDragState(initialDragState);
-
-      if (hasMoved) {
-        justFinishedDragRef.current = true;
-        setTimeout(() => {
-          justFinishedDragRef.current = false;
-        }, 300);
-      }
-
-      // Se moveu pelo menos 1 dia útil:
-      if (Math.abs(finalDelta) >= 1 && taskId) {
-        // 1. ATUALIZAÇÃO OTIMISTA DA TAREFA ALVO:
-        setTarefas(prevTarefas => {
-          return prevTarefas.map(t => {
-            if (t.id === taskId) {
-              const dIni = parseDateBR(t.dataInicio || '');
-              const newStartDay = Math.max(1, t.start + finalDelta);
-              if (dIni) {
-                const newIniDate = formatDateBR(addWorkingDays(dIni, finalDelta));
-                const newFimDate = calcularDataFim(newIniDate, t.duration);
-                return {
-                  ...t,
-                  start: newStartDay,
-                  dataInicio: newIniDate,
-                  dataFim: newFimDate
-                };
-              }
-              return { ...t, start: newStartDay };
-            }
-            return t;
-          });
-        });
-
-        // Atualiza também os pontos de vagoesFluxo em memória para o ponto alvo
-        setVagoesFluxo(prevVagoes => {
-          return prevVagoes.map(v => {
-            let mod = false;
-            const novosPontos = v.pontos.map(p => {
-              if (p.id === taskId) {
-                mod = true;
-                const dIni = parseDateBR(p.dataInicio || '');
-                const newStart = Math.max(1, p.start + finalDelta);
-                if (dIni) {
-                  const newIniDate = formatDateBR(addWorkingDays(dIni, finalDelta));
-                  const newFimDate = calcularDataFim(newIniDate, p.duration);
-                  return {
-                    ...p,
-                    start: newStart,
-                    dataInicio: newIniDate,
-                    dataFim: newFimDate
-                  };
-                }
-                return { ...p, start: newStart };
-              }
-              return p;
-            });
-
-            if (mod) {
-              const sMin = Math.min(...novosPontos.map(p => p.start));
-              const eMax = Math.max(...novosPontos.map(p => p.start + p.duration));
-              return { ...v, pontos: novosPontos, startMin: sMin, endMax: eMax };
-            }
-            return v;
-          });
-        });
-
-        // 2. Notificação e Envio ao Backend em Background
-        setToastMsg({
-          tipo: 'info',
-          texto: `💾 Gravando no CSV: '${taskName}' (${finalDelta > 0 ? '+' : ''}${finalDelta}d)...`
-        });
-
-        try {
-          const res = await fetch('/api/cronograma', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              obra: obraAtiva,
-              acao: 'deslocar',
-              id: taskId,
-              dias: finalDelta,
-              deslocarSucessores: finalDelta > 0,
-              deslocarPredecessores: false
-            })
-          });
-          const data = await res.json();
-          if (res.ok && data.success) {
-            setToastMsg({
-              tipo: 'success',
-              texto: `✅ Deslocamento fixado no CSV! (${finalDelta > 0 ? '+' : ''}${finalDelta}d${finalDelta > 0 ? ' com cascata' : ' na folga'})`
-            });
-            // Sincronização SILENCIOSA (sem fechar o gráfico nem dar spinner na tela inteira)
-            carregarDadosCronograma(true);
-          } else {
-            setToastMsg({ tipo: 'error', texto: data.error || 'Erro ao salvar deslocamento no CSV' });
-            carregarDadosCronograma(false);
-          }
-        } catch (err) {
-          setToastMsg({ tipo: 'error', texto: 'Falha de comunicação com o servidor ao salvar no CSV' });
-          carregarDadosCronograma(false);
-        }
-      }
-    };
-
-    window.addEventListener('pointermove', onGlobalPointerMove);
-    window.addEventListener('pointerup', onGlobalPointerUp);
-    window.addEventListener('pointercancel', onGlobalPointerUp);
-  };
 
   // Agrupamento para a visão de "Blocos por Lotes"
   // Consolida tarefas contíguas do mesmo vagão no setor (folga <= 2 dias de fim de semana).
@@ -1308,29 +1024,11 @@ export default function LinhaDeBalanco() {
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
+                          className="cursor-pointer transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.4 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => {
-                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
-                            setVagaoSelecionado(vagao);
-                          }}
-                          onPointerDown={(e) => {
-                            if (ponto0) {
-                              handlePointerDown(e, {
-                                id: ponto0.id,
-                                pav: ponto0.pav,
-                                tipo: vagao.nome,
-                                vagao: vagao.nome,
-                                equipe: vagao.equipe,
-                                start: vagao.startMin,
-                                duration: vagao.endMax - vagao.startMin,
-                                dataInicio: ponto0.dataInicio,
-                                dataFim: ponto0.dataFim
-                              });
-                            }
-                          }}
+                          onClick={() => setVagaoSelecionado(vagao)}
                         >
                           <rect 
                             x={xIni} 
@@ -1402,29 +1100,11 @@ export default function LinhaDeBalanco() {
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
+                          className="cursor-pointer transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.4 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => {
-                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
-                            setVagaoSelecionado(vagao);
-                          }}
-                          onPointerDown={(e) => {
-                            if (pontoZ) {
-                              handlePointerDown(e, {
-                                id: pontoZ.id,
-                                pav: z.pav,
-                                tipo: vagao.nome,
-                                vagao: vagao.nome,
-                                equipe: vagao.equipe,
-                                start: z.start,
-                                duration: z.duration,
-                                dataInicio: z.dataInicio,
-                                dataFim: z.dataFim
-                              });
-                            }
-                          }}
+                          onClick={() => setVagaoSelecionado(vagao)}
                         >
                           <rect 
                             x={xIni} 
@@ -1490,29 +1170,11 @@ export default function LinhaDeBalanco() {
                       return (
                         <g 
                           key={vagao.id}
-                          className="cursor-grab active:cursor-grabbing transition-opacity duration-200"
+                          className="cursor-pointer transition-opacity duration-200"
                           opacity={vagaoHover && !isHovered ? 0.35 : 1}
                           onMouseEnter={() => setVagaoHover(vagao.id)}
                           onMouseLeave={() => setVagaoHover(null)}
-                          onClick={() => {
-                            if (justFinishedDragRef.current || dragRef.current.hasMoved) return;
-                            setVagaoSelecionado(vagao);
-                          }}
-                          onPointerDown={(e) => {
-                            if (primeiroP) {
-                              handlePointerDown(e, {
-                                id: primeiroP.id,
-                                pav: primeiroP.pav,
-                                tipo: vagao.nome,
-                                vagao: vagao.nome,
-                                equipe: vagao.equipe,
-                                start: vagao.startMin,
-                                duration: vagao.endMax - vagao.startMin,
-                                dataInicio: primeiroP.dataInicio,
-                                dataFim: primeiroP.dataFim
-                              });
-                            }
-                          }}
+                          onClick={() => setVagaoSelecionado(vagao)}
                         >
                           {/* FAIXA INCLINADA TRANSLÚCIDA (RIBBON ↗) */}
                           <polygon 
@@ -1567,22 +1229,10 @@ export default function LinhaDeBalanco() {
                                 fill="#ffffff" 
                                 stroke={temConflito3 ? "#ef4444" : cor.stroke} 
                                 strokeWidth={2.5} 
-                                className="cursor-grab active:cursor-grabbing hover:scale-125 transition-transform"
-                                onPointerDown={(e) => {
+                                className="cursor-pointer hover:scale-125 transition-transform"
+                                onClick={(e) => {
                                   e.stopPropagation();
-                                  if (pontoZ && z) {
-                                    handlePointerDown(e, {
-                                      id: pontoZ.id,
-                                      pav: z.pav,
-                                      tipo: vagao.nome,
-                                      vagao: vagao.nome,
-                                      equipe: vagao.equipe,
-                                      start: z.start,
-                                      duration: z.duration,
-                                      dataInicio: z.dataInicio,
-                                      dataFim: z.dataFim
-                                    });
-                                  }
+                                  setVagaoSelecionado(vagao);
                                 }}
                               />
                             );
@@ -1617,23 +1267,7 @@ export default function LinhaDeBalanco() {
                     return null;
                   })}
 
-                  {/* PREVIEW DO ARRASTE GHOST (SE ATIVO) */}
-                  {dragState.active && (
-                    <g className="pointer-events-none">
-                      <rect
-                        x={getX(dragState.origStartDay + dragState.deltaDays)}
-                        y={getYCenter(dragState.pav) - 22}
-                        width={Math.max(40, getX(dragState.origStartDay + dragState.deltaDays + dragState.origDuration) - getX(dragState.origStartDay + dragState.deltaDays))}
-                        height={44}
-                        rx={8}
-                        fill="rgba(59, 130, 246, 0.45)"
-                        stroke="#60a5fa"
-                        strokeWidth={3}
-                        strokeDasharray="6 3"
-                        className="animate-pulse"
-                      />
-                    </g>
-                  )}
+
                 </svg>
               ) : (
                 /* MODO BLOCOS: VISÃO POR LOTES CONSOLIDADOS POR SETOR COM TEXTO LEGÍVEL */
@@ -1654,29 +1288,12 @@ export default function LinhaDeBalanco() {
                           const cor = getCorVagao(lote.vagaoNome);
                           const prefix = (lote.vagaoNome || '').slice(0, 2);
                           const temConflito = conflitosVisuais.some(c => c.tarefasIds.includes(lote.tarefaId));
-                          const isDraggingThis = dragState.active && dragState.taskId === lote.tarefaId;
 
                           return (
                             <div
                               key={lote.id}
-                              onPointerDown={(e) => {
-                                handlePointerDown(e, {
-                                  id: lote.tarefaId,
-                                  pav: lote.pav,
-                                  tipo: lote.vagaoNome,
-                                  vagao: lote.vagaoNome,
-                                  equipe: lote.equipe,
-                                  start: lote.start,
-                                  duration: lote.duration,
-                                  dataInicio: lote.dataInicio,
-                                  dataFim: lote.dataFim
-                                });
-                              }}
                               onClick={(e) => {
-                                if (justFinishedDragRef.current || dragRef.current.hasMoved) {
-                                  e.stopPropagation();
-                                  return;
-                                }
+                                e.stopPropagation();
                                 const vEncontrado = vagoesFluxo.find(v => v.nome === lote.vagaoNome);
                                 if (vEncontrado) setVagaoSelecionado(vEncontrado);
                               }}
@@ -1684,13 +1301,11 @@ export default function LinhaDeBalanco() {
                                 left: `${xIni}px`, 
                                 width: `${width}px`, 
                                 height: `${rowHeight - 28}px`,
-                                transform: isDraggingThis ? `translateX(${dragState.currentX - dragState.startX}px)` : undefined,
-                                opacity: isDraggingThis ? 0.8 : 1
                               }}
                               className={`absolute ${cor.badge} border ${
                                 temConflito ? 'border-rose-400 ring-2 ring-rose-500 animate-pulse' : 'border-white/20'
-                              } rounded-lg shadow-md flex flex-col items-center justify-center text-white px-1.5 cursor-grab active:cursor-grabbing hover:ring-2 hover:ring-white hover:scale-[1.02] transition-transform z-10 select-none`}
-                              title={`${lote.vagaoNome} (${lote.dataInicio} a ${lote.dataFim}) - ${lote.duration} dias. Arraste horizontalmente para deslocar!`}
+                              } rounded-lg shadow-md flex flex-col items-center justify-center text-white px-1.5 cursor-pointer hover:ring-2 hover:ring-white hover:scale-[1.02] transition-transform z-10 select-none`}
+                              title={`${lote.vagaoNome} (${lote.dataInicio} a ${lote.dataFim}) - ${lote.duration} dias. Clique para ver detalhes.`}
                             >
                               {width >= 90 ? (
                                 <>
@@ -2268,47 +1883,6 @@ export default function LinhaDeBalanco() {
         </div>
       )}
 
-      {/* TOOLTIP FLUTUANTE DE ARRASTE INTERATIVO (PREVIEW DINÂMICO) */}
-      {dragState.active && (
-        <div 
-          style={{ 
-            left: `${dragState.currentX + 16}px`, 
-            top: `${dragState.currentY + 16}px` 
-          }}
-          className="fixed z-50 pointer-events-none px-3.5 py-2.5 bg-zinc-950/95 backdrop-blur-md border border-blue-500/80 rounded-xl shadow-2xl text-xs text-white flex flex-col gap-1 min-w-[230px]"
-        >
-          <div className="flex items-center justify-between font-bold border-b border-zinc-800 pb-1">
-            <span className="text-blue-400 truncate max-w-[150px]">{dragState.taskName}</span>
-            <span className={`font-mono px-1.5 py-0.5 rounded text-[10px] font-bold ${
-              dragState.deltaDays > 0 
-                ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30' 
-                : dragState.deltaDays < 0 
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' 
-                : 'bg-zinc-800 text-zinc-300'
-            }`}>
-              {dragState.deltaDays > 0 ? `+${dragState.deltaDays} dias` : dragState.deltaDays < 0 ? `${dragState.deltaDays} dias` : '0 dias'}
-            </span>
-          </div>
-          <div className="flex justify-between text-[11px] text-zinc-400">
-            <span>Setor: <strong className="text-zinc-200">{dragState.pav}</strong></span>
-            <span>Equipe: <strong className="text-zinc-200">{dragState.equipe}</strong></span>
-          </div>
-          <div className="flex justify-between text-[11px] font-mono text-zinc-300 pt-0.5">
-            <span>{dragState.projectedIniDate}</span>
-            <span className="text-blue-400">➔</span>
-            <span>{dragState.projectedFimDate}</span>
-          </div>
-          <div className="text-[10px] font-medium flex items-center gap-1 pt-1 border-t border-zinc-800/60">
-            {dragState.deltaDays < 0 ? (
-              <span className="text-emerald-400">✅ Reduzindo folga na esteira (aproveitando ritmo sem cascata)</span>
-            ) : dragState.deltaDays > 0 ? (
-              <span className="text-amber-400">➡️ Movendo atividade para a frente</span>
-            ) : (
-              <span className="text-zinc-400">Arraste para ajustar na folga</span>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* NOTIFICAÇÃO TOAST FLUTUANTE */}
       {toastMsg && (
