@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import LinhaDeBalanco from '@/components/LinhaDeBalanco';
+import TremDeProducaoLean from '@/components/TremDeProducaoLean';
 import { useObra } from '@/context/ObraContext';
 import { 
   Calendar, 
@@ -18,7 +19,9 @@ import {
   PackageCheck,
   Filter,
   Info,
-  X
+  X,
+  Train,
+  Table as TableIcon
 } from 'lucide-react';
 
 interface AtividadeCPM {
@@ -75,6 +78,7 @@ export default function CronogramaPage() {
   const [histogramaMensal, setHistogramaMensal] = useState<HistogramaItem[]>([]);
   const [mostrarHistogramaModal, setMostrarHistogramaModal] = useState(false);
   const [filtroSemana, setFiltroSemana] = useState<string>('Semana 01');
+  const [modoCurtoPrazo, setModoCurtoPrazo] = useState<'trem' | 'tabela'>('trem');
   const [metaGlobal, setMetaGlobal] = useState<any>({
     diasCorridos: 180,
     semanas: 26,
@@ -248,28 +252,81 @@ export default function CronogramaPage() {
 
       {/* ABA CURTO PRAZO: LOTES E RECURSOS PREVISTOS (O PREVISTO QUE ENTRA NO CAMPO) */}
       {activeTab === 'curto_prazo' && (
-        <div className="space-y-4">
-          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div className="space-y-6">
+          {/* BARRA SUPERIOR DE MODO (TREM vs TABELA) & HISTOGRAMA */}
+          <div className="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-lg backdrop-blur-sm">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500/20 to-emerald-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                <Train className="w-5 h-5" />
+              </div>
               <div>
-                <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
-                  Programação de Curto Prazo — Lotes, Equipes e Metas Previstas
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  Programação de Curto Prazo (Linha de Produção Lean)
+                  <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded-full text-[10px] font-bold">
+                    TAKT TIME 3 DIAS
+                  </span>
                 </h3>
-                <p className="text-sm text-zinc-400 mt-0.5">
-                  Estes são os lotes calculados pelo sistema que montam as frentes de trabalho. O RDO aponta o real contra este plano.
+                <p className="text-xs text-zinc-400">
+                  Visualização da esteira contínua em formato vagão ou tabela analítica detalhada de lotes.
                 </p>
               </div>
+            </div>
 
-              {/* CONTROLES: FILTRO POR SEMANA & BOTÃO HISTOGRAMA */}
-              <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              {/* SELETOR DE MODO: TREM vs TABELA */}
+              <div className="bg-zinc-950 p-1 rounded-xl border border-zinc-800 flex items-center">
                 <button
-                  onClick={() => setMostrarHistogramaModal(true)}
-                  className="inline-flex items-center gap-1.5 bg-blue-950/60 hover:bg-blue-900/60 text-blue-300 border border-blue-800/60 px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors"
+                  onClick={() => setModoCurtoPrazo('trem')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                    modoCurtoPrazo === 'trem'
+                      ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/20'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
                 >
-                  <Users className="w-3.5 h-3.5" />
-                  Ver Histograma Mensal (EAP 1.0)
+                  <Train className="w-4 h-4" />
+                  Trem de Produção (Vagões)
                 </button>
+                <button
+                  onClick={() => setModoCurtoPrazo('tabela')}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 ${
+                    modoCurtoPrazo === 'tabela'
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  <TableIcon className="w-4 h-4" />
+                  Tabela Analítica de Lotes
+                </button>
+              </div>
+
+              <button
+                onClick={() => setMostrarHistogramaModal(true)}
+                className="inline-flex items-center gap-1.5 bg-blue-950/60 hover:bg-blue-900/60 text-blue-300 border border-blue-800/60 px-3.5 py-2 rounded-xl text-xs font-semibold transition-colors"
+              >
+                <Users className="w-4 h-4" />
+                Histograma EAP 1.0
+              </button>
+            </div>
+          </div>
+
+          {/* MODO 1: TREM DE PRODUÇÃO LEAN (VAGÕES CONTÍNUOS COM DATAS NO RODAPÉ) */}
+          {modoCurtoPrazo === 'trem' && (
+            <TremDeProducaoLean lotes={lotes} />
+          )}
+
+          {/* MODO 2: TABELA ANALÍTICA DE LOTES */}
+          {modoCurtoPrazo === 'tabela' && (
+            <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                <div>
+                  <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                    Detalhamento dos Lotes e Recursos Previstos
+                  </h3>
+                  <p className="text-sm text-zinc-400 mt-0.5">
+                    Estes são os lotes calculados pelo sistema que montam as frentes de trabalho. O RDO aponta o real contra este plano.
+                  </p>
+                </div>
 
                 <div className="flex items-center gap-2 bg-zinc-950 px-3 py-1.5 rounded-lg border border-zinc-800">
                   <Filter className="w-4 h-4 text-zinc-400" />
@@ -286,7 +343,6 @@ export default function CronogramaPage() {
                   </select>
                 </div>
               </div>
-            </div>
 
             {/* DIAGNÓSTICO DE BALANCEAMENTO & NIVELAMENTO DE EFETIVO (LEAN CONSTRUCTION) */}
             <div className="bg-gradient-to-r from-blue-950/40 via-zinc-900 to-emerald-950/30 border border-blue-800/40 rounded-xl p-4 mb-6">
@@ -464,6 +520,7 @@ export default function CronogramaPage() {
               </table>
             </div>
           </div>
+          )}
 
           {/* MODAL / PAINEL DO HISTOGRAMA MENSAL DE MÃO DE OBRA (EAP 1.0 / RH) */}
           {mostrarHistogramaModal && (

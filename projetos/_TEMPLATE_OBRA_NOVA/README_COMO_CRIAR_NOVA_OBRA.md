@@ -45,11 +45,15 @@ python scripts/precificar_obra.py --obra OBRA_NOVA
 # 2. Gerar o Plano de Contas e Centros de Custo
 python scripts/gerar_plano_centros_custo.py --obra OBRA_NOVA
 
-# 3. Gerar o Cronograma Físico-Financeiro, Baseline, Excel, MS Project XML e Dashboard HTML
-python scripts/gerar_cronograma.py --obra OBRA_NOVA
-
-# 3.1 Gerar a Programação de Curto Prazo em Lotes Takt (Esteira Lean em Zonas Equalizadas)
+# 3. Modelar o Curto Prazo em Esteira Lean (Takt Time Planning em Zonas Equalizadas)
+# Define lotes de 3 dias, 10 equipes especializadas e bancada de pré-fabricação contra ociosidade:
 python scripts/gerar_programacao_curto_prazo_takt.py --obra OBRA_NOVA
+
+# 3.1 Calibrar a Linha de Balanço e CPM com base na Esteira Lean
+# (Ajustar LINHA_DE_BALANCO.csv e dados_cpm.json com a cobertura posicionada logo após a desforma)
+
+# 3.2 Gerar o Cronograma Físico-Financeiro, Baseline 01, Excel Executivo, MS Project XML e Dashboard HTML
+python scripts/gerar_cronograma.py --obra OBRA_NOVA
 
 # 4. Gerar o Pacote Completo de Suprimentos (RCs, REs, Matriz de Subcontratos)
 python scripts/gerar_cronograma_suprimentos.py --obra OBRA_NOVA

@@ -30,24 +30,57 @@ Analisar cronogramas, identificar dependências lógicas entre serviços, medir 
 - **Duração das atividades:** Baseada no RUP real de `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (não estimativa sentida).
 - **Reprogramação formal:** Delegada para `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md`.
 
-### 1.3 Gestão em 3 Níveis & Esteira Lean de Curto Prazo (Takt Time Planning)
+### 1.3 Metodologia Sistêmica Obrigatória: Inversão Lean (Esteira Takt ➔ Linha de Balanço ➔ CPM)
 
-O ecossistema opera o cronograma em **3 níveis de maturidade 5D**:
-1. **Longo Prazo (Linha de Balanço - LOB & CPM):**
-   - Define o prazo global contratual (ex: 180 dias / 26 semanas), o caminho crítico determinístico e os ritmos de avanço vertical/setorial em fluxo ascendente.
-2. **Médio Prazo (Lookahead 4 a 6 Semanas):**
-   - Identificação e remoção ativa de restrições (projetos, compras, contratações de empreiteiros, liberações de FVS).
-3. **Curto Prazo (Plano Semanal / Lotes em Esteira Lean - WWP):**
-   - **Regra de Ouro da Esteira de Produção Construtiva:**
-     A mão de obra nunca deve ser alocada de forma caótica ou agrupada sem sequência temporal. Para evitar ociosidade e picos irreais, **toda obra deve ser dividida em 2 a 3 Etapas Construtivas (Zonas Takt) de volumes de serviço equalizados**.
-   - **Mecanismo da Linha de Montagem (Parade of Trades / Vagões Especializados):**
-     * Cada disciplina atua como um "vagão" que se desloca de zona em zona em ritmo fixo (Takt Time padrão = 3 dias úteis: Seg-Qua e Qui-Sáb).
-     * **Eliminação da Espera Tecnológica de Cura:** Enquanto a Zona 1 está concretando e cumprindo o período de cura (ganho de fck e resistência), as equipes especializadas de carpintaria e armação **NUNCA ficam ociosas**: elas avançam imediatamente para montar as fôrmas da Zona 2! Quando a Zona 2 está curando, a carpintaria avança para a Zona 3 ou retorna para montar vigas e pilares da Zona 1 que já desformaram.
-   - **Nivelamento Rigoroso de Recursos (Resource Leveling):**
-     * O efetivo real diário de campo deve ser rigorosamente constante ao longo de cada semana, calibrado com o teto mensal orçado no **Histograma de Mão de Obra (EAP 1.0 e RH)**.
-     * **É PROIBIDO** gerar cronogramas com anomalias de picos fictícios (ex: somar linhas de atividades independentes resultando em 36 operários simultâneos) ou vales de abandono (ex: 6 operários em 1 dia deixando os outros 5 dias úteis sem trabalho).
-   - **Padrão de Arquivo:** Todo cronograma de curto prazo deve ser gerado no arquivo `projetos/[OBRA]/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_[OBRA].csv` contendo:
-     `COD_LOTE`, `SEMANA`, `DIAS_SEMANA`, `ETAPA_ZONA`, `VAGAO_ESTEIRA`, `SERVICO_LOTE`, `META_FISICA`, `DURACAO_DIAS`, `EQUIPE_PREVISTA`, `HEADCOUNT_PREVISTO`, `EQUIPAMENTOS_PREVISTOS`, `MATERIAIS_UCC`, `RUP_META_HH_UNID`, `STATUS_EXECUCAO`, `RDO_VINCULADO`.
+Nas obras do ecossistema, **o cronograma mestre não nasce de um diagrama de barras teórico abstrato**. A engenharia de planejamento deve executar obrigatoriamente a seguinte sequência em 4 passos:
+
+```
+[Passo 1: Curto Prazo com Performance]
+Modelar Zonas Takt + Vagões Especializados + Bancada de Pré-Fabricação (Zero Ociosidade)
+                                      ↓
+[Passo 2: Calibração da Linha de Balanço (LOB)]
+Mapear os Setores Físicos herdando os ritmos da esteira (Cobertura logo pós-desforma)
+                                      ↓
+[Passo 3: Caminho Crítico Determinístico (CPM)]
+Processar via `calcular_cpm.py` fixando folgas, marcos e prazo contratual global
+                                      ↓
+[Passo 4: Geração Automatizada dos Artefatos]
+Executar `gerar_cronograma.py` gerando CSV, Excel Executivo, MS Project XML e Plotly HTML
+```
+
+#### A) Passo 1: Esteira Lean de Curto Prazo (Takt Time Planning — WWP)
+1. **Divisão em Zonas Takt Equalizadas:** Toda obra deve ser subdividida em 2 a 4 Zonas/Etapas de volumes de serviço equivalentes.
+2. **Ciclos Takt Padronizados:** Ciclos fixos de 3 dias úteis (Seg-Qua e Qui-Sáb), totalizando 2 lotes por semana.
+3. **Parade of Trades (Vagões Especializados):** Cada disciplina atua em cadeia contínua (ex: Fundações ➔ Estrutura ➔ Alvenaria ➔ Instalações ➔ Reboco ➔ Acabamentos/Pisos ➔ Pintura ➔ Esquadrias/HVAC ➔ Comissionamento).
+4. **Regra de Ouro contra Ociosidade (Bancada de Pré-Fabricação / Pulmão Lean):**
+   * Enquanto a frente de serviço principal estiver executando serviços mecanizados ou de concretagem direta (ex: retroescavadeira abrindo cavas, caminhão betoneira lançando concreto magro ou de sapatas), os profissionais especializados que não atuam diretamente no lançamento (especialmente **Armadores**) **NUNCA ficam parados no canteiro**.
+   * Eles são obrigatoriamente alocados na **Central de Corte e Dobra na Bancada (sob tenda protegida)** pré-fabricando as gaiolas, vigas e estribos do lote subsequente. Isso gera um estoque pulmão puxado (Kanban físico) que garante velocidade máxima na montagem seguinte.
+5. **Nivelamento Rigoroso de Recursos (Resource Leveling):**
+   * O efetivo diário deve ser rigorosamente constante e respeitar o **Histograma Orçado (EAP 1.0 e RH)** (ex: 7 a 9 operários no início; 14 a 15 no pico estrutural; 10 a 12 nos acabamentos).
+   * **PROIBIDO:** Picos artificiais de somatório ingênuo (ex: 30 operários num dia) ou vales de abandono com 4 a 6 operários.
+6. **Formato Padrão:** Arquivo `projetos/[OBRA]/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_[OBRA].csv`.
+
+#### B) Passo 2: Calibração da Linha de Balanço (LOB / Fluxo Ascendente & Sincronização Bidirecional)
+* A Linha de Balanço herda as durações e sequências da Esteira de Produção de forma automatizada via `scripts/sincronizar_esteira_e_lob.py`.
+* **Ritmo Takt Construtivo:** O ritmo de avanço é rigorosamente o Takt Time da esteira (`RITMO_DIAS_POR_LOCAL = 3`).
+* **Sincronização Bidirecional:**
+  - `esteira_para_lob`: Converte os lotes semanais da esteira nas barras contínuas da Linha de Balanço com datas exatas.
+  - `lob_para_esteira`: Se o gestor alterar prazos ou setores na Linha de Balanço, a esteira de curto prazo é sincronizada.
+* **Detector Inteligente de Sobreposições & Alerta de Efetivo:**
+  - O sistema varre automaticamente conflitos espaciais no mesmo setor e sobreposições de frentes da mesma disciplina.
+  - Se uma reprogramação acelerar atividades concorrentes, o sistema calcula o salto de headcount diário e emite um alerta com **bloqueio de segurança**:
+    `"ALERTA: Sobreposição detectada! Efetivo aumenta de X para Y operários (+Z). Confirma o aumento de efetivo?"`
+  - A aplicação de sobreposição exige autorização formal via flag `--permitir-sobreposicao`. Sem essa autorização, o sistema mantém o fluxo em série nivelado (Heijunka).
+* **Momento Tecnológico da Cobertura (Regra Crítica de Engenharia):**
+  A estrutura metálica de terças e o telhamento termoacústico sandwich **devem ser posicionados imediatamente após a cura e desforma da laje/supraestrutura**. O edifício DEVE ser 100% estancado contra chuva antes do início do reboco mecanizado, impermeabilizações internas e assentamento de porcelanatos.
+* **Orientação Canônica:** Zona 01 na base e Zona Superior/Geral no topo, com fluxo ascendente (↗) ao longo do tempo.
+
+#### C) Passo 3: Rede Determinística de Caminho Crítico (CPM)
+* Cálculo algorítmico via Teoria dos Grafos usando o script determinístico `scripts/calculadoras/calcular_cpm.py`.
+* Verificação de folgas zero e garantia do fechamento dentro da data contratual com margem de segurança de 2 a 3 dias para entrega definitiva das chaves.
+
+#### D) Passo 4: Geração dos Artefatos de Entrega
+* Execução do motor `python scripts/gerar_cronograma.py --obra [OBRA]` para compilar o cronograma físico-financeiro, planilha executiva e dashboard interativo.
 
 ---
 

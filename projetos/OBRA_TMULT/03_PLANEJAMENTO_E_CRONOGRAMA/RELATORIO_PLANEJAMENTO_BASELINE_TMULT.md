@@ -118,39 +118,43 @@ O cronograma de 26 semanas é dividido em 12 blocos quinzenais de controle rigor
 * **Portão de Bloqueio 2:** Cura úmida contínua e protocolo de desforma parcial aos 14 dias; manutenção de re-escoramento central para liberação segura das frentes inferiores.
 * **Metas Físicas:** 100% da supraestrutura de concreto concluída (298,25 m² de laje).
 
-### Quinzena 05 (Semanas 09 e 10 / Dias 61 a 75) — Alvenaria Estrutural/Vedação
-* **Serviços:** Elevação de alvenaria em blocos de concreto 14x19x39cm, vergas e contravergas pré-moldadas, telas de amarração pilar-alvenaria a cada 2 fiadas e montagem da estrutura metálica de terças da cobertura.
-* **Metas Físicas:** 60% da alvenaria erguida; estrutura de terças galvanizadas montada.
+### Quinzena 05 (Semanas 09 e 10 / Dias 61 a 75) — Alvenaria Estrutural/Vedação & Montagem da Cobertura
+* **Serviços:** Desforma controlada da laje H12 (Portão 2), elevação de alvenaria em blocos de concreto 14x19x39cm nos Setores 01 e 02 (Lotes 017 e 018), vergas/contravergas pré-moldadas, telas de amarração pilar-alvenaria e **início imediato da montagem das terças metálicas perfil U da cobertura (Setor 05 — SUB-07)** logo após a liberação da laje.
+* **Metas Físicas:** 60% da alvenaria erguida; estrutura de terças metálicas montada (381,29 m² de projeção).
 
-### Quinzena 06 (Semanas 11 e 12 / Dias 76 a 90) — Fechamento da Cobertura & Platibanda
-* **Serviços:** Término da elevação das alvenarias, encunhamento superior resiliente, instalação das telhas termoacústicas trapezoidais sandwich 30mm EPS (381,29 m²), calhas galvanizadas, rufos, alvenaria e impermeabilização da platibanda.
-* **Metas Físicas:** Edifício 100% estanque contra intempéries; liberação das frentes internas protegidas.
+### Quinzena 06 (Semanas 11 e 12 / Dias 76 a 90) — Fechamento Estanque da Cobertura, Platibanda & Redes Iniciais
+* **Serviços:** Conclusão da elevação das alvenarias e encunhamento flexível (Lote 019), **instalação das telhas termoacústicas trapezoidais sandwich 30mm PIR (Lote 021)**, calhas galvanizadas de beiral, rufos, platibanda e teste de estanqueidade da cobertura (Setor 05). Início da abertura de rasgos para tubulações elétricas e hidráulicas embutidas (Lote 022) sob telhado 100% estanque.
+* **Metas Físicas:** Edifício 100% estanque contra chuvas de verão no canteiro; frentes internas secas liberadas para instalações embutidas e chapisco rolado (Lote 024).
 
-### Quinzena 07 (Semanas 13 e 14 / Dias 91 a 105) — Redes Embutidas Elétrica/Hidráulica
-* **Serviços:** Abertura de rasgos em paredes, assentamento de eletrodutos rígidos PVC 3/4" e 1", caixas 4x2", tubulações de água fria soldável e esgoto primário/secundário, caixas de passagem e instalação dos quadros de distribuição QDG/QDF.
-* **Metas Físicas:** 100% das tubulações e caixas embutidas instaladas.
+### Quinzena 07 (Semanas 13 e 14 / Dias 91 a 105) — Redes Embutidas Elétrica/Hidráulica & Reboco Mecanizado
+* **Serviços:** Abertura de rasgos em paredes, assentamento de eletrodutos rígidos PVC 3/4" e 1", caixas 4x2", tubulações de água fria soldável e esgoto primário/secundário, caixas de passagem e instalação dos quadros de distribuição QDG/QDF. Projeção mecânica do emboço/reboco paulista e=20mm com mestras metálicas (Lotes 025 e 026).
+* **Metas Físicas:** 100% das tubulações e caixas embutidas instaladas; 440 m² de paredes rebocadas.
 
-### Quinzena 08 (Semanas 15 e 16 / Dias 106 a 120) — Portão 3 & Emboço Paulista
-* **Portão de Bloqueio 3:** Realização do Teste Hidrostático sob pressão com manômetro calibrado durante 72h nas redes de água fria e ensaio de estanqueidade no esgoto. Assinatura obrigatória da FVS.
-* **Serviços:** Fechamento de rasgos com argamassa forte, aplicação de chapisco traço 1:3 e execução do emboço/reboco paulista e=20mm (2.122 m²) com desempenadeira mecânica.
-* **Metas Físicas:** 100% das paredes rebocadas e curadas.
+### Quinzena 08 (Semanas 15 e 16 / Dias 106 a 120) — Portão 3, Impermeabilização WCs & Regularização Contrapiso
+* **Portão de Bloqueio 3:** Realização do Teste Hidrostático sob pressão com manômetro calibrado durante 72h nas redes de água fria e ensaio de estanqueidade no esgoto (Lote 023). Assinatura obrigatória da FVS.
+* **Serviços:** Impermeabilização polimérica flexível de sanitários e copa (Lote 027), execução do contrapiso sarrafeado e regularizado com nível a laser e=3cm (Lote 028) e início do assentamento de porcelanato retificado 60x60cm (Lotes 029 e 030).
+* **Metas Físicas:** 100% das redes testadas e estanques; contrapiso concluído; início dos pisos nobres.
 
-### Quinzena 09 (Semanas 17 e 18 / Dias 121 a 135) — Contrapiso, Dutos HVAC & Caixilhos
-* **Serviços:** Execução do contrapiso autonivelante/regularização e=3cm (368,40 m²), impermeabilização polimérica de sanitários e copa, instalação de tubulações frigorígenas de cobre flexível com isolamento elastomérico e chumbamento dos marcos de esquadrias e contramarcos de alumínio.
-* **Metas Físicas:** Base de piso pronta; infraestrutura de climatização posicionada.
+### Quinzena 09 (Semanas 17 e 18 / Dias 121 a 135) — Pisos Cerâmicos WCs, Rejunte, Dutos HVAC & Caixilharia
+* **Serviços:** Cerâmica esmaltada nas paredes dos WCs (Lote 031), rejunte resinado impermeável e rodapés de porcelanato (Lote 032), caixilharia de alumínio linha Suprema anodizada preta com vidros temperados acústicos 8mm (Lotes 033 e 034) e infraestrutura de linhas frigorígenas de cobre e drenos de HVAC (Lotes 035 e 036).
+* **Metas Físicas:** Base de piso e revestimento concluída; esquadrias externas vedadas com PU-40; linhas de ar-condicionado pressurizadas com nitrogênio (teste de estanqueidade).
 
-### Quinzena 10 (Semanas 19 e 20 / Dias 136 a 150) — Piso Porcelanato & Cabeamento
-* **Serviços:** Assentamento do piso porcelanato retificado 60x60cm com argamassa AC-III (dupla colagem) e niveladores plásticos, azulejos até h=1,80m nos WCs, instalação de rodapés de 10cm, enfiamento dos circuitos elétricos de força e passagem do cabeamento estruturado UTP Cat6.
-* **Metas Físicas:** 368,40 m² de piso assentado e imediatamente protegido com lona plástica preta.
+### Quinzena 10 (Semanas 19 e 20 / Dias 136 a 150) — Cabeamento Elétrico/Dados, Quadros QGBT & Louças Nobres
+* **Serviços:** Enfiamento de cabos elétricos antichama 750V e cabeamento estruturado Furukawa Cat.6 (Lote 037), montagem e identificação de circuitos no QGBT e quadros com DR (Lote 038), instalação de bacias sanitárias com caixa acoplada Deca Vogue, cubas e torneiras temporizadas Docol antivandalismo (Lote 039), e fixação de luminárias painel LED 40W 6500K com tomadas e interruptores (Lote 040).
+* **Metas Físicas:** Infraestrutura de potência, iluminação e dados conectada; sanitários e copa montados.
 
-### Quinzena 11 (Semanas 21 e 22 / Dias 151 a 165) — Portão 4, Aparelhos HVAC & Louças
-* **Portão de Bloqueio 4:** Aplicação de selador acrílico e 1ª demão de tinta látex acrílica em tetos e paredes. Liberação formal para fixação de acabamentos finos.
-* **Serviços:** Montagem dos aparelhos de ar-condicionado (splits cassete 36.000 BTU/h e hi-walls), montagem de bacias sanitárias acopladas, lavatórios com torneiras automáticas economizadoras, instalação de portas de madeira P1-P5 e colocação das folhas de vidro temperado nas janelas.
-* **Metas Físicas:** Sistemas hidrossanitários e climatização montados em definitivo.
+### Quinzena 11 (Semanas 21 e 22 / Dias 151 a 165) — Portão 4, Pintura Acrílica & Startup Climatização
+* **Portão de Bloqueio 4:** Emassamento com massa acrílica, lixamento mecanizado com aspirador e aplicação de selador primer (Lotes 041 e 042). Forração integral de pisos com lona plástica e papelão ondulado.
+* **Serviços:** Pintura látex acrílica fosca lavável Suvinil Toque de Seda em duas demãos de acabamento (Lote 043), montagem das evaporadoras split cassete 36.000 BTU/h, ligação dos condensadores externos, carga de gás refrigerante R-410A e startup operacional (Lote 044).
+* **Metas Físicas:** Pintura 100% finalizada sem respingos; sistema de climatização em regime operacional de refrigeração.
 
-### Quinzena 12 (Semanas 23 a 26 / Dias 166 a 180) — Acabamentos Finos, Comissionamento & Entrega
-* **Serviços:** 2ª e 3ª demãos de pintura acrílica, instalação de placas/espelhos e luminárias LED 60x60cm, montagem do rack 12U e switch PoE, testes de carga dos circuitos, certificação dos pontos de rede Cat6, balanceamento térmico dos condicionadores de ar, limpeza pós-obra especializada, desmobilização dos containers de canteiro e emissão do Databook com Termo de Recebimento Provisório (TRP).
-* **Metas Físicas:** Obra 100% concluída no prazo de 180 dias.
+### Quinzena 12 (Semanas 23 a 26 / Dias 166 a 180) — Comissionamento 52 Lotes, Auditoria SST, DataBook & Chaves Turnkey
+* **Serviços:** 
+  * **Semana 23 (Lotes 045 e 046):** Comissionamento elétrico sob carga nominal, laudo termográfico Fluke de barramentos, laudo anemométrico HVAC, limpeza química fina pós-obra e início da desmobilização de canteiro.
+  * **Semana 24 (Lotes 047 e 048):** Testes integrados de carga plena com todos os sistemas ativos e consolidação das pranchas As-Built e DataBook oficial (3 vias físicas + digital criptografada).
+  * **Semana 25 (Lotes 049 e 050):** Treinamento técnico presencial da equipe de Facilities do Terminal Multiuso e conclusão da desmobilização total dos containers NR-18, com caçambas e termo PGRCC de descarte ambiental.
+  * **Semana 26 (Lotes 051 e 052):** Vistoria conjunta de Recebimento Provisório (Fiscalização do Porto x Diretoria Construtora), conferência das fichas FVS e assinatura do Termo de Recebimento Definitivo com entrega oficial das chaves codificadas e controle de acesso RFID.
+* **Metas Físicas:** Obra 100% entregue no prazo contratual de 180 dias corridos / 26 semanas (R$ 1.660.762,28).
 
 ---
 
@@ -190,9 +194,9 @@ Teste Hidrostático 72h sob Pressão ────> Libera Fechamento de Rasgos e
 
 ---
 
-## 5.1 Programação de Curto Prazo em Lotes Takt (Esteira Lean & Nivelamento de Recursos)
+## 5.1 Programação de Curto Prazo em Lotes Takt (Esteira Lean de 52 Ciclos & Nivelamento)
 
-O planejamento operacional de curto prazo (Weekly Work Plan - WWP) foi estruturado seguindo os princípios rigorosos do **Lean Construction** e do **Takt Time Planning (Esteira de Produção Contínua)**:
+O planejamento operacional de curto prazo (Weekly Work Plan - WWP) foi estruturado seguindo os princípios rigorosos do **Lean Construction** e do **Takt Time Planning (Esteira de Produção Contínua)**, cobrindo integralmente as 26 semanas (52 lotes de 3 dias úteis):
 
 ### A) Divisão da Obra em 3 Etapas Construtivas (Zonas Takt)
 Para eliminar esperas improdutivas decorrentes do tempo de cura do concreto armado (resistência $f_{ck}$), a edificação foi subdividida em 3 Zonas Takt com volumes de serviço equalizados:
@@ -200,16 +204,40 @@ Para eliminar esperas improdutivas decorrentes do tempo de cura do concreto arma
 2. **Etapa 2 (Zona 2 — Salas Técnicas e CPD):** Sapatas S13 a S24 (12 sapatas) $\rightarrow$ Vigas Baldrames VB7 a VB12 (6 vigas) $\rightarrow$ Pilares P9 a P16 (8 pilares) $\rightarrow$ Vigas V106 a V110.
 3. **Etapa 3 (Zona 3 — Sanitários, Copa e Apoio):** Sapatas S25 a S32 (8 sapatas) $\rightarrow$ Vigas Baldrames VB13 a VB19 (7 vigas) $\rightarrow$ Pilares P17 a P24 (8 pilares) $\rightarrow$ Vigas V111 a V115 + Concretagem Global da Laje H12.
 
-### B) Mecanismo da Esteira de Produção (Takt Time = 3 Dias Úteis)
+### B) Mecanismo da Esteira de Produção (Takt Time = 3 Dias Úteis / 52 Lotes)
 * Cada semana de 6 dias úteis possui dois ciclos de produção: **Ciclo 1 (Segunda a Quarta)** e **Ciclo 2 (Quinta a Sábado)**.
-* **Eliminação da Ociosidade Tecnológica de Cura:** Enquanto a Etapa 1 está sendo concretada e cumprindo o período de cura úmida (tempo tecnológico), a equipe de carpintaria e armação **não espera no canteiro**: avança imediatamente para a montagem de fôrmas da Etapa 2! Quando a Etapa 2 está curando, a equipe avança para a Etapa 3 ou retorna para os pilares e vigas da Etapa 1 que já desformaram.
+* **Eliminação da Ociosidade Tecnológica de Cura:** Enquanto a Etapa 1 está sendo concretada e cumprindo o período de cura úmida (tempo tecnológico), a equipe de carpintaria e armação avança imediatamente para a montagem de fôrmas da Etapa 2! Quando a Etapa 2 está curando, a equipe avança para a Etapa 3 ou retorna para os pilares e vigas da Etapa 1 que já desformaram.
+* **Alocação Contínua da Armação (Zero Ociosidade):** Nos ciclos de escavação e concretagem direta (Lotes 002, 004 e 006), os 2 armadores **não ficam ociosos no canteiro**. Eles operam dedicados na **Central de Corte e Dobra na Bancada**, pré-fabricando as armaduras de sapatas e baldrames que serão instaladas no ciclo subsequente.
 
-### C) Nivelamento de Recursos (Resource Leveling)
-* O efetivo diário de campo é rigorosamente constante e calibrado com o **Histograma de Mão de Obra Oficial (EAP 1.0 e RH)**:
-  * **Mês 1 (Semanas 01 a 04):** 7 a 9 operários diários de produção direta (dentro do teto orçado de 9 operários diretos / 14 headcount total).
-  * **Mês 2 (Semanas 05 a 08):** 14 operários diários de produção direta (dentro do teto orçado de 14 operários diretos / 19 headcount total).
-  * **Meses 3 a 6 (Semanas 09 a 26):** 10 a 14 operários diários conforme as frentes de alvenaria, reboco projetado, porcelanatos e acabamentos.
-* Foram extintas quaisquer oscilações artificiais de efetivo (como acúmulos fictícios de 30+ operários ou vales de abandono com 6 operários em 1 único dia útil).
+### C) As 10 Frentes e Equipes Especializadas da Esteira Lean
+A esteira orquestra 10 equipes com subcontratos e vínculos orçamentários rastreáveis:
+1. `SUB-01 Estruturas`: Carpintaria, armação, formas resinadas, concretagem e impermeabilização asfáltica.
+2. `SUB-02 Alvenaria & Reboco`: Elevação de blocos 14x19x39, encunhamento, chapisco rolado e reboco mecânico.
+3. `SUB-03 Elétrica & Lógica`: Eletrodutos embutidos, caixas, quadros QGBT, cabeamento Cat6 e luminárias LED.
+4. `SUB-04 Hidráulica & Metais`: Tubulações soldáveis/esgoto, teste hidrostático 72h, bacias e torneiras temporizadas.
+5. `SUB-05 Acabamentos & Pisos`: Regularização de contrapiso autonivelante, porcelanato 60x60 e azulejos WCs.
+6. `SUB-06 Pintura`: Selador primer, emassamento acrílico lixado a vácuo e pintura Suvinil lavável.
+7. `SUB-07 Coberturas`: Estrutura metálica de terças U, telhas sandwich PIR 30mm, calhas, rufos e estanqueidade.
+8. `SUB-08 Climatização HVAC`: Tubulações frigorígenas de cobre, teste de estanqueidade c/ N2 e splits cassete.
+9. `Terraplenagem & Locações`: Retroescavadeira, caminhão caçamba basculante e guincho de coluna.
+10. `Gestão Técnica & Turnkey`: Engenharia Residente, Mestre de Obras, TST, fiscalização e entrega de chaves.
+
+---
+
+## 5.2 Linha de Balanço (LOB) Recalibrada & Sincronizada (5 Setores / 32 Atividades)
+
+A Linha de Balanço (Longo Prazo) foi rigorosamente alinhada com as datas da Esteira Lean, eliminando discrepâncias de planejamento e garantindo que o fechamento da envoltória ocorra no momento tecnológico perfeito:
+
+| Setor Físico (Eixo Y) | Atividades Modeladas | Janela Temporal | Justificativa Técnica de Engenharia |
+|---|:---:|:---:|---|
+| **Setor 05 — Cobertura / Platibanda** | 4 macroatividades (SUB-07) | **01/12/2026 a 07/01/2027 (Sem 10 a 14)** | **Montagem imediata pós-desforma da laje.** Estanca a edificação contra intempéries antes de iniciar o reboco e acabamentos finos. |
+| **Setor 04 — Galeria Circulação** | 7 macroatividades (Seq 1 a 7) | 19/10/2026 a 26/03/2027 (Sem 3 a 26) | Último setor térreo do fluxo; absorve as prumadas principais e fecha a pintura na Sem 26. |
+| **Setor 03 — Sanitários e Copa** | 7 macroatividades (Seq 1 a 7) | 13/10/2026 a 20/03/2027 (Sem 3 a 25) | Setor de áreas molhadas com testes hidrostáticos (Portão 3), impermeabilização e louças finas. |
+| **Setor 02 — Salas Técnicas / CPD** | 7 macroatividades (Seq 1 a 7) | 07/10/2026 a 14/03/2027 (Sem 2 a 24) | Setor de infraestrutura de dados, ar-condicionado de precisão e quadros QGBT. |
+| **Setor 01 — Recepção / Diretoria** | 7 macroatividades (Seq 1 a 7) | 01/10/2026 a 08/03/2027 (Sem 1 a 23) | Setor pioneiro de avanço da esteira (cota zero à pintura final). |
+
+* **Orientação Canônica:** Setor 01 na base e Setor 05 no topo, com inclinação positiva harmônica (↗) no avanço temporal do eixo X.
+* **Fechamento Contratual:** O último acabamento físico conclui no dia 26/03/2027 (Dia 177). Os dias 178 a 180 (Semana 26) são integralmente reservados para o comissionamento final, auditoria e entrega das chaves turnkey.
 
 ---
 
@@ -231,10 +259,10 @@ De acordo com a `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md`, atrasos pontuai
 Todos os artefatos de planejamento foram compilados e estão disponíveis na pasta `projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/`:
 
 1. **[`PROGRAMACAO_CURTO_PRAZO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_TMULT.csv)**
-   - Base de dados de curto prazo contendo 46 lotes dimensionados em Takt Time de 3 dias, organizados por Etapa Construtiva (Zonas 1 a 3), Vagão Lean e Recursos Previstos com metas de RUP.
+   - Base de dados operacional de curto prazo contendo os **52 lotes semanais (Semanas 01 a 26)** dimensionados em Takt Time de 3 dias, organizados por Vagão Lean, Recursos Previstos com metas de RUP e status de execução auditável.
 
 2. **[`LINHA_DE_BALANCO.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv)**
-   - Cronograma de Linha de Balanço (LOB) cobrindo os 180 dias corridos em fluxo ascendente com 5 setores físicos.
+   - Cronograma de Linha de Balanço (LOB) cobrindo os 180 dias corridos em fluxo ascendente com 5 setores físicos e 32 macroatividades recalibradas em sincronia com a Cobertura Metálica e o CPM.
 
 3. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv)**
    - Base de dados bruta, auditável e versionável via Git. Contém os 158 itens da EAP distribuídos mês a mês (M1 a M6), somando exatamente R$ 1.660.762,28.

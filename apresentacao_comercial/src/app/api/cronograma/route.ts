@@ -26,8 +26,13 @@ function parseDateRobust(dateStr: string): Date | null {
   return null;
 }
 
-function getDisciplineColor(tipo: string): string {
+function getDisciplineColor(tipo: string, pav: string = ''): string {
   const t = (tipo || '').toLowerCase();
+  const p = (pav || '').toLowerCase();
+  
+  if (p.includes('cobertura') || t.includes('cobertura') || t.includes('telha') || t.includes('metálic') || t.includes('calha') || t.includes('rufo')) {
+    return 'bg-cyan-600';
+  }
   if (t.includes('estrutur') || t.includes('fund') || t.includes('baldrame') || t.includes('pilar') || t.includes('concreto')) {
     return 'bg-blue-600';
   }
@@ -48,9 +53,6 @@ function getDisciplineColor(tipo: string): string {
   }
   if (t.includes('pintura') || t.includes('esquadria') || t.includes('vidro')) {
     return 'bg-purple-600';
-  }
-  if (t.includes('cobertura') || t.includes('telha') || t.includes('metálic') || t.includes('calha')) {
-    return 'bg-cyan-600';
   }
   return 'bg-zinc-600';
 }
@@ -84,7 +86,8 @@ export async function GET(request: Request) {
       pavimentosSet.add(pav);
       
       const tipo = item['ATIVIDADE'] || item['SERVICO'] || 'Serviço';
-      const color = getDisciplineColor(tipo);
+      const vagao = item['VAGAO'] || tipo;
+      const color = getDisciplineColor(vagao || tipo, pav);
       
       const startDate = parseDateRobust(item['DATA_INICIO']);
       const endDate = parseDateRobust(item['DATA_FIM']);
@@ -94,6 +97,7 @@ export async function GET(request: Request) {
           id: index + 1,
           pav,
           tipo,
+          vagao,
           color,
           _startDate: startDate,
           _endDate: endDate,
@@ -107,6 +111,7 @@ export async function GET(request: Request) {
 
     let finalTarefas: any[] = [];
     let pavimentos: string[] = [];
+    let vagoesFluxo: any[] = [];
     let totalDias = 35;
 
     if (tarefasMapeadas.length > 0) {
@@ -121,6 +126,7 @@ export async function GET(request: Request) {
           id: t.id,
           pav: t.pav,
           tipo: t.tipo,
+          vagao: t.vagao,
           color: t.color,
           start: startDay,
           duration,
@@ -130,8 +136,25 @@ export async function GET(request: Request) {
         };
       });
 
-      // Ordenar pavimentos mantendo sequência lógica
-      pavimentos = Array.from(pavimentosSet);
+      // Ordenar pavimentos estritamente nas 4 Zonas Físicas Reais (Base Zona 01 até Topo Zona 04)
+      const ordemHierarquica = [
+        'Zona 01 - Recepção/Diretoria',
+        'Zona 02 - Salas Técnicas/CPD',
+        'Zona 03 - Sanitários e Apoio',
+        'Zona 04 - Cobertura e Platibanda'
+      ];
+      pavimentos = Array.from(pavimentosSet)
+        .filter(p => !p.toLowerCase().includes('geral'))
+        .sort((a, b) => {
+          const idxA = ordemHierarquica.indexOf(a);
+          const idxB = ordemHierarquica.indexOf(b);
+          if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+          return a.localeCompare(b);
+        });
+
+      if (pavimentos.length === 0) {
+        pavimentos = ordemHierarquica;
+      }
       
       let maxDay = 0;
       finalTarefas.forEach(t => {
@@ -139,6 +162,61 @@ export async function GET(request: Request) {
         if (end > maxDay) maxDay = end;
       });
       totalDias = Math.max(26, maxDay + 2);
+
+      // Agrupar tarefas por VAGÃO para gerar as Linhas de Balanço Contínuas (↗)
+      const vagoesMap = new Map<string, any>();
+      finalTarefas.forEach(t => {
+        const vagaoNome = t.vagao || t.tipo;
+        if (!vagoesMap.has(vagaoNome)) {
+          vagoesMap.set(vagaoNome, {
+            id: vagaoNome.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+            nome: vagaoNome,
+            equipe: t.equipe,
+            color: t.color,
+            pontos: [],
+            startMin: t.start,
+            endMax: t.start + t.duration,
+            dataInicioGlobal: t.dataInicio,
+            dataFimGlobal: t.dataFim
+          });
+        }
+        
+        const v = vagoesMap.get(vagaoNome);
+        if (pavimentos.includes(t.pav)) {
+          v.pontos.push({
+            id: t.id,
+            pav: t.pav,
+            start: t.start,
+            duration: t.duration,
+            dataInicio: t.dataInicio,
+            dataFim: t.dataFim
+          });
+        }
+        
+        if (t.start < v.startMin) {
+          v.startMin = t.start;
+          v.dataInicioGlobal = t.dataInicio;
+        }
+        if (t.start + t.duration > v.endMax) {
+          v.endMax = t.start + t.duration;
+          v.dataFimGlobal = t.dataFim;
+        }
+      });
+
+      vagoesFluxo = Array.from(vagoesMap.values())
+        .filter(v => v.pontos.length > 0)
+        .sort((a, b) => a.startMin - b.startMin);
+    }
+
+    // Carregar Relatório de Sobreposição e Nivelamento da LOB
+    const sobreposicaoPath = path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'RELATORIO_SOBREPOSICAO_LOB.json');
+    let relatorioSobreposicao: any = null;
+    if (fs.existsSync(sobreposicaoPath)) {
+      try {
+        relatorioSobreposicao = JSON.parse(fs.readFileSync(sobreposicaoPath, 'utf-8'));
+      } catch (err) {
+        console.error('Erro ao ler RELATORIO_SOBREPOSICAO_LOB.json', err);
+      }
     }
 
     // Carregar dados CPM se disponíveis
@@ -206,12 +284,14 @@ export async function GET(request: Request) {
     return NextResponse.json({
       obra,
       tarefas: finalTarefas,
+      vagoesFluxo,
       pavimentos,
       totalDias,
       cpm: cpmAtividades,
       curvaS,
       lotesCurtoPrazo,
       histogramaMensal,
+      relatorioSobreposicao,
       metaGlobal: {
         prazoMeses: 6,
         diasCorridos: 180,

@@ -107,7 +107,10 @@ O dimensionamento de lotes de curto prazo no ecossistema não pode gerar oscila�
    - Enquanto a **Etapa 1** está concretando e cumprindo o tempo tecnológico de cura, a equipe de carpintaria e armação **avança imediatamente para a Etapa 2**!
    - Quando a **Etapa 2** está concretando, a carpintaria avança para a **Etapa 3** ou retorna para as vigas/pilares da **Etapa 1** que já desformaram.
    - **Ociosidade Zero:** Nenhuma equipe para. A transição de zona ocorre em ciclos Takt padronizados de 3 dias úteis (Segunda a Quarta / Quinta a Sábado).
-4. **Validação contra o RDO:**
+4. **Mecanismo de Pulmão em Bancada (Central de Corte e Dobra / Pré-Armação):**
+   - Em ciclos de escavação pesada com retroescavadeira ou concretagem direta onde a frente física não comporta montagem de aço, os **Armadores NUNCA ficam parados**.
+   - Eles atuam 100% do tempo na **Central de Corte e Dobra na Bancada (sob tenda)** pré-fabricando as gaiolas de sapatas, armaduras de vigas e estribos para os ciclos futuros. Isso gera um estoque regulador (pulmão Lean) que acelera o ciclo seguinte e mantém o headcount estável.
+5. **Validação contra o RDO:**
    - O apontador/engenheiro no RDO confere diariamente se o lote programado da semana está sendo cumprido dentro da meta de RUP pactuada, alertando qualquer desvio de ritmo antes que ele impacte a Linha de Balanço global.
 
 ---

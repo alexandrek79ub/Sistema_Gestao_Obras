@@ -88,21 +88,28 @@ de retas (posição × tempo) — cálculo determinístico. Usar `detectar_colis
 
 ---
 
-## ⚠️ 7. Regras de Ouro
+## 8. Sincronização Obrigatória: A Esteira Takt Calibra o Cronograma Mestre
 
-1. Duração de atividade nasce do RUP meta, nunca de estimativa "sentida" sem lastro em
-   produtividade (histórico próprio ou referência).
-2. Obra com repetição vertical relevante mantém Gantt E Linha de Balanço — nunca só um dos dois.
-3. Reprogramação nunca sobrescreve a baseline — sempre gera versão nova, mantendo a anterior
-   visível.
-4. Gatilho de reprogramação é objetivo (SPI sustentado abaixo do limiar, ou risco real
-   identificado) — nunca decisão de humor do momento.
-5. Nenhum plano de recuperação de prazo é proposto sem checar o RUP histórico da frente
-   específica — "aumentar efetivo" sem essa checagem é aposta, não plano.
-6. Caminho crítico e colisão de linha de balanço são sempre calculados por script, nunca
-   estimados visualmente pelo agente.
+Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **ancorada na esteira física de produção de curto prazo**:
+
+1. **A Esteira Define a Realidade:** A duração dos ciclos Takt (3 dias úteis), os lotes semanais e as equipes dimensionadas com suas metas de RUP formam a base concreta do planejamento.
+2. **A Linha de Balanço Reflete a Esteira:** As datas de início e término de cada setor físico na Linha de Balanço (LOB) devem herdar rigorosamente o encadeamento dos lotes da esteira.
+3. **Momento Crítico da Cobertura:** A montagem de estruturas metálicas de cobertura e telhas termoacústicas deve ser posicionada **imediatamente após a desforma da laje**. É terminantemente proibido projetar cronogramas com alvenaria e reboco avançando por semanas sem telhado estanque.
+4. **Alocação Sem Ociosidade (Bancada Pulmão):** Em períodos de concretagem ou escavação direta, equipes auxiliares/especialistas (ex: armadores) operam na central de corte e dobra na bancada, acumulando peças pré-montadas para os lotes futuros.
+5. **Detector de Sobreposição e Alerta de Efetivo:** Sempre que uma revisão ou reprogramação for rodada, deve ser executado `python scripts/sincronizar_esteira_e_lob.py --obra [OBRA] --analisar-sobreposicao`. Se forem identificadas frentes concorrentes que gerem sobreposição ou exijam duplicação de equipes (+X operários), o sistema emitirá o **Alerta de Sobreposição Lean**, exigindo a aprovação explícita do gestor com `--permitir-sobreposicao`.
 
 ---
-*Trabalha junto com `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fonte do RUP),
-`SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` (versionamento) e `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md`
-(gatilho de risco para reprogramação).*
+
+## ⚠️ 7. Regras de Ouro
+
+1. Duração de atividade nasce do RUP meta, nunca de estimativa "sentida" sem lastro em produtividade (histórico próprio ou referência).
+2. Obra com repetição vertical relevante mantém Gantt E Linha de Balanço — nunca só um dos dois.
+3. Reprogramação nunca sobrescreve a baseline — sempre gera versão nova, mantendo a anterior visível.
+4. Gatilho de reprogramação é objetivo (SPI sustentado abaixo do limiar, ou risco real identificado) — nunca decisão de humor do momento.
+5. Nenhum plano de recuperação de prazo é proposto sem checar o RUP histórico da frente específica — "aumentar efetivo" sem essa checagem é aposta, não plano.
+6. Caminho crítico e colisão de linha de balanço são sempre calculados por script, nunca estimados visualmente pelo agente.
+7. **O cronograma mestre (LOB e CPM) deve ser sempre calibrado em cima da Esteira Lean:** frentes de curto prazo niveladas, zero ociosidade com central de bancada, e cobertura montada logo após a desforma estrutural.
+8. **Interligação Bidirecional Obrigatória:** Toda alteração no curto prazo atualiza a Linha de Balanço, e toda alteração na LOB sincroniza os lotes de curto prazo via `scripts/sincronizar_esteira_e_lob.py`, garantindo que o planejamento e o canteiro falem a mesma língua.
+
+---
+*Trabalha junto com `SKILL_GESTAO_01_PLANEJAMENTO.md` (arquitetura do plano), `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fonte do RUP e nivelamento de recursos), `SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` (versionamento) e `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md` (gatilho de risco para reprogramação).*

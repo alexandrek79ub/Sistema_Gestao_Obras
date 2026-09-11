@@ -1,0 +1,12 @@
+{
+  "obra": "OBRA_TMULT",
+  "data_analise": "11/09/2026 15:07:46",
+  "total_dias_analisados": 182,
+  "headcount_pico_diario": 24,
+  "headcount_medio_diario": 10.6,
+  "total_conflitos_espaciais": 0,
+  "total_disciplinas_com_frentes_duplas": 0,
+  "conflitos_espaciais": [],
+  "frentes_duplicadas": [],
+  "status_aprovacao": "CONFORME_FLUXO_NIVELADO"
+}

@@ -1,33 +1,97 @@
-"LOCAL_PAVIMENTO";"SEQUENCIA";"ATIVIDADE";"EQUIPE_RESPONSAVEL";"RITMO_DIAS_POR_LOCAL";"DATA_INICIO";"DATA_FIM"
-"Setor 01 - Recepcao/Diretoria";"1";"Fundações e Baldrames";"SUB-01 Estruturas";"15";"01/10/2026";"15/10/2026"
-"Setor 01 - Recepcao/Diretoria";"2";"Supraestrutura Pilares";"SUB-01 Estruturas";"15";"06/11/2026";"20/11/2026"
-"Setor 01 - Recepcao/Diretoria";"3";"Alvenaria de Vedação";"SUB-02 Alvenaria";"15";"12/12/2026";"26/12/2026"
-"Setor 01 - Recepcao/Diretoria";"4";"Instalações Elétricas/Lógica";"SUB-03 Elétrica";"14";"17/01/2027";"30/01/2027"
-"Setor 01 - Recepcao/Diretoria";"5";"Reboco e Emboço";"SUB-02 Alvenaria";"14";"31/01/2027";"13/02/2027"
-"Setor 01 - Recepcao/Diretoria";"6";"Piso Porcelanato 60x60";"SUB-05 Acabamentos";"14";"21/02/2027";"06/03/2027"
-"Setor 01 - Recepcao/Diretoria";"7";"Pintura Final e Luminárias";"SUB-06 Pintura";"11";"18/03/2027";"28/03/2027"
-"Setor 02 - Salas Tecnicas/CPD";"1";"Fundações e Baldrames";"SUB-01 Estruturas";"15";"08/10/2026";"22/10/2026"
-"Setor 02 - Salas Tecnicas/CPD";"2";"Supraestrutura Pilares";"SUB-01 Estruturas";"14";"13/11/2026";"27/11/2026"
-"Setor 02 - Salas Tecnicas/CPD";"3";"Alvenaria de Vedação";"SUB-02 Alvenaria";"14";"19/12/2026";"02/01/2027"
-"Setor 02 - Salas Tecnicas/CPD";"4";"Instalações Elétricas/Lógica";"SUB-03 Elétrica";"14";"24/01/2027";"06/02/2027"
-"Setor 02 - Salas Tecnicas/CPD";"5";"Reboco e Emboço";"SUB-02 Alvenaria";"14";"07/02/2027";"20/02/2027"
-"Setor 02 - Salas Tecnicas/CPD";"6";"Piso Porcelanato 60x60";"SUB-05 Acabamentos";"14";"28/02/2027";"13/03/2027"
-"Setor 02 - Salas Tecnicas/CPD";"7";"Pintura Final e Climatização";"SUB-06 Pintura";"11";"18/03/2027";"28/03/2027"
-"Setor 03 - Sanitarios e Copa";"1";"Fundações e Baldrames";"SUB-01 Estruturas";"15";"15/10/2026";"29/10/2026"
-"Setor 03 - Sanitarios e Copa";"2";"Supraestrutura Pilares";"SUB-01 Estruturas";"14";"20/11/2026";"04/12/2026"
-"Setor 03 - Sanitarios e Copa";"3";"Alvenaria de Vedação";"SUB-02 Alvenaria";"14";"26/12/2026";"09/01/2027"
-"Setor 03 - Sanitarios e Copa";"4";"Instalações Hidráulicas";"SUB-04 Hidráulica";"14";"31/01/2027";"13/02/2027"
-"Setor 03 - Sanitarios e Copa";"5";"Impermeabilização e Reboco";"SUB-02 Alvenaria";"14";"14/02/2027";"27/02/2027"
-"Setor 03 - Sanitarios e Copa";"6";"Revestimento Cerâmico";"SUB-05 Acabamentos";"14";"07/03/2027";"20/03/2027"
-"Setor 03 - Sanitarios e Copa";"7";"Louças, Metais e Pintura";"SUB-04 Hidráulica";"9";"20/03/2027";"28/03/2027"
-"Setor 04 - Galeria Circulacao";"1";"Fundações e Baldrames";"SUB-01 Estruturas";"15";"22/10/2026";"05/11/2026"
-"Setor 04 - Galeria Circulacao";"2";"Supraestrutura Pilares";"SUB-01 Estruturas";"14";"27/11/2026";"11/12/2026"
-"Setor 04 - Galeria Circulacao";"3";"Alvenaria de Vedação";"SUB-02 Alvenaria";"15";"02/01/2027";"16/01/2027"
-"Setor 04 - Galeria Circulacao";"4";"Instalações Elétricas/Lógica";"SUB-03 Elétrica";"14";"07/02/2027";"20/02/2027"
-"Setor 04 - Galeria Circulacao";"5";"Reboco e Emboço";"SUB-02 Alvenaria";"14";"21/02/2027";"06/03/2027"
-"Setor 04 - Galeria Circulacao";"6";"Piso Porcelanato 60x60";"SUB-05 Acabamentos";"12";"14/03/2027";"25/03/2027"
-"Setor 04 - Galeria Circulacao";"7";"Pintura e Luminárias";"SUB-06 Pintura";"9";"20/03/2027";"28/03/2027"
-"Setor 05 - Cobertura/Platibanda";"1";"Montagem Estrutura Metálica";"SUB-07 Coberturas";"15";"02/01/2027";"16/01/2027"
-"Setor 05 - Cobertura/Platibanda";"2";"Telhas Termoacústicas";"SUB-07 Coberturas";"14";"17/01/2027";"30/01/2027"
-"Setor 05 - Cobertura/Platibanda";"3";"Calhas, Rufos e Platibanda";"SUB-07 Coberturas";"14";"31/01/2027";"13/02/2027"
-"Setor 05 - Cobertura/Platibanda";"4";"Impermeabilização e Teste";"SUB-07 Coberturas";"14";"14/02/2027";"27/02/2027"
+LOCAL_PAVIMENTO;SEQUENCIA;VAGAO;ATIVIDADE;EQUIPE_RESPONSAVEL;RITMO_DIAS_POR_LOCAL;DATA_INICIO;DATA_FIM
+Zona 01 - Recepção/Diretoria;1;01. Topografia & Canteiro;Topografia & Canteiro;SUB-01 Topografia e Locação;3;01/10/2026;03/10/2026
+Zona 01 - Recepção/Diretoria;2;02. Fundações Sapatas;Escavação & Pré-Armação de Bancada;SUB-01 Estruturas e Concreto;3;05/10/2026;07/10/2026
+Zona 01 - Recepção/Diretoria;3;02. Fundações Sapatas;Carpintaria & Armação;SUB-01 Estruturas e Concreto;3;08/10/2026;10/10/2026
+Zona 02 - Salas Técnicas/CPD;4;02. Fundações Sapatas;Escavação, Concretagem & Pré-Armação;SUB-01 Estruturas e Concreto;3;12/10/2026;14/10/2026
+Zona 02 - Salas Técnicas/CPD;5;02. Fundações Sapatas;Carpintaria & Armação;SUB-01 Estruturas e Concreto;3;15/10/2026;17/10/2026
+Zona 03 - Sanitários e Apoio;6;02. Fundações Sapatas;Escavação, Concretagem & Pré-Armação;SUB-01 Estruturas e Concreto;3;19/10/2026;21/10/2026
+Zona 03 - Sanitários e Apoio;7;02. Fundações Sapatas;Carpintaria & Armação;SUB-01 Estruturas e Concreto;3;22/10/2026;24/10/2026
+Zona 01 - Recepção/Diretoria;8;03. Vigas Baldrames;Carpintaria de Baldrames;SUB-01 Estruturas e Concreto;3;26/10/2026;28/10/2026
+Zona 01 - Recepção/Diretoria;9;03. Vigas Baldrames;Fôrmas VB7-12 & Concretagem VB1-6;SUB-01 Estruturas e Concreto;3;29/10/2026;31/10/2026
+Zona 02 - Salas Técnicas/CPD;10;03. Vigas Baldrames;Fôrmas VB13-19 & Concretagem VB7-12;SUB-01 Estruturas e Concreto;3;02/11/2026;04/11/2026
+Zona 03 - Sanitários e Apoio;11;03. Vigas Baldrames;Concretagem VB13-19 & Fôrmas Pilares P1-8;SUB-01 Estruturas e Concreto;3;05/11/2026;07/11/2026
+Zona 01 - Recepção/Diretoria;12;04. Pilares Supraestrutura;Concretagem P1-8 & Fôrmas Pilares P9-16;SUB-01 Estruturas e Concreto;3;09/11/2026;11/11/2026
+Zona 02 - Salas Técnicas/CPD;13;04. Pilares Supraestrutura;Concretagem P9-16 & Fôrmas Pilares P17-24;SUB-01 Estruturas e Concreto;3;12/11/2026;14/11/2026
+Zona 03 - Sanitários e Apoio;14;04. Pilares Supraestrutura;Concretagem P17-24 & Cimbramento Vigas;SUB-01 Estruturas e Concreto;3;16/11/2026;18/11/2026
+Zona 02 - Salas Técnicas/CPD;15;05. Vigas & Laje H12;Cimbramento e Armação Vigas Superiores;SUB-01 Estruturas e Concreto;3;19/11/2026;21/11/2026
+Zona 01 - Recepção/Diretoria;16;05. Vigas & Laje H12;Montagem Vigotas Treliçadas & Concretagem Capa H12;SUB-01 Estruturas e Concreto;3;23/11/2026;25/11/2026
+Zona 02 - Salas Técnicas/CPD;17;05. Vigas & Laje H12;Montagem Vigotas Treliçadas & Concretagem Capa H12;SUB-01 Estruturas e Concreto;3;23/11/2026;25/11/2026
+Zona 03 - Sanitários e Apoio;18;05. Vigas & Laje H12;Montagem Vigotas Treliçadas & Concretagem Capa H12;SUB-01 Estruturas e Concreto;3;23/11/2026;25/11/2026
+Zona 01 - Recepção/Diretoria;19;06. Alvenaria de Vedação;Alvenaria de Blocos;SUB-02 Alvenaria e Revestimento;3;26/11/2026;28/11/2026
+Zona 02 - Salas Técnicas/CPD;20;06. Alvenaria de Vedação;Alvenaria de Blocos;SUB-02 Alvenaria e Revestimento;3;30/11/2026;02/12/2026
+Zona 03 - Sanitários e Apoio;21;06. Alvenaria de Vedação;Alvenaria de Blocos;SUB-02 Alvenaria e Revestimento;3;03/12/2026;05/12/2026
+Zona 04 - Cobertura e Platibanda;22;07. Cobertura Metálica;Estrutura Metálica Cobertura;SUB-07 Coberturas Metálicas;3;07/12/2026;09/12/2026
+Zona 04 - Cobertura e Platibanda;23;07. Cobertura Metálica;Telhamento Termoacústico;SUB-07 Coberturas Metálicas;3;10/12/2026;12/12/2026
+Zona 01 - Recepção/Diretoria;24;08. Instalações Embutidas;Redes Elétricas & Hidráulicas Embutidas;SUB-03 Elétrica e Lógica;3;14/12/2026;16/12/2026
+Zona 02 - Salas Técnicas/CPD;25;08. Instalações Embutidas;Redes Elétricas & Hidráulicas Embutidas;SUB-03 Elétrica e Lógica;3;14/12/2026;16/12/2026
+Zona 03 - Sanitários e Apoio;26;08. Instalações Embutidas;Redes Elétricas & Hidráulicas Embutidas;SUB-03 Elétrica e Lógica;3;14/12/2026;16/12/2026
+Zona 01 - Recepção/Diretoria;27;08. Instalações Embutidas;Teste Hidrostático Estanqueidade;SUB-04 Hidráulica e Sanitários;3;17/12/2026;19/12/2026
+Zona 02 - Salas Técnicas/CPD;28;08. Instalações Embutidas;Teste Hidrostático Estanqueidade;SUB-04 Hidráulica e Sanitários;3;17/12/2026;19/12/2026
+Zona 03 - Sanitários e Apoio;29;08. Instalações Embutidas;Teste Hidrostático Estanqueidade;SUB-04 Hidráulica e Sanitários;3;17/12/2026;19/12/2026
+Zona 01 - Recepção/Diretoria;30;09. Reboco Paulista;Chapisco Rolado;SUB-02 Alvenaria e Revestimento;3;21/12/2026;23/12/2026
+Zona 01 - Recepção/Diretoria;31;09. Reboco Paulista;Reboco Paulista Mecanizado;SUB-02 Alvenaria e Revestimento;3;24/12/2026;26/12/2026
+Zona 02 - Salas Técnicas/CPD;32;09. Reboco Paulista;Reboco Paulista Mecanizado;SUB-02 Alvenaria e Revestimento;3;28/12/2026;30/12/2026
+Zona 03 - Sanitários e Apoio;33;10. Pisos & Porcelanato;Impermeabilização Áreas Molhadas;SUB-01 Impermeabilização;3;31/12/2026;02/01/2027
+Zona 01 - Recepção/Diretoria;34;10. Pisos & Porcelanato;Regularização de Contrapiso;SUB-02 Alvenaria e Revestimento;3;04/01/2027;06/01/2027
+Zona 01 - Recepção/Diretoria;35;10. Pisos & Porcelanato;Assentamento de Porcelanato;SUB-05 Acabamentos e Pisos;3;07/01/2027;09/01/2027
+Zona 02 - Salas Técnicas/CPD;36;10. Pisos & Porcelanato;Assentamento de Porcelanato;SUB-05 Acabamentos e Pisos;3;11/01/2027;13/01/2027
+Zona 03 - Sanitários e Apoio;37;10. Pisos & Porcelanato;Revestimento Cerâmico WCs;SUB-05 Acabamentos e Pisos;3;14/01/2027;16/01/2027
+Zona 01 - Recepção/Diretoria;38;10. Pisos & Porcelanato;Rejunte Geral e Rodapés;SUB-05 Acabamentos e Pisos;3;18/01/2027;20/01/2027
+Zona 02 - Salas Técnicas/CPD;39;10. Pisos & Porcelanato;Rejunte Geral e Rodapés;SUB-05 Acabamentos e Pisos;3;18/01/2027;20/01/2027
+Zona 03 - Sanitários e Apoio;40;10. Pisos & Porcelanato;Rejunte Geral e Rodapés;SUB-05 Acabamentos e Pisos;3;18/01/2027;20/01/2027
+Zona 01 - Recepção/Diretoria;41;11. Esquadrias de Alumínio;Esquadrias de Alumínio;SUB-07 Caixilharia e Esquadrias;3;21/01/2027;23/01/2027
+Zona 03 - Sanitários e Apoio;42;11. Esquadrias de Alumínio;Esquadrias de Alumínio & Portas;SUB-07 Caixilharia e Esquadrias;3;25/01/2027;27/01/2027
+Zona 01 - Recepção/Diretoria;43;12. Climatização HVAC;Climatização & Redes Frigorígenas;SUB-08 Climatização e HVAC;3;28/01/2027;30/01/2027
+Zona 02 - Salas Técnicas/CPD;44;12. Climatização HVAC;Climatização & Redes Frigorígenas;SUB-08 Climatização e HVAC;3;28/01/2027;30/01/2027
+Zona 03 - Sanitários e Apoio;45;12. Climatização HVAC;Climatização & Redes Frigorígenas;SUB-08 Climatização e HVAC;3;28/01/2027;30/01/2027
+Zona 01 - Recepção/Diretoria;46;12. Climatização HVAC;Teste de Estanqueidade Redes HVAC;SUB-08 Climatização e HVAC;3;01/02/2027;03/02/2027
+Zona 02 - Salas Técnicas/CPD;47;12. Climatização HVAC;Teste de Estanqueidade Redes HVAC;SUB-08 Climatização e HVAC;3;01/02/2027;03/02/2027
+Zona 03 - Sanitários e Apoio;48;12. Climatização HVAC;Teste de Estanqueidade Redes HVAC;SUB-08 Climatização e HVAC;3;01/02/2027;03/02/2027
+Zona 01 - Recepção/Diretoria;49;13. Acabamentos Elétr./Hidr.;Cabos Elétricos & Telecom;SUB-03 Elétrica e Lógica;3;04/02/2027;06/02/2027
+Zona 01 - Recepção/Diretoria;50;13. Acabamentos Elétr./Hidr.;Montagem de Quadros QGBT e QD;SUB-03 Elétrica e Lógica;3;08/02/2027;10/02/2027
+Zona 02 - Salas Técnicas/CPD;51;13. Acabamentos Elétr./Hidr.;Montagem de Quadros QGBT e QD;SUB-03 Elétrica e Lógica;3;08/02/2027;10/02/2027
+Zona 03 - Sanitários e Apoio;52;13. Acabamentos Elétr./Hidr.;Montagem de Quadros QGBT e QD;SUB-03 Elétrica e Lógica;3;08/02/2027;10/02/2027
+Zona 03 - Sanitários e Apoio;53;13. Acabamentos Elétr./Hidr.;Louças & Metais Sanitários;SUB-04 Hidráulica e Sanitários;3;11/02/2027;13/02/2027
+Zona 01 - Recepção/Diretoria;54;13. Acabamentos Elétr./Hidr.;Luminárias LED & Acabamentos Elétricos;SUB-03 Elétrica e Lógica;3;15/02/2027;17/02/2027
+Zona 02 - Salas Técnicas/CPD;55;13. Acabamentos Elétr./Hidr.;Luminárias LED & Acabamentos Elétricos;SUB-03 Elétrica e Lógica;3;15/02/2027;17/02/2027
+Zona 03 - Sanitários e Apoio;56;13. Acabamentos Elétr./Hidr.;Luminárias LED & Acabamentos Elétricos;SUB-03 Elétrica e Lógica;3;15/02/2027;17/02/2027
+Zona 01 - Recepção/Diretoria;57;14. Pintura Acrílica Final;Pintura Acrílica;SUB-06 Pintura;3;18/02/2027;20/02/2027
+Zona 03 - Sanitários e Apoio;58;14. Pintura Acrílica Final;Pintura Acrílica;SUB-06 Pintura;3;22/02/2027;24/02/2027
+Zona 01 - Recepção/Diretoria;59;14. Pintura Acrílica Final;Pintura Acrílica Final;SUB-06 Pintura;3;25/02/2027;27/02/2027
+Zona 02 - Salas Técnicas/CPD;60;14. Pintura Acrílica Final;Pintura Acrílica Final;SUB-06 Pintura;3;25/02/2027;27/02/2027
+Zona 03 - Sanitários e Apoio;61;14. Pintura Acrílica Final;Pintura Acrílica Final;SUB-06 Pintura;3;25/02/2027;27/02/2027
+Zona 01 - Recepção/Diretoria;62;12. Climatização HVAC;Instalação Evaporadoras & Startup;SUB-08 Climatização e HVAC;3;01/03/2027;03/03/2027
+Zona 02 - Salas Técnicas/CPD;63;12. Climatização HVAC;Instalação Evaporadoras & Startup;SUB-08 Climatização e HVAC;3;01/03/2027;03/03/2027
+Zona 03 - Sanitários e Apoio;64;12. Climatização HVAC;Instalação Evaporadoras & Startup;SUB-08 Climatização e HVAC;3;01/03/2027;03/03/2027
+Zona 01 - Recepção/Diretoria;65;12. Climatização HVAC;Comissionamento Integrado & Testes;SUB-08 Climatização e HVAC;3;04/03/2027;06/03/2027
+Zona 02 - Salas Técnicas/CPD;66;12. Climatização HVAC;Comissionamento Integrado & Testes;SUB-08 Climatização e HVAC;3;04/03/2027;06/03/2027
+Zona 03 - Sanitários e Apoio;67;12. Climatização HVAC;Comissionamento Integrado & Testes;SUB-08 Climatização e HVAC;3;04/03/2027;06/03/2027
+Zona 04 - Cobertura e Platibanda;68;12. Climatização HVAC;Comissionamento Integrado & Testes;SUB-08 Climatização e HVAC;3;04/03/2027;06/03/2027
+Zona 01 - Recepção/Diretoria;69;15. Comissionamento & Entrega;Limpeza Fina Pós-Obra & Entrega;Equipe Própria / Turnkey;3;08/03/2027;10/03/2027
+Zona 02 - Salas Técnicas/CPD;70;15. Comissionamento & Entrega;Limpeza Fina Pós-Obra & Entrega;Equipe Própria / Turnkey;3;08/03/2027;10/03/2027
+Zona 03 - Sanitários e Apoio;71;15. Comissionamento & Entrega;Limpeza Fina Pós-Obra & Entrega;Equipe Própria / Turnkey;3;08/03/2027;10/03/2027
+Zona 04 - Cobertura e Platibanda;72;15. Comissionamento & Entrega;Limpeza Fina Pós-Obra & Entrega;Equipe Própria / Turnkey;3;08/03/2027;10/03/2027
+Zona 01 - Recepção/Diretoria;73;15. Comissionamento & Entrega;Testes Integrados sob Carga;SUB-03 Elétrica e Lógica;3;11/03/2027;13/03/2027
+Zona 02 - Salas Técnicas/CPD;74;15. Comissionamento & Entrega;Testes Integrados sob Carga;SUB-03 Elétrica e Lógica;3;11/03/2027;13/03/2027
+Zona 03 - Sanitários e Apoio;75;15. Comissionamento & Entrega;Testes Integrados sob Carga;SUB-03 Elétrica e Lógica;3;11/03/2027;13/03/2027
+Zona 04 - Cobertura e Platibanda;76;15. Comissionamento & Entrega;Testes Integrados sob Carga;SUB-03 Elétrica e Lógica;3;11/03/2027;13/03/2027
+Zona 01 - Recepção/Diretoria;77;15. Comissionamento & Entrega;As-Built & DataBook;Equipe Própria / Turnkey;3;15/03/2027;17/03/2027
+Zona 02 - Salas Técnicas/CPD;78;15. Comissionamento & Entrega;As-Built & DataBook;Equipe Própria / Turnkey;3;15/03/2027;17/03/2027
+Zona 03 - Sanitários e Apoio;79;15. Comissionamento & Entrega;As-Built & DataBook;Equipe Própria / Turnkey;3;15/03/2027;17/03/2027
+Zona 04 - Cobertura e Platibanda;80;15. Comissionamento & Entrega;As-Built & DataBook;Equipe Própria / Turnkey;3;15/03/2027;17/03/2027
+Zona 01 - Recepção/Diretoria;81;15. Comissionamento & Entrega;Treinamento Operacional;SUB-08 Climatização e HVAC;3;18/03/2027;20/03/2027
+Zona 02 - Salas Técnicas/CPD;82;15. Comissionamento & Entrega;Treinamento Operacional;SUB-08 Climatização e HVAC;3;18/03/2027;20/03/2027
+Zona 03 - Sanitários e Apoio;83;15. Comissionamento & Entrega;Treinamento Operacional;SUB-08 Climatização e HVAC;3;18/03/2027;20/03/2027
+Zona 04 - Cobertura e Platibanda;84;15. Comissionamento & Entrega;Treinamento Operacional;SUB-08 Climatização e HVAC;3;18/03/2027;20/03/2027
+Zona 01 - Recepção/Diretoria;85;15. Comissionamento & Entrega;Auditoria de Encerramento;Equipe Própria / Turnkey;3;22/03/2027;24/03/2027
+Zona 02 - Salas Técnicas/CPD;86;15. Comissionamento & Entrega;Auditoria de Encerramento;Equipe Própria / Turnkey;3;22/03/2027;24/03/2027
+Zona 03 - Sanitários e Apoio;87;15. Comissionamento & Entrega;Auditoria de Encerramento;Equipe Própria / Turnkey;3;22/03/2027;24/03/2027
+Zona 04 - Cobertura e Platibanda;88;15. Comissionamento & Entrega;Auditoria de Encerramento;Equipe Própria / Turnkey;3;22/03/2027;24/03/2027
+Zona 01 - Recepção/Diretoria;89;15. Comissionamento & Entrega;Vistoria Provisória;Equipe Própria / Turnkey;3;25/03/2027;27/03/2027
+Zona 02 - Salas Técnicas/CPD;90;15. Comissionamento & Entrega;Vistoria Provisória;Equipe Própria / Turnkey;3;25/03/2027;27/03/2027
+Zona 03 - Sanitários e Apoio;91;15. Comissionamento & Entrega;Vistoria Provisória;Equipe Própria / Turnkey;3;25/03/2027;27/03/2027
+Zona 04 - Cobertura e Platibanda;92;15. Comissionamento & Entrega;Vistoria Provisória;Equipe Própria / Turnkey;3;25/03/2027;27/03/2027
+Zona 01 - Recepção/Diretoria;93;15. Comissionamento & Entrega;Recebimento Definitivo;Equipe Própria / Turnkey;3;29/03/2027;31/03/2027
+Zona 02 - Salas Técnicas/CPD;94;15. Comissionamento & Entrega;Recebimento Definitivo;Equipe Própria / Turnkey;3;29/03/2027;31/03/2027
+Zona 03 - Sanitários e Apoio;95;15. Comissionamento & Entrega;Recebimento Definitivo;Equipe Própria / Turnkey;3;29/03/2027;31/03/2027
+Zona 04 - Cobertura e Platibanda;96;15. Comissionamento & Entrega;Recebimento Definitivo;Equipe Própria / Turnkey;3;29/03/2027;31/03/2027
