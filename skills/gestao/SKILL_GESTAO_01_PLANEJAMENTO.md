@@ -30,6 +30,25 @@ Analisar cronogramas, identificar dependências lógicas entre serviços, medir 
 - **Duração das atividades:** Baseada no RUP real de `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (não estimativa sentida).
 - **Reprogramação formal:** Delegada para `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md`.
 
+### 1.3 Gestão em 3 Níveis & Esteira Lean de Curto Prazo (Takt Time Planning)
+
+O ecossistema opera o cronograma em **3 níveis de maturidade 5D**:
+1. **Longo Prazo (Linha de Balanço - LOB & CPM):**
+   - Define o prazo global contratual (ex: 180 dias / 26 semanas), o caminho crítico determinístico e os ritmos de avanço vertical/setorial em fluxo ascendente.
+2. **Médio Prazo (Lookahead 4 a 6 Semanas):**
+   - Identificação e remoção ativa de restrições (projetos, compras, contratações de empreiteiros, liberações de FVS).
+3. **Curto Prazo (Plano Semanal / Lotes em Esteira Lean - WWP):**
+   - **Regra de Ouro da Esteira de Produção Construtiva:**
+     A mão de obra nunca deve ser alocada de forma caótica ou agrupada sem sequência temporal. Para evitar ociosidade e picos irreais, **toda obra deve ser dividida em 2 a 3 Etapas Construtivas (Zonas Takt) de volumes de serviço equalizados**.
+   - **Mecanismo da Linha de Montagem (Parade of Trades / Vagões Especializados):**
+     * Cada disciplina atua como um "vagão" que se desloca de zona em zona em ritmo fixo (Takt Time padrão = 3 dias úteis: Seg-Qua e Qui-Sáb).
+     * **Eliminação da Espera Tecnológica de Cura:** Enquanto a Zona 1 está concretando e cumprindo o período de cura (ganho de fck e resistência), as equipes especializadas de carpintaria e armação **NUNCA ficam ociosas**: elas avançam imediatamente para montar as fôrmas da Zona 2! Quando a Zona 2 está curando, a carpintaria avança para a Zona 3 ou retorna para montar vigas e pilares da Zona 1 que já desformaram.
+   - **Nivelamento Rigoroso de Recursos (Resource Leveling):**
+     * O efetivo real diário de campo deve ser rigorosamente constante ao longo de cada semana, calibrado com o teto mensal orçado no **Histograma de Mão de Obra (EAP 1.0 e RH)**.
+     * **É PROIBIDO** gerar cronogramas com anomalias de picos fictícios (ex: somar linhas de atividades independentes resultando em 36 operários simultâneos) ou vales de abandono (ex: 6 operários em 1 dia deixando os outros 5 dias úteis sem trabalho).
+   - **Padrão de Arquivo:** Todo cronograma de curto prazo deve ser gerado no arquivo `projetos/[OBRA]/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_[OBRA].csv` contendo:
+     `COD_LOTE`, `SEMANA`, `DIAS_SEMANA`, `ETAPA_ZONA`, `VAGAO_ESTEIRA`, `SERVICO_LOTE`, `META_FISICA`, `DURACAO_DIAS`, `EQUIPE_PREVISTA`, `HEADCOUNT_PREVISTO`, `EQUIPAMENTOS_PREVISTOS`, `MATERIAIS_UCC`, `RUP_META_HH_UNID`, `STATUS_EXECUCAO`, `RDO_VINCULADO`.
+
 ---
 
 ## 📥 2. Inputs Necessários (O que você deve pedir ao Gestor)

@@ -190,6 +190,29 @@ Teste Hidrostático 72h sob Pressão ────> Libera Fechamento de Rasgos e
 
 ---
 
+## 5.1 Programação de Curto Prazo em Lotes Takt (Esteira Lean & Nivelamento de Recursos)
+
+O planejamento operacional de curto prazo (Weekly Work Plan - WWP) foi estruturado seguindo os princípios rigorosos do **Lean Construction** e do **Takt Time Planning (Esteira de Produção Contínua)**:
+
+### A) Divisão da Obra em 3 Etapas Construtivas (Zonas Takt)
+Para eliminar esperas improdutivas decorrentes do tempo de cura do concreto armado (resistência $f_{ck}$), a edificação foi subdividida em 3 Zonas Takt com volumes de serviço equalizados:
+1. **Etapa 1 (Zona 1 — Recepção e Diretoria):** Sapatas S1 a S12 (12 sapatas) $\rightarrow$ Vigas Baldrames VB1 a VB6 (6 vigas) $\rightarrow$ Pilares P1 a P8 (8 pilares) $\rightarrow$ Vigas V101 a V105.
+2. **Etapa 2 (Zona 2 — Salas Técnicas e CPD):** Sapatas S13 a S24 (12 sapatas) $\rightarrow$ Vigas Baldrames VB7 a VB12 (6 vigas) $\rightarrow$ Pilares P9 a P16 (8 pilares) $\rightarrow$ Vigas V106 a V110.
+3. **Etapa 3 (Zona 3 — Sanitários, Copa e Apoio):** Sapatas S25 a S32 (8 sapatas) $\rightarrow$ Vigas Baldrames VB13 a VB19 (7 vigas) $\rightarrow$ Pilares P17 a P24 (8 pilares) $\rightarrow$ Vigas V111 a V115 + Concretagem Global da Laje H12.
+
+### B) Mecanismo da Esteira de Produção (Takt Time = 3 Dias Úteis)
+* Cada semana de 6 dias úteis possui dois ciclos de produção: **Ciclo 1 (Segunda a Quarta)** e **Ciclo 2 (Quinta a Sábado)**.
+* **Eliminação da Ociosidade Tecnológica de Cura:** Enquanto a Etapa 1 está sendo concretada e cumprindo o período de cura úmida (tempo tecnológico), a equipe de carpintaria e armação **não espera no canteiro**: avança imediatamente para a montagem de fôrmas da Etapa 2! Quando a Etapa 2 está curando, a equipe avança para a Etapa 3 ou retorna para os pilares e vigas da Etapa 1 que já desformaram.
+
+### C) Nivelamento de Recursos (Resource Leveling)
+* O efetivo diário de campo é rigorosamente constante e calibrado com o **Histograma de Mão de Obra Oficial (EAP 1.0 e RH)**:
+  * **Mês 1 (Semanas 01 a 04):** 7 a 9 operários diários de produção direta (dentro do teto orçado de 9 operários diretos / 14 headcount total).
+  * **Mês 2 (Semanas 05 a 08):** 14 operários diários de produção direta (dentro do teto orçado de 14 operários diretos / 19 headcount total).
+  * **Meses 3 a 6 (Semanas 09 a 26):** 10 a 14 operários diários conforme as frentes de alvenaria, reboco projetado, porcelanatos e acabamentos.
+* Foram extintas quaisquer oscilações artificiais de efetivo (como acúmulos fictícios de 30+ operários ou vales de abandono com 6 operários em 1 único dia útil).
+
+---
+
 ## 6. Matriz de Riscos de Prazo & Estratégia de Recuperação (Crashing vs Fast-Tracking)
 
 De acordo com a `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md`, atrasos pontuais no caminho crítico devem ser combatidos com critérios técnicos lastreados em produtividade (RUP), e não com decisões emocionais:
@@ -207,19 +230,25 @@ De acordo com a `SKILL_GESTAO_16_CRONOGRAMA_E_REPROGRAMACAO.md`, atrasos pontuai
 
 Todos os artefatos de planejamento foram compilados e estão disponíveis na pasta `projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/`:
 
-1. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv)**
-   - Base de dados bruta, auditável e versionável via Git. Contém os 158 itens da EAP distribuídos mês a mês (M1 a M6), com percentuais e valores em reais, somando exatamente R$ 1.660.762,28.
+1. **[`PROGRAMACAO_CURTO_PRAZO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_TMULT.csv)**
+   - Base de dados de curto prazo contendo 46 lotes dimensionados em Takt Time de 3 dias, organizados por Etapa Construtiva (Zonas 1 a 3), Vagão Lean e Recursos Previstos com metas de RUP.
 
-2. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.xlsx`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.xlsx)**
-   - Planilha executiva formatada em padrão corporativo. Contém duas abas: *Resumo Executivo & Curva S* (com gráfico nativo de linhas embutido) e *Cronograma Analítico* (158 itens com formatação de moeda R$, percentuais %, fórmulas automáticas de soma e cores alternadas).
+2. **[`LINHA_DE_BALANCO.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv)**
+   - Cronograma de Linha de Balanço (LOB) cobrindo os 180 dias corridos em fluxo ascendente com 5 setores físicos.
 
-3. **[`CRONOGRAMA_TMULT_MSPROJECT.xml`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_TMULT_MSPROJECT.xml)**
-   - Arquivo padrão Microsoft Project (MSPDI Schema). Pronto para importação direta no MS Project ou Primavera P6, contendo a EAP, tarefas, durações em horas/dias, vínculos de predecessão (FS) e marcação do caminho crítico determinístico.
+3. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv)**
+   - Base de dados bruta, auditável e versionável via Git. Contém os 158 itens da EAP distribuídos mês a mês (M1 a M6), somando exatamente R$ 1.660.762,28.
 
-4. **[`CRONOGRAMA_DASHBOARD_INTERATIVO.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_DASHBOARD_INTERATIVO.html)**
-   - Dashboard web interativo (gerado com Plotly). Permite visualização dinâmica em qualquer navegador web, com zoom, hover de valores e curvas comparativas de desembolso mensal e avanço físico vs. financeiro.
+4. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.xlsx`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.xlsx)**
+   - Planilha executiva formatada em padrão corporativo com gráficos e abas de Curva S e Cronograma Analítico.
 
-5. **[`RELATORIO_PLANEJAMENTO_BASELINE_TMULT.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/RELATORIO_PLANEJAMENTO_BASELINE_TMULT.md)**
+5. **[`CRONOGRAMA_TMULT_MSPROJECT.xml`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_TMULT_MSPROJECT.xml)**
+   - Arquivo padrão Microsoft Project (MSPDI Schema) pronto para importação direta no MS Project ou Primavera P6.
+
+6. **[`CRONOGRAMA_DASHBOARD_INTERATIVO.html`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_DASHBOARD_INTERATIVO.html)**
+   - Dashboard web interativo Plotly para visualização de Curva S e desembolso.
+
+7. **[`RELATORIO_PLANEJAMENTO_BASELINE_TMULT.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/RELATORIO_PLANEJAMENTO_BASELINE_TMULT.md)**
    - Este relatório formal consolidado, servindo como documento de Linha de Base Contratual da Construtora perante o Contratante.
 
 ---

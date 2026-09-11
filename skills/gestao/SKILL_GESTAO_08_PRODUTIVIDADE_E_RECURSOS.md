@@ -94,6 +94,22 @@ Tabela mínima a manter, atualizada diariamente a partir do RDO:
   redução de equipe (sempre seguindo o protocolo de correlação×causa, nunca declarando causa
   direto).
 
+### 2.2 Nivelamento de Recursos & Prevenção de Ociosidade em Esteira Lean (Takt Time)
+
+O dimensionamento de lotes de curto prazo no ecossistema não pode gerar oscilações artificiais de mão de obra (ex: picos irreais de 30+ operários ou vales de abandono de canteiro). 
+
+**Regras Mandatórias de Engenharia de Produção Lean:**
+1. **Calibração Direta com o Histograma Orçado (EAP 1.0 e RH):**
+   - O efetivo de campo em qualquer dia útil deve respeitar a equipe base contratada para o mês vigente (ex: 9 a 10 operários no início/fundações, 14 a 15 no pico estrutural/alvenarias, 10 a 12 nos acabamentos).
+2. **Divisão da Obra em Zonas Takt Equalizadas (2 a 3 Etapas):**
+   - Para que as equipes especializadas nunca fiquem ociosas aguardando a cura do concreto ou desforma de peças estruturais, a obra deve ser subdividida em 2 ou 3 etapas de volume de serviço equilibrado.
+3. **Fluxo Contínuo da Carpintaria e Concretagem:**
+   - Enquanto a **Etapa 1** está concretando e cumprindo o tempo tecnológico de cura, a equipe de carpintaria e armação **avança imediatamente para a Etapa 2**!
+   - Quando a **Etapa 2** está concretando, a carpintaria avança para a **Etapa 3** ou retorna para as vigas/pilares da **Etapa 1** que já desformaram.
+   - **Ociosidade Zero:** Nenhuma equipe para. A transição de zona ocorre em ciclos Takt padronizados de 3 dias úteis (Segunda a Quarta / Quinta a Sábado).
+4. **Validação contra o RDO:**
+   - O apontador/engenheiro no RDO confere diariamente se o lote programado da semana está sendo cumprido dentro da meta de RUP pactuada, alertando qualquer desvio de ritmo antes que ele impacte a Linha de Balanço global.
+
 ---
 
 ## 3. Desperdício (Mão de Obra, Material, Equipamento)

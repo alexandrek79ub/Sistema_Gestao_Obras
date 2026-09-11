@@ -48,6 +48,9 @@ python scripts/gerar_plano_centros_custo.py --obra OBRA_NOVA
 # 3. Gerar o Cronograma Físico-Financeiro, Baseline, Excel, MS Project XML e Dashboard HTML
 python scripts/gerar_cronograma.py --obra OBRA_NOVA
 
+# 3.1 Gerar a Programação de Curto Prazo em Lotes Takt (Esteira Lean em Zonas Equalizadas)
+python scripts/gerar_programacao_curto_prazo_takt.py --obra OBRA_NOVA
+
 # 4. Gerar o Pacote Completo de Suprimentos (RCs, REs, Matriz de Subcontratos)
 python scripts/gerar_cronograma_suprimentos.py --obra OBRA_NOVA
 
