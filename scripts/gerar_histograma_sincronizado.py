@@ -393,6 +393,54 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
 
     wb.save(xlsx_path)
     print(f"✔ Planilha XLSX do histograma gerada: {xlsx_path}")
+
+    # 4. Salvar RELATORIO_HISTOGRAMA_MO_[SIGLA].md
+    md_path = os.path.join(dir_rh, f"RELATORIO_HISTOGRAMA_MO_{sigla}.md")
+    pico_hc = max(totais_headcount)
+    media_hc = sum(totais_headcount) / len(totais_headcount)
+    total_geral_hh = sum(totais_hh)
+
+    md_lines = [
+        f"# 👷 RELATÓRIO EXECUTIVO: HISTOGRAMA DE MÃO DE OBRA & GESTÃO DE EFETIVO",
+        f"",
+        f"**Empreendimento:** Obra `{sigla}`  ",
+        f"**Prazo da Obra:** {prazo_meses} Meses (Sincronizado com Takt & Linha de Balanço)  ",
+        f"**Total de Horas-Homem (HH) Planejadas:** {total_geral_hh:,.0f} HH  ",
+        f"**Pico de Efetivo (Headcount):** {pico_hc} profissionais  ",
+        f"**Média Geral de Efetivo:** {media_hc:.1f} profissionais/mês (5 de gestão/SST fixos)  ",
+        f"**Data de Atualização:** {datetime.now().strftime('%d/%m/%Y %H:%M')}  ",
+        f"**Responsável Técnico:** PMO Virtual / Coordenação de Planejamento, SST e RH  ",
+        f"",
+        f"---",
+        f"",
+        f"## 1. Matriz Mensal de Headcount por Cargo / Função",
+        f"",
+        f"| Grupo | Função / Cargo | Categoria | Custo Base Ref. | " + " | ".join([f"M{m}" for m in range(1, prazo_meses + 1)]) + " |",
+        f"|---|---|:---:|:---:| " + " | ".join([":---:" for _ in range(prazo_meses)]) + " |"
+    ]
+
+    for row in dados_mo:
+        grupo, cargo, cat, custo = row[:4]
+        meses_str = " | ".join([str(v) for v in row[4:]])
+        custo_fmt = f"R$ {custo:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
+        md_lines.append(f"| **{grupo}** | {cargo} | {cat} | {custo_fmt} | {meses_str} |")
+
+    hc_row_str = " | ".join([f"**{hc}**" for hc in totais_headcount])
+    hh_row_str = " | ".join([f"**{hh:,.0f}**" for hh in totais_hh])
+    md_lines.append(f"| **TOTAL** | **HEADCOUNT TOTAL DE CAMPO** | — | — | {hc_row_str} |")
+    md_lines.append(f"| **TOTAL** | **TOTAL HORAS-HOMEM (HH) (220h/mês)** | — | — | {hh_row_str} |")
+    md_lines.append("")
+    md_lines.append("---")
+    md_lines.append("")
+    md_lines.append("## 2. Princípios de Nivelamento Lean (Heijunka)")
+    md_lines.append("1. **Equipe Fixa de Gestão & SST (5 profissionais):** Engenheiro Residente, Mestre de Obras Geral, TST, Almoxarife e Vigia Noturno permanecem estáveis em todos os meses.")
+    md_lines.append("2. **Fluxo Contínuo da Produção:** Equipes de oficiais e ajudantes movem-se continuamente entre as frentes em ciclos Takt, eliminando ociosidade e picos fictícios.")
+    md_lines.append("3. **Crashing e Reprogramação:** Se o ritmo de um lote for acelerado por aumento de equipe, o histograma do mês é automaticamente incrementado.")
+
+    with open(md_path, 'w', encoding='utf-8') as f:
+        f.write("\n".join(md_lines) + "\n")
+    print(f"✔ Relatório Markdown atualizado: {md_path}")
+
     print(f"  Headcount por Mês: {[int(x) for x in totais_headcount]}")
     print(f"  Horas-Homem (HH):  {[int(x) for x in totais_hh]}")
     return True
