@@ -98,9 +98,14 @@ Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **orques
 4. **Alocação Sem Ociosidade (Bancada Pulmão):** Em períodos de concretagem ou escavação direta, equipes auxiliares/especialistas (ex: armadores) operam na central de corte e dobra na bancada, acumulando peças pré-montadas para os lotes futuros.
 5. **Detector de Sobreposição e Alerta de Efetivo:** O sistema varre conflitos espaciais no mesmo setor e duplicação de frentes. Para manter o fluxo nivelado Heijunka (status `CONFORME_FLUXO_NIVELADO`), o efetivo se mantém dentro do teto orçado.
 6. **Aceleração por Aumento de Equipe (Crashing via RUP):** Ao acelerar frentes com `--novo-headcount H`, a duração cai proporcionalmente à RUP ($\text{Nova Duração} = \text{Duração Antiga} \times \frac{\text{Headcount Base}}{\text{Novo Headcount}}$) e o grafo topológico (DAG) propaga a antecipação para o CPM, LOB e lotes de curto prazo.
-7. **Orquestrador Central e File Watcher (`scripts/orquestrar_cronogramas.py`):**
+7. **Sincronização Contínua do Histograma de Mão de Obra (`scripts/gerar_histograma_sincronizado.py`):**
+   - Toda alteração de prazo ou aumento de equipe no curto prazo recalcula instantaneamente o Histograma de Mão de Obra (Headcount & HH).
+   - O mês correspondente absorve o novo pico da disciplina e atualiza as Horas-Homem ($\text{Headcount} \times 220\text{ h/mês}$).
+   - Regera simultaneamente `06_SST_E_RH/dados_histograma_mo.json`, `HISTOGRAMA_MAO_DE_OBRA_[SIGLA].csv` e `.xlsx`.
+8. **Orquestrador Central e File Watcher (`scripts/orquestrar_cronogramas.py`):**
    - Criação de nova obra: `python scripts/orquestrar_cronogramas.py --obra NOVA_OBRA --gerar-tudo --takt-dias 3`
    - Reprogramação atômica: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --reprogramar --tarefa-id ID [--novo-headcount H]`
+   - Recalcular apenas o Histograma: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --histograma`
    - Sincronização total: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --sincronizar`
    - Sentinela em tempo real: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --watch` (detecta edições no Excel/IDE e auto-harmoniza em < 2s).
 
@@ -115,8 +120,8 @@ Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **orques
 5. Nenhum plano de recuperação de prazo é proposto sem checar o RUP histórico da frente específica — "aumentar efetivo" sem essa checagem é aposta, não plano.
 6. Caminho crítico e colisão de linha de balanço são sempre calculados por script, nunca estimados visualmente pelo agente.
 7. **O cronograma mestre (LOB e CPM) deve ser sempre calibrado em cima da Esteira Lean:** frentes de curto prazo niveladas, zero ociosidade com central de bancada, e cobertura montada logo após a desforma estrutural.
-8. **Sincronização Atômica Obrigatória via Orquestrador:** Toda alteração de prazo ou efetivo deve atualizar simultaneamente `dados_cpm.json`, `LINHA_DE_BALANCO.csv` e `PROGRAMACAO_CURTO_PRAZO_*.csv` via `scripts/orquestrar_cronogramas.py`.
-9. **Auditoria de Conformidade Multi-Eixo:** Antes de oficializar qualquer baseline ou revisão, é mandatório rodar `python scripts/auditar_cronogramas.py --obra [OBRA]`, assegurando que CPM, Linha de Balanço, Esteira Takt e Orçamento Físico-Financeiro estejam 100% harmonizados e com 0 divergências.
+8. **Sincronização Atômica Obrigatória via Orquestrador:** Toda alteração de prazo ou efetivo deve atualizar simultaneamente `dados_cpm.json`, `LINHA_DE_BALANCO.csv`, `PROGRAMACAO_CURTO_PRAZO_*.csv` e o Histograma de Mão de Obra em `06_SST_E_RH/` via `scripts/orquestrar_cronogramas.py`.
+9. **Auditoria de Conformidade Multi-Eixo (6 Eixos):** Antes de oficializar qualquer baseline ou revisão, é mandatório rodar `python scripts/auditar_cronogramas.py --obra [OBRA]`, assegurando que CPM, Linha de Balanço, Esteira Takt, Orçamento Físico-Financeiro e Histograma de Mão de Obra estejam 100% harmonizados e com 0 divergências.
 
 ---
 *Trabalha junto com `SKILL_GESTAO_01_PLANEJAMENTO.md` (arquitetura do plano), `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fonte do RUP e nivelamento de recursos), `SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` (versionamento) e `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md` (gatilho de risco para reprogramação).*

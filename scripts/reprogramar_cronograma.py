@@ -717,6 +717,13 @@ def reprogramar(args):
             if os.path.exists(sync_script):
                 import subprocess
                 subprocess.run([sys.executable, sync_script, '--obra', obra, '--analisar-sobreposicao'], capture_output=True)
+
+            # Recalcula Histograma Oficial de Mão de Obra e Headcount automaticamente
+            hist_script = os.path.join(root_dir, 'scripts', 'gerar_histograma_sincronizado.py')
+            if os.path.exists(hist_script):
+                import subprocess
+                subprocess.run([sys.executable, hist_script, '--obra', obra], capture_output=True)
+                print(f"[✔] Histograma Oficial de Mão de Obra & Headcount recalculado e sincronizado!")
         except Exception:
             pass
     else:

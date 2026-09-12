@@ -111,13 +111,19 @@ def pipeline_gerar_tudo(obra, takt_dias=3):
         return False
 
     # Passo 4: Reconciliação Final do Físico-Financeiro com os Marcos da LOB
-    log("[Passo 4/5] Reconciliando Curva S e desembolso orçamentário...", "INFO")
+    log("[Passo 4/6] Reconciliando Curva S e desembolso orçamentário...", "INFO")
     ok, _ = run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
     if not ok:
         log("Aviso no Passo 4 (reconciliação físico-financeira)", "AVISO")
 
-    # Passo 5: Auditoria Multi-Eixo
-    log("[Passo 5/5] Executando Auditoria Multi-Eixo de Conformidade (5 Eixos)...", "INFO")
+    # Passo 5: Histograma Oficial de Mão de Obra e Efetivo de Canteiro
+    log("[Passo 5/6] Gerando e Calibrando Histograma de Mão de Obra (Headcount & HH)...", "INFO")
+    ok, _ = run_script('gerar_histograma_sincronizado.py', ['--obra', obra])
+    if not ok:
+        log("Aviso no Passo 5 (gerar_histograma_sincronizado.py)", "AVISO")
+
+    # Passo 6: Auditoria Multi-Eixo
+    log("[Passo 6/6] Executando Auditoria Multi-Eixo de Conformidade (6 Eixos)...", "INFO")
     ok, _ = run_script('auditar_cronogramas.py', ['--obra', obra])
     if not ok:
         log("Auditoria multi-eixo apontou inconformidades!", "AVISO")
@@ -125,7 +131,7 @@ def pipeline_gerar_tudo(obra, takt_dias=3):
 
     print("=" * 80)
     log(f"🎉 Pipeline concluído com SUCESSO ABSOLUTO para '{obra}'!", "SUCESSO")
-    log("Todos os 3 cronogramas (CPM, LOB e Curto Prazo) estão 100% calibrados e sincronizados.", "SUCESSO")
+    log("Todos os cronogramas (CPM, LOB, Curto Prazo e Histograma MO) estão 100% calibrados e sincronizados.", "SUCESSO")
     print("=" * 80)
     return True
 
@@ -165,6 +171,9 @@ def pipeline_reprogramar(obra, args):
     if not args.dry_run:
         # Reconcilia Curva S físico-financeira
         run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
+        # Recalcula e sincroniza o Histograma de Mão de Obra
+        log("Recalibrando Histograma Oficial de Mão de Obra & Headcount...", "INFO")
+        run_script('gerar_histograma_sincronizado.py', ['--obra', obra], silent=True)
         # Executa auditoria rápida
         log("Validando coerência global multi-eixo...", "INFO")
         run_script('auditar_cronogramas.py', ['--obra', obra])
@@ -186,6 +195,9 @@ def pipeline_sincronizar(obra, origem='lob'):
 
     # Reconcilia Físico-Financeiro
     run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
+    # Recalcula e sincroniza o Histograma de Mão de Obra
+    log("Harmonizando Histograma de Mão de Obra com as frentes de curto prazo...", "INFO")
+    run_script('gerar_histograma_sincronizado.py', ['--obra', obra], silent=True)
     # Audita
     run_script('auditar_cronogramas.py', ['--obra', obra])
     log("Sincronização bidirecional concluída com êxito!", "SUCESSO")
@@ -292,8 +304,9 @@ Exemplos Práticos:
     parser.add_argument("--gerar-tudo", action="store_true", help="Pipeline total de geração do zero para obras novas ou rebase")
     parser.add_argument("--reprogramar", action="store_true", help="Reprograma uma atividade/vagão e propaga em cascata nos 3 cronogramas")
     parser.add_argument("--sincronizar", action="store_true", help="Reconcilia e harmoniza os 3 cronogramas existentes")
+    parser.add_argument("--histograma", action="store_true", help="Recalcula e regenera exclusivamente o Histograma de Mão de Obra (Headcount & HH)")
     parser.add_argument("--watch", action="store_true", help="Ativa sentinela em tempo real (File Watcher de sincronização automática)")
-    parser.add_argument("--auditar", action="store_true", help="Executa auditoria multi-eixo de 5 eixos")
+    parser.add_argument("--auditar", action="store_true", help="Executa auditoria multi-eixo de 6 eixos")
 
     # Parâmetros de Takt e Reprogramação
     parser.add_argument("--takt-dias", type=int, default=3, help="Duração do Takt Time em dias úteis (1 a 6 dias, padrão 3)")
@@ -315,6 +328,9 @@ Exemplos Práticos:
         pipeline_gerar_tudo(args.obra, takt_dias=args.takt_dias)
     elif args.reprogramar:
         pipeline_reprogramar(args.obra, args)
+    elif args.histograma:
+        log(f"Recalculando Histograma Oficial de Mão de Obra para '{args.obra}'...", "INFO")
+        run_script('gerar_histograma_sincronizado.py', ['--obra', args.obra])
     elif args.watch:
         pipeline_watch(args.obra)
     elif args.auditar:

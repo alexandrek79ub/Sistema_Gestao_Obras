@@ -120,15 +120,40 @@ python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --watch
 
 ---
 
-## 6. Tabela de Referência Rápida (Cheat Sheet do Engenheiro)
+## 6. Sincronização e Geração Automática do Histograma de Mão de Obra (Headcount & HH)
+
+O **Histograma de Mão de Obra** reflete o efetivo físico necessário em campo a cada mês e é a base para o dimensionamento do canteiro de obras (NR-18: vivência, vestiários, refeitório, alojamento, transporte e EPIs).
+
+### Como o Motor Mantém a Sincronização Contínua:
+1. **Extração Automática dos Lotes Takt:** Cada lote de `PROGRAMACAO_CURTO_PRAZO_*.csv` define a equipe alocada (ex: `3 Ladrilhistas + 3 Ajudantes`) e as datas de execução (`DATA_INICIO` e `DATA_FIM`).
+2. **Equipe Fixa de Gestão & SST (5 profissionais):** Engenheiro Residente, Mestre de Obras Geral, TST, Almoxarife e Vigia Patrimonial permanecem estáveis (1 por mês) ao longo de todo o contrato.
+3. **Nivelamento Heijunka da Produção:** Para as especialidades operacionais (Pedreiros, Ladrilhistas, Armadores, Pintores, Eletricistas, etc.), o motor calcula o pico simultâneo da disciplina ativa naquele mês.
+4. **Crashing com Aumento de Efetivo:** Se o engenheiro dobrar a equipe de um lote (ex: `--novo-headcount 12`), o motor:
+   - Aloca 6 oficiais + 6 serventes no lote;
+   - Atualiza o mês correspondente no Histograma para absorver o novo pico;
+   - Recalcula automaticamente as **Horas-Homem (HH)** mensais ($\text{HH} = \text{Headcount} \times 220\text{ h/mês}$);
+   - Regera simultaneamente `06_SST_E_RH/dados_histograma_mo.json`, `HISTOGRAMA_MAO_DE_OBRA_[SIGLA].csv` e `HISTOGRAMA_MAO_DE_OBRA_[SIGLA].xlsx`;
+   - Atualiza a rota `/api/cronograma` e reflete imediatamente no modal do Dashboard Comercial.
+
+```bash
+# Recalcular exclusivamente o Histograma de Mão de Obra:
+python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --histograma
+# ou diretamente:
+python scripts/gerar_histograma_sincronizado.py --obra OBRA_TMULT
+```
+
+---
+
+## 7. Tabela de Referência Rápida (Cheat Sheet do Engenheiro)
 
 | Necessidade | Comando Recomendado |
 | :--- | :--- |
 | **Criar cronogramas de obra nova do zero** | `python scripts/orquestrar_cronogramas.py --obra NOVA_OBRA --gerar-tudo --takt-dias 3` |
 | **Sincronizar e auditar cronogramas existentes** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --sincronizar` |
+| **Recalcular apenas o Histograma de Mão de Obra** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --histograma` |
 | **Acelerar atividade dobrando a equipe (Crashing)** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --reprogramar --tarefa-id 29 --novo-headcount 12` |
 | **Alterar duração de uma frente específica** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --reprogramar --tarefa-id 15 --nova-duracao 4` |
 | **Deslocar um vagão inteiro em +2 dias** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --reprogramar --vagao 06 --deslocar-dias 2 --aplicar-todo-vagao` |
 | **Simular sem alterar arquivos (Dry-Run)** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --reprogramar --tarefa-id 29 --novo-headcount 12 --dry-run` |
 | **Ativar Sentinela em segundo plano** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --watch` |
-| **Auditar conformidade de 5 eixos** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --auditar` |
+| **Auditar conformidade rigorosa (6 Eixos)** | `python scripts/orquestrar_cronogramas.py --obra OBRA_TMULT --auditar` |

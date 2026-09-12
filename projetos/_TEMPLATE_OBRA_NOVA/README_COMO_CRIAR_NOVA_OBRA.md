@@ -45,11 +45,14 @@ python scripts/precificar_obra.py --obra OBRA_NOVA
 # 2. Gerar o Plano de Contas e Centros de Custo
 python scripts/gerar_plano_centros_custo.py --obra OBRA_NOVA
 
-# 3. Gerar e Sincronizar Todos os Cronogramas Integrados (Gantt CPM, Linha de Balanço e Curto Prazo Takt):
-# Executa a cadeia atômica de ponta a ponta com Takt Time flexível (1 a 6d) e auditoria de 5 eixos:
+# 3. Gerar e Sincronizar Todos os Cronogramas Integrados (Gantt CPM, Linha de Balanço, Curto Prazo Takt e Histograma MO):
+# Executa a cadeia atômica de ponta a ponta com Takt Time flexível (1 a 6d) e auditoria de 6 eixos:
 python scripts/orquestrar_cronogramas.py --obra OBRA_NOVA --gerar-tudo --takt-dias 3
 
-# 3.1 (Opcional) Ativar Sentinela em Tempo Real (File Watcher de sincronização automática):
+# 3.1 (Opcional) Recalcular exclusivamente o Histograma de Mão de Obra (Headcount & HH):
+# python scripts/orquestrar_cronogramas.py --obra OBRA_NOVA --histograma
+
+# 3.2 (Opcional) Ativar Sentinela em Tempo Real (File Watcher de sincronização automática):
 # python scripts/orquestrar_cronogramas.py --obra OBRA_NOVA --watch
 
 # 4. Gerar o Pacote Completo de Suprimentos (RCs, REs, Matriz de Subcontratos)

@@ -84,7 +84,9 @@ Executar `gerar_cronograma.py` gerando CSV, Excel Executivo, MS Project XML e Pl
   - CPM / Gantt determinístico (`dados_cpm.json`);
   - Linha de Balanço e Heijunka (`LINHA_DE_BALANCO.csv`);
   - Curto Prazo em Lotes Takt (`PROGRAMACAO_CURTO_PRAZO_[OBRA].csv`);
-  - Físico-Financeiro, Curva S e Auditoria Multi-Eixo de 5 Eixos com tolerância zero para descompassos.
+  - Histograma Oficial de Mão de Obra e Headcount (`06_SST_E_RH/dados_histograma_mo.json`, `.csv` e `.xlsx`);
+  - Físico-Financeiro, Curva S e Auditoria Multi-Eixo de 6 Eixos com tolerância zero para descompassos.
+* Para recalcular apenas o Histograma de Mão de Obra: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --histograma`.
 * Para reprogramações e crashing de equipe (RUP), acione `python scripts/orquestrar_cronogramas.py --obra [OBRA] --reprogramar --tarefa-id ID [--novo-headcount H]`.
 * Para manter a sincronização contínua durante edições de campo ou escritório, utilize o sentinela reativo `python scripts/orquestrar_cronogramas.py --obra [OBRA] --watch`.
 

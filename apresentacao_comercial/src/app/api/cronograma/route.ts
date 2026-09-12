@@ -803,14 +803,72 @@ export async function GET(request: Request) {
       }));
     }
 
-    const histogramaMensal = [
-      { mes: 'Mês 1 (Sem 01-04)', producao: 9, gestaoApoio: 5, total: 14, foco: 'Topografia, Canteiro, Escavações e Sapatas S1 a S32' },
-      { mes: 'Mês 2 (Sem 05-08)', producao: 14, gestaoApoio: 5, total: 19, foco: 'Baldrames VB1-VB19, Pilares P1-P24 e Laje H12' },
-      { mes: 'Mês 3 (Sem 09-12)', producao: 15, gestaoApoio: 5, total: 20, foco: 'Alvenaria de Vedação, Cobertura Metálica e Embutidos' },
-      { mes: 'Mês 4 (Sem 13-16)', producao: 12, gestaoApoio: 5, total: 17, foco: 'Reboco Mecanizado, Contrapisos e Impermeabilização' },
-      { mes: 'Mês 5 (Sem 17-20)', producao: 11, gestaoApoio: 5, total: 16, foco: 'Porcelanatos, Esquadrias Alumínio e Tubulações HVAC' },
-      { mes: 'Mês 6 (Sem 21-26)', producao: 11, gestaoApoio: 5, total: 16, foco: 'Pintura Acrílica, Aparelhos HVAC, Comissionamento e Limpeza' },
+    // Histograma Oficial de Mão de Obra e Headcount Sincronizado
+    let histogramaMensal: any[] = [];
+    const histMoJsonCandidates = [
+      path.join(basePath, '06_SST_E_RH', 'dados_histograma_mo.json'),
+      path.resolve(process.cwd(), `../projetos/${obra}/06_SST_E_RH/dados_histograma_mo.json`),
+      path.resolve(process.cwd(), `projetos/${obra}/06_SST_E_RH/dados_histograma_mo.json`),
     ];
+    const histMoPath = histMoJsonCandidates.find(p => fs.existsSync(p));
+
+    const focosPadrao = [
+      'Topografia, Canteiro, Escavações e Sapatas S1 a S32',
+      'Baldrames VB1-VB19, Pilares P1-P24 e Laje H12',
+      'Alvenaria de Vedação, Cobertura Metálica e Embutidos',
+      'Reboco Mecanizado, Contrapisos e Impermeabilização',
+      'Porcelanatos, Esquadrias Alumínio e Tubulações HVAC',
+      'Pintura Acrílica, Aparelhos HVAC, Comissionamento e Limpeza',
+    ];
+
+    if (histMoPath) {
+      try {
+        const rawHist = JSON.parse(fs.readFileSync(histMoPath, 'utf-8'));
+        if (Array.isArray(rawHist) && rawHist.length > 0) {
+          const numMeses = Math.max(0, rawHist[0].length - 4);
+          for (let m = 0; m < numMeses; m++) {
+            let producao = 0;
+            let gestaoApoio = 0;
+            for (const row of rawHist) {
+              const grupo = row[0];
+              const val = typeof row[4 + m] === 'number' ? row[4 + m] : parseInt(row[4 + m] || '0', 10);
+              if (grupo === 'Gestão' || grupo === 'SST / Apoio') {
+                gestaoApoio += val;
+              } else {
+                producao += val;
+              }
+            }
+            const mesNum = m + 1;
+            const mesNome = mesNum <= 5 
+              ? `Mês ${mesNum} (Sem ${String((mesNum - 1) * 4 + 1).padStart(2, '0')}-${String(mesNum * 4).padStart(2, '0')})`
+              : `Mês ${mesNum} (Sem 21-26)`;
+
+            histogramaMensal.push({
+              mes: mesNome,
+              producao,
+              gestaoApoio,
+              total: producao + gestaoApoio,
+              hhTotal: (producao + gestaoApoio) * 220,
+              foco: focosPadrao[m] || `Execução Físico-Operacional - Fase Mês ${mesNum}`
+            });
+          }
+        }
+      } catch (err) {
+        console.warn('Erro ao processar dados_histograma_mo.json:', err);
+      }
+    }
+
+    // Fallback de segurança se o arquivo ainda não existir
+    if (histogramaMensal.length === 0) {
+      histogramaMensal = [
+        { mes: 'Mês 1 (Sem 01-04)', producao: 15, gestaoApoio: 5, total: 20, hhTotal: 4400, foco: focosPadrao[0] },
+        { mes: 'Mês 2 (Sem 05-08)', producao: 17, gestaoApoio: 5, total: 22, hhTotal: 4840, foco: focosPadrao[1] },
+        { mes: 'Mês 3 (Sem 09-12)', producao: 26, gestaoApoio: 5, total: 31, hhTotal: 6820, foco: focosPadrao[2] },
+        { mes: 'Mês 4 (Sem 13-16)', producao: 21, gestaoApoio: 5, total: 26, hhTotal: 5720, foco: focosPadrao[3] },
+        { mes: 'Mês 5 (Sem 17-20)', producao: 20, gestaoApoio: 5, total: 25, hhTotal: 5500, foco: focosPadrao[4] },
+        { mes: 'Mês 6 (Sem 21-26)', producao: 29, gestaoApoio: 5, total: 34, hhTotal: 7480, foco: focosPadrao[5] },
+      ];
+    }
 
     return NextResponse.json({
       obra,

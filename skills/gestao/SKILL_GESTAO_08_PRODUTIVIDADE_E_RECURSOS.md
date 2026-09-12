@@ -112,6 +112,10 @@ O dimensionamento de lotes de curto prazo no ecossistema não pode gerar oscila�
    - Eles atuam 100% do tempo na **Central de Corte e Dobra na Bancada (sob tenda)** pré-fabricando as gaiolas de sapatas, armaduras de vigas e estribos para os ciclos futuros. Isso gera um estoque regulador (pulmão Lean) que acelera o ciclo seguinte e mantém o headcount estável.
 5. **Validação contra o RDO:**
    - O apontador/engenheiro no RDO confere diariamente se o lote programado da semana está sendo cumprido dentro da meta de RUP pactuada, alertando qualquer desvio de ritmo antes que ele impacte a Linha de Balanço global.
+6. **Sincronização Contínua do Histograma de Mão de Obra e Headcount (`scripts/gerar_histograma_sincronizado.py`):**
+   - O efetivo de cada especialidade é derivado diretamente dos lotes ativos no mês, aplicando Heijunka (pico simultâneo de equipe).
+   - Quando for necessário acelerar frentes por **Crashing via RUP** (`--novo-headcount N`), o motor recalcula a duração, antecipa sucessoras e **eleva instantaneamente o pico de operários e Horas-Homem (HH)** do mês correspondente em `06_SST_E_RH/dados_histograma_mo.json`, `.csv` e `.xlsx`.
+   - Execução direta: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --histograma`.
 
 ---
 

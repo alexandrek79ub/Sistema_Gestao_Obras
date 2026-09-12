@@ -70,6 +70,7 @@ interface HistogramaItem {
   gestaoApoio: number;
   total: number;
   foco: string;
+  hhTotal?: number;
 }
 
 export default function CronogramaPage() {
@@ -568,6 +569,7 @@ export default function CronogramaPage() {
                         <th className="py-2.5 px-3 text-center">Produção Direta</th>
                         <th className="py-2.5 px-3 text-center">Gestão & SST</th>
                         <th className="py-2.5 px-3 text-center font-bold text-white">Total Canteiro</th>
+                        <th className="py-2.5 px-3 text-center font-semibold text-amber-400">Horas-Homem (HH)</th>
                         <th className="py-2.5 px-3">Frente Crítica / Foco Principal</th>
                       </tr>
                     </thead>
@@ -575,9 +577,10 @@ export default function CronogramaPage() {
                       {histogramaMensal.map((h, idx) => (
                         <tr key={idx} className="hover:bg-zinc-800/40">
                           <td className="py-2.5 px-3 font-semibold text-white whitespace-nowrap">{h.mes}</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-emerald-400 font-bold">{h.producao} operários</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-zinc-400">{h.gestaoApoio} profissionais</td>
+                          <td className="py-2.5 px-3 text-center font-mono text-emerald-400 font-bold">{h.producao} op.</td>
+                          <td className="py-2.5 px-3 text-center font-mono text-zinc-400">{h.gestaoApoio} prof.</td>
                           <td className="py-2.5 px-3 text-center font-mono text-blue-400 font-bold bg-blue-950/20">{h.total} Headcount</td>
+                          <td className="py-2.5 px-3 text-center font-mono text-amber-300 font-semibold">{h.hhTotal ? `${h.hhTotal.toLocaleString()} HH` : `${h.total * 220} HH`}</td>
                           <td className="py-2.5 px-3 text-zinc-300">{h.foco}</td>
                         </tr>
                       ))}

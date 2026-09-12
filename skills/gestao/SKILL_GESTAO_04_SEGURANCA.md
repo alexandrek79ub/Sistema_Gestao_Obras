@@ -84,5 +84,14 @@ Você devolve ao Gestor a seguinte análise:
 2. Alerta de embargo ou interdição caso as medidas não sejam adotadas.
 3. Plano de ação corretivo em caso de incidentes reportados.
 
+### D) Dimensionamento de Instalações e Vivência NR-18 (Histograma de Mão de Obra)
+- O efetivo mensal do canteiro é sincronizado automaticamente via `06_SST_E_RH/dados_histograma_mo.json` e `HISTOGRAMA_MAO_DE_OBRA_[SIGLA].csv`.
+- O TST e Engenheiro devem usar o pico mensal para dimensionar:
+  - **Instalações Sanitárias:** 1 bacia sanitária, 1 mictório e 1 lavatório para cada 20 trabalhadores (ou fração).
+  - **Chuveiros:** 1 para cada 10 trabalhadores em atividades com exigência de esforço físico ou ambiente quente.
+  - **Refeitório / Vivência:** Capacidade para 100% dos trabalhadores presentes no horário de refeição (área mínima de 1,00 m² por usuário).
+  - **Armários:** Armários duplos individuais com ventilação e fechamento seguro.
+  - **Comando de Recálculo:** `python scripts/orquestrar_cronogramas.py --obra [OBRA] --histograma`.
+
 ---
 *Fim do Módulo Segurança do Trabalho.*
