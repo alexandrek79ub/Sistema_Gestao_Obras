@@ -1,12 +1,64 @@
 {
   "obra": "OBRA_TMULT",
-  "data_analise": "11/09/2026 20:20:49",
-  "total_dias_analisados": 182,
-  "headcount_pico_diario": 10,
-  "headcount_medio_diario": 6.6,
-  "total_conflitos_espaciais": 0,
+  "data_analise": "12/09/2026 10:24:45",
+  "total_dias_analisados": 208,
+  "headcount_pico_diario": 26,
+  "headcount_medio_diario": 9.2,
+  "total_conflitos_espaciais": 3,
   "total_disciplinas_com_frentes_duplas": 0,
-  "conflitos_espaciais": [],
+  "conflitos_espaciais": [
+    {
+      "setor": "Zona 01 - Recepção/Diretoria",
+      "dias_totais": 7,
+      "periodo": "02/03/2027 a 30/03/2027",
+      "atividades": [
+        "Acabamentos Elétr./Hidr.",
+        "Climatização HVAC",
+        "Esquadrias de Alumínio",
+        "Pisos & Porcelanato"
+      ],
+      "equipes": [
+        "SUB-05 Acabamentos e Pisos",
+        "SUB-08 Climatização e HVAC",
+        "SUB-03 Elétrica e Lógica",
+        "SUB-07 Caixilharia e Esquadrias",
+        "SUB-02 Alvenaria e Revestimento"
+      ]
+    },
+    {
+      "setor": "Zona 02 - Salas Técnicas/CPD",
+      "dias_totais": 6,
+      "periodo": "01/03/2027 a 31/03/2027",
+      "atividades": [
+        "Acabamentos Elétr./Hidr.",
+        "Climatização HVAC",
+        "Esquadrias de Alumínio",
+        "Pisos & Porcelanato"
+      ],
+      "equipes": [
+        "SUB-08 Climatização e HVAC",
+        "SUB-03 Elétrica e Lógica",
+        "SUB-07 Caixilharia e Esquadrias",
+        "SUB-02 Alvenaria e Revestimento"
+      ]
+    },
+    {
+      "setor": "Zona 03 - Sanitários e Apoio",
+      "dias_totais": 4,
+      "periodo": "02/03/2027 a 05/03/2027",
+      "atividades": [
+        "Acabamentos Elétr./Hidr.",
+        "Climatização HVAC",
+        "Esquadrias de Alumínio"
+      ],
+      "equipes": [
+        "SUB-08 Climatização e HVAC",
+        "SUB-03 Elétrica e Lógica",
+        "SUB-07 Caixilharia e Esquadrias",
+        "SUB-04 Hidráulica e Sanitários"
+      ]
+    }
+  ],
   "frentes_duplicadas": [],
-  "status_aprovacao": "CONFORME_FLUXO_NIVELADO"
+  "status_aprovacao": "ALERTA_SOBREPOSICAO_PENDENTE"
 }

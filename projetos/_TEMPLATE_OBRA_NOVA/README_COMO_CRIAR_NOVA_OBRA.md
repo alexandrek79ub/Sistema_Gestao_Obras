@@ -55,6 +55,9 @@ python scripts/gerar_programacao_curto_prazo_takt.py --obra OBRA_NOVA
 # 3.2 Gerar o Cronograma Físico-Financeiro, Baseline 01, Excel Executivo, MS Project XML e Dashboard HTML
 python scripts/gerar_cronograma.py --obra OBRA_NOVA
 
+# 3.3 Auditar Rigorosamente o Ecossistema de Planejamento (CPM, Esteira Takt, LOB e Físico-Financeiro)
+python scripts/auditar_cronogramas.py --obra OBRA_NOVA
+
 # 4. Gerar o Pacote Completo de Suprimentos (RCs, REs, Matriz de Subcontratos)
 python scripts/gerar_cronograma_suprimentos.py --obra OBRA_NOVA
 

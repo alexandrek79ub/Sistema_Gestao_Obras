@@ -72,14 +72,16 @@ def carregar_e_distribuir_orcamento(orcamento_csv, prazo_meses=6, regras_custom=
             
         # 2.1 Arquitetura / Acabamentos:
         elif eap.startswith('2.1'):
-            if eap.startswith('2.1.1'):  # Alvenaria
+            if eap.startswith('2.1.10'): # Janelas Alumínio/Vidro
+                df.at[idx, 'P_M5'] = 1.0
+            elif eap.startswith('2.1.11'): # Impermeabilização WCs/Copa
+                df.at[idx, 'P_M4'] = 1.0
+            elif eap.startswith('2.1.1.') or eap == '2.1.1':  # Alvenaria
                 df.at[idx, 'P_M3'] = 1.0
             elif eap.startswith('2.1.2'): # Chapisco
                 df.at[idx, 'P_M3'] = 0.5
                 df.at[idx, 'P_M4'] = 0.5
             elif eap.startswith('2.1.3'): # Emboço / Reboco Paulista
-                df.at[idx, 'P_M4'] = 1.0
-            elif eap.startswith('2.1.11'): # Impermeabilização WCs/Copa
                 df.at[idx, 'P_M4'] = 1.0
             elif eap.startswith('2.1.4'): # Contrapiso
                 df.at[idx, 'P_M5'] = 1.0
@@ -90,8 +92,6 @@ def carregar_e_distribuir_orcamento(orcamento_csv, prazo_meses=6, regras_custom=
             elif eap.startswith('2.1.7'): # Rodapé
                 df.at[idx, 'P_M5'] = 1.0
             elif eap.startswith('2.1.9'): # Portas Madeira/Alumínio
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.10'): # Janelas Alumínio/Vidro
                 df.at[idx, 'P_M5'] = 1.0
             elif eap.startswith('2.1.8'): # Pintura
                 if 'Selador' in desc or 'Lixa Grossa' in desc:

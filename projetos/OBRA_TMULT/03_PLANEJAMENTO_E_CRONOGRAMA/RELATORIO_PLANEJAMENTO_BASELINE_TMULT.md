@@ -139,14 +139,17 @@ O cronograma de 26 semanas é dividido em 12 blocos quinzenais de controle rigor
 * **Serviços:** Cerâmica esmaltada nas paredes dos WCs (Lote 031), rejunte resinado impermeável e rodapés de porcelanato (Lote 032), caixilharia de alumínio linha Suprema anodizada preta com vidros temperados acústicos 8mm (Lotes 033 e 034) e infraestrutura de linhas frigorígenas de cobre e drenos de HVAC (Lotes 035 e 036).
 * **Metas Físicas:** Base de piso e revestimento concluída; esquadrias externas vedadas com PU-40; linhas de ar-condicionado pressurizadas com nitrogênio (teste de estanqueidade).
 
-### Quinzena 10 (Semanas 19 e 20 / Dias 136 a 150) — Cabeamento Elétrico/Dados, Quadros QGBT & Louças Nobres
-* **Serviços:** Enfiamento de cabos elétricos antichama 750V e cabeamento estruturado Furukawa Cat.6 (Lote 037), montagem e identificação de circuitos no QGBT e quadros com DR (Lote 038), instalação de bacias sanitárias com caixa acoplada Deca Vogue, cubas e torneiras temporizadas Docol antivandalismo (Lote 039), e fixação de luminárias painel LED 40W 6500K com tomadas e interruptores (Lote 040).
-* **Metas Físicas:** Infraestrutura de potência, iluminação e dados conectada; sanitários e copa montados.
+### Quinzena 10 (Semanas 19 e 20 / Dias 136 a 150) — Cabeamento Elétrico/Dados & Portão 4 (Emassamento / 1ª Demão)
+* **Serviços:** 
+  * **Semana 19 (Lotes 037 e 038):** Enfiamento de cabos elétricos antichama 750V e cabeamento estruturado Furukawa Cat.6 (Lote 037), montagem e identificação de circuitos no QGBT e quadros com DR (Lote 038).
+  * **Semana 20 (Lotes 039 e 040 — Portão de Bloqueio 4):** Emassamento com massa corrida acrílica, lixamento mecanizado com aspirador, selador primer e 1ª demão de pintura látex acrílica em paredes e forros, com forração integral dos pisos com lona e papelão ondulado.
+* **Metas Físicas:** Infraestrutura elétrica conectada e energizada para testes; 100% dos ambientes emassados e selados (Portão 4 liberado para recebimento de peças nobres sem geração de poeira).
 
-### Quinzena 11 (Semanas 21 e 22 / Dias 151 a 165) — Portão 4, Pintura Acrílica & Startup Climatização
-* **Portão de Bloqueio 4:** Emassamento com massa acrílica, lixamento mecanizado com aspirador e aplicação de selador primer (Lotes 041 e 042). Forração integral de pisos com lona plástica e papelão ondulado.
-* **Serviços:** Pintura látex acrílica fosca lavável Suvinil Toque de Seda em duas demãos de acabamento (Lote 043), montagem das evaporadoras split cassete 36.000 BTU/h, ligação dos condensadores externos, carga de gás refrigerante R-410A e startup operacional (Lote 044).
-* **Metas Físicas:** Pintura 100% finalizada sem respingos; sistema de climatização em regime operacional de refrigeração.
+### Quinzena 11 (Semanas 21 e 22 / Dias 151 a 165) — Louças Nobres, Iluminação LED, Pintura Final & Startup HVAC
+* **Serviços:** 
+  * **Semana 21 (Lotes 041 e 042):** Instalação de louças sanitárias Deca Vogue com caixa acoplada, cubas e metais Docol temporizados antivandalismo (Lote 041), seguida da fixação de luminárias painel LED 40W 6500K de embutir, espelhos, interruptores e tomadas (Lote 042) em ambiente 100% protegido contra poeira de lixamento.
+  * **Semana 22 (Lotes 043 e 044):** Pintura látex acrílica fosca lavável Suvinil Toque de Seda em duas demãos de acabamento final e retoques (Lote 043), montagem das evaporadoras split cassete 36.000 BTU/h, ligação dos condensadores externos, carga de gás R-410A e startup operacional com ensaio de refrigeração (Lote 044).
+* **Metas Físicas:** Louças e luminárias instaladas sobre paredes protegidas; pintura finalizada sem manchas ou respingos; sistema HVAC em regime operacional de refrigeração.
 
 ### Quinzena 12 (Semanas 23 a 26 / Dias 166 a 180) — Comissionamento 52 Lotes, Auditoria SST, DataBook & Chaves Turnkey
 * **Serviços:** 
@@ -224,20 +227,19 @@ A esteira orquestra 10 equipes com subcontratos e vínculos orçamentários rast
 
 ---
 
-## 5.2 Linha de Balanço (LOB) Recalibrada & Sincronizada (5 Setores / 32 Atividades)
+## 5.2 Linha de Balanço (LOB) Recalibrada & Sincronizada (4 Setores / 103 Tarefas)
 
-A Linha de Balanço (Longo Prazo) foi rigorosamente alinhada com as datas da Esteira Lean, eliminando discrepâncias de planejamento e garantindo que o fechamento da envoltória ocorra no momento tecnológico perfeito:
+A Linha de Balanço (Longo Prazo) foi rigorosamente alinhada com as datas da Esteira Lean e do Caminho Crítico (CPM), eliminando quaisquer discrepâncias temporais e garantindo que o fechamento da envoltória ocorra no momento tecnológico perfeito:
 
-| Setor Físico (Eixo Y) | Atividades Modeladas | Janela Temporal | Justificativa Técnica de Engenharia |
+| Setor Físico (Eixo Y) | Escopo e Frentes Alocadas | Janela Temporal | Justificativa Técnica de Engenharia |
 |---|:---:|:---:|---|
-| **Setor 05 — Cobertura / Platibanda** | 4 macroatividades (SUB-07) | **01/12/2026 a 07/01/2027 (Sem 10 a 14)** | **Montagem imediata pós-desforma da laje.** Estanca a edificação contra intempéries antes de iniciar o reboco e acabamentos finos. |
-| **Setor 04 — Galeria Circulação** | 7 macroatividades (Seq 1 a 7) | 19/10/2026 a 26/03/2027 (Sem 3 a 26) | Último setor térreo do fluxo; absorve as prumadas principais e fecha a pintura na Sem 26. |
-| **Setor 03 — Sanitários e Copa** | 7 macroatividades (Seq 1 a 7) | 13/10/2026 a 20/03/2027 (Sem 3 a 25) | Setor de áreas molhadas com testes hidrostáticos (Portão 3), impermeabilização e louças finas. |
-| **Setor 02 — Salas Técnicas / CPD** | 7 macroatividades (Seq 1 a 7) | 07/10/2026 a 14/03/2027 (Sem 2 a 24) | Setor de infraestrutura de dados, ar-condicionado de precisão e quadros QGBT. |
-| **Setor 01 — Recepção / Diretoria** | 7 macroatividades (Seq 1 a 7) | 01/10/2026 a 08/03/2027 (Sem 1 a 23) | Setor pioneiro de avanço da esteira (cota zero à pintura final). |
+| **Zona 04 — Cobertura e Platibanda** | Terças Metálicas, Telhas Sandwich PIR e Calhas/Rufos | **05/01/2027 a 01/02/2027** | **Montagem imediata pós-desforma da laje.** Estanca a edificação contra intempéries antes de liberar reboco interno e pisos. |
+| **Zona 03 — Sanitários e Apoio** | Sapatas, Baldrames, Pilares, Alvenaria, WCs, Impermeabilização e Louças | 01/10/2026 a 26/04/2027 | Setor de áreas molhadas com teste hidrostático 72h (Portão 3), pisos cerâmicos e metais temporizados. |
+| **Zona 02 — Salas Técnicas/CPD** | Sapatas, Baldrames, Pilares, Alvenaria, Dutos HVAC e Quadros Elétricos | 01/10/2026 a 26/04/2027 | Setor crítico de infraestrutura de dados, ar-condicionado e quadros de distribuição QGBT/QDF. |
+| **Zona 01 — Recepção/Diretoria** | Sapatas, Baldrames, Pilares, Alvenaria, Porcelanato 60x60 e Pintura | 01/10/2026 a 26/04/2027 | Setor de entrada e avanço da esteira, com acabamento nobre e entrega das chaves turnkey. |
 
-* **Orientação Canônica:** Setor 01 na base e Setor 05 no topo, com inclinação positiva harmônica (↗) no avanço temporal do eixo X.
-* **Fechamento Contratual:** O último acabamento físico conclui no dia 26/03/2027 (Dia 177). Os dias 178 a 180 (Semana 26) são integralmente reservados para o comissionamento final, auditoria e entrega das chaves turnkey.
+* **Orientação Canônica:** Zona 01 na base e Zona 04 no topo, com fluxo ascendente (↗) ao longo dos 178 dias úteis (26 semanas).
+* **Fechamento Contratual:** O marco final de comissionamento e entrega turnkey encerra exatamente no dia 26/04/2027, em 100% de conformidade com o CPM (`dados_cpm.json`) e os 52 lotes Lean Takt.
 
 ---
 
@@ -262,7 +264,7 @@ Todos os artefatos de planejamento foram compilados e estão disponíveis na pas
    - Base de dados operacional de curto prazo contendo os **52 lotes semanais (Semanas 01 a 26)** dimensionados em Takt Time de 3 dias, organizados por Vagão Lean, Recursos Previstos com metas de RUP e status de execução auditável.
 
 2. **[`LINHA_DE_BALANCO.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv)**
-   - Cronograma de Linha de Balanço (LOB) cobrindo os 180 dias corridos em fluxo ascendente com 5 setores físicos e 32 macroatividades recalibradas em sincronia com a Cobertura Metálica e o CPM.
+   - Cronograma de Linha de Balanço (LOB) cobrindo os 178 dias úteis (26 semanas) em fluxo ascendente com 4 setores físicos (Zonas 01 a 04) e 103 tarefas setoriais 100% harmonizadas com o CPM e a Esteira Lean Takt.
 
 3. **[`CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_FISICO_FINANCEIRO_TMULT.csv)**
    - Base de dados bruta, auditável e versionável via Git. Contém os 158 itens da EAP distribuídos mês a mês (M1 a M6), somando exatamente R$ 1.660.762,28.

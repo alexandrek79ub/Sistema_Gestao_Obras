@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import LinhaDeBalanco from '@/components/LinhaDeBalanco';
 import TremDeProducaoLean from '@/components/TremDeProducaoLean';
+import GanttExecutivo from '@/components/GanttExecutivo';
 import { useObra } from '@/context/ObraContext';
 import { 
   Calendar, 
@@ -73,6 +74,7 @@ export default function CronogramaPage() {
   const { obraAtiva } = useObra();
   const [activeTab, setActiveTab] = useState<'lob' | 'curto_prazo' | 'cpm' | 'curva_s'>('curto_prazo');
   const [cpmAtividades, setCpmAtividades] = useState<AtividadeCPM[]>([]);
+  const [tarefas, setTarefas] = useState<any[]>([]);
   const [curvaS, setCurvaS] = useState<CurvaSItem[]>([]);
   const [lotes, setLotes] = useState<LoteCurtoPrazo[]>([]);
   const [histogramaMensal, setHistogramaMensal] = useState<HistogramaItem[]>([]);
@@ -92,6 +94,7 @@ export default function CronogramaPage() {
       .then(res => res.json())
       .then(data => {
         if (data.cpm) setCpmAtividades(data.cpm);
+        if (data.tarefas) setTarefas(data.tarefas);
         if (data.curvaS) setCurvaS(data.curvaS);
         if (data.lotesCurtoPrazo) setLotes(data.lotesCurtoPrazo);
         if (data.histogramaMensal) setHistogramaMensal(data.histogramaMensal);
@@ -232,12 +235,15 @@ export default function CronogramaPage() {
           onClick={() => setActiveTab('cpm')}
           className={`pb-3 px-4 text-sm font-semibold border-b-2 transition-colors flex items-center gap-2 whitespace-nowrap ${
             activeTab === 'cpm' 
-              ? 'border-blue-500 text-blue-400' 
+              ? 'border-rose-500 text-rose-400' 
               : 'border-transparent text-zinc-400 hover:text-zinc-200'
           }`}
         >
           <GitCommit className="w-4 h-4" />
-          Caminho Crítico Determinístico (CPM)
+          Gráfico de Gantt & Caminho Crítico (CPM)
+          <span className="text-[10px] bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider animate-pulse">
+            Executivo
+          </span>
         </button>
 
         <button
@@ -358,7 +364,7 @@ export default function CronogramaPage() {
                     <div className="flex items-center gap-2">
                       <h4 className="text-sm font-bold text-white tracking-wider">
                         {filtroSemana === 'TODAS' 
-                          ? 'Diagnóstico Geral: 42 Lotes Nivelados ao Longo de 26 Semanas' 
+                          ? 'Diagnóstico Geral: 52 Lotes Nivelados ao Longo de 26 Semanas' 
                           : `Diagnóstico de Balanceamento & Nivelamento — ${filtroSemana}`}
                       </h4>
                       <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-[10px] font-bold">
@@ -605,71 +611,81 @@ export default function CronogramaPage() {
         </div>
       )}
 
-      {/* ABA 2: CAMINHO CRÍTICO CPM */}
+      {/* ABA 2: GRÁFICO DE GANTT EXECUTIVO & CAMINHO CRÍTICO CPM */}
       {activeTab === 'cpm' && (
-        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <h3 className="text-lg font-semibold text-white">Rede de Precedências CPM — Baseline 01</h3>
-              <p className="text-sm text-zinc-400">
-                Processamento determinístico pela Teoria dos Grafos via <span className="font-mono text-zinc-300">calcular_cpm.py</span>. Folga zero indica atividades com risco imediato de atraso contratual.
-              </p>
-            </div>
-            <span className="text-xs bg-rose-500/20 text-rose-400 border border-rose-500/40 px-3 py-1 rounded-full font-bold">
-              31 Macroatividades Modeladas
-            </span>
-          </div>
+        <div className="space-y-6">
+          {/* COMPONENTE PRINCIPAL: GRÁFICO DE GANTT EXECUTIVO INTERATIVO */}
+          <GanttExecutivo 
+            cpmAtividades={cpmAtividades} 
+            tarefasDetalhadas={tarefas} 
+            metaGlobal={metaGlobal} 
+          />
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm text-zinc-300">
-              <thead className="text-xs uppercase bg-zinc-950/80 text-zinc-400 border-b border-zinc-800">
-                <tr>
-                  <th className="py-3 px-4">ID</th>
-                  <th className="py-3 px-4">Macroatividade</th>
-                  <th className="py-3 px-4 text-center">Duração</th>
-                  <th className="py-3 px-4 text-center">Início Cedo</th>
-                  <th className="py-3 px-4 text-center">Fim Cedo</th>
-                  <th className="py-3 px-4 text-center">Folga Total</th>
-                  <th className="py-3 px-4 text-center">Status Crítico</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-800/60">
-                {cpmAtividades.length === 0 ? (
+          {/* AUDITORIA DETERMINÍSTICA: TABELA DE PRECEDÊNCIAS CPM */}
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-6">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="text-base font-semibold text-white">Auditoria Matemática de Precedências (CPM Determinístico)</h3>
+                <p className="text-xs text-zinc-400">
+                  Cálculo algorítmico (Forward/Backward pass) com Teoria dos Grafos via <span className="font-mono text-zinc-300">calcular_cpm.py</span>.
+                </p>
+              </div>
+              <span className="text-xs bg-zinc-800 text-zinc-400 border border-zinc-700 px-3 py-1 rounded-full font-bold">
+                {cpmAtividades.length} Macroatividades
+              </span>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-zinc-300">
+                <thead className="text-[11px] uppercase bg-zinc-950/80 text-zinc-400 border-b border-zinc-800">
                   <tr>
-                    <td colSpan={7} className="text-center py-8 text-zinc-500">
-                      Carregando dados de caminho crítico...
-                    </td>
+                    <th className="py-2.5 px-3">ID</th>
+                    <th className="py-2.5 px-3">Macroatividade</th>
+                    <th className="py-2.5 px-3 text-center">Duração</th>
+                    <th className="py-2.5 px-3 text-center">Início Cedo</th>
+                    <th className="py-2.5 px-3 text-center">Fim Cedo</th>
+                    <th className="py-2.5 px-3 text-center">Folga Total</th>
+                    <th className="py-2.5 px-3 text-center">Status Crítico</th>
                   </tr>
-                ) : (
-                  cpmAtividades.map((atv, idx) => {
-                    const isCritica = atv.critica !== false;
-                    return (
-                      <tr key={atv.id || idx} className="hover:bg-zinc-800/40 transition-colors">
-                        <td className="py-2.5 px-4 font-mono text-xs text-blue-400 font-bold">{atv.id}</td>
-                        <td className="py-2.5 px-4 font-medium text-white">{formatDescricaoCPM(atv.id)}</td>
-                        <td className="py-2.5 px-4 text-center font-mono">{atv.duracao_dias}d</td>
-                        <td className="py-2.5 px-4 text-center font-mono text-zinc-400">Dia {atv.es_inicio_mais_cedo ?? '-'}</td>
-                        <td className="py-2.5 px-4 text-center font-mono text-zinc-400">Dia {atv.ef_fim_mais_cedo ?? '-'}</td>
-                        <td className="py-2.5 px-4 text-center font-mono">
-                          {atv.folga_dias !== undefined ? `${atv.folga_dias}d` : '0d'}
-                        </td>
-                        <td className="py-2.5 px-4 text-center">
-                          {isCritica ? (
-                            <span className="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-0.5 rounded text-xs font-bold">
-                              CRÍTICA
-                            </span>
-                          ) : (
-                            <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-xs font-bold">
-                              Folga ({atv.folga_dias}d)
-                            </span>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-zinc-800/60">
+                  {cpmAtividades.length === 0 ? (
+                    <tr>
+                      <td colSpan={7} className="text-center py-6 text-zinc-500">
+                        Carregando dados de caminho crítico...
+                      </td>
+                    </tr>
+                  ) : (
+                    cpmAtividades.map((atv, idx) => {
+                      const isCritica = atv.critica !== false;
+                      return (
+                        <tr key={atv.id || idx} className="hover:bg-zinc-800/40 transition-colors">
+                          <td className="py-2 px-3 font-mono text-xs text-blue-400 font-bold">{atv.id}</td>
+                          <td className="py-2 px-3 font-medium text-white">{formatDescricaoCPM(atv.id)}</td>
+                          <td className="py-2 px-3 text-center font-mono">{atv.duracao_dias}d</td>
+                          <td className="py-2 px-3 text-center font-mono text-zinc-400">Dia {atv.es_inicio_mais_cedo ?? '-'}</td>
+                          <td className="py-2 px-3 text-center font-mono text-zinc-400">Dia {atv.ef_fim_mais_cedo ?? '-'}</td>
+                          <td className="py-2 px-3 text-center font-mono">
+                            {atv.folga_dias !== undefined ? `${atv.folga_dias}d` : '0d'}
+                          </td>
+                          <td className="py-2 px-3 text-center">
+                            {isCritica ? (
+                              <span className="bg-rose-500/20 text-rose-400 border border-rose-500/40 px-2 py-0.5 rounded text-[11px] font-bold">
+                                CRÍTICA (0d)
+                              </span>
+                            ) : (
+                              <span className="bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 px-2 py-0.5 rounded text-[11px] font-bold">
+                                Folga ({atv.folga_dias}d)
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}

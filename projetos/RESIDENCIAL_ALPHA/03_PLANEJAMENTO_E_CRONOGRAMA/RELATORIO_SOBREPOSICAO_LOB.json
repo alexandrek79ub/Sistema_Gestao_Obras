@@ -1,0 +1,12 @@
+{
+  "obra": "RESIDENCIAL_ALPHA",
+  "data_analise": "12/09/2026 10:27:59",
+  "total_dias_analisados": 182,
+  "headcount_pico_diario": 10,
+  "headcount_medio_diario": 6.6,
+  "total_conflitos_espaciais": 0,
+  "total_disciplinas_com_frentes_duplas": 0,
+  "conflitos_espaciais": [],
+  "frentes_duplicadas": [],
+  "status_aprovacao": "CONFORME_FLUXO_NIVELADO"
+}

@@ -1,0 +1,506 @@
+{
+  "obra": "OBRA_TMULT",
+  "data_analise": "12/09/2026 09:55:17",
+  "cpm_duracao_total_dias_uteis": 178,
+  "cpm_data_fim_global": "26/04/2027",
+  "lob_duracao_total_dias_uteis": 178,
+  "lob_data_fim_global": "26/04/2027",
+  "diferenca_prazo_final_dias_uteis": 0,
+  "limite_divergencia_dias_uteis": 5,
+  "total_vagoes_analisados": 15,
+  "total_vagoes_divergentes": 0,
+  "comparativo_vagoes": [
+    {
+      "vagao": "01. Topografia & Canteiro",
+      "cpm_inicio": "01/10/2026",
+      "cpm_fim": "12/10/2026",
+      "lob_inicio": "01/10/2026",
+      "lob_fim": "12/10/2026",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A01_MOB_CANTEIRO"
+      ]
+    },
+    {
+      "vagao": "02. Fundações Sapatas",
+      "cpm_inicio": "13/10/2026",
+      "cpm_fim": "27/10/2026",
+      "lob_inicio": "13/10/2026",
+      "lob_fim": "27/10/2026",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A02_ESCAV_INFRA",
+        "A03_SAPATAS_CONC"
+      ]
+    },
+    {
+      "vagao": "03. Vigas Baldrames",
+      "cpm_inicio": "28/10/2026",
+      "cpm_fim": "12/11/2026",
+      "lob_inicio": "28/10/2026",
+      "lob_fim": "12/11/2026",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A04_BALDRAMES_CONC",
+        "A05_IMPERM_BALDRAME",
+        "A06_REATERRO_INFRA"
+      ]
+    },
+    {
+      "vagao": "04. Pilares Supraestrutura",
+      "cpm_inicio": "13/11/2026",
+      "cpm_fim": "23/11/2026",
+      "lob_inicio": "13/11/2026",
+      "lob_fim": "23/11/2026",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A07_PILARES_SUPRA"
+      ]
+    },
+    {
+      "vagao": "05. Vigas & Laje H12",
+      "cpm_inicio": "24/11/2026",
+      "cpm_fim": "17/12/2026",
+      "lob_inicio": "24/11/2026",
+      "lob_fim": "17/12/2026",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A08_VIGAS_LAJE_FORMA",
+        "A09_CONCRET_LAJE_H12",
+        "A10_CURA_DESFORMA"
+      ]
+    },
+    {
+      "vagao": "06. Alvenaria de Vedação",
+      "cpm_inicio": "18/12/2026",
+      "cpm_fim": "09/01/2027",
+      "lob_inicio": "18/12/2026",
+      "lob_fim": "09/01/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A12_ALVENARIA_VEDACAO"
+      ]
+    },
+    {
+      "vagao": "07. Cobertura Metálica",
+      "cpm_inicio": "18/12/2026",
+      "cpm_fim": "21/01/2027",
+      "lob_inicio": "18/12/2026",
+      "lob_fim": "21/01/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A11_ESTRUT_TERCAS_COB",
+        "A13_TELHAS_SANDWICH_PLAT"
+      ]
+    },
+    {
+      "vagao": "08. Instalações Embutidas",
+      "cpm_inicio": "22/01/2027",
+      "cpm_fim": "05/02/2027",
+      "lob_inicio": "22/01/2027",
+      "lob_fim": "05/02/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A14_ELET_EMBUTIDA",
+        "A15_HIDR_EMBUTIDA",
+        "A16_TESTE_HIDROSTATICO_72H"
+      ]
+    },
+    {
+      "vagao": "09. Reboco Paulista",
+      "cpm_inicio": "06/02/2027",
+      "cpm_fim": "22/02/2027",
+      "lob_inicio": "06/02/2027",
+      "lob_fim": "22/02/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A17_EMBOCO_REBOCO"
+      ]
+    },
+    {
+      "vagao": "10. Pisos & Porcelanato",
+      "cpm_inicio": "23/02/2027",
+      "cpm_fim": "22/03/2027",
+      "lob_inicio": "23/02/2027",
+      "lob_fim": "22/03/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A18_IMPERM_WCS",
+        "A19_CONTRAPISO",
+        "A22_PISO_PORCELANATO",
+        "A24_RODAPES_ACAB"
+      ]
+    },
+    {
+      "vagao": "11. Esquadrias de Alumínio",
+      "cpm_inicio": "23/02/2027",
+      "cpm_fim": "03/03/2027",
+      "lob_inicio": "23/02/2027",
+      "lob_fim": "03/03/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A21_ESQUADRIAS_FIX"
+      ]
+    },
+    {
+      "vagao": "12. Climatização HVAC",
+      "cpm_inicio": "23/02/2027",
+      "cpm_fim": "03/04/2027",
+      "lob_inicio": "23/02/2027",
+      "lob_fim": "03/04/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A20_INFRA_DUTOS_HVAC",
+        "A26_APARELHOS_HVAC"
+      ]
+    },
+    {
+      "vagao": "13. Acabamentos Elétr./Hidr.",
+      "cpm_inicio": "23/02/2027",
+      "cpm_fim": "03/04/2027",
+      "lob_inicio": "23/02/2027",
+      "lob_fim": "03/04/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A23_FIACAO_TELECOM",
+        "A27_LOUCAS_METAIS",
+        "A28_LUMINARIAS_ESPELHOS"
+      ]
+    },
+    {
+      "vagao": "14. Pintura Acrílica Final",
+      "cpm_inicio": "23/03/2027",
+      "cpm_fim": "12/04/2027",
+      "lob_inicio": "23/03/2027",
+      "lob_fim": "12/04/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A25_PINTURA_1A_DEMAO",
+        "A29_PINTURA_FINAL"
+      ]
+    },
+    {
+      "vagao": "15. Comissionamento & Entrega",
+      "cpm_inicio": "13/04/2027",
+      "cpm_fim": "26/04/2027",
+      "lob_inicio": "13/04/2027",
+      "lob_fim": "26/04/2027",
+      "diff_inicio_dias_uteis": 0,
+      "diff_fim_dias_uteis": 0,
+      "divergente_relevante": false,
+      "atividades_cpm_relacionadas": [
+        "A30_COMISSIONAMENTO",
+        "A31_LIMPEZA_ENTREGA"
+      ]
+    }
+  ],
+  "atividades_cpm_detalhe": [
+    {
+      "id": "A01_MOB_CANTEIRO",
+      "duracao_dias": 10,
+      "es_dias_uteis": 0,
+      "ef_dias_uteis": 10,
+      "data_inicio": "01/10/2026",
+      "data_fim": "12/10/2026",
+      "vagao_atribuido": "01. Topografia & Canteiro"
+    },
+    {
+      "id": "A02_ESCAV_INFRA",
+      "duracao_dias": 6,
+      "es_dias_uteis": 10,
+      "ef_dias_uteis": 16,
+      "data_inicio": "13/10/2026",
+      "data_fim": "19/10/2026",
+      "vagao_atribuido": "02. Fundações Sapatas"
+    },
+    {
+      "id": "A03_SAPATAS_CONC",
+      "duracao_dias": 7,
+      "es_dias_uteis": 16,
+      "ef_dias_uteis": 23,
+      "data_inicio": "20/10/2026",
+      "data_fim": "27/10/2026",
+      "vagao_atribuido": "02. Fundações Sapatas"
+    },
+    {
+      "id": "A04_BALDRAMES_CONC",
+      "duracao_dias": 8,
+      "es_dias_uteis": 23,
+      "ef_dias_uteis": 31,
+      "data_inicio": "28/10/2026",
+      "data_fim": "05/11/2026",
+      "vagao_atribuido": "03. Vigas Baldrames"
+    },
+    {
+      "id": "A05_IMPERM_BALDRAME",
+      "duracao_dias": 3,
+      "es_dias_uteis": 31,
+      "ef_dias_uteis": 34,
+      "data_inicio": "06/11/2026",
+      "data_fim": "09/11/2026",
+      "vagao_atribuido": "03. Vigas Baldrames"
+    },
+    {
+      "id": "A06_REATERRO_INFRA",
+      "duracao_dias": 3,
+      "es_dias_uteis": 34,
+      "ef_dias_uteis": 37,
+      "data_inicio": "10/11/2026",
+      "data_fim": "12/11/2026",
+      "vagao_atribuido": "03. Vigas Baldrames"
+    },
+    {
+      "id": "A07_PILARES_SUPRA",
+      "duracao_dias": 9,
+      "es_dias_uteis": 37,
+      "ef_dias_uteis": 46,
+      "data_inicio": "13/11/2026",
+      "data_fim": "23/11/2026",
+      "vagao_atribuido": "04. Pilares Supraestrutura"
+    },
+    {
+      "id": "A08_VIGAS_LAJE_FORMA",
+      "duracao_dias": 8,
+      "es_dias_uteis": 46,
+      "ef_dias_uteis": 54,
+      "data_inicio": "24/11/2026",
+      "data_fim": "02/12/2026",
+      "vagao_atribuido": "05. Vigas & Laje H12"
+    },
+    {
+      "id": "A09_CONCRET_LAJE_H12",
+      "duracao_dias": 1,
+      "es_dias_uteis": 54,
+      "ef_dias_uteis": 55,
+      "data_inicio": "03/12/2026",
+      "data_fim": "03/12/2026",
+      "vagao_atribuido": "05. Vigas & Laje H12"
+    },
+    {
+      "id": "A10_CURA_DESFORMA",
+      "duracao_dias": 12,
+      "es_dias_uteis": 55,
+      "ef_dias_uteis": 67,
+      "data_inicio": "04/12/2026",
+      "data_fim": "17/12/2026",
+      "vagao_atribuido": "05. Vigas & Laje H12"
+    },
+    {
+      "id": "A11_ESTRUT_TERCAS_COB",
+      "duracao_dias": 10,
+      "es_dias_uteis": 67,
+      "ef_dias_uteis": 77,
+      "data_inicio": "18/12/2026",
+      "data_fim": "29/12/2026",
+      "vagao_atribuido": "07. Cobertura Metálica"
+    },
+    {
+      "id": "A12_ALVENARIA_VEDACAO",
+      "duracao_dias": 20,
+      "es_dias_uteis": 67,
+      "ef_dias_uteis": 87,
+      "data_inicio": "18/12/2026",
+      "data_fim": "09/01/2027",
+      "vagao_atribuido": "06. Alvenaria de Vedação"
+    },
+    {
+      "id": "A13_TELHAS_SANDWICH_PLAT",
+      "duracao_dias": 10,
+      "es_dias_uteis": 87,
+      "ef_dias_uteis": 97,
+      "data_inicio": "11/01/2027",
+      "data_fim": "21/01/2027",
+      "vagao_atribuido": "07. Cobertura Metálica"
+    },
+    {
+      "id": "A14_ELET_EMBUTIDA",
+      "duracao_dias": 10,
+      "es_dias_uteis": 97,
+      "ef_dias_uteis": 107,
+      "data_inicio": "22/01/2027",
+      "data_fim": "02/02/2027",
+      "vagao_atribuido": "08. Instalações Embutidas"
+    },
+    {
+      "id": "A15_HIDR_EMBUTIDA",
+      "duracao_dias": 10,
+      "es_dias_uteis": 97,
+      "ef_dias_uteis": 107,
+      "data_inicio": "22/01/2027",
+      "data_fim": "02/02/2027",
+      "vagao_atribuido": "08. Instalações Embutidas"
+    },
+    {
+      "id": "A16_TESTE_HIDROSTATICO_72H",
+      "duracao_dias": 3,
+      "es_dias_uteis": 107,
+      "ef_dias_uteis": 110,
+      "data_inicio": "03/02/2027",
+      "data_fim": "05/02/2027",
+      "vagao_atribuido": "08. Instalações Embutidas"
+    },
+    {
+      "id": "A17_EMBOCO_REBOCO",
+      "duracao_dias": 14,
+      "es_dias_uteis": 110,
+      "ef_dias_uteis": 124,
+      "data_inicio": "06/02/2027",
+      "data_fim": "22/02/2027",
+      "vagao_atribuido": "09. Reboco Paulista"
+    },
+    {
+      "id": "A18_IMPERM_WCS",
+      "duracao_dias": 3,
+      "es_dias_uteis": 124,
+      "ef_dias_uteis": 127,
+      "data_inicio": "23/02/2027",
+      "data_fim": "25/02/2027",
+      "vagao_atribuido": "10. Pisos & Porcelanato"
+    },
+    {
+      "id": "A19_CONTRAPISO",
+      "duracao_dias": 6,
+      "es_dias_uteis": 124,
+      "ef_dias_uteis": 130,
+      "data_inicio": "23/02/2027",
+      "data_fim": "01/03/2027",
+      "vagao_atribuido": "10. Pisos & Porcelanato"
+    },
+    {
+      "id": "A20_INFRA_DUTOS_HVAC",
+      "duracao_dias": 10,
+      "es_dias_uteis": 124,
+      "ef_dias_uteis": 134,
+      "data_inicio": "23/02/2027",
+      "data_fim": "05/03/2027",
+      "vagao_atribuido": "12. Climatização HVAC"
+    },
+    {
+      "id": "A21_ESQUADRIAS_FIX",
+      "duracao_dias": 8,
+      "es_dias_uteis": 124,
+      "ef_dias_uteis": 132,
+      "data_inicio": "23/02/2027",
+      "data_fim": "03/03/2027",
+      "vagao_atribuido": "11. Esquadrias de Alumínio"
+    },
+    {
+      "id": "A22_PISO_PORCELANATO",
+      "duracao_dias": 14,
+      "es_dias_uteis": 130,
+      "ef_dias_uteis": 144,
+      "data_inicio": "02/03/2027",
+      "data_fim": "17/03/2027",
+      "vagao_atribuido": "10. Pisos & Porcelanato"
+    },
+    {
+      "id": "A23_FIACAO_TELECOM",
+      "duracao_dias": 10,
+      "es_dias_uteis": 124,
+      "ef_dias_uteis": 134,
+      "data_inicio": "23/02/2027",
+      "data_fim": "05/03/2027",
+      "vagao_atribuido": "13. Acabamentos Elétr./Hidr."
+    },
+    {
+      "id": "A24_RODAPES_ACAB",
+      "duracao_dias": 4,
+      "es_dias_uteis": 144,
+      "ef_dias_uteis": 148,
+      "data_inicio": "18/03/2027",
+      "data_fim": "22/03/2027",
+      "vagao_atribuido": "10. Pisos & Porcelanato"
+    },
+    {
+      "id": "A25_PINTURA_1A_DEMAO",
+      "duracao_dias": 5,
+      "es_dias_uteis": 148,
+      "ef_dias_uteis": 153,
+      "data_inicio": "23/03/2027",
+      "data_fim": "27/03/2027",
+      "vagao_atribuido": "14. Pintura Acrílica Final"
+    },
+    {
+      "id": "A26_APARELHOS_HVAC",
+      "duracao_dias": 6,
+      "es_dias_uteis": 153,
+      "ef_dias_uteis": 159,
+      "data_inicio": "29/03/2027",
+      "data_fim": "03/04/2027",
+      "vagao_atribuido": "12. Climatização HVAC"
+    },
+    {
+      "id": "A27_LOUCAS_METAIS",
+      "duracao_dias": 6,
+      "es_dias_uteis": 153,
+      "ef_dias_uteis": 159,
+      "data_inicio": "29/03/2027",
+      "data_fim": "03/04/2027",
+      "vagao_atribuido": "13. Acabamentos Elétr./Hidr."
+    },
+    {
+      "id": "A28_LUMINARIAS_ESPELHOS",
+      "duracao_dias": 5,
+      "es_dias_uteis": 153,
+      "ef_dias_uteis": 158,
+      "data_inicio": "29/03/2027",
+      "data_fim": "02/04/2027",
+      "vagao_atribuido": "13. Acabamentos Elétr./Hidr."
+    },
+    {
+      "id": "A29_PINTURA_FINAL",
+      "duracao_dias": 7,
+      "es_dias_uteis": 159,
+      "ef_dias_uteis": 166,
+      "data_inicio": "05/04/2027",
+      "data_fim": "12/04/2027",
+      "vagao_atribuido": "14. Pintura Acrílica Final"
+    },
+    {
+      "id": "A30_COMISSIONAMENTO",
+      "duracao_dias": 6,
+      "es_dias_uteis": 166,
+      "ef_dias_uteis": 172,
+      "data_inicio": "13/04/2027",
+      "data_fim": "19/04/2027",
+      "vagao_atribuido": "15. Comissionamento & Entrega"
+    },
+    {
+      "id": "A31_LIMPEZA_ENTREGA",
+      "duracao_dias": 6,
+      "es_dias_uteis": 172,
+      "ef_dias_uteis": 178,
+      "data_inicio": "20/04/2027",
+      "data_fim": "26/04/2027",
+      "vagao_atribuido": "15. Comissionamento & Entrega"
+    }
+  ]
+}

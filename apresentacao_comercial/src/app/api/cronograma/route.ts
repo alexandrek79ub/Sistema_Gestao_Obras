@@ -656,14 +656,111 @@ export async function GET(request: Request) {
 
     const cpmPath = path.join(actualBasePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'dados_cpm.json');
     let cpmAtividades: any[] = [];
+    let duracaoTotalCpm = 178;
     if (fs.existsSync(cpmPath)) {
       try {
         const cpmRaw = JSON.parse(fs.readFileSync(cpmPath, 'utf-8'));
-        cpmAtividades = cpmRaw.atividades || [];
+        const rawAtividades = cpmRaw.atividades || [];
+
+        // Algoritmo clássico de CPM (Kahn forward/backward pass)
+        const mapAtv = new Map<string, any>();
+        rawAtividades.forEach((a: any) => mapAtv.set(a.id, a));
+
+        const inDegree = new Map<string, number>();
+        const successors = new Map<string, string[]>();
+        rawAtividades.forEach((a: any) => {
+          inDegree.set(a.id, (a.predecessoras || []).length);
+          successors.set(a.id, []);
+        });
+
+        rawAtividades.forEach((a: any) => {
+          (a.predecessoras || []).forEach((p: string) => {
+            if (successors.has(p)) successors.get(p)!.push(a.id);
+          });
+        });
+
+        const queue: string[] = [];
+        inDegree.forEach((deg, id) => {
+          if (deg === 0) queue.push(id);
+        });
+
+        const topoOrder: string[] = [];
+        while (queue.length > 0) {
+          const u = queue.shift()!;
+          topoOrder.push(u);
+          (successors.get(u) || []).forEach(v => {
+            const currentDeg = (inDegree.get(v) || 0) - 1;
+            inDegree.set(v, currentDeg);
+            if (currentDeg === 0) queue.push(v);
+          });
+        }
+
+        const es = new Map<string, number>();
+        const ef = new Map<string, number>();
+        topoOrder.forEach(id => {
+          const atv = mapAtv.get(id);
+          const preds: string[] = atv.predecessoras || [];
+          let maxEf = 0;
+          preds.forEach(p => {
+            const pEf = ef.get(p) || 0;
+            if (pEf > maxEf) maxEf = pEf;
+          });
+          es.set(id, maxEf);
+          ef.set(id, maxEf + (atv.duracao_dias || 1));
+        });
+
+        let maxTotal = 0;
+        ef.forEach(v => { if (v > maxTotal) maxTotal = v; });
+        duracaoTotalCpm = maxTotal || 178;
+
+        const ls = new Map<string, number>();
+        const lf = new Map<string, number>();
+        for (let i = topoOrder.length - 1; i >= 0; i--) {
+          const id = topoOrder[i];
+          const atv = mapAtv.get(id);
+          const sucs = successors.get(id) || [];
+          let minLs = sucs.length === 0 ? maxTotal : Infinity;
+          sucs.forEach(s => {
+            const sLs = ls.get(s) ?? maxTotal;
+            if (sLs < minLs) minLs = sLs;
+          });
+          lf.set(id, minLs);
+          ls.set(id, minLs - (atv.duracao_dias || 1));
+        }
+
+        const baseStartDate = parseDateRobust('01/10/2026') || new Date(2026, 9, 1);
+
+        cpmAtividades = topoOrder.map(id => {
+          const atv = mapAtv.get(id);
+          const esVal = es.get(id) || 0;
+          const efVal = ef.get(id) || 0;
+          const lsVal = ls.get(id) || 0;
+          const lfVal = lf.get(id) || 0;
+          const folga = Math.max(0, lsVal - esVal);
+          const isCritica = folga === 0;
+
+          const dataIni = addWorkingDays(baseStartDate, esVal);
+          const dataFim = addWorkingDays(baseStartDate, Math.max(0, efVal - 1));
+
+          return {
+            id,
+            duracao_dias: atv.duracao_dias,
+            predecessoras: atv.predecessoras || [],
+            es_inicio_mais_cedo: esVal,
+            ef_fim_mais_cedo: efVal,
+            ls_inicio_mais_tarde: lsVal,
+            lf_fim_mais_tarde: lfVal,
+            folga_dias: folga,
+            critica: isCritica,
+            dataInicio: formatDateBR(dataIni),
+            dataFim: formatDateBR(dataFim)
+          };
+        });
       } catch (err) {
-        console.error('Erro ao ler dados_cpm.json', err);
+        console.error('Erro ao calcular CPM determinístico em route.ts:', err);
       }
     }
+
 
     const curvaS = [
       { mes: 'Mês 1', fisicoPlan: 12.05, financeiroPlan: 9.84, valorMes: 163442.02 },
@@ -729,7 +826,7 @@ export async function GET(request: Request) {
         diasCorridos: 180,
         semanas: 26,
         valorTurnkey: 1660762.28,
-        caminhoCriticoDias: 178
+        caminhoCriticoDias: duracaoTotalCpm || 178
       }
     });
   } catch (error) {

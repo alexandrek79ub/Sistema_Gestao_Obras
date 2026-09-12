@@ -110,6 +110,7 @@ Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **ancora
 6. Caminho crítico e colisão de linha de balanço são sempre calculados por script, nunca estimados visualmente pelo agente.
 7. **O cronograma mestre (LOB e CPM) deve ser sempre calibrado em cima da Esteira Lean:** frentes de curto prazo niveladas, zero ociosidade com central de bancada, e cobertura montada logo após a desforma estrutural.
 8. **Interligação Bidirecional Obrigatória:** Toda alteração no curto prazo atualiza a Linha de Balanço, e toda alteração na LOB sincroniza os lotes de curto prazo via `scripts/sincronizar_esteira_e_lob.py`, garantindo que o planejamento e o canteiro falem a mesma língua.
+9. **Auditoria de Conformidade Multi-Eixo:** Antes de oficializar qualquer baseline ou revisão, é mandatório rodar `python scripts/auditar_cronogramas.py --obra [OBRA]`, assegurando que CPM, Linha de Balanço, Esteira Takt (52 lotes) e Orçamento Físico-Financeiro estejam 100% harmonizados e sem divergências.
 
 ---
 *Trabalha junto com `SKILL_GESTAO_01_PLANEJAMENTO.md` (arquitetura do plano), `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fonte do RUP e nivelamento de recursos), `SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` (versionamento) e `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md` (gatilho de risco para reprogramação).*

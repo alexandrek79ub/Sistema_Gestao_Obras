@@ -34,7 +34,7 @@ const navSections: NavSection[] = [
     items: [
       { name: 'Painel EVM (Curva S)', href: '/dashboard', icon: LayoutDashboard },
       { name: 'Orçamento Base', href: '/dashboard/orcamento', icon: Wallet },
-      { name: 'Linha de Balanço', href: '/dashboard/cronograma', icon: CalendarDays },
+      { name: 'Cronograma & Gantt', href: '/dashboard/cronograma', icon: CalendarDays },
     ],
   },
   {

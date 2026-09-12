@@ -13,6 +13,7 @@ Uso:
 
 import os
 import sys
+import re
 import argparse
 import datetime
 import json
@@ -33,39 +34,148 @@ def parse_args():
     parser.add_argument("--verificar", action="store_true", help="Executa verificação de conformidade")
     parser.add_argument("--analisar-sobreposicao", action="store_true", help="Analisa sobreposições e pico de efetivo")
     parser.add_argument("--permitir-sobreposicao", action="store_true", help="Confirmação explícita de aumento de efetivo por sobreposição")
+    parser.add_argument("--verificar-cpm", action="store_true", help="Executa validação cruzada CPM vs Linha de Balanço")
+    parser.add_argument("--limite-divergencia", type=int, default=5, help="Limite em dias úteis para apontar divergência relevante")
     return parser.parse_args()
 
-def calcular_calendario_lotes(data_inicio_str, total_lotes=52):
+MAPA_LOTE_CPM = [
+    ("LOTE-001", "A01_MOB_CANTEIRO", 10, True, "01. Topografia & Canteiro"),
+    ("LOTE-002", "A02_ESCAV_INFRA", 2, True, "02. Fundações Sapatas"),
+    ("LOTE-003", "A03_SAPATAS_CONC", 2, False, "02. Fundações Sapatas"),
+    ("LOTE-004", "A02_ESCAV_INFRA", 2, False, "02. Fundações Sapatas"),
+    ("LOTE-005", "A03_SAPATAS_CONC", 2, False, "02. Fundações Sapatas"),
+    ("LOTE-006", "A02_ESCAV_INFRA", 2, False, "02. Fundações Sapatas"),
+    ("LOTE-007", "A03_SAPATAS_CONC", 3, False, "02. Fundações Sapatas"),
+    ("LOTE-008", "A04_BALDRAMES_CONC", 4, True, "03. Vigas Baldrames"),
+    ("LOTE-009", "A04_BALDRAMES_CONC", 3, False, "03. Vigas Baldrames"),
+    ("LOTE-010", "A05_IMPERM_BALDRAME", 4, False, "03. Vigas Baldrames"),
+    ("LOTE-011", "A06_REATERRO_INFRA", 3, False, "03. Vigas Baldrames"),
+    ("LOTE-012", "A07_PILARES_SUPRA", 3, True, "04. Pilares Supraestrutura"),
+    ("LOTE-013", "A07_PILARES_SUPRA", 3, False, "04. Pilares Supraestrutura"),
+    ("LOTE-014", "A07_PILARES_SUPRA", 3, False, "04. Pilares Supraestrutura"),
+    ("LOTE-015", "A08_VIGAS_LAJE_FORMA", 5, True, "05. Vigas & Laje H12"),
+    ("LOTE-016", "A09_CONCRET_LAJE_H12", 16, False, "05. Vigas & Laje H12"),
+    ("LOTE-017", "A12_ALVENARIA_VEDACAO", 7, True, "06. Alvenaria de Vedação"),
+    ("LOTE-018", "A12_ALVENARIA_VEDACAO", 7, False, "06. Alvenaria de Vedação"),
+    ("LOTE-019", "A12_ALVENARIA_VEDACAO", 6, False, "06. Alvenaria de Vedação"),
+    ("LOTE-020", "A11_ESTRUT_TERCAS_COB", 10, True, "07. Cobertura Metálica"),
+    ("LOTE-021", "A13_TELHAS_SANDWICH_PLAT", 10, True, "07. Cobertura Metálica"),
+    ("LOTE-022", "A14_ELET_EMBUTIDA", 10, True, "08. Instalações Embutidas"),
+    ("LOTE-023", "A16_TESTE_HIDROSTATICO_72H", 3, True, "08. Instalações Embutidas"),
+    ("LOTE-024", "A17_EMBOCO_REBOCO", 2, True, "09. Reboco Paulista"),
+    ("LOTE-025", "A17_EMBOCO_REBOCO", 6, False, "09. Reboco Paulista"),
+    ("LOTE-026", "A17_EMBOCO_REBOCO", 6, False, "09. Reboco Paulista"),
+    ("LOTE-027", "A18_IMPERM_WCS", 3, True, "10. Pisos & Porcelanato"),
+    ("LOTE-028", "A19_CONTRAPISO", 6, True, "10. Pisos & Porcelanato"),
+    ("LOTE-029", "A22_PISO_PORCELANATO", 5, True, "10. Pisos & Porcelanato"),
+    ("LOTE-030", "A22_PISO_PORCELANATO", 5, False, "10. Pisos & Porcelanato"),
+    ("LOTE-031", "A22_PISO_PORCELANATO", 4, False, "10. Pisos & Porcelanato"),
+    ("LOTE-032", "A24_RODAPES_ACAB", 4, True, "10. Pisos & Porcelanato"),
+    ("LOTE-033", "A21_ESQUADRIAS_FIX", 4, True, "11. Esquadrias de Alumínio"),
+    ("LOTE-034", "A21_ESQUADRIAS_FIX", 4, False, "11. Esquadrias de Alumínio"),
+    ("LOTE-035", "A20_INFRA_DUTOS_HVAC", 7, True, "12. Climatização HVAC"),
+    ("LOTE-036", "A20_INFRA_DUTOS_HVAC", 3, False, "12. Climatização HVAC"),
+    ("LOTE-037", "A23_FIACAO_TELECOM", 6, True, "13. Acabamentos Elétr./Hidr."),
+    ("LOTE-038", "A23_FIACAO_TELECOM", 4, False, "13. Acabamentos Elétr./Hidr."),
+    ("LOTE-039", "A25_PINTURA_1A_DEMAO", 3, True, "14. Pintura Acrílica Final"),
+    ("LOTE-040", "A25_PINTURA_1A_DEMAO", 2, False, "14. Pintura Acrílica Final"),
+    ("LOTE-041", "A27_LOUCAS_METAIS", 6, True, "13. Acabamentos Elétr./Hidr."),
+    ("LOTE-042", "A28_LUMINARIAS_ESPELHOS", 5, True, "13. Acabamentos Elétr./Hidr."),
+    ("LOTE-043", "A29_PINTURA_FINAL", 7, True, "14. Pintura Acrílica Final"),
+    ("LOTE-044", "A26_APARELHOS_HVAC", 6, True, "12. Climatização HVAC"),
+    ("LOTE-045", "A30_COMISSIONAMENTO", 2, True, "15. Comissionamento & Entrega"),
+    ("LOTE-046", "A31_LIMPEZA_ENTREGA", 2, False, "15. Comissionamento & Entrega"),
+    ("LOTE-047", "A30_COMISSIONAMENTO", 2, False, "15. Comissionamento & Entrega"),
+    ("LOTE-048", "A30_COMISSIONAMENTO", 1, False, "15. Comissionamento & Entrega"),
+    ("LOTE-049", "A30_COMISSIONAMENTO", 1, False, "15. Comissionamento & Entrega"),
+    ("LOTE-050", "A31_LIMPEZA_ENTREGA", 1, False, "15. Comissionamento & Entrega"),
+    ("LOTE-051", "A31_LIMPEZA_ENTREGA", 1, False, "15. Comissionamento & Entrega"),
+    ("LOTE-052", "A31_LIMPEZA_ENTREGA", 2, False, "15. Comissionamento & Entrega"),
+]
+
+def somar_dias_uteis_calc(dt_ini, dur_dias):
+    cur = dt_ini
+    added = 0
+    while added < (dur_dias - 1):
+        cur += datetime.timedelta(days=1)
+        if cur.weekday() != 6:
+            added += 1
+    return cur
+
+def proximo_dia_util_calc(dt):
+    prox = dt + datetime.timedelta(days=1)
+    if prox.weekday() == 6:
+        prox += datetime.timedelta(days=1)
+    return prox
+
+def calcular_calendario_lotes(data_inicio_str, total_lotes=52, obra_dir=None):
     """
-    Calcula as datas de início e fim para cada um dos 52 lotes de 3 dias úteis (Seg-Qua e Qui-Sáb).
-    Início padrão da TMULT: 01/10/2026 (Quinta-feira).
+    Calcula as datas de início e fim para cada um dos lotes da esteira.
+    Se dados_cpm.json estiver presente, alinha as janelas ao CPM Forward Pass (178 dias úteis).
     """
+    path_cpm = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "dados_cpm.json") if obra_dir else None
+    
+    if path_cpm and os.path.exists(path_cpm):
+        with open(path_cpm, "r", encoding="utf-8") as f:
+            cpm_raw = json.load(f)
+            
+        d, m, y = map(int, data_inicio_str.split('/'))
+        base_dt = datetime.date(y, m, d)
+        
+        atividades = {a['id']: a for a in cpm_raw['atividades']}
+        for aid, act in atividades.items():
+            preds = act.get('predecessoras', [])
+            act['es'] = 0 if not preds else max(atividades[p]['ef'] for p in preds)
+            act['ef'] = act['es'] + act['duracao_dias']
+            act['dt_ini'] = dia_util_para_data(act['es'], base_dt)
+            act['dt_fim'] = dia_util_para_data(act['ef'] - 1, base_dt)
+            
+        is_compativel = all(item[1] in atividades for item in MAPA_LOTE_CPM[:total_lotes])
+        if is_compativel:
+            calendario = []
+            prev_end = None
+            for lote_idx, (cod, aid, dur, is_start, vagao) in enumerate(MAPA_LOTE_CPM[:total_lotes]):
+                act = atividades[aid]
+                if is_start:
+                    dt_ini = act['dt_ini']
+                else:
+                    dt_ini = proximo_dia_util_calc(prev_end)
+                dt_fim = somar_dias_uteis_calc(dt_ini, dur)
+                prev_end = dt_fim
+                
+                semana_num = (lote_idx // 2) + 1
+                ciclo_num = (lote_idx % 2) + 1
+                
+                calendario.append({
+                    "lote_idx": lote_idx + 1,
+                    "cod_lote": cod,
+                    "semana": f"Semana {semana_num:02d}",
+                    "ciclo": ciclo_num,
+                    "dt_inicio": dt_ini,
+                    "dt_fim": dt_fim,
+                    "str_inicio": dt_ini.strftime("%d/%m/%Y"),
+                    "str_fim": dt_fim.strftime("%d/%m/%Y"),
+                    "duracao_dias": dur
+                })
+            return calendario
+
+    # Fallback: cálculo sequencial linear
     d, m, y = map(int, data_inicio_str.split('/'))
     data_atual = datetime.date(y, m, d)
-    
     calendario = []
-    
     for lote_idx in range(total_lotes):
         semana_num = (lote_idx // 2) + 1
-        ciclo_num = (lote_idx % 2) + 1  # 1: Seg-Qua (ou primeiros 3 dias), 2: Qui-Sáb (segundos 3 dias)
-        
-        # Se for domingo, pula para segunda
+        ciclo_num = (lote_idx % 2) + 1
         if data_atual.weekday() == 6:
             data_atual += datetime.timedelta(days=1)
-            
         dt_ini = data_atual
-        
-        # Duração de 3 dias de trabalho
-        # Avança 2 dias úteis
         dias_uteis_adicionados = 0
         cursor = dt_ini
         while dias_uteis_adicionados < 2:
             cursor += datetime.timedelta(days=1)
-            if cursor.weekday() != 6:  # Pula domingo
+            if cursor.weekday() != 6:
                 dias_uteis_adicionados += 1
-                
         dt_fim = cursor
-        
         calendario.append({
             "lote_idx": lote_idx + 1,
             "cod_lote": f"LOTE-{lote_idx + 1:03d}",
@@ -77,52 +187,110 @@ def calcular_calendario_lotes(data_inicio_str, total_lotes=52):
             "str_fim": dt_fim.strftime("%d/%m/%Y"),
             "duracao_dias": 3
         })
-        
-        # Prepara próximo lote: dia útil seguinte
         prox = dt_fim + datetime.timedelta(days=1)
-        if prox.weekday() == 6:  # Pula domingo
+        if prox.weekday() == 6:
             prox += datetime.timedelta(days=1)
         data_atual = prox
-        
     return calendario
 
+MAPA_ZONAS = {
+    1: "Zona 01 - Recepção/Diretoria",
+    2: "Zona 02 - Salas Técnicas/CPD",
+    3: "Zona 03 - Sanitários e Apoio",
+    4: "Zona 04 - Cobertura e Platibanda"
+}
+
 def normalizar_zona(etapa_zona_str):
-    """Normaliza o texto do lote para as 4 Zonas Físicas da Linha de Balanço (sem setores fictícios)."""
+    """Normaliza o texto do lote para as 4 Zonas Físicas da Linha de Balanço sem perder zonas em strings compostas."""
     s = (etapa_zona_str or "").lower()
     
-    # 1. Cobertura
+    # 1. Cobertura explícita
     if "cobertura" in s or "platibanda" in s or "telha" in s:
-        return ["Zona 04 - Cobertura e Platibanda"]
+        return [MAPA_ZONAS[4]]
         
-    # 2. Zonas específicas individuais
-    if "zona 1" in s or "etapa 1" in s:
-        if "zona 2" in s or "etapa 2" in s:
-            return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"]
-        return ["Zona 01 - Recepção/Diretoria"]
+    # 2. Termos globais que abrangem todas as zonas térreas
+    termos_globais = [
+        "todos os setores", "térreo geral", "geral", "toda a edificação",
+        "turnkey", "edifício", "vistoria", "entrega", "canteiro",
+        "redes hidráulicas (portão de qualidade 3)"
+    ]
+    has_etapa_or_zona = bool(re.search(r'\b(etapa|zona|setor)\s*\d', s))
+    
+    if not has_etapa_or_zona and any(t in s for t in termos_globais):
+        return [MAPA_ZONAS[1], MAPA_ZONAS[2], MAPA_ZONAS[3]]
         
-    if "zona 2" in s or "etapa 2" in s:
-        if "zona 3" in s or "etapa 3" in s:
-            return ["Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
-        return ["Zona 02 - Salas Técnicas/CPD"]
+    # 3. Extrair menções a etapas, zonas ou setores com números
+    zonas_encontradas = set()
+    matches = re.findall(r'\b(?:etapa|zona|setor)\s*([0-9\s,ea]+?)(?=\s*[\(\-\,\.\;]|e\s+[a-z]|em\s+|nas\s+|$)', s)
+    for m in matches:
+        m_range = re.search(r'(\d)\s*a\s*(\d)', m)
+        if m_range:
+            start_z = int(m_range.group(1))
+            end_z = int(m_range.group(2))
+            for z in range(start_z, end_z + 1):
+                if z in MAPA_ZONAS:
+                    zonas_encontradas.add(z)
+        else:
+            digits = re.findall(r'\b([1-4])\b', m)
+            for d in digits:
+                z = int(d)
+                if z in MAPA_ZONAS:
+                    zonas_encontradas.add(z)
+                    
+    if not zonas_encontradas:
+        for z in [1, 2, 3, 4]:
+            if re.search(rf'\b(etapa|zona|setor)\s*{z}\b', s):
+                zonas_encontradas.add(z)
+                
+    # 4. Lotes de fachadas (portas/vidros ou pintura/selador externo) cobrem fisicamente a Zona 01 (Fachada Frontal/Social)
+    if "fachada" in s:
+        zonas_encontradas.add(1)
+
+    if not zonas_encontradas:
+        if "áreas secas" in s or "paredes internas" in s:
+            return [MAPA_ZONAS[1], MAPA_ZONAS[2]]
+        return [MAPA_ZONAS[1], MAPA_ZONAS[2], MAPA_ZONAS[3]]
         
-    if "zona 3" in s or "etapa 3" in s:
-        return ["Zona 03 - Sanitários e Apoio"]
-        
-    # 3. Serviços gerais de térreo (Laje, Instalações, etc.) -> Cobrem as 3 zonas térreas
-    if "térreo geral" in s or "todos os setores" in s or "geral" in s or "áreas secas" in s or "paredes internas" in s:
-        return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
-        
-    # 4. Serviços de comissionamento/turnkey geral -> Cobrem as 3 zonas do edifício
-    if "turnkey" in s or "edifício" in s or "vistoria" in s or "entrega" in s or "canteiro" in s:
-        return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
-        
-    return ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"]
+    return [MAPA_ZONAS[z] for z in sorted(zonas_encontradas)]
+
+MAPA_PREFIXO_VAGAO = {
+    1: "01. Topografia & Canteiro",
+    2: "02. Fundações Sapatas",
+    3: "03. Vigas Baldrames",
+    4: "04. Pilares Supraestrutura",
+    5: "05. Vigas & Laje H12",
+    6: "06. Alvenaria de Vedação",
+    7: "07. Cobertura Metálica",
+    8: "08. Instalações Embutidas",
+    9: "09. Reboco Paulista",
+    10: "10. Pisos & Porcelanato",
+    11: "11. Esquadrias de Alumínio",
+    12: "12. Climatização HVAC",
+    13: "13. Acabamentos Elétr./Hidr.",
+    14: "14. Pintura Acrílica Final",
+    15: "15. Comissionamento & Entrega"
+}
 
 def normalizar_vagao(vagao_str, servico_str):
     """Classifica o serviço em um dos Grandes Vagões de Produção Contínua."""
-    s = (servico_str or "").lower()
-    v = (vagao_str or "").lower()
+    v = (vagao_str or "").strip().lower()
+    s = (servico_str or "").strip().lower()
     
+    # 0. Checagem direta do prefixo no vagao_str ('Vagão XX' ou 'XX. ')
+    m = re.search(r'vag[ãa]o\s*0?(\d+)', v)
+    if not m:
+        m = re.match(r'^0?(\d+)\.', v)
+    if m:
+        v_num = int(m.group(1))
+        if v_num in MAPA_PREFIXO_VAGAO:
+            return MAPA_PREFIXO_VAGAO[v_num]
+            
+    # Checagem por nome canônico presente no vagao_str
+    for num, can_nome in MAPA_PREFIXO_VAGAO.items():
+        subnome = can_nome.split(". ", 1)[1].lower()
+        if subnome in v:
+            return can_nome
+
     if "topografia" in v or "canteiro" in v or "locação" in s:
         return "01. Topografia & Canteiro"
     if "sapata" in s or "cavas" in s or ("escava" in s and "baldrame" not in s):
@@ -190,20 +358,27 @@ def normalizar_equipe(equipe_str, servico_str):
 
 def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
     """
-    Lê PROGRAMACAO_CURTO_PRAZO_*.csv e gera a LINHA_DE_BALANCO.csv calibrada para os 4 setores físicos reais.
+    Lê PROGRAMACAO_CURTO_PRAZO_*.csv e gera a LINHA_DE_BALANCO.csv calibrada para os setores físicos da obra.
+    Compatível com arquitetura multi-obra.
     """
-    path_curto_prazo = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO_TMULT.csv")
-    if not os.path.exists(path_curto_prazo):
-        # Tenta nome genérico
-        path_curto_prazo = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO.csv")
+    pasta_obra = os.path.basename(obra_dir)
+    sigla = pasta_obra.replace("OBRA_", "")
+    
+    candidatos = [
+        os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", f"PROGRAMACAO_CURTO_PRAZO_{sigla}.csv"),
+        os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", f"PROGRAMACAO_CURTO_PRAZO_{pasta_obra}.csv"),
+        os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO.csv"),
+        os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO_TMULT.csv"),
+    ]
+    path_curto_prazo = next((p for p in candidatos if os.path.exists(p)), None)
         
-    if not os.path.exists(path_curto_prazo):
-        print(f"[-] Erro: Arquivo de curto prazo não encontrado em {path_curto_prazo}")
+    if not path_curto_prazo:
+        print(f"[-] Erro: Arquivo de curto prazo não encontrado em {obra_dir}/03_PLANEJAMENTO_E_CRONOGRAMA")
         return False
         
     df_curto = pd.read_csv(path_curto_prazo, sep=';', encoding='utf-8')
     total_lotes = len(df_curto)
-    calendario = calcular_calendario_lotes(data_inicio_str, total_lotes)
+    calendario = calcular_calendario_lotes(data_inicio_str, total_lotes, obra_dir=obra_dir)
     
     linhas_lob = []
     
@@ -217,15 +392,23 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
         headcount = int(r.get('HEADCOUNT_PREVISTO', 4))
         
         zonas_dest = normalizar_zona(etapa_zona)
-        vagao_macro = normalizar_vagao(vagao_raw, servico)
+        mapa_lote_canonico = {item[0]: item[4] for item in MAPA_LOTE_CPM}
+        if cod_lote in mapa_lote_canonico:
+            vagao_macro = mapa_lote_canonico[cod_lote]
+        else:
+            vagao_macro = normalizar_vagao(vagao_raw, servico)
+            
         equipe = normalizar_equipe(equipe_raw, servico)
         
         # Nome amigável da atividade
-        nome_atividade = vagao_raw
-        if ":" in nome_atividade:
-            nome_atividade = nome_atividade.split(":", 1)[1].strip()
+        if ". " in vagao_macro:
+            nome_atividade = vagao_macro.split(". ", 1)[1].strip()
+        elif ":" in vagao_raw:
+            nome_atividade = vagao_raw.split(":", 1)[1].strip()
+        else:
+            nome_atividade = vagao_raw
             
-        # Dias úteis reais dentro do lote de 3 dias
+        # Dias úteis reais dentro do lote
         dias_uteis = []
         cur_d = cal['dt_inicio']
         while cur_d <= cal['dt_fim']:
@@ -233,59 +416,39 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
                 dias_uteis.append(cur_d)
             cur_d += datetime.timedelta(days=1)
             
-        # Fluxo Lean Nivelado (Heijunka): se o lote contempla as 3 zonas e 3 dias úteis,
-        # a equipe avança sequencialmente 1 dia em cada zona (Z1 -> Z2 -> Z3),
-        # garantindo zero sobreposição de equipes e zero conflito espacial.
-        if len(zonas_dest) == 3 and len(dias_uteis) == 3:
-            for z_i, zona in enumerate(zonas_dest):
-                dia = dias_uteis[z_i]
-                linhas_lob.append({
-                    "LOCAL_PAVIMENTO": zona,
-                    "SEQUENCIA": len(linhas_lob) + 1,
-                    "VAGAO": vagao_macro,
-                    "ATIVIDADE": nome_atividade,
-                    "EQUIPE_RESPONSAVEL": equipe,
-                    "RITMO_DIAS_POR_LOCAL": 1,
-                    "DATA_INICIO": dia.strftime("%d/%m/%Y"),
-                    "DATA_FIM": dia.strftime("%d/%m/%Y"),
-                    "_dt_ini": dia,
-                    "_dt_fim": dia,
-                    "_cod_lote": cod_lote,
-                    "_headcount": headcount
-                })
-        elif len(zonas_dest) == 1:
+        # Distribuição proporcional contínua entre as zonas (Heijunka sem desperdício de takt)
+        N = len(dias_uteis)
+        K = len(zonas_dest)
+        base_dias = N // K
+        resto = N % K
+        idx_dia = 0
+        
+        for z_i, zona in enumerate(zonas_dest):
+            qtd = base_dias + (1 if z_i < resto else 0)
+            if qtd == 0 and N > 0:
+                qtd = 1
+            slice_dias = dias_uteis[idx_dia : idx_dia + qtd]
+            if not slice_dias:
+                slice_dias = [dias_uteis[-1]]
+            idx_dia += qtd
+            
+            z_ini = slice_dias[0]
+            z_fim = slice_dias[-1]
+            
             linhas_lob.append({
-                "LOCAL_PAVIMENTO": zonas_dest[0],
+                "LOCAL_PAVIMENTO": zona,
                 "SEQUENCIA": len(linhas_lob) + 1,
                 "VAGAO": vagao_macro,
                 "ATIVIDADE": nome_atividade,
                 "EQUIPE_RESPONSAVEL": equipe,
-                "RITMO_DIAS_POR_LOCAL": len(dias_uteis),
-                "DATA_INICIO": cal['str_inicio'],
-                "DATA_FIM": cal['str_fim'],
-                "_dt_ini": cal['dt_inicio'],
-                "_dt_fim": cal['dt_fim'],
+                "RITMO_DIAS_POR_LOCAL": len(slice_dias),
+                "DATA_INICIO": z_ini.strftime("%d/%m/%Y"),
+                "DATA_FIM": z_fim.strftime("%d/%m/%Y"),
+                "_dt_ini": z_ini,
+                "_dt_fim": z_fim,
                 "_cod_lote": cod_lote,
                 "_headcount": headcount
             })
-        else:
-            for z_i, zona in enumerate(zonas_dest):
-                dia_idx = min(z_i, len(dias_uteis) - 1)
-                dia = dias_uteis[dia_idx]
-                linhas_lob.append({
-                    "LOCAL_PAVIMENTO": zona,
-                    "SEQUENCIA": len(linhas_lob) + 1,
-                    "VAGAO": vagao_macro,
-                    "ATIVIDADE": nome_atividade,
-                    "EQUIPE_RESPONSAVEL": equipe,
-                    "RITMO_DIAS_POR_LOCAL": 1,
-                    "DATA_INICIO": dia.strftime("%d/%m/%Y"),
-                    "DATA_FIM": dia.strftime("%d/%m/%Y"),
-                    "_dt_ini": dia,
-                    "_dt_fim": dia,
-                    "_cod_lote": cod_lote,
-                    "_headcount": headcount
-                })
             
     df_lob = pd.DataFrame(linhas_lob)
     
@@ -536,10 +699,259 @@ def lob_para_esteira(obra_dir, permitir_sobreposicao=False):
     print(f"[+] PROGRAMACAO_CURTO_PRAZO atualizada com sucesso a partir da Linha de Balanço: {path_curto}")
     return True
 
+MAPA_CPM_VAGAO_CANONICO = {
+    "A01_MOB_CANTEIRO": "01. Topografia & Canteiro",
+    "A02_ESCAV_INFRA": "02. Fundações Sapatas",
+    "A03_SAPATAS_CONC": "02. Fundações Sapatas",
+    "A04_BALDRAMES_CONC": "03. Vigas Baldrames",
+    "A05_IMPERM_BALDRAME": "03. Vigas Baldrames",
+    "A06_REATERRO_INFRA": "03. Vigas Baldrames",
+    "A07_PILARES_SUPRA": "04. Pilares Supraestrutura",
+    "A08_VIGAS_LAJE_FORMA": "05. Vigas & Laje H12",
+    "A09_CONCRET_LAJE_H12": "05. Vigas & Laje H12",
+    "A10_CURA_DESFORMA": "05. Vigas & Laje H12",
+    "A11_ESTRUT_TERCAS_COB": "07. Cobertura Metálica",
+    "A12_ALVENARIA_VEDACAO": "06. Alvenaria de Vedação",
+    "A13_TELHAS_SANDWICH_PLAT": "07. Cobertura Metálica",
+    "A14_ELET_EMBUTIDA": "08. Instalações Embutidas",
+    "A15_HIDR_EMBUTIDA": "08. Instalações Embutidas",
+    "A16_TESTE_HIDROSTATICO_72H": "08. Instalações Embutidas",
+    "A17_EMBOCO_REBOCO": "09. Reboco Paulista",
+    "A18_IMPERM_WCS": "10. Pisos & Porcelanato",
+    "A19_CONTRAPISO": "10. Pisos & Porcelanato",
+    "A20_INFRA_DUTOS_HVAC": "12. Climatização HVAC",
+    "A21_ESQUADRIAS_FIX": "11. Esquadrias de Alumínio",
+    "A22_PISO_PORCELANATO": "10. Pisos & Porcelanato",
+    "A23_FIACAO_TELECOM": "13. Acabamentos Elétr./Hidr.",
+    "A24_RODAPES_ACAB": "10. Pisos & Porcelanato",
+    "A25_PINTURA_1A_DEMAO": "14. Pintura Acrílica Final",
+    "A26_APARELHOS_HVAC": "12. Climatização HVAC",
+    "A27_LOUCAS_METAIS": "13. Acabamentos Elétr./Hidr.",
+    "A28_LUMINARIAS_ESPELHOS": "13. Acabamentos Elétr./Hidr.",
+    "A29_PINTURA_FINAL": "14. Pintura Acrílica Final",
+    "A30_COMISSIONAMENTO": "15. Comissionamento & Entrega",
+    "A31_LIMPEZA_ENTREGA": "15. Comissionamento & Entrega"
+}
+
+def dia_util_para_data(dia_num, base_dt):
+    cur = base_dt
+    added = 0
+    while added < dia_num:
+        cur += datetime.timedelta(days=1)
+        if cur.weekday() != 6:
+            added += 1
+    if cur.weekday() == 6:
+        cur += datetime.timedelta(days=1)
+    return cur
+
+def dias_uteis_entre(d1, d2):
+    if d1 == d2:
+        return 0
+    step = 1 if d2 > d1 else -1
+    cur = d1
+    count = 0
+    while cur != d2:
+        cur += datetime.timedelta(days=step)
+        if cur.weekday() != 6:
+            count += step
+    return count
+
+def verificar_cpm_vs_lob(obra_dir, data_inicio_str="01/10/2026", limite_dias=5):
+    """
+    Executa validação cruzada entre o Caminho Crítico (dados_cpm.json) e a Linha de Balanço (LINHA_DE_BALANCO.csv).
+    Gera o artefato RELATORIO_DIVERGENCIA_CPM_LOB.json para embasar decisões de engenharia.
+    """
+    path_cpm = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "dados_cpm.json")
+    path_lob = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "LINHA_DE_BALANCO.csv")
+    
+    if not os.path.exists(path_cpm):
+        print(f"[-] Erro: {path_cpm} não encontrado.")
+        return None
+    if not os.path.exists(path_lob):
+        print(f"[-] Erro: {path_lob} não encontrado.")
+        return None
+        
+    with open(path_cpm, "r", encoding="utf-8") as f:
+        cpm_raw = json.load(f)
+        
+    df_lob = pd.read_csv(path_lob, sep=';', encoding='utf-8')
+    
+    # 1. Forward pass determinístico do CPM
+    activities = {a['id']: a for a in cpm_raw['atividades']}
+    es, ef = {}, {}
+    for aid in activities:
+        es[aid] = 0
+        ef[aid] = activities[aid]['duracao_dias']
+        
+    changed = True
+    while changed:
+        changed = False
+        for aid, act in activities.items():
+            max_p = 0
+            for p in act.get('predecessoras', []):
+                if ef[p] > max_p:
+                    max_p = ef[p]
+            if max_p > es[aid]:
+                es[aid] = max_p
+                ef[aid] = max_p + act['duracao_dias']
+                changed = True
+                
+    cpm_duracao_total = max(ef.values()) if ef else 0
+    
+    d, m, y = map(int, data_inicio_str.split('/'))
+    base_dt = datetime.date(y, m, d)
+    
+    cpm_schedule = {}
+    for aid, act in activities.items():
+        s_day = es[aid]
+        f_day = ef[aid] - 1
+        d_ini = dia_util_para_data(s_day, base_dt)
+        d_fim = dia_util_para_data(f_day, base_dt)
+        cpm_schedule[aid] = {
+            "id": aid,
+            "duracao_dias": act["duracao_dias"],
+            "es": es[aid],
+            "ef": ef[aid],
+            "dt_inicio": d_ini,
+            "dt_fim": d_fim,
+            "vagao": MAPA_CPM_VAGAO_CANONICO.get(aid, normalizar_vagao("", aid.replace('_', ' ')))
+        }
+        
+    # 2. Janelas CPM por Vagão Macro
+    cpm_vagoes = {}
+    for aid, data in cpm_schedule.items():
+        v = data["vagao"]
+        if v not in cpm_vagoes:
+            cpm_vagoes[v] = {
+                "vagao": v,
+                "dt_inicio": data["dt_inicio"],
+                "dt_fim": data["dt_fim"],
+                "atividades": [aid],
+                "duracao_total_dias": data["duracao_dias"]
+            }
+        else:
+            cpm_vagoes[v]["dt_inicio"] = min(cpm_vagoes[v]["dt_inicio"], data["dt_inicio"])
+            cpm_vagoes[v]["dt_fim"] = max(cpm_vagoes[v]["dt_fim"], data["dt_fim"])
+            cpm_vagoes[v]["atividades"].append(aid)
+            cpm_vagoes[v]["duracao_total_dias"] += data["duracao_dias"]
+            
+    # 3. Janelas LOB por Vagão Macro
+    def parse_d(val):
+        d_part, m_part, y_part = map(int, str(val).strip().split('/'))
+        return datetime.date(y_part, m_part, d_part)
+        
+    df_lob['dt_ini'] = df_lob['DATA_INICIO'].apply(parse_d)
+    df_lob['dt_fim'] = df_lob['DATA_FIM'].apply(parse_d)
+    
+    lob_min_dt = df_lob['dt_ini'].min()
+    lob_max_dt = df_lob['dt_fim'].max()
+    lob_duracao_total = dias_uteis_entre(lob_min_dt, lob_max_dt) + 1
+    
+    lob_vagoes = {}
+    for v, grp in df_lob.groupby('VAGAO'):
+        lob_vagoes[v] = {
+            "vagao": v,
+            "dt_inicio": grp['dt_ini'].min(),
+            "dt_fim": grp['dt_fim'].max(),
+            "total_linhas": len(grp)
+        }
+        
+    # 4. Comparação e Detecção de Divergências
+    todos_vagoes = sorted(set(list(cpm_vagoes.keys()) + list(lob_vagoes.keys())))
+    comparativo = []
+    vagoes_divergentes = []
+    
+    print("\n" + "=" * 115)
+    print(" 🔍 VALIDAÇÃO CRUZADA: CAMINHO CRÍTICO (CPM) vs. LINHA DE BALANÇO (LOB)")
+    print("=" * 115)
+    print(f"{'VAGÃO':<30} | {'CPM JANELA (DATA)':<25} | {'LOB JANELA (DATA)':<25} | {'DIF INÍCIO':<11} | {'DIF TÉRMINO':<11}")
+    print("-" * 115)
+    
+    for v in todos_vagoes:
+        if v == "00. Outros Serviços":
+            continue
+        c = cpm_vagoes.get(v)
+        l = lob_vagoes.get(v)
+        
+        c_str = f"{c['dt_inicio'].strftime('%d/%m/%Y')} a {c['dt_fim'].strftime('%d/%m/%Y')}" if c else "NÃO PRESENTE NO CPM"
+        l_str = f"{l['dt_inicio'].strftime('%d/%m/%Y')} a {l['dt_fim'].strftime('%d/%m/%Y')}" if l else "NÃO PRESENTE NA LOB"
+        
+        diff_ini = dias_uteis_entre(c['dt_inicio'], l['dt_inicio']) if (c and l) else None
+        diff_fim = dias_uteis_entre(c['dt_fim'], l['dt_fim']) if (c and l) else None
+        
+        diff_ini_str = f"{diff_ini:+d}d úteis" if diff_ini is not None else "N/A"
+        diff_fim_str = f"{diff_fim:+d}d úteis" if diff_fim is not None else "N/A"
+        
+        divergente = False
+        if diff_ini is not None and abs(diff_ini) > limite_dias:
+            divergente = True
+        if diff_fim is not None and abs(diff_fim) > limite_dias:
+            divergente = True
+            
+        item_comp = {
+            "vagao": v,
+            "cpm_inicio": c['dt_inicio'].strftime('%d/%m/%Y') if c else None,
+            "cpm_fim": c['dt_fim'].strftime('%d/%m/%Y') if c else None,
+            "lob_inicio": l['dt_inicio'].strftime('%d/%m/%Y') if l else None,
+            "lob_fim": l['dt_fim'].strftime('%d/%m/%Y') if l else None,
+            "diff_inicio_dias_uteis": diff_ini,
+            "diff_fim_dias_uteis": diff_fim,
+            "divergente_relevante": divergente,
+            "atividades_cpm_relacionadas": c["atividades"] if c else []
+        }
+        comparativo.append(item_comp)
+        if divergente:
+            vagoes_divergentes.append(item_comp)
+            
+        alerta = " [! DIVERGÊNCIA > 5d !]" if divergente else ""
+        print(f"{v:<30} | {c_str:<25} | {l_str:<25} | {diff_ini_str:<11} | {diff_fim_str:<11}{alerta}")
+        
+    cpm_fim_global = dia_util_para_data(cpm_duracao_total - 1, base_dt)
+    diff_prazo_final_dias = dias_uteis_entre(cpm_fim_global, lob_max_dt)
+    
+    print("-" * 115)
+    print(f"[*] Duração Total CPM (Referência Intocada): {cpm_duracao_total} dias úteis (Término: {cpm_fim_global.strftime('%d/%m/%Y')})")
+    print(f"[*] Duração Total LOB (Esteira Atual):      {lob_duracao_total} dias úteis (Término: {lob_max_dt.strftime('%d/%m/%Y')})")
+    print(f"[*] Descompasso Total no Prazo Final:        {diff_prazo_final_dias:+d} dias úteis")
+    print(f"[*] Vagões com Divergência > {limite_dias} dias úteis:   {len(vagoes_divergentes)} de {len(comparativo)}")
+    print("=" * 115 + "\n")
+    
+    # 5. Salvar RELATORIO_DIVERGENCIA_CPM_LOB.json
+    relatorio_json = {
+        "obra": os.path.basename(obra_dir),
+        "data_analise": datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+        "cpm_duracao_total_dias_uteis": cpm_duracao_total,
+        "cpm_data_fim_global": cpm_fim_global.strftime("%d/%m/%Y"),
+        "lob_duracao_total_dias_uteis": lob_duracao_total,
+        "lob_data_fim_global": lob_max_dt.strftime("%d/%m/%Y"),
+        "diferenca_prazo_final_dias_uteis": diff_prazo_final_dias,
+        "limite_divergencia_dias_uteis": limite_dias,
+        "total_vagoes_analisados": len(comparativo),
+        "total_vagoes_divergentes": len(vagoes_divergentes),
+        "comparativo_vagoes": comparativo,
+        "atividades_cpm_detalhe": [
+            {
+                "id": a_data["id"],
+                "duracao_dias": a_data["duracao_dias"],
+                "es_dias_uteis": a_data["es"],
+                "ef_dias_uteis": a_data["ef"],
+                "data_inicio": a_data["dt_inicio"].strftime("%d/%m/%Y"),
+                "data_fim": a_data["dt_fim"].strftime("%d/%m/%Y"),
+                "vagao_atribuido": a_data["vagao"]
+            }
+            for a_data in cpm_schedule.values()
+        ]
+    }
+    
+    out_relatorio = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "RELATORIO_DIVERGENCIA_CPM_LOB.json")
+    with open(out_relatorio, "w", encoding="utf-8") as f:
+        json.dump(relatorio_json, f, indent=2, ensure_ascii=False)
+    print(f"[+] Relatório de divergência salvo em: {out_relatorio}")
+    return relatorio_json
+
 def main():
     args = parse_args()
     
-    # Determina diretório da obra
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     obra_dir = os.path.join(root_dir, "projetos", args.obra)
     
@@ -549,6 +961,11 @@ def main():
         
     print(f"[*] Sincronizador Bidirecional Esteira Takt <-> Linha de Balanço | Obra: {args.obra}")
     
+    # Modo de Validação Cruzada CPM vs LOB
+    if args.verificar_cpm:
+        verificar_cpm_vs_lob(obra_dir, args.data_inicio, args.limite_divergencia)
+        return
+
     # Se usuário chamou somente --verificar
     if args.verificar:
         analisar_sobreposicoes_e_efetivo(obra_dir, args.permitir_sobreposicao)

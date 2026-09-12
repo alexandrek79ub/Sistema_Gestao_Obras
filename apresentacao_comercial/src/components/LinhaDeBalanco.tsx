@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
   ZoomIn, ZoomOut, Maximize2, Minimize2, Calendar, User, Clock, 
   ArrowUpRight, CheckCircle2, AlertTriangle, TrendingUp, Layers, Info, X,
   ShieldCheck, HelpCircle, Edit3, Save, Sliders, FastForward, Rewind, Check, RefreshCw, Loader2,
-  Users, Zap
+  Users, Zap, Sparkles
 } from 'lucide-react';
 import { useObra } from '@/context/ObraContext';
 
@@ -116,6 +116,111 @@ function getCorVagao(nomeVagao: string) {
   };
 }
 
+function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
+  const v = `${vagaoOuTipo || ''} ${tipoSecundario || ''}`.toLowerCase();
+  
+  // 1. Infraestrutura & Fundações
+  if (
+    v.includes('topografia') || v.includes('locação') || v.includes('canteiro') || 
+    v.includes('fundaç') || v.includes('sapata') || v.includes('baldrame') || 
+    v.includes('escava') || v.includes('01.') || v.includes('02.') || v.includes('03.')
+  ) {
+    return {
+      key: 'INFRA',
+      nome: '1. Infraestrutura & Fundações',
+      badge: 'bg-blue-600',
+      corHex: { stroke: "#2563eb", fill: "rgba(37, 99, 235, 0.28)", badge: "bg-blue-600", bgCard: "bg-blue-950/70", border: "border-blue-500" }
+    };
+  }
+  // 2. Supraestrutura
+  if (
+    v.includes('pilar') || v.includes('viga') || v.includes('laje') || 
+    v.includes('estrutur') || v.includes('concreto') || v.includes('cimbramento') ||
+    v.includes('04.') || v.includes('05.')
+  ) {
+    return {
+      key: 'ESTRUT',
+      nome: '2. Supraestrutura de Concreto',
+      badge: 'bg-indigo-600',
+      corHex: { stroke: "#6366f1", fill: "rgba(99, 102, 241, 0.28)", badge: "bg-indigo-600", bgCard: "bg-indigo-950/70", border: "border-indigo-500" }
+    };
+  }
+  // 3. Cobertura Metálica
+  if (
+    v.includes('cobertura') || v.includes('telha') || v.includes('platibanda') || 
+    v.includes('metálic') || v.includes('07.')
+  ) {
+    return {
+      key: 'COBERT',
+      nome: '3. Cobertura & Platibanda',
+      badge: 'bg-cyan-600',
+      corHex: { stroke: "#06b6d4", fill: "rgba(6, 182, 212, 0.28)", badge: "bg-cyan-600", bgCard: "bg-cyan-950/70", border: "border-cyan-500" }
+    };
+  }
+  // 4. Alvenaria & Reboco
+  if (
+    v.includes('alvenaria') || v.includes('vedação') || v.includes('reboco') || 
+    v.includes('chapisco') || v.includes('emboço') || v.includes('06.') || v.includes('09.')
+  ) {
+    return {
+      key: 'VEDACAO',
+      nome: '4. Alvenaria & Reboco',
+      badge: 'bg-amber-600',
+      corHex: { stroke: "#f59e0b", fill: "rgba(245, 158, 11, 0.28)", badge: "bg-amber-600", bgCard: "bg-amber-950/70", border: "border-amber-500" }
+    };
+  }
+  // 5. Instalações Prediais & Climatização
+  if (
+    v.includes('embutida') || v.includes('elétric') || v.includes('hidrául') || 
+    v.includes('esgoto') || v.includes('hvac') || v.includes('climatiza') || 
+    v.includes('cabo') || v.includes('quadro') || v.includes('frigor') || 
+    v.includes('telecom') || v.includes('estanqueidade') || v.includes('08.') || v.includes('12.') || v.includes('13.')
+  ) {
+    return {
+      key: 'INSTAL',
+      nome: '5. Instalações & Climatização',
+      badge: 'bg-emerald-600',
+      corHex: { stroke: "#10b981", fill: "rgba(16, 185, 129, 0.28)", badge: "bg-emerald-600", bgCard: "bg-emerald-950/70", border: "border-emerald-500" }
+    };
+  }
+  // 6. Acabamentos Finos & Pisos
+  if (
+    v.includes('piso') || v.includes('porcelanato') || v.includes('contrapiso') || 
+    v.includes('cerâmica') || v.includes('esquadria') || v.includes('caixilho') || 
+    v.includes('porta') || v.includes('vidro') || v.includes('pintura') || 
+    v.includes('louça') || v.includes('metal') || v.includes('luminária') || 
+    v.includes('rodapé') || v.includes('rejunte') || v.includes('impermeabiliz') ||
+    v.includes('10.') || v.includes('11.') || v.includes('14.')
+  ) {
+    return {
+      key: 'ACABAM',
+      nome: '6. Acabamentos & Pisos',
+      badge: 'bg-purple-600',
+      corHex: { stroke: "#a855f7", fill: "rgba(168, 85, 247, 0.28)", badge: "bg-purple-600", bgCard: "bg-purple-950/70", border: "border-purple-500" }
+    };
+  }
+  // 7. Comissionamento & Entrega Técnica
+  if (
+    v.includes('comissionamento') || v.includes('entrega') || v.includes('limpeza') || 
+    v.includes('as-built') || v.includes('vistoria') || v.includes('recebimento') || 
+    v.includes('auditoria') || v.includes('treinamento') || v.includes('databook') ||
+    v.includes('15.')
+  ) {
+    return {
+      key: 'ENTREGA',
+      nome: '7. Comissionamento & Entrega',
+      badge: 'bg-teal-600',
+      corHex: { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.30)", badge: "bg-teal-600", bgCard: "bg-teal-950/70", border: "border-teal-500" }
+    };
+  }
+  return {
+    key: 'OUTROS',
+    nome: 'Serviços Complementares',
+    badge: 'bg-zinc-600',
+    corHex: { stroke: "#71717a", fill: "rgba(113, 113, 122, 0.25)", badge: "bg-zinc-600", bgCard: "bg-zinc-900/80", border: "border-zinc-600" }
+  };
+}
+
 function parseDateBR(dateStr: string): Date | null {
   if (!dateStr) return null;
   const clean = dateStr.trim().replace(/^"|"$/g, '');
@@ -183,7 +288,8 @@ export default function LinhaDeBalanco() {
   const [zoomX, setZoomX] = useState(1);
   const [zoomY, setZoomY] = useState(1);
   const [modoVisualizacao, setModoVisualizacao] = useState<'semanas' | 'dias'>('semanas');
-  const [estiloLOB, setEstiloLOB] = useState<'linhas' | 'blocos'>('linhas');
+  const [estiloLOB, setEstiloLOB] = useState<'linhas' | 'blocos'>('blocos');
+  const [nivelAgrupamento, setNivelAgrupamento] = useState<'macro' | 'vagao'>('macro');
   
   const [tarefas, setTarefas] = useState<TarefaLOB[]>([]);
   const [vagoesFluxo, setVagoesFluxo] = useState<VagaoFluxo[]>([]);
@@ -555,48 +661,227 @@ export default function LinhaDeBalanco() {
   };
 
 
-  // Agrupamento para a visão de "Blocos por Lotes"
-  // Consolida tarefas contíguas do mesmo vagão no setor (folga <= 2 dias de fim de semana).
-  // Tarefas com intervalo real de espera formam lotes distintos, preservando a diagonal ascendente Lean ↗.
+  // Consolidação Canônica das 7 Macrofases Mestres para Linha de Balanço
+  const macroFluxo = useMemo(() => {
+    const mapa = new Map<string, {
+      id: string;
+      nome: string;
+      equipe: string;
+      color: string;
+      corHex: any;
+      pontosMap: Map<string, { id: number; pav: string; start: number; duration: number; dataInicio?: string; dataFim?: string }>;
+      startMin: number;
+      endMax: number;
+      dataInicioGlobal?: string;
+      dataFimGlobal?: string;
+      predecessoresNomes: Set<string>;
+      sucessoresNomes: Set<string>;
+    }>();
+
+    tarefas.forEach(t => {
+      const macro = getMacroFase(t.vagao || '', t.tipo || '');
+      if (!mapa.has(macro.key)) {
+        mapa.set(macro.key, {
+          id: macro.key,
+          nome: macro.nome,
+          equipe: t.equipe || 'Equipe Especializada',
+          color: macro.corHex.badge,
+          corHex: macro.corHex,
+          pontosMap: new Map(),
+          startMin: Infinity,
+          endMax: -Infinity,
+          dataInicioGlobal: t.dataInicio,
+          dataFimGlobal: t.dataFim,
+          predecessoresNomes: new Set(),
+          sucessoresNomes: new Set()
+        });
+      }
+
+      const m = mapa.get(macro.key)!;
+      const tEnd = t.start + t.duration;
+      if (t.start < m.startMin) {
+        m.startMin = t.start;
+        if (t.dataInicio) m.dataInicioGlobal = t.dataInicio;
+      }
+      if (tEnd > m.endMax) {
+        m.endMax = tEnd;
+        if (t.dataFim) m.dataFimGlobal = t.dataFim;
+      }
+
+      if (!m.pontosMap.has(t.pav)) {
+        m.pontosMap.set(t.pav, {
+          id: t.id,
+          pav: t.pav,
+          start: t.start,
+          duration: t.duration,
+          dataInicio: t.dataInicio,
+          dataFim: t.dataFim
+        });
+      } else {
+        const pt = m.pontosMap.get(t.pav)!;
+        const ptEnd = Math.max(pt.start + pt.duration, tEnd);
+        const oldStart = pt.start;
+        pt.start = Math.min(pt.start, t.start);
+        pt.duration = ptEnd - pt.start;
+        if (t.start < oldStart && t.dataInicio) pt.dataInicio = t.dataInicio;
+        if (tEnd >= ptEnd && t.dataFim) pt.dataFim = t.dataFim;
+      }
+    });
+
+    return Array.from(mapa.values())
+      .filter(m => m.pontosMap.size > 0)
+      .map(m => ({
+        id: m.id,
+        nome: m.nome,
+        equipe: m.equipe,
+        color: m.color,
+        corHex: m.corHex,
+        pontos: Array.from(m.pontosMap.values()),
+        startMin: m.startMin === Infinity ? 0 : m.startMin,
+        endMax: m.endMax === -Infinity ? 30 : m.endMax,
+        dataInicioGlobal: m.dataInicioGlobal || '',
+        dataFimGlobal: m.dataFimGlobal || '',
+        predecessoresNomes: Array.from(m.predecessoresNomes),
+        sucessoresNomes: Array.from(m.sucessoresNomes)
+      }))
+      .sort((a, b) => a.startMin - b.startMin);
+  }, [tarefas]);
+
+  // Agrupamento para a visão de "Blocos Mestres" — Padrão Canônico de Engenharia
+  // Consolida tarefas estritamente nas 7 Macroetapas Canônicas por Setor,
+  // com cálculo automático de pistas verticais (lanes) para eliminar qualquer colisão visual.
   const lotesConsolidadosPorSetor = pavimentosOrdenados.map((pav, rowIdx) => {
     const tarefasDoSetor = [...tarefas.filter(t => t.pav === pav)].sort((a, b) => a.start - b.start);
-    const lotes: {
-      id: string;
-      tarefaId: number;
-      tarefa: TarefaLOB;
-      pav: string;
-      vagaoNome: string;
-      equipe: string;
-      start: number;
-      end: number;
-      duration: number;
-      dataInicio?: string;
-      dataFim?: string;
-      color: string;
-    }[] = [];
+    
+    if (nivelAgrupamento === 'macro') {
+      const macroMap = new Map<string, {
+        id: string;
+        tarefaId: number;
+        tarefa: TarefaLOB;
+        pav: string;
+        vagaoNome: string;
+        equipe: string;
+        start: number;
+        end: number;
+        duration: number;
+        dataInicio?: string;
+        dataFim?: string;
+        color: string;
+        corBadge: string;
+        subtarefasCount: number;
+        atividadesNomes: string[];
+        lane: number;
+      }>();
 
-    tarefasDoSetor.forEach((t, idx) => {
-      const vNome = t.vagao || t.tipo;
-      const tEnd = t.start + t.duration;
-      lotes.push({
-        id: `${pav}-${vNome}-${t.start}-${idx}`,
-        tarefaId: t.id,
-        tarefa: t,
-        pav,
-        vagaoNome: vNome,
-        equipe: t.equipe,
-        start: t.start,
-        end: tEnd,
-        duration: t.duration,
-        dataInicio: t.dataInicio,
-        dataFim: t.dataFim,
-        color: t.color
+      tarefasDoSetor.forEach((t) => {
+        const macro = getMacroFase(t.vagao || '', t.tipo || '');
+        const tEnd = t.start + t.duration;
+
+        if (!macroMap.has(macro.key)) {
+          macroMap.set(macro.key, {
+            id: `${pav}-${macro.key}`,
+            tarefaId: t.id,
+            tarefa: t,
+            pav,
+            vagaoNome: macro.nome,
+            equipe: macro.nome,
+            start: t.start,
+            end: tEnd,
+            duration: t.duration,
+            dataInicio: t.dataInicio,
+            dataFim: t.dataFim,
+            color: macro.corHex.badge,
+            corBadge: macro.badge,
+            subtarefasCount: 1,
+            atividadesNomes: [t.tipo],
+            lane: 0
+          });
+        } else {
+          const m = macroMap.get(macro.key)!;
+          const oldStart = m.start;
+          m.start = Math.min(m.start, t.start);
+          m.end = Math.max(m.end, tEnd);
+          m.duration = m.end - m.start;
+          if (t.start < oldStart && t.dataInicio) {
+            m.dataInicio = t.dataInicio;
+          }
+          if (tEnd >= m.end && t.dataFim) {
+            m.dataFim = t.dataFim;
+          }
+          m.subtarefasCount++;
+          if (!m.atividadesNomes.includes(t.tipo)) {
+            m.atividadesNomes.push(t.tipo);
+          }
+        }
       });
+
+      const macroList = Array.from(macroMap.values()).sort((a, b) => a.start - b.start);
+
+      // Algoritmo de atribuição de trilhas/pistas (lanes) para que blocos simultâneos não colidam
+      const laneEndTimes: number[] = [];
+      macroList.forEach(m => {
+        let assignedLane = -1;
+        for (let l = 0; l < laneEndTimes.length; l++) {
+          if (laneEndTimes[l] <= m.start) {
+            assignedLane = l;
+            laneEndTimes[l] = m.end;
+            break;
+          }
+        }
+        if (assignedLane === -1) {
+          assignedLane = laneEndTimes.length;
+          laneEndTimes.push(m.end);
+        }
+        m.lane = assignedLane;
+      });
+
+      return {
+        pav,
+        rowIdx,
+        totalLanes: Math.max(1, laneEndTimes.length),
+        lotes: macroList
+      };
+    }
+
+    // Modo Detalhado (15 Vagões Disciplinares)
+    const lotes: any[] = [];
+    tarefasDoSetor.forEach((t) => {
+      const vOriginal = t.vagao || t.tipo;
+      const tEnd = t.start + t.duration;
+      const ultimo = lotes.length > 0 ? lotes[lotes.length - 1] : null;
+
+      if (ultimo && ultimo.vagaoNome === vOriginal && (t.start - ultimo.end <= 4)) {
+        ultimo.end = Math.max(ultimo.end, tEnd);
+        ultimo.duration = ultimo.end - ultimo.start;
+        if (t.dataFim) ultimo.dataFim = t.dataFim;
+        ultimo.subtarefasCount = (ultimo.subtarefasCount || 1) + 1;
+        if (!ultimo.atividadesNomes) ultimo.atividadesNomes = [ultimo.tarefa.tipo];
+        ultimo.atividadesNomes.push(t.tipo);
+      } else {
+        lotes.push({
+          id: `${pav}-${vOriginal}-${t.start}`,
+          tarefaId: t.id,
+          tarefa: t,
+          pav,
+          vagaoNome: vOriginal,
+          equipe: t.equipe,
+          start: t.start,
+          end: tEnd,
+          duration: t.duration,
+          dataInicio: t.dataInicio,
+          dataFim: t.dataFim,
+          color: t.color,
+          subtarefasCount: 1,
+          atividadesNomes: [t.tipo],
+          lane: 0
+        });
+      }
     });
 
     return {
       pav,
       rowIdx,
+      totalLanes: 1,
       lotes
     };
   });
@@ -645,10 +930,37 @@ export default function LinhaDeBalanco() {
                   ? 'bg-blue-600 text-white shadow-sm ring-1 ring-blue-400/40' 
                   : 'text-zinc-400 hover:text-white'
               }`}
-              title="Exibe a visão detalhada de lotes discretos consolidados por setor"
+              title="Exibe a visão canônica de engenharia com blocos mestres consolidados por vagão e setor"
             >
               <Layers className="w-3.5 h-3.5" />
-              Blocos por Lotes
+              Blocos Mestres (Engenharia)
+            </button>
+          </div>
+
+          {/* SELETOR DE NÍVEL DE CONSOLIDAÇÃO: MACROETAPAS (7 FASES) VS VAGÕES (15) */}
+          <div className="bg-zinc-950 p-1 rounded-lg border border-zinc-800 flex items-center text-xs">
+            <button
+              onClick={() => setNivelAgrupamento('macro')}
+              className={`px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center gap-1.5 ${
+                nivelAgrupamento === 'macro'
+                  ? 'bg-amber-600 text-white shadow-sm ring-1 ring-amber-400/40'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+              title="Exibe apenas as 7 Macrofases principais da engenharia (Fundações, Estruturas, Cobertura, Alvenaria, Instalações, Acabamentos, Entrega)"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+              Apenas Macroatividades (7 Fases)
+            </button>
+            <button
+              onClick={() => setNivelAgrupamento('vagao')}
+              className={`px-3 py-1.5 rounded-md font-semibold transition-colors flex items-center gap-1.5 ${
+                nivelAgrupamento === 'vagao'
+                  ? 'bg-zinc-800 text-white shadow-sm ring-1 ring-zinc-500/40'
+                  : 'text-zinc-400 hover:text-white'
+              }`}
+              title="Exibe os 15 Vagões disciplinares detalhados"
+            >
+              15 Vagões Disciplinares
             </button>
           </div>
 
@@ -949,9 +1261,9 @@ export default function LinhaDeBalanco() {
                     );
                   })}
 
-                  {/* 1. RENDERIZAR AS FAIXAS E VAGÕES DE FLUXO */}
-                  {vagoesFluxo.map((vagao) => {
-                    const cor = getCorVagao(vagao.nome);
+                  {/* 1. RENDERIZAR AS FAIXAS E VAGÕES DE FLUXO (OU 7 MACROFASES MESTRES) */}
+                  {(nivelAgrupamento === 'macro' ? macroFluxo : vagoesFluxo).map((vagao: any) => {
+                    const cor = (vagao as any).corHex || getCorVagao(vagao.nome);
                     const isHovered = vagaoHover === vagao.id;
                     const isSelected = vagaoSelecionado?.id === vagao.id;
                     const isCommissioning = vagao.nome.includes('15.') || vagao.nome.toLowerCase().includes('comissionamento');
@@ -967,7 +1279,7 @@ export default function LinhaDeBalanco() {
                       dataFim?: string;
                     }>();
 
-                    vagao.pontos.forEach((p) => {
+                    vagao.pontos.forEach((p: any) => {
                       const idx = pavimentosOrdenados.indexOf(p.pav);
                       if (idx === -1) return;
                       const pEnd = p.start + p.duration;
@@ -1085,7 +1397,7 @@ export default function LinhaDeBalanco() {
                       const yCenter = getYCenter(z.pav);
                       const height = 36;
                       const yTop = yCenter - height / 2;
-                      const pontoZ = vagao.pontos.find(p => p.pav === z.pav) || vagao.pontos[0];
+                      const pontoZ = vagao.pontos.find((p: any) => p.pav === z.pav) || vagao.pontos[0];
                       const temConflito2 = pontoZ ? conflitosVisuais.some(c => c.tarefasIds.includes(pontoZ.id)) : false;
 
                       return (
@@ -1156,7 +1468,7 @@ export default function LinhaDeBalanco() {
                       const midIdx = Math.floor(centerPoints.length / 2);
                       const labelPonto = centerPoints[midIdx];
                       const primeiroP = vagao.pontos[0];
-                      const temConflito3 = vagao.pontos.some(p => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
+                      const temConflito3 = vagao.pontos.some((p: any) => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
 
                       return (
                         <g 
@@ -1210,7 +1522,7 @@ export default function LinhaDeBalanco() {
                           {/* NÓS/MARCADORES EM CADA SETOR COM ARRASTE DIRETO POR SETOR */}
                           {centerPoints.map((p, idx) => {
                             const z = zonasConsolidadas[idx];
-                            const pontoZ = vagao.pontos.find(pt => pt.pav === z?.pav) || vagao.pontos[0];
+                            const pontoZ = vagao.pontos.find((pt: any) => pt.pav === z?.pav) || vagao.pontos[0];
                             return (
                               <circle 
                                 key={idx} 
@@ -1263,65 +1575,79 @@ export default function LinhaDeBalanco() {
               ) : (
                 /* MODO BLOCOS: VISÃO POR LOTES CONSOLIDADOS POR SETOR COM TEXTO LEGÍVEL */
                 <div className="absolute inset-0 pointer-events-auto">
-                  {lotesConsolidadosPorSetor.map(({ pav, rowIdx, lotes }) => {
+                  {lotesConsolidadosPorSetor.map((setLotes: any) => {
+                    const { pav, rowIdx, lotes, totalLanes } = setLotes;
+                    const lanesCount = totalLanes || 1;
                     return (
                       <div 
                         key={pav} 
                         style={{ height: `${rowHeight}px`, top: `${rowIdx * rowHeight}px` }}
-                        className="absolute w-full flex items-center"
+                        className="absolute w-full"
                       >
-                        {lotes.map((lote) => {
+                        {lotes.map((lote: any) => {
                           const xIni = getX(lote.start);
                           const xFim = getX(lote.end);
                           const rawWidth = Math.max(0, xFim - xIni);
-                          // Garante respiro de 2px entre lotes sequenciais contíguos sem colisão visual
-                          const width = Math.max(22, rawWidth > 4 ? rawWidth - 2 : rawWidth);
-                          const cor = getCorVagao(lote.vagaoNome);
-                          const prefix = (lote.vagaoNome || '').slice(0, 2);
+                          // Garante respiro de 3px entre lotes sequenciais contíguos sem colisão visual
+                          const width = Math.max(26, rawWidth > 5 ? rawWidth - 3 : rawWidth);
+                          const cor = lote.corHex || getCorVagao(lote.vagaoNome);
                           const temConflito = conflitosVisuais.some(c => c.tarefasIds.includes(lote.tarefaId));
+
+                          // Dimensionamento de pista (lane) vertical dentro da linha do setor
+                          const laneHeight = lanesCount === 1 
+                            ? rowHeight - 24 
+                            : Math.max(26, Math.floor((rowHeight - 16) / lanesCount) - 4);
+                          const blockTop = lanesCount === 1 
+                            ? 12 
+                            : 8 + (lote.lane || 0) * (laneHeight + 4);
 
                           return (
                             <div
                               key={lote.id}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                const vEncontrado = vagoesFluxo.find(v => v.nome === lote.vagaoNome);
-                                if (vEncontrado) setVagaoSelecionado(vEncontrado);
+                                if (nivelAgrupamento === 'macro') {
+                                  const macroVagao = macroFluxo.find(m => m.nome === lote.vagaoNome);
+                                  if (macroVagao) setVagaoSelecionado(macroVagao as any);
+                                } else {
+                                  const vEncontrado = vagoesFluxo.find(v => v.nome === lote.vagaoNome);
+                                  if (vEncontrado) setVagaoSelecionado(vEncontrado);
+                                }
                               }}
                               style={{ 
                                 left: `${xIni}px`, 
                                 width: `${width}px`, 
-                                height: `${rowHeight - 28}px`,
+                                top: `${blockTop}px`,
+                                height: `${laneHeight}px`,
                               }}
-                              className={`absolute ${cor.badge} border ${
+                              className={`absolute ${lote.corBadge || cor.badge} border ${
                                 temConflito ? 'border-rose-400 ring-2 ring-rose-500 animate-pulse' : 'border-white/20'
-                              } rounded-lg shadow-md flex flex-col items-center justify-center text-white px-1.5 cursor-pointer hover:ring-2 hover:ring-white hover:scale-[1.02] transition-transform z-10 select-none`}
-                              title={`${lote.vagaoNome} (${lote.dataInicio} a ${lote.dataFim}) - ${lote.duration} dias. Clique para ver detalhes.`}
+                              } rounded-xl shadow-md flex flex-col items-center justify-center text-white px-2 cursor-pointer hover:ring-2 hover:ring-white hover:scale-[1.02] transition-transform z-10 select-none overflow-hidden`}
+                              title={`${lote.vagaoNome} (${lote.dataInicio || ''} a ${lote.dataFim || ''}) — ${lote.duration} dias úteis${lote.subtarefasCount > 1 ? ` (${lote.subtarefasCount} etapas consolidadas: ${lote.atividadesNomes?.join(', ')})` : ''}. Clique para ver detalhes.`}
                             >
-                              {width >= 90 ? (
+                              {width >= 72 ? (
                                 <>
                                   <span className="text-[10px] font-bold leading-tight truncate w-full text-center flex items-center justify-center gap-1">
                                     {temConflito && <span>⚠️</span>}
                                     {lote.vagaoNome.replace(/^\d+\.\s*/, '')}
                                   </span>
-                                  <span className="text-[9px] text-white/80 font-mono">
-                                    {lote.duration}d
+                                  <span className="text-[9px] text-white/90 font-mono font-semibold">
+                                    {lote.duration}d {lote.subtarefasCount > 1 ? `(${lote.subtarefasCount}et)` : ''}
                                   </span>
                                 </>
-                              ) : width >= 48 ? (
+                              ) : width >= 38 ? (
                                 <>
-                                  <span className="text-[10px] font-bold leading-tight flex items-center gap-0.5">
+                                  <span className="text-[10px] font-bold leading-tight flex items-center gap-0.5 truncate max-w-full px-0.5">
                                     {temConflito && <span>⚠️</span>}
-                                    V{prefix}
+                                    {lote.vagaoNome.replace(/^\d+\.\s*/, '').slice(0, 8)}
                                   </span>
-                                  <span className="text-[8px] text-white/80 font-mono">
+                                  <span className="text-[8px] text-white/90 font-mono font-semibold">
                                     {lote.duration}d
                                   </span>
                                 </>
                               ) : (
-                                <span className="text-[10px] font-bold flex items-center gap-0.5">
-                                  {temConflito && <span>⚠️</span>}
-                                  V{prefix}
+                                <span className="text-[9px] font-bold">
+                                  {lote.duration}d
                                 </span>
                               )}
                             </div>

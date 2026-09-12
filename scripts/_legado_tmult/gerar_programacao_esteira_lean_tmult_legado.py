@@ -2,41 +2,113 @@
 """
 Script: gerar_programacao_esteira_lean_tmult.py
 Gera a Programacao de Curto Prazo (WWP - Weekly Work Plan) para OBRA_TMULT
-estruturada rigorosamente como uma ESTEIRA DE PRODUCAO LEAN (Takt Planning).
+estruturada rigorosamente como uma ESTEIRA DE PRODUCAO LEAN (Takt Planning),
+harmonizada integralmente com o Caminho Crítico (dados_cpm.json, 178 dias úteis)
+e a Linha de Balanço Canônica de 15 Vagões.
 
-Princípios Fundamentais:
-1. Divisao da obra em 3 Etapas Construtivas (Zonas Takt):
-   - Etapa 1 (Zona 1 - Recepcao / Diretoria): S1 a S12, VB1 a VB6, P1 a P8, Laje Z1
-   - Etapa 2 (Zona 2 - Salas Tecnicas / CPD): S13 a S24, VB7 a VB12, P9 a P16, Laje Z2
-   - Etapa 3 (Zona 3 - Sanitarios / Copa / Circulacao): S25 a S32, VB13 a VB19, P17 a P24, Laje Z3
-2. Ritmo Takt = 3 dias uteis:
-   - Ciclo 1: Segunda a Quarta (D1 a D3 da semana)
-   - Ciclo 2: Quinta a Sabado (D4 a D6 da semana)
-3. Fluxo Continuo dos Vagoes de Especialidade:
-   - A Carpintaria monta Zona 1 -> enquanto cura, monta Zona 2 -> enquanto cura, monta Zona 3 -> enquanto cura, monta vigas da Zona 1.
-   - NENHUMA equipe fica ociosa esperando a cura do concreto.
-   - O headcount diario no canteiro permanece absolutamente constante e calibrado com o Histograma EAP 1.0!
+Princípios de Harmonização (v2):
+1. Duração dos lotes derivada diretamente dos dias reais das atividades críticas do CPM.
+2. Reordenação do Portão 4 (Pintura 1ª demão / emassamento na Semana 20 antes de louças e luminárias na Semana 21).
+3. Nomenclatura dos 15 Vagões Canônicos padronizada em todos os lotes.
+4. Gravação simultânea nos arquivos canônicos da obra e no template.
 """
 
 import os
 import csv
+import json
+
+MAPA_LOTE_CPM_ATIVIDADES = {
+    "LOTE-001": ("A01_MOB_CANTEIRO", 1.0, 10),
+    "LOTE-002": ("A02_ESCAV_INFRA", 2/6, 2),
+    "LOTE-003": ("A03_SAPATAS_CONC", 2/7, 2),
+    "LOTE-004": ("A02_ESCAV_INFRA", 2/6, 2),
+    "LOTE-005": ("A03_SAPATAS_CONC", 2/7, 2),
+    "LOTE-006": ("A02_ESCAV_INFRA", 2/6, 2),
+    "LOTE-007": ("A03_SAPATAS_CONC", 3/7, 3),
+    "LOTE-008": ("A04_BALDRAMES_CONC", 4/7, 4),
+    "LOTE-009": ("A04_BALDRAMES_CONC", 3/7, 3),
+    "LOTE-010": ("A05_IMPERM_BALDRAME", 1.0, 4),
+    "LOTE-011": ("A06_REATERRO_INFRA", 1.0, 3),
+    "LOTE-012": ("A07_PILARES_SUPRA", 3/9, 3),
+    "LOTE-013": ("A07_PILARES_SUPRA", 3/9, 3),
+    "LOTE-014": ("A07_PILARES_SUPRA", 3/9, 3),
+    "LOTE-015": ("A08_VIGAS_LAJE_FORMA", 1.0, 5),
+    "LOTE-016": ("A09_CONCRET_LAJE_H12", 1.0, 16),
+    "LOTE-017": ("A12_ALVENARIA_VEDACAO", 7/20, 7),
+    "LOTE-018": ("A12_ALVENARIA_VEDACAO", 7/20, 7),
+    "LOTE-019": ("A12_ALVENARIA_VEDACAO", 6/20, 6),
+    "LOTE-020": ("A11_ESTRUT_TERCAS_COB", 1.0, 10),
+    "LOTE-021": ("A13_TELHAS_SANDWICH_PLAT", 1.0, 10),
+    "LOTE-022": ("A14_ELET_EMBUTIDA", 1.0, 10),
+    "LOTE-023": ("A16_TESTE_HIDROSTATICO_72H", 1.0, 3),
+    "LOTE-024": ("A17_EMBOCO_REBOCO", 2/14, 2),
+    "LOTE-025": ("A17_EMBOCO_REBOCO", 6/14, 6),
+    "LOTE-026": ("A17_EMBOCO_REBOCO", 6/14, 6),
+    "LOTE-027": ("A18_IMPERM_WCS", 1.0, 3),
+    "LOTE-028": ("A19_CONTRAPISO", 1.0, 6),
+    "LOTE-029": ("A22_PISO_PORCELANATO", 5/14, 5),
+    "LOTE-030": ("A22_PISO_PORCELANATO", 5/14, 5),
+    "LOTE-031": ("A22_PISO_PORCELANATO", 4/14, 4),
+    "LOTE-032": ("A24_RODAPES_ACAB", 1.0, 4),
+    "LOTE-033": ("A21_ESQUADRIAS_FIX", 4/8, 4),
+    "LOTE-034": ("A21_ESQUADRIAS_FIX", 4/8, 4),
+    "LOTE-035": ("A20_INFRA_DUTOS_HVAC", 7/10, 7),
+    "LOTE-036": ("A20_INFRA_DUTOS_HVAC", 3/10, 3),
+    "LOTE-037": ("A23_FIACAO_TELECOM", 6/10, 6),
+    "LOTE-038": ("A23_FIACAO_TELECOM", 4/10, 4),
+    "LOTE-039": ("A25_PINTURA_1A_DEMAO", 3/5, 3),
+    "LOTE-040": ("A25_PINTURA_1A_DEMAO", 2/5, 2),
+    "LOTE-041": ("A27_LOUCAS_METAIS", 1.0, 6),
+    "LOTE-042": ("A28_LUMINARIAS_ESPELHOS", 1.0, 5),
+    "LOTE-043": ("A29_PINTURA_FINAL", 1.0, 7),
+    "LOTE-044": ("A26_APARELHOS_HVAC", 1.0, 6),
+    "LOTE-045": ("A30_COMISSIONAMENTO", 2/6, 2),
+    "LOTE-046": ("A31_LIMPEZA_ENTREGA", 2/6, 2),
+    "LOTE-047": ("A30_COMISSIONAMENTO", 2/6, 2),
+    "LOTE-048": ("A30_COMISSIONAMENTO", 1/6, 1),
+    "LOTE-049": ("A30_COMISSIONAMENTO", 1/6, 1),
+    "LOTE-050": ("A31_LIMPEZA_ENTREGA", 1/6, 1),
+    "LOTE-051": ("A31_LIMPEZA_ENTREGA", 1/6, 1),
+    "LOTE-052": ("A31_LIMPEZA_ENTREGA", 2/6, 2),
+}
+
+def derivar_duracoes_do_cpm(cpm_path):
+    """Lê dados_cpm.json e deriva dinamicamente as durações de cada lote."""
+    if not os.path.exists(cpm_path):
+        print(f"[-] Aviso: {cpm_path} não encontrado. Mantendo durações canônicas.")
+        return {}
+    with open(cpm_path, "r", encoding="utf-8") as f:
+        cpm_data = json.load(f)
+    atividades = {a['id']: a['duracao_dias'] for a in cpm_data.get('atividades', [])}
+    
+    duracoes_derivadas = {}
+    for cod_lote, (aid, frac, fallback_dur) in MAPA_LOTE_CPM_ATIVIDADES.items():
+        if aid in atividades:
+            if cod_lote == "LOTE-016":
+                a09_dur = atividades.get("A09_CONCRET_LAJE_H12", 1)
+                a10_dur = atividades.get("A10_CURA_DESFORMA", 12)
+                duracoes_derivadas[cod_lote] = a09_dur + a10_dur + 3
+            elif frac == 1.0:
+                duracoes_derivadas[cod_lote] = atividades[aid]
+            else:
+                dur_calc = int(round(atividades[aid] * frac))
+                duracoes_derivadas[cod_lote] = dur_calc if dur_calc > 0 else fallback_dur
+        else:
+            duracoes_derivadas[cod_lote] = fallback_dur
+    return duracoes_derivadas
 
 def gerar_programacao():
-    dest_path = os.path.join(
-        os.path.dirname(__file__),
-        '..',
-        'projetos',
-        'OBRA_TMULT',
-        '03_PLANEJAMENTO_E_CRONOGRAMA',
-        'PROGRAMACAO_CURTO_PRAZO_TMULT.csv'
-    )
-    dest_path = os.path.abspath(dest_path)
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    cpm_path = os.path.join(root_dir, "projetos", "OBRA_TMULT", "03_PLANEJAMENTO_E_CRONOGRAMA", "dados_cpm.json")
+    duracoes_cpm = derivar_duracoes_do_cpm(cpm_path)
+    
+    dest_paths = [
+        os.path.join(root_dir, "projetos", "OBRA_TMULT", "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO_TMULT.csv"),
+        os.path.join(root_dir, "projetos", "OBRA_TMULT", "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO_OBRA_TMULT.csv"),
+        os.path.join(root_dir, "projetos", "_TEMPLATE_OBRA_NOVA", "03_PLANEJAMENTO_E_CRONOGRAMA", "TEMPLATE_PROGRAMACAO_CURTO_PRAZO.csv")
+    ]
 
     lotes = [
-        # ==============================================================================
-        # MES 1 (SEMANAS 01 A 04) - HISTOGRAMA: 9 OPERARIOS DIRETOS (14 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 01
         {
             "COD_LOTE": "LOTE-001",
             "SEMANA": "Semana 01",
@@ -45,7 +117,7 @@ def gerar_programacao():
             "VAGAO_ESTEIRA": "Vagão 01: Topografia & Canteiro",
             "SERVICO_LOTE": "Mobilização de Canteiro NR-18 e Locação Gabarito Geral",
             "META_FISICA": "100% canteiro montado + 368 m² gabarito tábua corrida",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "10",
             "EQUIPE_PREVISTA": "1 Topógrafo + 2 Ajudantes + 4 Serventes",
             "HEADCOUNT_PREVISTO": "7",
             "EQUIPAMENTOS_PREVISTOS": "LOC-02 Caminhão Munck + Estação Total",
@@ -59,10 +131,10 @@ def gerar_programacao():
             "SEMANA": "Semana 01",
             "DIAS_SEMANA": "Dias 04 a 06 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - S1 a S12)",
-            "VAGAO_ESTEIRA": "Vagão 02: Escavação & Pré-Armação de Bancada",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Escavação Mecanizada e Lastro S1 a S12 + Corte e Dobra de Armaduras na Bancada",
             "META_FISICA": "12 cavas de sapatas (19,2 m³ escav. + 1,14 m³ lastro) + 96 kg aço CA-50 cortado e dobrado na central",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Operador + 2 Armadores (Central de Aço) + 4 Serventes",
             "HEADCOUNT_PREVISTO": "7",
             "EQUIPAMENTOS_PREVISTOS": "LOC-01 Mini Retroescavadeira + LOC-05 Gerador + Dobradeira elétrica",
@@ -71,17 +143,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "CONCLUIDO",
             "RDO_VINCULADO": "RDO-002"
         },
-
-        # SEMANA 02
         {
             "COD_LOTE": "LOTE-003",
             "SEMANA": "Semana 02",
             "DIAS_SEMANA": "Dias 07 a 09 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - S1 a S12)",
-            "VAGAO_ESTEIRA": "Vagão 03: Carpintaria & Armação",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Armação e Fôrmas das Sapatas S1 a S12 (Etapa 1)",
             "META_FISICA": "12 sapatas (96 kg aço CA-50 + 13,45 m² fôrmas compensado)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "2 Carpinteiros + 2 Armadores + 4 Serventes",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "LOC-05 Gerador + Dobradeira elétrica portátil",
@@ -95,10 +165,10 @@ def gerar_programacao():
             "SEMANA": "Semana 02",
             "DIAS_SEMANA": "Dias 10 a 12 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 2 (Zona 2 - S13 a S24)",
-            "VAGAO_ESTEIRA": "Vagão 02: Escavação, Concretagem & Pré-Armação",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Escavação/Lastro S13 a S24 + Concretagem S1 a S12 + Corte e Dobra Bancada S13 a S24",
             "META_FISICA": "12 cavas (19,2 m³) + Concretagem S1-12 (3,21 m³) + 96 kg aço CA-50 cortado e dobrado na central",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Operador + 2 Armadores (Central de Aço) + 2 Pedreiros + 4 Serventes",
             "HEADCOUNT_PREVISTO": "9",
             "EQUIPAMENTOS_PREVISTOS": "LOC-01 Retroescavadeira + Vibrador mangote 45mm + Dobradeira elétrica",
@@ -107,17 +177,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "CONCLUIDO",
             "RDO_VINCULADO": "RDO-004"
         },
-
-        # SEMANA 03
         {
             "COD_LOTE": "LOTE-005",
             "SEMANA": "Semana 03",
             "DIAS_SEMANA": "Dias 13 a 15 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 2 (Zona 2 - S13 a S24)",
-            "VAGAO_ESTEIRA": "Vagão 03: Carpintaria & Armação",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Armação e Fôrmas Sapatas S13 a S24 [Etapa 1 em Cura e Desforma]",
             "META_FISICA": "12 sapatas (96 kg aço CA-50 + 13,45 m² fôrmas) + Desforma S1-S12",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "2 Carpinteiros + 2 Armadores + 4 Serventes",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "LOC-05 Gerador + Desmoldante ecológico",
@@ -131,10 +199,10 @@ def gerar_programacao():
             "SEMANA": "Semana 03",
             "DIAS_SEMANA": "Dias 16 a 18 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 3 (Zona 3 - S25 a S32)",
-            "VAGAO_ESTEIRA": "Vagão 02: Escavação, Concretagem & Pré-Armação",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Escavação S25 a S32 + Concretagem S13 a S24 + Corte e Dobra Bancada S25 a S32 e Baldrames",
             "META_FISICA": "8 cavas (12,8 m³ escavação) + 3,21 m³ concreto fck 30 MPa + 64 kg aço sapatas cortado",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Operador + 2 Armadores (Central de Aço) + 2 Pedreiros + 4 Serventes",
             "HEADCOUNT_PREVISTO": "9",
             "EQUIPAMENTOS_PREVISTOS": "LOC-01 Retroescavadeira + Vibrador 45mm + Dobradeira elétrica + Jericas",
@@ -143,14 +211,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "CONCLUIDO",
             "RDO_VINCULADO": "RDO-006"
         },
-
-        # SEMANA 04
         {
             "COD_LOTE": "LOTE-007",
             "SEMANA": "Semana 04",
             "DIAS_SEMANA": "Dias 19 a 21 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 3 (Zona 3 - S25 a S32)",
-            "VAGAO_ESTEIRA": "Vagão 03: Carpintaria & Armação",
+            "VAGAO_ESTEIRA": "Vagão 02: Fundações Sapatas",
             "SERVICO_LOTE": "Armação, Fôrmas e Concretagem Sapatas S25 a S32 (Etapa 3)",
             "META_FISICA": "8 sapatas finais (64 kg aço + 8,98 m² fôrmas + 2,13 m³ conc)",
             "DURACAO_DIAS": "3",
@@ -167,10 +233,10 @@ def gerar_programacao():
             "SEMANA": "Semana 04",
             "DIAS_SEMANA": "Dias 22 a 24 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - Baldrames VB1 a VB6)",
-            "VAGAO_ESTEIRA": "Vagão 03: Carpintaria de Baldrames",
+            "VAGAO_ESTEIRA": "Vagão 03: Vigas Baldrames",
             "SERVICO_LOTE": "Montagem Fôrmas e Armação Baldrames VB1 a VB6 [Esteira Entra em Vigas]",
             "META_FISICA": "48 m vigas baldrames 25x40cm + 368 kg aço CA-50 cortado",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "3 Carpinteiros + 2 Armadores + 4 Serventes",
             "HEADCOUNT_PREVISTO": "9",
             "EQUIPAMENTOS_PREVISTOS": "LOC-05 Gerador + Dobradeira elétrica + Espaçadores",
@@ -179,17 +245,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "CONCLUIDO",
             "RDO_VINCULADO": "RDO-008"
         },
-
-        # ==============================================================================
-        # MES 2 (SEMANAS 05 A 08) - HISTOGRAMA: 14 OPERARIOS DIRETOS (19 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 05
         {
             "COD_LOTE": "LOTE-009",
             "SEMANA": "Semana 05",
             "DIAS_SEMANA": "Dias 25 a 27 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Zona 1 e 2 - Baldrames)",
-            "VAGAO_ESTEIRA": "Vagão 03: Fôrmas VB7-12 & Concretagem VB1-6",
+            "VAGAO_ESTEIRA": "Vagão 03: Vigas Baldrames",
             "SERVICO_LOTE": "Concretagem VB1 a VB6 (Etapa 1) + Fôrmas/Armação VB7 a VB12 (Etapa 2)",
             "META_FISICA": "4,8 m³ concreto VB1-6 + 46 m fôrmas/armação VB7-12 (350 kg aço)",
             "DURACAO_DIAS": "3",
@@ -206,10 +267,10 @@ def gerar_programacao():
             "SEMANA": "Semana 05",
             "DIAS_SEMANA": "Dias 28 a 30 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 2 e 3 (Zona 2 e 3 - Baldrames)",
-            "VAGAO_ESTEIRA": "Vagão 03: Fôrmas VB13-19 & Concretagem VB7-12",
+            "VAGAO_ESTEIRA": "Vagão 03: Vigas Baldrames",
             "SERVICO_LOTE": "Concretagem VB7 a VB12 (Etapa 2) + Fôrmas/Armação VB13 a VB19 (Etapa 3)",
             "META_FISICA": "4,6 m³ concreto VB7-12 + 46 m fôrmas VB13-19 (359 kg aço)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes",
             "HEADCOUNT_PREVISTO": "14",
             "EQUIPAMENTOS_PREVISTOS": "LOC-05 Gerador + Vibrador 45mm + Calhas",
@@ -218,14 +279,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 06
         {
             "COD_LOTE": "LOTE-011",
             "SEMANA": "Semana 06",
             "DIAS_SEMANA": "Dias 31 a 33 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 3 e 1 (Baldrames e Pilares P1 a P8)",
-            "VAGAO_ESTEIRA": "Vagão 03: Concretagem VB13-19 & Fôrmas Pilares P1-8",
+            "VAGAO_ESTEIRA": "Vagão 03: Vigas Baldrames",
             "SERVICO_LOTE": "Concretagem VB13 a VB19 + Fôrmas e Armação Pilares P1 a P8 (Etapa 1)",
             "META_FISICA": "4,64 m³ conc baldrames + 8 pilares (28,6 m² fôrmas + 131 kg aço)",
             "DURACAO_DIAS": "3",
@@ -242,7 +301,7 @@ def gerar_programacao():
             "SEMANA": "Semana 06",
             "DIAS_SEMANA": "Dias 34 a 36 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Pilares P1-8 Concreto & P9-16 Fôrmas)",
-            "VAGAO_ESTEIRA": "Vagão 03: Concretagem P1-8 & Fôrmas Pilares P9-16",
+            "VAGAO_ESTEIRA": "Vagão 04: Pilares Supraestrutura",
             "SERVICO_LOTE": "Concretagem Pilares P1 a P8 (Etapa 1) + Fôrmas Pilares P9 a P16 (Etapa 2)",
             "META_FISICA": "2,15 m³ concreto P1-8 + 8 pilares fôrmas P9-16 (28,6 m² + 131 kg)",
             "DURACAO_DIAS": "3",
@@ -254,14 +313,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 07
         {
             "COD_LOTE": "LOTE-013",
             "SEMANA": "Semana 07",
             "DIAS_SEMANA": "Dias 37 a 39 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 2 e 3 (Pilares P9-16 Concreto & P17-24 Fôrmas)",
-            "VAGAO_ESTEIRA": "Vagão 03: Concretagem P9-16 & Fôrmas Pilares P17-24",
+            "VAGAO_ESTEIRA": "Vagão 04: Pilares Supraestrutura",
             "SERVICO_LOTE": "Concretagem Pilares P9 a P16 + Fôrmas Pilares P17 a P24 (Etapa 3)",
             "META_FISICA": "2,15 m³ conc P9-16 + 8 pilares fôrmas P17-24 (28,6 m² + 131 kg)",
             "DURACAO_DIAS": "3",
@@ -278,7 +335,7 @@ def gerar_programacao():
             "SEMANA": "Semana 07",
             "DIAS_SEMANA": "Dias 40 a 42 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 3 e 1 (Pilares P17-24 & Vigas Laje V101-108)",
-            "VAGAO_ESTEIRA": "Vagão 04: Concretagem P17-24 & Cimbramento Vigas",
+            "VAGAO_ESTEIRA": "Vagão 04: Pilares Supraestrutura",
             "SERVICO_LOTE": "Concretagem Pilares P17 a P24 + Cimbramento Vigas V101 a V108 (Etapa 1)",
             "META_FISICA": "2,14 m³ conc pilares (Total 24 P = 6,44 m³) + 104 m² fôrmas vigas",
             "DURACAO_DIAS": "3",
@@ -290,17 +347,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 08
         {
             "COD_LOTE": "LOTE-015",
             "SEMANA": "Semana 08",
             "DIAS_SEMANA": "Dias 43 a 45 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 2 e 3 (Vigas Laje V109 a V115)",
-            "VAGAO_ESTEIRA": "Vagão 04: Cimbramento e Armação Vigas Superiores",
+            "VAGAO_ESTEIRA": "Vagão 05: Vigas & Laje H12",
             "SERVICO_LOTE": "Montagem Cimbramento e Armação Vigas V109 a V115 (Etapas 2 e 3)",
             "META_FISICA": "7 vigas superiores (104 m² fôrmas + 940 kg aço CA-50 cortado)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "5",
             "EQUIPE_PREVISTA": "4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes",
             "HEADCOUNT_PREVISTO": "14",
             "EQUIPAMENTOS_PREVISTOS": "Cimbramento metálico modulado (LOC-08) + Dobradeira",
@@ -314,10 +369,10 @@ def gerar_programacao():
             "SEMANA": "Semana 08",
             "DIAS_SEMANA": "Dias 46 a 48 (Qui-Sáb)",
             "ETAPA_ZONA": "Térreo Geral (Laje Superior H12)",
-            "VAGAO_ESTEIRA": "Vagão 04: Montagem Vigotas Treliçadas & Concretagem Capa H12",
+            "VAGAO_ESTEIRA": "Vagão 05: Vigas & Laje H12",
             "SERVICO_LOTE": "Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem Laje H12",
             "META_FISICA": "968,8 m vigotas + 1.148 EPS + 999 kg malha + 13,17 m³ conc fck 30",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "1 Mestre + 4 Carpinteiros + 3 Pedreiros + 6 Serventes",
             "HEADCOUNT_PREVISTO": "14",
             "EQUIPAMENTOS_PREVISTOS": "Bomba de concreto sobre caminhão + Vibradores mangote",
@@ -326,20 +381,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # ==============================================================================
-        # MES 3 (SEMANAS 09 A 12) - HISTOGRAMA: 15 OPERARIOS DIRETOS (20 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 09
         {
             "COD_LOTE": "LOTE-017",
             "SEMANA": "Semana 09",
             "DIAS_SEMANA": "Dias 49 a 51 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - Recepção/Diretoria)",
-            "VAGAO_ESTEIRA": "Vagão 05: Alvenaria de Blocos",
+            "VAGAO_ESTEIRA": "Vagão 06: Alvenaria de Vedação",
             "SERVICO_LOTE": "Alvenaria de Vedação Blocos Concreto 14x19x39 - Etapa 1",
             "META_FISICA": "85 m² alvenaria de blocos com vergas, contravergas e telas",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "7",
             "EQUIPE_PREVISTA": "5 Pedreiros + 5 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "10",
             "EQUIPAMENTOS_PREVISTOS": "LOC-06 Betoneira 400L + Masseiras + Andaimes",
@@ -353,10 +403,10 @@ def gerar_programacao():
             "SEMANA": "Semana 09",
             "DIAS_SEMANA": "Dias 52 a 54 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 2 (Zona 2 - Salas Técnicas/CPD)",
-            "VAGAO_ESTEIRA": "Vagão 05: Alvenaria de Blocos",
+            "VAGAO_ESTEIRA": "Vagão 06: Alvenaria de Vedação",
             "SERVICO_LOTE": "Alvenaria de Vedação Blocos Concreto 14x19x39 - Etapa 2 [Esteira Move]",
             "META_FISICA": "85 m² alvenaria de blocos com vergas e eletrodutos embutidos",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "7",
             "EQUIPE_PREVISTA": "5 Pedreiros + 5 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "10",
             "EQUIPAMENTOS_PREVISTOS": "LOC-06 Betoneira 400L + Andaimes tubulares",
@@ -365,17 +415,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 10
         {
             "COD_LOTE": "LOTE-019",
             "SEMANA": "Semana 10",
             "DIAS_SEMANA": "Dias 55 a 57 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 3 (Zona 3 - Sanitários e Apoio)",
-            "VAGAO_ESTEIRA": "Vagão 05: Alvenaria de Blocos",
+            "VAGAO_ESTEIRA": "Vagão 06: Alvenaria de Vedação",
             "SERVICO_LOTE": "Alvenaria de Vedação Blocos Concreto - Etapa 3 [Conclusão Paredes]",
             "META_FISICA": "80 m² alvenaria divisórias WCs e copa com encunhamento",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "5 Pedreiros + 5 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "10",
             "EQUIPAMENTOS_PREVISTOS": "LOC-06 Betoneira 400L + Andaimes tubulares",
@@ -389,10 +437,10 @@ def gerar_programacao():
             "SEMANA": "Semana 10",
             "DIAS_SEMANA": "Dias 58 a 60 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 a 3 (Cobertura e Platibanda)",
-            "VAGAO_ESTEIRA": "Vagão 06: Estrutura Metálica Cobertura",
+            "VAGAO_ESTEIRA": "Vagão 07: Cobertura Metálica",
             "SERVICO_LOTE": "Montagem das Terças Metálicas da Cobertura e Rufos",
             "META_FISICA": "381 m² projeção de terças galvanizadas perfil U + linha de vida",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "10",
             "EQUIPE_PREVISTA": "3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio",
             "HEADCOUNT_PREVISTO": "9",
             "EQUIPAMENTOS_PREVISTOS": "Guincho elétrico de coluna + Linha de vida + Cinto duplo",
@@ -401,17 +449,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 11
         {
             "COD_LOTE": "LOTE-021",
             "SEMANA": "Semana 11",
             "DIAS_SEMANA": "Dias 61 a 63 (Seg-Qua)",
             "ETAPA_ZONA": "Cobertura Superior",
-            "VAGAO_ESTEIRA": "Vagão 06: Telhamento Termoacústico",
+            "VAGAO_ESTEIRA": "Vagão 07: Cobertura Metálica",
             "SERVICO_LOTE": "Instalação de Telhas Termoacústicas Sandwich PIR 30mm",
             "META_FISICA": "381 m² telhas sandwich PIR + calhas de beiral e rufos",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "10",
             "EQUIPE_PREVISTA": "3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio",
             "HEADCOUNT_PREVISTO": "9",
             "EQUIPAMENTOS_PREVISTOS": "Parafusadeiras a bateria + EPIs específicos NR-35",
@@ -425,10 +471,10 @@ def gerar_programacao():
             "SEMANA": "Semana 11",
             "DIAS_SEMANA": "Dias 64 a 66 (Qui-Sáb)",
             "ETAPA_ZONA": "Todos os Setores (Embutidos)",
-            "VAGAO_ESTEIRA": "Vagão 07: Redes Elétricas & Hidráulicas Embutidas",
+            "VAGAO_ESTEIRA": "Vagão 08: Instalações Embutidas",
             "SERVICO_LOTE": "Ranhuras, Eletrodutos, Caixas de Tomada e Tubulações Embutidas",
             "META_FISICA": "180 m eletrodutos flexíveis + 140 m tubos PVC esgoto e água",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "10",
             "EQUIPE_PREVISTA": "2 Eletricistas + 2 Encanadores + 4 Serventes (SUB-03/04)",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "Ranhuradora mecânica com aspirador + Termofusora 220V",
@@ -437,14 +483,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 12
         {
             "COD_LOTE": "LOTE-023",
             "SEMANA": "Semana 12",
             "DIAS_SEMANA": "Dias 67 a 69 (Seg-Qua)",
             "ETAPA_ZONA": "Redes Hidráulicas (Portão de Qualidade 3)",
-            "VAGAO_ESTEIRA": "Vagão 07: Teste Hidrostático Estanqueidade",
+            "VAGAO_ESTEIRA": "Vagão 08: Instalações Embutidas",
             "SERVICO_LOTE": "Teste Hidrostático Pressurizado 72h em Redes de Água e Esgoto",
             "META_FISICA": "Pressão de 6 kgf/cm² por 72h em 16 pontos de consumo (Portão 3)",
             "DURACAO_DIAS": "3",
@@ -461,10 +505,10 @@ def gerar_programacao():
             "SEMANA": "Semana 12",
             "DIAS_SEMANA": "Dias 70 a 72 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Paredes Internas)",
-            "VAGAO_ESTEIRA": "Vagão 08: Chapisco Rolado",
+            "VAGAO_ESTEIRA": "Vagão 09: Reboco Paulista",
             "SERVICO_LOTE": "Chapisco Rolado com Resina Acrílica Fixadora nas Paredes",
             "META_FISICA": "440 m² chapisco rolado traço 1:3 com Bianco",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "4 Pedreiros + 4 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "LOC-06 Betoneira 400L + Rolos para textura",
@@ -473,20 +517,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # ==============================================================================
-        # MES 4 (SEMANAS 13 A 16) - HISTOGRAMA: 12 OPERARIOS DIRETOS (17 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 13
         {
             "COD_LOTE": "LOTE-025",
             "SEMANA": "Semana 13",
             "DIAS_SEMANA": "Dias 73 a 75 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - Recepção/Diretoria)",
-            "VAGAO_ESTEIRA": "Vagão 08: Reboco Paulista Mecanizado",
+            "VAGAO_ESTEIRA": "Vagão 09: Reboco Paulista",
             "SERVICO_LOTE": "Emboço/Reboco Paulista Projetado Mecanicamente - Etapa 1",
             "META_FISICA": "220 m² reboco espessura 2,0 cm com mestras metálicas",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "4 Pedreiros + 4 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "LOC-09 Projetor Mecânico de Argamassa + Réguas alumínio",
@@ -500,10 +539,10 @@ def gerar_programacao():
             "SEMANA": "Semana 13",
             "DIAS_SEMANA": "Dias 76 a 78 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 2 e 3 (Salas Técnicas e Sanitários)",
-            "VAGAO_ESTEIRA": "Vagão 08: Reboco Paulista Mecanizado",
+            "VAGAO_ESTEIRA": "Vagão 09: Reboco Paulista",
             "SERVICO_LOTE": "Emboço/Reboco Paulista Projetado - Etapa 2 e 3 [Esteira Move]",
             "META_FISICA": "220 m² reboco desempenado (Total paredes = 440 m²)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "4 Pedreiros + 4 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "8",
             "EQUIPAMENTOS_PREVISTOS": "LOC-09 Projetor Mecânico de Argamassa + Desempenadeiras",
@@ -512,14 +551,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 14
         {
             "COD_LOTE": "LOTE-027",
             "SEMANA": "Semana 14",
             "DIAS_SEMANA": "Dias 79 a 81 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 3 (Sanitários e Copa - Áreas Molhadas)",
-            "VAGAO_ESTEIRA": "Vagão 09: Impermeabilização Áreas Molhadas",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Impermeabilização com Membrana Polimérica em Sanitários e Copa",
             "META_FISICA": "65 m² membrana com tela de poliéster em ralos e cantos",
             "DURACAO_DIAS": "3",
@@ -536,10 +573,10 @@ def gerar_programacao():
             "SEMANA": "Semana 14",
             "DIAS_SEMANA": "Dias 82 a 84 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Áreas Secas)",
-            "VAGAO_ESTEIRA": "Vagão 10: Regularização de Contrapiso",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Execução de Contrapiso Sarrafeado e Nivelado e=3cm",
             "META_FISICA": "180 m² contrapiso sarrafeado com nível a laser rotativo",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "3 Pedreiros + 4 Serventes (SUB-02)",
             "HEADCOUNT_PREVISTO": "7",
             "EQUIPAMENTOS_PREVISTOS": "LOC-06 Betoneira 400L + Nível laser rotativo + Réguas",
@@ -548,17 +585,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 15
         {
             "COD_LOTE": "LOTE-029",
             "SEMANA": "Semana 15",
             "DIAS_SEMANA": "Dias 85 a 87 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 (Zona 1 - Recepção/Diretoria)",
-            "VAGAO_ESTEIRA": "Vagão 11: Assentamento de Porcelanato",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Assentamento de Porcelanato Retificado 60x60cm - Etapa 1",
             "META_FISICA": "90 m² porcelanato 60x60 com dupla colagem e niveladores",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "5",
             "EQUIPE_PREVISTA": "3 Ladrilhistas + 3 Ajudantes (SUB-05)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Cortadora elétrica de bancada refrigerada + Ventosas",
@@ -572,10 +607,10 @@ def gerar_programacao():
             "SEMANA": "Semana 15",
             "DIAS_SEMANA": "Dias 88 a 90 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 2 (Zona 2 - Salas Técnicas/CPD)",
-            "VAGAO_ESTEIRA": "Vagão 11: Assentamento de Porcelanato",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Assentamento de Porcelanato Retificado 60x60cm - Etapa 2",
             "META_FISICA": "90 m² porcelanato 60x60 com dupla colagem (Total = 180 m²)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "5",
             "EQUIPE_PREVISTA": "3 Ladrilhistas + 3 Ajudantes (SUB-05)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Cortadora elétrica de bancada + Espaçadores niveladores",
@@ -584,17 +619,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 16
         {
             "COD_LOTE": "LOTE-031",
             "SEMANA": "Semana 16",
             "DIAS_SEMANA": "Dias 91 a 93 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 3 (Sanitários e Copa - Paredes)",
-            "VAGAO_ESTEIRA": "Vagão 11: Revestimento Cerâmico WCs",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Assentamento de Cerâmica Esmaltada nas Paredes dos Sanitários",
             "META_FISICA": "110 m² cerâmica esmaltada até o teto com rejunte resinado",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "3 Ladrilhistas + 3 Ajudantes (SUB-05)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Cortadora manual + Nível a laser + Desempenadeira denteada",
@@ -608,10 +641,10 @@ def gerar_programacao():
             "SEMANA": "Semana 16",
             "DIAS_SEMANA": "Dias 94 a 96 (Qui-Sáb)",
             "ETAPA_ZONA": "Todos os Setores (Rejunte e Rodapés)",
-            "VAGAO_ESTEIRA": "Vagão 11: Rejunte Geral e Rodapés",
+            "VAGAO_ESTEIRA": "Vagão 10: Pisos & Porcelanato",
             "SERVICO_LOTE": "Rejuntamento Resinado Geral e Fixação de Rodapés em Porcelanato",
             "META_FISICA": "290 m² rejunte epóxi/resinado + 120 m rodapés de 10cm",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "3 Ladrilhistas + 3 Ajudantes (SUB-05)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Espátulas emborrachadas + Esponjas de limpeza especial",
@@ -620,20 +653,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # ==============================================================================
-        # MES 5 (SEMANAS 17 A 20) - HISTOGRAMA: 11 OPERARIOS DIRETOS (16 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 17
         {
             "COD_LOTE": "LOTE-033",
             "SEMANA": "Semana 17",
             "DIAS_SEMANA": "Dias 97 a 99 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Caixilharia Externa)",
-            "VAGAO_ESTEIRA": "Vagão 12: Esquadrias de Alumínio",
+            "VAGAO_ESTEIRA": "Vagão 11: Esquadrias de Alumínio",
             "SERVICO_LOTE": "Instalação de Janelas de Alumínio Linha Suprema e Vidros Temperados",
             "META_FISICA": "22 m² janelas de correr com vidros acústicos 8mm e contra-marcos",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "2 Montadores de Esquadrias + 2 Ajudantes",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Ventosas duplas de sucção + Parafusadeiras a bateria",
@@ -647,10 +675,10 @@ def gerar_programacao():
             "SEMANA": "Semana 17",
             "DIAS_SEMANA": "Dias 100 a 102 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 3 e Fachadas (Portas e Vidros)",
-            "VAGAO_ESTEIRA": "Vagão 12: Esquadrias de Alumínio & Portas",
+            "VAGAO_ESTEIRA": "Vagão 11: Esquadrias de Alumínio",
             "SERVICO_LOTE": "Fixação de Portas de Alumínio, Vidros Fixos e Vedações PU",
             "META_FISICA": "20 m² portas de alumínio + vedações perimetrais com selante",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "2 Montadores de Esquadrias + 2 Ajudantes",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Pistolas aplicadoras de selante PU + Nível a laser",
@@ -659,17 +687,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 18
         {
             "COD_LOTE": "LOTE-035",
             "SEMANA": "Semana 18",
             "DIAS_SEMANA": "Dias 103 a 105 (Seg-Qua)",
             "ETAPA_ZONA": "Todos os Setores (Tubulações HVAC)",
-            "VAGAO_ESTEIRA": "Vagão 13: Climatização & Redes Frigorígenas",
+            "VAGAO_ESTEIRA": "Vagão 12: Climatização HVAC",
             "SERVICO_LOTE": "Instalação de Redes Frigorígenas de Cobre Isoladas e Drenos",
             "META_FISICA": "120 m tubulação de cobre com isolamento elastomérico + drenos PVC",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "7",
             "EQUIPE_PREVISTA": "2 Técnicos de Refrigeração HVAC + 2 Ajudantes (SUB-08)",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Conjunto de solda oxiacetilênica + Curvador de tubos",
@@ -683,7 +709,7 @@ def gerar_programacao():
             "SEMANA": "Semana 18",
             "DIAS_SEMANA": "Dias 106 a 108 (Qui-Sáb)",
             "ETAPA_ZONA": "Todos os Setores (Pressurização e Vácuo HVAC)",
-            "VAGAO_ESTEIRA": "Vagão 13: Teste de Estanqueidade Redes HVAC",
+            "VAGAO_ESTEIRA": "Vagão 12: Climatização HVAC",
             "SERVICO_LOTE": "Pressurização com Nitrogênio e Teste de Vácuo em Linhas VRF",
             "META_FISICA": "Vácuo em 8 circuitos frigorígenos atingindo 500 microns",
             "DURACAO_DIAS": "3",
@@ -695,17 +721,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 19
         {
             "COD_LOTE": "LOTE-037",
             "SEMANA": "Semana 19",
             "DIAS_SEMANA": "Dias 109 a 111 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Cabeamento Elétrico)",
-            "VAGAO_ESTEIRA": "Vagão 14: Cabos Elétricos & Telecom",
+            "VAGAO_ESTEIRA": "Vagão 13: Acabamentos Elétr./Hidr.",
             "SERVICO_LOTE": "Enfiamento de Cabos de Força, Iluminação e Cabling Cat.6",
             "META_FISICA": "1.200 m cabos elétricos antichama 2,5/4/6mm² + cabos Cat.6",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "2 Eletricistas Instaladores + 2 Ajudantes (SUB-03)",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Passa-fios de aço + Decapadores automáticos e multímetro",
@@ -719,10 +743,10 @@ def gerar_programacao():
             "SEMANA": "Semana 19",
             "DIAS_SEMANA": "Dias 112 a 114 (Qui-Sáb)",
             "ETAPA_ZONA": "Todos os Setores (Quadros de Distribuição)",
-            "VAGAO_ESTEIRA": "Vagão 14: Montagem de Quadros QGBT e QD",
+            "VAGAO_ESTEIRA": "Vagão 13: Acabamentos Elétr./Hidr.",
             "SERVICO_LOTE": "Montagem, Barramentos e Identificação de Circuitos nos Quadros",
             "META_FISICA": "1 QGBT geral + 3 Quadros de Distribuição de Circuitos com DR",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "4",
             "EQUIPE_PREVISTA": "2 Eletricistas Instaladores + 2 Ajudantes (SUB-03)",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Alicate prensa-terminais hidráulico + Rotulador eletrônico",
@@ -731,53 +755,12 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 20
         {
             "COD_LOTE": "LOTE-039",
             "SEMANA": "Semana 20",
             "DIAS_SEMANA": "Dias 115 a 117 (Seg-Qua)",
-            "ETAPA_ZONA": "Etapa 3 (Sanitários e Copa)",
-            "VAGAO_ESTEIRA": "Vagão 15: Louças & Metais Sanitários",
-            "SERVICO_LOTE": "Instalação de Bacias Acopladas, Cubas e Torneiras Temporizadas",
-            "META_FISICA": "14 bacias sanitárias Deca + 8 lavatórios de bancada + 12 torneiras",
-            "DURACAO_DIAS": "3",
-            "EQUIPE_PREVISTA": "2 Encanadores Oficiais + 2 Ajudantes (SUB-04)",
-            "HEADCOUNT_PREVISTO": "4",
-            "EQUIPAMENTOS_PREVISTOS": "Chaves de lavatório + Nível bolha de precisão",
-            "MATERIAIS_UCC": "Bacias Deca Vogue + Vedações de cera + Torneiras Docol antivandalismo",
-            "RUP_META_HH_UNID": "1,20 HH/unid",
-            "STATUS_EXECUCAO": "PROGRAMADO",
-            "RDO_VINCULADO": ""
-        },
-        {
-            "COD_LOTE": "LOTE-040",
-            "SEMANA": "Semana 20",
-            "DIAS_SEMANA": "Dias 118 a 120 (Qui-Sáb)",
-            "ETAPA_ZONA": "Todos os Setores (Luminárias LED)",
-            "VAGAO_ESTEIRA": "Vagão 14: Luminárias LED & Acabamentos Elétricos",
-            "SERVICO_LOTE": "Instalação de Luminárias Painel LED 40W, Interruptores e Tomadas",
-            "META_FISICA": "32 painéis LED embutir + 60 tomadas 2P+T 10A/20A com placas",
-            "DURACAO_DIAS": "3",
-            "EQUIPE_PREVISTA": "2 Eletricistas Instaladores + 2 Ajudantes (SUB-03)",
-            "HEADCOUNT_PREVISTO": "4",
-            "EQUIPAMENTOS_PREVISTOS": "Escadas de fibra de vidro isoladas + Chaves isoladas 1000V",
-            "MATERIAIS_UCC": "Painéis LED 40W 6500K + Módulos Pial Legrand brancos",
-            "RUP_META_HH_UNID": "0,65 HH/unid",
-            "STATUS_EXECUCAO": "PROGRAMADO",
-            "RDO_VINCULADO": ""
-        },
-
-        # ==============================================================================
-        # MES 6 (SEMANAS 21 A 26) - HISTOGRAMA: 11 OPERARIOS DIRETOS (16 HEADCOUNT TOTAL)
-        # ==============================================================================
-        # SEMANA 21
-        {
-            "COD_LOTE": "LOTE-041",
-            "SEMANA": "Semana 21",
-            "DIAS_SEMANA": "Dias 121 a 123 (Seg-Qua)",
             "ETAPA_ZONA": "Etapa 1 e 2 (Paredes Internas)",
-            "VAGAO_ESTEIRA": "Vagão 16: Pintura Acrílica",
+            "VAGAO_ESTEIRA": "Vagão 14: Pintura Acrílica Final",
             "SERVICO_LOTE": "Emassamento com Massa Corrida Acrílica e Lixamento Mecanizado",
             "META_FISICA": "270 m² aplicação de duas demãos de massa acrílica lixada",
             "DURACAO_DIAS": "3",
@@ -790,14 +773,14 @@ def gerar_programacao():
             "RDO_VINCULADO": ""
         },
         {
-            "COD_LOTE": "LOTE-042",
-            "SEMANA": "Semana 21",
-            "DIAS_SEMANA": "Dias 124 a 126 (Qui-Sáb)",
+            "COD_LOTE": "LOTE-040",
+            "SEMANA": "Semana 20",
+            "DIAS_SEMANA": "Dias 118 a 120 (Qui-Sáb)",
             "ETAPA_ZONA": "Etapa 3 e Fachadas Externas",
-            "VAGAO_ESTEIRA": "Vagão 16: Pintura Acrílica",
+            "VAGAO_ESTEIRA": "Vagão 14: Pintura Acrílica Final",
             "SERVICO_LOTE": "Emassamento e Selador em Fachadas e Setor 3 [Esteira Move]",
             "META_FISICA": "270 m² aplicação de primer selador e massa acrílica",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "4 Pintores Oficiais + 2 Ajudantes (SUB-06)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Andaime fachadeiro NR-18 + Lixadeiras de haste girafa",
@@ -806,17 +789,49 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 22
+        {
+            "COD_LOTE": "LOTE-041",
+            "SEMANA": "Semana 21",
+            "DIAS_SEMANA": "Dias 121 a 123 (Seg-Qua)",
+            "ETAPA_ZONA": "Etapa 3 (Sanitários e Copa)",
+            "VAGAO_ESTEIRA": "Vagão 13: Acabamentos Elétr./Hidr.",
+            "SERVICO_LOTE": "Instalação de Bacias Acopladas, Cubas e Torneiras Temporizadas",
+            "META_FISICA": "14 bacias sanitárias Deca + 8 lavatórios de bancada + 12 torneiras",
+            "DURACAO_DIAS": "6",
+            "EQUIPE_PREVISTA": "2 Encanadores Oficiais + 2 Ajudantes (SUB-04)",
+            "HEADCOUNT_PREVISTO": "4",
+            "EQUIPAMENTOS_PREVISTOS": "Chaves de lavatório + Nível bolha de precisão",
+            "MATERIAIS_UCC": "Bacias Deca Vogue + Vedações de cera + Torneiras Docol antivandalismo",
+            "RUP_META_HH_UNID": "1,20 HH/unid",
+            "STATUS_EXECUCAO": "PROGRAMADO",
+            "RDO_VINCULADO": ""
+        },
+        {
+            "COD_LOTE": "LOTE-042",
+            "SEMANA": "Semana 21",
+            "DIAS_SEMANA": "Dias 124 a 126 (Qui-Sáb)",
+            "ETAPA_ZONA": "Todos os Setores (Luminárias LED)",
+            "VAGAO_ESTEIRA": "Vagão 13: Acabamentos Elétr./Hidr.",
+            "SERVICO_LOTE": "Instalação de Luminárias Painel LED 40W, Interruptores e Tomadas",
+            "META_FISICA": "32 painéis LED embutir + 60 tomadas 2P+T 10A/20A com placas",
+            "DURACAO_DIAS": "5",
+            "EQUIPE_PREVISTA": "2 Eletricistas Instaladores + 2 Ajudantes (SUB-03)",
+            "HEADCOUNT_PREVISTO": "4",
+            "EQUIPAMENTOS_PREVISTOS": "Escadas de fibra de vidro isoladas + Chaves isoladas 1000V",
+            "MATERIAIS_UCC": "Painéis LED 40W 6500K + Módulos Pial Legrand brancos",
+            "RUP_META_HH_UNID": "0,65 HH/unid",
+            "STATUS_EXECUCAO": "PROGRAMADO",
+            "RDO_VINCULADO": ""
+        },
         {
             "COD_LOTE": "LOTE-043",
             "SEMANA": "Semana 22",
             "DIAS_SEMANA": "Dias 127 a 129 (Seg-Qua)",
             "ETAPA_ZONA": "Toda a Edificação (Demãos Finais Pintura)",
-            "VAGAO_ESTEIRA": "Vagão 16: Pintura Acrílica Final",
+            "VAGAO_ESTEIRA": "Vagão 14: Pintura Acrílica Final",
             "SERVICO_LOTE": "Pintura Látex Acrílica Fosca Lavável em Duas Demãos de Acabamento",
             "META_FISICA": "540 m² duas demãos de tinta látex acrílica fosca acetinada",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "7",
             "EQUIPE_PREVISTA": "4 Pintores Oficiais + 2 Ajudantes (SUB-06)",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Máquina de pintura Airless de alta pressão + Rolos microfibra",
@@ -830,10 +845,10 @@ def gerar_programacao():
             "SEMANA": "Semana 22",
             "DIAS_SEMANA": "Dias 130 a 132 (Qui-Sáb)",
             "ETAPA_ZONA": "Todos os Setores (Climatização Startup)",
-            "VAGAO_ESTEIRA": "Vagão 13: Instalação Evaporadoras & Startup",
+            "VAGAO_ESTEIRA": "Vagão 12: Climatização HVAC",
             "SERVICO_LOTE": "Instalação de Evaporadoras Cassete, Carga de Gás R-410A e Startup",
             "META_FISICA": "8 evaporadoras Cassete conectadas e 2 condensadoras ligadas",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "6",
             "EQUIPE_PREVISTA": "2 Técnicos de Refrigeração HVAC + 2 Ajudantes (SUB-08)",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Balança digital de carga de fluido + Termômetro de contato",
@@ -842,17 +857,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 23
         {
             "COD_LOTE": "LOTE-045",
             "SEMANA": "Semana 23",
             "DIAS_SEMANA": "Dias 133 a 135 (Seg-Qua)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 17: Comissionamento Integrado & Testes",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Comissionamento Elétrico sob Carga, Termografia e Equilíbrio HVAC",
             "META_FISICA": "Laudo termográfico de quadros + Laudo de vazão e temperatura HVAC",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Engenheiro Residente + 2 Eletricistas + 1 Técnico HVAC",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Câmera termográfica Fluke + Anemômetro de hélice digital",
@@ -866,10 +879,10 @@ def gerar_programacao():
             "SEMANA": "Semana 23",
             "DIAS_SEMANA": "Dias 136 a 138 (Qui-Sáb)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 18: Limpeza Fina Pós-Obra & Entrega",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Limpeza Química Pós-Obra Especializada e Desmobilização de Canteiro",
             "META_FISICA": "381 m² área interna com pisos encerados, vidros limpos e canteiro NR-18 desmobilizado",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Mestre de Obras + 4 Auxiliares de Limpeza Especializada",
             "HEADCOUNT_PREVISTO": "5",
             "EQUIPAMENTOS_PREVISTOS": "Enceradeira industrial + Lavadora de alta pressão + Caminhão Munck",
@@ -878,17 +891,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 24
         {
             "COD_LOTE": "LOTE-047",
             "SEMANA": "Semana 24",
             "DIAS_SEMANA": "Dias 139 a 141 (Seg-Qua)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 17: Testes Integrados sob Carga",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Vistoria e Testes de Carga Elétrica, Automação e Pressão Hidráulica Final",
             "META_FISICA": "100% circuitos testados sob carga nominal + 16 pontos de água/esgoto aferidos",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "1 Engenheiro Residente + 2 Eletricistas + 1 Encanador + 2 Serventes",
             "HEADCOUNT_PREVISTO": "6",
             "EQUIPAMENTOS_PREVISTOS": "Câmera termográfica Fluke + Multímetro digital + Manômetros calibrados",
@@ -902,10 +913,10 @@ def gerar_programacao():
             "SEMANA": "Semana 24",
             "DIAS_SEMANA": "Dias 142 a 144 (Qui-Sáb)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 17: As-Built & DataBook",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Consolidação de Desenhos As-Built, Manuais de Operação e Termos de Garantia",
             "META_FISICA": "DataBook completo (3 pastas físicas + pen-drive digital) com pranchas as-built",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "1",
             "EQUIPE_PREVISTA": "1 Engenheiro Residente + 1 Técnico de Edificações + 2 Apoio Administrativo",
             "HEADCOUNT_PREVISTO": "4",
             "EQUIPAMENTOS_PREVISTOS": "Plotter + Scanner profissional + Estação CAD",
@@ -914,17 +925,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 25
         {
             "COD_LOTE": "LOTE-049",
             "SEMANA": "Semana 25",
             "DIAS_SEMANA": "Dias 145 a 147 (Seg-Qua)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 17: Treinamento Operacional",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Treinamento Técnico Operacional da Equipe de Facilties e Manutenção do Terminal",
             "META_FISICA": "16 horas de capacitação presencial com entrega de certificados operacionais",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "1",
             "EQUIPE_PREVISTA": "1 Engenheiro Residente + 1 Técnico HVAC + 1 Eletricista Instalador",
             "HEADCOUNT_PREVISTO": "3",
             "EQUIPAMENTOS_PREVISTOS": "Projetor multimídia + Painel simulador didático",
@@ -938,10 +947,10 @@ def gerar_programacao():
             "SEMANA": "Semana 25",
             "DIAS_SEMANA": "Dias 148 a 150 (Qui-Sáb)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 18: Auditoria de Encerramento",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Auditoria Final de Qualidade, SST e Desmobilização Total do Canteiro NR-18",
             "META_FISICA": "100% canteiro desmobilizado com terreno limpo e regularizado (368 m²)",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "1",
             "EQUIPE_PREVISTA": "1 Mestre de Obras + 4 Serventes Apoio",
             "HEADCOUNT_PREVISTO": "5",
             "EQUIPAMENTOS_PREVISTOS": "Caminhão Munck 12t + Caçambas estacionárias",
@@ -950,17 +959,15 @@ def gerar_programacao():
             "STATUS_EXECUCAO": "PROGRAMADO",
             "RDO_VINCULADO": ""
         },
-
-        # SEMANA 26
         {
             "COD_LOTE": "LOTE-051",
             "SEMANA": "Semana 26",
             "DIAS_SEMANA": "Dias 151 a 153 (Seg-Qua)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 18: Vistoria Provisória",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Vistoria Conjunta de Recebimento Provisório (Fiscalização do Porto x Construtora)",
             "META_FISICA": "Laudo de vistoria sem pendências impeditivas e assinatura do Termo Provisório",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "1",
             "EQUIPE_PREVISTA": "1 Engenheiro Residente + 1 Mestre de Obras + Fiscalização Portuária",
             "HEADCOUNT_PREVISTO": "3",
             "EQUIPAMENTOS_PREVISTOS": "Nível a laser + Trena eletrônica + Formulário digital de vistoria",
@@ -974,10 +981,10 @@ def gerar_programacao():
             "SEMANA": "Semana 26",
             "DIAS_SEMANA": "Dias 154 a 156 (Qui-Sáb)",
             "ETAPA_ZONA": "Edifício Administrativo Turnkey",
-            "VAGAO_ESTEIRA": "Vagão 18: Recebimento Definitivo",
+            "VAGAO_ESTEIRA": "Vagão 15: Comissionamento & Entrega",
             "SERVICO_LOTE": "Assinatura do Termo de Recebimento Definitivo e Entrega das Chaves Turnkey",
             "META_FISICA": "Entrega oficial das chaves do Edifício Administrativo TMULT 100% operacional",
-            "DURACAO_DIAS": "3",
+            "DURACAO_DIAS": "2",
             "EQUIPE_PREVISTA": "Diretoria Técnica + Engenheiro Residente + Gestores TMULT",
             "HEADCOUNT_PREVISTO": "3",
             "EQUIPAMENTOS_PREVISTOS": "Kit oficial de chaves codificadas + Controle de acesso RFID",
@@ -995,13 +1002,22 @@ def gerar_programacao():
         "RUP_META_HH_UNID", "STATUS_EXECUCAO", "RDO_VINCULADO"
     ]
 
-    with open(dest_path, mode='w', newline='', encoding='utf-8') as f:
-        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';', quoting=csv.QUOTE_ALL)
-        writer.writeheader()
+    # Atualiza dinamicamente as durações com base no CPM
+    if duracoes_cpm:
+        print(f"[*] Sincronizando {len(lotes)} lotes com as durações reais do CPM ({cpm_path})...")
         for lote in lotes:
-            writer.writerow(lote)
+            cod = lote["COD_LOTE"]
+            if cod in duracoes_cpm:
+                lote["DURACAO_DIAS"] = str(duracoes_cpm[cod])
 
-    print(f"Sucesso: {len(lotes)} lotes gravados em {dest_path}")
+    for dest_path in dest_paths:
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        with open(dest_path, mode="w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=";", quoting=csv.QUOTE_ALL)
+            writer.writeheader()
+            for lote in lotes:
+                writer.writerow(lote)
+        print(f"[+] Sucesso: {len(lotes)} lotes gravados em {dest_path}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     gerar_programacao()
