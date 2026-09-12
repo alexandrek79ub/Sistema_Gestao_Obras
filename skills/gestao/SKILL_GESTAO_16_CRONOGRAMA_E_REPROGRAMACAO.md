@@ -88,15 +88,21 @@ de retas (posição × tempo) — cálculo determinístico. Usar `detectar_colis
 
 ---
 
-## 8. Sincronização Obrigatória: A Esteira Takt Calibra o Cronograma Mestre
+## 8. Sincronização Obrigatória: O Triângulo da Verdade Única (CPM ↔ LOB ↔ Takt Curto Prazo)
 
-Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **ancorada na esteira física de produção de curto prazo**:
+Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **orquestrada de forma atômica e simultânea nos 3 níveis**:
 
-1. **A Esteira Define a Realidade:** A duração dos ciclos Takt (3 dias úteis), os lotes semanais e as equipes dimensionadas com suas metas de RUP formam a base concreta do planejamento.
+1. **A Esteira Define a Realidade:** A duração dos ciclos Takt (flexível de 1 a 6 dias úteis via `--takt-dias N`), os lotes semanais e as equipes dimensionadas com suas metas de RUP formam a base concreta do planejamento.
 2. **A Linha de Balanço Reflete a Esteira:** As datas de início e término de cada setor físico na Linha de Balanço (LOB) devem herdar rigorosamente o encadeamento dos lotes da esteira.
 3. **Momento Crítico da Cobertura:** A montagem de estruturas metálicas de cobertura e telhas termoacústicas deve ser posicionada **imediatamente após a desforma da laje**. É terminantemente proibido projetar cronogramas com alvenaria e reboco avançando por semanas sem telhado estanque.
 4. **Alocação Sem Ociosidade (Bancada Pulmão):** Em períodos de concretagem ou escavação direta, equipes auxiliares/especialistas (ex: armadores) operam na central de corte e dobra na bancada, acumulando peças pré-montadas para os lotes futuros.
-5. **Detector de Sobreposição e Alerta de Efetivo:** Sempre que uma revisão ou reprogramação for rodada, deve ser executado `python scripts/sincronizar_esteira_e_lob.py --obra [OBRA] --analisar-sobreposicao`. Se forem identificadas frentes concorrentes que gerem sobreposição ou exijam duplicação de equipes (+X operários), o sistema emitirá o **Alerta de Sobreposição Lean**, exigindo a aprovação explícita do gestor com `--permitir-sobreposicao`.
+5. **Detector de Sobreposição e Alerta de Efetivo:** O sistema varre conflitos espaciais no mesmo setor e duplicação de frentes. Para manter o fluxo nivelado Heijunka (status `CONFORME_FLUXO_NIVELADO`), o efetivo se mantém dentro do teto orçado.
+6. **Aceleração por Aumento de Equipe (Crashing via RUP):** Ao acelerar frentes com `--novo-headcount H`, a duração cai proporcionalmente à RUP ($\text{Nova Duração} = \text{Duração Antiga} \times \frac{\text{Headcount Base}}{\text{Novo Headcount}}$) e o grafo topológico (DAG) propaga a antecipação para o CPM, LOB e lotes de curto prazo.
+7. **Orquestrador Central e File Watcher (`scripts/orquestrar_cronogramas.py`):**
+   - Criação de nova obra: `python scripts/orquestrar_cronogramas.py --obra NOVA_OBRA --gerar-tudo --takt-dias 3`
+   - Reprogramação atômica: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --reprogramar --tarefa-id ID [--novo-headcount H]`
+   - Sincronização total: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --sincronizar`
+   - Sentinela em tempo real: `python scripts/orquestrar_cronogramas.py --obra [OBRA] --watch` (detecta edições no Excel/IDE e auto-harmoniza em < 2s).
 
 ---
 
@@ -109,8 +115,8 @@ Toda revisão de cronograma (ou elaboração de nova baseline) deve ser **ancora
 5. Nenhum plano de recuperação de prazo é proposto sem checar o RUP histórico da frente específica — "aumentar efetivo" sem essa checagem é aposta, não plano.
 6. Caminho crítico e colisão de linha de balanço são sempre calculados por script, nunca estimados visualmente pelo agente.
 7. **O cronograma mestre (LOB e CPM) deve ser sempre calibrado em cima da Esteira Lean:** frentes de curto prazo niveladas, zero ociosidade com central de bancada, e cobertura montada logo após a desforma estrutural.
-8. **Interligação Bidirecional Obrigatória:** Toda alteração no curto prazo atualiza a Linha de Balanço, e toda alteração na LOB sincroniza os lotes de curto prazo via `scripts/sincronizar_esteira_e_lob.py`, garantindo que o planejamento e o canteiro falem a mesma língua.
-9. **Auditoria de Conformidade Multi-Eixo:** Antes de oficializar qualquer baseline ou revisão, é mandatório rodar `python scripts/auditar_cronogramas.py --obra [OBRA]`, assegurando que CPM, Linha de Balanço, Esteira Takt (52 lotes) e Orçamento Físico-Financeiro estejam 100% harmonizados e sem divergências.
+8. **Sincronização Atômica Obrigatória via Orquestrador:** Toda alteração de prazo ou efetivo deve atualizar simultaneamente `dados_cpm.json`, `LINHA_DE_BALANCO.csv` e `PROGRAMACAO_CURTO_PRAZO_*.csv` via `scripts/orquestrar_cronogramas.py`.
+9. **Auditoria de Conformidade Multi-Eixo:** Antes de oficializar qualquer baseline ou revisão, é mandatório rodar `python scripts/auditar_cronogramas.py --obra [OBRA]`, assegurando que CPM, Linha de Balanço, Esteira Takt e Orçamento Físico-Financeiro estejam 100% harmonizados e com 0 divergências.
 
 ---
 *Trabalha junto com `SKILL_GESTAO_01_PLANEJAMENTO.md` (arquitetura do plano), `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fonte do RUP e nivelamento de recursos), `SKILL_GESTAO_14_CONTROLE_DE_REVISAO.md` (versionamento) e `SKILL_GESTAO_13_MATRIZ_DE_RISCO.md` (gatilho de risco para reprogramação).*

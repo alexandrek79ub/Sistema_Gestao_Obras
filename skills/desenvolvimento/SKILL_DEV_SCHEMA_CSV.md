@@ -133,6 +133,51 @@ Consumido por: dashboard financeiro.
 
 ---
 
+### 3.5 `PROGRAMACAO_CURTO_PRAZO_[OBRA].csv`
+
+Consumido por: `TremDeProducaoLean.tsx`, `page.tsx` (aba Curto Prazo / Lotes), API `/api/cronograma`.  
+Localização: `projetos/[NOME_OBRA]/03_PLANEJAMENTO_E_CRONOGRAMA/`.
+
+| Coluna | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `COD_LOTE` | string | ✅ | Identificador determinístico do lote (ex: `LOTE-001` a `LOTE-052`) |
+| `SEMANA` | string | ✅ | Semana de produção (ex: `Semana 01` a `Semana 26`) |
+| `DIAS_SEMANA` | string | ✅ | Numeração de dias CPM e dias da semana (ex: `Dias 125 a 127 (Ter-Qui)`) |
+| `DATA_INICIO` | string | ✅ | Data de início de calendário no formato `DD/MM/AAAA` |
+| `DATA_FIM` | string | ✅ | Data de conclusão de calendário no formato `DD/MM/AAAA` |
+| `ETAPA_ZONA` | string | ✅ | Zona física ou etapa construtiva (ex: `Etapa 1 (Zona 1 - Recepção/Diretoria)`) |
+| `VAGAO_ESTEIRA` | string | ✅ | Nome do vagão Lean (ex: `Vagão 10: Pisos & Porcelanato`) |
+| `SERVICO_LOTE` | string | ✅ | Descrição técnica da meta de serviço |
+| `META_FISICA` | string | ✅ | Meta quantitativa mensurável (ex: `90 m² porcelanato 60x60 com dupla colagem`) |
+| `DURACAO_DIAS` | number | ✅ | Duração da frente no ciclo takt em dias úteis (ex: `3`, `5`) |
+| `EQUIPE_PREVISTA` | string | ✅ | Composição da equipe (ex: `3 Ladrilhistas + 3 Ajudantes (SUB-05)`) |
+| `HEADCOUNT_PREVISTO` | number | ✅ | Número absoluto de operários alocados na frente |
+| `EQUIPAMENTOS_PREVISTOS` | string | ❌ | Maquinários necessários (ex: `Cortadora elétrica + Ventosas`) |
+| `MATERIAIS_UCC` | string | ✅ | Insumos principais e embalagem UCC (ex: `Porcelanato 60x60 + AC-III`) |
+| `RUP_META_HH_UNID` | string | ✅ | Meta de produtividade RUP (ex: `0,70 HH/m²`) |
+| `STATUS_EXECUCAO` | string | ✅ | `PROGRAMADO`, `EM_ANDAMENTO`, `CONCLUIDO`, `ATRASADO` |
+| `RDO_VINCULADO` | string | ❌ | Código do RDO que apontou a execução |
+
+---
+
+### 3.6 `LINHA_DE_BALANCO.csv`
+
+Consumido por: `LinhaDeBalanco.tsx`, `TremDeProducaoLean.tsx`, API `/api/cronograma`.  
+Localização: `projetos/[NOME_OBRA]/03_PLANEJAMENTO_E_CRONOGRAMA/`.
+
+| Coluna | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `LOCAL_PAVIMENTO` | string | ✅ | Setor físico / zona no eixo Y (ex: `Zona 01 - Recepção/Diretoria`, `Zona 04 - Cobertura`) |
+| `SEQUENCIA` | number | ✅ | Ordem sequencial de execução (1 a N) |
+| `VAGAO` | string | ✅ | Nome canônico do vagão (ex: `10. Pisos & Porcelanato`) |
+| `ATIVIDADE` | string | ✅ | Descrição da atividade executiva |
+| `EQUIPE_RESPONSAVEL` | string | ✅ | Equipe ou subempreiteiro responsável (ex: `3 Ladrilhistas + 3 Ajudantes (SUB-05)`) |
+| `RITMO_DIAS_POR_LOCAL` | number | ✅ | Ritmo de avanço / Takt Time por setor em dias úteis |
+| `DATA_INICIO` | string | ✅ | Data de início no setor (`DD/MM/AAAA`) |
+| `DATA_FIM` | string | ✅ | Data de término no setor (`DD/MM/AAAA`) |
+
+---
+
 ## 4. Regras de Migração de Schema
 
 Quando um schema de CSV muda (nova coluna adicionada, coluna renomeada):

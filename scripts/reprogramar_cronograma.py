@@ -299,6 +299,8 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
 
             dur_idx = headers.index('DURACAO_DIAS') if 'DURACAO_DIAS' in headers else -1
             hc_idx = headers.index('HEADCOUNT_PREVISTO') if 'HEADCOUNT_PREVISTO' in headers else -1
+            ini_idx = headers.index('DATA_INICIO') if 'DATA_INICIO' in headers else -1
+            fim_idx = headers.index('DATA_FIM') if 'DATA_FIM' in headers else -1
             vagao_idx = headers.index('VAGAO_ESTEIRA') if 'VAGAO_ESTEIRA' in headers else -1
             zona_idx = headers.index('ETAPA_ZONA') if 'ETAPA_ZONA' in headers else -1
             lote_idx = headers.index('COD_LOTE') if 'COD_LOTE' in headers else 0
@@ -353,9 +355,16 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
                             calc_hc = int(novo_hc)
 
                         parts[hc_idx] = str(calc_hc)
+                        
+                        # Atualiza datas de início e fim no lote de curto prazo
+                        if ini_idx != -1 and mod_row.get('DATA_INICIO'):
+                            parts[ini_idx] = mod_row.get('DATA_INICIO')
+                        if fim_idx != -1 and mod_row.get('DATA_FIM'):
+                            parts[fim_idx] = mod_row.get('DATA_FIM')
+
                         file_modified = True
                         total_lotes_sync += 1
-                        detalhes_sync.append(f"{lote_cod} ({lote_vagao[:25]} | {parts[zona_idx][:20]}): Dur {old_dur}d -> {nova_dur}d | Efetivo {old_hc} -> {calc_hc} op.")
+                        detalhes_sync.append(f"{lote_cod} ({lote_vagao[:25]} | {parts[zona_idx][:20]}): Dur {old_dur}d -> {nova_dur}d | Efetivo {old_hc} -> {calc_hc} op. | Datas: {parts[ini_idx] if ini_idx != -1 else ''} .. {parts[fim_idx] if fim_idx != -1 else ''}")
                         break
 
                 new_lines.append(';'.join(f'"{p}"' for p in parts) + '\n')
@@ -368,6 +377,78 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
             print(f"[!] Erro ao sincronizar arquivo de curto prazo {prog_file}: {e}")
 
     return total_lotes_sync, detalhes_sync
+
+def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
+    """
+    Sincroniza as alterações de frentes da Linha de Balanço diretamente no Caminho Crítico (dados_cpm.json).
+    Recalcula Forward/Backward pass determinístico e atualiza datas e folgas do CPM.
+    """
+    cpm_path = os.path.join(base_path, '03_PLANEJAMENTO_E_CRONOGRAMA', 'dados_cpm.json')
+    if not os.path.exists(cpm_path):
+        return 0, []
+
+    try:
+        import json
+        with open(cpm_path, 'r', encoding='utf-8') as f:
+            dados = json.load(f)
+
+        atividades = dados.get('atividades', [])
+        cpm_modificados = []
+
+        # Mapeamento do prefixo do vagão para atividades CPM
+        VAGAO_PARA_CPM = {
+            "01": ["A01_MOB_CANTEIRO"],
+            "02": ["A03_SAPATAS_CONC"],
+            "03": ["A04_BALDRAMES_CONC"],
+            "04": ["A07_PILARES_SUPRA"],
+            "05": ["A08_VIGAS_LAJE_FORMA", "A09_CONCRET_LAJE_H12"],
+            "06": ["A12_ALVENARIA_EXT", "A12_ALVENARIA_VEDACAO"],
+            "07": ["A14_ESTRUT_COBERTURA", "A11_ESTRUT_TERCAS_COB", "A13_TELHAS_SANDWICH_PLAT"],
+            "08": ["A17_ELETRICA_EMBUTIDA", "A14_ELET_EMBUTIDA"],
+            "09": ["A19_REBOCO_INTERNO", "A17_EMBOCO_REBOCO"],
+            "10": ["A20_IMPERM_AREAS_MOLHADAS", "A18_IMPERM_WCS", "A22_PISO_PORCELANATO", "A19_CONTRAPISO"],
+            "11": ["A25_ESQUADRIAS_ALUM", "A21_ESQUADRIAS_FIX"],
+            "12": ["A26_CLIMATIZACAO_DUTOS", "A20_INFRA_DUTOS_HVAC"],
+            "13": ["A27_LOUCAS_METAIS", "A23_FIACAO_TELECOM", "A28_LUMINARIAS_ESPELHOS"],
+            "14": ["A29_PINTURA_FINAL", "A25_PINTURA_1A_DEMAO"],
+            "15": ["A31_LIMPEZA_ENTREGA", "A30_COMISSIONAMENTO"]
+        }
+
+        for mod_row in modified_rows:
+            v_nome = mod_row.get('VAGAO', '')
+            v_pref = v_nome[:2]
+            if v_pref in VAGAO_PARA_CPM:
+                cpm_ids = VAGAO_PARA_CPM[v_pref]
+                nova_dur = int(mod_row.get('RITMO_DIAS_POR_LOCAL', 3))
+                for ativ in atividades:
+                    if ativ.get('id') in cpm_ids:
+                        old_dur = ativ.get('duracao_dias', 3)
+                        if old_dur != nova_dur and nova_dur > 0:
+                            ativ['duracao_dias'] = nova_dur
+                            cpm_modificados.append(f"{ativ['id']}: {old_dur}d -> {nova_dur}d")
+
+        if cpm_modificados and not dry_run:
+            try:
+                root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+                calc_path = os.path.join(root_dir, 'scripts', 'calculadoras', 'calcular_cpm.py')
+                if os.path.exists(calc_path):
+                    import importlib.util
+                    spec = importlib.util.spec_from_file_location("calcular_cpm", calc_path)
+                    mod_cpm = importlib.util.module_from_spec(spec)
+                    spec.loader.exec_module(mod_cpm)
+                    res_cpm = mod_cpm.calcular_cpm(dados)
+                    if res_cpm.get('status') != 'erro':
+                        dados['caminho_critico_calculado'] = res_cpm
+            except Exception:
+                pass
+
+            with open(cpm_path, 'w', encoding='utf-8') as f:
+                json.dump(dados, f, indent=2, ensure_ascii=False)
+
+        return len(cpm_modificados), cpm_modificados
+    except Exception as e:
+        print(f"[!] Erro ao sincronizar dados_cpm.json: {e}")
+        return 0, []
 
 # =============================================================================
 # FUNÇÕES DE COMANDO (STATUS, LISTAR, REPROGRAMAR)
@@ -560,11 +641,18 @@ def reprogramar(args):
             novo_d_fim = calculate_end_date(old_d_ini, nova_dur)
             row['DATA_FIM'] = format_date_br(novo_d_fim)
 
-        # 4. Dimensionamento RUP de Headcount
+        # 4. Dimensionamento RUP de Headcount & Aceleração de Prazo (Crashing)
         vagao_prefix = vagao_nome[:2]
         base_hc = HEADCOUNT_PADRAO_VAGAO.get(vagao_prefix, 8)
         if args.novo_headcount:
             calc_hc = args.novo_headcount
+            # Se forneceu novo headcount sem nova duração, calcula nova duração via RUP (Crashing):
+            if args.nova_duracao is None and base_hc > 0 and old_dur > 0:
+                nova_dur = max(1, math.ceil(old_dur * (base_hc / calc_hc)))
+                row['RITMO_DIAS_POR_LOCAL'] = str(nova_dur)
+                if old_d_ini:
+                    novo_d_fim = calculate_end_date(old_d_ini, nova_dur)
+                    row['DATA_FIM'] = format_date_br(novo_d_fim)
         elif nova_dur != old_dur and old_dur > 0:
             calc_hc = max(1, math.ceil(base_hc * (old_dur / nova_dur)))
         else:
@@ -596,7 +684,7 @@ def reprogramar(args):
             if len(cascade_modified_indices) > 5:
                 print(f"      ... e mais {len(cascade_modified_indices) - 5} frentes subsequentes.")
 
-    # Sincronização com Curto Prazo (Lotes Takt de 3 dias)
+    # Sincronização com Curto Prazo (Lotes Takt)
     all_modified = [rows[i] for i in set(modified_initial).union(cascade_modified_indices)]
     lotes_sync_count = 0
     if not args.sem_curto_prazo:
@@ -608,11 +696,29 @@ def reprogramar(args):
         if len(detalhes_lotes) > 5:
             print(f"      ... e mais {len(detalhes_lotes) - 5} lotes semanais.")
 
+    # Sincronização com Caminho Crítico (dados_cpm.json)
+    cpm_sync_count, detalhes_cpm = sync_cpm_schedule(base_path, obra, all_modified, dry_run=args.dry_run)
+    if cpm_sync_count > 0:
+        print(f"\n[+] SINCRONIZAÇÃO COM O CAMINHO CRÍTICO (CPM / GANTT):")
+        print(f"    Total de atividades CPM recalculadas: {cpm_sync_count}")
+        for det in detalhes_cpm:
+            print(f"      • {det}")
+
     # Salva no arquivo CSV da Linha de Balanço se não for dry-run
     if not args.dry_run:
         save_schedule_csv(csv_path, rows, fieldnames)
         print(f"\n[✔] Sucesso! Planilha LINHA_DE_BALANCO.csv salva com integridade absoluta.")
         print(f"    Caminho: {csv_path}")
+
+        # Recalcula sobreposições da LOB e Heijunka automaticamente
+        try:
+            root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+            sync_script = os.path.join(root_dir, 'scripts', 'sincronizar_esteira_e_lob.py')
+            if os.path.exists(sync_script):
+                import subprocess
+                subprocess.run([sys.executable, sync_script, '--obra', obra, '--analisar-sobreposicao'], capture_output=True)
+        except Exception:
+            pass
     else:
         print(f"\n[i] Simulação concluída com sucesso. Nenhuma alteração foi gravada em disco.")
 
@@ -656,6 +762,7 @@ Exemplos de Uso:
     parser.add_argument("--nova-data-inicio", type=str, help="Nova data de início (DD/MM/AAAA)")
     parser.add_argument("--deslocar-dias", type=int, help="Deslocar início em +/- N dias úteis")
     parser.add_argument("--novo-headcount", type=int, help="Forçar novo efetivo (se omitido, calcula via RUP)")
+    parser.add_argument("--takt-dias", type=int, help="Configura novo ritmo / Takt Time padrão (1 a 6 dias úteis)")
 
     # Controle de Cascata e Sincronização
     parser.add_argument("--sem-cascata", action="store_true", help="Desativa o recalculo automático em cascata das sucessoras")

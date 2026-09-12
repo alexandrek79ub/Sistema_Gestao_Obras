@@ -1108,25 +1108,25 @@ export async function POST(request: Request) {
 
     fs.writeFileSync(filePath, lines.join('\n') + '\n', 'utf-8');
 
-    // Executar análise de sobreposição e sincronização rápida em background
+    // Executar sincronização total dos 3 cronogramas via Orquestrador Universal
     let relatorioSobreposicao = null;
     try {
       const possibleScriptPaths = [
-        path.resolve(process.cwd(), 'scripts', 'sincronizar_esteira_e_lob.py'),
-        path.resolve(process.cwd(), '..', 'scripts', 'sincronizar_esteira_e_lob.py')
+        path.resolve(process.cwd(), 'scripts', 'orquestrar_cronogramas.py'),
+        path.resolve(process.cwd(), '..', 'scripts', 'orquestrar_cronogramas.py')
       ];
-      const scriptSync = possibleScriptPaths.find(p => fs.existsSync(p));
-      if (scriptSync) {
-        const rootDir = path.dirname(path.dirname(scriptSync));
-        const cmd = `python "${scriptSync}" --obra "${obra}" --analisar-sobreposicao ${permitirSobreposicao ? '--permitir-sobreposicao' : ''}`;
+      const scriptOrquestrador = possibleScriptPaths.find(p => fs.existsSync(p));
+      if (scriptOrquestrador) {
+        const rootDir = path.dirname(path.dirname(scriptOrquestrador));
+        const cmd = `python "${scriptOrquestrador}" --obra "${obra}" --sincronizar`;
         execSync(cmd, {
           cwd: rootDir,
-          timeout: 8000,
+          timeout: 15000,
           encoding: 'utf-8'
         });
       }
     } catch (scriptErr) {
-      console.warn('Aviso: Execução do script de sincronização:', scriptErr);
+      console.warn('Aviso: Execução do orquestrador de cronogramas:', scriptErr);
     }
 
     try {

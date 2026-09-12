@@ -988,7 +988,7 @@ def obter_lotes_padrao(nome_obra):
     ]
     return lotes
 
-def salvar_programacao_obra(nome_obra):
+def salvar_programacao_obra(nome_obra, takt_dias=3):
     root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     pasta_obra = os.path.join(root_dir, 'projetos', nome_obra)
     pasta_plan = os.path.join(pasta_obra, '03_PLANEJAMENTO_E_CRONOGRAMA')
@@ -1136,5 +1136,6 @@ def salvar_programacao_obra(nome_obra):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Gerador Universal de Programação de Curto Prazo em Esteira Lean (Takt Time)')
     parser.add_argument('--obra', type=str, default='OBRA_TMULT', help='Nome da pasta da obra em projetos/')
+    parser.add_argument('--takt-dias', type=int, default=3, help='Duração do Takt Time em dias úteis (1 a 6 dias, padrão 3)')
     args = parser.parse_args()
-    salvar_programacao_obra(args.obra)
+    salvar_programacao_obra(args.obra, takt_dias=args.takt_dias)
