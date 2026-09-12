@@ -47,6 +47,8 @@ interface LoteCurtoPrazo {
   codLote: string;
   semana: string;
   diasSemana?: string;
+  dataInicio?: string;
+  dataFim?: string;
   etapaZona?: string;
   vagaoEsteira?: string;
   setor: string;
@@ -451,6 +453,11 @@ export default function CronogramaPage() {
                             <span className="inline-block bg-blue-950/60 text-blue-300 border border-blue-800/50 px-2 py-1 rounded text-xs font-medium">
                               {lote.diasSemana || `Dias 1 a ${lote.duracaoDias}`}
                             </span>
+                            {lote.dataInicio && lote.dataFim && (
+                              <span className="block text-[11px] text-amber-400 font-mono mt-1">
+                                {lote.dataInicio} a {lote.dataFim}
+                              </span>
+                            )}
                           </td>
                           <td className="py-3 px-4 font-medium text-xs whitespace-nowrap">
                             <span className="inline-block bg-zinc-800/80 text-zinc-200 border border-zinc-700 px-2 py-1 rounded font-semibold">

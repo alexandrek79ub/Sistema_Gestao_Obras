@@ -785,6 +785,8 @@ export async function GET(request: Request) {
         codLote: row['COD_LOTE'],
         semana: row['SEMANA'],
         diasSemana: row['DIAS_SEMANA'] || '',
+        dataInicio: row['DATA_INICIO'] || '',
+        dataFim: row['DATA_FIM'] || '',
         etapaZona: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',
         vagaoEsteira: row['VAGAO_ESTEIRA'] || 'Geral',
         setor: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',

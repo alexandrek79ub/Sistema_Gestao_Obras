@@ -1019,12 +1019,98 @@ def salvar_programacao_obra(nome_obra):
             cod = lote['COD_LOTE']
             if cod in duracoes_cpm:
                 lote['DURACAO_DIAS'] = str(duracoes_cpm[cod])
+
+    # Mapeamento do Calendário Operacional Heijunka (178 dias úteis CPM - Início 01/10/2026)
+    import datetime
+    base_dt = datetime.date(2026, 10, 1)
+    def day_to_date(day_idx):
+        cur = base_dt
+        added = 0
+        while added < (day_idx - 1):
+            cur += datetime.timedelta(days=1)
+            if cur.weekday() != 6:
+                added += 1
+        return cur
+
+    weekday_br = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
+
+    LOTE_CALENDARIO_CPM = {
+        "LOTE-001": (1, 10),
+        "LOTE-002": (11, 12),
+        "LOTE-003": (13, 14),
+        "LOTE-004": (15, 16),
+        "LOTE-005": (17, 18),
+        "LOTE-006": (19, 20),
+        "LOTE-007": (21, 23),
+        "LOTE-008": (24, 27),
+        "LOTE-009": (28, 31),
+        "LOTE-010": (32, 34),
+        "LOTE-011": (35, 37),
+        "LOTE-012": (38, 40),
+        "LOTE-013": (41, 43),
+        "LOTE-014": (44, 46),
+        "LOTE-015": (47, 54),
+        "LOTE-016": (55, 67),
+        "LOTE-017": (68, 74),
+        "LOTE-018": (75, 81),
+        "LOTE-019": (82, 87),
+        "LOTE-020": (68, 77),
+        "LOTE-021": (88, 97),
+        "LOTE-022": (98, 107),
+        "LOTE-023": (108, 110),
+        "LOTE-024": (111, 112),
+        "LOTE-025": (113, 118),
+        "LOTE-026": (119, 124),
+        "LOTE-027": (125, 127), # Impermeabilização WCs (Zona 03) -> 23/02/2027 a 25/02/2027
+        "LOTE-028": (125, 130), # Contrapiso (Zonas 01 e 02) -> 23/02/2027 a 01/03/2027
+        "LOTE-029": (131, 135), # Porcelanato Z1 -> 02/03/2027 a 06/03/2027
+        "LOTE-030": (136, 140), # Porcelanato Z2 -> 08/03/2027 a 12/03/2027
+        "LOTE-031": (141, 144), # Cerâmica Z3 -> 13/03/2027 a 17/03/2027
+        "LOTE-032": (145, 148), # Rodapés -> 18/03/2027 a 22/03/2027
+        "LOTE-033": (140, 143), # Esquadrias Janelas
+        "LOTE-034": (145, 148), # Esquadrias Fachada e Portas
+        "LOTE-035": (134, 139), # HVAC Dutos
+        "LOTE-036": (140, 142), # HVAC Vácuo e Condensadoras
+        "LOTE-037": (128, 133), # Fiação e Telecom
+        "LOTE-038": (141, 144), # Quadros CPD
+        "LOTE-039": (149, 151), # Pintura 1a Demão Z1-Z2
+        "LOTE-040": (152, 153), # Pintura 1a Demão Z3
+        "LOTE-041": (154, 159), # Louças e Metais
+        "LOTE-042": (154, 158), # Luminárias LED
+        "LOTE-043": (163, 166), # Pintura Final Demãos
+        "LOTE-044": (159, 162), # Aparelhos HVAC
+        "LOTE-045": (167, 168), # Comissionamento Elétrico
+        "LOTE-046": (173, 174), # Limpeza Pós-Obra
+        "LOTE-047": (169, 170), # Vistoria Carga
+        "LOTE-048": (171, 171), # As-Built DataBook
+        "LOTE-049": (172, 172), # Treinamento Operacional
+        "LOTE-050": (175, 175), # Auditoria SST e Desmobilização
+        "LOTE-051": (176, 176), # Vistoria Provisória
+        "LOTE-052": (177, 178), # Termo Definitivo e Handover Turnkey (Dia 178: 26/04/2027)
+    }
+
+    for lote in lotes:
+        cod = lote['COD_LOTE']
+        if cod in LOTE_CALENDARIO_CPM:
+            d_ini, d_fim = LOTE_CALENDARIO_CPM[cod]
+            dt_i = day_to_date(d_ini)
+            dt_f = day_to_date(d_fim)
+            lote['DATA_INICIO'] = dt_i.strftime("%d/%m/%Y")
+            lote['DATA_FIM'] = dt_f.strftime("%d/%m/%Y")
+            lote['DURACAO_DIAS'] = str(d_fim - d_ini + 1)
+            w_i = weekday_br[dt_i.weekday()]
+            w_f = weekday_br[dt_f.weekday()]
+            if d_ini == d_fim:
+                lote['DIAS_SEMANA'] = f"Dia {d_ini:03d} ({w_i})"
+            else:
+                lote['DIAS_SEMANA'] = f"Dias {d_ini:03d} a {d_fim:03d} ({w_i}-{w_f})"
                 
     fieldnames = [
-        'COD_LOTE', 'SEMANA', 'DIAS_SEMANA', 'ETAPA_ZONA', 'VAGAO_ESTEIRA',
-        'SERVICO_LOTE', 'META_FISICA', 'DURACAO_DIAS', 'EQUIPE_PREVISTA',
-        'HEADCOUNT_PREVISTO', 'EQUIPAMENTOS_PREVISTOS', 'MATERIAIS_UCC',
-        'RUP_META_HH_UNID', 'STATUS_EXECUCAO', 'RDO_VINCULADO'
+        'COD_LOTE', 'SEMANA', 'DIAS_SEMANA', 'DATA_INICIO', 'DATA_FIM',
+        'ETAPA_ZONA', 'VAGAO_ESTEIRA', 'SERVICO_LOTE', 'META_FISICA',
+        'DURACAO_DIAS', 'EQUIPE_PREVISTA', 'HEADCOUNT_PREVISTO',
+        'EQUIPAMENTOS_PREVISTOS', 'MATERIAIS_UCC', 'RUP_META_HH_UNID',
+        'STATUS_EXECUCAO', 'RDO_VINCULADO'
     ]
     
     # Grava em todos os destinos relevantes

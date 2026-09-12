@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   Train, 
   Layers, 
@@ -27,6 +27,8 @@ interface LoteCurtoPrazo {
   codLote: string;
   semana: string;
   diasSemana?: string;
+  dataInicio?: string;
+  dataFim?: string;
   etapaZona?: string;
   vagaoEsteira?: string;
   setor: string;
@@ -51,71 +53,48 @@ export default function TremDeProducaoLean({ lotes }: TremProps) {
   const [faseFiltro, setFaseFiltro] = useState<string>('FASE_1');
   const [loteSelecionado, setLoteSelecionado] = useState<LoteCurtoPrazo | null>(null);
 
-  // Mapeamento dos 52 ciclos takt de toda a obra (Semanas 01 a 26 - 180 dias corridos)
-  const ciclosTakt = [
-    // FASE 1: FUNDAÇÕES E ESTRUTURA (SEMANAS 01 A 08 - CICLOS 01 A 16)
-    { ciclo: 'Ciclo 01', semana: 'Semana 01', dias: 'Dias 01 a 03 (Seg-Qua)', datas: '01/10 a 03/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 02', semana: 'Semana 01', dias: 'Dias 04 a 06 (Qui-Sáb)', datas: '05/10 a 07/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 03', semana: 'Semana 02', dias: 'Dias 07 a 09 (Seg-Qua)', datas: '08/10 a 10/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 04', semana: 'Semana 02', dias: 'Dias 10 a 12 (Qui-Sáb)', datas: '12/10 a 14/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 05', semana: 'Semana 03', dias: 'Dias 13 a 15 (Seg-Qua)', datas: '15/10 a 17/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 06', semana: 'Semana 03', dias: 'Dias 16 a 18 (Qui-Sáb)', datas: '19/10 a 21/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 07', semana: 'Semana 04', dias: 'Dias 19 a 21 (Seg-Qua)', datas: '22/10 a 24/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 08', semana: 'Semana 04', dias: 'Dias 22 a 24 (Qui-Sáb)', datas: '26/10 a 28/10/26', mes: 'Mês 1', fase: 'FASE_1' },
-    
-    { ciclo: 'Ciclo 09', semana: 'Semana 05', dias: 'Dias 25 a 27 (Seg-Qua)', datas: '29/10 a 31/10/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 10', semana: 'Semana 05', dias: 'Dias 28 a 30 (Qui-Sáb)', datas: '02/11 a 04/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 11', semana: 'Semana 06', dias: 'Dias 31 a 33 (Seg-Qua)', datas: '05/11 a 07/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 12', semana: 'Semana 06', dias: 'Dias 34 a 36 (Qui-Sáb)', datas: '09/11 a 11/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 13', semana: 'Semana 07', dias: 'Dias 37 a 39 (Seg-Qua)', datas: '12/11 a 14/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 14', semana: 'Semana 07', dias: 'Dias 40 a 42 (Qui-Sáb)', datas: '16/11 a 18/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 15', semana: 'Semana 08', dias: 'Dias 43 a 45 (Seg-Qua)', datas: '19/11 a 21/11/26', mes: 'Mês 2', fase: 'FASE_1' },
-    { ciclo: 'Ciclo 16', semana: 'Semana 08', dias: 'Dias 46 a 48 (Qui-Sáb)', datas: '23/11 a 25/11/26', mes: 'Mês 2', fase: 'FASE_1' },
+  // Mapeamento dinâmico dos 52 ciclos takt sincronizados com os lotes reais de Curto Prazo (178 dias úteis CPM)
+  const ciclosTakt = useMemo(() => {
+    return Array.from({ length: 52 }).map((_, i) => {
+      const num = i + 1;
+      const codFormatado = `LOTE-${String(num).padStart(3, '0')}`;
+      const lote = lotes?.find(l => l.codLote === codFormatado);
 
-    // FASE 2: ALVENARIAS E COBERTURA METÁLICA (SEMANAS 09 A 12 - CICLOS 17 A 24)
-    { ciclo: 'Ciclo 17', semana: 'Semana 09', dias: 'Dias 49 a 51 (Seg-Qua)', datas: '26/11 a 28/11/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 18', semana: 'Semana 09', dias: 'Dias 52 a 54 (Qui-Sáb)', datas: '30/11 a 02/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 19', semana: 'Semana 10', dias: 'Dias 55 a 57 (Seg-Qua)', datas: '03/12 a 05/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 20', semana: 'Semana 10', dias: 'Dias 58 a 60 (Qui-Sáb)', datas: '07/12 a 09/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 21', semana: 'Semana 11', dias: 'Dias 61 a 63 (Seg-Qua)', datas: '10/12 a 12/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 22', semana: 'Semana 11', dias: 'Dias 64 a 66 (Qui-Sáb)', datas: '14/12 a 16/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 23', semana: 'Semana 12', dias: 'Dias 67 a 69 (Seg-Qua)', datas: '17/12 a 19/12/26', mes: 'Mês 3', fase: 'FASE_2' },
-    { ciclo: 'Ciclo 24', semana: 'Semana 12', dias: 'Dias 70 a 72 (Qui-Sáb)', datas: '21/12 a 23/12/26', mes: 'Mês 3', fase: 'FASE_2' },
+      const cicloStr = `Ciclo ${String(num).padStart(2, '0')}`;
+      const semNum = Math.floor(i / 2) + 1;
+      const semanaStr = lote?.semana || `Semana ${String(semNum).padStart(2, '0')}`;
+      const diasStr = lote?.diasSemana || (num % 2 !== 0 ? 'Dias 01 a 03 (Seg-Qua)' : 'Dias 04 a 06 (Qui-Sáb)');
 
-    // FASE 3: REBOCO, IMPERMEABILIZAÇÃO E PORCELANATOS (SEMANAS 13 A 16 - CICLOS 25 A 32)
-    { ciclo: 'Ciclo 25', semana: 'Semana 13', dias: 'Dias 73 a 75 (Seg-Qua)', datas: '24/12 a 26/12/26', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 26', semana: 'Semana 13', dias: 'Dias 76 a 78 (Qui-Sáb)', datas: '28/12 a 30/12/26', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 27', semana: 'Semana 14', dias: 'Dias 79 a 81 (Seg-Qua)', datas: '31/12 a 02/01/27', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 28', semana: 'Semana 14', dias: 'Dias 82 a 84 (Qui-Sáb)', datas: '04/01 a 06/01/27', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 29', semana: 'Semana 15', dias: 'Dias 85 a 87 (Seg-Qua)', datas: '07/01 a 09/01/27', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 30', semana: 'Semana 15', dias: 'Dias 88 a 90 (Qui-Sáb)', datas: '11/01 a 13/01/27', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 31', semana: 'Semana 16', dias: 'Dias 91 a 93 (Seg-Qua)', datas: '14/01 a 16/01/27', mes: 'Mês 4', fase: 'FASE_3' },
-    { ciclo: 'Ciclo 32', semana: 'Semana 16', dias: 'Dias 94 a 96 (Qui-Sáb)', datas: '18/01 a 20/01/27', mes: 'Mês 4', fase: 'FASE_3' },
+      let datasStr = '';
+      if (lote?.dataInicio && lote?.dataFim) {
+        const dIni = lote.dataInicio.slice(0, 5);
+        const dFim = lote.dataFim.length >= 10 
+          ? `${lote.dataFim.slice(0, 5)}/${lote.dataFim.slice(8, 10)}` 
+          : lote.dataFim;
+        datasStr = `${dIni} a ${dFim}`;
+      } else {
+        datasStr = 'A definir';
+      }
 
-    // FASE 4: INSTALAÇÕES MEP, ESQUADRIAS E CLIMATIZAÇÃO HVAC (SEMANAS 17 A 20 - CICLOS 33 A 40)
-    { ciclo: 'Ciclo 33', semana: 'Semana 17', dias: 'Dias 97 a 99 (Seg-Qua)', datas: '21/01 a 23/01/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 34', semana: 'Semana 17', dias: 'Dias 100 a 102 (Qui-Sáb)', datas: '25/01 a 27/01/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 35', semana: 'Semana 18', dias: 'Dias 103 a 105 (Seg-Qua)', datas: '28/01 a 30/01/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 36', semana: 'Semana 18', dias: 'Dias 106 a 108 (Qui-Sáb)', datas: '01/02 a 03/02/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 37', semana: 'Semana 19', dias: 'Dias 109 a 111 (Seg-Qua)', datas: '04/02 a 06/02/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 38', semana: 'Semana 19', dias: 'Dias 112 a 114 (Qui-Sáb)', datas: '08/02 a 10/02/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 39', semana: 'Semana 20', dias: 'Dias 115 a 117 (Seg-Qua)', datas: '11/02 a 13/02/27', mes: 'Mês 5', fase: 'FASE_4' },
-    { ciclo: 'Ciclo 40', semana: 'Semana 20', dias: 'Dias 118 a 120 (Qui-Sáb)', datas: '15/02 a 17/02/27', mes: 'Mês 5', fase: 'FASE_4' },
+      let mes = 'Mês 1';
+      let fase = 'FASE_1';
+      if (num <= 8) { mes = 'Mês 1'; fase = 'FASE_1'; }
+      else if (num <= 16) { mes = 'Mês 2'; fase = 'FASE_1'; }
+      else if (num <= 24) { mes = 'Mês 3'; fase = 'FASE_2'; }
+      else if (num <= 32) { mes = 'Mês 4'; fase = 'FASE_3'; }
+      else if (num <= 40) { mes = 'Mês 5'; fase = 'FASE_4'; }
+      else { mes = 'Mês 6'; fase = 'FASE_5'; }
 
-    // FASE 5: PINTURA, COMISSIONAMENTO E HANDOVER TURNKEY (SEMANAS 21 A 26 - CICLOS 41 A 52)
-    { ciclo: 'Ciclo 41', semana: 'Semana 21', dias: 'Dias 121 a 123 (Seg-Qua)', datas: '18/02 a 20/02/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 42', semana: 'Semana 21', dias: 'Dias 124 a 126 (Qui-Sáb)', datas: '22/02 a 24/02/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 43', semana: 'Semana 22', dias: 'Dias 127 a 129 (Seg-Qua)', datas: '25/02 a 27/02/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 44', semana: 'Semana 22', dias: 'Dias 130 a 132 (Qui-Sáb)', datas: '01/03 a 03/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 45', semana: 'Semana 23', dias: 'Dias 133 a 135 (Seg-Qua)', datas: '04/03 a 06/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 46', semana: 'Semana 23', dias: 'Dias 136 a 138 (Qui-Sáb)', datas: '08/03 a 10/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 47', semana: 'Semana 24', dias: 'Dias 139 a 141 (Seg-Qua)', datas: '11/03 a 13/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 48', semana: 'Semana 24', dias: 'Dias 142 a 144 (Qui-Sáb)', datas: '15/03 a 17/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 49', semana: 'Semana 25', dias: 'Dias 145 a 147 (Seg-Qua)', datas: '18/03 a 20/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 50', semana: 'Semana 25', dias: 'Dias 148 a 150 (Qui-Sáb)', datas: '22/03 a 24/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 51', semana: 'Semana 26', dias: 'Dias 151 a 153 (Seg-Qua)', datas: '25/03 a 27/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-    { ciclo: 'Ciclo 52', semana: 'Semana 26', dias: 'Dias 154 a 156 (Qui-Sáb)', datas: '29/03 a 31/03/27', mes: 'Mês 6', fase: 'FASE_5' },
-  ];
+      return {
+        ciclo: cicloStr,
+        semana: semanaStr,
+        dias: diasStr,
+        datas: datasStr,
+        mes,
+        fase
+      };
+    });
+  }, [lotes]);
 
   // Filtrar ciclos conforme seleção de fase
   const ciclosFiltrados = faseFiltro === 'TODAS' 

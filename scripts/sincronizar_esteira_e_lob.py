@@ -380,10 +380,34 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
     total_lotes = len(df_curto)
     calendario = calcular_calendario_lotes(data_inicio_str, total_lotes, obra_dir=obra_dir)
     
+    def parse_d_br(val):
+        d, m, y = map(int, str(val).strip().split('/'))
+        return datetime.date(y, m, d)
+
+    SETOR_ESPECIFICO_LOTE = {
+        "LOTE-027": ["Zona 03 - Sanitários e Apoio"],
+        "LOTE-028": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-029": ["Zona 01 - Recepção/Diretoria"],
+        "LOTE-030": ["Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-031": ["Zona 03 - Sanitários e Apoio"],
+        "LOTE-032": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-033": ["Zona 01 - Recepção/Diretoria"],
+        "LOTE-034": ["Zona 04 - Cobertura e Platibanda"],
+        "LOTE-035": ["Zona 03 - Sanitários e Apoio"],
+        "LOTE-036": ["Zona 04 - Cobertura e Platibanda"],
+        "LOTE-037": ["Zona 01 - Recepção/Diretoria", "Zona 03 - Sanitários e Apoio"],
+        "LOTE-038": ["Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-039": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-040": ["Zona 03 - Sanitários e Apoio"],
+        "LOTE-041": ["Zona 03 - Sanitários e Apoio"],
+        "LOTE-042": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-044": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD"],
+        "LOTE-043": ["Zona 01 - Recepção/Diretoria", "Zona 02 - Salas Técnicas/CPD", "Zona 03 - Sanitários e Apoio"],
+    }
+
     linhas_lob = []
     
     for idx, r in df_curto.iterrows():
-        cal = calendario[idx]
         cod_lote = str(r.get('COD_LOTE', f'LOTE-{idx+1:03d}')).strip()
         vagao_raw = str(r.get('VAGAO_ESTEIRA', '')).strip()
         servico = str(r.get('SERVICO_LOTE', '')).strip()
@@ -391,7 +415,25 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
         equipe_raw = str(r.get('EQUIPE_PREVISTA', '')).strip()
         headcount = int(r.get('HEADCOUNT_PREVISTO', 4))
         
-        zonas_dest = normalizar_zona(etapa_zona)
+        # Leitura prioritária das datas explícitas sincronizadas do curto prazo
+        if 'DATA_INICIO' in r and 'DATA_FIM' in r and pd.notna(r['DATA_INICIO']) and pd.notna(r['DATA_FIM']):
+            try:
+                dt_ini_lote = parse_d_br(r['DATA_INICIO'])
+                dt_fim_lote = parse_d_br(r['DATA_FIM'])
+            except Exception:
+                cal = calendario[idx]
+                dt_ini_lote = cal['dt_inicio']
+                dt_fim_lote = cal['dt_fim']
+        else:
+            cal = calendario[idx]
+            dt_ini_lote = cal['dt_inicio']
+            dt_fim_lote = cal['dt_fim']
+
+        if cod_lote in SETOR_ESPECIFICO_LOTE:
+            zonas_dest = SETOR_ESPECIFICO_LOTE[cod_lote]
+        else:
+            zonas_dest = normalizar_zona(etapa_zona)
+
         mapa_lote_canonico = {item[0]: item[4] for item in MAPA_LOTE_CPM}
         if cod_lote in mapa_lote_canonico:
             vagao_macro = mapa_lote_canonico[cod_lote]
@@ -400,18 +442,17 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
             
         equipe = normalizar_equipe(equipe_raw, servico)
         
-        # Nome amigável da atividade
-        if ". " in vagao_macro:
-            nome_atividade = vagao_macro.split(". ", 1)[1].strip()
-        elif ":" in vagao_raw:
-            nome_atividade = vagao_raw.split(":", 1)[1].strip()
-        else:
-            nome_atividade = vagao_raw
+        # Nome amigável e específico da atividade (preserva identidade real do serviço)
+        nome_atividade = servico.split('[')[0].strip()
+        if len(nome_atividade) > 50:
+            nome_atividade = nome_atividade[:50].strip()
+        if not nome_atividade:
+            nome_atividade = vagao_macro.split(". ", 1)[1].strip() if ". " in vagao_macro else vagao_macro
             
         # Dias úteis reais dentro do lote
         dias_uteis = []
-        cur_d = cal['dt_inicio']
-        while cur_d <= cal['dt_fim']:
+        cur_d = dt_ini_lote
+        while cur_d <= dt_fim_lote:
             if cur_d.weekday() != 6:
                 dias_uteis.append(cur_d)
             cur_d += datetime.timedelta(days=1)
@@ -470,10 +511,16 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
     if os.path.exists(os.path.dirname(template_lob)):
         df_lob[cols_salvar].to_csv(template_lob, sep=';', index=False, encoding='utf-8')
         print(f"[+] TEMPLATE_LINHA_DE_BALANCO.csv atualizado em: {template_lob}")
+
+    # Executa análise automática de sobreposição e gera relatório
+    try:
+        analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False, df_lob_in=df_lob)
+    except Exception as err:
+        print(f"[!] Aviso: Análise de sobreposição automática falhou: {err}")
         
     return df_lob
 
-def analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False):
+def analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False, df_lob_in=None):
     """
     Analisa a Linha de Balanço e a Esteira quanto a:
     1. Conflito Espacial (duas equipes diferentes trabalhando na mesma Zona no mesmo dia)
@@ -483,18 +530,22 @@ def analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False):
     path_lob = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "LINHA_DE_BALANCO.csv")
     path_curto = os.path.join(obra_dir, "03_PLANEJAMENTO_E_CRONOGRAMA", "PROGRAMACAO_CURTO_PRAZO_TMULT.csv")
     
-    if not os.path.exists(path_lob):
+    if df_lob_in is not None:
+        df_lob = df_lob_in.copy()
+    elif os.path.exists(path_lob):
+        df_lob = pd.read_csv(path_lob, sep=';', encoding='utf-8')
+    else:
         print(f"[-] Erro: {path_lob} não encontrado.")
         return
         
-    df_lob = pd.read_csv(path_lob, sep=';', encoding='utf-8')
-    
     def parse_d(val):
         d, m, y = map(int, str(val).strip().split('/'))
         return datetime.date(y, m, d)
         
-    df_lob['dt_ini'] = df_lob['DATA_INICIO'].apply(parse_d)
-    df_lob['dt_fim'] = df_lob['DATA_FIM'].apply(parse_d)
+    if 'dt_ini' not in df_lob.columns:
+        df_lob['dt_ini'] = df_lob['DATA_INICIO'].apply(parse_d)
+    if 'dt_fim' not in df_lob.columns:
+        df_lob['dt_fim'] = df_lob['DATA_FIM'].apply(parse_d)
     
     min_date = df_lob['dt_ini'].min()
     max_date = df_lob['dt_fim'].max()
@@ -525,16 +576,19 @@ def analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False):
         setores = ativas['LOCAL_PAVIMENTO'].value_counts()
         for setor, count in setores.items():
             sub_setor = ativas[ativas['LOCAL_PAVIMENTO'] == setor]
-            lotes_setor = sub_setor['_cod_lote'].nunique() if '_cod_lote' in sub_setor.columns else sub_setor['ATIVIDADE'].nunique()
-            if lotes_setor > 1:
+            equipes_distintas = sub_setor['EQUIPE_RESPONSAVEL'].nunique()
+            lotes_distintos = sub_setor['_cod_lote'].nunique() if '_cod_lote' in sub_setor.columns else sub_setor['ATIVIDADE'].nunique()
+            if equipes_distintas > 1 and lotes_distintos > 1:
                 subs = sub_setor['EQUIPE_RESPONSAVEL'].unique().tolist()
-                atvs = sub_setor['ATIVIDADE'].unique().tolist()
-                conflitos_espaciais.append({
-                    "data": str_curr,
-                    "setor": setor,
-                    "equipes": subs,
-                    "atividades": atvs
-                })
+                subs_prod = [s for s in subs if "Própria" not in s and "Turnkey" not in s]
+                if len(subs_prod) > 1:
+                    atvs = sub_setor['ATIVIDADE'].unique().tolist()
+                    conflitos_espaciais.append({
+                        "data": str_curr,
+                        "setor": setor,
+                        "equipes": subs_prod,
+                        "atividades": atvs
+                    })
                 
         # 2. Checar Frentes Simultâneas da Mesma Disciplina (Lotes concorrentes distintos)
         equipes = ativas['EQUIPE_RESPONSAVEL'].value_counts()
