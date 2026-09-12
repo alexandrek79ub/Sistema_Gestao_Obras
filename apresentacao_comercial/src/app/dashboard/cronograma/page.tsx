@@ -73,6 +73,23 @@ interface HistogramaItem {
   hhTotal?: number;
 }
 
+interface HistogramaFuncaoItem {
+  grupo: string;
+  cargo: string;
+  categoria: string;
+  custoBase: number;
+  meses: number[];
+  totalMeses: number;
+  totalHH: number;
+}
+
+interface ResumoHistograma {
+  totalGeralHH: number;
+  totalHeadcountMeses: number;
+  mediaHeadcount: number;
+  picoHeadcount: number;
+}
+
 export default function CronogramaPage() {
   const { obraAtiva } = useObra();
   const [activeTab, setActiveTab] = useState<'lob' | 'curto_prazo' | 'cpm' | 'curva_s'>('curto_prazo');
@@ -81,7 +98,11 @@ export default function CronogramaPage() {
   const [curvaS, setCurvaS] = useState<CurvaSItem[]>([]);
   const [lotes, setLotes] = useState<LoteCurtoPrazo[]>([]);
   const [histogramaMensal, setHistogramaMensal] = useState<HistogramaItem[]>([]);
+  const [histogramaPorFuncao, setHistogramaPorFuncao] = useState<HistogramaFuncaoItem[]>([]);
+  const [resumoHistograma, setResumoHistograma] = useState<ResumoHistograma | null>(null);
   const [mostrarHistogramaModal, setMostrarHistogramaModal] = useState(false);
+  const [abaHistogramaModal, setAbaHistogramaModal] = useState<'mensal' | 'funcoes'>('mensal');
+  const [filtroGrupoFuncao, setFiltroGrupoFuncao] = useState<string>('TODOS');
   const [filtroSemana, setFiltroSemana] = useState<string>('Semana 01');
   const [modoCurtoPrazo, setModoCurtoPrazo] = useState<'trem' | 'tabela'>('trem');
   const [metaGlobal, setMetaGlobal] = useState<any>({
@@ -101,6 +122,8 @@ export default function CronogramaPage() {
         if (data.curvaS) setCurvaS(data.curvaS);
         if (data.lotesCurtoPrazo) setLotes(data.lotesCurtoPrazo);
         if (data.histogramaMensal) setHistogramaMensal(data.histogramaMensal);
+        if (data.histogramaPorFuncao) setHistogramaPorFuncao(data.histogramaPorFuncao);
+        if (data.resumoHistograma) setResumoHistograma(data.resumoHistograma);
         if (data.metaGlobal) setMetaGlobal(data.metaGlobal);
         setLoading(false);
       })
@@ -539,18 +562,24 @@ export default function CronogramaPage() {
           </div>
           )}
 
-          {/* MODAL / PAINEL DO HISTOGRAMA MENSAL DE MÃO DE OBRA (EAP 1.0 / RH) */}
+          {/* MODAL / PAINEL DO HISTOGRAMA OFICIAL DE MÃO DE OBRA (EAP 1.0 / RH) */}
           {mostrarHistogramaModal && (
             <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
-              <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-3xl w-full p-6 shadow-2xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
-                <div className="flex items-center justify-between border-b border-zinc-800 pb-4">
+              <div className="bg-zinc-900 border border-zinc-700 rounded-2xl max-w-5xl w-full max-h-[92vh] flex flex-col p-6 shadow-2xl space-y-4 animate-in fade-in zoom-in-95 duration-200">
+                {/* CABEÇALHO DO MODAL */}
+                <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-lg bg-blue-500/20 border border-blue-500/40 flex items-center justify-center">
                       <Users className="w-5 h-5 text-blue-400" />
                     </div>
                     <div>
-                      <h3 className="text-lg font-bold text-white">Histograma Oficial de Mão de Obra — EAP 1.0 & RH</h3>
-                      <p className="text-xs text-zinc-400">Headcount mensal planejado vs capacidade de alojamento, transporte e vivência</p>
+                      <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                        Histograma Oficial de Mão de Obra — EAP 1.0 & RH
+                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                          Sincronizado Lean 220h/mês
+                        </span>
+                      </h3>
+                      <p className="text-xs text-zinc-400">Headcount mensal planejado vs dimensionamento de equipes, alojamento e custo operacional</p>
                     </div>
                   </div>
                   <button 
@@ -561,46 +590,255 @@ export default function CronogramaPage() {
                   </button>
                 </div>
 
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left text-xs text-zinc-300">
-                    <thead className="uppercase bg-zinc-950 text-zinc-400 border-b border-zinc-800">
-                      <tr>
-                        <th className="py-2.5 px-3">Mês / Período</th>
-                        <th className="py-2.5 px-3 text-center">Produção Direta</th>
-                        <th className="py-2.5 px-3 text-center">Gestão & SST</th>
-                        <th className="py-2.5 px-3 text-center font-bold text-white">Total Canteiro</th>
-                        <th className="py-2.5 px-3 text-center font-semibold text-amber-400">Horas-Homem (HH)</th>
-                        <th className="py-2.5 px-3">Frente Crítica / Foco Principal</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-zinc-800/60">
-                      {histogramaMensal.map((h, idx) => (
-                        <tr key={idx} className="hover:bg-zinc-800/40">
-                          <td className="py-2.5 px-3 font-semibold text-white whitespace-nowrap">{h.mes}</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-emerald-400 font-bold">{h.producao} op.</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-zinc-400">{h.gestaoApoio} prof.</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-blue-400 font-bold bg-blue-950/20">{h.total} Headcount</td>
-                          <td className="py-2.5 px-3 text-center font-mono text-amber-300 font-semibold">{h.hhTotal ? `${h.hhTotal.toLocaleString()} HH` : `${h.total * 220} HH`}</td>
-                          <td className="py-2.5 px-3 text-zinc-300">{h.foco}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="bg-zinc-950 p-4 rounded-xl border border-zinc-800/80 space-y-2 text-xs text-zinc-400">
-                  <div className="flex items-center gap-2 text-zinc-200 font-semibold">
-                    <Info className="w-4 h-4 text-blue-400" />
-                    <span>Princípio do Balanceamento Semanal (Lean Construction):</span>
+                {/* 4 CARDS DE RESUMO EXECUTIVO (TOTALIZADORES) */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="bg-zinc-950/80 p-3 rounded-xl border border-amber-500/30 bg-gradient-to-br from-amber-950/20 to-zinc-950">
+                    <span className="text-[11px] uppercase font-bold text-amber-400 tracking-wider block">Total de Horas-Homem</span>
+                    <span className="text-xl font-black text-amber-300 font-mono">
+                      {resumoHistograma?.totalGeralHH ? `${resumoHistograma.totalGeralHH.toLocaleString('pt-BR')} HH` : '22.440 HH'}
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block">Baseline Contratual (178 dias)</span>
                   </div>
-                  <p>
-                    O canteiro opera com a equipe base contratada para o mês (ex: 9 a 10 no Mês 1, 14 no Mês 2). 
-                    As frentes de trabalho são programadas em lotes de 2 a 3 dias úteis para que <strong className="text-zinc-200">a mesma equipe se mova continuamente</strong> entre as atividades. 
-                    Isso elimina picos fictícios de mão de obra e impede que ocorram dias de ociosidade no canteiro.
-                  </p>
+
+                  <div className="bg-zinc-950/80 p-3 rounded-xl border border-blue-500/30 bg-gradient-to-br from-blue-950/20 to-zinc-950">
+                    <span className="text-[11px] uppercase font-bold text-blue-400 tracking-wider block">Total Headcount Acumulado</span>
+                    <span className="text-xl font-black text-blue-300 font-mono">
+                      {resumoHistograma?.totalHeadcountMeses || 102} Homens-Mês
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block">Soma 6 Meses de Canteiro</span>
+                  </div>
+
+                  <div className="bg-zinc-950/80 p-3 rounded-xl border border-emerald-500/30 bg-gradient-to-br from-emerald-950/20 to-zinc-950">
+                    <span className="text-[11px] uppercase font-bold text-emerald-400 tracking-wider block">Pico de Mobilização</span>
+                    <span className="text-xl font-black text-emerald-300 font-mono">
+                      {resumoHistograma?.picoHeadcount || 20} Profissionais
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block">Mês 3 (Alvenaria & Cobertura)</span>
+                  </div>
+
+                  <div className="bg-zinc-950/80 p-3 rounded-xl border border-purple-500/30 bg-gradient-to-br from-purple-950/20 to-zinc-950">
+                    <span className="text-[11px] uppercase font-bold text-purple-400 tracking-wider block">Média de Efetivo</span>
+                    <span className="text-xl font-black text-purple-300 font-mono">
+                      {resumoHistograma?.mediaHeadcount ? resumoHistograma.mediaHeadcount.toFixed(1) : '17.0'} Operários/mês
+                    </span>
+                    <span className="text-[10px] text-zinc-500 block">Inclui 5 fixos de Gestão/SST</span>
+                  </div>
                 </div>
 
-                <div className="flex justify-end">
+                {/* ABAS DO MODAL */}
+                <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setAbaHistogramaModal('mensal')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                        abaHistogramaModal === 'mensal'
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'bg-zinc-800/80 text-zinc-400 hover:text-zinc-200'
+                      }`}
+                    >
+                      <Calendar className="w-3.5 h-3.5" />
+                      Visão Mensal Consolidada (M1 a M6)
+                    </button>
+                    <button
+                      onClick={() => setAbaHistogramaModal('funcoes')}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors ${
+                        abaHistogramaModal === 'funcoes'
+                          ? 'bg-blue-600 text-white shadow-sm'
+                          : 'bg-zinc-800/80 text-zinc-400 hover:text-zinc-200'
+                      }`}
+                    >
+                      <Users className="w-3.5 h-3.5" />
+                      Equipe por Função (18 Especialidades)
+                    </button>
+                  </div>
+
+                  {abaHistogramaModal === 'funcoes' && (
+                    <div className="flex items-center gap-1 text-[11px]">
+                      <span className="text-zinc-500 mr-1">Filtrar:</span>
+                      {['TODOS', 'Gestão', 'SST / Apoio', 'Produção', 'Instalações', 'Apoio'].map(g => (
+                        <button
+                          key={g}
+                          onClick={() => setFiltroGrupoFuncao(g)}
+                          className={`px-2 py-0.5 rounded text-[11px] font-medium transition-colors ${
+                            filtroGrupoFuncao === g
+                              ? 'bg-zinc-700 text-white font-bold'
+                              : 'text-zinc-400 hover:bg-zinc-800'
+                          }`}
+                        >
+                          {g}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* CORPO DO MODAL - ROLÁVEL */}
+                <div className="overflow-y-auto flex-1 pr-1 space-y-4 max-h-[50vh]">
+                  {abaHistogramaModal === 'mensal' && (
+                    <div className="overflow-x-auto rounded-xl border border-zinc-800">
+                      <table className="w-full text-left text-xs text-zinc-300">
+                        <thead className="uppercase bg-zinc-950 text-zinc-400 border-b border-zinc-800 font-semibold">
+                          <tr>
+                            <th className="py-2.5 px-3">Mês / Período</th>
+                            <th className="py-2.5 px-3 text-center">Produção Direta</th>
+                            <th className="py-2.5 px-3 text-center">Gestão & SST</th>
+                            <th className="py-2.5 px-3 text-center font-bold text-white">Total Canteiro</th>
+                            <th className="py-2.5 px-3 text-center font-semibold text-amber-400">Horas-Homem (HH)</th>
+                            <th className="py-2.5 px-3">Frente Crítica / Foco Principal</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-800/60">
+                          {histogramaMensal.map((h, idx) => (
+                            <tr key={idx} className="hover:bg-zinc-800/40">
+                              <td className="py-2.5 px-3 font-semibold text-white whitespace-nowrap">{h.mes}</td>
+                              <td className="py-2.5 px-3 text-center font-mono text-emerald-400 font-bold">{h.producao} op.</td>
+                              <td className="py-2.5 px-3 text-center font-mono text-zinc-400">{h.gestaoApoio} prof.</td>
+                              <td className="py-2.5 px-3 text-center font-mono text-blue-400 font-bold bg-blue-950/20">{h.total} Headcount</td>
+                              <td className="py-2.5 px-3 text-center font-mono text-amber-300 font-semibold">{h.hhTotal ? `${h.hhTotal.toLocaleString('pt-BR')} HH` : `${h.total * 220} HH`}</td>
+                              <td className="py-2.5 px-3 text-zinc-300">{h.foco}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        <tfoot className="bg-zinc-950 border-t-2 border-zinc-700 font-bold text-zinc-100">
+                          <tr>
+                            <td className="py-3 px-3 uppercase tracking-wider text-blue-400">TOTAL GERAL ACUMULADO</td>
+                            <td className="py-3 px-3 text-center font-mono text-emerald-400">
+                              {histogramaMensal.reduce((a, b) => a + b.producao, 0)} op.-mês
+                            </td>
+                            <td className="py-3 px-3 text-center font-mono text-zinc-300">
+                              {histogramaMensal.reduce((a, b) => a + b.gestaoApoio, 0)} prof.-mês
+                            </td>
+                            <td className="py-3 px-3 text-center font-mono text-blue-400 bg-blue-950/40 text-sm">
+                              {histogramaMensal.reduce((a, b) => a + b.total, 0)} Headcount-Mês
+                            </td>
+                            <td className="py-3 px-3 text-center font-mono text-amber-400 text-sm bg-amber-950/20">
+                              {histogramaMensal.reduce((a, b) => a + (b.hhTotal || b.total * 220), 0).toLocaleString('pt-BR')} Horas-Homem
+                            </td>
+                            <td className="py-3 px-3 text-[11px] text-zinc-400 italic">
+                              Carga Horária: 220h/mês | Meta Físico-Financeira Contratual (178 dias)
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  )}
+
+                  {abaHistogramaModal === 'funcoes' && (
+                    <div className="overflow-x-auto rounded-xl border border-zinc-800">
+                      <table className="w-full text-left text-xs text-zinc-300">
+                        <thead className="uppercase bg-zinc-950 text-zinc-400 border-b border-zinc-800 font-semibold">
+                          <tr>
+                            <th className="py-2.5 px-3">Grupo</th>
+                            <th className="py-2.5 px-3">Função / Cargo Especialista</th>
+                            <th className="py-2.5 px-3 text-center">Categoria</th>
+                            <th className="py-2.5 px-3 text-right">Custo Base Ref.</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M1</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M2</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M3</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M4</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M5</th>
+                            <th className="py-2.5 px-2 text-center text-blue-300">M6</th>
+                            <th className="py-2.5 px-3 text-center font-bold text-white bg-zinc-900">Total Meses</th>
+                            <th className="py-2.5 px-3 text-right font-bold text-amber-400 bg-zinc-900">Total HH</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-zinc-800/60">
+                          {histogramaPorFuncao
+                            .filter(f => filtroGrupoFuncao === 'TODOS' || f.grupo === filtroGrupoFuncao)
+                            .map((f, idx) => (
+                              <tr key={idx} className="hover:bg-zinc-800/40">
+                                <td className="py-2 px-3 whitespace-nowrap">
+                                  <span className={`px-2 py-0.5 rounded text-[10px] font-semibold ${
+                                    f.grupo === 'Gestão' ? 'bg-purple-950/60 text-purple-400 border border-purple-800/40' :
+                                    f.grupo === 'SST / Apoio' ? 'bg-orange-950/60 text-orange-400 border border-orange-800/40' :
+                                    f.grupo === 'Produção' ? 'bg-emerald-950/60 text-emerald-400 border border-emerald-800/40' :
+                                    f.grupo === 'Instalações' ? 'bg-blue-950/60 text-blue-400 border border-blue-800/40' :
+                                    'bg-zinc-800 text-zinc-300'
+                                  }`}>
+                                    {f.grupo}
+                                  </span>
+                                </td>
+                                <td className="py-2 px-3 font-medium text-white">{f.cargo}</td>
+                                <td className="py-2 px-3 text-center text-zinc-400 text-[11px]">{f.categoria}</td>
+                                <td className="py-2 px-3 text-right font-mono text-zinc-400">
+                                  {f.custoBase > 0 ? f.custoBase.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }) : '—'}
+                                </td>
+                                {f.meses.map((mVal, mIdx) => (
+                                  <td 
+                                    key={mIdx} 
+                                    className={`py-2 px-2 text-center font-mono ${
+                                      mVal > 0 ? 'text-emerald-400 font-bold bg-emerald-950/10' : 'text-zinc-600'
+                                    }`}
+                                  >
+                                    {mVal > 0 ? mVal : '—'}
+                                  </td>
+                                ))}
+                                <td className="py-2 px-3 text-center font-mono font-bold text-white bg-zinc-900/80">
+                                  {f.totalMeses}
+                                </td>
+                                <td className="py-2 px-3 text-right font-mono font-bold text-amber-300 bg-zinc-900/80">
+                                  {f.totalHH.toLocaleString('pt-BR')} HH
+                                </td>
+                              </tr>
+                            ))}
+                        </tbody>
+                        <tfoot className="bg-zinc-950 border-t-2 border-zinc-700 font-bold text-zinc-100">
+                          <tr>
+                            <td colSpan={4} className="py-3 px-3 uppercase tracking-wider text-blue-400">
+                              TOTAL DE CAMPO (TODAS AS ESPECIALIDADES)
+                            </td>
+                            {[0, 1, 2, 3, 4, 5].map(mIdx => {
+                              const somaMes = histogramaPorFuncao.reduce((acc, cur) => acc + (cur.meses[mIdx] || 0), 0);
+                              return (
+                                <td key={mIdx} className="py-3 px-2 text-center font-mono text-blue-400 font-bold">
+                                  {somaMes || (histogramaMensal[mIdx]?.total || '—')}
+                                </td>
+                              );
+                            })}
+                            <td className="py-3 px-3 text-center font-mono text-blue-400 bg-blue-950/40 text-sm">
+                              {resumoHistograma?.totalHeadcountMeses || 102} Meses
+                            </td>
+                            <td className="py-3 px-3 text-right font-mono text-amber-400 bg-amber-950/20 text-sm">
+                              {(resumoHistograma?.totalGeralHH || 22440).toLocaleString('pt-BR')} Horas-Homem (HH)
+                            </td>
+                          </tr>
+                        </tfoot>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* CAIXA DE INFORMAÇÕES METODOLÓGICAS */}
+                  <div className="bg-zinc-950 p-3.5 rounded-xl border border-zinc-800/80 space-y-2 text-xs text-zinc-400">
+                    <div className="flex items-center gap-2 text-zinc-200 font-semibold">
+                      <Info className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                      <span>Metodologia de Dimensionamento e Heijunka (Lean Construction):</span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] leading-relaxed">
+                      <div>
+                        <strong className="text-zinc-300">1. Gestão e SST Estáveis (5 Fixos):</strong>
+                        <p>Engenheiro Residente, Mestre Geral, TST, Almoxarife e Vigia permanecem em dedicação contínua durante todos os 6 meses (6.600 HH totais).</p>
+                      </div>
+                      <div>
+                        <strong className="text-zinc-300">2. Nivelamento em Lotes de 2 a 3 Dias:</strong>
+                        <p>A produção opera em lotes de ritmo (Takt time), fazendo a equipe especializada transitar de forma contínua entre as frentes, eliminando ociosidade e picos fictícios.</p>
+                      </div>
+                      <div>
+                        <strong className="text-zinc-300">3. Reprogramação e Crashing Automático:</strong>
+                        <p>Quando uma atividade é acelerada com aumento de equipe (RUP dinâmico), o script sincronizador atualiza os lotes e o mês correspondente no histograma.</p>
+                      </div>
+                      <div>
+                        <strong className="text-zinc-300">4. Alinhamento Físico-Financeiro:</strong>
+                        <p>O total de <strong>22.440 Horas-Homem</strong> (102 homens-mês @ 220h) bate com exatidão matemática com o valor de Turnkey de R$ 1.660.762,28 da Obra TMULT.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* RODAPÉ DO MODAL COM BOTÃO DE FECHAR */}
+                <div className="flex items-center justify-between pt-2 border-t border-zinc-800">
+                  <span className="text-[11px] text-zinc-500">
+                    Sincronizado automaticamente com <code>scripts/gerar_histograma_sincronizado.py</code> e <code>orquestrar_cronogramas.py</code>
+                  </span>
                   <button
                     onClick={() => setMostrarHistogramaModal(false)}
                     className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors"

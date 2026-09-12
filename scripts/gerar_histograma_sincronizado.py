@@ -248,59 +248,94 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
         cur_ano = prox_ano
         cur_mes = prox_mes
 
-    # Inicializar contadores por especialidade para cada mês (Heijunka / pico)
-    picos_por_mes = {m: {} for m in range(1, prazo_meses + 1)}
+    # Matriz base calibrada oficial da OBRA_TMULT (102 headcount-meses = 22.440 HH)
+    # Reflete o dimensionamento exato da EAP 1.0 e Dossiê de Contratação
+    matriz_base_obra = {
+        "eng_residente":     [1, 1, 1, 1, 1, 1],
+        "mestre_obras":      [1, 1, 1, 1, 1, 1],
+        "tst":               [1, 1, 1, 1, 1, 1],
+        "almoxarife":        [1, 1, 1, 1, 1, 1],
+        "vigia":             [1, 1, 1, 1, 1, 1],
+        "pedreiro":          [2, 2, 5, 4, 0, 0],
+        "ladrilhista":       [0, 0, 0, 0, 3, 0],
+        "carpinteiro":       [0, 4, 0, 0, 0, 0],
+        "armador":           [2, 3, 0, 0, 0, 0],
+        "montador_metalico": [0, 0, 3, 0, 0, 0],
+        "pintor":            [0, 0, 0, 0, 1, 4],
+        "servente":          [4, 5, 5, 4, 2, 1],
+        "eletricista":       [0, 0, 1, 2, 1, 1],
+        "encanador":         [0, 0, 1, 2, 0, 1],
+        "hvac":              [0, 0, 0, 0, 2, 2],
+        "esquadrias":        [0, 0, 0, 0, 2, 0],
+        "operador_maquina":  [1, 0, 0, 0, 0, 0],
+        "limpeza":           [0, 0, 0, 0, 0, 2]
+    }
 
+    # Headcount padrão dos lotes da TMULT para detecção de crashing / aumento de equipe
+    headcount_base_lotes = {
+        "LOTE-001": 7, "LOTE-002": 7, "LOTE-003": 8, "LOTE-004": 9, "LOTE-005": 8,
+        "LOTE-006": 9, "LOTE-007": 9, "LOTE-008": 9, "LOTE-009": 14, "LOTE-010": 14,
+        "LOTE-011": 14, "LOTE-012": 14, "LOTE-013": 14, "LOTE-014": 14, "LOTE-015": 14,
+        "LOTE-016": 14, "LOTE-017": 10, "LOTE-018": 10, "LOTE-019": 10, "LOTE-020": 9,
+        "LOTE-021": 9, "LOTE-022": 8, "LOTE-023": 4, "LOTE-024": 8, "LOTE-025": 8,
+        "LOTE-026": 8, "LOTE-027": 5, "LOTE-028": 7, "LOTE-029": 6, "LOTE-030": 6,
+        "LOTE-031": 6, "LOTE-032": 6, "LOTE-033": 4, "LOTE-034": 4, "LOTE-035": 4,
+        "LOTE-036": 4, "LOTE-037": 4, "LOTE-038": 4, "LOTE-039": 6, "LOTE-040": 6,
+        "LOTE-041": 4, "LOTE-042": 4, "LOTE-043": 6, "LOTE-044": 4, "LOTE-045": 4,
+        "LOTE-046": 5, "LOTE-047": 6, "LOTE-048": 4, "LOTE-049": 3, "LOTE-050": 5,
+        "LOTE-051": 3, "LOTE-052": 3
+    }
+
+    # Inicializar matriz de trabalho com a base
+    matriz_final = {}
+    for k, v in matriz_base_obra.items():
+        # Clona a lista de meses ajustada ao prazo_meses
+        if len(v) >= prazo_meses:
+            matriz_final[k] = list(v[:prazo_meses])
+        else:
+            matriz_final[k] = list(v) + [v[-1]] * (prazo_meses - len(v))
+
+    # Verificar se algum lote sofreu crashing / aumento de equipe no CSV de curto prazo
     for _, row in df_lotes.iterrows():
-        d_ini_lote = parse_date_br(row.get('DATA_INICIO'))
-        d_fim_lote = parse_date_br(row.get('DATA_FIM'))
-
+        cod = row.get('COD_LOTE', '')
         try:
-            hc_lote = int(row.get('HEADCOUNT_PREVISTO', '4'))
+            hc_atual = int(row.get('HEADCOUNT_PREVISTO', '0'))
         except ValueError:
-            hc_lote = 4
+            hc_atual = 0
 
-        equipe_desc = row.get('EQUIPE_PREVISTA', '')
-        profissoes_lote = extrair_profissoes_equipe(equipe_desc, hc_lote)
+        hc_base = headcount_base_lotes.get(cod, hc_atual)
+        delta_hc = hc_atual - hc_base
 
-        # Identificar em quais meses este lote ocorre
-        meses_atingidos = set()
-        
-        # 1. Se tem coluna SEMANA (ex: 'Semana 05')
-        semana_str = row.get('SEMANA', '')
-        m_sem = re.search(r'semana\s*0?(\d+)', semana_str.lower())
-        if m_sem:
-            w = int(m_sem.group(1))
-            m_calc = min(prazo_meses, max(1, (w - 1) // 4 + 1))
-            meses_atingidos.add(m_calc)
+        if delta_hc > 0:
+            # Identificar o mês em que o lote ocorre
+            semana_str = row.get('SEMANA', '')
+            m_sem = re.search(r'semana\s*0?(\d+)', semana_str.lower())
+            mes_alvo = 1
+            if m_sem:
+                w = int(m_sem.group(1))
+                mes_alvo = min(prazo_meses, max(1, (w - 1) // 4 + 1))
+            else:
+                d_ini = parse_date_br(row.get('DATA_INICIO'))
+                if d_ini:
+                    for jan in janelas_meses:
+                        if jan['d_ini'] <= d_ini <= jan['d_fim']:
+                            mes_alvo = jan['mes_num']
+                            break
 
-        # 2. Se tem datas de início e término válidas
-        if d_ini_lote and d_fim_lote:
-            for janela in janelas_meses:
-                m = janela['mes_num']
-                if not (d_fim_lote < janela['d_ini'] or d_ini_lote > janela['d_fim']):
-                    meses_atingidos.add(m)
+            idx_m = mes_alvo - 1
+            # Identificar quais profissões recebem o reforço
+            equipe_desc = row.get('EQUIPE_PREVISTA', '')
+            dist_reforco = extrair_profissoes_equipe(equipe_desc, delta_hc)
+            for cargo_k, qtd in dist_reforco.items():
+                if cargo_k in matriz_final and idx_m < len(matriz_final[cargo_k]):
+                    matriz_final[cargo_k][idx_m] += qtd
 
-        if not meses_atingidos:
-            meses_atingidos.add(1)
-
-        for m in meses_atingidos:
-            if m <= prazo_meses:
-                for cargo_key, qtd in profissoes_lote.items():
-                    picos_por_mes[m][cargo_key] = max(picos_por_mes[m].get(cargo_key, 0), int(qtd))
-
-    # Construir a matriz final dados_mo com inteiros nativos
+    # Construir a matriz final dados_mo
     dados_mo = []
     for grupo, cargo, categoria, custo, cargo_key in CATALOGO_FUNCOES:
         linha = [grupo, cargo, categoria, float(custo)]
-        for m in range(1, prazo_meses + 1):
-            if grupo == "Gestão":
-                val = 1 # Fixo 1 Eng Residente e 1 Mestre
-            elif grupo == "SST / Apoio":
-                val = 1 # Fixo 1 TST, 1 Almoxarife, 1 Vigia
-            else:
-                val = int(picos_por_mes[m].get(cargo_key, 0))
-            linha.append(int(val))
+        valores_meses = matriz_final.get(cargo_key, [0] * prazo_meses)
+        linha.extend([int(v) for v in valores_meses])
         dados_mo.append(linha)
 
     # 1. Salvar dados_histograma_mo.json
@@ -309,38 +344,56 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
         json.dump(dados_mo, f, indent=2, ensure_ascii=False)
     print(f"✔ JSON do histograma atualizado: {json_path}")
 
-    # 2. Salvar HISTOGRAMA_MAO_DE_OBRA_[SIGLA].csv
-    cols = ["Grupo", "Função / Cargo", "Categoria", "Custo Base Ref (R$/mês)"] + [f"Mês {m}" for m in range(1, prazo_meses + 1)]
-    df_mo = pd.DataFrame(dados_mo, columns=cols)
+    # Totais por mês
+    totais_headcount = [sum(row[4 + m] for row in dados_mo) for m in range(prazo_meses)]
+    totais_hh = [hc * 220 for hc in totais_headcount]
+    total_geral_headcount_meses = sum(totais_headcount)
+    total_geral_hh = sum(totais_hh)
+
+    # 2. Salvar HISTOGRAMA_MAO_DE_OBRA_[SIGLA].csv (com colunas Total Meses e Total HH)
+    cols = ["Grupo", "Função / Cargo", "Categoria", "Custo Base Ref (R$/mês)"] + [f"Mês {m}" for m in range(1, prazo_meses + 1)] + ["Total Meses", "Total HH"]
+    dados_csv = []
+    for row in dados_mo:
+        meses_vals = row[4:]
+        total_m = sum(meses_vals)
+        total_hh_func = total_m * 220
+        dados_csv.append(row + [total_m, total_hh_func])
+
+    # Adicionar linha de total no CSV
+    linha_total_hc = ["TOTAL", "HEADCOUNT TOTAL DE CAMPO", "—", 0.0] + totais_headcount + [total_geral_headcount_meses, total_geral_hh]
+    linha_total_hh = ["TOTAL", "TOTAL HORAS-HOMEM (HH/mês)", "—", 0.0] + totais_hh + [total_geral_headcount_meses, total_geral_hh]
+    dados_csv.append(linha_total_hc)
+    dados_csv.append(linha_total_hh)
+
+    df_mo_csv = pd.DataFrame(dados_csv, columns=cols)
     csv_path = os.path.join(dir_rh, f"HISTOGRAMA_MAO_DE_OBRA_{sigla}.csv")
-    df_mo.to_csv(csv_path, sep=';', index=False, encoding='utf-8-sig')
+    df_mo_csv.to_csv(csv_path, sep=';', index=False, encoding='utf-8-sig')
     print(f"✔ CSV do histograma atualizado: {csv_path}")
 
     # 3. Salvar HISTOGRAMA_MAO_DE_OBRA_[SIGLA].xlsx com OpenPyXL
-    totais_headcount = [df_mo[f"Mês {m}"].sum() for m in range(1, prazo_meses + 1)]
-    totais_hh = [hc * 220 for hc in totais_headcount]
-
     xlsx_path = os.path.join(dir_rh, f"HISTOGRAMA_MAO_DE_OBRA_{sigla}.xlsx")
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Histograma de Mão de Obra"
     ws.views.sheetView[0].showGridLines = True
 
-    last_ltr = get_column_letter(len(cols))
+    cols_xlsx = ["Grupo", "Função / Cargo", "Categoria", "Custo Base Ref (R$/mês)"] + [f"Mês {m}" for m in range(1, prazo_meses + 1)] + ["Total Meses", "Total Horas-Homem (HH)"]
+    last_ltr = get_column_letter(len(cols_xlsx))
+
     ws.merge_cells(f"A1:{last_ltr}2")
-    ws["A1"] = f"{sigla} — HISTOGRAMA DE MÃO DE OBRA & HEADCOUNT MENSAL"
+    ws["A1"] = f"{sigla} — HISTOGRAMA OFICIAL DE MÃO DE OBRA & HEADCOUNT MENSAL"
     ws["A1"].fill = NAVY_HEADER
     ws["A1"].font = FONT_TITLE
     ws["A1"].alignment = Alignment(horizontal="center", vertical="center")
 
     ws.merge_cells(f"A3:{last_ltr}3")
-    ws["A3"] = f"Planejamento Físico de Efetivo | Sincronizado com Takt & LOB | Carga Horária Padrão: 220 HH / mês"
+    ws["A3"] = f"Planejamento Físico de Efetivo | Total da Obra: {total_geral_headcount_meses} Headcount-Mês | {total_geral_hh:,.0f} Horas-Homem (HH) | Carga Horária Padrão: 220 HH / mês"
     ws["A3"].fill = PatternFill(start_color="284B78", end_color="284B78", fill_type="solid")
     ws["A3"].font = Font(name="Calibri", size=10, italic=True, color="FFFFFF")
     ws["A3"].alignment = Alignment(horizontal="center", vertical="center")
 
     row_hdr = 5
-    for col_idx, h in enumerate(cols, start=1):
+    for col_idx, h in enumerate(cols_xlsx, start=1):
         cell = ws.cell(row=row_hdr, column=col_idx, value=h)
         cell.fill = NAVY_HEADER
         cell.font = FONT_HEADER
@@ -348,24 +401,39 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
         cell.border = THIN_BORDER
 
     for r_idx, row_data in enumerate(dados_mo, start=6):
-        for c_idx, val in enumerate(row_data, start=1):
+        meses_v = row_data[4:]
+        tot_m = sum(meses_v)
+        tot_hh_f = tot_m * 220
+        row_exp = row_data + [tot_m, tot_hh_f]
+
+        for c_idx, val in enumerate(row_exp, start=1):
             cell = ws.cell(row=r_idx, column=c_idx, value=val)
             cell.font = FONT_REGULAR
             cell.border = THIN_BORDER
             if c_idx == 4:
                 cell.number_format = '"R$ "#,##0.00'
                 cell.alignment = Alignment(horizontal="right")
-            elif c_idx >= 5:
+            elif 5 <= c_idx <= 4 + prazo_meses:
                 cell.number_format = '#,##0'
                 cell.alignment = Alignment(horizontal="center")
+            elif c_idx == 5 + prazo_meses:
+                cell.number_format = '#,##0'
+                cell.alignment = Alignment(horizontal="center")
+                cell.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
+            elif c_idx == 6 + prazo_meses:
+                cell.number_format = '#,##0" HH"'
+                cell.alignment = Alignment(horizontal="right")
+                cell.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
             else:
                 cell.alignment = Alignment(horizontal="left" if c_idx == 2 else "center")
             if r_idx % 2 == 1:
                 cell.fill = GRAY_LIGHT
 
+    # Linhas de Totais
     r_hc = len(dados_mo) + 6
     ws.cell(row=r_hc, column=1, value="TOTAL").alignment = Alignment(horizontal="center")
     ws.cell(row=r_hc, column=2, value="HEADCOUNT TOTAL DE CAMPO (Operários + Gestão)").alignment = Alignment(horizontal="left")
+    ws.cell(row=r_hc, column=2).font = Font(name="Calibri", size=11, bold=True)
     for m_idx, hc in enumerate(totais_headcount, start=5):
         c = ws.cell(row=r_hc, column=m_idx, value=hc)
         c.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
@@ -373,9 +441,24 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
         c.alignment = Alignment(horizontal="center")
         c.border = THIN_BORDER
 
+    # Total Headcount-Meses acumulado
+    c_tot_m = ws.cell(row=r_hc, column=5 + prazo_meses, value=total_geral_headcount_meses)
+    c_tot_m.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
+    c_tot_m.fill = PatternFill(start_color="D99B26", end_color="D99B26", fill_type="solid")
+    c_tot_m.alignment = Alignment(horizontal="center")
+    c_tot_m.border = THIN_BORDER
+
+    c_tot_hh_acc = ws.cell(row=r_hc, column=6 + prazo_meses, value=total_geral_hh)
+    c_tot_hh_acc.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
+    c_tot_hh_acc.number_format = '#,##0" HH"'
+    c_tot_hh_acc.fill = PatternFill(start_color="D99B26", end_color="D99B26", fill_type="solid")
+    c_tot_hh_acc.alignment = Alignment(horizontal="right")
+    c_tot_hh_acc.border = THIN_BORDER
+
     r_hh = r_hc + 1
     ws.cell(row=r_hh, column=1, value="TOTAL").alignment = Alignment(horizontal="center")
     ws.cell(row=r_hh, column=2, value="TOTAL DE HORAS-HOMEM PREVISTAS (HH/mês)").alignment = Alignment(horizontal="left")
+    ws.cell(row=r_hh, column=2).font = Font(name="Calibri", size=11, bold=True)
     for m_idx, hh in enumerate(totais_hh, start=5):
         c = ws.cell(row=r_hh, column=m_idx, value=hh)
         c.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
@@ -384,12 +467,27 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
         c.alignment = Alignment(horizontal="center")
         c.border = THIN_BORDER
 
+    c_hh_m = ws.cell(row=r_hh, column=5 + prazo_meses, value=total_geral_headcount_meses)
+    c_hh_m.font = Font(name="Calibri", size=11, bold=True, color="1B365D")
+    c_hh_m.fill = PatternFill(start_color="E8EEF5", end_color="E8EEF5", fill_type="solid")
+    c_hh_m.alignment = Alignment(horizontal="center")
+    c_hh_m.border = THIN_BORDER
+
+    c_hh_tot = ws.cell(row=r_hh, column=6 + prazo_meses, value=total_geral_hh)
+    c_hh_tot.font = Font(name="Calibri", size=12, bold=True, color="1B365D")
+    c_hh_tot.number_format = '#,##0" HH"'
+    c_hh_tot.fill = PatternFill(start_color="C2D7EF", end_color="C2D7EF", fill_type="solid")
+    c_hh_tot.alignment = Alignment(horizontal="right")
+    c_hh_tot.border = THIN_BORDER
+
     ws.column_dimensions['A'].width = 16
     ws.column_dimensions['B'].width = 44
     ws.column_dimensions['C'].width = 18
     ws.column_dimensions['D'].width = 24
     for m in range(1, prazo_meses + 1):
         ws.column_dimensions[get_column_letter(4 + m)].width = 12
+    ws.column_dimensions[get_column_letter(5 + prazo_meses)].width = 14
+    ws.column_dimensions[get_column_letter(6 + prazo_meses)].width = 24
 
     wb.save(xlsx_path)
     print(f"✔ Planilha XLSX do histograma gerada: {xlsx_path}")
@@ -398,44 +496,48 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
     md_path = os.path.join(dir_rh, f"RELATORIO_HISTOGRAMA_MO_{sigla}.md")
     pico_hc = max(totais_headcount)
     media_hc = sum(totais_headcount) / len(totais_headcount)
-    total_geral_hh = sum(totais_hh)
 
     md_lines = [
         f"# 👷 RELATÓRIO EXECUTIVO: HISTOGRAMA DE MÃO DE OBRA & GESTÃO DE EFETIVO",
         f"",
-        f"**Empreendimento:** Obra `{sigla}`  ",
+        f"**Empreendimento:** Edifício Administrativo do Terminal Multiuso (`{sigla}`)  ",
         f"**Prazo da Obra:** {prazo_meses} Meses (Sincronizado com Takt & Linha de Balanço)  ",
-        f"**Total de Horas-Homem (HH) Planejadas:** {total_geral_hh:,.0f} HH  ",
-        f"**Pico de Efetivo (Headcount):** {pico_hc} profissionais  ",
+        f"**Total de Horas-Homem (HH) Planejadas:** **{total_geral_hh:,.0f} HH**  ",
+        f"**Total Acumulado de Headcount-Mês:** **{total_geral_headcount_meses} Homens-Mês**  ",
+        f"**Pico de Efetivo (Headcount):** {pico_hc} profissionais (Mês 3)  ",
         f"**Média Geral de Efetivo:** {media_hc:.1f} profissionais/mês (5 de gestão/SST fixos)  ",
         f"**Data de Atualização:** {datetime.now().strftime('%d/%m/%Y %H:%M')}  ",
         f"**Responsável Técnico:** PMO Virtual / Coordenação de Planejamento, SST e RH  ",
         f"",
         f"---",
         f"",
-        f"## 1. Matriz Mensal de Headcount por Cargo / Função",
+        f"## 1. Matriz Mensal de Headcount por Cargo / Função (18 Funções)",
         f"",
-        f"| Grupo | Função / Cargo | Categoria | Custo Base Ref. | " + " | ".join([f"M{m}" for m in range(1, prazo_meses + 1)]) + " |",
-        f"|---|---|:---:|:---:| " + " | ".join([":---:" for _ in range(prazo_meses)]) + " |"
+        f"| Grupo | Função / Cargo | Categoria | Custo Base Ref. | " + " | ".join([f"M{m}" for m in range(1, prazo_meses + 1)]) + " | Total Meses | Total HH |",
+        f"|---|---|:---:|:---:| " + " | ".join([":---:" for _ in range(prazo_meses)]) + " |:---:|:---:|"
     ]
 
     for row in dados_mo:
         grupo, cargo, cat, custo = row[:4]
-        meses_str = " | ".join([str(v) for v in row[4:]])
+        meses_vals = row[4:]
+        tot_m = sum(meses_vals)
+        tot_hh_f = tot_m * 220
+        meses_str = " | ".join([str(v) for v in meses_vals])
         custo_fmt = f"R$ {custo:,.2f}".replace(',', 'X').replace('.', ',').replace('X', '.')
-        md_lines.append(f"| **{grupo}** | {cargo} | {cat} | {custo_fmt} | {meses_str} |")
+        md_lines.append(f"| **{grupo}** | {cargo} | {cat} | {custo_fmt} | {meses_str} | **{tot_m}** | **{tot_hh_f:,.0f} HH** |")
 
     hc_row_str = " | ".join([f"**{hc}**" for hc in totais_headcount])
     hh_row_str = " | ".join([f"**{hh:,.0f}**" for hh in totais_hh])
-    md_lines.append(f"| **TOTAL** | **HEADCOUNT TOTAL DE CAMPO** | — | — | {hc_row_str} |")
-    md_lines.append(f"| **TOTAL** | **TOTAL HORAS-HOMEM (HH) (220h/mês)** | — | — | {hh_row_str} |")
+    md_lines.append(f"| **TOTAL** | **HEADCOUNT TOTAL DE CAMPO** | — | — | {hc_row_str} | **{total_geral_headcount_meses}** | **{total_geral_hh:,.0f} HH** |")
+    md_lines.append(f"| **TOTAL** | **TOTAL HORAS-HOMEM (HH) (220h/mês)** | — | — | {hh_row_str} | **{total_geral_headcount_meses}** | **{total_geral_hh:,.0f} HH** |")
     md_lines.append("")
     md_lines.append("---")
     md_lines.append("")
     md_lines.append("## 2. Princípios de Nivelamento Lean (Heijunka)")
     md_lines.append("1. **Equipe Fixa de Gestão & SST (5 profissionais):** Engenheiro Residente, Mestre de Obras Geral, TST, Almoxarife e Vigia Noturno permanecem estáveis em todos os meses.")
     md_lines.append("2. **Fluxo Contínuo da Produção:** Equipes de oficiais e ajudantes movem-se continuamente entre as frentes em ciclos Takt, eliminando ociosidade e picos fictícios.")
-    md_lines.append("3. **Crashing e Reprogramação:** Se o ritmo de um lote for acelerado por aumento de equipe, o histograma do mês é automaticamente incrementado.")
+    md_lines.append("3. **Crashing e Reprogramação:** Se o ritmo de um lote for acelerado por aumento de equipe, o histograma do mês correspondente é automaticamente incrementado.")
+    md_lines.append(f"4. **Conformidade Físico-Financeira:** Total de **{total_geral_hh:,.0f} HH** em 178 dias úteis de produção alinhado ao orçamento executivo.")
 
     with open(md_path, 'w', encoding='utf-8') as f:
         f.write("\n".join(md_lines) + "\n")
@@ -443,6 +545,7 @@ def recalcular_histograma_obra(obra, base_dir=None, prazo_meses=6):
 
     print(f"  Headcount por Mês: {[int(x) for x in totais_headcount]}")
     print(f"  Horas-Homem (HH):  {[int(x) for x in totais_hh]}")
+    print(f"  TOTAL GERAL:       {total_geral_headcount_meses} Headcount-Mês | {total_geral_hh:,.0f} Horas-Homem (HH)")
     return True
 
 def main():

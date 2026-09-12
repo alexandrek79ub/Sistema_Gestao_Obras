@@ -293,13 +293,16 @@ def auditar_obra(obra_nome, limite_dias=5):
         else:
             print(f"  ✓ Equipe Fixa de Gestão & SST: 5 profissionais mantidos (Engenheiro, Mestre, TST, Almoxarife, Vigia).")
 
-        # Validar se o CSV tem os mesmos dados do JSON
         import re
         df_mo_csv = pd.read_csv(mo_csv_path, sep=';', encoding='utf-8-sig')
-        mes_cols = [c for c in df_mo_csv.columns if re.search(r'm[êe]s\s*\d+', c, re.IGNORECASE)]
+        df_linhas_func = df_mo_csv[df_mo_csv['Grupo'] != 'TOTAL'] if 'Grupo' in df_mo_csv.columns else df_mo_csv
+        mes_cols = [c for c in df_linhas_func.columns if re.search(r'm[êe]s\s*\d+', c, re.IGNORECASE)]
         if len(mes_cols) >= 6:
-            totais_hc = [int(df_mo_csv[c].sum()) for c in mes_cols]
+            totais_hc = [int(pd.to_numeric(df_linhas_func[c], errors='coerce').fillna(0).sum()) for c in mes_cols]
+            total_geral_hc = sum(totais_hc[:6])
+            total_geral_hh = total_geral_hc * 220
             print(f"  ✓ Histograma Sincronizado ({len(dados_mo)} funções): Headcount mensal auditado: {totais_hc[:6]}.")
+            print(f"  ✓ Total Geral: {total_geral_hc} Headcount-Mês | {total_geral_hh:,.0f} Horas-Homem (HH).")
             print(f"  ✓ Formatos JSON, CSV e XLSX 100% íntegros e compatíveis com a EAP 1.0 & RH.")
 
     # -------------------------------------------------------------

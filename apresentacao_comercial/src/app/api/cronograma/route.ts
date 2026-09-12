@@ -805,6 +805,7 @@ export async function GET(request: Request) {
 
     // Histograma Oficial de Mão de Obra e Headcount Sincronizado
     let histogramaMensal: any[] = [];
+    let histogramaPorFuncao: any[] = [];
     const histMoJsonCandidates = [
       path.join(basePath, '06_SST_E_RH', 'dados_histograma_mo.json'),
       path.resolve(process.cwd(), `../projetos/${obra}/06_SST_E_RH/dados_histograma_mo.json`),
@@ -852,23 +853,58 @@ export async function GET(request: Request) {
               foco: focosPadrao[m] || `Execução Físico-Operacional - Fase Mês ${mesNum}`
             });
           }
+
+          for (const row of rawHist) {
+            const grupo = row[0];
+            const cargo = row[1];
+            const categoria = row[2];
+            const custoBase = typeof row[3] === 'number' ? row[3] : parseFloat(row[3] || '0');
+            const mesesValores: number[] = [];
+            for (let m = 0; m < numMeses; m++) {
+              const val = typeof row[4 + m] === 'number' ? row[4 + m] : parseInt(row[4 + m] || '0', 10);
+              mesesValores.push(val);
+            }
+            const totalMeses = mesesValores.reduce((a, b) => a + b, 0);
+            const totalHH = totalMeses * 220;
+            histogramaPorFuncao.push({
+              grupo,
+              cargo,
+              categoria,
+              custoBase,
+              meses: mesesValores,
+              totalMeses,
+              totalHH,
+            });
+          }
         }
       } catch (err) {
         console.warn('Erro ao processar dados_histograma_mo.json:', err);
       }
     }
 
-    // Fallback de segurança se o arquivo ainda não existir
+    // Fallback de segurança calibrado (22.440 HH e 102 headcount-mês)
     if (histogramaMensal.length === 0) {
       histogramaMensal = [
-        { mes: 'Mês 1 (Sem 01-04)', producao: 15, gestaoApoio: 5, total: 20, hhTotal: 4400, foco: focosPadrao[0] },
-        { mes: 'Mês 2 (Sem 05-08)', producao: 17, gestaoApoio: 5, total: 22, hhTotal: 4840, foco: focosPadrao[1] },
-        { mes: 'Mês 3 (Sem 09-12)', producao: 26, gestaoApoio: 5, total: 31, hhTotal: 6820, foco: focosPadrao[2] },
-        { mes: 'Mês 4 (Sem 13-16)', producao: 21, gestaoApoio: 5, total: 26, hhTotal: 5720, foco: focosPadrao[3] },
-        { mes: 'Mês 5 (Sem 17-20)', producao: 20, gestaoApoio: 5, total: 25, hhTotal: 5500, foco: focosPadrao[4] },
-        { mes: 'Mês 6 (Sem 21-26)', producao: 29, gestaoApoio: 5, total: 34, hhTotal: 7480, foco: focosPadrao[5] },
+        { mes: 'Mês 1 (Sem 01-04)', producao: 9, gestaoApoio: 5, total: 14, hhTotal: 3080, foco: focosPadrao[0] },
+        { mes: 'Mês 2 (Sem 05-08)', producao: 14, gestaoApoio: 5, total: 19, hhTotal: 4180, foco: focosPadrao[1] },
+        { mes: 'Mês 3 (Sem 09-12)', producao: 15, gestaoApoio: 5, total: 20, hhTotal: 4400, foco: focosPadrao[2] },
+        { mes: 'Mês 4 (Sem 13-16)', producao: 12, gestaoApoio: 5, total: 17, hhTotal: 3740, foco: focosPadrao[3] },
+        { mes: 'Mês 5 (Sem 17-20)', producao: 11, gestaoApoio: 5, total: 16, hhTotal: 3520, foco: focosPadrao[4] },
+        { mes: 'Mês 6 (Sem 21-26)', producao: 11, gestaoApoio: 5, total: 16, hhTotal: 3520, foco: focosPadrao[5] },
       ];
     }
+
+    const totalGeralHeadcountMeses = histogramaMensal.reduce((acc, cur) => acc + cur.total, 0);
+    const totalGeralHH = histogramaMensal.reduce((acc, cur) => acc + (cur.hhTotal || (cur.total * 220)), 0);
+    const picoHeadcount = Math.max(...histogramaMensal.map(h => h.total), 0);
+    const mediaHeadcount = histogramaMensal.length > 0 ? (totalGeralHeadcountMeses / histogramaMensal.length) : 0;
+
+    const resumoHistograma = {
+      totalGeralHH,
+      totalHeadcountMeses: totalGeralHeadcountMeses,
+      mediaHeadcount: Math.round(mediaHeadcount * 10) / 10,
+      picoHeadcount,
+    };
 
     return NextResponse.json({
       obra,
@@ -880,6 +916,8 @@ export async function GET(request: Request) {
       curvaS,
       lotesCurtoPrazo,
       histogramaMensal,
+      histogramaPorFuncao,
+      resumoHistograma,
       relatorioSobreposicao,
       metaGlobal: {
         prazoMeses: 6,
