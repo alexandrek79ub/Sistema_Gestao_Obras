@@ -1,0 +1,150 @@
+[
+  {
+    "codigo": "FVS-01",
+    "titulo": "Topografia, Locação de Eixos e Terraplenagem",
+    "pop": "POP 21 (Topografia a Laser) e POP 01 (Canteiro Lean)",
+    "nbr": "ABNT NBR 13133 (Execução de Levantamento Topográfico)",
+    "etapa_obra": "Infraestrutura / Locação de Canteiro",
+    "contrato_bloqueado": "SUB-01 (Estrutura e Fundações)",
+    "tolerancia": "Erro angular máximo de ± 10\"; Desvio linear máximo em eixos principais de ± 3mm; Nível de cota de fundo de valas com tolerância de ± 10mm.",
+    "itens_verificacao": [
+      "Locação do gabarito perimetral de tábua corrida fixado com pontaletes travados e pintados",
+      "Conferência de esquadro geral da edificação via triangulação 3-4-5 com trena de precisão ou estação total",
+      "Cotas de nível e amarração ao marco georreferenciado (RN oficial do empreendimento)",
+      "Alinhamento dos eixos de sapatas e arranques de pilares c/ linhas de nylon de alta tenacidade",
+      "Compactação e nivelamento da praça de trabalho e valas de circulação de canteiro"
+    ],
+    "servico_sucessor_bloqueado": "Escavação mecanizada profunda e concretagem de lastro de fundação"
+  },
+  {
+    "codigo": "FVS-02",
+    "titulo": "Fundações Isoladas, Estacas e Vigas Baldrames",
+    "pop": "POP 10 (Fundações) e POP 14 (Impermeabilização)",
+    "nbr": "ABNT NBR 6122 (Projeto e Execução de Fundações) e NBR 9575",
+    "etapa_obra": "Infraestrutura / Cavas e Fundações",
+    "contrato_bloqueado": "SUB-01 (Medição 01 e 02)",
+    "tolerancia": "Espessura mínima de lastro de concreto magro: 50mm; Cobrimento mínimo de armadura em contato c/ solo: 50mm (ou 40mm com lastro brita/concreto magro); Desaprumo em arranques máx. 5mm.",
+    "itens_verificacao": [
+      "Limpeza e remoção total de terra solta do fundo de cava antes do lastro",
+      "Aplicação de concreto magro e=5cm em 100% da área de contato das sapatas",
+      "Montagem e estroncamento de fôrmas compensadas de sapatas e baldrames",
+      "Posicionamento das armaduras com espaçadores plásticos tipo pastilha de concreto (proibido toco de madeira)",
+      "Amarração de arranques de pilares (P1 a P24) com conferência de bitola e transpasse normativo",
+      "Impermeabilização de baldrames com 2 demãos cruzadas de emulsão asfáltica elastomérica"
+    ],
+    "servico_sucessor_bloqueado": "Lançamento de concreto estrutural usinado e reaterro de valas"
+  },
+  {
+    "codigo": "FVS-03",
+    "titulo": "Estrutura de Concreto Armado (Pilares, Vigas e Lajes)",
+    "pop": "POP 11 (Concretagem), POP 19 (Fôrmas) e POP 22 (Controle de Concreto)",
+    "nbr": "ABNT NBR 6118 (Projeto de Estruturas de Concreto) e NBR 14931",
+    "etapa_obra": "Supraestrutura",
+    "contrato_bloqueado": "SUB-01 (Medição 03 e 04)",
+    "tolerancia": "Desaprumo em pilares máximo de 1/500 da altura (máx. 6mm para h=3m); Nivelamento de fundo de vigas máx. L/500; Flecha residual em laje menor que L/350 após desforma.",
+    "itens_verificacao": [
+      "Estanqueidade das fôrmas, aplicação uniforme de desmoldante biodegradável",
+      "Aprumo e travamento vertical dos pilares com escoras metálicas reguláveis push-pull",
+      "Limpeza prévia do pé do pilar (janela de inspeção) para remoção de serragem e impurezas",
+      "Conferência de armaduras (bitola, quantidade, estribos e cobrimento normativo de 30mm a 40mm)",
+      "Teste de abatimento do concreto (Slump test 12 ± 2 cm) no ato do descarregamento",
+      "Moldagem obrigatória de 6 corpos de prova por caminhão betoneira (ruptura aos 7, 14 e 28 dias)",
+      "Vibração uniforme por camadas sem tocar na armadura e início da cura úmida contínua por 7 dias"
+    ],
+    "servico_sucessor_bloqueado": "Desforma de fundo de vigas/lajes e início do levantamento de alvenaria"
+  },
+  {
+    "codigo": "FVS-04",
+    "titulo": "Alvenaria Estrutural e Alvenaria de Vedação",
+    "pop": "POP 12 (Alvenaria e Vedações)",
+    "nbr": "ABNT NBR 8545 (Execução de Alvenaria sem Função Estrutural)",
+    "etapa_obra": "Vedações e Fechamentos Verticais",
+    "contrato_bloqueado": "SUB-02 (Alvenaria e Vedações)",
+    "tolerancia": "Desaprumo máximo de 3mm por pavimento; Nivelamento das fiadas com desvio máx. de 3mm em 3 metros; Espessura de junta de argamassa entre 10mm e 15mm.",
+    "itens_verificacao": [
+      "Locação e marcação da primeira fiada com esquadro e prumo de face perfeitos",
+      "Fixação de telas metálicas de amarração alvenaria/pilar galvanizadas a cada 2 fiadas",
+      "Execução de vergas e contravergas pré-moldadas em todos os vãos de portas e janelas (transpasse mín. 20cm)",
+      "Encunhamento flexível (aperto) com argamassa expansiva ou espuma PU após 14 dias de cura",
+      "Amarração em amarração tradicional com traspasse de 1/2 bloco (mínimo 1/3 bloco)",
+      "Alinhamento dos shafts e passagens de tubulações sem quebra estrutural indiscriminada"
+    ],
+    "servico_sucessor_bloqueado": "Aplicação de chapisco, emboço e reboco nas paredes"
+  },
+  {
+    "codigo": "FVS-05",
+    "titulo": "Impermeabilização e Teste de Estanqueidade (72 Horas)",
+    "pop": "POP 14 (Impermeabilização de Alta Performance)",
+    "nbr": "ABNT NBR 9575 (Seleção e Projeto) e NBR 9574 (Execução de Impermeabilização)",
+    "etapa_obra": "Áreas Molhadas, Cobertura e Reservatórios",
+    "contrato_bloqueado": "SUB-07 (Impermeabilização)",
+    "tolerancia": "Caimento mínimo de 1% em direção aos ralos; Meia-cana em cantos vivos raio mín. 5cm; Teste de lâmina d'água de 72 horas com ZERO infiltração ou rebaixamento além da evaporação normal.",
+    "itens_verificacao": [
+      "Regularização da superfície com argamassa cimento e areia 1:3 e cantos arredondados (meia-cana)",
+      "Execução de rebaixo de 1cm em torno de ralos e passagens de tubulações com primer epóxi",
+      "Aplicação da membrana/manta conforme especificação técnica e número de demãos cruzadas",
+      "Subida da impermeabilização nos rodapés em no mínimo 20cm acima do piso acabado",
+      "Enchimento com lâmina d'água de 5cm a 10cm por exatas 72 horas com registro fotográfico e cota de nível",
+      "Vistoria na laje inferior/ambiente adjacente comprovando 100% de ausência de umidade ou gotejamento",
+      "Aplicação de camada separadora e argamassa de proteção mecânica antes do tráfego"
+    ],
+    "servico_sucessor_bloqueado": "Instalação de revestimentos cerâmicos, pisos vinílicos e reaterro de baldrames"
+  },
+  {
+    "codigo": "FVS-06",
+    "titulo": "Instalações Hidráulicas e Teste Hidrostático sob Pressão",
+    "pop": "POP 15 (Instalações Hidrossanitárias)",
+    "nbr": "ABNT NBR 5626 (Instalação Predial de Água Fria) e NBR 8160 (Esgoto)",
+    "etapa_obra": "Instalações Hidrossanitárias e Incêndio",
+    "contrato_bloqueado": "SUB-05 (Instalações Hidráulicas)",
+    "tolerancia": "Queda de pressão no teste hidrostático menor que 2% após 1 hora de pressurização contínua a 1,5x a pressão de trabalho (mínimo 60 mca / 6 bar); Declividade mínima em esgoto de 2% para tubos <= 75mm e 1% para 100mm.",
+    "itens_verificacao": [
+      "Alinhamento, fixação e envelopamento de prumadas e ramais em shafts e alvenarias",
+      "Instalação de plugs roscáveis em todos os pontos de utilização antes do teste",
+      "Enchimento da rede c/ água eliminando 100% do ar pelas extremidades mais altas",
+      "Pressurização com bomba de teste hidrostático e manômetro calibrado (mín. 6 kgf/cm²)",
+      "Manutenção da pressão por no mínimo 1 hora sem vazamento em conexões ou soldas",
+      "Teste de fumaça / estanqueidade por gravidade na rede de esgoto e ventilação sanitária",
+      "Proteção mecânica dos tubos antes do fechamento com reboco"
+    ],
+    "servico_sucessor_bloqueado": "Chapisco e emboço de alvenarias que contêm tubulações e fechamento de shafts"
+  },
+  {
+    "codigo": "FVS-07",
+    "titulo": "Instalações Elétricas, Cabeamento e Malha de Aterramento SPDA",
+    "pop": "POP 16 (Instalações Elétricas) e POP 23 (SESMT)",
+    "nbr": "ABNT NBR 5410 (Instalações de Baixa Tensão) e NBR 5419 (Proteção SPDA)",
+    "etapa_obra": "Instalações Elétricas, Telefonia e SPDA",
+    "contrato_bloqueado": "SUB-06 (Instalações Elétricas e SPDA)",
+    "tolerancia": "Resistência de isolamento mínima de 1,0 MΩ para circuitos de 220V/380V; Resistência de aterramento máxima de 10 Ω (ou conforme projeto SPDA); Queda de tensão máxima de 4% no ponto terminal.",
+    "itens_verificacao": [
+      "Eletrodutos rígidos e corrugados fixados e desobstruídos com arame-guia",
+      "Caixas de passagem 4x2 e 4x4 chumbadas no prumo e niveladas",
+      "Cabeamento passado com identificação por cores normativas (Azul claro=Neutro, Verde=Terra, Preto/Vermelho=Fases)",
+      "Instalação dos barramentos do Quadro de Distribuição Geral (QDG) com DR geral e DPS classe II",
+      "Medição da malha de aterramento com terrômetro calibrado (eletrodos cravados no solo)",
+      "Teste de continuidade elétrica e ensaio de isolamento com Megômetro",
+      "Identificação e anilhamento de todos os condutores nos quadros terminais"
+    ],
+    "servico_sucessor_bloqueado": "Fechamento de forro de gesso, colocação de espelhos e energização final da obra"
+  },
+  {
+    "codigo": "FVS-08",
+    "titulo": "Cobertura Termoacústica, Calhas e Esquadrias de Alumínio",
+    "pop": "POP 24 (Coberturas) e POP 25 (Esquadrias e Fachadas)",
+    "nbr": "ABNT NBR 10821 (Esquadrias Externas) e NBR 14514 (Telhas Metálicas)",
+    "etapa_obra": "Cobertura, Fachada e Fechamentos Externos",
+    "contrato_bloqueado": "SUB-03 (Cobertura) e SUB-04 (Esquadrias)",
+    "tolerancia": "Declividade mínima de calhas de 0,5%; Sobreposição longitudinal de telhas de no mín. 200mm c/ parafusos autobrocantes c/ arruela EPDM; Estanqueidade 100% sob jato d'água contínuo por 15 min.",
+    "itens_verificacao": [
+      "Estrutura metálica de apoio pintada, alinhada e ancorada nas vigas de concreto",
+      "Instalação de telhas termoacústicas tipo sanduíche PIR com fixação e vedação de cumeeiras",
+      "Caimento e teste de estanqueidade de calhas e condutores verticais de águas pluviais",
+      "Chumbamento de contramarcos de alumínio com conferência de esquadro, prumo e nível",
+      "Aplicação de silicone estrutural neutro de vedação perimetral externa entre marco e alvenaria",
+      "Teste de permeabilidade à água com mangueira pressurizada direcionada às frestas das esquadrias",
+      "Funcionamento perfeito de roldanas, fechos cremona e fechaduras com proteção plástica mantida"
+    ],
+    "servico_sucessor_bloqueado": "Execução de forros internos de gesso e pintura fina de acabamento"
+  }
+]
