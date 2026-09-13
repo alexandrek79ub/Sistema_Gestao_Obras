@@ -172,6 +172,89 @@ def parse_date_br(d_str):
     return None
 
 
+def format_date_br(d):
+    """Converte date ou datetime para string DD/MM/AAAA."""
+    if not d:
+        return ""
+    if isinstance(d, (datetime, date)):
+        return d.strftime("%d/%m/%Y")
+    return str(d)
+
+
+# =============================================================================
+# REGIME DE CANTEIRO: 6 DIAS ÚTEIS / SEMANA (Segunda a Sábado, pula Domingo)
+# Padrão da Esteira Lean Takt, Linha de Balanço (LOB) e CPM 178 dias úteis
+# =============================================================================
+
+def dia_util_para_data_6d(dia_num, base_dt):
+    """
+    Converte índice relativo de dias úteis (base 0) em data real, pulando domingos.
+    """
+    if isinstance(base_dt, datetime):
+        cur = base_dt.date()
+    elif isinstance(base_dt, str):
+        parsed = parse_date_br(base_dt)
+        cur = parsed.date() if parsed else date(2026, 10, 1)
+    else:
+        cur = base_dt
+
+    added = 0
+    while added < dia_num:
+        cur += timedelta(days=1)
+        if cur.weekday() != 6:
+            added += 1
+    if cur.weekday() == 6:
+        cur += timedelta(days=1)
+    return cur
+
+
+def somar_dias_uteis_6d(dt_ini, dur_dias):
+    """
+    Soma dur_dias úteis a partir de dt_ini (considerando dt_ini como dia 1, pula domingos).
+    """
+    if isinstance(dt_ini, datetime):
+        dt_ini = dt_ini.date()
+    if dur_dias <= 1:
+        return dt_ini
+    cur = dt_ini
+    added = 0
+    while added < (dur_dias - 1):
+        cur += timedelta(days=1)
+        if cur.weekday() != 6:
+            added += 1
+    return cur
+
+
+def proximo_dia_util_6d(dt):
+    """Retorna o próximo dia útil a partir de dt (pula domingos)."""
+    if isinstance(dt, datetime):
+        dt = dt.date()
+    prox = dt + timedelta(days=1)
+    if prox.weekday() == 6:
+        prox += timedelta(days=1)
+    return prox
+
+
+def contar_dias_uteis_6d(d_ini, d_fim):
+    """
+    Conta os dias úteis entre d_ini e d_fim inclusive (segunda a sábado, pula domingos).
+    """
+    if isinstance(d_ini, datetime):
+        d_ini = d_ini.date()
+    if isinstance(d_fim, datetime):
+        d_fim = d_fim.date()
+    if not d_ini or not d_fim or d_fim < d_ini:
+        return 0
+    cur = d_ini
+    count = 0
+    while cur <= d_fim:
+        if cur.weekday() != 6:
+            count += 1
+        cur += timedelta(days=1)
+    return count
+
+
+
 def janelas_mensais_obra(d_inicio_obra, prazo_meses, extra_meses_buffer=0):
     """
     Gera a lista de janelas mensais da obra para agrupamento de headcount/custos.

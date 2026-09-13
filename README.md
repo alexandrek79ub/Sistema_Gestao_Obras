@@ -89,36 +89,38 @@ O ecossistema disponibiliza uma suíte executiva completa em Next.js com 8 visõ
 Todos os motores implementam interface de linha de comando (`argparse`) com parâmetros `--obra [NOME]` e `--dir [CAMINHO]`, com isolamento total anti-contaminação e suporte à **Arquitetura Modular v2.0 Lean**:
 
 - 🧩 **Camada Compartilhada ([`scripts/common/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/common/)):** Centraliza I/O e CLI (`obra_io.py`), tema e estilos visuais OpenPyXL corporativos (`excel_theme.py`) e regras de calendário e dias úteis (`calendario.py`), eliminando código duplicado em mais de 15 scripts.
-- 📑 **Repositório de Templates ([`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/)):** Desacopla laudos técnicos, termos de entrega e manuais dos scripts Python, mantendo os motores enxutos e focados exclusivamente na lógica de cálculo.
-- 📊 **Catálogos de Engenharia ([`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/)):** Tabelas de referência (funções CUB/SINDUSCON em `catalogo_funcoes.json`, frações de avanço Takt em `mapa_lotes_cpm.json`) auditáveis e editáveis sem alteração em código.
+- 📑 **Repositório de Templates ([`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/)):** Desacopla laudos técnicos, termos de entrega, RDOs e manuais dos scripts Python, mantendo os motores enxutos e focados exclusivamente na lógica de cálculo.
+- 📊 **Catálogos de Engenharia ([`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/)):** Tabelas de referência em JSON auditáveis (`catalogo_funcoes.json`, `mapa_lotes_cpm.json`, `catalogo_lotes_takt.json`, `catalogo_fvs.json`) editáveis sem alterar o código dos motores.
 
-| # | Script | Função Principal | Saídas Geradas |
-| :---: | :--- | :--- | :--- |
-| **01** | `precificar_obra.py` | Motor Universal de Orçamento Base Turnkey | `ORCAMENTO_BASE.csv/xlsx`, Curvas ABC |
-| **02** | `gerar_plano_centros_custo.py` | Amarração EAP x Centros de Custo CC-100 a CC-900 | `PLANO_DE_CONTAS.md`, estrutura JSON |
-| **03** | `gerar_cronograma.py` | Cronograma Físico-Financeiro, Curva S e CPM | `CRONOGRAMA.xlsx`, XML MS Project, HTML |
-| **04** | `gerar_programacao_curto_prazo_takt.py` | Esteira de Produção Lean Takt (WWP 52 Lotes) | `PROGRAMACAO_CURTO_PRAZO_[OBRA].csv` |
-| **05** | `sincronizar_esteira_e_lob.py` | Sincronizador Bidirecional Esteira Takt $\leftrightarrow$ Linha de Balanço | `LINHA_DE_BALANCO.csv`, `RELATORIO_SOBREPOSICAO_LOB.json` |
-| **06** | `orquestrar_cronogramas.py` | Motor Universal Mestre de Orquestração, Takt Flexível (1-6d), Crashing e Watcher | Sincronização total entre CPM, LOB, Takt e Histograma |
-| **07** | `gerar_histograma_sincronizado.py` | Motor Universal de Sincronização do Histograma de Mão de Obra (Headcount & HH) | `dados_histograma_mo.json`, `HISTOGRAMA_MAO_DE_OBRA.csv/xlsx` |
-| **08** | `auditar_cronogramas.py` | Auditoria Rigorosa Multi-Eixo de 6 Eixos (CPM, Takt, LOB, Orçamento, Histograma) | Relatório de conformidade 100% no terminal |
-| **09** | `reprogramar_cronograma.py` | Reprogramação de Atividades e Linha de Balanço com Crashing via RUP | Versões de replanejamento e auto-sincronia de curto prazo |
-| **10** | `gerar_cronograma_suprimentos.py` | Matriz de Compras e Lead Times (D-30/D-15/D-7/D-0) | RCs de materiais e REs de locações |
-| **11** | `gerar_tracker_suprimentos.py` | Pipeline de Procurement com semáforos de entrega | `TRACKER_SUPRIMENTOS.xlsx/md` |
-| **12** | `gerar_fluxo_caixa.py` | Projeção financeira em 3 cenários e Capital de Giro | `FLUXO_DE_CAIXA.xlsx/csv/md` |
-| **13** | `gerar_contratos_empreiteiros.py` | Minutas contratuais de 8 pacotes (SUB-01 a SUB-08) | `CONTRATOS_EMPREITEIROS/` com cadernos |
-| **14** | `gerar_contratos_locacao.py` | Contratos de locação de máquinas (LOC-01 a LOC-06) | Minutas e planilha de controle de frotas |
-| **15** | `gerar_planilha_medicao.py` | Planilha Master evolutiva de 12 quinzenas | `PLANILHA_MEDICAO_QUINZENAL.xlsx` (ret. 5%) |
-| **16** | `gerar_dossie_contratacao.py` | Dossiê de contratação e histogramas de recursos | Histogramas de MO (HH) e Equipamentos |
-| **17** | `gerar_rdo.py` | Sistema diário de RDO e painel de produção | `PAINEL_RDOS_OBRA.xlsx` e `RDOS/RDO-XXX.md` |
-| **18** | `gerar_fvs_bloqueantes.py` | Caderno de 8 FVSs com bloqueio de medições | `CADERNO_FVS_BLOQUEANTES.md` e planilha |
-| **19** | `gerar_tracker_avanco_fisico.py` | Acompanhamento de avanço físico e SPI (EVM) | `ACOMPANHAMENTO_AVANCO_FISICO.xlsx/md` |
-| **20** | `gerar_compliance_sst.py` | Painel SST, controle de ASOs e matriz de NRs | `PAINEL_COMPLIANCE_SST.xlsx/md` |
-| **21** | `gerar_estrutura_databook.py` | Estruturação e controle das 5 pastas de closeout | Acervo permanente em `07_DATABOOK_E_ASBUILT/` |
-| **22** | `processar_coleta_campo.py` | Ingestão de apontamentos via Mobile e WhatsApp | Atualização atômica de RDOs e FVSs |
-| **23** | `gerar_organograma_visual.py` | Geração do organograma funcional em SVG vetorial e PNG | `ORGANOGRAMA_EQUIPE_TMULT.png/svg` em `06_SST_E_RH/` |
-| **24** | `gerar_lista_desenhos.py` | Catalogação automática de pranchas PDF | `LISTA_DE_DESENHOS.csv/md` em `01_ENGENHARIA_E_PROJETOS/` |
-| **25** | `gerar_certificado_auditoria.py` | Auditoria estrutural e QA dos 6 checklists | Laudo e checklists em `02_ORCAMENTO_BASE_E_CONTRATOS/` |
+> **Status da Modernização v2.0 Lean:** 10 scripts centrais já refatorados com mais de **4.400 linhas de código eliminadas**, conformidade 100% (6/6 eixos verdes na auditoria multi-eixo) e máxima eficiência em tokens de contexto.
+
+| # | Script | Padrão | Função Principal | Saídas Geradas |
+| :---: | :--- | :---: | :--- | :--- |
+| **01** | `precificar_obra.py` | — | Motor Universal de Orçamento Base Turnkey | `ORCAMENTO_BASE.csv/xlsx`, Curvas ABC |
+| **02** | `gerar_plano_centros_custo.py` | — | Amarração EAP x Centros de Custo CC-100 a CC-900 | `PLANO_DE_CONTAS.md`, estrutura JSON |
+| **03** | `gerar_cronograma.py` | **v2.0 Lean** | Cronograma Físico-Financeiro, Curva S e CPM | `CRONOGRAMA.xlsx`, XML MS Project, HTML |
+| **04** | `gerar_programacao_curto_prazo_takt.py` | **v2.0 Lean** | Esteira de Produção Lean Takt (WWP 52 Lotes) via catálogo | `PROGRAMACAO_CURTO_PRAZO_[OBRA].csv` |
+| **05** | `sincronizar_esteira_e_lob.py` | **v2.0 Lean** | Sincronizador Bidirecional Esteira Takt $\leftrightarrow$ Linha de Balanço | `LINHA_DE_BALANCO.csv`, `RELATORIO_SOBREPOSICAO_LOB.json` |
+| **06** | `orquestrar_cronogramas.py` | — | Motor Universal Mestre de Orquestração, Takt Flexível (1-6d), Crashing e Watcher | Sincronização total entre CPM, LOB, Takt e Histograma |
+| **07** | `gerar_histograma_sincronizado.py` | **v2.0 Lean** | Motor Universal de Sincronização do Histograma de Mão de Obra (Headcount & HH) | `dados_histograma_mo.json`, `HISTOGRAMA_MAO_DE_OBRA.csv/xlsx` |
+| **08** | `auditar_cronogramas.py` | — | Auditoria Rigorosa Multi-Eixo de 6 Eixos (CPM, Takt, LOB, Orçamento, Histograma) | Relatório de conformidade 100% no terminal |
+| **09** | `reprogramar_cronograma.py` | **v2.0 Lean** | Reprogramação de Atividades e Linha de Balanço com Crashing via RUP | Versões de replanejamento e auto-sincronia de curto prazo |
+| **10** | `gerar_cronograma_suprimentos.py` | — | Matriz de Compras e Lead Times (D-30/D-15/D-7/D-0) | RCs de materiais e REs de locações |
+| **11** | `gerar_tracker_suprimentos.py` | — | Pipeline de Procurement com semáforos de entrega | `TRACKER_SUPRIMENTOS.xlsx/md` |
+| **12** | `gerar_fluxo_caixa.py` | **v2.0 Lean** | Projeção financeira em 3 cenários e Capital de Giro | `FLUXO_DE_CAIXA.xlsx/csv/md` |
+| **13** | `gerar_contratos_empreiteiros.py` | — | Minutas contratuais de 8 pacotes (SUB-01 a SUB-08) | `CONTRATOS_EMPREITEIROS/` com cadernos |
+| **14** | `gerar_contratos_locacao.py` | — | Contratos de locação de máquinas (LOC-01 a LOC-06) | Minutas e planilha de controle de frotas |
+| **15** | `gerar_planilha_medicao.py` | **v2.0 Lean** | Planilha Master evolutiva de 12 quinzenas | `PLANILHA_MEDICAO_QUINZENAL.xlsx` (ret. 5%) |
+| **16** | `gerar_dossie_contratacao.py` | — | Dossiê de contratação e histogramas de recursos | Histogramas de MO (HH) e Equipamentos |
+| **17** | `gerar_rdo.py` | **v2.0 Lean** | Sistema diário de RDO e painel de produção | `PAINEL_RDOS_OBRA.xlsx` e `RDOS/RDO-XXX.md` |
+| **18** | `gerar_fvs_bloqueantes.py` | **v2.0 Lean** | Caderno de 8 FVSs com bloqueio de medições via catálogo | `CADERNO_FVS_BLOQUEANTES.md` e planilha |
+| **19** | `gerar_tracker_avanco_fisico.py` | — | Acompanhamento de avanço físico e SPI (EVM) | `ACOMPANHAMENTO_AVANCO_FISICO.xlsx/md` |
+| **20** | `gerar_compliance_sst.py` | — | Painel SST, controle de ASOs e matriz de NRs | `PAINEL_COMPLIANCE_SST.xlsx/md` |
+| **21** | `gerar_estrutura_databook.py` | **v2.0 Lean** | Estruturação e controle das 5 pastas de closeout | Acervo permanente em `07_DATABOOK_E_ASBUILT/` |
+| **22** | `processar_coleta_campo.py` | — | Ingestão de apontamentos via Mobile e WhatsApp | Atualização atômica de RDOs e FVSs |
+| **23** | `gerar_organograma_visual.py` | — | Geração do organograma funcional em SVG vetorial e PNG | `ORGANOGRAMA_EQUIPE_TMULT.png/svg` em `06_SST_E_RH/` |
+| **24** | `gerar_lista_desenhos.py` | — | Catalogação automática de pranchas PDF | `LISTA_DE_DESENHOS.csv/md` em `01_ENGENHARIA_E_PROJETOS/` |
+| **25** | `gerar_certificado_auditoria.py` | — | Auditoria estrutural e QA dos 6 checklists | Laudo e checklists em `02_ORCAMENTO_BASE_E_CONTRATOS/` |
 
 #### 🛠️ Utilitários Globais de Engenharia (Bases Federais e OCR):
 - `consultar_sinapi.py` ➔ Busca instantânea na base SINAPI SP 07/2026 por termo ou código (`python scripts/consultar_sinapi.py "termo"`);

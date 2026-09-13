@@ -1,4 +1,4 @@
-LOCAL_PAVIMENTO;SEQUENCIA;VAGAO;ATIVIDADE;EQUIPE_RESPONSAVEL;RITMO_DIAS_POR_LOCAL;DATA_INICIO;DATA_FIM
+﻿LOCAL_PAVIMENTO;SEQUENCIA;VAGAO;ATIVIDADE;EQUIPE_RESPONSAVEL;RITMO_DIAS_POR_LOCAL;DATA_INICIO;DATA_FIM
 Zona 01 - Recepção/Diretoria;1;01. Topografia & Canteiro;Mobilização de Canteiro NR-18 e Locação Gabarito G;SUB-01 Topografia e Locação;10;01/10/2026;12/10/2026
 Zona 01 - Recepção/Diretoria;2;02. Fundações Sapatas;Escavação Mecanizada e Lastro S1 a S12 + Corte e D;SUB-01 Estruturas e Concreto;2;13/10/2026;14/10/2026
 Zona 01 - Recepção/Diretoria;3;02. Fundações Sapatas;Armação e Fôrmas das Sapatas S1 a S12 (Etapa 1);SUB-01 Estruturas e Concreto;2;15/10/2026;16/10/2026

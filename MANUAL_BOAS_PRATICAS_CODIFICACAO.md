@@ -54,7 +54,7 @@ from scripts.common.calendario import (
 
 ### 2.2. Desacoplamento de Templates de Relatórios (`scripts/templates/`)
 - **Regra de Ouro:** Scripts Python **NÃO** devem conter centenas de linhas de blocos literais de texto Markdown (`f"""# LAUDO..."""`).
-- Laudos técnicos, termos contratuais, minutas, manuais e RDOs devem residir em arquivos `.md` dedicados dentro de [`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/) (ex: `templates/databook/`, `templates/rdo/`).
+- Laudos técnicos, termos contratuais, minutas, manuais, RDOs e cadernos de FVS devem residir em arquivos `.md` dedicados dentro de [`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/) (ex: `templates/databook/`, `templates/rdo/`, `templates/qualidade/`, `templates/avanco/`).
 - O script Python apenas lê o arquivo de template e realiza a substituição limpa de placeholders:
 ```python
 TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "templates", "databook")
@@ -71,8 +71,12 @@ def carregar_template(nome_arquivo, config):
 ```
 
 ### 2.3. Catálogos e Tabelas de Referência de Engenharia (`apoio/`)
-- Tabelas de custos de mão de obra (CUB/SINDUSCON), frentes de esteira Takt e composições de engenharia **não devem ficar hardcoded** dentro dos scripts.
-- Elas devem residir na pasta [`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/) em formato JSON auditável (ex: `apoio/catalogo_funcoes.json`, `apoio/mapa_lotes_cpm.json`).
+- Tabelas de custos de mão de obra (CUB/SINDUSCON), frentes de esteira Takt, especificações de FVS e composições de engenharia **não devem ficar hardcoded** dentro dos scripts.
+- Elas devem residir na pasta [`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/) em formato JSON auditável:
+  - `apoio/catalogo_funcoes.json`: Especialidades e custos hora-homem (CUB/SINDUSCON);
+  - `apoio/mapa_lotes_cpm.json`: Mapeamento canônico dos 52 lotes Lean com atividades CPM e LOB;
+  - `apoio/catalogo_lotes_takt.json`: Especificação completa dos 52 lotes de produção (metas físicas, equipes, equipamentos e RUP);
+  - `apoio/catalogo_fvs.json`: Especificação normativa das 8 FVSs bloqueantes (critérios, tolerâncias NBR e travas contratuais).
 - O script deve carregar esses catálogos com fallback seguro caso um contrato regional específico deseje sobrescrevê-los via `config_obra.json`.
 
 ### 2.4. Regex de Alta Precisão (Fronteiras de Palavra)

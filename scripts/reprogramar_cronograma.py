@@ -32,9 +32,22 @@ Uso:
 import os
 import sys
 import csv
+import json
 import math
 import argparse
-from datetime import datetime, timedelta
+import subprocess
+from datetime import timedelta
+
+# Raiz do repositório
+ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if ROOT_DIR not in sys.path:
+    sys.path.insert(0, ROOT_DIR)
+
+from scripts.common.obra_io import resolver_obra_dir, carregar_config_obra
+from scripts.common.calendario import (
+    parse_date_br, format_date_br,
+    somar_dias_uteis_6d, contar_dias_uteis_6d, proximo_dia_util_6d
+)
 
 # Configuração de encoding UTF-8 no Windows
 if sys.platform == "win32":
@@ -63,59 +76,36 @@ HEADCOUNT_PADRAO_VAGAO = {
     "15": 12   # Comissionamento & Entrega
 }
 
-# =============================================================================
-# UTILITÁRIOS DE DATA (CALENDÁRIO DE DIAS ÚTEIS - PULA DOMINGOS)
-# =============================================================================
 
-def parse_date_br(d_str):
-    """Converte string DD/MM/AAAA para datetime.date."""
-    if not d_str:
-        return None
-    clean = str(d_str).strip().replace('"', '')
-    for sep, fmt in [('/', '%d/%m/%Y'), ('-', '%Y-%m-%d')]:
-        if sep in clean:
-            try:
-                return datetime.strptime(clean, fmt).date()
-            except ValueError:
-                pass
-    return None
-
-def format_date_br(d):
-    """Converte datetime.date para string DD/MM/AAAA."""
-    if not d:
-        return ""
-    return d.strftime("%d/%m/%Y")
+# =============================================================================
+# FUNÇÕES DE DATA — wrappers semânticos sobre calendario.py (regime 6d)
+# =============================================================================
 
 def add_working_days(start_date, days):
-    """Adiciona ou subtrai dias úteis (segunda a sábado, pulando domingos)."""
+    """Adiciona ou subtrai dias úteis (seg-sáb, pula domingos)."""
     if days == 0:
         return start_date
+    if days > 0:
+        return somar_dias_uteis_6d(start_date, days + 1)  # somar_dias_uteis_6d conta dt_ini como dia 1
+    # Subtração: percorre para trás
     cur = start_date
-    step = 1 if days > 0 else -1
     remaining = abs(days)
     while remaining > 0:
-        cur += timedelta(days=step)
-        if cur.weekday() != 6:  # 6 = Domingo
+        cur -= timedelta(days=1)
+        if cur.weekday() != 6:
             remaining -= 1
     return cur
 
+
 def calculate_end_date(start_date, duration_days):
-    """Data final considerando que o primeiro dia já é trabalhado."""
-    if duration_days <= 1:
-        return start_date
-    return add_working_days(start_date, duration_days - 1)
+    """Data final considerando que o primeiro dia já é trabalhado (regime 6d)."""
+    return somar_dias_uteis_6d(start_date, duration_days)
+
 
 def count_working_days(d_ini, d_fim):
-    """Conta quantidade de dias úteis entre d_ini e d_fim (inclusivo)."""
-    if not d_ini or not d_fim or d_fim < d_ini:
-        return 0
-    cur = d_ini
-    count = 0
-    while cur <= d_fim:
-        if cur.weekday() != 6:
-            count += 1
-        cur += timedelta(days=1)
-    return count
+    """Conta dias úteis entre d_ini e d_fim inclusive (seg-sáb)."""
+    return contar_dias_uteis_6d(d_ini, d_fim)
+
 
 # =============================================================================
 # CONSTRUÇÃO DO GRAFO DIRIGIDO ACÍCLICO (DAG) & ORDENAÇÃO TOPOLÓGICA
@@ -128,7 +118,7 @@ def build_lob_dag(rows):
     2. Sequência de avanço de equipe (takt) no mesmo Vagão entre zonas sucessivas.
     3. Marco de Cobertura: Vagão 06 (Alvenaria Z3) -> Vagão 07 (Cobertura Metálica Z4).
     4. Marco de Comissionamento: Todas as frentes anteriores -> Vagão 15.
-    
+
     Retorna (adj, rev_adj, topo_order).
     """
     n = len(rows)
@@ -150,7 +140,7 @@ def build_lob_dag(rows):
         zonas_map.setdefault(pav, []).append(idx)
 
     for pav, indices in zonas_map.items():
-        indices.sort()  # Mantém ordem do arquivo
+        indices.sort()
         for k in range(len(indices) - 1):
             add_edge(indices[k], indices[k + 1])
 
@@ -166,8 +156,7 @@ def build_lob_dag(rows):
             u, v = indices[k], indices[k + 1]
             d_fim_u = parse_date_br(rows[u].get('DATA_FIM'))
             d_ini_v = parse_date_br(rows[v].get('DATA_INICIO'))
-            # Vincula se no planejamento original a tarefa v foi programada após ou junto com u
-            if d_fim_u and d_ini_v and d_ini_v >= d_fim_u:
+            if d_fim_u and d_ini_v and d_ini_v.date() >= d_fim_u.date():
                 add_edge(u, v)
 
     # 3. Marco de Cobertura (Alvenaria Z3 libera Cobertura Z4)
@@ -183,7 +172,6 @@ def build_lob_dag(rows):
                 add_edge(idx_alvenaria_z3, idx)
 
     # 4. Marco de Comissionamento e Entrega (Vagão 15)
-    # Sucessora final de todas as atividades
     indices_comiss = [idx for idx, r in enumerate(rows) if '15.' in (r.get('VAGAO') or '')]
     if indices_comiss:
         primeiro_comiss = min(indices_comiss)
@@ -191,7 +179,7 @@ def build_lob_dag(rows):
             if '15.' not in (r.get('VAGAO') or ''):
                 d_fim = parse_date_br(r.get('DATA_FIM'))
                 d_ini_c = parse_date_br(rows[primeiro_comiss].get('DATA_INICIO'))
-                if d_fim and d_ini_c and d_fim <= d_ini_c:
+                if d_fim and d_ini_c and d_fim.date() <= d_ini_c.date():
                     add_edge(idx, primeiro_comiss)
 
     # Kahn's Algorithm para Ordenação Topológica do DAG
@@ -207,13 +195,13 @@ def build_lob_dag(rows):
             if in_degree[v] == 0:
                 queue.append(v)
 
-    # Garante inclusão de todos os nós caso haja algum desconectado
     if len(topo_order) < n:
         for i in range(n):
             if i not in topo_order:
                 topo_order.append(i)
 
     return adj, rev_adj, topo_order
+
 
 # =============================================================================
 # MOTOR DE PROPAGAÇÃO EM CASCATA FORWARD (TOPOLÓGICA)
@@ -224,7 +212,6 @@ def propagate_forward_dag(rows, start_indices, adj, topo_order):
     Propaga mudanças para todas as tarefas sucessoras atingíveis exatamente
     na ordem topológica do DAG. Garante zero sobreposição e fluxo contínuo.
     """
-    # Encontra nós atingíveis
     reachable = set(start_indices)
     q = list(start_indices)
     while q:
@@ -234,7 +221,6 @@ def propagate_forward_dag(rows, start_indices, adj, topo_order):
                 reachable.add(nxt)
                 q.append(nxt)
 
-    # Filtra nós atingíveis mantendo ordem topológica estrita
     active_topo = [node for node in topo_order if node in reachable]
     modified_indices = set()
 
@@ -251,15 +237,15 @@ def propagate_forward_dag(rows, start_indices, adj, topo_order):
             if not d_ini_v:
                 continue
 
-            # Sucessora deve iniciar no primeiro dia útil após o término da predecessora
-            min_ini_v = add_working_days(d_fim_u, 1)
+            min_ini_v = proximo_dia_util_6d(d_fim_u.date())
 
-            if d_ini_v < min_ini_v:
+            if d_ini_v.date() < min_ini_v:
                 row_v['DATA_INICIO'] = format_date_br(min_ini_v)
                 row_v['DATA_FIM'] = format_date_br(calculate_end_date(min_ini_v, dur_v))
                 modified_indices.add(v)
 
     return modified_indices
+
 
 # =============================================================================
 # SINCRONIZAÇÃO COM CURTO PRAZO (LOTES TAKT DE 3 DIAS) & RUP
@@ -278,7 +264,7 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
         os.path.join(base_path, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_OBRA_TMULT.csv'),
         os.path.join(base_path, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_TMULT.csv'),
     ]
-    
+
     candidate_files = list(set([f for f in possible_files if os.path.exists(f)]))
     if not candidate_files:
         return 0, []
@@ -288,7 +274,7 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
 
     for prog_file in candidate_files:
         try:
-            with open(prog_file, 'r', encoding='utf-8') as f:
+            with open(prog_file, 'r', encoding='utf-8-sig') as f:
                 lines = f.readlines()
 
             if len(lines) < 2:
@@ -297,13 +283,13 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
             header_line = lines[0].strip()
             headers = [h.replace('"', '').strip() for h in header_line.split(';')]
 
-            dur_idx = headers.index('DURACAO_DIAS') if 'DURACAO_DIAS' in headers else -1
-            hc_idx = headers.index('HEADCOUNT_PREVISTO') if 'HEADCOUNT_PREVISTO' in headers else -1
-            ini_idx = headers.index('DATA_INICIO') if 'DATA_INICIO' in headers else -1
-            fim_idx = headers.index('DATA_FIM') if 'DATA_FIM' in headers else -1
+            dur_idx  = headers.index('DURACAO_DIAS') if 'DURACAO_DIAS' in headers else -1
+            hc_idx   = headers.index('HEADCOUNT_PREVISTO') if 'HEADCOUNT_PREVISTO' in headers else -1
+            ini_idx  = headers.index('DATA_INICIO') if 'DATA_INICIO' in headers else -1
+            fim_idx  = headers.index('DATA_FIM') if 'DATA_FIM' in headers else -1
             vagao_idx = headers.index('VAGAO_ESTEIRA') if 'VAGAO_ESTEIRA' in headers else -1
-            zona_idx = headers.index('ETAPA_ZONA') if 'ETAPA_ZONA' in headers else -1
-            lote_idx = headers.index('COD_LOTE') if 'COD_LOTE' in headers else 0
+            zona_idx  = headers.index('ETAPA_ZONA') if 'ETAPA_ZONA' in headers else -1
+            lote_idx  = headers.index('COD_LOTE') if 'COD_LOTE' in headers else 0
 
             if dur_idx == -1 or hc_idx == -1:
                 continue
@@ -319,11 +305,10 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
                     new_lines.append(line)
                     continue
 
-                lote_cod = parts[lote_idx]
+                lote_cod  = parts[lote_idx]
                 lote_vagao = parts[vagao_idx] if vagao_idx != -1 else ''
-                lote_zona = parts[zona_idx].lower() if zona_idx != -1 else ''
+                lote_zona  = parts[zona_idx].lower() if zona_idx != -1 else ''
 
-                # Verifica se corresponde a alguma das tarefas modificadas
                 for mod_row in modified_rows:
                     vagao_nome = mod_row.get('VAGAO', '')
                     vagao_prefix = vagao_nome[:2]
@@ -332,7 +317,7 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
                     novo_hc = mod_row.get('_calc_headcount')
 
                     match_vagao = vagao_prefix in lote_vagao or (vagao_nome and vagao_nome[3:10].lower() in lote_vagao.lower())
-                    
+
                     match_zona = (
                         ('zona 01' in pav and ('zona 1' in lote_zona or 'etapa 1' in lote_zona)) or
                         ('zona 02' in pav and ('zona 2' in lote_zona or 'etapa 2' in lote_zona)) or
@@ -342,21 +327,17 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
 
                     if match_vagao and match_zona:
                         old_dur = int(parts[dur_idx]) if parts[dur_idx].isdigit() else 3
-                        old_hc = int(parts[hc_idx]) if parts[hc_idx].isdigit() else 8
+                        old_hc  = int(parts[hc_idx]) if parts[hc_idx].isdigit() else 8
 
                         parts[dur_idx] = str(nova_dur)
 
                         if novo_hc is None:
-                            if old_dur > 0 and nova_dur > 0 and old_dur != nova_dur:
-                                calc_hc = max(1, math.ceil(old_hc * (old_dur / nova_dur)))
-                            else:
-                                calc_hc = old_hc
+                            calc_hc = max(1, math.ceil(old_hc * (old_dur / nova_dur))) if old_dur > 0 and nova_dur > 0 and old_dur != nova_dur else old_hc
                         else:
                             calc_hc = int(novo_hc)
 
                         parts[hc_idx] = str(calc_hc)
-                        
-                        # Atualiza datas de início e fim no lote de curto prazo
+
                         if ini_idx != -1 and mod_row.get('DATA_INICIO'):
                             parts[ini_idx] = mod_row.get('DATA_INICIO')
                         if fim_idx != -1 and mod_row.get('DATA_FIM'):
@@ -364,19 +345,24 @@ def sync_short_term_schedule(base_path, obra, modified_rows, dry_run=False):
 
                         file_modified = True
                         total_lotes_sync += 1
-                        detalhes_sync.append(f"{lote_cod} ({lote_vagao[:25]} | {parts[zona_idx][:20]}): Dur {old_dur}d -> {nova_dur}d | Efetivo {old_hc} -> {calc_hc} op. | Datas: {parts[ini_idx] if ini_idx != -1 else ''} .. {parts[fim_idx] if fim_idx != -1 else ''}")
+                        detalhes_sync.append(
+                            f"{lote_cod} ({lote_vagao[:25]} | {parts[zona_idx][:20]}): "
+                            f"Dur {old_dur}d -> {nova_dur}d | Efetivo {old_hc} -> {calc_hc} op. | "
+                            f"Datas: {parts[ini_idx] if ini_idx != -1 else ''} .. {parts[fim_idx] if fim_idx != -1 else ''}"
+                        )
                         break
 
                 new_lines.append(';'.join(f'"{p}"' for p in parts) + '\n')
 
             if file_modified and not dry_run:
-                with open(prog_file, 'w', encoding='utf-8') as f:
+                with open(prog_file, 'w', encoding='utf-8-sig', newline='') as f:
                     f.writelines(new_lines)
 
         except Exception as e:
             print(f"[!] Erro ao sincronizar arquivo de curto prazo {prog_file}: {e}")
 
     return total_lotes_sync, detalhes_sync
+
 
 def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
     """
@@ -388,14 +374,12 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
         return 0, []
 
     try:
-        import json
         with open(cpm_path, 'r', encoding='utf-8') as f:
             dados = json.load(f)
 
         atividades = dados.get('atividades', [])
         cpm_modificados = []
 
-        # Mapeamento do prefixo do vagão para atividades CPM
         VAGAO_PARA_CPM = {
             "01": ["A01_MOB_CANTEIRO"],
             "02": ["A03_SAPATAS_CONC"],
@@ -429,8 +413,7 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
 
         if cpm_modificados and not dry_run:
             try:
-                root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-                calc_path = os.path.join(root_dir, 'scripts', 'calculadoras', 'calcular_cpm.py')
+                calc_path = os.path.join(ROOT_DIR, 'scripts', 'calculadoras', 'calcular_cpm.py')
                 if os.path.exists(calc_path):
                     import importlib.util
                     spec = importlib.util.spec_from_file_location("calcular_cpm", calc_path)
@@ -450,40 +433,29 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
         print(f"[!] Erro ao sincronizar dados_cpm.json: {e}")
         return 0, []
 
+
 # =============================================================================
 # FUNÇÕES DE COMANDO (STATUS, LISTAR, REPROGRAMAR)
 # =============================================================================
 
-def get_base_path(obra):
-    """Encontra o diretório base do projeto."""
-    cur = os.getcwd()
-    candidates = [
-        os.path.join(cur, 'projetos', obra),
-        os.path.join(cur, '..', 'projetos', obra),
-        os.path.join(cur, 'projetos', 'OBRA_TMULT'),
-    ]
-    for c in candidates:
-        if os.path.exists(c):
-            return os.path.abspath(c)
-    return os.path.abspath(os.path.join(cur, 'projetos', obra))
-
 def load_schedule_csv(csv_path):
     """Lê o arquivo CSV da Linha de Balanço preservando colunas."""
-    with open(csv_path, 'r', encoding='utf-8') as f:
+    with open(csv_path, 'r', encoding='utf-8-sig') as f:
         reader = csv.DictReader(f, delimiter=';')
         rows = list(reader)
         fieldnames = reader.fieldnames
     return rows, fieldnames
 
+
 def save_schedule_csv(csv_path, rows, fieldnames):
-    """Grava as alterações no CSV da Linha de Balanço."""
-    with open(csv_path, 'w', encoding='utf-8', newline='') as f:
+    """Grava as alterações no CSV da Linha de Balanço (utf-8-sig, delimitador ;)."""
+    with open(csv_path, 'w', encoding='utf-8-sig', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
         writer.writeheader()
         for r in rows:
-            # Remove campos internos temporários antes de salvar
             clean_r = {k: v for k, v in r.items() if not k.startswith('_')}
             writer.writerow(clean_r)
+
 
 def print_status(rows, obra):
     """Imprime o resumo de status da Linha de Balanço."""
@@ -496,15 +468,15 @@ def print_status(rows, obra):
     dates_fim = [parse_date_br(r.get('DATA_FIM')) for r in rows if parse_date_br(r.get('DATA_FIM'))]
 
     if dates_ini and dates_fim:
-        ini_global = min(dates_ini)
-        fim_global = max(dates_fim)
+        ini_global = min(d.date() for d in dates_ini)
+        fim_global = max(d.date() for d in dates_fim)
         dias_uteis = count_working_days(ini_global, fim_global)
         dias_corridos = (fim_global - ini_global).days + 1
         semanas = math.ceil(dias_uteis / 6)
         print(f"Início Global do Empreendimento : {format_date_br(ini_global)}")
         print(f"Término Global Previsto         : {format_date_br(fim_global)}")
         print(f"Duração Total                   : {dias_uteis} dias úteis ({dias_corridos} corridos, ~{semanas} semanas)")
-    
+
     print("\nFRENTES POR VAGÃO (ESTEIRA TAKT):")
     print(f"{'Vagão':<32} | {'Frentes':<8} | {'Início':<12} | {'Término':<12} | {'Ritmo (dias)':<12}")
     print("-" * 85)
@@ -519,11 +491,12 @@ def print_status(rows, obra):
         fims = [parse_date_br(r.get('DATA_FIM')) for r in itens if parse_date_br(r.get('DATA_FIM'))]
         ritmos = [r.get('RITMO_DIAS_POR_LOCAL', '3') for r in itens]
         ritmo_str = "/".join(sorted(set(ritmos)))
-        ini_str = format_date_br(min(inis)) if inis else "-"
-        fim_str = format_date_br(max(fims)) if fims else "-"
+        ini_str = format_date_br(min(d.date() for d in inis)) if inis else "-"
+        fim_str = format_date_br(max(d.date() for d in fims)) if fims else "-"
         print(f"{v:<32} | {len(itens):<8} | {ini_str:<12} | {fim_str:<12} | {ritmo_str:<12}")
 
     print("==================================================================\n")
+
 
 def list_tasks(rows):
     """Lista todas as tarefas com ID para facilitar a seleção."""
@@ -540,14 +513,15 @@ def list_tasks(rows):
     print("-" * 105)
     print(f"Total: {len(rows)} tarefas. Use --tarefa-id <ID> para reprogramar.\n")
 
+
 # =============================================================================
 # EXECUÇÃO PRINCIPAL DE REPROGRAMAÇÃO
 # =============================================================================
 
 def reprogramar(args):
+    obra_dir = resolver_obra_dir(args)
     obra = args.obra
-    base_path = get_base_path(obra)
-    csv_path = os.path.join(base_path, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv')
+    csv_path = os.path.join(obra_dir, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv')
 
     if not os.path.exists(csv_path):
         print(f"[!] ERRO: Arquivo não encontrado: {csv_path}")
@@ -592,8 +566,6 @@ def reprogramar(args):
         print("    Use --status para visualizar, --listar para ver IDs ou passe --tarefa-id / --vagao.")
         return
 
-    # Se não foi solicitado aplicar em todo o vagão e há múltiplos alvos selecionados por vagão,
-    # pega apenas o primeiro a menos que args.aplicar_todo_vagao seja True
     if len(target_indices) > 1 and not args.aplicar_todo_vagao and not args.vagao:
         target_indices = [target_indices[0]]
 
@@ -614,7 +586,8 @@ def reprogramar(args):
         old_dur = int(row.get('RITMO_DIAS_POR_LOCAL') or '3')
         old_ini = row.get('DATA_INICIO', '')
         old_fim = row.get('DATA_FIM', '')
-        old_d_ini = parse_date_br(old_ini)
+        old_d_ini_dt = parse_date_br(old_ini)
+        old_d_ini = old_d_ini_dt.date() if old_d_ini_dt else None
 
         # 1. Ajuste de Duração
         nova_dur = old_dur
@@ -624,17 +597,15 @@ def reprogramar(args):
 
         # 2. Ajuste de Data de Início
         if args.nova_data_inicio:
-            novo_d_ini = parse_date_br(args.nova_data_inicio)
-            if novo_d_ini:
-                row['DATA_INICIO'] = format_date_br(novo_d_ini)
-                old_d_ini = novo_d_ini
+            novo_d_ini_dt = parse_date_br(args.nova_data_inicio)
+            if novo_d_ini_dt:
+                old_d_ini = novo_d_ini_dt.date()
+                row['DATA_INICIO'] = format_date_br(old_d_ini)
 
         # 3. Deslocamento relativo em dias úteis
-        if args.deslocar_dias:
-            if old_d_ini:
-                novo_d_ini = add_working_days(old_d_ini, args.deslocar_dias)
-                row['DATA_INICIO'] = format_date_br(novo_d_ini)
-                old_d_ini = novo_d_ini
+        if args.deslocar_dias and old_d_ini:
+            old_d_ini = add_working_days(old_d_ini, args.deslocar_dias)
+            row['DATA_INICIO'] = format_date_br(old_d_ini)
 
         # Recalcula data de fim garantindo dias úteis
         if old_d_ini:
@@ -646,13 +617,11 @@ def reprogramar(args):
         base_hc = HEADCOUNT_PADRAO_VAGAO.get(vagao_prefix, 8)
         if args.novo_headcount:
             calc_hc = args.novo_headcount
-            # Se forneceu novo headcount sem nova duração, calcula nova duração via RUP (Crashing):
             if args.nova_duracao is None and base_hc > 0 and old_dur > 0:
                 nova_dur = max(1, math.ceil(old_dur * (base_hc / calc_hc)))
                 row['RITMO_DIAS_POR_LOCAL'] = str(nova_dur)
                 if old_d_ini:
-                    novo_d_fim = calculate_end_date(old_d_ini, nova_dur)
-                    row['DATA_FIM'] = format_date_br(novo_d_fim)
+                    row['DATA_FIM'] = format_date_br(calculate_end_date(old_d_ini, nova_dur))
         elif nova_dur != old_dur and old_dur > 0:
             calc_hc = max(1, math.ceil(base_hc * (old_dur / nova_dur)))
         else:
@@ -688,7 +657,7 @@ def reprogramar(args):
     all_modified = [rows[i] for i in set(modified_initial).union(cascade_modified_indices)]
     lotes_sync_count = 0
     if not args.sem_curto_prazo:
-        lotes_sync_count, detalhes_lotes = sync_short_term_schedule(base_path, obra, all_modified, dry_run=args.dry_run)
+        lotes_sync_count, detalhes_lotes = sync_short_term_schedule(obra_dir, obra, all_modified, dry_run=args.dry_run)
         print(f"\n[+] SINCRONIZAÇÃO COM A ESTEIRA DE CURTO PRAZO:")
         print(f"    Total de lotes sincronizados nas planilhas semanais: {lotes_sync_count}")
         for det in detalhes_lotes[:5]:
@@ -697,7 +666,7 @@ def reprogramar(args):
             print(f"      ... e mais {len(detalhes_lotes) - 5} lotes semanais.")
 
     # Sincronização com Caminho Crítico (dados_cpm.json)
-    cpm_sync_count, detalhes_cpm = sync_cpm_schedule(base_path, obra, all_modified, dry_run=args.dry_run)
+    cpm_sync_count, detalhes_cpm = sync_cpm_schedule(obra_dir, obra, all_modified, dry_run=args.dry_run)
     if cpm_sync_count > 0:
         print(f"\n[+] SINCRONIZAÇÃO COM O CAMINHO CRÍTICO (CPM / GANTT):")
         print(f"    Total de atividades CPM recalculadas: {cpm_sync_count}")
@@ -712,16 +681,12 @@ def reprogramar(args):
 
         # Recalcula sobreposições da LOB e Heijunka automaticamente
         try:
-            root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-            sync_script = os.path.join(root_dir, 'scripts', 'sincronizar_esteira_e_lob.py')
+            sync_script = os.path.join(ROOT_DIR, 'scripts', 'sincronizar_esteira_e_lob.py')
             if os.path.exists(sync_script):
-                import subprocess
                 subprocess.run([sys.executable, sync_script, '--obra', obra, '--analisar-sobreposicao'], capture_output=True)
 
-            # Recalcula Histograma Oficial de Mão de Obra e Headcount automaticamente
-            hist_script = os.path.join(root_dir, 'scripts', 'gerar_histograma_sincronizado.py')
+            hist_script = os.path.join(ROOT_DIR, 'scripts', 'gerar_histograma_sincronizado.py')
             if os.path.exists(hist_script):
-                import subprocess
                 subprocess.run([sys.executable, hist_script, '--obra', obra], capture_output=True)
                 print(f"[✔] Histograma Oficial de Mão de Obra & Headcount recalculado e sincronizado!")
         except Exception:
@@ -733,8 +698,9 @@ def reprogramar(args):
     dates_fim = [parse_date_br(r.get('DATA_FIM')) for r in rows if parse_date_br(r.get('DATA_FIM'))]
     dates_ini = [parse_date_br(r.get('DATA_INICIO')) for r in rows if parse_date_br(r.get('DATA_INICIO'))]
     if dates_ini and dates_fim:
-        print(f"    Novo Término Previsto da Obra: {format_date_br(max(dates_fim))}")
+        print(f"    Novo Término Previsto da Obra: {format_date_br(max(d.date() for d in dates_fim))}")
         print(f"==================================================================\n")
+
 
 # =============================================================================
 # CLI PARSER
@@ -755,6 +721,7 @@ Exemplos de Uso:
     )
 
     parser.add_argument("--obra", type=str, default="OBRA_TMULT", help="Identificador da pasta do projeto (padrão: OBRA_TMULT)")
+    parser.add_argument("--dir", type=str, default=None, help="Caminho direto absoluto ou relativo para a pasta da obra")
     parser.add_argument("--status", action="store_true", help="Exibe resumo executivo atual do cronograma")
     parser.add_argument("--listar", action="store_true", help="Lista todas as tarefas com respectivos IDs")
 
@@ -778,6 +745,7 @@ Exemplos de Uso:
 
     args = parser.parse_args()
     reprogramar(args)
+
 
 if __name__ == '__main__':
     main()

@@ -5,57 +5,455 @@
   "_nota_fracao": "Frações armazenadas como numerador (num) e denominador (den) separados para preservar precisão IEEE 754. O script lê: fracao = num/den",
   "_nota_uso": "Para obras novas: ajustar fallback_dur se a duração da atividade CPM for diferente. As frações geralmente permanecem as mesmas.",
   "lotes": {
-    "LOTE-001": {"atividade_cpm": "A01_MOB_CANTEIRO",        "num": 1,  "den": 1,  "fallback_dur": 10},
-    "LOTE-002": {"atividade_cpm": "A02_ESCAV_INFRA",         "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-003": {"atividade_cpm": "A03_SAPATAS_CONC",        "num": 2,  "den": 7,  "fallback_dur": 2},
-    "LOTE-004": {"atividade_cpm": "A02_ESCAV_INFRA",         "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-005": {"atividade_cpm": "A03_SAPATAS_CONC",        "num": 2,  "den": 7,  "fallback_dur": 2},
-    "LOTE-006": {"atividade_cpm": "A02_ESCAV_INFRA",         "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-007": {"atividade_cpm": "A03_SAPATAS_CONC",        "num": 3,  "den": 7,  "fallback_dur": 3},
-    "LOTE-008": {"atividade_cpm": "A04_BALDRAMES_CONC",      "num": 4,  "den": 7,  "fallback_dur": 4},
-    "LOTE-009": {"atividade_cpm": "A04_BALDRAMES_CONC",      "num": 3,  "den": 7,  "fallback_dur": 3},
-    "LOTE-010": {"atividade_cpm": "A05_IMPERM_BALDRAME",     "num": 1,  "den": 1,  "fallback_dur": 4},
-    "LOTE-011": {"atividade_cpm": "A06_REATERRO_INFRA",      "num": 1,  "den": 1,  "fallback_dur": 3},
-    "LOTE-012": {"atividade_cpm": "A07_PILARES_SUPRA",       "num": 3,  "den": 9,  "fallback_dur": 3},
-    "LOTE-013": {"atividade_cpm": "A07_PILARES_SUPRA",       "num": 3,  "den": 9,  "fallback_dur": 3},
-    "LOTE-014": {"atividade_cpm": "A07_PILARES_SUPRA",       "num": 3,  "den": 9,  "fallback_dur": 3},
-    "LOTE-015": {"atividade_cpm": "A08_VIGAS_LAJE_FORMA",   "num": 1,  "den": 1,  "fallback_dur": 5},
-    "LOTE-016": {"atividade_cpm": "A09_CONCRET_LAJE_H12",   "num": 1,  "den": 1,  "fallback_dur": 16, "_especial": "dur = A09 + A10_CURA_DESFORMA + 3"},
-    "LOTE-017": {"atividade_cpm": "A12_ALVENARIA_VEDACAO",  "num": 7,  "den": 20, "fallback_dur": 7},
-    "LOTE-018": {"atividade_cpm": "A12_ALVENARIA_VEDACAO",  "num": 7,  "den": 20, "fallback_dur": 7},
-    "LOTE-019": {"atividade_cpm": "A12_ALVENARIA_VEDACAO",  "num": 6,  "den": 20, "fallback_dur": 6},
-    "LOTE-020": {"atividade_cpm": "A11_ESTRUT_TERCAS_COB",  "num": 1,  "den": 1,  "fallback_dur": 10},
-    "LOTE-021": {"atividade_cpm": "A13_TELHAS_SANDWICH_PLAT","num": 1,  "den": 1,  "fallback_dur": 10},
-    "LOTE-022": {"atividade_cpm": "A14_ELET_EMBUTIDA",      "num": 1,  "den": 1,  "fallback_dur": 10},
-    "LOTE-023": {"atividade_cpm": "A16_TESTE_HIDROSTATICO_72H","num": 1,"den": 1,  "fallback_dur": 3},
-    "LOTE-024": {"atividade_cpm": "A17_EMBOCO_REBOCO",      "num": 2,  "den": 14, "fallback_dur": 2},
-    "LOTE-025": {"atividade_cpm": "A17_EMBOCO_REBOCO",      "num": 6,  "den": 14, "fallback_dur": 6},
-    "LOTE-026": {"atividade_cpm": "A17_EMBOCO_REBOCO",      "num": 6,  "den": 14, "fallback_dur": 6},
-    "LOTE-027": {"atividade_cpm": "A18_IMPERM_WCS",         "num": 1,  "den": 1,  "fallback_dur": 3},
-    "LOTE-028": {"atividade_cpm": "A19_CONTRAPISO",         "num": 1,  "den": 1,  "fallback_dur": 6},
-    "LOTE-029": {"atividade_cpm": "A22_PISO_PORCELANATO",   "num": 5,  "den": 14, "fallback_dur": 5},
-    "LOTE-030": {"atividade_cpm": "A22_PISO_PORCELANATO",   "num": 5,  "den": 14, "fallback_dur": 5},
-    "LOTE-031": {"atividade_cpm": "A22_PISO_PORCELANATO",   "num": 4,  "den": 14, "fallback_dur": 4},
-    "LOTE-032": {"atividade_cpm": "A24_RODAPES_ACAB",       "num": 1,  "den": 1,  "fallback_dur": 4},
-    "LOTE-033": {"atividade_cpm": "A21_ESQUADRIAS_FIX",     "num": 4,  "den": 8,  "fallback_dur": 4},
-    "LOTE-034": {"atividade_cpm": "A21_ESQUADRIAS_FIX",     "num": 4,  "den": 8,  "fallback_dur": 4},
-    "LOTE-035": {"atividade_cpm": "A20_INFRA_DUTOS_HVAC",   "num": 7,  "den": 10, "fallback_dur": 7},
-    "LOTE-036": {"atividade_cpm": "A20_INFRA_DUTOS_HVAC",   "num": 3,  "den": 10, "fallback_dur": 3},
-    "LOTE-037": {"atividade_cpm": "A23_FIACAO_TELECOM",     "num": 6,  "den": 10, "fallback_dur": 6},
-    "LOTE-038": {"atividade_cpm": "A23_FIACAO_TELECOM",     "num": 4,  "den": 10, "fallback_dur": 4},
-    "LOTE-039": {"atividade_cpm": "A25_PINTURA_1A_DEMAO",   "num": 3,  "den": 5,  "fallback_dur": 3},
-    "LOTE-040": {"atividade_cpm": "A25_PINTURA_1A_DEMAO",   "num": 2,  "den": 5,  "fallback_dur": 2},
-    "LOTE-041": {"atividade_cpm": "A27_LOUCAS_METAIS",      "num": 1,  "den": 1,  "fallback_dur": 6},
-    "LOTE-042": {"atividade_cpm": "A28_LUMINARIAS_ESPELHOS","num": 1,  "den": 1,  "fallback_dur": 5},
-    "LOTE-043": {"atividade_cpm": "A29_PINTURA_FINAL",      "num": 1,  "den": 1,  "fallback_dur": 7},
-    "LOTE-044": {"atividade_cpm": "A26_APARELHOS_HVAC",     "num": 1,  "den": 1,  "fallback_dur": 6},
-    "LOTE-045": {"atividade_cpm": "A30_COMISSIONAMENTO",    "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-046": {"atividade_cpm": "A31_LIMPEZA_ENTREGA",    "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-047": {"atividade_cpm": "A30_COMISSIONAMENTO",    "num": 2,  "den": 6,  "fallback_dur": 2},
-    "LOTE-048": {"atividade_cpm": "A30_COMISSIONAMENTO",    "num": 1,  "den": 6,  "fallback_dur": 1},
-    "LOTE-049": {"atividade_cpm": "A30_COMISSIONAMENTO",    "num": 1,  "den": 6,  "fallback_dur": 1},
-    "LOTE-050": {"atividade_cpm": "A31_LIMPEZA_ENTREGA",    "num": 1,  "den": 6,  "fallback_dur": 1},
-    "LOTE-051": {"atividade_cpm": "A31_LIMPEZA_ENTREGA",    "num": 1,  "den": 6,  "fallback_dur": 1},
-    "LOTE-052": {"atividade_cpm": "A31_LIMPEZA_ENTREGA",    "num": 2,  "den": 6,  "fallback_dur": 2}
+    "LOTE-001": {
+      "atividade_cpm": "A01_MOB_CANTEIRO",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 10,
+      "is_start": true,
+      "vagao": "01. Topografia & Canteiro"
+    },
+    "LOTE-002": {
+      "atividade_cpm": "A02_ESCAV_INFRA",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": true,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-003": {
+      "atividade_cpm": "A03_SAPATAS_CONC",
+      "num": 2,
+      "den": 7,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-004": {
+      "atividade_cpm": "A02_ESCAV_INFRA",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-005": {
+      "atividade_cpm": "A03_SAPATAS_CONC",
+      "num": 2,
+      "den": 7,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-006": {
+      "atividade_cpm": "A02_ESCAV_INFRA",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-007": {
+      "atividade_cpm": "A03_SAPATAS_CONC",
+      "num": 3,
+      "den": 7,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "02. Fundações Sapatas"
+    },
+    "LOTE-008": {
+      "atividade_cpm": "A04_BALDRAMES_CONC",
+      "num": 4,
+      "den": 7,
+      "fallback_dur": 4,
+      "is_start": true,
+      "vagao": "03. Vigas Baldrames"
+    },
+    "LOTE-009": {
+      "atividade_cpm": "A04_BALDRAMES_CONC",
+      "num": 3,
+      "den": 7,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "03. Vigas Baldrames"
+    },
+    "LOTE-010": {
+      "atividade_cpm": "A05_IMPERM_BALDRAME",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 4,
+      "is_start": false,
+      "vagao": "03. Vigas Baldrames"
+    },
+    "LOTE-011": {
+      "atividade_cpm": "A06_REATERRO_INFRA",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "03. Vigas Baldrames"
+    },
+    "LOTE-012": {
+      "atividade_cpm": "A07_PILARES_SUPRA",
+      "num": 3,
+      "den": 9,
+      "fallback_dur": 3,
+      "is_start": true,
+      "vagao": "04. Pilares Supraestrutura"
+    },
+    "LOTE-013": {
+      "atividade_cpm": "A07_PILARES_SUPRA",
+      "num": 3,
+      "den": 9,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "04. Pilares Supraestrutura"
+    },
+    "LOTE-014": {
+      "atividade_cpm": "A07_PILARES_SUPRA",
+      "num": 3,
+      "den": 9,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "04. Pilares Supraestrutura"
+    },
+    "LOTE-015": {
+      "atividade_cpm": "A08_VIGAS_LAJE_FORMA",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 5,
+      "is_start": true,
+      "vagao": "05. Vigas & Laje H12"
+    },
+    "LOTE-016": {
+      "atividade_cpm": "A09_CONCRET_LAJE_H12",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 16,
+      "_especial": "dur = A09 + A10_CURA_DESFORMA + 3",
+      "is_start": false,
+      "vagao": "05. Vigas & Laje H12"
+    },
+    "LOTE-017": {
+      "atividade_cpm": "A12_ALVENARIA_VEDACAO",
+      "num": 7,
+      "den": 20,
+      "fallback_dur": 7,
+      "is_start": true,
+      "vagao": "06. Alvenaria de Vedação"
+    },
+    "LOTE-018": {
+      "atividade_cpm": "A12_ALVENARIA_VEDACAO",
+      "num": 7,
+      "den": 20,
+      "fallback_dur": 7,
+      "is_start": false,
+      "vagao": "06. Alvenaria de Vedação"
+    },
+    "LOTE-019": {
+      "atividade_cpm": "A12_ALVENARIA_VEDACAO",
+      "num": 6,
+      "den": 20,
+      "fallback_dur": 6,
+      "is_start": false,
+      "vagao": "06. Alvenaria de Vedação"
+    },
+    "LOTE-020": {
+      "atividade_cpm": "A11_ESTRUT_TERCAS_COB",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 10,
+      "is_start": true,
+      "vagao": "07. Cobertura Metálica"
+    },
+    "LOTE-021": {
+      "atividade_cpm": "A13_TELHAS_SANDWICH_PLAT",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 10,
+      "is_start": true,
+      "vagao": "07. Cobertura Metálica"
+    },
+    "LOTE-022": {
+      "atividade_cpm": "A14_ELET_EMBUTIDA",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 10,
+      "is_start": true,
+      "vagao": "08. Instalações Embutidas"
+    },
+    "LOTE-023": {
+      "atividade_cpm": "A16_TESTE_HIDROSTATICO_72H",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 3,
+      "is_start": true,
+      "vagao": "08. Instalações Embutidas"
+    },
+    "LOTE-024": {
+      "atividade_cpm": "A17_EMBOCO_REBOCO",
+      "num": 2,
+      "den": 14,
+      "fallback_dur": 2,
+      "is_start": true,
+      "vagao": "09. Reboco Paulista"
+    },
+    "LOTE-025": {
+      "atividade_cpm": "A17_EMBOCO_REBOCO",
+      "num": 6,
+      "den": 14,
+      "fallback_dur": 6,
+      "is_start": false,
+      "vagao": "09. Reboco Paulista"
+    },
+    "LOTE-026": {
+      "atividade_cpm": "A17_EMBOCO_REBOCO",
+      "num": 6,
+      "den": 14,
+      "fallback_dur": 6,
+      "is_start": false,
+      "vagao": "09. Reboco Paulista"
+    },
+    "LOTE-027": {
+      "atividade_cpm": "A18_IMPERM_WCS",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 3,
+      "is_start": true,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-028": {
+      "atividade_cpm": "A19_CONTRAPISO",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 6,
+      "is_start": true,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-029": {
+      "atividade_cpm": "A22_PISO_PORCELANATO",
+      "num": 5,
+      "den": 14,
+      "fallback_dur": 5,
+      "is_start": true,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-030": {
+      "atividade_cpm": "A22_PISO_PORCELANATO",
+      "num": 5,
+      "den": 14,
+      "fallback_dur": 5,
+      "is_start": false,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-031": {
+      "atividade_cpm": "A22_PISO_PORCELANATO",
+      "num": 4,
+      "den": 14,
+      "fallback_dur": 4,
+      "is_start": false,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-032": {
+      "atividade_cpm": "A24_RODAPES_ACAB",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 4,
+      "is_start": true,
+      "vagao": "10. Pisos & Porcelanato"
+    },
+    "LOTE-033": {
+      "atividade_cpm": "A21_ESQUADRIAS_FIX",
+      "num": 4,
+      "den": 8,
+      "fallback_dur": 4,
+      "is_start": true,
+      "vagao": "11. Esquadrias de Alumínio"
+    },
+    "LOTE-034": {
+      "atividade_cpm": "A21_ESQUADRIAS_FIX",
+      "num": 4,
+      "den": 8,
+      "fallback_dur": 4,
+      "is_start": false,
+      "vagao": "11. Esquadrias de Alumínio"
+    },
+    "LOTE-035": {
+      "atividade_cpm": "A20_INFRA_DUTOS_HVAC",
+      "num": 7,
+      "den": 10,
+      "fallback_dur": 7,
+      "is_start": true,
+      "vagao": "12. Climatização HVAC"
+    },
+    "LOTE-036": {
+      "atividade_cpm": "A20_INFRA_DUTOS_HVAC",
+      "num": 3,
+      "den": 10,
+      "fallback_dur": 3,
+      "is_start": false,
+      "vagao": "12. Climatização HVAC"
+    },
+    "LOTE-037": {
+      "atividade_cpm": "A23_FIACAO_TELECOM",
+      "num": 6,
+      "den": 10,
+      "fallback_dur": 6,
+      "is_start": true,
+      "vagao": "13. Acabamentos Elétr./Hidr."
+    },
+    "LOTE-038": {
+      "atividade_cpm": "A23_FIACAO_TELECOM",
+      "num": 4,
+      "den": 10,
+      "fallback_dur": 4,
+      "is_start": false,
+      "vagao": "13. Acabamentos Elétr./Hidr."
+    },
+    "LOTE-039": {
+      "atividade_cpm": "A25_PINTURA_1A_DEMAO",
+      "num": 3,
+      "den": 5,
+      "fallback_dur": 3,
+      "is_start": true,
+      "vagao": "14. Pintura Acrílica Final"
+    },
+    "LOTE-040": {
+      "atividade_cpm": "A25_PINTURA_1A_DEMAO",
+      "num": 2,
+      "den": 5,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "14. Pintura Acrílica Final"
+    },
+    "LOTE-041": {
+      "atividade_cpm": "A27_LOUCAS_METAIS",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 6,
+      "is_start": true,
+      "vagao": "13. Acabamentos Elétr./Hidr."
+    },
+    "LOTE-042": {
+      "atividade_cpm": "A28_LUMINARIAS_ESPELHOS",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 5,
+      "is_start": true,
+      "vagao": "13. Acabamentos Elétr./Hidr."
+    },
+    "LOTE-043": {
+      "atividade_cpm": "A29_PINTURA_FINAL",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 7,
+      "is_start": true,
+      "vagao": "14. Pintura Acrílica Final"
+    },
+    "LOTE-044": {
+      "atividade_cpm": "A26_APARELHOS_HVAC",
+      "num": 1,
+      "den": 1,
+      "fallback_dur": 6,
+      "is_start": true,
+      "vagao": "12. Climatização HVAC"
+    },
+    "LOTE-045": {
+      "atividade_cpm": "A30_COMISSIONAMENTO",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": true,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-046": {
+      "atividade_cpm": "A31_LIMPEZA_ENTREGA",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-047": {
+      "atividade_cpm": "A30_COMISSIONAMENTO",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-048": {
+      "atividade_cpm": "A30_COMISSIONAMENTO",
+      "num": 1,
+      "den": 6,
+      "fallback_dur": 1,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-049": {
+      "atividade_cpm": "A30_COMISSIONAMENTO",
+      "num": 1,
+      "den": 6,
+      "fallback_dur": 1,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-050": {
+      "atividade_cpm": "A31_LIMPEZA_ENTREGA",
+      "num": 1,
+      "den": 6,
+      "fallback_dur": 1,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-051": {
+      "atividade_cpm": "A31_LIMPEZA_ENTREGA",
+      "num": 1,
+      "den": 6,
+      "fallback_dur": 1,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    },
+    "LOTE-052": {
+      "atividade_cpm": "A31_LIMPEZA_ENTREGA",
+      "num": 2,
+      "den": 6,
+      "fallback_dur": 2,
+      "is_start": false,
+      "vagao": "15. Comissionamento & Entrega"
+    }
+  },
+  "mapa_cpm_vagao_canonico": {
+    "A01_MOB_CANTEIRO": "01. Topografia & Canteiro",
+    "A02_ESCAV_INFRA": "02. Fundações Sapatas",
+    "A03_SAPATAS_CONC": "02. Fundações Sapatas",
+    "A04_BALDRAMES_CONC": "03. Vigas Baldrames",
+    "A05_IMPERM_BALDRAME": "03. Vigas Baldrames",
+    "A06_REATERRO_INFRA": "03. Vigas Baldrames",
+    "A07_PILARES_SUPRA": "04. Pilares Supraestrutura",
+    "A08_VIGAS_LAJE_FORMA": "05. Vigas & Laje H12",
+    "A09_CONCRET_LAJE_H12": "05. Vigas & Laje H12",
+    "A10_CURA_DESFORMA": "05. Vigas & Laje H12",
+    "A11_ESTRUT_TERCAS_COB": "07. Cobertura Metálica",
+    "A12_ALVENARIA_VEDACAO": "06. Alvenaria de Vedação",
+    "A13_TELHAS_SANDWICH_PLAT": "07. Cobertura Metálica",
+    "A14_ELET_EMBUTIDA": "08. Instalações Embutidas",
+    "A15_HIDR_EMBUTIDA": "08. Instalações Embutidas",
+    "A16_TESTE_HIDROSTATICO_72H": "08. Instalações Embutidas",
+    "A17_EMBOCO_REBOCO": "09. Reboco Paulista",
+    "A18_IMPERM_WCS": "10. Pisos & Porcelanato",
+    "A19_CONTRAPISO": "10. Pisos & Porcelanato",
+    "A20_INFRA_DUTOS_HVAC": "12. Climatização HVAC",
+    "A21_ESQUADRIAS_FIX": "11. Esquadrias de Alumínio",
+    "A22_PISO_PORCELANATO": "10. Pisos & Porcelanato",
+    "A23_FIACAO_TELECOM": "13. Acabamentos Elétr./Hidr.",
+    "A24_RODAPES_ACAB": "10. Pisos & Porcelanato",
+    "A25_PINTURA_1A_DEMAO": "14. Pintura Acrílica Final",
+    "A26_APARELHOS_HVAC": "12. Climatização HVAC",
+    "A27_LOUCAS_METAIS": "13. Acabamentos Elétr./Hidr.",
+    "A28_LUMINARIAS_ESPELHOS": "13. Acabamentos Elétr./Hidr.",
+    "A29_PINTURA_FINAL": "14. Pintura Acrílica Final",
+    "A30_COMISSIONAMENTO": "15. Comissionamento & Entrega",
+    "A31_LIMPEZA_ENTREGA": "15. Comissionamento & Entrega"
   }
 }
