@@ -1,0 +1,61 @@
+{
+  "versao": "2.0 Lean",
+  "descricao": "Catálogo Central de Governança, Lead Times e Alçadas de Suprimentos",
+  "regras_lead_time": {
+    "materiais_pesados": {
+      "descricao": "Aço CA-50/60, Concreto Usinado, Estrutura Metálica, Telhas Termoacústicas",
+      "lead_dias": 30,
+      "fase_gatilho": "D-30 (Cotação e equalização técnica)"
+    },
+    "materiais_acabamento": {
+      "descricao": "Porcelanato, Argamassas colantes, Tintas acrílicas, Louças e Metais",
+      "lead_dias": 15,
+      "fase_gatilho": "D-15 (Emissão de Pedido de Compra)"
+    },
+    "locacoes_maquinas": {
+      "descricao": "Retroescavadeiras, Caminhão Munck, Andaimes fachadeiros, Geradores",
+      "lead_dias": 15,
+      "fase_gatilho": "D-15 (Contrato de Locação e Checklist POP 04)"
+    },
+    "instalacoes_nr18": {
+      "descricao": "Módulos habitáveis escritório/vestiário/refeitório, Sanitários químicos",
+      "lead_dias": 20,
+      "fase_gatilho": "D-20 (Mobilização preliminar de canteiro)"
+    },
+    "consumiveis_gerais": {
+      "descricao": "EPIs, Ferramentas manuais, Miudezas de canteiro, Arames e Pregos",
+      "lead_dias": 7,
+      "fase_gatilho": "D-7 (Compra expressa / Almoxarifado local)"
+    }
+  },
+  "alcadas_governanca": [
+    {
+      "nivel": 1,
+      "limite": "Até R$ 15.000,00",
+      "aprovadores": "Comprador de Suprimentos + Engenheiro Residente",
+      "requisitos": "3 cotações de mercado ou tabela SINAPI vigente"
+    },
+    {
+      "nivel": 2,
+      "limite": "De R$ 15.000,01 a R$ 50.000,00",
+      "aprovadores": "Gerente de Operações / PMO Virtual",
+      "requisitos": "Mapa de cotação equalizado e aprovação orçamentária"
+    },
+    {
+      "nivel": 3,
+      "limite": "Acima de R$ 50.000,00",
+      "aprovadores": "Diretoria Executiva",
+      "requisitos": "Dossiê executivo, minuta contratual jurídica e alinhamento de fluxo de caixa"
+    }
+  ],
+  "diretrizes_governanca_subcontratos": [
+    "Portão de Segurança SST (POP 17 / NR-18): Nenhuma empresa terceirizada entra no canteiro sem envio de ASOs, treinamentos de NR-18/NR-35 e fichas de EPI;",
+    "Critério de Medição por FVS: A medição quinzenal só é aprovada pelo Engenheiro Residente se acompanhada da respectiva FVS assinada sem pendências;",
+    "Retenção Técnica Contratual (5%): Em todas as medições retém-se 5% do valor bruto da nota fiscal, liberada após o término do período de garantia da etapa."
+  ],
+  "instrucoes_compradores_almoxarifado": [
+    "Rastreabilidade Obrigatória nas Notas Fiscais: Toda NF-e emitida pelos fornecedores deve conter em Informações Complementares: 'Material destinado à {SIGLA_OBRA} - Centro de Custo: [CC] - Pedido de Compra: [Nº PC]';",
+    "Conferência Física no Canteiro (POP 06): Almoxarife e Engenharia conferem lote a lote com o romaneio e certificados de qualidade antes de assinar o canhoto da NF;",
+    "Alçadas de Governança (Skill 03): Valores até R$ 15.000 (Comprador + Eng. Residente); de R$ 15.000 a R$ 50.000 (Gerente de Operações); acima de R$ 50.000 (Diretoria Executiva)."
+  ]
+}

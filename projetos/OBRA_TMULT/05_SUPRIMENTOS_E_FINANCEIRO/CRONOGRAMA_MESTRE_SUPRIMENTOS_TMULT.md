@@ -3,7 +3,7 @@
 > **Empreendimento:** TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo (368.4 m²)  
 > **Horizonte Temporal:** 6 Meses (26 Semanas / 180 Dias Corridos) — Linha de Base  
 > **Governança:** POP 05, POP 06, POP 17 e Skill Gestão 03  
-> **Data de Atualização:** 11/09/2026 | **Engenheiro Chefe:** PMO Virtual
+> **Data de Atualização:** 13/09/2026 | **Engenheiro Chefe:** PMO Virtual
 
 ---
 

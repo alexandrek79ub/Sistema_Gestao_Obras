@@ -1,0 +1,56 @@
+# 📑 DOSSIÊ EXECUTIVO DE CONTRATAÇÃO & HISTOGRAMAS DE RECURSOS
+## {{NOME_OBRA_UPPER}} ({{SIGLA_OBRA}})
+
+> **Empreendimento:** {{NOME_OBRA}} ({{SIGLA_OBRA}})  
+> **Horizonte de Planejamento:** {{PRAZO_MESES}} Meses ({{DIAS_CORRIDOS}} Dias Corridos) — Linha de Base 01  
+> **Governança:** Contratos de Empreitada Turnkey, Matriz RACI, POP 04, POP 17 e Retenção Técnica (5,0%)  
+> **Data de Emissão:** {{DATA_ATUAL}} | **Responsável:** Engenharia de Planejamento & PMO Virtual
+
+---
+
+## 🎯 1. OBJETIVO DO DOSSIÊ
+Este documento consolida a estrutura de suprimento de recursos, equipes operacionais e maquinário necessária para garantir o avanço físico do empreendimento dentro do prazo e orçamento da Linha de Base 01:
+
+1. **Histograma de Mão de Obra (Headcount & HH):** Efetivo mensal de campo, equipes fixas de gestão e horas-homem produtivas;
+2. **Histograma de Equipamentos & Canteiro:** Dimensionamento de maquinário pesado, locações e instalações provisórias NR-18;
+3. **Curva ABC Dupla de Contratação:** Estratificação de criticidade financeira para composições de serviços e famílias de insumos.
+
+---
+
+## 👥 2. SÍNTESE DO HISTOGRAMA DE MÃO DE OBRA
+
+* **Headcount Médio de Campo:** **{{HEADCOUNT_MEDIO}} operários/mês**
+* **Headcount de Pico:** **{{HEADCOUNT_PICO}} operários** ({{MES_PICO}})
+* **Carga Horária Mensal Padrão:** 220 Horas-Homem (HH) por profissional
+* **Equipe Fixa de Gestão & SST (5 profissionais mantidos):** Engenheiro Residente, Mestre Geral, TST, Almoxarife e Vigia Noturno.
+
+{{TABELA_RESUMO_MO}}
+
+---
+
+## 🚜 3. SÍNTESE DO HISTOGRAMA DE EQUIPAMENTOS & LOCAÇÕES
+
+{{TABELA_RESUMO_EQ}}
+
+---
+
+## 📊 4. SÍNTESE DA CURVA ABC DUPLA (SERVIÇOS & INSUMOS)
+
+### 4.1. Curva ABC de Serviços e Pacotes EAP
+* **Classe A (80% do Custo):** Concentrada nos pacotes estruturais, cobertura metálica, alvenaria de vedação e instalações prediais;
+* **Classe B (15% do Custo):** Revestimentos, impermeabilização, esquadrias e acabamentos elétricos/hidráulicos;
+* **Classe C (5% do Custo):** Miudezas complementares, limpeza fina e arremates.
+
+### 4.2. Curva ABC de Famílias de Insumos (Custo Direto)
+* **Valor Total do Custo Direto:** **{{VALOR_TOTAL_CD}}**
+* Insumos críticos de compra monitorados via Lead Time logístico D-30 / D-15 / D-0 (Aço CA-50, Concreto Usinado, Estrutura Metálica e Porcelanato).
+
+---
+
+## 🔒 5. DIRETRIZES DE HOMOLOGAÇÃO & GOVERNANÇA DE CONTRATOS
+1. **Portão de Segurança SST (POP 17 / NR-18):** Nenhuma empresa terceirizada ou operador de máquina inicia atividades sem validação prévia de ASO, treinamentos de NR-18/NR-35 e fichas de EPI com CA válido;
+2. **Inspeção de Entrada de Equipamentos (POP 04):** Máquinas pesadas (retroescavadeiras, guindastes, muncks) exigem laudo de conformidade mecânica/elétrica, ART de manutenção e habilitação do operador;
+3. **Boletim de Medição Quinzenal (BMQ):** Liberação de faturamento estritamente condicionada à verificação física com trena (POP 09), FVS homologada sem pendências e retenção técnica contratual de 5,0%.
+
+---
+*Dossiê Executivo gerado e auditado pelo Sistema de Gestão de Obras (PMO Virtual).*
