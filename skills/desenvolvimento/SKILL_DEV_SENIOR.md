@@ -26,6 +26,9 @@ Antes de tocar em qualquer código, você **DEVE** saber o que define o "certo" 
 | Plano de Implementação | `implementation_plan.md` nos artefatos | Escopo e entregáveis aprovados |
 | Arquitetura do Sistema | [`README.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/README.md) | Visão geral da plataforma e fluxo de dados |
 | Boas Práticas de Codificação | [`MANUAL_BOAS_PRATICAS_CODIFICACAO.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md) | Padrões de código para Python (CLI, UTF-8, Regex), Next.js, CSV e Markdown |
+| Infraestrutura Compartilhada | [`scripts/common/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/common/) | Módulos canônicos de I/O (`obra_io.py`), estilos Excel (`excel_theme.py`) e calendário (`calendario.py`) |
+| Repositório de Templates | [`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/) | Templates Markdown para laudos, termos e RDOs (desacoplamento de texto e código) |
+| Catálogos de Engenharia | [`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/) | Catálogo de funções CUB e frentes de esteira em JSON |
 | Schema dos CSVs | [`SKILL_DEV_SCHEMA_CSV.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md) | Fonte da verdade dos dados — consultar antes de qualquer leitura/escrita de CSV |
 | Arquitetura Next.js | [`SKILL_DEV_ARQUITETURA_NEXTJS.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_ARQUITETURA_NEXTJS.md) | Mapa de pastas, padrões, contextos, checklist de nova página |
 | Testes e Qualidade | [`SKILL_DEV_TESTES_E_QUALIDADE.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_TESTES_E_QUALIDADE.md) | Edge cases por componente, checklist pré-entrega |

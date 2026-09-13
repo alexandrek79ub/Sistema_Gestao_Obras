@@ -6,7 +6,7 @@
 **Total Acumulado de Headcount-Mês:** **102 Homens-Mês**  
 **Pico de Efetivo (Headcount):** 20 profissionais (Mês 3)  
 **Média Geral de Efetivo:** 17.0 profissionais/mês (5 de gestão/SST fixos)  
-**Data de Atualização:** 12/09/2026 12:05  
+**Data de Atualização:** 13/09/2026 12:36  
 **Responsável Técnico:** PMO Virtual / Coordenação de Planejamento, SST e RH  
 
 ---

@@ -84,9 +84,13 @@ O ecossistema disponibiliza uma suíte executiva completa em Next.js com 8 visõ
 
 ---
 
-## ⚙️ 3. A Suíte dos Motores Universais em Python (`scripts/`)
+## ⚙️ 3. A Suíte dos Motores Universais em Python (`scripts/`) — Arquitetura Modular v2.0 Lean
 
-Todos os motores implementam interface de linha de comando (`argparse`) com parâmetros `--obra [NOME]` e `--dir [CAMINHO]`, com isolamento total anti-contaminação:
+Todos os motores implementam interface de linha de comando (`argparse`) com parâmetros `--obra [NOME]` e `--dir [CAMINHO]`, com isolamento total anti-contaminação e suporte à **Arquitetura Modular v2.0 Lean**:
+
+- 🧩 **Camada Compartilhada ([`scripts/common/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/common/)):** Centraliza I/O e CLI (`obra_io.py`), tema e estilos visuais OpenPyXL corporativos (`excel_theme.py`) e regras de calendário e dias úteis (`calendario.py`), eliminando código duplicado em mais de 15 scripts.
+- 📑 **Repositório de Templates ([`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/)):** Desacopla laudos técnicos, termos de entrega e manuais dos scripts Python, mantendo os motores enxutos e focados exclusivamente na lógica de cálculo.
+- 📊 **Catálogos de Engenharia ([`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/)):** Tabelas de referência (funções CUB/SINDUSCON em `catalogo_funcoes.json`, frações de avanço Takt em `mapa_lotes_cpm.json`) auditáveis e editáveis sem alteração em código.
 
 | # | Script | Função Principal | Saídas Geradas |
 | :---: | :--- | :--- | :--- |

@@ -1,0 +1,26 @@
+{
+  "_comentario": "Catálogo Global de Funções e Custos de Referência — SINDUSCON / CUB",
+  "_fonte": "Extraído de scripts/gerar_histograma_sincronizado.py (CATALOGO_FUNCOES)",
+  "_versao": "2026-09",
+  "_nota": "Custos mensais de referência. Para ajuste regional, sobrescrever em config_obra.json > custo_mo_override.",
+  "funcoes": [
+    {"grupo": "Gestão",       "cargo": "Engenheiro Residente (60%)",                     "categoria": "Mensalista",       "custo_mes_ref": 10680.0, "chave": "eng_residente"},
+    {"grupo": "Gestão",       "cargo": "Mestre de Obras Geral (100%)",                   "categoria": "Mensalista",       "custo_mes_ref": 7120.0,  "chave": "mestre_obras"},
+    {"grupo": "SST / Apoio",  "cargo": "Técnico de Segurança do Trabalho (TST)",         "categoria": "Mensalista",       "custo_mes_ref": 4500.0,  "chave": "tst"},
+    {"grupo": "SST / Apoio",  "cargo": "Almoxarife / Apontador de Campo",                "categoria": "Mensalista",       "custo_mes_ref": 3500.0,  "chave": "almoxarife"},
+    {"grupo": "SST / Apoio",  "cargo": "Vigia Noturno / Segurança Patrimonial",          "categoria": "Mensalista",       "custo_mes_ref": 3500.0,  "chave": "vigia"},
+    {"grupo": "Produção",     "cargo": "Pedreiro Oficial (Alvenaria / Reboco)",           "categoria": "Horista/Produção", "custo_mes_ref": 3200.0,  "chave": "pedreiro"},
+    {"grupo": "Produção",     "cargo": "Ladrilhista / Azulejista (Porcelanato)",          "categoria": "Horista/Produção", "custo_mes_ref": 3400.0,  "chave": "ladrilhista"},
+    {"grupo": "Produção",     "cargo": "Carpinteiro de Fôrmas e Escoramento",             "categoria": "Horista/Produção", "custo_mes_ref": 3200.0,  "chave": "carpinteiro"},
+    {"grupo": "Produção",     "cargo": "Armador de Ferragens CA-50/CA-60",                "categoria": "Horista/Produção", "custo_mes_ref": 3200.0,  "chave": "armador"},
+    {"grupo": "Produção",     "cargo": "Montador de Estrutura Metálica / Telhadista",     "categoria": "Especialista",     "custo_mes_ref": 3600.0,  "chave": "montador_metalico"},
+    {"grupo": "Produção",     "cargo": "Pintor Oficial Imobiliário",                      "categoria": "Horista/Produção", "custo_mes_ref": 3100.0,  "chave": "pintor"},
+    {"grupo": "Produção",     "cargo": "Servente de Obras / Ajudante Prático",            "categoria": "Horista/Produção", "custo_mes_ref": 2200.0,  "chave": "servente"},
+    {"grupo": "Instalações",  "cargo": "Eletricista Instalador / Telecom",                "categoria": "Oficial",          "custo_mes_ref": 3300.0,  "chave": "eletricista"},
+    {"grupo": "Instalações",  "cargo": "Encanador / Bombeiro Hidráulico",                 "categoria": "Oficial",          "custo_mes_ref": 3300.0,  "chave": "encanador"},
+    {"grupo": "Instalações",  "cargo": "Mecânico / Montador de Climatização HVAC",        "categoria": "Especialista",     "custo_mes_ref": 3800.0,  "chave": "hvac"},
+    {"grupo": "Instalações",  "cargo": "Marceneiro / Montador de Esquadrias",             "categoria": "Oficial",          "custo_mes_ref": 3200.0,  "chave": "esquadrias"},
+    {"grupo": "Apoio",        "cargo": "Operador de Retroescavadeira / Máquinas",         "categoria": "Operador",         "custo_mes_ref": 3600.0,  "chave": "operador_maquina"},
+    {"grupo": "Apoio",        "cargo": "Auxiliar de Limpeza Especializada Pós-Obra",      "categoria": "Apoio",            "custo_mes_ref": 2100.0,  "chave": "limpeza"}
+  ]
+}

@@ -141,6 +141,8 @@ Quando o sistema exigir criação, manutenção, refatoração ou auditoria de c
 - ⚡ **ATIVAÇÃO AUTOMÁTICA OBRIGATÓRIA:** Todo pedido que envolva manipular ou criar código em `scripts/`, `apresentacao_comercial/` ou bases de dados aciona **compulsoriamente** o Tech Lead e o Manual de Boas Práticas antes de qualquer execução.
 - 👨‍💻 **[Desenvolvedor Sênior e Tech Lead](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md)**: Skill de entrada da frente. O agente aplica o "Loop de QA" e mantém a locomotiva nos trilhos.
 - 📘 **[Manual de Boas Práticas de Codificação](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md)**: Guia oficial de arquitetura e qualidade para Python (CLI, UTF-8, Regex), Next.js, CSVs (`utf-8-sig`) e Markdown Puro.
+- 🧩 **Camada Compartilhada (`scripts/common/`):** Utilização obrigatória dos módulos `obra_io.py`, `excel_theme.py` e `calendario.py` em novos scripts ou refatorações, eliminando código duplicado.
+- 📑 **Templates Externos (`scripts/templates/`):** Laudos e termos longos devem ser desacoplados em Markdown puro na pasta de templates, mantendo os scripts Python enxutos (< 350 linhas).
 - 🗂️ **[Schema dos CSVs](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md)**: Fonte da verdade dos dados. Consultar antes de qualquer leitura ou escrita de CSV no dashboard.
 - 🏗️ **[Arquitetura Next.js](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_ARQUITETURA_NEXTJS.md)**: Mapa de pastas, padrões de naming, contextos React, fluxo de fetch e checklist para adicionar novos relatórios.
 - 🧪 **[Testes e Qualidade](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_TESTES_E_QUALIDADE.md)**: Verificações obrigatórias, edge cases por componente e checklist pré-entrega.
@@ -156,7 +158,8 @@ Sempre que receber um pedido, siga rigorosamente estes passos:
    - Se a solicitação do usuário envolver criar, alterar, refatorar, auditar ou rodar qualquer código (`.py`, `.ts`, `.tsx`, `.js`, `.csv`, `.json`), a IA **DEVE OBRIGATORIAMENTE:**
      a) Assumir a persona do **Tech Lead** e o ciclo de QA da [`SKILL_DEV_SENIOR.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md);
      b) Ler e aplicar as diretrizes do [`MANUAL_BOAS_PRATICAS_CODIFICACAO.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_CODIFICACAO.md) antes de gerar a primeira linha de código;
-     c) Validar os 7 itens do **Checklist de QA Pré-Commit (Seção 7 do Manual)** antes de concluir a entrega.
+     c) Reutilizar os utilitários de `scripts/common/` e desacoplar textos para `scripts/templates/`;
+     d) Validar os 7 itens do **Checklist de QA Pré-Commit (Seção 7 do Manual)** antes de concluir a entrega.
 4. **Leitura Obrigatória**: Nunca responda baseado em conhecimentos genéricos. Leia os arquivos correspondentes na íntegra.
 5. **Sintetização**: Se for Quantitativo, use memórias de cálculo. Se for Gestão/Campo, exija o cumprimento rigoroso das regras do POP aplicável. Se for Código, produza estritamente motores universais escalonáveis multi-obras.
 6. **Transparência**: Cite explicitamente quais Skills/POPs/Manuais você acionou para gerar a resposta.

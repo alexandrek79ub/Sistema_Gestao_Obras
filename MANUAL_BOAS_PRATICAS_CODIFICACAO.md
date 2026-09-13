@@ -15,51 +15,65 @@ O sistema opera sobre um ecossistema híbrido de alta performance:
 
 ---
 
-## 🐍 2. Motores em Python (`scripts/`)
+## 🐍 2. Motores em Python (`scripts/`) — Arquitetura Modular v2.0 Lean
 
-Todo script localizado na pasta [`scripts/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/) é considerado um **Motor Universal de Produção**. Ele deve atender rigorosamente aos padrões abaixo:
+Todo script localizado na pasta [`scripts/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/) é considerado um **Motor Universal de Produção**. Ele deve atender rigorosamente aos padrões da **Arquitetura Modular v2.0 Lean**, mantendo o código conciso (idealmente entre 150 e 300 linhas):
 
-### 2.1. Interface CLI Padrão com `argparse`
-É terminantemente proibido criar scripts sem parametrização de linha de comando. Todo motor deve aceitar a obra alvo e caminho customizado:
-```python
-import argparse
+### 2.1. Camada de Infraestrutura Compartilhada (`scripts/common/`)
+É terminantemente proibido reimplementar rotinas de CLI, resolução de pastas, leitura de configuração, manipulação de dias úteis ou estilização de planilhas Excel. Utilize sempre os módulos utilitários canônicos:
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Descrição do Motor Universal")
-    parser.add_argument("--obra", default="OBRA_TMULT", help="Nome da pasta da obra em /projetos/ (default: OBRA_TMULT)")
-    parser.add_argument("--dir", help="Caminho direto para a pasta da obra")
-    args = parser.parse_args()
-```
-
-### 2.2. Resolução Agnóstica de Caminhos
-Nunca utilize caminhos absolutos locais do seu computador (`C:\Users\...`). Sempre resolva os diretórios a partir da localização do próprio script:
-```python
-import os
-
-# Raiz do repositório
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Resolução do diretório da obra
-if custom_dir:
-    proj_dir = os.path.abspath(custom_dir)
-elif obra_nome:
-    proj_dir = os.path.join(BASE_DIR, "projetos", obra_nome)
-else:
-    proj_dir = os.path.join(BASE_DIR, "projetos", "OBRA_TMULT")
-```
-
-### 2.3. Blindagem de Encoding UTF-8 no Windows
-O console do Windows (PowerShell/CMD) frequentemente adota `cp1252`, gerando exceções ao imprimir emojis ou caracteres acentuados. Adicione sempre no início de todo script:
 ```python
 import sys
+import os
 
-if sys.platform == "win32":
-    try:
-        sys.stdout.reconfigure(encoding="utf-8")
-        sys.stderr.reconfigure(encoding="utf-8")
-    except Exception:
-        pass
+# Adiciona o diretório scripts/ ao sys.path caso necessário
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+# I/O, CLI padronizada e persistência segura:
+from scripts.common.obra_io import (
+    parse_obra_args,           # Parser com --obra e --dir padronizados
+    resolver_obra_dir,         # Resolução dinâmica sem hardcoding
+    carregar_config_obra,      # Leitura resiliente de config_obra.json
+    salvar_csv_utf8_sig,       # CSV com encoding utf-8-sig e separador ';'
+    salvar_json                # JSON estruturado formatado (indent=2)
+)
+
+# Estilização visual única de planilhas OpenPyXL:
+from scripts.common.excel_theme import (
+    NAVY, BLUE_DARK, BLUE_LIGHT, GOLD_ACCENT, GREEN_FILL, RED_FILL,  # Paleta
+    FONT_TITLE, FONT_HEADER, FONT_BOLD, FONT_REGULAR,                # Tipografia
+    THIN_BORDER, ALIGN_CENTER, ALIGN_LEFT, ALIGN_RIGHT,              # Geometria
+    aplicar_cabecalho_tabela, auto_ajustar_colunas, zebrar_linhas     # Utilitários
+)
+
+# Cálculos de calendário e dias úteis:
+from scripts.common.calendario import (
+    parse_date_br, dias_uteis_entre, adicionar_dias_uteis, janelas_mensais_obra
+)
 ```
+
+### 2.2. Desacoplamento de Templates de Relatórios (`scripts/templates/`)
+- **Regra de Ouro:** Scripts Python **NÃO** devem conter centenas de linhas de blocos literais de texto Markdown (`f"""# LAUDO..."""`).
+- Laudos técnicos, termos contratuais, minutas, manuais e RDOs devem residir em arquivos `.md` dedicados dentro de [`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/) (ex: `templates/databook/`, `templates/rdo/`).
+- O script Python apenas lê o arquivo de template e realiza a substituição limpa de placeholders:
+```python
+TEMPLATES_DIR = os.path.join(os.path.dirname(__file__), "templates", "databook")
+
+def carregar_template(nome_arquivo, config):
+    caminho = os.path.join(TEMPLATES_DIR, nome_arquivo)
+    with open(caminho, "r", encoding="utf-8") as f:
+        conteudo = f.read()
+    return (
+        conteudo
+        .replace("{{NOME_OBRA}}", config.get("nome_obra", "Obra"))
+        .replace("{{SIGLA_OBRA}}", config.get("sigla_obra", "OBRA"))
+    )
+```
+
+### 2.3. Catálogos e Tabelas de Referência de Engenharia (`apoio/`)
+- Tabelas de custos de mão de obra (CUB/SINDUSCON), frentes de esteira Takt e composições de engenharia **não devem ficar hardcoded** dentro dos scripts.
+- Elas devem residir na pasta [`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/) em formato JSON auditável (ex: `apoio/catalogo_funcoes.json`, `apoio/mapa_lotes_cpm.json`).
+- O script deve carregar esses catálogos com fallback seguro caso um contrato regional específico deseje sobrescrevê-los via `config_obra.json`.
 
 ### 2.4. Regex de Alta Precisão (Fronteiras de Palavra)
 Em processamento de strings de engenharia, nunca use `in` para palavras curtas. Use sempre `\b` para evitar falsos positivos graves:
@@ -85,10 +99,10 @@ meses_headers = [f"M{m}" for m in range(1, prazo_meses + 1)]
 row_ajustada = row[:4] + row[4:4 + prazo_meses]
 ```
 
-### 2.6. Planilhas Excel com OpenPyXL
-- Use paletas corporativas sóbrias (Azul Marinho `#1B365D`, Dourado `#D99B26`, Cinza Claro `#F8FAFC`).
+### 2.6. Planilhas Excel com OpenPyXL e Padrão Visual Único
+- Use exclusivamente a paleta centralizada de [`excel_theme.py`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/common/excel_theme.py) (`NAVY`, `BLUE_DARK`, `GOLD_ACCENT`).
 - Todas as fórmulas de planilha devem estar em inglês e maiúsculas (`SUM`, `SUMPRODUCT`, `VLOOKUP`, `IF`).
-- Congele sempre os cabeçalhos (`ws.freeze_panes = "A2"` ou correspondente).
+- Congele sempre os painéis (`ws.freeze_panes = "E6"` ou correspondente) e use `auto_ajustar_colunas(ws)` ao finalizar a planilha.
 
 ---
 
@@ -195,10 +209,10 @@ Antes de fazer qualquer commit ou entrega de código, execute o checklist mental
 
 | # | Check de Qualidade | Status Obrigatório |
 | :-: | :--- | :---: |
-| **1** | O script Python aceita `--obra` e `--dir` via `argparse`? | [ ] APROVADO |
-| **2** | Há algum caminho fixo (`C:\...`) ou nome de obra chumbado no código? | [ ] ZERO HARDCODING |
-| **3** | Os CSVs gerados usam `utf-8-sig` e delimitador `;`? | [ ] APROVADO |
-| **4** | O relatório Markdown está livre de expressões KaTeX (`$$` ou `\text{}`)? | [ ] 100% LIMPO |
-| **5** | O teste de fumaça executou com código de retorno 0 na `OBRA_TMULT`? | [ ] 100% OK |
-| **6** | O teste de fumaça executou em outra obra (`RESIDENCIAL_ALPHA`) sem contaminação? | [ ] 100% ISOLADO |
-| **7** | O modelo `_TEMPLATE_OBRA_NOVA` foi atualizado caso haja novo tipo de dado? | [ ] ATUALIZADO |
+| **1** | O script reutiliza a camada compartilhada [`scripts/common/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/common/) (`obra_io`, `excel_theme`, `calendario`)? | [ ] REUTILIZADO |
+| **2** | Textos longos de laudos/termos foram externalizados para [`scripts/templates/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/templates/)? | [ ] DESACOPLADO |
+| **3** | Dados vivos de engenharia foram externalizados para [`apoio/`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/apoio/)? | [ ] AUDITÁVEL |
+| **4** | O script aceita `--obra` e `--dir` com ZERO caminhos absolutos ou fixos (`C:\...`)? | [ ] ZERO HARDCODING |
+| **5** | Os CSVs gerados usam estritamente `utf-8-sig` e delimitador `;`? | [ ] APROVADO |
+| **6** | O relatório Markdown gerado está limpo e sem expressões KaTeX (`$$` ou `\text{}`)? | [ ] 100% LIMPO |
+| **7** | Teste de fumaça executado com sucesso (código 0) na `OBRA_TMULT` e em `_TEMPLATE_OBRA_NOVA`? | [ ] 100% ISOLADO |
