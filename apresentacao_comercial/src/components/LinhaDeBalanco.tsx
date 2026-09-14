@@ -159,11 +159,28 @@ function getCorVagao(nomeVagao: string) {
 function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
   const v = `${vagaoOuTipo || ''} ${tipoSecundario || ''}`.toLowerCase();
   
+  // 8. Comissionamento & Entrega Técnica (verificado primeiro para capturar desmobilização e encerramentos)
+  if (
+    v.includes('15.') || v.includes('comissionamento') || v.includes('entrega') || 
+    v.includes('desmobiliz') || v.includes('limpeza') || v.includes('as-built') || 
+    v.includes('vistoria') || v.includes('recebimento') || v.includes('auditoria') || 
+    v.includes('treinamento') || v.includes('databook')
+  ) {
+    return {
+      key: 'ENTREGA',
+      nome: '8. Comissionamento & Entrega',
+      badge: 'bg-teal-600',
+      corHex: { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.30)", badge: "bg-teal-600", bgCard: "bg-teal-950/70", border: "border-teal-500" }
+    };
+  }
+
   // 1. Infraestrutura & Fundações
   if (
-    v.includes('topografia') || v.includes('locação') || v.includes('canteiro') || 
+    v.includes('01.') || v.includes('02.') || v.includes('03.') ||
+    v.includes('topografia') || v.includes('locação') || 
+    (v.includes('canteiro') && !v.includes('desmobiliz')) || 
     v.includes('fundaç') || v.includes('sapata') || v.includes('baldrame') || 
-    v.includes('escava') || v.includes('01.') || v.includes('02.') || v.includes('03.')
+    v.includes('escava')
   ) {
     return {
       key: 'INFRA',
@@ -174,9 +191,9 @@ function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
   }
   // 2. Supraestrutura
   if (
+    v.includes('04.') || v.includes('05.') ||
     v.includes('pilar') || v.includes('viga') || v.includes('laje') || 
-    v.includes('estrutur') || v.includes('concreto') || v.includes('cimbramento') ||
-    v.includes('04.') || v.includes('05.')
+    v.includes('estrutur') || v.includes('concreto') || v.includes('cimbramento')
   ) {
     return {
       key: 'ESTRUT',
@@ -187,8 +204,9 @@ function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
   }
   // 3. Cobertura Metálica
   if (
+    v.includes('07.') ||
     v.includes('cobertura') || v.includes('telha') || v.includes('platibanda') || 
-    v.includes('metálic') || v.includes('07.')
+    v.includes('metálic')
   ) {
     return {
       key: 'COBERT',
@@ -199,8 +217,9 @@ function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
   }
   // 4. Alvenaria & Reboco
   if (
+    v.includes('06.') || v.includes('09.') ||
     v.includes('alvenaria') || v.includes('vedação') || v.includes('reboco') || 
-    v.includes('chapisco') || v.includes('emboço') || v.includes('06.') || v.includes('09.')
+    v.includes('chapisco') || v.includes('emboço')
   ) {
     return {
       key: 'VEDACAO',
@@ -209,48 +228,48 @@ function getMacroFase(vagaoOuTipo: string, tipoSecundario?: string) {
       corHex: { stroke: "#f59e0b", fill: "rgba(245, 158, 11, 0.28)", badge: "bg-amber-600", bgCard: "bg-amber-950/70", border: "border-amber-500" }
     };
   }
-  // 5. Instalações Prediais & Climatização
+  // 5. Instalações Embutidas (Brutas de Parede e Piso - antes do reboco)
   if (
-    v.includes('embutida') || v.includes('elétric') || v.includes('hidrául') || 
-    v.includes('esgoto') || v.includes('hvac') || v.includes('climatiza') || 
-    v.includes('cabo') || v.includes('quadro') || v.includes('frigor') || 
-    v.includes('telecom') || v.includes('estanqueidade') || v.includes('08.') || v.includes('12.') || v.includes('13.')
+    v.includes('08.') ||
+    v.includes('embutida') || v.includes('ranhura') || v.includes('eletroduto') || 
+    v.includes('tubulações embutidas') || v.includes('hidrostático')
   ) {
     return {
-      key: 'INSTAL',
-      nome: '5. Instalações & Climatização',
+      key: 'INSTAL_BRUTA',
+      nome: '5. Instalações Embutidas',
       badge: 'bg-emerald-600',
       corHex: { stroke: "#10b981", fill: "rgba(16, 185, 129, 0.28)", badge: "bg-emerald-600", bgCard: "bg-emerald-950/70", border: "border-emerald-500" }
     };
   }
-  // 6. Acabamentos Finos & Pisos
+  // 6. Instalações Finais, Elétrica & Climatização HVAC
   if (
+    v.includes('12.') || v.includes('13.') ||
+    v.includes('hvac') || v.includes('climatiza') || v.includes('frigor') || 
+    v.includes('enfiamento') || v.includes('cabo') || v.includes('quadro') || 
+    v.includes('luminária') || v.includes('bacia') || v.includes('torneira') ||
+    v.includes('elétric') || v.includes('hidrául') || v.includes('esgoto')
+  ) {
+    return {
+      key: 'INSTAL_FINAL',
+      nome: '6. Elétrica, Hidráulica & HVAC',
+      badge: 'bg-teal-500',
+      corHex: { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.28)", badge: "bg-teal-500", bgCard: "bg-teal-950/70", border: "border-teal-400" }
+    };
+  }
+  // 7. Acabamentos Finos & Pisos
+  if (
+    v.includes('10.') || v.includes('11.') || v.includes('14.') ||
     v.includes('piso') || v.includes('porcelanato') || v.includes('contrapiso') || 
     v.includes('cerâmica') || v.includes('esquadria') || v.includes('caixilho') || 
     v.includes('porta') || v.includes('vidro') || v.includes('pintura') || 
-    v.includes('louça') || v.includes('metal') || v.includes('luminária') || 
-    v.includes('rodapé') || v.includes('rejunte') || v.includes('impermeabiliz') ||
-    v.includes('10.') || v.includes('11.') || v.includes('14.')
+    v.includes('louça') || v.includes('metal') || 
+    v.includes('rodapé') || v.includes('rejunte') || v.includes('impermeabiliz')
   ) {
     return {
       key: 'ACABAM',
-      nome: '6. Acabamentos & Pisos',
+      nome: '7. Acabamentos & Pisos',
       badge: 'bg-purple-600',
       corHex: { stroke: "#a855f7", fill: "rgba(168, 85, 247, 0.28)", badge: "bg-purple-600", bgCard: "bg-purple-950/70", border: "border-purple-500" }
-    };
-  }
-  // 7. Comissionamento & Entrega Técnica
-  if (
-    v.includes('comissionamento') || v.includes('entrega') || v.includes('limpeza') || 
-    v.includes('as-built') || v.includes('vistoria') || v.includes('recebimento') || 
-    v.includes('auditoria') || v.includes('treinamento') || v.includes('databook') ||
-    v.includes('15.')
-  ) {
-    return {
-      key: 'ENTREGA',
-      nome: '7. Comissionamento & Entrega',
-      badge: 'bg-teal-600',
-      corHex: { stroke: "#14b8a6", fill: "rgba(20, 184, 166, 0.30)", badge: "bg-teal-600", bgCard: "bg-teal-950/70", border: "border-teal-500" }
     };
   }
   return {
@@ -987,10 +1006,10 @@ export default function LinhaDeBalanco() {
                   ? 'bg-amber-600 text-white shadow-sm ring-1 ring-amber-400/40'
                   : 'text-zinc-400 hover:text-white'
               }`}
-              title="Exibe apenas as 7 Macrofases principais da engenharia (Fundações, Estruturas, Cobertura, Alvenaria, Instalações, Acabamentos, Entrega)"
+              title="Exibe as 8 Macrofases principais da engenharia (Fundações, Estruturas, Cobertura, Alvenaria, Instalações Embutidas, Elétrica/HVAC, Acabamentos, Entrega)"
             >
               <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-              Apenas Macroatividades (7 Fases)
+              Apenas Macroatividades (8 Fases)
             </button>
             <button
               onClick={() => setNivelAgrupamento('vagao')}

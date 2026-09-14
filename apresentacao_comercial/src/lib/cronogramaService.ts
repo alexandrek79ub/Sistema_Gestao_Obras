@@ -684,6 +684,30 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
     picoHeadcount,
   };
 
+  let dataInicioObra = '01/10/2026';
+  let dataTerminoObra = '03/03/2027';
+  let duracaoDiasUteis = duracaoTotalCpm || 132;
+  let lotesConcluidos = 0;
+  let lotesEmAndamento = 0;
+  let totalLotesCount = lotesCurtoPrazo.length || 52;
+
+  const mestrePath = path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'planejamento_mestre.json');
+  if (fs.existsSync(mestrePath)) {
+    try {
+      const mestreRaw = JSON.parse(fs.readFileSync(mestrePath, 'utf-8'));
+      dataInicioObra = mestreRaw.data_inicio_obra || dataInicioObra;
+      dataTerminoObra = mestreRaw.data_termino_obra || dataTerminoObra;
+      duracaoDiasUteis = mestreRaw.duracao_total_dias_uteis || duracaoDiasUteis;
+      if (Array.isArray(mestreRaw.lotes)) {
+        totalLotesCount = mestreRaw.lotes.length;
+        lotesConcluidos = mestreRaw.lotes.filter((l: { status?: string }) => l.status === 'CONCLUIDO').length;
+        lotesEmAndamento = mestreRaw.lotes.filter((l: { status?: string }) => l.status === 'EM_ANDAMENTO').length;
+      }
+    } catch (e) {
+      console.warn('Erro ao ler planejamento_mestre.json em cronogramaService:', e);
+    }
+  }
+
   return {
     ok: true,
     data: {
@@ -702,9 +726,15 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
       metaGlobal: {
         prazoMeses: 6,
         diasCorridos: 180,
-        semanas: 26,
+        semanas: Math.ceil(duracaoDiasUteis / 6),
         valorTurnkey: 1660762.28,
-        caminhoCriticoDias: duracaoTotalCpm || 178,
+        caminhoCriticoDias: duracaoDiasUteis,
+        dataInicioObra,
+        dataTerminoObra,
+        duracaoDiasUteis,
+        totalLotes: totalLotesCount,
+        lotesConcluidos,
+        lotesEmAndamento,
       },
     },
   };

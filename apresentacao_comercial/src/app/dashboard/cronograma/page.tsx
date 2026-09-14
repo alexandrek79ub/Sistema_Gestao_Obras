@@ -179,53 +179,132 @@ export default function CronogramaPage() {
           </p>
         </div>
 
-        <a 
-          href={`/projetos/${obraAtiva}/03_PLANEJAMENTO_E_CRONOGRAMA/CRONOGRAMA_DASHBOARD_INTERATIVO.html`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-blue-600/20 hover:bg-blue-600/30 text-blue-400 border border-blue-500/40 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-        >
-          <ExternalLink className="w-4 h-4" />
-          Dashboard HTML Plotly
-        </a>
+      </div>
+
+      {/* BANNER VISUAL DE INÍCIO / TÉRMINO DA OBRA */}
+      <div className="relative bg-zinc-900 border border-zinc-700/60 rounded-2xl overflow-hidden shadow-xl">
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/5 via-transparent to-emerald-600/5 pointer-events-none" />
+        <div className="relative p-5">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-5">
+
+            {/* BLOCO INÍCIO */}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-blue-600/20 border border-blue-500/40 flex items-center justify-center shrink-0">
+                <Calendar className="w-6 h-6 text-blue-400" />
+              </div>
+              <div>
+                <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider mb-0.5">Início da Obra</p>
+                <p className="text-2xl font-black text-blue-400 font-mono tracking-tight">
+                  {(metaGlobal as Record<string, unknown>).dataInicioObra as string || '01/10/2026'}
+                </p>
+                <p className="text-xs text-zinc-500 mt-0.5">Data Base · Regime 6d/semana</p>
+              </div>
+            </div>
+
+            {/* SETA / TIMELINE CENTRAL */}
+            <div className="flex-1 flex flex-col items-center gap-2 min-w-[140px]">
+              <div className="flex items-center gap-2 w-full">
+                <div className="h-px flex-1 bg-gradient-to-r from-blue-500 to-zinc-600" />
+                <div className="shrink-0 text-center px-2">
+                  <p className="text-xl font-black text-white font-mono">
+                    {((metaGlobal as Record<string, unknown>).duracaoDiasUteis as number) || metaGlobal.caminhoCriticoDias}
+                    <span className="text-sm font-semibold text-zinc-400 ml-1">d.u.</span>
+                  </p>
+                  <p className="text-[10px] text-zinc-500">{metaGlobal.semanas} semanas · {metaGlobal.semanas ? Math.ceil(metaGlobal.semanas / 4.3) : 6} meses</p>
+                </div>
+                <div className="h-px flex-1 bg-gradient-to-r from-zinc-600 to-emerald-500" />
+              </div>
+
+              {/* Barra de progresso */}
+              {(() => {
+                const total = ((metaGlobal as Record<string, unknown>).totalLotes as number) || 0;
+                const concluidos = ((metaGlobal as Record<string, unknown>).lotesConcluidos as number) || 0;
+                const emAndamento = ((metaGlobal as Record<string, unknown>).lotesEmAndamento as number) || 0;
+                const pct = total > 0 ? Math.round((concluidos / total) * 100) : 0;
+                return total > 0 ? (
+                  <div className="w-full">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-[10px] text-zinc-500">
+                        <span className="text-white font-bold">{concluidos}</span>/{total} lotes concluídos
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-400">{pct}%</span>
+                    </div>
+                    <div className="h-2 bg-zinc-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full transition-all"
+                        style={{ width: `${pct}%` }}
+                      />
+                    </div>
+                    <div className="flex gap-3 mt-1 text-[10px]">
+                      <span className="text-emerald-400">✓ {concluidos} concluídos</span>
+                      {emAndamento > 0 && <span className="text-amber-400">⟳ {emAndamento} andamento</span>}
+                      <span className="text-zinc-600">{total - concluidos - emAndamento} pendentes</span>
+                    </div>
+                  </div>
+                ) : null;
+              })()}
+            </div>
+
+            {/* BLOCO TÉRMINO */}
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-emerald-600/20 border border-emerald-500/40 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-6 h-6 text-emerald-400" />
+              </div>
+              <div>
+                <p className="text-xs text-zinc-500 uppercase font-bold tracking-wider mb-0.5">Término Previsto</p>
+                <p className="text-2xl font-black text-emerald-400 font-mono tracking-tight">
+                  {(metaGlobal as Record<string, unknown>).dataTerminoObra as string || '03/03/2027'}
+                </p>
+                <p className="text-xs text-zinc-500 mt-0.5">Prazo Contratual (CPM)</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* CARDS DE KPIS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Prazo Global</span>
+            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Prazo Total</span>
             <Clock className="w-4 h-4 text-blue-400" />
           </div>
-          <div className="text-2xl font-bold text-white mt-1">{metaGlobal.diasCorridos} Dias</div>
-          <span className="text-xs text-zinc-400">26 Semanas / 6 Meses Corridos</span>
+          <div className="text-2xl font-bold text-white mt-1">
+            {((metaGlobal as Record<string, unknown>).duracaoDiasUteis as number) || metaGlobal.caminhoCriticoDias} d.u.
+          </div>
+          <span className="text-xs text-zinc-400">{metaGlobal.semanas} semanas · Regime 6 dias/semana</span>
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Caminho Crítico (CPM)</span>
+            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Caminho Crítico</span>
             <AlertTriangle className="w-4 h-4 text-rose-400" />
           </div>
-          <div className="text-2xl font-bold text-rose-400 mt-1">{metaGlobal.caminhoCriticoDias} Dias</div>
-          <span className="text-xs text-zinc-400">Folga Zero em 26 Macroatividades</span>
+          <div className="text-2xl font-bold text-rose-400 mt-1">{metaGlobal.caminhoCriticoDias} d.u.</div>
+          <span className="text-xs text-zinc-400">Folga zero em {cpmAtividades.filter(a => a.critica).length} atividades críticas</span>
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Lotes Programados</span>
+            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Lotes Takt</span>
             <Layers className="w-4 h-4 text-emerald-400" />
           </div>
-          <div className="text-2xl font-bold text-emerald-400 mt-1">{lotes.length} Lotes</div>
-          <span className="text-xs text-zinc-400">Frentes Enxutas de 1 a 2 Dias</span>
+          <div className="text-2xl font-bold text-emerald-400 mt-1">
+            {((metaGlobal as Record<string, unknown>).totalLotes as number) || lotes.length} lotes
+          </div>
+          <span className="text-xs text-zinc-400">
+            {((metaGlobal as Record<string, unknown>).lotesConcluidos as number) || 0} concluídos
+            {' · '}{((metaGlobal as Record<string, unknown>).lotesEmAndamento as number) || 0} andamento
+          </span>
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Controle Operacional</span>
+            <span className="text-xs text-zinc-500 uppercase font-bold tracking-wider">Valor Turnkey</span>
             <ShieldCheck className="w-4 h-4 text-amber-400" />
           </div>
-          <div className="text-2xl font-bold text-amber-400 mt-1">Previsto × RDO</div>
-          <span className="text-xs text-zinc-400">Auditoria Diária de Efetivo & Metas</span>
+          <div className="text-2xl font-bold text-amber-400 mt-1">R$ {(metaGlobal.valorTurnkey / 1_000_000).toFixed(2)}M</div>
+          <span className="text-xs text-zinc-400">Orçamento Base SINAPI consolidado</span>
         </div>
       </div>
 

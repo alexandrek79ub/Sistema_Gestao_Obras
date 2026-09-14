@@ -144,6 +144,12 @@ export interface MetaGlobal {
   semanas: number;
   valorTurnkey: number;
   caminhoCriticoDias: number;
+  dataInicioObra?: string;
+  dataTerminoObra?: string;
+  duracaoDiasUteis?: number;
+  totalLotes?: number;
+  lotesConcluidos?: number;
+  lotesEmAndamento?: number;
   [key: string]: unknown;
 }
 

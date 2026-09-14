@@ -55,6 +55,12 @@ interface GanttExecutivoProps {
     semanas: number;
     valorTurnkey: number;
     caminhoCriticoDias: number;
+    dataInicioObra?: string;
+    dataTerminoObra?: string;
+    duracaoDiasUteis?: number;
+    lotesConcluidos?: number;
+    lotesEmAndamento?: number;
+    totalLotes?: number;
   };
 }
 
@@ -92,6 +98,34 @@ const NOMES_CPM_AMIGAVEIS: Record<string, string> = {
   "A31_LIMPEZA_ENTREGA": "Limpeza Fina Pós-Obra, As-Built e Entrega Técnica"
 };
 
+// Adiciona dias corridos (incl. domingos) a uma data
+function addCalendarDays(date: Date, days: number): Date {
+  const d = new Date(date);
+  d.setDate(d.getDate() + days);
+  return d;
+}
+
+function parseDateBRLocal(str: string): Date {
+  if (!str) return new Date(2026, 9, 1);
+  if (str.includes('/')) {
+    const [d, m, y] = str.split('/');
+    return new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+  }
+  if (str.includes('-')) {
+    const [y, m, d] = str.split('-');
+    return new Date(parseInt(y), parseInt(m) - 1, parseInt(d));
+  }
+  return new Date(2026, 9, 1);
+}
+
+function formatDateShort(d: Date): string {
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}`;
+}
+
+function formatDateFull(d: Date): string {
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+}
+
 export default function GanttExecutivo({
   cpmAtividades = [],
   tarefasDetalhadas = [],
@@ -104,8 +138,13 @@ export default function GanttExecutivo({
   const [gruposAbertos, setGruposAbertos] = useState<Record<string, boolean>>({});
   const [itemSelecionado, setItemSelecionado] = useState<ItemGanttSelecionado | null>(null);
 
-  const totalDias = metaGlobal.caminhoCriticoDias || 178;
-  const totalSemanas = 26;
+  const totalDias = metaGlobal.caminhoCriticoDias || metaGlobal.duracaoDiasUteis || 178;
+  const totalSemanas = Math.max(26, Math.ceil(totalDias / 7));
+
+  // Data real de início da obra
+  const dataInicioBase = useMemo(() => {
+    return parseDateBRLocal(metaGlobal.dataInicioObra || '01/10/2026');
+  }, [metaGlobal.dataInicioObra]);
 
   // Largura base por unidade temporal (pixels)
   const pxPorDia = useMemo(() => {
@@ -116,25 +155,46 @@ export default function GanttExecutivo({
 
   const timelineWidth = Math.max(1200, Math.ceil(totalDias * pxPorDia) + 120);
 
-  // Semanas (S01 a S26) com posições
+  // Semanas com datas reais calculadas a partir do início da obra
   const semanasHeader = useMemo(() => {
-    return Array.from({ length: totalSemanas }, (_, i) => ({
-      numero: i + 1,
-      label: `S${String(i + 1).padStart(2, '0')}`,
-      startDay: i * 7,
-      endDay: (i + 1) * 7
-    }));
-  }, [totalSemanas]);
+    return Array.from({ length: totalSemanas }, (_, i) => {
+      const startDay = i * 7;
+      const endDay = (i + 1) * 7 - 1;
+      const startDate = addCalendarDays(dataInicioBase, startDay);
+      const endDate = addCalendarDays(dataInicioBase, endDay);
+      return {
+        numero: i + 1,
+        label: `S${String(i + 1).padStart(2, '0')}`,
+        startDay,
+        endDay: endDay + 1,
+        dataInicio: formatDateShort(startDate),
+        dataFim: formatDateShort(endDate),
+        dataInicioFull: formatDateFull(startDate),
+      };
+    });
+  }, [totalSemanas, dataInicioBase]);
 
-  // Meses da obra (Outubro/2026 a Março/2027)
-  const mesesHeader = [
-    { nome: 'Outubro / 2026', dias: 31, startDay: 0 },
-    { nome: 'Novembro / 2026', dias: 30, startDay: 31 },
-    { nome: 'Dezembro / 2026', dias: 31, startDay: 61 },
-    { nome: 'Janeiro / 2027', dias: 31, startDay: 92 },
-    { nome: 'Fevereiro / 2027', dias: 28, startDay: 123 },
-    { nome: 'Março / 2027', dias: 31, startDay: 151 },
-  ];
+  // Header de meses calculado dinamicamente a partir da data real de início
+  const mesesHeader = useMemo(() => {
+    const meses: { nome: string; dias: number; startDay: number }[] = [];
+    let currentDate = new Date(dataInicioBase);
+    let dayOffset = 0;
+    const nomesMeses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+      'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+    for (let m = 0; m < 7; m++) {
+      const ano = currentDate.getFullYear();
+      const mes = currentDate.getMonth();
+      const diasNoMes = new Date(ano, mes + 1, 0).getDate();
+      const diasRestantes = diasNoMes - currentDate.getDate() + 1;
+      const diasMes = m === 0 ? diasRestantes : diasNoMes;
+      meses.push({ nome: `${nomesMeses[currentDate.getMonth()]} / ${currentDate.getFullYear()}`, dias: diasMes, startDay: dayOffset });
+      dayOffset += diasMes;
+      if (dayOffset >= totalDias + 10) break;
+      currentDate = new Date(ano, mes + 1, 1);
+    }
+    return meses;
+  }, [dataInicioBase, totalDias]);
 
   // Alternar sanfona de grupos
   const toggleGrupo = (grupoKey: string) => {
@@ -379,13 +439,18 @@ export default function GanttExecutivo({
         {/* COLUNA ESQUERDA FIXA: LISTA DE TAREFAS (STICKY) */}
         <div className="w-[340px] md:w-[420px] shrink-0 border-r border-zinc-800 bg-zinc-950 z-20 shadow-lg">
           {/* CABEÇALHO DA COLUNA FIXA */}
-          <div className="h-[68px] border-b border-zinc-800 flex items-center justify-between px-4 bg-zinc-950">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-              {modoVisao === 'cpm' ? 'Atividade / Macroetapa' : 'EAP / Pacote de Trabalho'}
-            </span>
-            <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-500">
-              <span>DUR</span>
-              <span>FOLGA</span>
+          <div className="h-[68px] border-b border-zinc-800 bg-zinc-950">
+            <div className="h-7 border-b border-zinc-800/60 flex items-center px-4">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-zinc-500">
+                {modoVisao === 'cpm' ? 'Atividade / Macroetapa CPM' : 'EAP / Pacote de Trabalho'}
+              </span>
+            </div>
+            <div className="h-10 flex items-center justify-between px-4">
+              <span className="text-[10px] text-zinc-500 font-mono">Início → Fim</span>
+              <div className="flex items-center gap-3 text-[11px] font-mono text-zinc-500">
+                <span>DUR</span>
+                <span>FOLGA</span>
+              </div>
             </div>
           </div>
 
@@ -405,25 +470,30 @@ export default function GanttExecutivo({
                         : 'hover:bg-zinc-900/60'
                     }`}
                   >
-                    <div className="flex items-center gap-2 truncate pr-2">
+                    <div className="flex items-center gap-2 min-w-0 flex-1 pr-2">
                       <span className={`w-2 h-2 rounded-full shrink-0 ${atv.critica ? 'bg-rose-500 shadow-sm shadow-rose-500/50' : 'bg-emerald-500'}`} />
-                      <div className="truncate">
+                      <div className="min-w-0">
                         <div className="text-white font-medium truncate text-xs">{nomeAmigavel}</div>
-                        <div className="text-[10px] font-mono text-zinc-500 flex items-center gap-2">
-                          <span>{atv.id}</span>
-                          {atv.dataInicio && <span className="text-zinc-400">{atv.dataInicio}</span>}
-                        </div>
+                        {atv.dataInicio && atv.dataFim ? (
+                          <div className="text-[10px] font-mono text-blue-400/80 flex items-center gap-1">
+                            <span>{atv.dataInicio}</span>
+                            <span className="text-zinc-600">→</span>
+                            <span>{atv.dataFim}</span>
+                          </div>
+                        ) : (
+                          <div className="text-[10px] font-mono text-zinc-600">{atv.id}</div>
+                        )}
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3 shrink-0 font-mono text-xs">
+                    <div className="flex items-center gap-2 shrink-0 font-mono text-xs">
                       <span className="text-zinc-300 w-8 text-right font-bold">{atv.duracao_dias}d</span>
-                      <span className={`w-12 text-center text-[10px] font-bold rounded px-1 py-0.5 ${
+                      <span className={`w-10 text-center text-[10px] font-bold rounded px-1 py-0.5 ${
                         atv.critica 
                           ? 'bg-rose-500/20 text-rose-400 border border-rose-500/40' 
                           : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                       }`}>
-                        {atv.folga_dias === 0 ? '0d' : `${atv.folga_dias}d`}
+                        {atv.folga_dias === 0 ? '0d' : `+${atv.folga_dias}d`}
                       </span>
                     </div>
                   </div>
@@ -547,16 +617,17 @@ export default function GanttExecutivo({
                 ))}
               </div>
 
-              {/* LINHA 2: SEMANAS */}
+              {/* LINHA 2: SEMANAS COM DATAS REAIS */}
               <div className="h-10 flex divide-x divide-zinc-800/60 text-[10px] font-mono text-zinc-400">
                 {semanasHeader.map(sem => (
                   <div
                     key={sem.numero}
                     style={{ width: `${7 * pxPorDia}px` }}
-                    className="flex flex-col items-center justify-center bg-zinc-950/40 hover:bg-zinc-900/40 transition-colors"
+                    className="flex flex-col items-center justify-center bg-zinc-950/40 hover:bg-zinc-900/40 transition-colors group"
+                    title={`Semana ${sem.numero}: ${sem.dataInicioFull}`}
                   >
-                    <span className="font-bold text-zinc-300">{sem.label}</span>
-                    <span className="text-[9px] text-zinc-500">d{sem.startDay + 1}</span>
+                    <span className="font-bold text-zinc-300 leading-none">{sem.label}</span>
+                    <span className="text-[9px] text-blue-400/70 leading-none mt-0.5 group-hover:text-blue-400 transition-colors">{sem.dataInicio}</span>
                   </div>
                 ))}
               </div>
@@ -601,7 +672,10 @@ export default function GanttExecutivo({
                             ? 'bg-gradient-to-r from-rose-600 via-rose-500 to-amber-600 border border-rose-400 text-white font-bold shadow-rose-500/20'
                             : 'bg-gradient-to-r from-blue-700 to-indigo-600 border border-blue-400/60 text-white font-medium shadow-blue-500/10'
                         } ${isSelected ? 'ring-2 ring-white scale-[1.02] z-10' : 'hover:scale-[1.01]'}`}
-                        title={`${nomeAmigavel} (${duracao}d) | Início Dia ${startDay} -> Fim Dia ${startDay + duracao} | Folga: ${folga}d`}
+                        title={atv.dataInicio && atv.dataFim
+                          ? `${nomeAmigavel} | ${atv.dataInicio} → ${atv.dataFim} | ${duracao}d | Folga: ${folga}d`
+                          : `${nomeAmigavel} (${duracao}d) | Dia ${startDay + 1} → Dia ${startDay + duracao} | Folga: ${folga}d`
+                        }
                       >
                         <span className="truncate text-xs tracking-tight">
                           {nomeAmigavel}
