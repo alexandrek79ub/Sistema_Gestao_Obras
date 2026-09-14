@@ -322,6 +322,15 @@ def processar_ingestao_rdo(obra_dir, config, rdo_data):
 
 
 def processar_ingestao_fvs(obra_dir, config, fvs_data):
+    """Contenção da Fase 0: FVS de campo não pode promover registro oficial."""
+    codigo_fvs = str(fvs_data.get("codigo", "")).upper().strip()
+    return {
+        "status": "SUBMETIDA",
+        "codigo_fvs": codigo_fvs,
+        "parecer": "PENDENTE_ANALISE_GOVERNADA",
+        "registro_md": None,
+    }
+
     sigla = config.get("sigla_obra", "TMULT")
     producao_dir = os.path.join(obra_dir, "04_PRODUCAO_E_AVANCO")
     fvs_dir = os.path.join(producao_dir, "FVS")
@@ -488,11 +497,10 @@ def main():
         print(f"      ✅ Planilha PAINEL_RDOS_OBRA.xlsx atualizada com sucesso!")
 
     elif tipo == "fvs":
-        print("[1/2] Processando Inspeção de Qualidade FVS...")
+        print("[1/2] Registrando submissão de FVS para análise governada...")
         res = processar_ingestao_fvs(obra_dir, config, payload)
-        print(f"      ✅ Inspeção {res['codigo_fvs']} processada com status: {res['parecer']}")
-        print(f"      ✅ Registro de inspeções atualizado: {res['registro_md']}")
-        print(f"      ✅ Planilha MATRIZ_BLOQUEIO_FVS_CONTRATOS atualizada com sucesso!")
+        print(f"      ⏸️ FVS {res['codigo_fvs']} permanece {res['parecer']}.")
+        print("      ⏸️ Nenhum registro oficial ou liberação de medição foi alterado.")
 
     print("\n✨ Ingestão de dados de campo concluída com 100% de sucesso!")
 

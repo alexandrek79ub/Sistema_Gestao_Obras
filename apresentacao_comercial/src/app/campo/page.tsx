@@ -76,7 +76,7 @@ export default function CampoMobilePage() {
   // Estado da FVS
   const [fvsCodigo, setFvsCodigo] = useState('FVS-01');
   const [fvsTolerancia, setFvsTolerancia] = useState('Desvio linear < 2mm');
-  const [fvsStatus, setFvsStatus] = useState<'Aprovado' | 'Reprovado'>('Aprovado');
+  const [fvsStatus, setFvsStatus] = useState<'Conforme' | 'NaoConforme'>('Conforme');
   const [fvsChecklist, setFvsChecklist] = useState<Record<string, boolean>>({
     'Locação dos eixos e conferência do esquadro': true,
     'Nível a laser e amarração topográfica com RN': true,
@@ -191,7 +191,8 @@ export default function CampoMobilePage() {
       hh: parseFloat(totalHH),
       eap: servicosEap.join('; ') || 'EAP Geral de Canteiro',
       fvs: fvsCodigo,
-      fvs_status: fvsStatus === 'Aprovado' ? '🟢 Aprovado' : '🔴 Reprovado',
+      fvs_status: 'SUBMETIDA',
+      idempotencyKey: crypto.randomUUID(),
       obs:
         ocorrencias ||
         `Dia produtivo. Total de ${totalEfetivo} pessoas no canteiro. ${horasParalisadas > 0 ? `Paralisação: ${horasParalisadas}h por ${motivoParalisacao}` : 'Sem impedimentos.'}`
@@ -228,12 +229,12 @@ export default function CampoMobilePage() {
       obra,
       codigo: fvsCodigo,
       data: dataHoje.split('-').reverse().join('/'),
-      status: fvsStatus === 'Aprovado' ? '🟢 Aprovado' : '🔴 Reprovado',
-      responsavel: 'Mestre João Silva / Eng. Alexandre',
+      status: fvsStatus === 'Conforme' ? 'CONFORME_INFORMADO' : 'NAO_CONFORME_INFORMADO',
       medicao_tolerancia: fvsTolerancia,
       itens_conferidos: Object.keys(fvsChecklist).filter((k) => fvsChecklist[k]),
       observacoes: ocorrencias || 'Inspeção técnica em conformidade com as tolerâncias normativas da ABNT.',
-      assinatura: hasSignature ? 'Assinado Digitalmente no Canvas de Campo' : 'Assinatura Pendente'
+      assinatura: hasSignature ? 'Capturada no canvas de campo' : 'Pendente',
+      idempotencyKey: crypto.randomUUID(),
     };
 
     try {
@@ -263,7 +264,7 @@ export default function CampoMobilePage() {
 👷 Efetivo Total: ${totalEfetivo} pessoas (${totalProprio} Gestão / ${totalTerceiro} Terceirizados)
 ⏱️ Horas Trabalhadas: ${totalHH} HH ${horasParalisadas > 0 ? `(⚠️ ${horasParalisadas}h paralisadas por ${motivoParalisacao})` : '(Sem paralisação)'}
 🔨 Frentes EAP: ${servicosEap.join(', ')}
-🛡️ Inspeção: ${fvsCodigo} — ${fvsStatus === 'Aprovado' ? '🟢 Aprovada' : '🔴 Pendente'}
+🛡️ Inspeção: ${fvsCodigo} — ${fvsStatus === 'Conforme' ? 'Conforme informado (submetida para análise)' : 'Não conforme informado (submetida para análise)'}
 📝 Ocorrências: ${ocorrencias || 'Dia de produção normal dentro do cronograma.'}
 _Enviado via Antigravity Mobile 4.0_`;
 
@@ -603,27 +604,27 @@ _Enviado via Antigravity Mobile 4.0_`;
               {/* Status do Parecer */}
               <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={() => setFvsStatus('Aprovado')}
+                  onClick={() => setFvsStatus('Conforme')}
                   className={`py-2.5 px-3 rounded-xl text-xs font-bold border flex items-center justify-center space-x-2 transition-all ${
-                    fvsStatus === 'Aprovado'
+                    fvsStatus === 'Conforme'
                       ? 'bg-emerald-600 text-white border-emerald-500 shadow-md shadow-emerald-600/30'
                       : 'bg-zinc-950 text-zinc-400 border-zinc-800'
                   }`}
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Aprovado (Liberar)</span>
+                  <span>Conforme (submeter)</span>
                 </button>
 
                 <button
-                  onClick={() => setFvsStatus('Reprovado')}
+                  onClick={() => setFvsStatus('NaoConforme')}
                   className={`py-2.5 px-3 rounded-xl text-xs font-bold border flex items-center justify-center space-x-2 transition-all ${
-                    fvsStatus === 'Reprovado'
+                    fvsStatus === 'NaoConforme'
                       ? 'bg-rose-600 text-white border-rose-500 shadow-md shadow-rose-600/30'
                       : 'bg-zinc-950 text-zinc-400 border-zinc-800'
                   }`}
                 >
                   <XCircle className="w-4 h-4" />
-                  <span>Reprovado (Bloquear)</span>
+                  <span>Não conforme (submeter)</span>
                 </button>
               </div>
             </div>
@@ -718,7 +719,7 @@ _Enviado via Antigravity Mobile 4.0_`;
               className="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-emerald-500/20 shadow-lg flex items-center justify-center space-x-2 active:scale-[0.99] transition-all disabled:opacity-50"
             >
               <ShieldCheck className="w-4 h-4" />
-              <span>{enviando ? 'Homologando Inspeção...' : `Homologar ${fvsCodigo} e Desbloquear Medição`}</span>
+              <span>{enviando ? 'Enviando para análise...' : `Submeter ${fvsCodigo} para análise`}</span>
             </button>
           </div>
         )}

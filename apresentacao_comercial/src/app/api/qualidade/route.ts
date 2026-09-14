@@ -1,6 +1,4 @@
 import { NextResponse } from 'next/server';
-import path from 'path';
-import fs from 'fs';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,13 +28,6 @@ export interface SubcontratoStatus {
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const obra = searchParams.get('obra') || 'OBRA_TMULT';
-
-  const basePath = process.env.OBRA_PATH
-    ? process.env.OBRA_PATH.replace(/OBRA$/, obra)
-    : path.resolve(process.cwd(), `../projetos/${obra}`);
-
-  const producaoDir = path.join(basePath, '04_PRODUCAO_E_AVANCO');
-  const filaCampoPath = path.join(producaoDir, 'fila_apontamentos_campo.json');
 
   // Base normativa das 8 FVSs do Caderno Mestre
   const fvss: FvsItem[] = [
@@ -191,27 +182,6 @@ export async function GET(request: Request) {
       ],
     },
   ];
-
-  // Checa se há apontamentos recentes do mobile para atualizar status
-  if (fs.existsSync(filaCampoPath)) {
-    try {
-      const fila = JSON.parse(fs.readFileSync(filaCampoPath, 'utf-8'));
-      if (Array.isArray(fila)) {
-        for (const item of fila) {
-          if (item?.dados?.tipo === 'fvs' && item.dados.codigo) {
-            const fvsMatch = fvss.find((f) => f.codigo === item.dados.codigo);
-            if (fvsMatch) {
-              fvsMatch.status = 'APROVADO';
-              fvsMatch.dataUltimaInspecao = item.dados.data || fvsMatch.dataUltimaInspecao;
-              fvsMatch.responsavel = item.dados.responsavel || fvsMatch.responsavel;
-            }
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Erro ao ler apontamentos de FVS:', e);
-    }
-  }
 
   // Matriz de Governança dos Subcontratos SUB-01 a SUB-08
   const subcontratos: SubcontratoStatus[] = [

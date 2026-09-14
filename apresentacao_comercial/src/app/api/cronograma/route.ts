@@ -2,7 +2,6 @@ import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
 import path from 'path';
 import fs from 'fs';
-import { execSync } from 'child_process';
 
 export const dynamic = 'force-dynamic';
 
@@ -480,8 +479,6 @@ export async function GET(request: Request) {
   const possiblePaths = [
     path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv'),
     path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'TEMPLATE_LINHA_DE_BALANCO.csv'),
-    path.resolve(process.cwd(), '../projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv'),
-    path.resolve(process.cwd(), '../projetos/_TEMPLATE_OBRA_NOVA/03_PLANEJAMENTO_E_CRONOGRAMA/TEMPLATE_LINHA_DE_BALANCO.csv')
   ];
 
   let filePath = possiblePaths.find(p => fs.existsSync(p)) || possiblePaths[0];
@@ -939,7 +936,16 @@ export async function GET(request: Request) {
   }
 }
 
-export async function POST(request: Request) {
+export async function POST() {
+  return NextResponse.json(
+    {
+      error: 'Mutações de cronograma não são permitidas pela API do dashboard.',
+      detalhe: 'Gere uma proposta pelo agente e execute o motor canônico após a confirmação exigida pela governança.',
+    },
+    { status: 405 },
+  );
+
+  /*
   try {
     const body = await request.json();
     const { 
@@ -1251,4 +1257,5 @@ export async function POST(request: Request) {
       details: String(error)
     }, { status: 500 });
   }
+  */
 }

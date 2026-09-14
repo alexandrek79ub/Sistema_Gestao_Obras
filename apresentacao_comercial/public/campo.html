@@ -222,10 +222,10 @@
 
         <div class="grid grid-cols-2 gap-2">
           <button type="button" id="btnFvsAprov" onclick="setFvsStatus(true)" class="py-2.5 px-3 rounded-xl text-xs font-bold border bg-emerald-600 text-white border-emerald-500">
-            🟢 Aprovado (Liberar)
+            🟢 Conforme (submeter)
           </button>
           <button type="button" id="btnFvsReprov" onclick="setFvsStatus(false)" class="py-2.5 px-3 rounded-xl text-xs font-bold border bg-zinc-950 text-zinc-400 border-zinc-800">
-            🔴 Reprovado (Bloquear)
+            🔴 Não conforme (submeter)
           </button>
         </div>
       </div>
@@ -250,7 +250,7 @@
       </div>
 
       <button onclick="enviarFvs()" class="w-full py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-600/30 flex items-center justify-center space-x-2">
-        <span>🛡️ Homologar FVS e Liberar Medição</span>
+        <span>🛡️ Submeter FVS para análise</span>
       </button>
     </div>
 
@@ -440,6 +440,7 @@
         eap: getEapSelecionada(),
         fvs: 'FVS-01',
         fvs_status: 'Conforme',
+        idempotencyKey: crypto.randomUUID(),
         obs: document.getElementById('txtOcorrencias').value || 'Apontamento registrado via app mobile.'
       };
 
@@ -451,7 +452,7 @@
         });
         const d = await res.json();
         if (d.success) {
-          showFeedback(true, 'RDO transmitido com sucesso!');
+          showFeedback(true, 'RDO submetido para análise. Nenhum registro oficial foi alterado.');
         } else {
           showFeedback(false, d.error || 'Erro na transmissão');
         }
@@ -470,12 +471,12 @@
         obra: obra,
         codigo: cod,
         data: document.getElementById('inputData').value.split('-').reverse().join('/'),
-        status: state.fvsStatus ? '🟢 Aprovado' : '🔴 Reprovado',
-        responsavel: 'Mestre de Obras / Eng. Residente',
+        status: state.fvsStatus ? 'CONFORME_INFORMADO' : 'NAO_CONFORME_INFORMADO',
         medicao_tolerancia: document.getElementById('txtTolerancia').value,
         itens_conferidos: ['Conformidade com POP e Projeto'],
         observacoes: 'Inspeção validada via dispositivo móvel no canteiro.',
-        assinatura: state.hasSignature ? 'Assinado na tela' : 'Não assinado'
+        assinatura: state.hasSignature ? 'Capturada na tela' : 'Pendente',
+        idempotencyKey: crypto.randomUUID(),
       };
 
       try {
@@ -486,7 +487,7 @@
         });
         const d = await res.json();
         if (d.success) {
-          showFeedback(true, `FVS ${cod} homologada e medição liberada!`);
+          showFeedback(true, `FVS ${cod} submetida para análise. A medição permanece bloqueada.`);
         } else {
           showFeedback(false, d.error || 'Erro na homologação da FVS');
         }
