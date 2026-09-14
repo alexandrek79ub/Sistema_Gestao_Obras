@@ -3,6 +3,17 @@
   "sigla_obra": "TMULT",
   "area_construida_m2": 368.4,
   "prazo_meses": 6.0,
+  "cronograma": {
+    "baseline_01": {
+      "duracao_dias_uteis": 178,
+      "data_termino": "26/04/2027"
+    },
+    "revisao_ativa": {
+      "codigo": "REV-01",
+      "duracao_dias_uteis": 156,
+      "data_termino": "31/03/2027"
+    }
+  },
   "bdi_servico_pct": 27.17,
   "bdi_equipamento_pct": 15.0,
   "data_auditoria": "10/09/2026",

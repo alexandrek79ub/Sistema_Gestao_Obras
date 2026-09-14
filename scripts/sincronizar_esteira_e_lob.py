@@ -440,11 +440,6 @@ def esteira_para_lob(obra_dir, data_inicio_str="01/10/2026"):
     df_lob[cols_salvar].to_csv(out_csv, sep=';', index=False, encoding='utf-8-sig')
     print(f"[+] LINHA_DE_BALANCO.csv gerada com sucesso em: {out_csv} ({len(df_lob)} tarefas mapeadas nos 4 setores)")
 
-    template_lob = os.path.join(ROOT_DIR, "projetos", "_TEMPLATE_OBRA_NOVA", "03_PLANEJAMENTO_E_CRONOGRAMA", "TEMPLATE_LINHA_DE_BALANCO.csv")
-    if os.path.exists(os.path.dirname(template_lob)):
-        df_lob[cols_salvar].to_csv(template_lob, sep=';', index=False, encoding='utf-8-sig')
-        print(f"[+] TEMPLATE_LINHA_DE_BALANCO.csv atualizado em: {template_lob}")
-
     try:
         analisar_sobreposicoes_e_efetivo(obra_dir, permitir_sobreposicao=False, df_lob_in=df_lob)
     except Exception as err:
@@ -734,7 +729,9 @@ def verificar_cpm_vs_lob(obra_dir, data_inicio_str="01/10/2026", limite_dias=5):
 
     lob_min_dt = df_lob['dt_ini'].min()
     lob_max_dt = df_lob['dt_fim'].max()
-    lob_duracao_total = dias_uteis_entre_calc(lob_min_dt, lob_max_dt) + 1
+    # dias_uteis_entre_calc já delega para uma contagem inclusiva. Somar mais
+    # um dia fazia o relatório divergente declarar uma duração maior que a LOB.
+    lob_duracao_total = dias_uteis_entre_calc(lob_min_dt, lob_max_dt)
 
     lob_vagoes = {}
     for v, grp in df_lob.groupby('VAGAO'):

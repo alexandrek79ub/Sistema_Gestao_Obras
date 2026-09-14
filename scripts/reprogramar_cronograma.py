@@ -46,8 +46,9 @@ if ROOT_DIR not in sys.path:
 from scripts.common.obra_io import resolver_obra_dir, carregar_config_obra
 from scripts.common.calendario import (
     parse_date_br, format_date_br,
-    somar_dias_uteis_6d, contar_dias_uteis_6d, proximo_dia_util_6d
+    somar_dias_uteis_6d, contar_dias_uteis_6d, proximo_dia_util_6d, dia_util_para_data_6d
 )
+from scripts.common.cpm import calcular_cpm_detalhado
 
 # Configuração de encoding UTF-8 no Windows
 if sys.platform == "win32":
@@ -373,6 +374,7 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
     if not os.path.exists(cpm_path):
         return 0, []
 
+
     try:
         with open(cpm_path, 'r', encoding='utf-8') as f:
             dados = json.load(f)
@@ -432,6 +434,52 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
     except Exception as e:
         print(f"[!] Erro ao sincronizar dados_cpm.json: {e}")
         return 0, []
+
+
+def reprogramar_atividades_cpm(args):
+    """Reprograma o CPM como fonte de verdade e deriva os demais artefatos."""
+    obra_dir = resolver_obra_dir(args)
+    cpm_path = os.path.join(obra_dir, '03_PLANEJAMENTO_E_CRONOGRAMA', 'dados_cpm.json')
+    with open(cpm_path, 'r', encoding='utf-8') as f:
+        dados = json.load(f)
+    atividades = {item['id']: item for item in dados.get('atividades', [])}
+
+    for aid in args.atividade_cpm:
+        if aid not in atividades:
+            raise ValueError(f"Atividade CPM inexistente: {aid}")
+        atividade = atividades[aid]
+        anterior = int(atividade['duracao_dias'])
+        if args.nova_duracao:
+            nova = args.nova_duracao
+        elif args.novo_headcount:
+            base_hc = int(atividade.get('headcount_base', args.headcount_base or 1))
+            nova = max(1, math.ceil(anterior * base_hc / args.novo_headcount))
+        else:
+            raise ValueError('Informe --nova-duracao ou --novo-headcount.')
+        atividade['duracao_dias'] = nova
+        atividade['headcount_planejado'] = args.novo_headcount or atividade.get('headcount_planejado')
+        print(f"[+] {aid}: {anterior}d -> {nova}d")
+
+    resultado = calcular_cpm_detalhado(dados['atividades'])
+    config = carregar_config_obra(obra_dir)
+    inicio = parse_date_br(config.get('data_inicio', '01/10/2026')).date()
+    termino = dia_util_para_data_6d(resultado['duracao_total_dias'] - 1, inicio)
+    print(f"[+] Novo término CPM: {termino.strftime('%d/%m/%Y')} ({resultado['duracao_total_dias']} dias úteis)")
+    if args.dry_run:
+        return
+    with open(cpm_path, 'w', encoding='utf-8') as f:
+        json.dump(dados, f, indent=2, ensure_ascii=False)
+
+    comandos = [
+        ('gerar_programacao_curto_prazo_takt.py', ['--obra', args.obra]),
+        ('sincronizar_esteira_e_lob.py', ['--obra', args.obra, '--verificar-cpm']),
+        ('gerar_histograma_sincronizado.py', ['--obra', args.obra]),
+        ('auditar_cronogramas.py', ['--obra', args.obra]),
+    ]
+    for script, parametros in comandos:
+        resultado_script = subprocess.run([sys.executable, os.path.join(ROOT_DIR, 'scripts', script), *parametros])
+        if resultado_script.returncode:
+            raise RuntimeError(f'Falha ao executar {script}.')
 
 
 # =============================================================================
@@ -727,6 +775,7 @@ Exemplos de Uso:
 
     # Alvos
     parser.add_argument("--tarefa-id", type=int, help="Número ID da tarefa (1 a N)")
+    parser.add_argument("--atividade-cpm", action="append", help="ID da atividade CPM a reprogramar; pode ser repetido")
     parser.add_argument("--vagao", type=str, help="Nome ou número do vagão (ex: 02, 06)")
     parser.add_argument("--setor", type=str, help="Filtro de setor/pavimento (ex: Zona 01)")
     parser.add_argument("--aplicar-todo-vagao", action="store_true", help="Aplica a reprogramação a todas as zonas do vagão")
@@ -736,6 +785,7 @@ Exemplos de Uso:
     parser.add_argument("--nova-data-inicio", type=str, help="Nova data de início (DD/MM/AAAA)")
     parser.add_argument("--deslocar-dias", type=int, help="Deslocar início em +/- N dias úteis")
     parser.add_argument("--novo-headcount", type=int, help="Forçar novo efetivo (se omitido, calcula via RUP)")
+    parser.add_argument("--headcount-base", type=int, help="Efetivo de referência para cálculo RUP da atividade CPM")
     parser.add_argument("--takt-dias", type=int, help="Configura novo ritmo / Takt Time padrão (1 a 6 dias úteis)")
 
     # Controle de Cascata e Sincronização
@@ -744,7 +794,12 @@ Exemplos de Uso:
     parser.add_argument("--dry-run", action="store_true", help="Apenas simula e exibe impactos sem modificar planilhas")
 
     args = parser.parse_args()
-    reprogramar(args)
+    if args.atividade_cpm:
+        reprogramar_atividades_cpm(args)
+    elif args.status or args.listar:
+        reprogramar(args)
+    else:
+        parser.error('Reprogramação exige --atividade-cpm; a LOB é saída derivada e não pode ser alterada diretamente.')
 
 
 if __name__ == '__main__':

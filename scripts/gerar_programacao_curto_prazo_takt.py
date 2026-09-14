@@ -20,6 +20,7 @@ import json
 import copy
 import argparse
 import subprocess
+import math
 from datetime import date
 
 # Raiz do repositório
@@ -28,7 +29,7 @@ if ROOT_DIR not in sys.path:
     sys.path.insert(0, ROOT_DIR)
 
 from scripts.common.obra_io import resolver_obra_dir, carregar_config_obra
-from scripts.common.calendario import dia_util_para_data_6d, parse_date_br
+from scripts.common.calendario import dia_util_para_data_6d, parse_date_br, proximo_dia_util_6d, somar_dias_uteis_6d
 
 # Blindagem UTF-8 no Windows
 if sys.platform == "win32":
@@ -62,25 +63,60 @@ def derivar_duracoes_do_cpm(cpm_path):
     mapa_cpm = carregar_mapa_cpm()
     duracoes_derivadas = {}
 
+    lotes_por_atividade = {}
     for cod_lote, info in mapa_cpm.items():
-        aid = info.get("atividade_cpm")
-        num = info.get("num", 1)
-        den = info.get("den", 1)
-        fallback_dur = info.get("fallback_dur", 2)
-        frac = num / den if den != 0 else 1.0
+        lotes_por_atividade.setdefault(info.get("atividade_cpm"), []).append((cod_lote, info))
 
-        if aid in atividades:
-            if cod_lote == "LOTE-016":
-                a09_dur = atividades.get("A09_CONCRET_LAJE_H12", 1)
-                a10_dur = atividades.get("A10_CURA_DESFORMA", 12)
-                duracoes_derivadas[cod_lote] = a09_dur + a10_dur + 3
-            elif frac == 1.0:
-                duracoes_derivadas[cod_lote] = atividades[aid]
-            else:
-                dur_calc = int(round(atividades[aid] * frac))
-                duracoes_derivadas[cod_lote] = dur_calc if dur_calc > 0 else fallback_dur
-        else:
-            duracoes_derivadas[cod_lote] = fallback_dur
+    for aid, lotes_atividade in lotes_por_atividade.items():
+        if aid not in atividades:
+            for cod_lote, info in lotes_atividade:
+                duracoes_derivadas[cod_lote] = int(info.get("fallback_dur", 2))
+            continue
+
+        # LOTE-016 representa uma janela composta de concretagem, cura e folga
+        # tecnológica; ela não é uma fração de uma única atividade CPM.
+        especiais = [(cod, info) for cod, info in lotes_atividade if cod == "LOTE-016"]
+        regulares = [(cod, info) for cod, info in lotes_atividade if cod != "LOTE-016"]
+        for cod_lote, _ in especiais:
+            duracoes_derivadas[cod_lote] = (
+                atividades.get("A09_CONCRET_LAJE_H12", 1)
+                + atividades.get("A10_CURA_DESFORMA", 12) + 3
+            )
+
+        if not regulares:
+            continue
+
+        duracao_atividade = int(atividades[aid])
+        if duracao_atividade < len(regulares):
+            raise ValueError(
+                f"Atividade {aid} tem {duracao_atividade}d para {len(regulares)} lotes; "
+                "não é possível preservar lotes com duração mínima de 1 dia."
+            )
+
+        pesos = [info.get("num", 1) / max(1, info.get("den", 1)) for _, info in regulares]
+        soma_pesos = sum(pesos)
+        quotas = [duracao_atividade * peso / soma_pesos for peso in pesos]
+        alocadas = [max(1, math.floor(quota)) for quota in quotas]
+        saldo = duracao_atividade - sum(alocadas)
+
+        # Método do maior resto: as frações dos lotes somam exatamente a duração
+        # do CPM, eliminando dias fantasmas introduzidos por arredondamento unitário.
+        ordem = sorted(range(len(regulares)), key=lambda idx: quotas[idx] - math.floor(quotas[idx]), reverse=True)
+        for idx in ordem:
+            if saldo <= 0:
+                break
+            alocadas[idx] += 1
+            saldo -= 1
+        if saldo < 0:
+            for idx in reversed(ordem):
+                while saldo < 0 and alocadas[idx] > 1:
+                    alocadas[idx] -= 1
+                    saldo += 1
+        if saldo != 0:
+            raise ValueError(f"Não foi possível ratear exatamente a duração da atividade {aid}.")
+
+        for (cod_lote, _), duracao_lote in zip(regulares, alocadas):
+            duracoes_derivadas[cod_lote] = duracao_lote
 
     return duracoes_derivadas
 
@@ -100,6 +136,46 @@ def obter_lotes_padrao(nome_obra=""):
     return copy.deepcopy(catalogo.get("lotes", []))
 
 
+def aplicar_cpm_aos_lotes(lotes, cpm_path, data_inicio):
+    """Deriva datas, duracoes e efetivo dos lotes diretamente do CPM."""
+    with open(cpm_path, "r", encoding="utf-8") as f:
+        cpm = json.load(f)
+
+    atividades = {item["id"]: dict(item) for item in cpm.get("atividades", [])}
+    pendentes = set(atividades)
+    while pendentes:
+        prontos = [aid for aid in pendentes if all(pred not in pendentes for pred in atividades[aid].get("predecessoras", []))]
+        if not prontos:
+            raise ValueError("CPM contem ciclo ou predecessora inexistente.")
+        for aid in prontos:
+            atividade = atividades[aid]
+            atividade["es"] = max((atividades[pred]["ef"] for pred in atividade.get("predecessoras", [])), default=0)
+            atividade["ef"] = atividade["es"] + int(atividade["duracao_dias"])
+            pendentes.remove(aid)
+
+    mapa = carregar_mapa_cpm()
+    ultimo_fim = {}
+    dias_semana = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]
+    for lote in lotes:
+        info = mapa.get(lote["COD_LOTE"], {})
+        atividade = atividades.get(info.get("atividade_cpm"))
+        if not atividade:
+            continue
+        duracao = max(1, int(lote["DURACAO_DIAS"]))
+        inicio_cpm = dia_util_para_data_6d(atividade["es"], data_inicio)
+        inicio = proximo_dia_util_6d(ultimo_fim[atividade["id"]]) if atividade["id"] in ultimo_fim else inicio_cpm
+        inicio = max(inicio, inicio_cpm)
+        fim = somar_dias_uteis_6d(inicio, duracao)
+        ultimo_fim[atividade["id"]] = fim
+
+        duracao_base = max(1, int(info.get("fallback_dur", duracao)))
+        efetivo_base = max(1, int(lote.get("HEADCOUNT_PREVISTO", 1)))
+        lote["HEADCOUNT_PREVISTO"] = str(math.ceil(efetivo_base * duracao_base / duracao))
+        lote["DATA_INICIO"] = inicio.strftime("%d/%m/%Y")
+        lote["DATA_FIM"] = fim.strftime("%d/%m/%Y")
+        lote["DIAS_SEMANA"] = f"Dias {atividade['es'] + 1:03d} a {atividade['es'] + duracao:03d} ({dias_semana[inicio.weekday()]}-{dias_semana[fim.weekday()]})"
+
+
 def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None):
     """Gera e salva a esteira de curto prazo (Takt / WWP) harmonizada com o CPM."""
     if not obra_dir:
@@ -115,10 +191,6 @@ def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None):
     ]
     if os.path.basename(obra_dir) == 'OBRA_TMULT':
         dest_paths.append(os.path.join(pasta_plan, 'PROGRAMACAO_CURTO_PRAZO_TMULT.csv'))
-
-    dest_template = os.path.join(ROOT_DIR, 'projetos', '_TEMPLATE_OBRA_NOVA', '03_PLANEJAMENTO_E_CRONOGRAMA', 'TEMPLATE_PROGRAMACAO_CURTO_PRAZO.csv')
-    if os.path.exists(os.path.dirname(dest_template)):
-        dest_paths.append(dest_template)
 
     lotes = obter_lotes_padrao(nome_obra)
 
@@ -138,34 +210,8 @@ def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None):
     parsed_base = parse_date_br(dt_inicio_cfg)
     base_dt = parsed_base.date() if parsed_base else date(2026, 10, 1)
 
-    weekday_br = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"]
-
-    # Carrega janelas do calendário CPM do catálogo se necessário
-    caminho_cat = os.path.join(ROOT_DIR, "apoio", "catalogo_lotes_takt.json")
-    cal_cpm_map = {}
-    if os.path.exists(caminho_cat):
-        with open(caminho_cat, "r", encoding="utf-8") as f:
-            cal_cpm_map = json.load(f).get("calendario_cpm_dias", {})
-
-    for lote in lotes:
-        cod = lote['COD_LOTE']
-        d_ini = lote.get('CPM_DIA_INICIO')
-        d_fim = lote.get('CPM_DIA_FIM')
-        if (d_ini is None or d_fim is None) and cod in cal_cpm_map:
-            d_ini, d_fim = cal_cpm_map[cod]
-
-        if d_ini is not None and d_fim is not None:
-            dt_i = dia_util_para_data_6d(d_ini - 1, base_dt)
-            dt_f = dia_util_para_data_6d(d_fim - 1, base_dt)
-            lote['DATA_INICIO'] = dt_i.strftime("%d/%m/%Y")
-            lote['DATA_FIM'] = dt_f.strftime("%d/%m/%Y")
-            lote['DURACAO_DIAS'] = str(d_fim - d_ini + 1)
-            w_i = weekday_br[dt_i.weekday()]
-            w_f = weekday_br[dt_f.weekday()]
-            if d_ini == d_fim:
-                lote['DIAS_SEMANA'] = f"Dia {d_ini:03d} ({w_i})"
-            else:
-                lote['DIAS_SEMANA'] = f"Dias {d_ini:03d} a {d_fim:03d} ({w_i}-{w_f})"
+    if os.path.exists(cpm_path):
+        aplicar_cpm_aos_lotes(lotes, cpm_path, base_dt)
 
     fieldnames = [
         'COD_LOTE', 'SEMANA', 'DIAS_SEMANA', 'DATA_INICIO', 'DATA_FIM',

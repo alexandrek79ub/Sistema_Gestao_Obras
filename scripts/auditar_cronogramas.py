@@ -88,7 +88,8 @@ def auditar_obra(obra_nome, limite_dias=5):
             config = json.load(f)
             
     is_tmult = (obra_nome == "OBRA_TMULT")
-    duracao_esperada = 178 if is_tmult else None
+    revisao_ativa = config.get("cronograma", {}).get("revisao_ativa", {})
+    duracao_esperada = revisao_ativa.get("duracao_dias_uteis") if revisao_ativa else (178 if is_tmult else None)
     lotes_esperados = 52 if is_tmult else None
     orcamento_esperado = 1660762.28 if is_tmult else None
 
@@ -125,7 +126,7 @@ def auditar_obra(obra_nome, limite_dias=5):
                 
     duracao_cpm_calc = max(ef.values()) if ef else 0
     if duracao_esperada and duracao_cpm_calc != duracao_esperada:
-        erros.append(f"CPM: Duração recalculada do Forward Pass ({duracao_cpm_calc}d) != {duracao_esperada} dias úteis.")
+        erros.append(f"CPM: Duração recalculada do Forward Pass ({duracao_cpm_calc}d) != {duracao_esperada} dias úteis da revisão ativa.")
     else:
         print(f"  ✓ Forward Pass validado: {duracao_cpm_calc} dias úteis exatos ({len(atividades)} atividades).")
 
@@ -218,7 +219,8 @@ def auditar_obra(obra_nome, limite_dias=5):
             
         if total_div == 0 and descompasso_final == 0:
             print(f"  ✓ Alinhamento perfeito: 0 de 15 vagões divergentes (tolerância {limite_dias}d).")
-            print(f"  ✓ Descompasso no marco final de entrega: +0 dias úteis (Ambos em 26/04/2027).")
+            termino = rel_div.get("cpm_data_fim_global", "data não informada")
+            print(f"  ✓ Descompasso no marco final de entrega: +0 dias úteis (Ambos em {termino}).")
 
     # -------------------------------------------------------------
     # 5. AUDITORIA DO ORÇAMENTO CONSOLIDADO E FÍSICO-FINANCEIRO

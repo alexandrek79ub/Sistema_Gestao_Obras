@@ -77,7 +77,7 @@
     },
     {
       "id": "A12_ALVENARIA_VEDACAO",
-      "duracao_dias": 20,
+        "duracao_dias": 16,
       "predecessoras": [
         "A10_CURA_DESFORMA"
       ]
@@ -113,7 +113,7 @@
     },
     {
       "id": "A17_EMBOCO_REBOCO",
-      "duracao_dias": 14,
+        "duracao_dias": 10,
       "predecessoras": [
         "A16_TESTE_HIDROSTATICO_72H",
         "A14_ELET_EMBUTIDA"
@@ -149,7 +149,7 @@
     },
     {
       "id": "A22_PISO_PORCELANATO",
-      "duracao_dias": 14,
+        "duracao_dias": 8,
       "predecessoras": [
         "A19_CONTRAPISO",
         "A18_IMPERM_WCS"
@@ -171,7 +171,7 @@
     },
     {
       "id": "A25_PINTURA_1A_DEMAO",
-      "duracao_dias": 5,
+        "duracao_dias": 3,
       "predecessoras": [
         "A24_RODAPES_ACAB",
         "A20_INFRA_DUTOS_HVAC",
@@ -181,28 +181,28 @@
     },
     {
       "id": "A26_APARELHOS_HVAC",
-      "duracao_dias": 6,
+        "duracao_dias": 4,
       "predecessoras": [
         "A25_PINTURA_1A_DEMAO"
       ]
     },
     {
       "id": "A27_LOUCAS_METAIS",
-      "duracao_dias": 6,
+        "duracao_dias": 4,
       "predecessoras": [
         "A25_PINTURA_1A_DEMAO"
       ]
     },
     {
       "id": "A28_LUMINARIAS_ESPELHOS",
-      "duracao_dias": 5,
+        "duracao_dias": 3,
       "predecessoras": [
         "A25_PINTURA_1A_DEMAO"
       ]
     },
     {
       "id": "A29_PINTURA_FINAL",
-      "duracao_dias": 7,
+        "duracao_dias": 4,
       "predecessoras": [
         "A26_APARELHOS_HVAC",
         "A27_LOUCAS_METAIS",
@@ -210,15 +210,15 @@
       ]
     },
     {
-      "id": "A30_COMISSIONAMENTO",
-      "duracao_dias": 6,
+        "id": "A30_COMISSIONAMENTO",
+        "duracao_dias": 6,
       "predecessoras": [
         "A29_PINTURA_FINAL"
       ]
     },
     {
-      "id": "A31_LIMPEZA_ENTREGA",
-      "duracao_dias": 6,
+        "id": "A31_LIMPEZA_ENTREGA",
+        "duracao_dias": 5,
       "predecessoras": [
         "A30_COMISSIONAMENTO"
       ]

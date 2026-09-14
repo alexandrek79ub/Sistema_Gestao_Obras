@@ -147,6 +147,8 @@ def pipeline_reprogramar(obra, args):
 
     if args.tarefa_id:
         reprog_args += ['--tarefa-id', args.tarefa_id]
+    for atividade_cpm in args.atividade_cpm or []:
+        reprog_args += ['--atividade-cpm', atividade_cpm]
     if args.vagao:
         reprog_args += ['--vagao', args.vagao]
     if args.setor:
@@ -157,6 +159,8 @@ def pipeline_reprogramar(obra, args):
         reprog_args += ['--nova-duracao', args.nova_duracao]
     if args.novo_headcount:
         reprog_args += ['--novo-headcount', args.novo_headcount]
+    if args.headcount_base:
+        reprog_args += ['--headcount-base', args.headcount_base]
     if args.nova_data_inicio:
         reprog_args += ['--nova-data-inicio', args.nova_data_inicio]
     if args.deslocar_dias:
@@ -339,11 +343,13 @@ Exemplos Práticos:
     # Parâmetros de Takt e Reprogramação
     parser.add_argument("--takt-dias", type=int, default=3, help="Duração do Takt Time em dias úteis (1 a 6 dias, padrão 3)")
     parser.add_argument("--tarefa-id", type=int, help="ID numérico da tarefa para reprogramar (1 a N)")
+    parser.add_argument("--atividade-cpm", action="append", help="ID CPM a reprogramar; pode ser repetido")
     parser.add_argument("--vagao", type=str, help="Prefixo ou nome do vagão para reprogramar")
     parser.add_argument("--setor", type=str, help="Filtro de setor/pavimento")
     parser.add_argument("--aplicar-todo-vagao", action="store_true", help="Aplica a reprogramação a todas as frentes do vagão")
     parser.add_argument("--nova-duracao", type=int, help="Nova duração da atividade em dias úteis")
     parser.add_argument("--novo-headcount", type=int, help="Novo efetivo de operários (recalcula duração via RUP se duração omitida)")
+    parser.add_argument("--headcount-base", type=int, help="Efetivo de referência da atividade CPM para cálculo RUP")
     parser.add_argument("--nova-data-inicio", type=str, help="Nova data de início (DD/MM/AAAA)")
     parser.add_argument("--deslocar-dias", type=int, help="Deslocar início em +/- N dias úteis")
     parser.add_argument("--origem", type=str, default="lob", choices=["lob", "curto-prazo", "cpm"], help="Fonte originária da sincronização")

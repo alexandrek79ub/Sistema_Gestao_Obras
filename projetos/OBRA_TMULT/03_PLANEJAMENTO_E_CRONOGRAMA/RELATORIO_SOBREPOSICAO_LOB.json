@@ -1,12 +1,75 @@
 {
   "obra": "OBRA_TMULT",
-  "data_analise": "13/09/2026 13:49:50",
-  "total_dias_analisados": 208,
-  "headcount_pico_diario": 19,
-  "headcount_medio_diario": 9.1,
-  "total_conflitos_espaciais": 0,
+  "data_analise": "14/09/2026 14:35:36",
+  "total_dias_analisados": 182,
+  "headcount_pico_diario": 27,
+  "headcount_medio_diario": 9.6,
+  "total_conflitos_espaciais": 4,
   "total_disciplinas_com_frentes_duplas": 0,
-  "conflitos_espaciais": [],
+  "conflitos_espaciais": [
+    {
+      "setor": "Zona 01 - Recepção/Diretoria",
+      "dias_totais": 5,
+      "periodo": "10/03/2027 a 16/02/2027",
+      "atividades": [
+        "Enfiamento de Cabos de Força, Iluminação e Cabling",
+        "Instalação de Janelas de Alumínio Linha Suprema e",
+        "Instalação de Evaporadoras Cassete, Carga de Gás R",
+        "Instalação de Luminárias Painel LED 40W, Interrupt",
+        "Execução de Contrapiso Sarrafeado e Nivelado e=3cm"
+      ],
+      "equipes": [
+        "SUB-02 Alvenaria e Revestimento",
+        "SUB-08 Climatização e HVAC",
+        "SUB-03 Elétrica e Lógica",
+        "SUB-07 Caixilharia e Esquadrias"
+      ]
+    },
+    {
+      "setor": "Zona 02 - Salas Técnicas/CPD",
+      "dias_totais": 2,
+      "periodo": "12/03/2027 a 24/02/2027",
+      "atividades": [
+        "Assentamento de Porcelanato Retificado 60x60cm - E",
+        "Montagem, Barramentos e Identificação de Circuitos",
+        "Instalação de Luminárias Painel LED 40W, Interrupt",
+        "Instalação de Evaporadoras Cassete, Carga de Gás R"
+      ],
+      "equipes": [
+        "SUB-08 Climatização e HVAC",
+        "SUB-03 Elétrica e Lógica",
+        "SUB-05 Acabamentos e Pisos"
+      ]
+    },
+    {
+      "setor": "Zona 03 - Sanitários e Apoio",
+      "dias_totais": 6,
+      "periodo": "13/02/2027 a 19/02/2027",
+      "atividades": [
+        "Instalação de Redes Frigorígenas de Cobre Isoladas",
+        "Enfiamento de Cabos de Força, Iluminação e Cabling",
+        "Impermeabilização com Membrana Polimérica em Sanit"
+      ],
+      "equipes": [
+        "SUB-08 Climatização e HVAC",
+        "SUB-01 Impermeabilização",
+        "SUB-03 Elétrica e Lógica"
+      ]
+    },
+    {
+      "setor": "Zona 04 - Cobertura e Platibanda",
+      "dias_totais": 1,
+      "periodo": "22/02/2027 a 22/02/2027",
+      "atividades": [
+        "Fixação de Portas de Alumínio, Vidros Fixos e Veda",
+        "Pressurização com Nitrogênio e Teste de Vácuo em L"
+      ],
+      "equipes": [
+        "SUB-08 Climatização e HVAC",
+        "SUB-07 Caixilharia e Esquadrias"
+      ]
+    }
+  ],
   "frentes_duplicadas": [],
-  "status_aprovacao": "CONFORME_FLUXO_NIVELADO"
+  "status_aprovacao": "ALERTA_SOBREPOSICAO_PENDENTE"
 }

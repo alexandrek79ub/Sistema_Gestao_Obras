@@ -23,6 +23,7 @@ import sys
 import re
 import json
 import argparse
+import math
 from datetime import datetime
 import pandas as pd
 import openpyxl
@@ -165,6 +166,7 @@ def recalcular_histograma_obra(obra_dir, obra_nome, prazo_meses=6):
     config = carregar_config_obra(obra_dir)
     sigla = config.get("sigla_obra", obra_nome.replace("OBRA_", ""))
     prazo_meses = int(config.get("prazo_meses", prazo_meses))
+    duracao_cronograma = config.get("cronograma", {}).get("revisao_ativa", {}).get("duracao_dias_uteis", 178)
 
     dir_rh = os.path.join(obra_dir, '06_SST_E_RH')
     os.makedirs(dir_rh, exist_ok=True)
@@ -234,7 +236,7 @@ def recalcular_histograma_obra(obra_dir, obra_nome, prazo_meses=6):
             hc_atual = 0
         hc_base = headcount_base_lotes.get(cod, hc_atual)
         delta_hc = hc_atual - hc_base
-        if delta_hc > 0:
+        if delta_hc != 0:
             semana_str = row.get('SEMANA', '')
             m_sem = re.search(r'semana\s*0?(\d+)', semana_str.lower())
             mes_alvo = 1
@@ -250,10 +252,35 @@ def recalcular_histograma_obra(obra_dir, obra_nome, prazo_meses=6):
                             break
             idx_m = mes_alvo - 1
             equipe_desc = row.get('EQUIPE_PREVISTA', '')
-            dist_reforco = extrair_profissoes_equipe(equipe_desc, delta_hc)
+            sinal = 1 if delta_hc > 0 else -1
+            dist_reforco = extrair_profissoes_equipe(equipe_desc, abs(delta_hc))
             for cargo_k, qtd in dist_reforco.items():
                 if cargo_k in matriz_final and idx_m < len(matriz_final[cargo_k]):
-                    matriz_final[cargo_k][idx_m] += qtd
+                    matriz_final[cargo_k][idx_m] = max(0, matriz_final[cargo_k][idx_m] + (sinal * qtd))
+
+    # Crashing altera a distribuição temporal do efetivo, não a quantidade de
+    # trabalho contratada. Reescala somente as funções produtivas para conservar
+    # o HH de referência; a equipe fixa de Gestão/SST é mantida intacta.
+    funcoes_fixas = {"eng_residente", "mestre_obras", "tst", "almoxarife", "vigia"}
+    hh_base_produtivo = sum(
+        sum(valores) for cargo, valores in matriz_base_obra.items()
+        if cargo not in funcoes_fixas
+    )
+    celulas_produtivas = [
+        (cargo, mes, matriz_final[cargo][mes])
+        for cargo in matriz_final if cargo not in funcoes_fixas
+        for mes in range(prazo_meses) if matriz_final[cargo][mes] > 0
+    ]
+    soma_reprogramada = sum(valor for _, _, valor in celulas_produtivas)
+    if soma_reprogramada and soma_reprogramada != hh_base_produtivo:
+        quotas = [valor * hh_base_produtivo / soma_reprogramada for _, _, valor in celulas_produtivas]
+        alocadas = [math.floor(quota) for quota in quotas]
+        saldo = hh_base_produtivo - sum(alocadas)
+        ordem = sorted(range(len(celulas_produtivas),), key=lambda idx: quotas[idx] - alocadas[idx], reverse=True)
+        for idx in ordem[:saldo]:
+            alocadas[idx] += 1
+        for (cargo, mes, _), valor in zip(celulas_produtivas, alocadas):
+            matriz_final[cargo][mes] = valor
 
     # Montar dados finais
     dados_mo = []
@@ -300,7 +327,7 @@ def recalcular_histograma_obra(obra_dir, obra_nome, prazo_meses=6):
     # ─── 4. Relatório MD ──────────────────────────────────────────────────────
     _gerar_relatorio_md(
         dir_rh, sigla, dados_mo, totais_headcount, totais_hh,
-        total_geral_hc_meses, total_geral_hh, prazo_meses
+        total_geral_hc_meses, total_geral_hh, prazo_meses, duracao_cronograma
     )
 
     print(f"  Headcount por Mês: {[int(x) for x in totais_headcount]}")
@@ -443,7 +470,7 @@ def _gerar_xlsx_histograma(dir_rh, sigla, dados_mo, totais_hc, totais_hh,
 # =============================================================================
 
 def _gerar_relatorio_md(dir_rh, sigla, dados_mo, totais_hc, totais_hh,
-                         total_hc_meses, total_hh, prazo_meses):
+                         total_hc_meses, total_hh, prazo_meses, duracao_cronograma):
     md_path = os.path.join(dir_rh, f"RELATORIO_HISTOGRAMA_MO_{sigla}.md")
     pico_hc = max(totais_hc)
     media_hc = sum(totais_hc) / len(totais_hc)
@@ -496,7 +523,7 @@ def _gerar_relatorio_md(dir_rh, sigla, dados_mo, totais_hc, totais_hh,
         "1. **Equipe Fixa de Gestão & SST (5 profissionais):** Engenheiro Residente, Mestre de Obras Geral, TST, Almoxarife e Vigia Noturno permanecem estáveis em todos os meses.",
         "2. **Fluxo Contínuo da Produção:** Equipes de oficiais e ajudantes movem-se continuamente entre as frentes em ciclos Takt, eliminando ociosidade e picos fictícios.",
         "3. **Crashing e Reprogramação:** Se o ritmo de um lote for acelerado por aumento de equipe, o histograma do mês correspondente é automaticamente incrementado.",
-        f"4. **Conformidade Físico-Financeira:** Total de **{total_hh:,.0f} HH** em 178 dias úteis de produção alinhado ao orçamento executivo.",
+        f"4. **Conformidade Físico-Financeira:** Total de **{total_hh:,.0f} HH** em {duracao_cronograma} dias úteis de produção alinhado ao orçamento executivo.",
     ]
 
     with open(md_path, 'w', encoding='utf-8') as f:
