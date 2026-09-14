@@ -176,7 +176,7 @@ def aplicar_cpm_aos_lotes(lotes, cpm_path, data_inicio):
         lote["DIAS_SEMANA"] = f"Dias {atividade['es'] + 1:03d} a {atividade['es'] + duracao:03d} ({dias_semana[inicio.weekday()]}-{dias_semana[fim.weekday()]})"
 
 
-def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None):
+def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None, sincronizar_lob=True):
     """Gera e salva a esteira de curto prazo (Takt / WWP) harmonizada com o CPM."""
     if not obra_dir:
         obra_dir = os.path.join(ROOT_DIR, 'projetos', nome_obra)
@@ -232,6 +232,8 @@ def salvar_programacao_obra(nome_obra, takt_dias=3, obra_dir=None):
         print(f'[LEAN TAKT] Sucesso: {len(lotes)} lotes gravados em {p}')
 
     # Sincronização Automática com a Linha de Balanço (LOB)
+    if not sincronizar_lob:
+        return
     try:
         script_sync = os.path.join(ROOT_DIR, 'scripts', 'sincronizar_esteira_e_lob.py')
         if os.path.exists(script_sync):
@@ -246,10 +248,11 @@ def main():
     parser.add_argument('--obra', type=str, default='OBRA_TMULT', help='Nome da pasta da obra em projetos/')
     parser.add_argument('--dir', type=str, default=None, help='Caminho direto absoluto ou relativo para a pasta da obra')
     parser.add_argument('--takt-dias', type=int, default=3, help='Duração do Takt Time em dias úteis (1 a 6 dias, padrão 3)')
+    parser.add_argument('--sem-lob', action='store_true')
     args = parser.parse_args()
 
     obra_dir = resolver_obra_dir(args)
-    salvar_programacao_obra(args.obra, takt_dias=args.takt_dias, obra_dir=obra_dir)
+    salvar_programacao_obra(args.obra, takt_dias=args.takt_dias, obra_dir=obra_dir, sincronizar_lob=not args.sem_lob)
 
 
 if __name__ == '__main__':

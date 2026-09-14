@@ -3,7 +3,7 @@
     <Name>TMULT_BASELINE_01</Name>
     <Title>TMULT — Terminal Multiuso (Porto do Açu) — Edifício Administrativo</Title>
     <StartDate>2026-10-01T08:00:00</StartDate>
-    <FinishDate>2027-03-30T17:00:00</FinishDate>
+    <FinishDate>2027-02-10T17:00:00</FinishDate>
     <CalendarUID>1</CalendarUID>
     <DefaultStartTime>08:00:00</DefaultStartTime>
     <DefaultFinishTime>17:00:00</DefaultFinishTime>
@@ -14,12 +14,12 @@
         <Task>
             <UID>0</UID>
             <ID>0</ID>
-            <Name>TMULT — TERMINAL MULTIUSO (PORTO DO AÇU) — EDIFÍCIO ADMINISTRATIVO (180 DIAS)</Name>
+            <Name>TMULT — TERMINAL MULTIUSO (PORTO DO AÇU) — EDIFÍCIO ADMINISTRATIVO (132 DIAS CPM)</Name>
             <Type>1</Type>
-            <CreateDate>2026-09-13T08:00:00</CreateDate>
+            <CreateDate>2026-09-14T08:00:00</CreateDate>
             <Start>2026-10-01T08:00:00</Start>
-            <Finish>2027-03-30T17:00:00</Finish>
-            <Duration>PT1440H0M0S</Duration>
+            <Finish>2027-02-10T17:00:00</Finish>
+            <Duration>PT1056H0M0S</Duration>
             <Summary>1</Summary>
             <Critical>1</Critical>
         </Task>
@@ -28,20 +28,22 @@
             <ID>1</ID>
             <Name>A01 MOB CANTEIRO</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
+            <Duration>PT56H0M0S</Duration>
             <Start>2026-10-01T08:00:00</Start>
-            <Finish>2026-10-11T17:00:00</Finish>
+            <Finish>2026-10-08T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
         </Task>
         <Task>
             <UID>2</UID>
             <ID>2</ID>
             <Name>A02 ESCAV INFRA</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2026-10-11T08:00:00</Start>
-            <Finish>2026-10-17T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2026-10-08T08:00:00</Start>
+            <Finish>2026-10-12T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>1</PredecessorUID>
                 <Type>1</Type>
@@ -55,10 +57,11 @@
             <ID>3</ID>
             <Name>A03 SAPATAS CONC</Name>
             <Active>1</Active>
-            <Duration>PT56H0M0S</Duration>
-            <Start>2026-10-17T08:00:00</Start>
-            <Finish>2026-10-24T17:00:00</Finish>
+            <Duration>PT40H0M0S</Duration>
+            <Start>2026-10-12T08:00:00</Start>
+            <Finish>2026-10-17T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>2</PredecessorUID>
                 <Type>1</Type>
@@ -72,10 +75,11 @@
             <ID>4</ID>
             <Name>A04 BALDRAMES CONC</Name>
             <Active>1</Active>
-            <Duration>PT64H0M0S</Duration>
-            <Start>2026-10-24T08:00:00</Start>
-            <Finish>2026-11-01T17:00:00</Finish>
+            <Duration>PT48H0M0S</Duration>
+            <Start>2026-10-17T08:00:00</Start>
+            <Finish>2026-10-23T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>3</PredecessorUID>
                 <Type>1</Type>
@@ -89,10 +93,11 @@
             <ID>5</ID>
             <Name>A05 IMPERM BALDRAME</Name>
             <Active>1</Active>
-            <Duration>PT24H0M0S</Duration>
-            <Start>2026-11-01T08:00:00</Start>
-            <Finish>2026-11-04T17:00:00</Finish>
+            <Duration>PT16H0M0S</Duration>
+            <Start>2026-10-23T08:00:00</Start>
+            <Finish>2026-10-25T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>4</PredecessorUID>
                 <Type>1</Type>
@@ -106,10 +111,11 @@
             <ID>6</ID>
             <Name>A06 REATERRO INFRA</Name>
             <Active>1</Active>
-            <Duration>PT24H0M0S</Duration>
-            <Start>2026-11-04T08:00:00</Start>
-            <Finish>2026-11-07T17:00:00</Finish>
+            <Duration>PT16H0M0S</Duration>
+            <Start>2026-10-25T08:00:00</Start>
+            <Finish>2026-10-27T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>5</PredecessorUID>
                 <Type>1</Type>
@@ -123,10 +129,11 @@
             <ID>7</ID>
             <Name>A07 PILARES SUPRA</Name>
             <Active>1</Active>
-            <Duration>PT72H0M0S</Duration>
-            <Start>2026-11-07T08:00:00</Start>
-            <Finish>2026-11-16T17:00:00</Finish>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2026-10-27T08:00:00</Start>
+            <Finish>2026-11-03T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>6</PredecessorUID>
                 <Type>1</Type>
@@ -140,10 +147,11 @@
             <ID>8</ID>
             <Name>A08 VIGAS LAJE FORMA</Name>
             <Active>1</Active>
-            <Duration>PT64H0M0S</Duration>
-            <Start>2026-11-16T08:00:00</Start>
-            <Finish>2026-11-24T17:00:00</Finish>
+            <Duration>PT48H0M0S</Duration>
+            <Start>2026-11-03T08:00:00</Start>
+            <Finish>2026-11-09T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>7</PredecessorUID>
                 <Type>1</Type>
@@ -158,9 +166,10 @@
             <Name>A09 CONCRET LAJE H12</Name>
             <Active>1</Active>
             <Duration>PT8H0M0S</Duration>
-            <Start>2026-11-24T08:00:00</Start>
-            <Finish>2026-11-25T17:00:00</Finish>
+            <Start>2026-11-09T08:00:00</Start>
+            <Finish>2026-11-10T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>8</PredecessorUID>
                 <Type>1</Type>
@@ -175,9 +184,10 @@
             <Name>A10 CURA DESFORMA</Name>
             <Active>1</Active>
             <Duration>PT96H0M0S</Duration>
-            <Start>2026-11-25T08:00:00</Start>
-            <Finish>2026-12-07T17:00:00</Finish>
+            <Start>2026-11-10T08:00:00</Start>
+            <Finish>2026-11-22T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>9</PredecessorUID>
                 <Type>1</Type>
@@ -191,10 +201,11 @@
             <ID>11</ID>
             <Name>A11 ESTRUT TERCAS COB</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2026-12-07T08:00:00</Start>
-            <Finish>2026-12-17T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2026-11-22T08:00:00</Start>
+            <Finish>2026-11-29T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>3840</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>10</PredecessorUID>
                 <Type>1</Type>
@@ -208,10 +219,11 @@
             <ID>12</ID>
             <Name>A12 ALVENARIA VEDACAO</Name>
             <Active>1</Active>
-            <Duration>PT160H0M0S</Duration>
-            <Start>2026-12-17T08:00:00</Start>
-            <Finish>2027-01-06T17:00:00</Finish>
+            <Duration>PT120H0M0S</Duration>
+            <Start>2026-11-22T08:00:00</Start>
+            <Finish>2026-12-07T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>10</PredecessorUID>
                 <Type>1</Type>
@@ -225,10 +237,11 @@
             <ID>13</ID>
             <Name>A13 TELHAS SANDWICH PLAT</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2027-01-06T08:00:00</Start>
-            <Finish>2027-01-16T17:00:00</Finish>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2026-12-07T08:00:00</Start>
+            <Finish>2026-12-14T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>11</PredecessorUID>
                 <Type>1</Type>
@@ -249,10 +262,11 @@
             <ID>14</ID>
             <Name>A14 ELET EMBUTIDA</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2027-01-06T08:00:00</Start>
-            <Finish>2027-01-16T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2026-12-14T08:00:00</Start>
+            <Finish>2026-12-21T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>960</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>13</PredecessorUID>
                 <Type>1</Type>
@@ -266,10 +280,11 @@
             <ID>15</ID>
             <Name>A15 HIDR EMBUTIDA</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2027-01-16T08:00:00</Start>
-            <Finish>2027-01-26T17:00:00</Finish>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2026-12-14T08:00:00</Start>
+            <Finish>2026-12-21T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>13</PredecessorUID>
                 <Type>1</Type>
@@ -283,10 +298,11 @@
             <ID>16</ID>
             <Name>A16 TESTE HIDROSTATICO 72H</Name>
             <Active>1</Active>
-            <Duration>PT24H0M0S</Duration>
-            <Start>2027-01-26T08:00:00</Start>
-            <Finish>2027-01-29T17:00:00</Finish>
+            <Duration>PT16H0M0S</Duration>
+            <Start>2026-12-21T08:00:00</Start>
+            <Finish>2026-12-23T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>15</PredecessorUID>
                 <Type>1</Type>
@@ -300,10 +316,11 @@
             <ID>17</ID>
             <Name>A17 EMBOCO REBOCO</Name>
             <Active>1</Active>
-            <Duration>PT112H0M0S</Duration>
-            <Start>2027-01-29T08:00:00</Start>
-            <Finish>2027-02-12T17:00:00</Finish>
+            <Duration>PT80H0M0S</Duration>
+            <Start>2026-12-23T08:00:00</Start>
+            <Finish>2027-01-02T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>16</PredecessorUID>
                 <Type>1</Type>
@@ -324,10 +341,11 @@
             <ID>18</ID>
             <Name>A18 IMPERM WCS</Name>
             <Active>1</Active>
-            <Duration>PT24H0M0S</Duration>
-            <Start>2027-01-29T08:00:00</Start>
-            <Finish>2027-02-01T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT16H0M0S</Duration>
+            <Start>2027-01-02T08:00:00</Start>
+            <Finish>2027-01-04T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>960</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>17</PredecessorUID>
                 <Type>1</Type>
@@ -341,10 +359,11 @@
             <ID>19</ID>
             <Name>A19 CONTRAPISO</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2027-02-01T08:00:00</Start>
-            <Finish>2027-02-07T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-01-02T08:00:00</Start>
+            <Finish>2027-01-06T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>17</PredecessorUID>
                 <Type>1</Type>
@@ -358,10 +377,11 @@
             <ID>20</ID>
             <Name>A20 INFRA DUTOS HVAC</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2027-02-07T08:00:00</Start>
-            <Finish>2027-02-17T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2027-01-02T08:00:00</Start>
+            <Finish>2027-01-09T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>4800</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>17</PredecessorUID>
                 <Type>1</Type>
@@ -375,10 +395,11 @@
             <ID>21</ID>
             <Name>A21 ESQUADRIAS FIX</Name>
             <Active>1</Active>
-            <Duration>PT64H0M0S</Duration>
-            <Start>2027-02-17T08:00:00</Start>
-            <Finish>2027-02-25T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT48H0M0S</Duration>
+            <Start>2027-01-02T08:00:00</Start>
+            <Finish>2027-01-08T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>5280</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>17</PredecessorUID>
                 <Type>1</Type>
@@ -392,10 +413,11 @@
             <ID>22</ID>
             <Name>A22 PISO PORCELANATO</Name>
             <Active>1</Active>
-            <Duration>PT112H0M0S</Duration>
-            <Start>2027-02-25T08:00:00</Start>
-            <Finish>2027-03-11T17:00:00</Finish>
+            <Duration>PT80H0M0S</Duration>
+            <Start>2027-01-06T08:00:00</Start>
+            <Finish>2027-01-16T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>19</PredecessorUID>
                 <Type>1</Type>
@@ -416,10 +438,11 @@
             <ID>23</ID>
             <Name>A23 FIACAO TELECOM</Name>
             <Active>1</Active>
-            <Duration>PT80H0M0S</Duration>
-            <Start>2027-02-25T08:00:00</Start>
-            <Finish>2027-03-07T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Duration>PT56H0M0S</Duration>
+            <Start>2027-01-02T08:00:00</Start>
+            <Finish>2027-01-09T17:00:00</Finish>
+            <Critical>0</Critical>
+            <TotalSlack>4800</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>17</PredecessorUID>
                 <Type>1</Type>
@@ -433,10 +456,11 @@
             <ID>24</ID>
             <Name>A24 RODAPES ACAB</Name>
             <Active>1</Active>
-            <Duration>PT32H0M0S</Duration>
-            <Start>2027-03-07T08:00:00</Start>
-            <Finish>2027-03-11T17:00:00</Finish>
+            <Duration>PT24H0M0S</Duration>
+            <Start>2027-01-16T08:00:00</Start>
+            <Finish>2027-01-19T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>22</PredecessorUID>
                 <Type>1</Type>
@@ -450,10 +474,11 @@
             <ID>25</ID>
             <Name>A25 PINTURA 1A DEMAO</Name>
             <Active>1</Active>
-            <Duration>PT40H0M0S</Duration>
-            <Start>2027-03-11T08:00:00</Start>
-            <Finish>2027-03-16T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-01-19T08:00:00</Start>
+            <Finish>2027-01-23T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>24</PredecessorUID>
                 <Type>1</Type>
@@ -488,10 +513,11 @@
             <ID>26</ID>
             <Name>A26 APARELHOS HVAC</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2027-03-11T08:00:00</Start>
-            <Finish>2027-03-17T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-01-23T08:00:00</Start>
+            <Finish>2027-01-27T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>25</PredecessorUID>
                 <Type>1</Type>
@@ -505,10 +531,11 @@
             <ID>27</ID>
             <Name>A27 LOUCAS METAIS</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2027-03-17T08:00:00</Start>
-            <Finish>2027-03-23T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-01-23T08:00:00</Start>
+            <Finish>2027-01-27T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>25</PredecessorUID>
                 <Type>1</Type>
@@ -522,10 +549,11 @@
             <ID>28</ID>
             <Name>A28 LUMINARIAS ESPELHOS</Name>
             <Active>1</Active>
-            <Duration>PT40H0M0S</Duration>
-            <Start>2027-03-23T08:00:00</Start>
-            <Finish>2027-03-28T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-01-23T08:00:00</Start>
+            <Finish>2027-01-27T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>25</PredecessorUID>
                 <Type>1</Type>
@@ -539,10 +567,11 @@
             <ID>29</ID>
             <Name>A29 PINTURA FINAL</Name>
             <Active>1</Active>
-            <Duration>PT56H0M0S</Duration>
-            <Start>2027-03-28T08:00:00</Start>
-            <Finish>2027-04-04T17:00:00</Finish>
+            <Duration>PT40H0M0S</Duration>
+            <Start>2027-01-27T08:00:00</Start>
+            <Finish>2027-02-01T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>26</PredecessorUID>
                 <Type>1</Type>
@@ -570,10 +599,11 @@
             <ID>30</ID>
             <Name>A30 COMISSIONAMENTO</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2027-03-28T08:00:00</Start>
-            <Finish>2027-04-03T17:00:00</Finish>
+            <Duration>PT32H0M0S</Duration>
+            <Start>2027-02-01T08:00:00</Start>
+            <Finish>2027-02-05T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>29</PredecessorUID>
                 <Type>1</Type>
@@ -587,10 +617,11 @@
             <ID>31</ID>
             <Name>A31 LIMPEZA ENTREGA</Name>
             <Active>1</Active>
-            <Duration>PT48H0M0S</Duration>
-            <Start>2027-04-03T08:00:00</Start>
-            <Finish>2027-04-09T17:00:00</Finish>
+            <Duration>PT40H0M0S</Duration>
+            <Start>2027-02-05T08:00:00</Start>
+            <Finish>2027-02-10T17:00:00</Finish>
             <Critical>1</Critical>
+            <TotalSlack>0</TotalSlack>
             <PredecessorLink>
                 <PredecessorUID>30</PredecessorUID>
                 <Type>1</Type>

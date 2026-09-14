@@ -9,9 +9,9 @@
       "data_termino": "26/04/2027"
     },
     "revisao_ativa": {
-      "codigo": "REV-01",
-      "duracao_dias_uteis": 156,
-      "data_termino": "31/03/2027"
+      "codigo": "REV-SSOT",
+      "duracao_dias_uteis": 132,
+      "data_termino": "03/03/2027"
     }
   },
   "bdi_servico_pct": 27.17,
@@ -22,7 +22,7 @@
     "particao_mo_pct": 0.35,
     "particao_mat_pct": 0.65,
     "retencao_pct": 0.05,
-    "adiantamento_pct": 0.10,
+    "adiantamento_pct": 0.1,
     "aliquota_impostos_pct": 0.0865,
     "bdi_indireto_pct": 0.0594
   },

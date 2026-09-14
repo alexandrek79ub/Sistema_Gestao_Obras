@@ -4,18 +4,18 @@ Gestão;Mestre de Obras Geral (100%);Mensalista;7120.0;1;1;1;1;1;1;6;1320
 SST / Apoio;Técnico de Segurança do Trabalho (TST);Mensalista;4500.0;1;1;1;1;1;1;6;1320
 SST / Apoio;Almoxarife / Apontador de Campo;Mensalista;3500.0;1;1;1;1;1;1;6;1320
 SST / Apoio;Vigia Noturno / Segurança Patrimonial;Mensalista;3500.0;1;1;1;1;1;1;6;1320
-Produção;Pedreiro Oficial (Alvenaria / Reboco);Horista/Produção;3200.0;1;1;5;4;0;0;11;2420
+Produção;Pedreiro Oficial (Alvenaria / Reboco);Horista/Produção;3200.0;1;1;6;3;0;0;11;2420
 Produção;Ladrilhista / Azulejista (Porcelanato);Horista/Produção;3400.0;0;0;0;4;2;0;6;1320
 Produção;Carpinteiro de Fôrmas e Escoramento;Horista/Produção;3200.0;0;2;0;0;0;0;2;440
 Produção;Armador de Ferragens CA-50/CA-60;Horista/Produção;3200.0;1;2;0;0;0;0;3;660
 Produção;Montador de Estrutura Metálica / Telhadista;Especialista;3600.0;0;0;2;0;0;0;2;440
-Produção;Pintor Oficial Imobiliário;Horista/Produção;3100.0;0;0;0;0;4;4;8;1760
-Produção;Servente de Obras / Ajudante Prático;Horista/Produção;2200.0;2;3;5;8;3;4;25;5500
-Instalações;Eletricista Instalador / Telecom;Oficial;3300.0;0;0;1;1;1;2;5;1100
-Instalações;Encanador / Bombeiro Hidráulico;Oficial;3300.0;0;0;0;1;0;1;2;440
-Instalações;Mecânico / Montador de Climatização HVAC;Especialista;3800.0;0;0;0;0;1;2;3;660
+Produção;Pintor Oficial Imobiliário;Horista/Produção;3100.0;0;0;0;0;6;2;8;1760
+Produção;Servente de Obras / Ajudante Prático;Horista/Produção;2200.0;2;3;6;7;6;2;26;5720
+Instalações;Eletricista Instalador / Telecom;Oficial;3300.0;0;0;1;1;2;1;5;1100
+Instalações;Encanador / Bombeiro Hidráulico;Oficial;3300.0;0;0;0;1;0;0;1;220
+Instalações;Mecânico / Montador de Climatização HVAC;Especialista;3800.0;0;0;0;0;2;1;3;660
 Instalações;Marceneiro / Montador de Esquadrias;Oficial;3200.0;0;0;0;0;1;0;1;220
 Apoio;Operador de Retroescavadeira / Máquinas;Operador;3600.0;0;0;0;0;0;0;0;0
-Apoio;Auxiliar de Limpeza Especializada Pós-Obra;Apoio;2100.0;0;0;0;0;0;4;4;880
-TOTAL;HEADCOUNT TOTAL DE CAMPO;—;0.0;9;13;18;23;17;22;102;22440
-TOTAL;TOTAL HORAS-HOMEM (HH/mês);—;0.0;1980;2860;3960;5060;3740;4840;102;22440
+Apoio;Auxiliar de Limpeza Especializada Pós-Obra;Apoio;2100.0;0;0;0;0;3;1;4;880
+TOTAL;HEADCOUNT TOTAL DE CAMPO;—;0.0;9;13;20;21;27;12;102;22440
+TOTAL;TOTAL HORAS-HOMEM (HH/mês);—;0.0;1980;2860;4400;4620;5940;2640;102;22440

@@ -77,6 +77,20 @@ HEADCOUNT_PADRAO_VAGAO = {
     "15": 12   # Comissionamento & Entrega
 }
 
+HEADCOUNT_BASE_CPM = {
+    'A01_MOB_CANTEIRO': 7, 'A02_ESCAV_INFRA': 7, 'A03_SAPATAS_CONC': 7,
+    'A04_BALDRAMES_CONC': 8, 'A05_IMPERM_BALDRAME': 8, 'A06_REATERRO_INFRA': 8,
+    'A07_PILARES_SUPRA': 14, 'A08_VIGAS_LAJE_FORMA': 14, 'A09_CONCRET_LAJE_H12': 14,
+    'A10_CURA_DESFORMA': 14, 'A11_ESTRUT_TERCAS_COB': 9, 'A12_ALVENARIA_VEDACAO': 10,
+    'A13_TELHAS_SANDWICH_PLAT': 9, 'A14_ELET_EMBUTIDA': 8, 'A15_HIDR_EMBUTIDA': 8,
+    'A16_TESTE_HIDROSTATICO_72H': 8, 'A17_EMBOCO_REBOCO': 8, 'A18_IMPERM_WCS': 10,
+    'A19_CONTRAPISO': 10, 'A20_INFRA_DUTOS_HVAC': 6, 'A21_ESQUADRIAS_FIX': 6,
+    'A22_PISO_PORCELANATO': 10, 'A23_FIACAO_TELECOM': 8, 'A24_RODAPES_ACAB': 10,
+    'A25_PINTURA_1A_DEMAO': 8, 'A26_APARELHOS_HVAC': 6, 'A27_LOUCAS_METAIS': 8,
+    'A28_LUMINARIAS_ESPELHOS': 8, 'A29_PINTURA_FINAL': 8, 'A30_COMISSIONAMENTO': 12,
+    'A31_LIMPEZA_ENTREGA': 12,
+}
+
 
 # =============================================================================
 # FUNÇÕES DE DATA — wrappers semânticos sobre calendario.py (regime 6d)
@@ -436,6 +450,25 @@ def sync_cpm_schedule(base_path, obra, modified_rows, dry_run=False):
         return 0, []
 
 
+def registrar_revisao_ativa(obra_dir, duracao_dias, data_termino):
+    """Promove uma revisao aprovada sem sobrescrever a baseline contratual."""
+    config_path = os.path.join(obra_dir, 'config_obra.json')
+    with open(config_path, 'r', encoding='utf-8') as arquivo:
+        config = json.load(arquivo)
+    cronograma = config.setdefault('cronograma', {})
+    anterior = dict(cronograma.get('revisao_ativa', {}))
+    historico = cronograma.setdefault('revisoes', [])
+    if anterior and anterior not in historico:
+        historico.append(anterior)
+    cronograma['revisao_ativa'] = {
+        'codigo': f"REV-{len(historico) + 1:02d}",
+        'duracao_dias_uteis': duracao_dias,
+        'data_termino': data_termino.strftime('%d/%m/%Y'),
+    }
+    with open(config_path, 'w', encoding='utf-8') as arquivo:
+        json.dump(config, arquivo, indent=2, ensure_ascii=False)
+
+
 def reprogramar_atividades_cpm(args):
     """Reprograma o CPM como fonte de verdade e deriva os demais artefatos."""
     obra_dir = resolver_obra_dir(args)
@@ -452,7 +485,12 @@ def reprogramar_atividades_cpm(args):
         if args.nova_duracao:
             nova = args.nova_duracao
         elif args.novo_headcount:
-            base_hc = int(atividade.get('headcount_base', args.headcount_base or 1))
+            base_hc = int(
+                atividade.get('headcount_base')
+                or args.headcount_base
+                or HEADCOUNT_BASE_CPM.get(aid, 1)
+            )
+            atividade['headcount_base'] = base_hc
             nova = max(1, math.ceil(anterior * base_hc / args.novo_headcount))
         else:
             raise ValueError('Informe --nova-duracao ou --novo-headcount.')
@@ -467,12 +505,15 @@ def reprogramar_atividades_cpm(args):
     print(f"[+] Novo término CPM: {termino.strftime('%d/%m/%Y')} ({resultado['duracao_total_dias']} dias úteis)")
     if args.dry_run:
         return
+    if args.aprovar_revisao:
+        registrar_revisao_ativa(obra_dir, resultado['duracao_total_dias'], termino)
     with open(cpm_path, 'w', encoding='utf-8') as f:
         json.dump(dados, f, indent=2, ensure_ascii=False)
 
     comandos = [
-        ('gerar_programacao_curto_prazo_takt.py', ['--obra', args.obra]),
-        ('sincronizar_esteira_e_lob.py', ['--obra', args.obra, '--verificar-cpm']),
+        ('gerar_programacao_curto_prazo_takt.py', ['--obra', args.obra, '--sem-lob']),
+        # CPM é a fonte única: gera Takt e depois deriva a LOB a partir do Takt.
+        ('sincronizar_esteira_e_lob.py', ['--obra', args.obra, '--modo', 'esteira_para_lob', '--verificar-cpm']),
         ('gerar_histograma_sincronizado.py', ['--obra', args.obra]),
         ('auditar_cronogramas.py', ['--obra', args.obra]),
     ]
@@ -792,6 +833,7 @@ Exemplos de Uso:
     parser.add_argument("--sem-cascata", action="store_true", help="Desativa o recalculo automático em cascata das sucessoras")
     parser.add_argument("--sem-curto-prazo", action="store_true", help="Não sincroniza planilhas de curto prazo")
     parser.add_argument("--dry-run", action="store_true", help="Apenas simula e exibe impactos sem modificar planilhas")
+    parser.add_argument("--aprovar-revisao", action="store_true", help="Promove uma nova revisao antes de gerar os derivados")
 
     args = parser.parse_args()
     if args.atividade_cpm:

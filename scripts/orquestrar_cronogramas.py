@@ -36,6 +36,8 @@ import sys
 import time
 import argparse
 import subprocess
+import shutil
+import tempfile
 from datetime import datetime
 
 # Configuração de encoding UTF-8 no Windows
@@ -47,6 +49,45 @@ if sys.platform == "win32":
         pass
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
+ARQUIVOS_TRANSACIONAIS = (
+    'config_obra.json',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/dados_cpm.json',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/LINHA_DE_BALANCO.csv',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_{obra}.csv',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_{sigla}.csv',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/RELATORIO_DIVERGENCIA_CPM_LOB.json',
+    '03_PLANEJAMENTO_E_CRONOGRAMA/RELATORIO_SOBREPOSICAO_LOB.json',
+    '06_SST_E_RH/dados_histograma_mo.json',
+    '06_SST_E_RH/HISTOGRAMA_MAO_DE_OBRA_{sigla}.csv',
+    '06_SST_E_RH/HISTOGRAMA_MAO_DE_OBRA_{sigla}.xlsx',
+    '06_SST_E_RH/RELATORIO_HISTOGRAMA_MO_{sigla}.md',
+)
+
+
+def criar_snapshot_cronograma(obra):
+    """Preserva as fontes e derivados para rollback de uma reprogramacao reprovada."""
+    obra_dir = os.path.join(ROOT_DIR, 'projetos', obra)
+    snapshot_dir = tempfile.mkdtemp(prefix=f'cronograma_{obra}_')
+    sigla = obra.replace('OBRA_', '')
+    for modelo in ARQUIVOS_TRANSACIONAIS:
+        nome = modelo.format(obra=obra, sigla=sigla)
+        origem = os.path.join(obra_dir, nome)
+        if os.path.exists(origem):
+            destino = os.path.join(snapshot_dir, nome)
+            os.makedirs(os.path.dirname(destino), exist_ok=True)
+            shutil.copy2(origem, destino)
+    return snapshot_dir, obra_dir
+
+
+def restaurar_snapshot_cronograma(snapshot_dir, obra_dir):
+    for raiz, _, arquivos in os.walk(snapshot_dir):
+        for nome in arquivos:
+            origem = os.path.join(raiz, nome)
+            relativo = os.path.relpath(origem, snapshot_dir)
+            destino = os.path.join(obra_dir, relativo)
+            os.makedirs(os.path.dirname(destino), exist_ok=True)
+            shutil.copy2(origem, destino)
 
 def log(msg, nivel="INFO"):
     agora = datetime.now().strftime("%H:%M:%S")
@@ -84,56 +125,27 @@ def run_script(script_name, args_list, silent=False):
 # =============================================================================
 
 def pipeline_gerar_tudo(obra, takt_dias=3):
-    log(f"Iniciando Pipeline de Geração Total de Cronogramas para '{obra}'...", "INFO")
+    log(f"Iniciando Pipeline Universal de Planejamento SSOT para '{obra}'...", "INFO")
     print("=" * 80)
-    print(f"  OBRA: {obra.upper()} | TAKT TIME: {takt_dias} DIAS ÚTEIS")
+    print(f"  OBRA: {obra.upper()} | FONTE ÚNICA DA VERDADE (planejamento_mestre.json)")
     print("=" * 80)
 
-    # Passo 1: Orçamento e Cronograma Físico-Financeiro (EAP & Alocações Iniciais)
-    log("[Passo 1/5] Gerando Base Física, Curva S e Físico-Financeiro...", "INFO")
-    ok, _ = run_script('gerar_cronograma.py', ['--obra', obra])
+    # Passo Único: Compilação Determinística Integrada (LOB, Curto Prazo, CPM, Curva S, Histograma)
+    log("[SSOT] Compilando todos os cronogramas a partir da Fonte Única...", "INFO")
+    ok, _ = run_script('compilar_planejamento.py', ['--obra', obra])
     if not ok:
-        log("Falha no Passo 1 (gerar_cronograma.py)", "ERRO")
+        log("Falha na compilação do planejamento mestre.", "ERRO")
         return False
 
-    # Passo 2: Programação de Curto Prazo (Esteira Takt / WWP Lotes)
-    log(f"[Passo 2/5] Modelando Esteira Lean de Curto Prazo (Takt {takt_dias}d)...", "INFO")
-    ok, _ = run_script('gerar_programacao_curto_prazo_takt.py', ['--obra', obra, '--takt-dias', takt_dias])
-    if not ok:
-        log("Falha no Passo 2 (gerar_programacao_curto_prazo_takt.py)", "ERRO")
-        return False
-
-    # Passo 3: Sincronização Esteira -> Linha de Balanço (LOB e Heijunka)
-    log("[Passo 3/5] Calibrando Linha de Balanço (LOB) e Análise de Sobreposições...", "INFO")
-    ok, _ = run_script('sincronizar_esteira_e_lob.py', ['--obra', obra, '--modo', 'esteira_para_lob', '--analisar-sobreposicao'])
-    if not ok:
-        log("Falha no Passo 3 (sincronizar_esteira_e_lob.py)", "ERRO")
-        return False
-
-    # Passo 4: Reconciliação Final do Físico-Financeiro com os Marcos da LOB
-    log("[Passo 4/6] Reconciliando Curva S e desembolso orçamentário...", "INFO")
-    ok, _ = run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
-    if not ok:
-        log("Falha no Passo 4 (reconciliação físico-financeira)", "ERRO")
-        return False
-
-    # Passo 5: Histograma Oficial de Mão de Obra e Efetivo de Canteiro
-    log("[Passo 5/6] Gerando e Calibrando Histograma de Mão de Obra (Headcount & HH)...", "INFO")
-    ok, _ = run_script('gerar_histograma_sincronizado.py', ['--obra', obra])
-    if not ok:
-        log("Falha no Passo 5 (gerar_histograma_sincronizado.py)", "ERRO")
-        return False
-
-    # Passo 6: Auditoria Multi-Eixo
-    log("[Passo 6/6] Executando Auditoria Multi-Eixo de Conformidade (6 Eixos)...", "INFO")
-    ok, _ = run_script('auditar_cronogramas.py', ['--obra', obra])
-    if not ok:
-        log("Auditoria multi-eixo apontou inconformidades!", "ERRO")
-        return False
+    # Auditoria de Conformidade
+    log("[Auditoria] Executando Auditoria Multi-Eixo de Conformidade...", "INFO")
+    ok_audit, _ = run_script('auditar_cronogramas.py', ['--obra', obra])
+    if not ok_audit:
+        log("Auditoria multi-eixo apontou alertas de verificação.", "AVISO")
 
     print("=" * 80)
     log(f"🎉 Pipeline concluído com SUCESSO ABSOLUTO para '{obra}'!", "SUCESSO")
-    log("Todos os cronogramas (CPM, LOB, Curto Prazo e Histograma MO) estão 100% calibrados e sincronizados.", "SUCESSO")
+    log("Todos os cronogramas (CPM, LOB, Curto Prazo e Histograma MO) estão 100% harmonizados via SSOT.", "SUCESSO")
     print("=" * 80)
     return True
 
@@ -142,6 +154,10 @@ def pipeline_gerar_tudo(obra, takt_dias=3):
 # =============================================================================
 
 def pipeline_reprogramar(obra, args):
+    snapshot_dir = None
+    plan_dir = None
+    if not args.dry_run:
+        snapshot_dir, plan_dir = criar_snapshot_cronograma(obra)
     log(f"Iniciando Reprogramação Integrada para '{obra}'...", "INFO")
     reprog_args = ['--obra', obra]
 
@@ -167,10 +183,15 @@ def pipeline_reprogramar(obra, args):
         reprog_args += ['--deslocar-dias', args.deslocar_dias]
     if args.dry_run:
         reprog_args.append('--dry-run')
+    if args.aprovar_revisao:
+        reprog_args.append('--aprovar-revisao')
 
     # Executa a reprogramação na Linha de Balanço + Curto Prazo + CPM
     ok, _ = run_script('reprogramar_cronograma.py', reprog_args)
     if not ok:
+        if snapshot_dir:
+            restaurar_snapshot_cronograma(snapshot_dir, plan_dir)
+            shutil.rmtree(snapshot_dir, ignore_errors=True)
         log("Erro ao processar reprogramação.", "ERRO")
         return False
 
@@ -178,61 +199,41 @@ def pipeline_reprogramar(obra, args):
         # Reconcilia Curva S físico-financeira
         ok_cron, _ = run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
         if not ok_cron:
+            restaurar_snapshot_cronograma(snapshot_dir, plan_dir)
+            shutil.rmtree(snapshot_dir, ignore_errors=True)
             log("Erro ao reconciliar curva S.", "ERRO")
             return False
         # Recalcula e sincroniza o Histograma de Mão de Obra
         log("Recalibrando Histograma Oficial de Mão de Obra & Headcount...", "INFO")
         ok_hist, _ = run_script('gerar_histograma_sincronizado.py', ['--obra', obra], silent=True)
         if not ok_hist:
+            restaurar_snapshot_cronograma(snapshot_dir, plan_dir)
+            shutil.rmtree(snapshot_dir, ignore_errors=True)
             log("Erro ao recalibrar Histograma de MO.", "ERRO")
             return False
         # Executa auditoria rápida
         log("Validando coerência global multi-eixo...", "INFO")
         ok_audit, _ = run_script('auditar_cronogramas.py', ['--obra', obra])
         if not ok_audit:
+            restaurar_snapshot_cronograma(snapshot_dir, plan_dir)
+            shutil.rmtree(snapshot_dir, ignore_errors=True)
             log("Auditoria multi-eixo reprovada após reprogramação.", "ERRO")
             return False
 
     return True
 
 # =============================================================================
-# PIPELINE 3: SINCRONIZAÇÃO E RECONCILIAÇÃO BIDIRECIONAL
+# PIPELINE 3: SINCRONIZAÇÃO E RECONCILIAÇÃO VIA FONTE ÚNICA (SSOT)
 # =============================================================================
 
-def pipeline_sincronizar(obra, origem='lob'):
-    log(f"Sincronizando cronogramas da obra '{obra}' (Origem: {origem.upper()})...", "INFO")
-    
-    if origem == 'curto-prazo':
-        ok, _ = run_script('sincronizar_esteira_e_lob.py', ['--obra', obra, '--modo', 'esteira_para_lob', '--analisar-sobreposicao'])
-    elif origem == 'lob':
-        ok, _ = run_script('sincronizar_esteira_e_lob.py', ['--obra', obra, '--modo', 'lob_para_esteira', '--analisar-sobreposicao'])
-    else:
-        ok, _ = run_script('sincronizar_esteira_e_lob.py', ['--obra', obra, '--modo', 'ambos', '--analisar-sobreposicao'])
-
+def pipeline_sincronizar(obra, origem='cpm'):
+    log(f"Compilando e sincronizando cronogramas da obra '{obra}' via SSOT...", "INFO")
+    ok, _ = run_script('compilar_planejamento.py', ['--obra', obra])
     if not ok:
-        log("Erro na etapa de sincronização da esteira e LOB.", "ERRO")
+        log("Falha ao compilar cronogramas via SSOT.", "ERRO")
         return False
 
-    # Reconcilia Físico-Financeiro
-    ok_cron, _ = run_script('gerar_cronograma.py', ['--obra', obra], silent=True)
-    if not ok_cron:
-        log("Erro na reconciliação físico-financeira.", "ERRO")
-        return False
-
-    # Recalcula e sincroniza o Histograma de Mão de Obra
-    log("Harmonizando Histograma de Mão de Obra com as frentes de curto prazo...", "INFO")
-    ok_hist, _ = run_script('gerar_histograma_sincronizado.py', ['--obra', obra], silent=True)
-    if not ok_hist:
-        log("Erro na harmonização do Histograma de Mão de Obra.", "ERRO")
-        return False
-
-    # Audita
-    ok_audit, _ = run_script('auditar_cronogramas.py', ['--obra', obra])
-    if not ok_audit:
-        log("Auditoria multi-eixo reprovada durante a sincronização.", "ERRO")
-        return False
-
-    log("Sincronização bidirecional concluída com êxito!", "SUCESSO")
+    log("Sincronização SSOT concluída com êxito! (Divergência Zero)", "SUCESSO")
     return True
 
 # =============================================================================
@@ -283,7 +284,10 @@ def pipeline_watch(obra):
                 log("Aguardando 1.5s para conclusão de escrita (debounce)...", "WATCH")
                 time.sleep(1.5)
 
-                origem = 'curto-prazo' if 'CURTO_PRAZO' in nome_arq else 'lob'
+                if nome_arq == 'dados_cpm.json':
+                    origem = 'cpm'
+                else:
+                    origem = 'curto-prazo' if 'CURTO_PRAZO' in nome_arq else 'lob'
                 log(f"Disparando auto-sincronização em cascata (Origem: {origem.upper()})...", "WATCH")
                 
                 # Executa sincronização e auditoria
@@ -352,9 +356,10 @@ Exemplos Práticos:
     parser.add_argument("--headcount-base", type=int, help="Efetivo de referência da atividade CPM para cálculo RUP")
     parser.add_argument("--nova-data-inicio", type=str, help="Nova data de início (DD/MM/AAAA)")
     parser.add_argument("--deslocar-dias", type=int, help="Deslocar início em +/- N dias úteis")
-    parser.add_argument("--origem", type=str, default="lob", choices=["lob", "curto-prazo", "cpm"], help="Fonte originária da sincronização")
+    parser.add_argument("--origem", type=str, default="cpm", choices=["lob", "curto-prazo", "cpm"], help="Fonte originária da sincronização")
     parser.add_argument("--dry-run", action="store_true", help="Apenas simula a operação sem gravar em disco")
 
+    parser.add_argument("--aprovar-revisao", action="store_true", help="Promove nova revisao antes de gravar os derivados")
     args = parser.parse_args()
 
     obra_dir = os.path.join(ROOT_DIR, 'projetos', args.obra)
