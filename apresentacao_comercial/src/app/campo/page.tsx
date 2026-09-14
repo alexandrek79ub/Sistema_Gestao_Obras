@@ -50,20 +50,21 @@ export default function CampoMobilePage() {
   const [dataHoje, setDataHoje] = useState(new Date().toISOString().split('T')[0]);
 
   // Estado do RDO
+  const [responsavelRdo, setResponsavelRdo] = useState('');
   const [climaManha, setClimaManha] = useState('Sol');
   const [climaTarde, setClimaTarde] = useState('Sol');
   const [horasParalisadas, setHorasParalisadas] = useState(0);
-  const [motivoParalisacao, setMotivoParalisacao] = useState('Chuva forte no período da tarde');
+  const [motivoParalisacao, setMotivoParalisacao] = useState('');
 
   // Efetivo com contadores rápidos
   const [efetivo, setEfetivo] = useState<Record<EfetivoKey, number>>({
     mestre: 1,
-    tst: 1,
-    almoxarife: 1,
-    pedreiros: 6,
-    serventes: 4,
-    armadores: 2,
-    carpinteiros: 2,
+    tst: 0,
+    almoxarife: 0,
+    pedreiros: 0,
+    serventes: 0,
+    armadores: 0,
+    carpinteiros: 0,
     eletricistas: 0,
     encanadores: 0
   });
@@ -73,14 +74,15 @@ export default function CampoMobilePage() {
   ]);
   const [ocorrencias, setOcorrencias] = useState('');
 
-  // Estado da FVS
+  // Estado da FVS (AUD-001: sem defaults decisórios ou medições presumidas)
   const [fvsCodigo, setFvsCodigo] = useState('FVS-01');
-  const [fvsTolerancia, setFvsTolerancia] = useState('Desvio linear < 2mm');
-  const [fvsStatus, setFvsStatus] = useState<'Conforme' | 'NaoConforme'>('Conforme');
+  const [fvsResponsavel, setFvsResponsavel] = useState('');
+  const [fvsTolerancia, setFvsTolerancia] = useState('');
+  const [fvsStatus, setFvsStatus] = useState<'Conforme' | 'NaoConforme' | null>(null);
   const [fvsChecklist, setFvsChecklist] = useState<Record<string, boolean>>({
-    'Locação dos eixos e conferência do esquadro': true,
-    'Nível a laser e amarração topográfica com RN': true,
-    'Gabarito rígido travado com tábua corrida': true
+    'Locação dos eixos e conferência do esquadro': false,
+    'Nível a laser e amarração topográfica com RN': false,
+    'Gabarito rígido travado com tábua corrida': false
   });
   const [hasSignature, setHasSignature] = useState(false);
 
@@ -175,27 +177,38 @@ export default function CampoMobilePage() {
 
   // Enviar RDO para a API
   const handleEnviarRdo = async () => {
-    setEnviando(true);
     setMensagemSucesso(null);
     setMensagemErro(null);
+
+    if (!responsavelRdo.trim()) {
+      setMensagemErro('❌ Informe o Responsável pelo Apontamento do RDO.');
+      return;
+    }
+    if (servicosEap.length === 0) {
+      setMensagemErro('❌ Selecione ao menos uma frente EAP executada hoje.');
+      return;
+    }
+
+    setEnviando(true);
 
     const payload = {
       tipo: 'rdo',
       obra,
       data: dataHoje.split('-').reverse().join('/'),
+      responsavel: responsavelRdo.trim(),
       clima_m: climaManha,
       clima_t: climaTarde,
       h_paral: horasParalisadas,
       ef_prop: totalProprio,
       ef_terc: totalTerceiro,
       hh: parseFloat(totalHH),
-      eap: servicosEap.join('; ') || 'EAP Geral de Canteiro',
+      eap: servicosEap.join('; '),
       fvs: fvsCodigo,
       fvs_status: 'SUBMETIDA',
       idempotencyKey: crypto.randomUUID(),
       obs:
         ocorrencias ||
-        `Dia produtivo. Total de ${totalEfetivo} pessoas no canteiro. ${horasParalisadas > 0 ? `Paralisação: ${horasParalisadas}h por ${motivoParalisacao}` : 'Sem impedimentos.'}`
+        `Total de ${totalEfetivo} pessoas no canteiro. ${horasParalisadas > 0 ? `Paralisação: ${horasParalisadas}h por ${motivoParalisacao}` : 'Sem paralisações.'}`
     };
 
     try {
@@ -206,7 +219,7 @@ export default function CampoMobilePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setMensagemSucesso(`✅ RDO gravado com sucesso! Arquivo inserido no Painel.`);
+        setMensagemSucesso(`✅ RDO submetido com sucesso para análise e emissão governada.`);
       } else {
         setMensagemErro(`❌ Erro: ${data.error || 'Falha na transmissão'}`);
       }
@@ -220,20 +233,42 @@ export default function CampoMobilePage() {
 
   // Enviar FVS para a API
   const handleEnviarFvs = async () => {
-    setEnviando(true);
     setMensagemSucesso(null);
     setMensagemErro(null);
+
+    if (!fvsResponsavel.trim()) {
+      setMensagemErro('❌ Informe o Responsável Técnico pela inspeção da FVS.');
+      return;
+    }
+    if (!fvsTolerancia.trim()) {
+      setMensagemErro('❌ Informe a Medição / Tolerância observada em campo.');
+      return;
+    }
+    if (!fvsStatus) {
+      setMensagemErro('❌ Selecione o parecer da inspeção (Conforme ou Não conforme).');
+      return;
+    }
+    if (!hasSignature) {
+      setMensagemErro('❌ A assinatura digital na tela é obrigatória para submeter a FVS.');
+      return;
+    }
+
+    setEnviando(true);
+
+    const canvas = canvasRef.current;
+    const assinaturaData = canvas ? canvas.toDataURL('image/png') : 'capturada_canvas';
 
     const payload = {
       tipo: 'fvs',
       obra,
       codigo: fvsCodigo,
       data: dataHoje.split('-').reverse().join('/'),
+      responsavel: fvsResponsavel.trim(),
       status: fvsStatus === 'Conforme' ? 'CONFORME_INFORMADO' : 'NAO_CONFORME_INFORMADO',
-      medicao_tolerancia: fvsTolerancia,
+      medicao_tolerancia: fvsTolerancia.trim(),
       itens_conferidos: Object.keys(fvsChecklist).filter((k) => fvsChecklist[k]),
-      observacoes: ocorrencias || 'Inspeção técnica em conformidade com as tolerâncias normativas da ABNT.',
-      assinatura: hasSignature ? 'Capturada no canvas de campo' : 'Pendente',
+      observacoes: ocorrencias || 'Inspeção técnica de campo conforme POP.',
+      assinatura: assinaturaData,
       idempotencyKey: crypto.randomUUID(),
     };
 
@@ -245,7 +280,7 @@ export default function CampoMobilePage() {
       });
       const data = await res.json();
       if (data.success) {
-        setMensagemSucesso(`🛡️ Inspeção ${fvsCodigo} homologada! Medição correspondente liberada.`);
+        setMensagemSucesso(`🛡️ Inspeção ${fvsCodigo} submetida para análise técnica governada (status: SUBMETIDA).`);
       } else {
         setMensagemErro(`❌ Erro: ${data.error || 'Falha na transmissão da FVS'}`);
       }
@@ -387,6 +422,21 @@ _Enviado via Antigravity Mobile 4.0_`;
                 type="date"
                 value={dataHoje}
                 onChange={(e) => setDataHoje(e.target.value)}
+                className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-white outline-none focus:border-blue-500"
+              />
+            </div>
+
+            {/* RESPONSÁVEL PELO APONTAMENTO */}
+            <div className="bg-zinc-900 border border-zinc-800 rounded-2xl p-4 shadow-sm">
+              <label className="text-xs font-semibold text-zinc-400 uppercase tracking-wider mb-2 flex items-center">
+                <Users className="w-3.5 h-3.5 mr-1.5 text-blue-400" />
+                Responsável pelo Apontamento (Mestre / Engenheiro)
+              </label>
+              <input
+                type="text"
+                value={responsavelRdo}
+                onChange={(e) => setResponsavelRdo(e.target.value)}
+                placeholder="Nome do responsável técnico (ex: Mestre João Silva / Eng. Residente)"
                 className="w-full bg-zinc-950 border border-zinc-700 rounded-xl px-3 py-2.5 text-sm font-semibold text-white outline-none focus:border-blue-500"
               />
             </div>
@@ -600,6 +650,20 @@ _Enviado via Antigravity Mobile 4.0_`;
                 <option value="FVS-07">FVS-07: Instalações Elétricas e SPDA</option>
                 <option value="FVS-08">FVS-08: Cobertura e Esquadrias</option>
               </select>
+
+              {/* Responsável Técnico pela Inspeção */}
+              <div className="mb-3">
+                <label className="text-[11px] text-zinc-400 font-medium block mb-1">
+                  Responsável Técnico da Inspeção:
+                </label>
+                <input
+                  type="text"
+                  value={fvsResponsavel}
+                  onChange={(e) => setFvsResponsavel(e.target.value)}
+                  placeholder="Nome do Engenheiro / Inspetor responsável"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-emerald-500"
+                />
+              </div>
 
               {/* Status do Parecer */}
               <div className="grid grid-cols-2 gap-2">

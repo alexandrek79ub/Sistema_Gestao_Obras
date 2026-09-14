@@ -174,14 +174,21 @@ def construir_painel_excel_rdos(output_dir, config, semana1_dados):
         cell = ws_dash.cell(row=9, column=c_idx, value=h)
         cell.fill, cell.font = NAVY, FONT_TH
 
-    semanas = [
-        ("Semana S01 (Mobilização)", "22/09/2026 a 26/09/2026", 5, "=SUM('Registro Diário RDO'!I6:I10)", "No Prazo (Fundações Iniciadas)", "FVS-01 e FVS-02 Aprovadas"),
-        ("Semana S02 (Fundações)", "29/09/2026 a 03/10/2026", "-", "-", "Aguardando Início", "Pendente"),
-        ("Semana S03 (Baldrames)", "06/10/2026 a 10/10/2026", "-", "-", "Aguardando Início", "Pendente"),
-        ("Semana S04 (Pilares P1-P24)", "13/10/2026 a 17/10/2026", "-", "-", "Aguardando Início", "Pendente"),
-        ("Semana S05 (Laje H12 e Vigas)", "20/10/2026 a 24/10/2026", "-", "-", "Aguardando Início", "Pendente"),
-        ("Semana S06 (Desforma e Cura)", "27/10/2026 a 31/10/2026", "-", "-", "Aguardando Início", "Pendente"),
-    ]
+    if semana1_dados:
+        semanas = [
+            ("Semana S01 (Mobilização)", "22/09/2026 a 26/09/2026", 5, "=SUM('Registro Diário RDO'!I6:I10)", "No Prazo (Fundações Iniciadas)", "FVS-01 e FVS-02 Aprovadas"),
+            ("Semana S02 (Fundações)", "29/09/2026 a 03/10/2026", "-", "-", "Aguardando Início", "Pendente"),
+            ("Semana S03 (Baldrames)", "06/10/2026 a 10/10/2026", "-", "-", "Aguardando Início", "Pendente"),
+            ("Semana S04 (Pilares P1-P24)", "13/10/2026 a 17/10/2026", "-", "-", "Aguardando Início", "Pendente"),
+            ("Semana S05 (Laje H12 e Vigas)", "20/10/2026 a 24/10/2026", "-", "-", "Aguardando Início", "Pendente"),
+            ("Semana S06 (Desforma e Cura)", "27/10/2026 a 31/10/2026", "-", "-", "Aguardando Início", "Pendente"),
+        ]
+    else:
+        semanas = [
+            (f"Semana S{i+1:02d}", "-", "-", "-", "Aguardando Início", "Pendente")
+            for i in range(6)
+        ]
+
     for r_idx, (sem, per, dias, hh_f, status, fvs) in enumerate(semanas, start=10):
         ws_dash.cell(row=r_idx, column=2, value=sem).font = FONT_B9
         ws_dash.cell(row=r_idx, column=3, value=per).font = FONT_REG
@@ -256,25 +263,37 @@ def construir_painel_excel_rdos(output_dir, config, semana1_dados):
                 cell.fill = ZEBRA_LIGHT
         curr_row += 1
 
-    ws_log.cell(row=curr_row, column=1, value="TOTAL SEMANA 1").font = FONT_B9
-    for col_i, form, fmt in [(6, f"=SUM(F4:F{curr_row-1})", "#,##0.0"), (7, f"=AVERAGE(G4:G{curr_row-1})", "#,##0.0"),
-                             (8, f"=AVERAGE(H4:H{curr_row-1})", "#,##0.0"), (9, f"=AVERAGE(I4:I{curr_row-1})", "#,##0.0"),
-                             (10, f"=SUM(J4:J{curr_row-1})", "#,##0")]:
-        c_t = ws_log.cell(row=curr_row, column=col_i, value=form)
-        c_t.font, c_t.number_format = FONT_B9, fmt
+    if semana1_dados:
+        ws_log.cell(row=curr_row, column=1, value="TOTAL SEMANA 1").font = FONT_B9
+        for col_i, form, fmt in [(6, f"=SUM(F4:F{curr_row-1})", "#,##0.0"), (7, f"=AVERAGE(G4:G{curr_row-1})", "#,##0.0"),
+                                 (8, f"=AVERAGE(H4:H{curr_row-1})", "#,##0.0"), (9, f"=AVERAGE(I4:I{curr_row-1})", "#,##0.0"),
+                                 (10, f"=SUM(J4:J{curr_row-1})", "#,##0")]:
+            c_t = ws_log.cell(row=curr_row, column=col_i, value=form)
+            c_t.font, c_t.number_format = FONT_B9, fmt
 
-    for col in range(1, 15):
-        ws_log.cell(row=curr_row, column=col).border = DOUBLE_BOTTOM_BORDER
+        for col in range(1, 15):
+            ws_log.cell(row=curr_row, column=col).border = DOUBLE_BOTTOM_BORDER
 
     wb.save(excel_path)
     return excel_path
 
 
+def parse_rdo_args():
+    import argparse
+    parser = argparse.ArgumentParser(description="Motor Universal de RDO e Painel de Produção.")
+    parser.add_argument("--obra", type=str, default="OBRA_TMULT", help="Nome da pasta da obra em projetos/")
+    parser.add_argument("--dir", type=str, default=None, help="Caminho direto para a pasta da obra")
+    parser.add_argument("--piloto", action="store_true", help="Gera os RDOs piloto da Semana 1")
+    parser.add_argument("--sem-piloto", action="store_true", help="Força geração de estrutura limpa sem RDOs piloto")
+    return parser.parse_args()
+
+
 def main():
-    args = parse_obra_args("Motor Universal de RDO e Painel de Produção.")
+    args = parse_rdo_args()
     obra_dir = resolver_obra_dir(args)
     config = carregar_config_obra(obra_dir)
     sigla = config.get("sigla_obra", "OBRA")
+    nome_pasta = os.path.basename(obra_dir)
 
     print(f"\n=======================================================")
     print(f"🚀 MOTOR UNIVERSAL DE RDO E PRODUÇÃO DE CAMPO")
@@ -290,9 +309,16 @@ def main():
     print(f"      ✅ TEMPLATE_RDO_EXECUTIVO.md gerado")
     print(f"      ✅ TEMPLATE_RDO_EXECUTIVO.csv gerado")
 
-    print(f"\n[2/3] Gerando Lote Piloto da Semana 1 de Mobilização (RDO-001 a RDO-005)...")
-    semana1 = gerar_rdos_piloto_semana1(output_dir, config)
-    print(f"      ✅ 5 Diários de Obra gerados em 04_PRODUCAO_E_AVANCO/RDOS/")
+    is_template = (nome_pasta == "_TEMPLATE_OBRA_NOVA" or sigla == "OBRA_NOVA")
+    gerar_piloto = args.piloto or (sigla == "TMULT" and not args.sem_piloto and not is_template)
+
+    if gerar_piloto:
+        print(f"\n[2/3] Gerando Lote Piloto da Semana 1 de Mobilização (RDO-001 a RDO-005)...")
+        semana1 = gerar_rdos_piloto_semana1(output_dir, config)
+        print(f"      ✅ 5 Diários de Obra gerados em 04_PRODUCAO_E_AVANCO/RDOS/")
+    else:
+        print(f"\n[2/3] Obra Nova / Operação Limpa: Sem injeção de diários pilotos pré-preenchidos.")
+        semana1 = []
 
     print(f"\n[3/3] Construindo Planilha Executiva PAINEL_RDOS_OBRA.xlsx...")
     excel_path = construir_painel_excel_rdos(output_dir, config, semana1)
