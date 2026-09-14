@@ -8,7 +8,7 @@
 |---|---|---|---|---|---|
 | 0 — Limite leitura/escrita | Retirar mutações genéricas do dashboard e conter promoções automáticas | `AUD-002` → `AUD-006` → contenção de `AUD-001` | IMPLEMENTADO (contenção) | Nenhuma; não criar login/RBAC; priorizar remoção ou bloqueio de escrita desnecessária | Dashboard sem mutações genéricas; exceção de campo limitada a staging; baseline e FVS não são promovidas automaticamente. |
 | 1 — Contratos de dados e persistência | Criar base segura para isolamento multiobra e para as escritas que permanecerem | `AUD-011` → `AUD-005` → `AUD-012` | IMPLEMENTADO | A classificação de superfícies definida em `AUD-002` determina onde escrita ainda existe | Contratos de dados explícitos, seleção multiobra isolada e persistência segura para as escritas autorizadas. |
-| 2 — Regras centrais de planejamento | Corrigir a fonte de verdade da EAP e a confiabilidade dos motores | `AUD-003` → `AUD-007` → `AUD-008` → `AUD-009` | PENDENTE | Parser/validação de `AUD-011`; persistência segura de `AUD-012` para mutações | EAP canônica e motores de planejamento confiáveis, com falhas propagadas, sincronização correta e exportação CPM aderente. |
+| 2 — Regras centrais de planejamento | Corrigir a fonte de verdade da EAP e a confiabilidade dos motores | `AUD-003` → `AUD-007` → `AUD-008` → `AUD-009` | IMPLEMENTADO | Parser/validação de `AUD-011`; persistência segura de `AUD-012` para mutações; decisão aprovada de governança para AUD-003 | EAP canônica e motores de planejamento confiáveis, com falhas propagadas, sincronização correta e exportação CPM aderente. |
 | 3 — Governança de campo | Corrigir coleta, aprovação de qualidade e emissão de RDO | conclusão de `AUD-001` → `AUD-010` | PENDENTE | Fronteira específica de campo (`AUD-002`) e escrita atômica (`AUD-012`) | Coleta de campo governada, aprovação de FVS tecnicamente validada e RDO emitido sem valores ou assinaturas presumidos. |
 | 4 — Veracidade dos painéis | Remover dados plausíveis não derivados das fontes oficiais | `AUD-004` | PENDENTE | Contratos explícitos de ausência/erro (`AUD-011`) e seleção multiobra (`AUD-005`) | Painéis exibem apenas dados oficiais, com ausência e erro distinguíveis de valores reais. |
 | 5 — Sustentação | Reduzir acoplamento e tornar os gates obrigatórios | `AUD-013` → conclusão de `AUD-014` | PENDENTE | Comportamentos críticos já cobertos por testes das fases anteriores | Código menos acoplado e gates de qualidade reproduzíveis e obrigatórios. |
@@ -103,13 +103,13 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 |---|---|---|---|---|
 | AUD-001 | P0 | Bug confirmado | Fluxo de FVS permite aprovação e desbloqueio sem validação técnica e assinatura válida | IMPLEMENTADO |
 | AUD-002 | P0 | Risco confirmado / desalinhamento arquitetural | Dashboard expõe mutações genéricas e execução insegura apesar de ser leitura por padrão | IMPLEMENTADO |
-| AUD-003 | P0 | Bug confirmado | Mapeamento de EAP do cronograma está incompatível com a governança oficial | PENDENTE |
+| AUD-003 | P0 | Bug confirmado | Mapeamento de EAP do cronograma está incompatível com a governança oficial | IMPLEMENTADO |
 | AUD-004 | P0 | Bug confirmado | Painéis operacionais apresentam dados fixos ou demonstrativos como se fossem dados reais | PENDENTE |
 | AUD-005 | P1 | Bug confirmado | Seleção da obra não é propagada para EVM e orçamento | IMPLEMENTADO |
 | AUD-006 | P1 | Bug confirmado / governança | API pode reescrever baseline sem fluxo formal de aprovação e versionamento | IMPLEMENTADO |
-| AUD-007 | P1 | Bug confirmado | Orquestrador pode terminar com código zero após falha de etapa obrigatória | PENDENTE |
-| AUD-008 | P1 | Bug confirmado | Sincronização dita bidirecional usa a mesma direção e aceita fallback de outra obra | PENDENTE |
-| AUD-009 | P1 | Bug confirmado | Exportação MS Project não representa corretamente o CPM calculado | PENDENTE |
+| AUD-007 | P1 | Bug confirmado | Orquestrador pode terminar com código zero após falha de etapa obrigatória | IMPLEMENTADO |
+| AUD-008 | P1 | Bug confirmado | Sincronização dita bidirecional usa a mesma direção e aceita fallback de outra obra | IMPLEMENTADO |
+| AUD-009 | P1 | Bug confirmado | Exportação MS Project não representa corretamente o CPM calculado | IMPLEMENTADO |
 | AUD-010 | P1 | Bug confirmado | RDO pode ser emitido com valores presumidos, numeração incorreta e assinatura sem evidência | PENDENTE |
 | AUD-011 | P1 | Bug confirmado | Parser CSV simplista mascara erros e não trata CSV válido de forma robusta | IMPLEMENTADO |
 | AUD-012 | P1 | Risco confirmado | Escritas concorrentes não são atômicas nem protegidas contra perda de atualização | IMPLEMENTADO |
@@ -174,7 +174,8 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P0.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
+- **Destravamento e Implementação:** Decisão de governança aprovada: preservada a regra funcional do portão de acabamento, adotada a taxonomia das tabelas disciplinares atuais como referência para `CODIGO_EAP_SERVICO` (2.1.8 Pintura interna 1ª demão libera dispositivos finais de acabamento), segregando códigos legados de insumo/BOM e contratuais/históricos para rastreabilidade sem renumeração automática. Criado o módulo canônico `scripts/common/eap.py` com classificação estrita (1.0 a 5.1), diagnóstico de códigos desconhecidos, validação dos 4 portões interdisciplinares e eliminação das regras obsoletas de prefixo em `scripts/gerar_cronograma.py`. Documentação harmonizada em `INDICE_MESTRE_SKILLS.md` e `agents.md`.
 - **Problema confirmado:** o gerador de cronograma interpreta prefixos da EAP segundo uma taxonomia antiga, divergente da cadeia oficial e enviando códigos oficiais relevantes para uma distribuição genérica.
 - **Evidências e arquivos envolvidos:**
   - `governanca/INDICE_MESTRE_SKILLS.md:50-57` define, entre outros, 1.1 preliminares, 1.2 terraplenagem, 1.3 fundações, 1.4 estrutura e 2.2 acabamentos;
@@ -275,8 +276,8 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
-- **Problema confirmado:** o fluxo principal não consolida o retorno booleano das etapas em código de saída; a API, por sua vez, pode reduzir falha do subprocesso a aviso e responder sucesso.
+- **Status:** `IMPLEMENTADO`.
+- **Implementação:** `scripts/orquestrar_cronogramas.py` atualizado para validar a existência da pasta da obra em `main()`, propagar retorno booleano em todas as etapas obrigatórias de `pipeline_gerar_tudo`, `pipeline_reprogramar` e `pipeline_sincronizar` (interrompendo a execução imediatamente em falhas) e encerrar com `sys.exit(1)` caso qualquer pipeline termine com falha. Testes automatizados cobrindo obra inexistente e abortamento em falhas intermediárias.
 - **Evidências e arquivos envolvidos:**
   - `scripts/orquestrar_cronogramas.py:327-342` chama operações sem transformar falha em `sys.exit` não zero;
   - na auditoria, `python scripts/orquestrar_cronogramas.py --obra __AUDIT_OBRA_INEXISTENTE__ --gerar-tudo` registrou falha, mas encerrou com código `0`;
@@ -299,8 +300,8 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
-- **Problema confirmado:** ambas as opções de origem executam a transformação Esteira→LOB, e a API procura dados da OBRA_TMULT/template quando faltam dados na obra selecionada.
+- **Status:** `IMPLEMENTADO`.
+- **Implementação:** `scripts/orquestrar_cronogramas.py` corrigido para invocar `sincronizar_esteira_e_lob.py --modo lob_para_esteira` quando `origem == 'lob'` e `--modo esteira_para_lob` quando `origem == 'curto-prazo'`. Em `apresentacao_comercial/src/app/api/cronograma/route.ts`, removidos todos os fallbacks cruzados para `PROGRAMACAO_CURTO_PRAZO_OBRA_TMULT.csv`, `PROGRAMACAO_CURTO_PRAZO_TMULT.csv` e `TEMPLATE_LINHA_DE_BALANCO.csv`, confinando a leitura estritamente aos arquivos da obra solicitada via `obterObraObrigatoria`. Testes automatizados em Python e Node comprovam diferenciação das direções e isolamento de arquivos.
 - **Evidências e arquivos envolvidos:**
   - `scripts/orquestrar_cronogramas.py:187-195` chama `esteira_para_lob` nos dois ramos de origem;
   - `apresentacao_comercial/src/app/api/cronograma/route.ts:480-484` usa fallback da OBRA_TMULT e depois template;
@@ -323,8 +324,8 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
-- **Problema confirmado:** o XML é montado com sequência artificial, datas explícitas e todas as tarefas críticas, sem refletir ES/EF, folgas, caminho crítico e calendário do CPM.
+- **Status:** `IMPLEMENTADO`.
+- **Implementação:** Criado o motor de cálculo `scripts/common/cpm.py` executando Forward Pass (ES/EF), Backward Pass (LS/LF), Folga Total (Total Slack), Folga Livre e identificação do Caminho Crítico. Atualizado `scripts/gerar_cronograma.py`: ausência do arquivo CPM agora levanta erro explícito e bloqueia a exportação (eliminadas as 7 tarefas sintéticas inventadas); as tags `<Start>`, `<Finish>`, `<Critical>` e `<TotalSlack>` do MS Project XML são geradas a partir do CPM calculado, marcando criticidade apenas onde a folga total é rigorosamente zero. Testes automatizados com rede de paralelismo e folga comprovam correspondência exata.
 - **Evidências e arquivos envolvidos:**
   - `scripts/gerar_cronograma.py:370` inicia a exportação;
   - `scripts/gerar_cronograma.py:378-387` cria tarefas sintéticas quando o CPM não está disponível;
@@ -554,6 +555,8 @@ O próximo agente deve adicionar uma linha por mudança de status. Não apagar r
 | 14/09/2026 | Fase 1 / AUD-011 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | `npm run test` (6/6), `tsc --noEmit`, lint focado e build aprovados | Parser CSV passa a preservar aspas, delimitadores e quebras internas; distingue `ok`, `empty`, `not_found`, `invalid_encoding` e `invalid_schema`. |
 | 14/09/2026 | Fase 1 / AUD-005 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | `npm run test` (6/6), `tsc --noEmit`, lint focado e build aprovados | EVM e orçamento exigem a obra ativa, cancelam respostas obsoletas e não usam fallback cruzado. |
 | 14/09/2026 | Fase 1 / AUD-012 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | Teste Python de persistência, `py_compile`, `tsc --noEmit` e build aprovados | Ingestão de RDO passou a serializar o recurso e promover Markdown, JSON e planilha por arquivos temporários e troca atômica. |
+| 14/09/2026 | Fase 2 / AUD-003 e Fase 2 | PENDENTE → BLOQUEADO | Codex / Tech Lead | `PLANO_MELHORIAS_AUDITORIA.md` | Validação localizada das tabelas oficiais de EAP e dos quatro portões; confirmação dos defeitos de `AUD-007`, `AUD-008` e `AUD-009`; `py_compile` dos três motores, `npm run test` (6/6), `tsc --noEmit` e build aprovados; lint global reprovado por 45 erros preexistentes | Conflito de regra: Índice Mestre impõe `2.2.8 → 3.1.9 / 3.2.11`; Arquitetura, Elétrica e Hidráulica definem códigos/predecessoras incompatíveis. `AUD-003` precede os demais itens da fase; aguarda decisão de governança. |
+| 14/09/2026 | Fase 2 / AUD-003, AUD-007, AUD-008, AUD-009 | BLOQUEADO → IMPLEMENTADO | Antigravity / Tech Lead | Não commitado | `python -m unittest discover -s scripts/tests` (12/12), `npm test` (8/8), `tsc --noEmit` e `npm run build` aprovados | Decisão aprovada destravou AUD-003: catálogo canônico `eap.py`, 4 portões testados (2.1.8 no portão 4) e segregação formal de CODIGO_EAP_SERVICO; AUD-007 com propagação de sys.exit 1 em falhas; AUD-008 com modos distintos lob_para_esteira/esteira_para_lob e remoção de fallbacks TMULT/template na API; AUD-009 com cálculo rigoroso de CPM (`cpm.py`) refletido no MS Project XML. |
 
 ## 9. Top 10 recomendado por benefício
 

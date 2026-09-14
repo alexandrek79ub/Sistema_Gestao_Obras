@@ -198,8 +198,8 @@ Sempre que receber um pedido, siga rigorosamente estes passos:
 - 📊 **OBRIGATORIEDADE DA TABELA OFICIAL DE SERVIÇOS E PORTÕES DE BLOQUEIO DA EAP:** Todo levantamento quantitativo DEVE ser acompanhado da Tabela de Serviços / EAP correspondente da disciplina (níveis 1.1 a 5.1), respeitando estritamente a **Cadeia Global Integrada e os 4 Portões de Bloqueio do Índice Mestre (§1.1)**:
   1. *Fundação:* 1.3.11 (Impermeabilização) bloqueia 1.3.13 (Reaterro de valas);
   2. *Estrutura:* 1.4.12 (Desforma de Laje) libera prumadas verticais de shafts 3.1.7 e 3.2.8;
-  3. *Hidráulica [REGRA DE OURO]:* 3.2.7 (Teste Hidrostático sob pressão 72h) bloqueia 2.1.2 (Chapisco e Emboço);
-  4. *Acabamento:* 2.2.8 (1ª Demão de Pintura) libera a fixação de 3.1.9 (Espelhos/Tomadas) e 3.2.11 (Metais e Louças Nobres).
+  4. *Acabamento:* 2.1.8 (1ª Demão de Pintura) libera a fixação de 3.1.9 / 3.1.11 (Espelhos/Tomadas) e 3.2.10 / 3.2.11 (Metais e Louças Nobres).
+  *(Nota de Governança AUD-003: Taxonomia disciplinar é referência canônica para CODIGO_EAP_SERVICO; códigos legados de insumo/BOM e contratos são preservados para rastreabilidade, vedada renumeração automática).*
 - 🛒 **VARREDURA MANDATÓRIA DE KITS DE MIUDEZAS (CHECKLIST 7 DA AUDITORIA):** Antes de emitir qualquer lista de compras, o agente DEVE auditar os kits de miudezas e insumos de apoio correspondentes à disciplina (Fundações §1.4, Estrutura §4.2, Alvenaria §1.8, Pintura §5, Pisos §6, Esquadrias §2.3, Impermeabilização §1.5, Cobertura/Fachada §2.4, Elétrica §2.5, Hidráulica §2.4, Canteiro §1.4). A omissão de qualquer miudeza de canteiro resulta em reprovação sumária pela Auditoria.
 - **NÃO** resuma uma skill ou POP. Leia-as e aplique-as na íntegra.
 - **NÃO** assuma dimensões, datas ou efetivo da obra sem confirmação do usuário.

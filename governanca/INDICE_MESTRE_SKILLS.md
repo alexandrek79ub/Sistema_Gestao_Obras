@@ -67,8 +67,11 @@ A governança do cronograma físico, da linha de balanço e da medição contrat
    - A liberação de frentes de shafts verticais de esgoto, prumadas de água fria/incêndio e barramentos elétricos exige a desforma total e desaprumo do pavimento imediatamente superior (`1.4.12`), eliminando riscos de queda de materiais e impacto sobre tubulações plásticas.
 3. **Portão Hidráulico → Fechamento Civil (3.2.7 → 2.1.2) [REGRA DE OURO]:**
    - **NUNCA chapiscar, emboçar, azulejar ou fechar forros e shafts** sobre tubulações de água fria, água quente ou gás sem a realização do **Teste Hidrostático de Estanqueidade sob Pressão (`3.2.7`) com manômetro calibrado durante no mínimo 72 horas**. Vazamentos descobertos após o revestimento geram quebra-quebra, desperdício e atrasos severos na linha de balanço.
-4. **Portão Civil → Dispositivos de Acabamento (2.2.8 → 3.1.9 / 3.2.11):**
-   - A instalação de espelhos, tomadas, interruptores finos (`3.1.9`), louças sanitárias, cubas e metais nobres (`3.2.11`) só pode ocorrer após a conclusão da 1ª demão de pintura e forração protetora de pisos (`2.2.8`), prevenindo danos por respingos e abrasão de ferramentas.
+4. **Portão Civil → Dispositivos de Acabamento (2.1.8 → 3.1.9 / 3.1.11 / 3.2.10 / 3.2.11):**
+   - A instalação de espelhos, tomadas, interruptores finos (`3.1.9` / `3.1.11`), louças sanitárias, cubas e metais nobres (`3.2.10` / `3.2.11`) só pode ocorrer após a conclusão da 1ª demão de pintura e forração protetora de pisos (`2.1.8`), prevenindo danos por respingos e abrasão de ferramentas.
+
+> 🛡️ **Nota de Governança de Códigos (AUD-003):**
+> A taxonomia das tabelas disciplinares atuais é a referência canônica para a EAP de serviço (`CODIGO_EAP_SERVICO`). Códigos legados de insumo/BOM e códigos contratuais/históricos existentes são segregados e preservados estritamente para rastreabilidade, sendo proibida qualquer renumeração automática ou inferência arbitrária de correspondência sem migração explícita homologada.
 
 ---
 

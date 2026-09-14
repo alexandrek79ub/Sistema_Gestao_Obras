@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
+import { ErroObra, obterObraObrigatoria } from '@/lib/obra';
 import path from 'path';
 import fs from 'fs';
 
@@ -387,12 +388,7 @@ function sincronizarCurtoPrazo(
   const candidateFiles = Array.from(new Set([
     path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', `PROGRAMACAO_CURTO_PRAZO_${obra}.csv`),
     path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', `PROGRAMACAO_CURTO_PRAZO_${obraClean}.csv`),
-    path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_OBRA_TMULT.csv'),
-    path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_TMULT.csv'),
-    path.resolve(process.cwd(), `../projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_${obra}.csv`),
-    path.resolve(process.cwd(), `../projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_${obraClean}.csv`),
-    path.resolve(process.cwd(), `projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_${obra}.csv`),
-    path.resolve(process.cwd(), `projetos/${obra}/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_${obraClean}.csv`),
+    path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO.csv'),
   ])).filter(p => fs.existsSync(p));
   
   if (candidateFiles.length === 0) return;
@@ -469,19 +465,20 @@ function sincronizarCurtoPrazo(
 }
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const obra = searchParams.get('obra') || 'OBRA_TMULT';
-  
-  const basePath = process.env.OBRA_PATH 
-    ? process.env.OBRA_PATH.replace(/OBRA.*$/, obra)
-    : path.resolve(process.cwd(), `../projetos/${obra}`);
-    
-  const possiblePaths = [
-    path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv'),
-    path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'TEMPLATE_LINHA_DE_BALANCO.csv'),
-  ];
+  let obra = 'OBRA_TMULT';
+  let basePath: string;
+  try {
+    const res = obterObraObrigatoria(request);
+    obra = res.obra;
+    basePath = res.diretorio;
+  } catch (err) {
+    if (err instanceof ErroObra) {
+      return NextResponse.json({ error: err.message, status: 'invalid_obra' }, { status: 400 });
+    }
+    throw err;
+  }
 
-  let filePath = possiblePaths.find(p => fs.existsSync(p)) || possiblePaths[0];
+  const filePath = path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'LINHA_DE_BALANCO.csv');
 
   try {
   const csvLinhaBalanco = parseCSV(filePath);
@@ -772,11 +769,11 @@ export async function GET(request: Request) {
       { mes: 'Mês 6', fisicoPlan: 100.0, financeiroPlan: 100.0, valorMes: 286953.00 },
     ];
 
+    const obraClean = obra.replace(/^OBRA_/, '');
     const progPaths = [
       path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', `PROGRAMACAO_CURTO_PRAZO_${obra}.csv`),
-      path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_OBRA_TMULT.csv'),
-      path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO_TMULT.csv'),
-      path.resolve(process.cwd(), '../projetos/OBRA_TMULT/03_PLANEJAMENTO_E_CRONOGRAMA/PROGRAMACAO_CURTO_PRAZO_TMULT.csv')
+      path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', `PROGRAMACAO_CURTO_PRAZO_${obraClean}.csv`),
+      path.join(basePath, '03_PLANEJAMENTO_E_CRONOGRAMA', 'PROGRAMACAO_CURTO_PRAZO.csv'),
     ];
     let lotesCurtoPrazo: any[] = [];
     const progFile = progPaths.find(p => fs.existsSync(p));

@@ -36,6 +36,9 @@ from scripts.common.excel_theme import (
     THIN_BORDER, DOUBLE_BOTTOM_BORDER,
     ALIGN_CENTER, ALIGN_LEFT,
 )
+from scripts.common.eap import determinar_distribuicao_canonica, classificar_codigo_eap
+from scripts.common.cpm import calcular_cpm_detalhado
+
 
 if sys.platform == "win32":
     try:
@@ -73,81 +76,17 @@ def carregar_e_distribuir_orcamento(orcamento_csv, prazo_meses=6, regras_custom=
         eap = str(r[eap_col]).strip()
         desc = str(r[desc_col]).strip()
 
-        # 1.0 Administração Local e Canteiro: linear
-        if eap.startswith('1.0'):
+        # Custom rules override if provided
+        if regras_custom and eap in regras_custom:
+            pesos = regras_custom[eap]
             for m in range(1, prazo_meses + 1):
-                df.at[idx, f'P_M{m}'] = 1.0 / float(prazo_meses)
-
-        # 1.1 Infraestrutura: 100% Mês 1
-        elif eap.startswith('1.1'):
-            df.at[idx, 'P_M1'] = 1.0
-
-        # 1.2 Supraestrutura: 100% Mês 2
-        elif eap.startswith('1.2'):
-            df.at[idx, 'P_M2'] = 1.0
-
-        # 2.1 Arquitetura / Acabamentos
-        elif eap.startswith('2.1'):
-            if eap.startswith('2.1.10'):        # Janelas Alumínio/Vidro
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.11'):      # Impermeabilização WCs/Copa
-                df.at[idx, 'P_M4'] = 1.0
-            elif eap.startswith('2.1.1.') or eap == '2.1.1':  # Alvenaria
-                df.at[idx, 'P_M3'] = 1.0
-            elif eap.startswith('2.1.2'):       # Chapisco
-                df.at[idx, 'P_M3'] = 0.5
-                df.at[idx, 'P_M4'] = 0.5
-            elif eap.startswith('2.1.3'):       # Emboço / Reboco Paulista
-                df.at[idx, 'P_M4'] = 1.0
-            elif eap.startswith('2.1.4'):       # Contrapiso
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.5'):       # Porcelanato
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.6'):       # Cerâmica WCs
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.7'):       # Rodapé
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.9'):       # Portas Madeira/Alumínio
-                df.at[idx, 'P_M5'] = 1.0
-            elif eap.startswith('2.1.8'):       # Pintura
-                if 'Selador' in desc or 'Lixa Grossa' in desc:
-                    df.at[idx, 'P_M5'] = 0.5
-                    df.at[idx, 'P_M6'] = 0.5
-                else:
-                    df.at[idx, 'P_M6'] = 1.0
-            else:
-                df.at[idx, 'P_M5'] = 1.0
-
-        # 2.2 Cobertura: 100% Mês 3
-        elif eap.startswith('2.2'):
-            df.at[idx, 'P_M3'] = 1.0
-
-        # 3.1 Elétrica e Telecom
-        elif eap.startswith('3.1'):
-            if any(term in desc for term in ['Eletroduto', 'Caixa de Embutir', 'Caixa Octogonal', 'Aterramento', 'Quadro']):
-                df.at[idx, 'P_M4'] = 1.0
-            elif any(term in desc for term in ['Cabo Cobre', 'Cabo UTP']):
-                df.at[idx, 'P_M5'] = 1.0
-            else:
-                df.at[idx, 'P_M6'] = 1.0
-
-        # 3.2 Hidráulica
-        elif eap.startswith('3.2'):
-            if any(term in desc for term in ['Tubo PVC Soldável', 'Tubo PVC Esgoto', 'Tubo PVC Pluvial', 'Joelho', 'Tê ', 'Curva', 'Junção', 'Registro de Gaveta', 'Registro de Pressão', 'Válvula de Retenção']):
-                df.at[idx, 'P_M4'] = 1.0
-            else:
-                df.at[idx, 'P_M6'] = 1.0
-
-        # 3.3 HVAC
-        elif eap.startswith('3.3'):
-            if any(term in desc for term in ['Tubulação Cobre', 'Tubo PVC Condensado', 'Exaustor']):
-                df.at[idx, 'P_M5'] = 1.0
-            else:
-                df.at[idx, 'P_M6'] = 1.0
-
+                df.at[idx, f'P_M{m}'] = float(pesos.get(f'P_M{m}', 0.0))
         else:
-            mid = max(1, prazo_meses // 2)
-            df.at[idx, f'P_M{mid}'] = 1.0
+            pesos, aviso = determinar_distribuicao_canonica(eap, prazo_meses=prazo_meses, descricao=desc)
+            if aviso:
+                print(f"[AVISO EAP] Linha {idx}: {aviso}")
+            for m in range(1, prazo_meses + 1):
+                df.at[idx, f'P_M{m}'] = float(pesos.get(f'P_M{m}', 0.0))
 
     # Calcular valores monetários
     for m in range(1, prazo_meses + 1):
@@ -370,24 +309,25 @@ def gerar_excel(df, eap_col, desc_col, output_dir, sigla, titulo_obra, prazo_mes
 def gerar_ms_project_xml(cpm_file, output_dir, sigla, titulo_obra, data_inicio_iso="2026-10-01", duracao_dias=180):
     out_xml = os.path.join(output_dir, f"CRONOGRAMA_{sigla}_MSPROJECT.xml")
 
-    if os.path.exists(cpm_file):
-        with open(cpm_file, "r", encoding="utf-8") as f:
-            cpm_raw = json.load(f)
-        tasks = cpm_raw.get("atividades", [])
-    else:
-        # Tarefas sintéticas caso não exista CPM JSON específico
-        tasks = [
-            {"id": "A01_MOBILIZACAO",         "duracao_dias": 15, "predecessoras": []},
-            {"id": "A02_INFRAESTRUTURA",       "duracao_dias": 30, "predecessoras": ["A01_MOBILIZACAO"]},
-            {"id": "A03_ESTRUTURA",            "duracao_dias": 45, "predecessoras": ["A02_INFRAESTRUTURA"]},
-            {"id": "A04_ALVENARIA_COBERTURA",  "duracao_dias": 30, "predecessoras": ["A03_ESTRUTURA"]},
-            {"id": "A05_INSTALACOES",          "duracao_dias": 40, "predecessoras": ["A04_ALVENARIA_COBERTURA"]},
-            {"id": "A06_ACABAMENTOS",          "duracao_dias": 30, "predecessoras": ["A05_INSTALACOES"]},
-            {"id": "A07_DESMOBILIZACAO",       "duracao_dias": 10, "predecessoras": ["A06_ACABAMENTOS"]}
-        ]
+    if not os.path.exists(cpm_file):
+        raise FileNotFoundError(
+            f"[ERRO AUD-009] Arquivo CPM '{cpm_file}' não encontrado. "
+            "A exportação MS Project exige o cronograma CPM validado e não aceita tarefas sintéticas em modo produtivo."
+        )
+
+    with open(cpm_file, "r", encoding="utf-8") as f:
+        cpm_raw = json.load(f)
+    tasks_input = cpm_raw.get("atividades", [])
+    if not tasks_input:
+        raise ValueError(f"[ERRO AUD-009] Nenhuma atividade encontrada no arquivo CPM '{cpm_file}'.")
+
+    # Cálculo rigoroso do CPM (Forward Pass, Backward Pass, folgas e criticidade)
+    cpm_dto = calcular_cpm_detalhado(tasks_input, data_inicio_iso=data_inicio_iso)
+    cpm_atividades = cpm_dto["atividades"]
+    duracao_total_cpm = cpm_dto["duracao_total_dias"]
 
     start_date = datetime.date.fromisoformat(data_inicio_iso)
-    finish_date = start_date + datetime.timedelta(days=duracao_dias)
+    finish_date = datetime.date.fromisoformat(cpm_dto["data_fim"])
 
     xml_content = f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Project xmlns="http://schemas.microsoft.com/project">
@@ -405,26 +345,32 @@ def gerar_ms_project_xml(cpm_file, output_dir, sigla, titulo_obra, data_inicio_i
         <Task>
             <UID>0</UID>
             <ID>0</ID>
-            <Name>{titulo_obra.upper()} ({duracao_dias} DIAS)</Name>
+            <Name>{titulo_obra.upper()} ({duracao_total_cpm} DIAS CPM)</Name>
             <Type>1</Type>
             <CreateDate>{datetime.date.today().isoformat()}T08:00:00</CreateDate>
             <Start>{start_date.isoformat()}T08:00:00</Start>
             <Finish>{finish_date.isoformat()}T17:00:00</Finish>
-            <Duration>PT{duracao_dias * 8}H0M0S</Duration>
+            <Duration>PT{duracao_total_cpm * 8}H0M0S</Duration>
             <Summary>1</Summary>
             <Critical>1</Critical>
         </Task>
 """
-    task_uid_map = {t["id"]: idx for idx, t in enumerate(tasks, start=1)}
-    current_day = 0
+    task_uid_map = {t["id"]: idx for idx, t in enumerate(tasks_input, start=1)}
 
-    for idx, t in enumerate(tasks, start=1):
-        dur_days = t["duracao_dias"]
+    for idx, t in enumerate(tasks_input, start=1):
+        aid = t["id"]
+        cpm_info = cpm_atividades.get(aid, {})
+        dur_days = cpm_info.get("duracao_dias", t.get("duracao_dias", 1))
         dur_hours = dur_days * 8
-        t_start = start_date + datetime.timedelta(days=current_day)
-        t_finish = t_start + datetime.timedelta(days=dur_days)
-        if len(t.get("predecessoras", [])) <= 1:
-            current_day += dur_days
+        is_critica = 1 if cpm_info.get("critica", False) else 0
+        folga_total = cpm_info.get("folga_total", 0)
+        total_slack_minutes = folga_total * 480
+        t_start_iso = cpm_info.get("data_inicio", f"{start_date.isoformat()}T08:00:00")
+        t_finish_iso = cpm_info.get("data_fim", f"{finish_date.isoformat()}T17:00:00")
+        if "T" not in t_start_iso:
+            t_start_iso = f"{t_start_iso}T08:00:00"
+        if "T" not in t_finish_iso:
+            t_finish_iso = f"{t_finish_iso}T17:00:00"
 
         preds_xml = ""
         for p in t.get("predecessoras", []):
@@ -440,12 +386,13 @@ def gerar_ms_project_xml(cpm_file, output_dir, sigla, titulo_obra, data_inicio_i
         xml_content += f"""        <Task>
             <UID>{idx}</UID>
             <ID>{idx}</ID>
-            <Name>{t["id"].replace('_', ' ')}</Name>
+            <Name>{aid.replace('_', ' ')}</Name>
             <Active>1</Active>
             <Duration>PT{dur_hours}H0M0S</Duration>
-            <Start>{t_start.isoformat()}T08:00:00</Start>
-            <Finish>{t_finish.isoformat()}T17:00:00</Finish>
-            <Critical>1</Critical>
+            <Start>{t_start_iso}</Start>
+            <Finish>{t_finish_iso}</Finish>
+            <Critical>{is_critica}</Critical>
+            <TotalSlack>{total_slack_minutes}</TotalSlack>
 {preds_xml}        </Task>
 """
     xml_content += """    </Tasks>
