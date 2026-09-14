@@ -12,7 +12,8 @@ import {
   ChevronDown,
   ChevronUp,
   FileBadge,
-  Info
+  Info,
+  AlertTriangle
 } from 'lucide-react';
 
 interface FvsItem {
@@ -41,6 +42,13 @@ interface SubcontratoItem {
 interface QualidadeResponse {
   success: boolean;
   obra: string;
+  modoDemo?: boolean;
+  status?: string;
+  proveniencia?: {
+    catalogo?: string | null;
+    registroCampo?: string | null;
+    filaCampo?: string | null;
+  };
   resumo: {
     totalFvss: number;
     aprovadas: number;
@@ -89,12 +97,12 @@ export default function QualidadePage() {
   const fvss = data?.fvss || [];
   const subcontratos = data?.subcontratos || [];
   const resumo = data?.resumo || {
-    totalFvss: 8,
-    aprovadas: 2,
-    emInspecao: 1,
-    pendentes: 5,
-    taxaConformidade: 25,
-    contratosBloqueados: 7,
+    totalFvss: fvss.length,
+    aprovadas: 0,
+    emInspecao: 0,
+    pendentes: fvss.length,
+    taxaConformidade: 0,
+    contratosBloqueados: subcontratos.length,
   };
 
   const getStatusBadge = (status: FvsItem['status']) => {
@@ -146,6 +154,29 @@ export default function QualidadePage() {
           </span>
         </div>
       </div>
+
+      {data?.modoDemo && (
+        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-3 text-amber-300 text-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-amber-400" />
+          <div>
+            <span className="font-bold">MODO DEMONSTRAÇÃO ATIVO:</span> Os dados de inspeções exibidos nesta tela são simulados para demonstração e não representam inspeções reais homologadas desta obra.
+          </div>
+        </div>
+      )}
+
+      {data?.proveniencia && (
+        <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-2">
+          <span>Origem oficial:</span>
+          {data.proveniencia.catalogo && (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Catálogo: {data.proveniencia.catalogo}</span>
+          )}
+          {data.proveniencia.registroCampo ? (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Inspeções: {data.proveniencia.registroCampo}</span>
+          ) : (
+            <span className="text-zinc-500">Sem inspeções registradas em campo</span>
+          )}
+        </div>
+      )}
 
       {/* KPI CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

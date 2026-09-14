@@ -39,6 +39,14 @@ interface ProgramaLegal {
 interface SstResponse {
   success: boolean;
   obra: string;
+  modoDemo?: boolean;
+  status?: string;
+  proveniencia?: {
+    sstDir?: string | null;
+    relatorioCompliance?: string | null;
+    histogramaMo?: string | null;
+    operariosJson?: string | null;
+  };
   resumo: {
     efetivoTotal: number;
     totalProprios: number;
@@ -47,9 +55,9 @@ interface SstResponse {
     alerta30d: number;
     bloqueados: number;
     indiceConformidade: number;
-    diasSemAcidentes: number;
-    taxaDdsSemanal: number;
-    temaDdsSemana: string;
+    diasSemAcidentes: number | null;
+    taxaDdsSemanal: number | null;
+    temaDdsSemana: string | null;
   };
   operarios: OperarioAso[];
   programasLegais: ProgramaLegal[];
@@ -89,16 +97,16 @@ export default function SstPage() {
   }
 
   const resumo = data?.resumo || {
-    efetivoTotal: 13,
-    totalProprios: 5,
-    totalTerceiros: 8,
-    aptos: 12,
-    alerta30d: 1,
+    efetivoTotal: 0,
+    totalProprios: 0,
+    totalTerceiros: 0,
+    aptos: 0,
+    alerta30d: 0,
     bloqueados: 0,
-    indiceConformidade: 100,
-    diasSemAcidentes: 18,
-    taxaDdsSemanal: 100,
-    temaDdsSemana: 'Uso obrigatório de EPI e trabalho em altura NR-35',
+    indiceConformidade: 0,
+    diasSemAcidentes: null,
+    taxaDdsSemanal: null,
+    temaDdsSemana: null,
   };
 
   const operarios = data?.operarios || [];
@@ -125,10 +133,33 @@ export default function SstPage() {
 
         <div className="flex items-center gap-2">
           <span className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold rounded-lg flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4" /> {resumo.diasSemAcidentes} Dias Sem Acidentes
+            <ShieldCheck className="w-4 h-4" /> {resumo.diasSemAcidentes !== null ? `${resumo.diasSemAcidentes} Dias Sem Acidentes` : 'Sem Ocorrências Registradas'}
           </span>
         </div>
       </div>
+
+      {data?.modoDemo && (
+        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-3 text-amber-300 text-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-amber-400" />
+          <div>
+            <span className="font-bold">MODO DEMONSTRAÇÃO ATIVO:</span> Os operários e conformidades exibidos nesta tela são simulados para demonstração e não representam o canteiro real desta obra.
+          </div>
+        </div>
+      )}
+
+      {data?.proveniencia && (
+        <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-2">
+          <span>Origem oficial:</span>
+          {data.proveniencia.relatorioCompliance && (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Compliance: {data.proveniencia.relatorioCompliance}</span>
+          )}
+          {data.proveniencia.histogramaMo ? (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Histograma: {data.proveniencia.histogramaMo}</span>
+          ) : (
+            <span className="text-zinc-500">Sem histograma de MO</span>
+          )}
+        </div>
+      )}
 
       {/* KPI CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -13,7 +13,8 @@ import {
   FileText,
   Building,
   Key,
-  ChevronRight
+  ChevronRight,
+  AlertTriangle
 } from 'lucide-react';
 
 interface ArquivoItem {
@@ -43,6 +44,12 @@ interface GarantiaItem {
 interface DataBookResponse {
   success: boolean;
   obra: string;
+  modoDemo?: boolean;
+  status?: string;
+  proveniencia?: {
+    databookDir?: string | null;
+    arquivosReaisEncontrados?: number;
+  };
   kpis: {
     totalPastas: number;
     pastasConcluidas: number;
@@ -60,8 +67,8 @@ export default function DataBookPage() {
   const { obraAtiva } = useObra();
   const [data, setData] = useState<DataBookResponse | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'PASTAS' | 'GARANTIAS' | 'CLOSEOUT'>('PASTAS');
   const [selectedFolder, setSelectedFolder] = useState<string>('01');
+  const [activeTab, setActiveTab] = useState<'PASTAS' | 'GARANTIAS' | 'CLOSEOUT'>('PASTAS');
 
   useEffect(() => {
     async function carregarDataBook() {
@@ -92,12 +99,12 @@ export default function DataBookPage() {
 
   const kpis = data?.kpis || {
     totalPastas: 5,
-    pastasConcluidas: 1,
-    totalDocumentos: 17,
-    documentosValidados: 9,
-    progressoCloseout: 53,
-    statusTrp: 'Em Elaboração (D-0)',
-    statusTrd: 'Condicionado ao DataBook 100%',
+    pastasConcluidas: 0,
+    totalDocumentos: 0,
+    documentosValidados: 0,
+    progressoCloseout: 0,
+    statusTrp: 'PENDENTE',
+    statusTrd: 'PENDENTE',
   };
 
   const pastas = data?.pastas || [];
@@ -146,6 +153,27 @@ export default function DataBookPage() {
           </button>
         </div>
       </div>
+
+      {data?.modoDemo && (
+        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-3 text-amber-300 text-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-amber-400" />
+          <div>
+            <span className="font-bold">MODO DEMONSTRAÇÃO ATIVO:</span> Os documentos e laudos exibidos nesta tela são simulados para demonstração e não representam o acervo real desta obra.
+          </div>
+        </div>
+      )}
+
+      {data?.proveniencia && (
+        <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-2">
+          <span>Origem oficial:</span>
+          {data.proveniencia.databookDir ? (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Acervo: {data.proveniencia.databookDir}</span>
+          ) : (
+            <span className="text-zinc-500">Sem pasta 07_DATABOOK_E_ASBUILT</span>
+          )}
+          <span className="text-zinc-500">({data.proveniencia.arquivosReaisEncontrados ?? 0} arquivos escaneados no disco)</span>
+        </div>
+      )}
 
       {/* KPI CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

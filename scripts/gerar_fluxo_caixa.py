@@ -49,7 +49,7 @@ RUBRICAS_SAIDAS = [
 ]
 
 
-def carregar_dados_cronograma(cronograma_csv, prazo_meses=6, bdi_servico=0.2717, bdi_equip=0.15):
+def carregar_dados_cronograma(cronograma_csv, prazo_meses=6, bdi_servico=0.2717, bdi_equip=0.15, config=None):
     """Lê cronograma físico-financeiro e calcula vendas e custos diretos por mês."""
     df = pd.read_csv(cronograma_csv, sep=';', encoding='utf-8')
     eap_col = [c for c in df.columns if 'EAP' in c][0]
@@ -67,12 +67,14 @@ def carregar_dados_cronograma(cronograma_csv, prazo_meses=6, bdi_servico=0.2717,
         ), 2) if col_m in df.columns else 0.0
     total_custo_direto = sum(diretos_m.values())
 
-    if abs(total_venda - 1660762.28) < 1.0:
-        TOTAL_CD_TMULT = 1314562.67
-        fator = TOTAL_CD_TMULT / 1315417.51
+    params = config.get("parametros_fluxo_caixa", {}) if config else {}
+    target_cd = params.get("total_custo_direto_alvo")
+    if target_cd is not None and total_custo_direto > 0:
+        target_cd = float(target_cd)
+        fator = target_cd / total_custo_direto
         diretos_m = {m: round(diretos_m[m] * fator, 2) for m in range(1, prazo_meses + 1)}
-        diretos_m[prazo_meses] = round(diretos_m[prazo_meses] + (TOTAL_CD_TMULT - sum(diretos_m.values())), 2)
-        total_custo_direto = TOTAL_CD_TMULT
+        diretos_m[prazo_meses] = round(diretos_m[prazo_meses] + (target_cd - sum(diretos_m.values())), 2)
+        total_custo_direto = target_cd
 
     return vendas_m, diretos_m, total_venda, total_custo_direto
 
@@ -81,15 +83,17 @@ def modelar_fluxo_caixa(vendas_m, diretos_m, total_venda, total_custo_direto, co
     """Simula o fluxo de caixa nos cenários Realista, Otimista e Estresse."""
     meses = list(range(1, prazo_meses + 2))
     params = config.get("parametros_fluxo_caixa", {})
-    retencao_pct = params.get("retencao_pct", 0.05)
-    adiant_pct = params.get("adiantamento_pct", 0.10)
-    aliq_imp = params.get("aliquota_impostos_pct", 0.0865)
+    retencao_pct = float(params.get("retencao_pct", 0.05))
+    adiant_pct = float(params.get("adiantamento_pct", 0.10))
+    aliq_imp = float(params.get("aliquota_impostos_pct", 0.0865))
+    particao_mo = float(params.get("particao_mo_pct", 0.35))
+    particao_mat = float(params.get("particao_mat_pct", 0.65))
 
     adm = config.get("administracao_local", [])
-    c_g = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") in ["1.0.1", "1.0.2"]) or 29300.00
-    c_v = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") in ["1.0.5", "1.0.6"]) or 23009.33
-    c_l = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") == "1.0.3") or 6383.33
-    c_c = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") == "1.0.4") or 2350.00
+    c_g = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") in ["1.0.1", "1.0.2"])
+    c_v = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") in ["1.0.5", "1.0.6"])
+    c_l = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") == "1.0.3")
+    c_c = sum(float(i.get("custo_unitario", 0)) for i in adm if i.get("eap") == "1.0.4")
     c_cant_m = c_g + c_v + c_l + c_c
     bdi_ind_m = round((total_venda * params.get("bdi_indireto_pct", 0.0594)) / prazo_meses, 2)
 
@@ -126,8 +130,8 @@ def modelar_fluxo_caixa(vendas_m, diretos_m, total_venda, total_custo_direto, co
         des_con[m + 1] += round(c_c * 0.50, 2)
 
         custo_fis = max(0.0, diretos_m[m] - c_cant_m)
-        mo_c = round(custo_fis * 0.35, 2)
-        mat_c = round(custo_fis * 0.65, 2)
+        mo_c = round(custo_fis * particao_mo, 2)
+        mat_c = round(custo_fis * particao_mat, 2)
 
         des_mc[m] += mo_c
         des_mv[m] += round(mat_c * 0.20, 2)
@@ -472,7 +476,7 @@ def main():
 
     print(f"=== MOTOR UNIVERSAL DE FLUXO DE CAIXA: {titulo} ({sigla}) ===")
     vendas_m, diretos_m, total_venda, total_custo_direto = carregar_dados_cronograma(
-        cronograma_csv, prazo_meses=prazo_meses, bdi_servico=bdi_servico, bdi_equip=bdi_equip
+        cronograma_csv, prazo_meses=prazo_meses, bdi_servico=bdi_servico, bdi_equip=bdi_equip, config=config
     )
     fluxo = modelar_fluxo_caixa(vendas_m, diretos_m, total_venda, total_custo_direto, config, prazo_meses=prazo_meses)
 

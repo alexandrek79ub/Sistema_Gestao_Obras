@@ -14,7 +14,8 @@ import {
   CheckCircle2,
   Calendar,
   Layers,
-  Filter
+  Filter,
+  AlertTriangle
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -62,6 +63,13 @@ interface MedicaoEmpreiteiro {
 interface FinanceiroResponse {
   success: boolean;
   obra: string;
+  modoDemo?: boolean;
+  status?: string;
+  proveniencia?: {
+    fluxoCsv?: string | null;
+    trackerJson?: string | null;
+    calendarioMedicoes?: string | null;
+  };
   kpis: {
     faturamentoTotal: number;
     desembolsoTotal: number;
@@ -114,16 +122,16 @@ export default function FinanceiroPage() {
   }
 
   const kpis = data?.kpis || {
-    faturamentoTotal: 1660762.28,
-    desembolsoTotal: 1556867.83,
-    margemContratual: 103894.45,
-    margemPercent: 6.26,
-    capitalGiroMaximo: -180621.7,
-    mesPicoExposicao: 'Mês 3',
-    totalRetencaoCaucao: 83038.11,
-    totalPacotesSuprimentos: 41,
-    materiaisRcCount: 24,
-    equipamentosReCount: 17,
+    faturamentoTotal: 0,
+    desembolsoTotal: 0,
+    margemContratual: 0,
+    margemPercent: 0,
+    capitalGiroMaximo: 0,
+    mesPicoExposicao: 'N/A',
+    totalRetencaoCaucao: 0,
+    totalPacotesSuprimentos: 0,
+    materiaisRcCount: 0,
+    equipamentosReCount: 0,
   };
 
   const fluxo = data?.fluxoMensal || [];
@@ -181,6 +189,29 @@ export default function FinanceiroPage() {
           </button>
         </div>
       </div>
+
+      {data?.modoDemo && (
+        <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl flex items-center gap-3 text-amber-300 text-sm">
+          <AlertTriangle className="w-5 h-5 shrink-0 text-amber-400" />
+          <div>
+            <span className="font-bold">MODO DEMONSTRAÇÃO ATIVO:</span> Os indicadores exibidos nesta tela são simulados para demonstração e não representam o fluxo de caixa real desta obra.
+          </div>
+        </div>
+      )}
+
+      {data?.proveniencia && (
+        <div className="text-xs text-zinc-400 flex flex-wrap items-center gap-2">
+          <span>Origem oficial:</span>
+          {data.proveniencia.fluxoCsv ? (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Fluxo: {data.proveniencia.fluxoCsv}</span>
+          ) : (
+            <span className="text-zinc-500">Sem CSV de fluxo</span>
+          )}
+          {data.proveniencia.trackerJson && (
+            <span className="bg-zinc-900 border border-zinc-800 px-2 py-0.5 rounded text-zinc-300">Tracker: {data.proveniencia.trackerJson}</span>
+          )}
+        </div>
+      )}
 
       {/* KPI CARDS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

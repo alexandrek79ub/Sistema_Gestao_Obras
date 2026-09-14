@@ -6,6 +6,15 @@
   "bdi_servico_pct": 27.17,
   "bdi_equipamento_pct": 15.0,
   "data_auditoria": "10/09/2026",
+  "parametros_fluxo_caixa": {
+    "total_custo_direto_alvo": 1314562.67,
+    "particao_mo_pct": 0.35,
+    "particao_mat_pct": 0.65,
+    "retencao_pct": 0.05,
+    "adiantamento_pct": 0.10,
+    "aliquota_impostos_pct": 0.0865,
+    "bdi_indireto_pct": 0.0594
+  },
   "administracao_local": [
     {
       "eap": "1.0.1",

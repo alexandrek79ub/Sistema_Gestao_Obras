@@ -104,7 +104,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 | AUD-001 | P0 | Bug confirmado | Fluxo de FVS permite aprovação e desbloqueio sem validação técnica e assinatura válida | IMPLEMENTADO |
 | AUD-002 | P0 | Risco confirmado / desalinhamento arquitetural | Dashboard expõe mutações genéricas e execução insegura apesar de ser leitura por padrão | IMPLEMENTADO |
 | AUD-003 | P0 | Bug confirmado | Mapeamento de EAP do cronograma está incompatível com a governança oficial | IMPLEMENTADO |
-| AUD-004 | P0 | Bug confirmado | Painéis operacionais apresentam dados fixos ou demonstrativos como se fossem dados reais | PENDENTE |
+| AUD-004 | P0 | Bug confirmado | Painéis operacionais apresentam dados fixos ou demonstrativos como se fossem dados reais | IMPLEMENTADO |
 | AUD-005 | P1 | Bug confirmado | Seleção da obra não é propagada para EVM e orçamento | IMPLEMENTADO |
 | AUD-006 | P1 | Bug confirmado / governança | API pode reescrever baseline sem fluxo formal de aprovação e versionamento | IMPLEMENTADO |
 | AUD-007 | P1 | Bug confirmado | Orquestrador pode terminar com código zero após falha de etapa obrigatória | IMPLEMENTADO |
@@ -202,7 +202,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P0.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** APIs e geradores retornam indicadores plausíveis fixos ou derivados de premissas específicas da OBRA_TMULT sem distinguir demonstração, ausência de dados e informação oficial da obra selecionada.
 - **Evidências e arquivos envolvidos:**
   - `apresentacao_comercial/src/app/api/evm/route.ts:40-48` monta percentuais EVM fixos;
@@ -560,6 +560,7 @@ O próximo agente deve adicionar uma linha por mudança de status. Não apagar r
 | 14/09/2026 | Fase 2 / AUD-003 e Fase 2 | PENDENTE → BLOQUEADO | Codex / Tech Lead | `PLANO_MELHORIAS_AUDITORIA.md` | Validação localizada das tabelas oficiais de EAP e dos quatro portões; confirmação dos defeitos de `AUD-007`, `AUD-008` e `AUD-009`; `py_compile` dos três motores, `npm run test` (6/6), `tsc --noEmit` e build aprovados; lint global reprovado por 45 erros preexistentes | Conflito de regra: Índice Mestre impõe `2.2.8 → 3.1.9 / 3.2.11`; Arquitetura, Elétrica e Hidráulica definem códigos/predecessoras incompatíveis. `AUD-003` precede os demais itens da fase; aguarda decisão de governança. |
 | 14/09/2026 | Fase 2 / AUD-003, AUD-007, AUD-008, AUD-009 | BLOQUEADO → IMPLEMENTADO | Antigravity / Tech Lead | `9d991ff` | `python -m unittest discover -s scripts/tests` (12/12), `npm test` (8/8), `tsc --noEmit` e `npm run build` aprovados | Decisão aprovada destravou AUD-003: catálogo canônico `eap.py`, 4 portões testados (2.1.8 no portão 4) e segregação formal de CODIGO_EAP_SERVICO; AUD-007 com propagação de sys.exit 1 em falhas; AUD-008 com modos distintos lob_para_esteira/esteira_para_lob e remoção de fallbacks TMULT/template na API; AUD-009 com cálculo rigoroso de CPM (`cpm.py`) refletido no MS Project XML. |
 | 14/09/2026 | Fase 3 / AUD-001 (conclusão) e AUD-010 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | A comitar | `python -m unittest discover -s scripts/tests` (22/22), `npm test` (11/11), `tsc --noEmit` e `npm run build` aprovados | AUD-001: Módulo canônico `qualidade_fvs.py` com avaliação técnica rigorosa (código oficial, 100% do checklist atendido, tolerância medida, responsável identificado e assinatura com hash sha256); liberação de medição condicionada estritamente ao status APROVADA; remoção de defaults em `/campo` e `campoStaging.ts`. AUD-010: `processar_coleta_campo.py` inicia numeração em 001, valida campos obrigatórios sem defaults factuais e emite RASCUNHO quando não assinado; template `_TEMPLATE_OBRA_NOVA` purgado de RDOs e registros operacionais; `gerar_rdo.py` atualizado sem injeção de pilotos em obras novas. |
+| 14/09/2026 | Fase 4 / AUD-004 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | A comitar | `python -m unittest discover -s scripts/tests` (25/25), `npm test` (15/15), `tsc --noEmit` e `npm run build` aprovados | Remoção integral de dados fabricados/simulados em produção nas rotas /api/evm, /api/financeiro, /api/qualidade, /api/sst e /api/databook; exigência de obterObraObrigatoria em todas; suporte a modo demonstração visualmente identificado com rótulo e proveniência estrita (?demo=true); dashboards ajustados para tratar ausência com veracidade (status SEM_DADOS, spi/cpi nulos); scripts/gerar_fluxo_caixa.py parametrizado via config_obra.json sem fallbacks hardcoded da TMULT. |
 
 ## 9. Top 10 recomendado por benefício
 
