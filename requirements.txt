@@ -1,0 +1,7 @@
+# Dependências oficiais dos motores Python do Sistema de Gestão de Obras (AUD-014)
+openpyxl>=3.1.2
+Pillow>=10.0.0
+plotly>=5.18.0
+numpy>=1.26.0
+pandas>=2.1.0
+pymupdf>=1.23.0

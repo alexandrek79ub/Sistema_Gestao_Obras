@@ -5,28 +5,53 @@ import { XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Area
 import { AlertTriangle, CheckCircle2, ArrowDownRight, ArrowUpRight, HelpCircle, FileText } from 'lucide-react';
 import { useObra } from '@/context/ObraContext';
 
+interface EvmSemanaItem {
+  semana: string;
+  name?: string;
+  data: string;
+  VP?: number;
+  CR?: number | null;
+  VA?: number | null;
+  spi?: number | null;
+  cpi?: number | null;
+  [key: string]: unknown;
+}
+
+interface ProvenienciaItem {
+  origem?: string;
+  dataAtualizacao?: string;
+  detalhe?: string;
+  orcamento?: string;
+  cronograma?: string;
+  [key: string]: unknown;
+}
+
 export default function DashboardPage() {
   const { obraAtiva } = useObra();
-  const [evmData, setEvmData] = useState<any[]>([]);
+  const [evmData, setEvmData] = useState<EvmSemanaItem[]>([]);
   const [bac, setBac] = useState<number | null>(null);
   const [spi, setSpi] = useState<number | null>(null);
   const [cpi, setCpi] = useState<number | null>(null);
   const [modoDemo, setModoDemo] = useState<boolean>(false);
   const [statusEVM, setStatusEVM] = useState<string>('OK');
   const [mensagemEVM, setMensagemEVM] = useState<string | null>(null);
-  const [proveniencia, setProveniencia] = useState<any>(null);
+  const [proveniencia, setProveniencia] = useState<ProvenienciaItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!obraAtiva) {
-      setLoading(false);
-      setError('Nenhuma obra disponível para consulta.');
+      Promise.resolve().then(() => {
+        setLoading(false);
+        setError('Nenhuma obra disponível para consulta.');
+      });
       return;
     }
     const controller = new AbortController();
-    setLoading(true);
-    setError(null);
+    Promise.resolve().then(() => {
+      setLoading(true);
+      setError(null);
+    });
     fetch(`/api/evm?obra=${encodeURIComponent(obraAtiva)}`, { signal: controller.signal })
       .then(async (res) => {
         const data = await res.json();
@@ -85,7 +110,10 @@ export default function DashboardPage() {
       <div className="flex justify-between items-end">
         <div>
           <h1 className="text-3xl font-bold text-white tracking-tight">Painel de Diretoria (EVM)</h1>
-          <p className="text-zinc-400 mt-1">Análise de Valor Agregado oficial ({obraAtiva}).</p>
+          <p className="text-zinc-400 mt-1">
+            Análise de Valor Agregado oficial ({obraAtiva})
+            {statusEVM ? <span className="ml-2 text-xs px-2 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700">Status: {statusEVM}</span> : null}
+          </p>
         </div>
         <button className="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors">
           Exportar PDF
@@ -175,9 +203,9 @@ export default function DashboardPage() {
               <div className="lg:col-span-2 bg-zinc-900 border border-zinc-800 rounded-xl p-6">
                 <div className="flex justify-between items-center mb-6">
                   <h3 className="text-lg font-semibold text-white">Curva S (Planejado vs Realizado)</h3>
-                  {proveniencia?.cronograma && (
+                  {proveniencia?.cronograma ? (
                     <span className="text-xs text-zinc-500 bg-zinc-800/60 px-2 py-1 rounded">Fonte: {proveniencia.cronograma}</span>
-                  )}
+                  ) : null}
                 </div>
                 <div className="h-80 w-full">
                   <ResponsiveContainer width="100%" height="100%">
@@ -194,7 +222,7 @@ export default function DashboardPage() {
                       <Tooltip 
                         contentStyle={{ backgroundColor: '#18181b', borderColor: '#27272a', color: '#fff' }}
                         itemStyle={{ color: '#fff' }}
-                        formatter={(value: any) => formatCurrency(value)}
+                        formatter={(value) => formatCurrency(typeof value === 'number' ? value : Number(value) || 0)}
                       />
                       <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }}/>
                       <Area type="monotone" dataKey="VP" name="Valor Planejado (Curva S)" stroke="#3b82f6" strokeWidth={3} fillOpacity={1} fill="url(#colorVP)" />

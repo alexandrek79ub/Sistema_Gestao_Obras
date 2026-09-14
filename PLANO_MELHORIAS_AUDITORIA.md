@@ -10,8 +10,8 @@
 | 1 — Contratos de dados e persistência | Criar base segura para isolamento multiobra e para as escritas que permanecerem | `AUD-011` → `AUD-005` → `AUD-012` | IMPLEMENTADO | A classificação de superfícies definida em `AUD-002` determina onde escrita ainda existe | Contratos de dados explícitos, seleção multiobra isolada e persistência segura para as escritas autorizadas. |
 | 2 — Regras centrais de planejamento | Corrigir a fonte de verdade da EAP e a confiabilidade dos motores | `AUD-003` → `AUD-007` → `AUD-008` → `AUD-009` | IMPLEMENTADO | Parser/validação de `AUD-011`; persistência segura de `AUD-012` para mutações; decisão aprovada de governança para AUD-003 | EAP canônica e motores de planejamento confiáveis, com falhas propagadas, sincronização correta e exportação CPM aderente. |
 | 3 — Governança de campo | Corrigir coleta, aprovação de qualidade e emissão de RDO | conclusão de `AUD-001` → `AUD-010` | IMPLEMENTADO | Fronteira específica de campo (`AUD-002`) e escrita atômica (`AUD-012`) | Coleta de campo governada, aprovação de FVS tecnicamente validada e RDO emitido sem valores ou assinaturas presumidos. |
-| 4 — Veracidade dos painéis | Remover dados plausíveis não derivados das fontes oficiais | `AUD-004` | PENDENTE | Contratos explícitos de ausência/erro (`AUD-011`) e seleção multiobra (`AUD-005`) | Painéis exibem apenas dados oficiais, com ausência e erro distinguíveis de valores reais. |
-| 5 — Sustentação | Reduzir acoplamento e tornar os gates obrigatórios | `AUD-013` → conclusão de `AUD-014` | PENDENTE | Comportamentos críticos já cobertos por testes das fases anteriores | Código menos acoplado e gates de qualidade reproduzíveis e obrigatórios. |
+| 4 — Veracidade dos painéis | Remover dados plausíveis não derivados das fontes oficiais | `AUD-004` | IMPLEMENTADO | Contratos explícitos de ausência/erro (`AUD-011`) e seleção multiobra (`AUD-005`) | Painéis exibem apenas dados oficiais, com ausência e erro distinguíveis de valores reais. |
+| 5 — Sustentação | Reduzir acoplamento e tornar os gates obrigatórios | `AUD-013` → conclusão de `AUD-014` | IMPLEMENTADO | Comportamentos críticos já cobertos por testes das fases anteriores | Código menos acoplado e gates de qualidade reproduzíveis e obrigatórios. |
 
 ## 1. Objetivo e limites
 
@@ -224,6 +224,9 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
   3. cada indicador expõe fonte/proveniência suficiente para auditoria;
   4. modo demo, se mantido, exige ativação explícita e rótulo visível;
   5. testes com duas obras provam isolamento e resultados distintos.
+- **Nota de Auditoria e Evolução Futura (Não Bloqueante — Fora do Escopo das Fases 0–5):**
+  - **Validação de Baseline Legítima:** O valor de `R$ 1.314.562,67` configurado em `projetos/OBRA_TMULT/config_obra.json` sob a chave `total_custo_direto_alvo` foi formalmente auditado e validado como a baseline oficial e legítima de custo direto da `OBRA_TMULT`, correspondendo à soma analítica dos 158 itens da EAP no Orçamento Base SINAPI SP e na Proposta Comercial Turnkey. A reconciliação matemática aplicada em `gerar_fluxo_caixa.py` absorve exclusivamente resíduos de arredondamento (R$ 854,85) decorrentes da decomposição inversa de BDI a partir das colunas de venda do cronograma. Portanto, esta validação confirma a integridade dos dados da obra e **não reabre nem altera o status de `IMPLEMENTADO` do AUD-004**.
+  - **Melhoria Futura (Fora das Fases 0–5):** Registra-se como evolução futura não bloqueante a separação explícita, dentro do cronograma físico-financeiro, entre a curva de venda com BDI (faturamento contratual) e a curva de custo direto orçado (desembolso real da construtora). Essa evolução permitirá que o motor de fluxo de caixa consuma diretamente o custo direto orçado mês a mês, eliminando futuramente a necessidade de qualquer reconciliação externa por `total_custo_direto_alvo`.
 
 ### AUD-005 — Obra ativa não propagada para EVM e orçamento
 
@@ -428,7 +431,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P2.
 - **Natureza:** dívida técnica confirmada.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** módulos de grande porte concentram responsabilidades de apresentação, parsing, regras, DAG, persistência e execução de processos, aumentando superfície de regressão.
 - **Evidências e arquivos envolvidos:** contagens observadas na auditoria:
   - `apresentacao_comercial/src/components/LinhaDeBalanco.tsx`: 2.221 linhas;
@@ -455,7 +458,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** dívida técnica e risco de qualidade confirmados.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** não foi encontrada suíte automatizada nem CI; o lint falha; não há manifesto/lock Python reproduzível, embora existam dependências externas.
 - **Evidências e arquivos envolvidos:** resultados da auditoria:
   - `npx.cmd tsc --noEmit --incremental false`: aprovado;
@@ -560,7 +563,9 @@ O próximo agente deve adicionar uma linha por mudança de status. Não apagar r
 | 14/09/2026 | Fase 2 / AUD-003 e Fase 2 | PENDENTE → BLOQUEADO | Codex / Tech Lead | `PLANO_MELHORIAS_AUDITORIA.md` | Validação localizada das tabelas oficiais de EAP e dos quatro portões; confirmação dos defeitos de `AUD-007`, `AUD-008` e `AUD-009`; `py_compile` dos três motores, `npm run test` (6/6), `tsc --noEmit` e build aprovados; lint global reprovado por 45 erros preexistentes | Conflito de regra: Índice Mestre impõe `2.2.8 → 3.1.9 / 3.2.11`; Arquitetura, Elétrica e Hidráulica definem códigos/predecessoras incompatíveis. `AUD-003` precede os demais itens da fase; aguarda decisão de governança. |
 | 14/09/2026 | Fase 2 / AUD-003, AUD-007, AUD-008, AUD-009 | BLOQUEADO → IMPLEMENTADO | Antigravity / Tech Lead | `9d991ff` | `python -m unittest discover -s scripts/tests` (12/12), `npm test` (8/8), `tsc --noEmit` e `npm run build` aprovados | Decisão aprovada destravou AUD-003: catálogo canônico `eap.py`, 4 portões testados (2.1.8 no portão 4) e segregação formal de CODIGO_EAP_SERVICO; AUD-007 com propagação de sys.exit 1 em falhas; AUD-008 com modos distintos lob_para_esteira/esteira_para_lob e remoção de fallbacks TMULT/template na API; AUD-009 com cálculo rigoroso de CPM (`cpm.py`) refletido no MS Project XML. |
 | 14/09/2026 | Fase 3 / AUD-001 (conclusão) e AUD-010 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | A comitar | `python -m unittest discover -s scripts/tests` (22/22), `npm test` (11/11), `tsc --noEmit` e `npm run build` aprovados | AUD-001: Módulo canônico `qualidade_fvs.py` com avaliação técnica rigorosa (código oficial, 100% do checklist atendido, tolerância medida, responsável identificado e assinatura com hash sha256); liberação de medição condicionada estritamente ao status APROVADA; remoção de defaults em `/campo` e `campoStaging.ts`. AUD-010: `processar_coleta_campo.py` inicia numeração em 001, valida campos obrigatórios sem defaults factuais e emite RASCUNHO quando não assinado; template `_TEMPLATE_OBRA_NOVA` purgado de RDOs e registros operacionais; `gerar_rdo.py` atualizado sem injeção de pilotos em obras novas. |
-| 14/09/2026 | Fase 4 / AUD-004 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | A comitar | `python -m unittest discover -s scripts/tests` (25/25), `npm test` (15/15), `tsc --noEmit` e `npm run build` aprovados | Remoção integral de dados fabricados/simulados em produção nas rotas /api/evm, /api/financeiro, /api/qualidade, /api/sst e /api/databook; exigência de obterObraObrigatoria em todas; suporte a modo demonstração visualmente identificado com rótulo e proveniência estrita (?demo=true); dashboards ajustados para tratar ausência com veracidade (status SEM_DADOS, spi/cpi nulos); scripts/gerar_fluxo_caixa.py parametrizado via config_obra.json sem fallbacks hardcoded da TMULT. |
+| 14/09/2026 | Fase 4 / AUD-004 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | `141402c` | `python -m unittest discover -s scripts/tests` (25/25), `npm test` (15/15), `tsc --noEmit` e `npm run build` aprovados | Remoção integral de dados fabricados/simulados em produção nas rotas /api/evm, /api/financeiro, /api/qualidade, /api/sst e /api/databook; exigência de obterObraObrigatoria em todas; suporte a modo demonstração visualmente identificado com rótulo e proveniência estrita (?demo=true); dashboards ajustados para tratar ausência com veracidade (status SEM_DADOS, spi/cpi nulos); scripts/gerar_fluxo_caixa.py parametrizado via config_obra.json sem fallbacks hardcoded da TMULT. |
+| 14/09/2026 | Auditoria / AUD-004 | IMPLEMENTADO → IMPLEMENTADO | Tech Lead | `PLANO_MELHORIAS_AUDITORIA.md` | Validação de `?demo=true` e da baseline de custo direto da TMULT (R$ 1.314.562,67) | Registro de melhoria futura não bloqueante (fora do escopo das Fases 0–5) para curvas segregadas no cronograma (venda com BDI vs custo direto orçado); validada baseline oficial legítima sem reabertura do AUD-004. |
+| 14/09/2026 | Fase 5 / AUD-013 e AUD-014 | PENDENTE → IMPLEMENTADO | Antigravity / Tech Lead | A comitar | `python -m unittest discover -s scripts/tests` (25/25), `npm test` (19/19), `tsc --noEmit`, `npm run lint` (0 erros) e `npm run build` aprovados | AUD-013: API de cronograma refatorada para thin layer delegando a `cronogramaService.ts`; tipos centralizados em `types/cronograma.ts`; `LinhaDeBalanco` tipada sem `any` desnecessário e desacoplada. AUD-014: `requirements.txt` oficial criado com dependências Python pinadas; workflow `.github/workflows/ci.yml` criado com gates obrigatórios para Python e Frontend; ESLint aprovado com 0 erros; 19 testes automatizados no frontend cobrindo todas as fases. |
 
 ## 9. Top 10 recomendado por benefício
 

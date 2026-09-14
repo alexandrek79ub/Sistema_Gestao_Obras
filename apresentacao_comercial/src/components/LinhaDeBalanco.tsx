@@ -63,6 +63,46 @@ interface ConflitoVisual {
   descricao: string;
 }
 
+type CorVagao = { stroke: string; fill: string; badge: string; bgCard: string; border: string };
+
+interface LoteConsolidado {
+  id: string;
+  tarefaId: number;
+  tarefa: TarefaLOB;
+  pav: string;
+  vagaoNome: string;
+  equipe: string;
+  start: number;
+  end: number;
+  duration: number;
+  dataInicio?: string;
+  dataFim?: string;
+  color: string;
+  corHex?: CorVagao;
+  corBadge?: string;
+  subtarefasCount: number;
+  atividadesNomes: string[];
+  lane: number;
+}
+
+interface RelatorioSobreposicaoItem {
+  total_conflitos_espaciais?: number;
+  total_disciplinas_com_frentes_duplas?: number;
+  status_aprovacao?: string;
+  headcount_pico_diario?: number | string;
+  headcount_medio_diario?: number | string;
+  [key: string]: unknown;
+}
+
+interface SetorLotes {
+  pav: string;
+  rowIdx: number;
+  totalLanes: number;
+  lotes: LoteConsolidado[];
+}
+
+type VagaoOuMacro = VagaoFluxo & { corHex?: CorVagao };
+
 
 // Paleta de cores vibrantes, contrastantes e oficiais para Linhas de Balanço Lean
 const COR_HEX_VAGOES: Record<string, { stroke: string; fill: string; badge: string; bgCard: string; border: string }> = {
@@ -299,7 +339,7 @@ export default function LinhaDeBalanco() {
   
   const [vagaoSelecionado, setVagaoSelecionado] = useState<VagaoFluxo | null>(null);
   const [vagaoHover, setVagaoHover] = useState<string | null>(null);
-  const [relatorioSobreposicao, setRelatorioSobreposicao] = useState<any>(null);
+  const [relatorioSobreposicao, setRelatorioSobreposicao] = useState<RelatorioSobreposicaoItem | null>(null);
   const [showAjuda, setShowAjuda] = useState(false);
   const [showBannerConflito, setShowBannerConflito] = useState(false);
 
@@ -358,6 +398,7 @@ export default function LinhaDeBalanco() {
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     carregarDadosCronograma();
   }, [obraAtiva]);
 
@@ -668,7 +709,7 @@ export default function LinhaDeBalanco() {
       nome: string;
       equipe: string;
       color: string;
-      corHex: any;
+      corHex?: CorVagao;
       pontosMap: Map<string, { id: number; pav: string; start: number; duration: number; dataInicio?: string; dataFim?: string }>;
       startMin: number;
       endMax: number;
@@ -844,7 +885,7 @@ export default function LinhaDeBalanco() {
     }
 
     // Modo Detalhado (15 Vagões Disciplinares)
-    const lotes: any[] = [];
+    const lotes: LoteConsolidado[] = [];
     tarefasDoSetor.forEach((t) => {
       const vOriginal = t.vagao || t.tipo;
       const tEnd = t.start + t.duration;
@@ -1083,7 +1124,7 @@ export default function LinhaDeBalanco() {
       )}
 
       {/* ALERTA LEAN: NIVELAMENTO (HEIJUNKA) OU SOBREPOSIÇÃO */}
-      {relatorioSobreposicao && (relatorioSobreposicao.total_conflitos_espaciais > 0 || relatorioSobreposicao.total_disciplinas_com_frentes_duplas > 0) ? (
+      {relatorioSobreposicao && ((relatorioSobreposicao.total_conflitos_espaciais || 0) > 0 || (relatorioSobreposicao.total_disciplinas_com_frentes_duplas || 0) > 0) ? (
         <div className="mb-6 p-4 bg-amber-950/40 border border-amber-500/50 rounded-xl flex items-start gap-3 text-amber-200 shadow-lg">
           <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0 mt-0.5" />
           <div className="flex-1">
@@ -1262,8 +1303,8 @@ export default function LinhaDeBalanco() {
                   })}
 
                   {/* 1. RENDERIZAR AS FAIXAS E VAGÕES DE FLUXO (OU 7 MACROFASES MESTRES) */}
-                  {(nivelAgrupamento === 'macro' ? macroFluxo : vagoesFluxo).map((vagao: any) => {
-                    const cor = (vagao as any).corHex || getCorVagao(vagao.nome);
+                  {(nivelAgrupamento === 'macro' ? macroFluxo : vagoesFluxo as VagaoOuMacro[]).map((vagao) => {
+                    const cor = vagao.corHex || getCorVagao(vagao.nome);
                     const isHovered = vagaoHover === vagao.id;
                     const isSelected = vagaoSelecionado?.id === vagao.id;
                     const isCommissioning = vagao.nome.includes('15.') || vagao.nome.toLowerCase().includes('comissionamento');
@@ -1279,7 +1320,7 @@ export default function LinhaDeBalanco() {
                       dataFim?: string;
                     }>();
 
-                    vagao.pontos.forEach((p: any) => {
+                    vagao.pontos.forEach((p: PontoVagao) => {
                       const idx = pavimentosOrdenados.indexOf(p.pav);
                       if (idx === -1) return;
                       const pEnd = p.start + p.duration;
@@ -1397,7 +1438,7 @@ export default function LinhaDeBalanco() {
                       const yCenter = getYCenter(z.pav);
                       const height = 36;
                       const yTop = yCenter - height / 2;
-                      const pontoZ = vagao.pontos.find((p: any) => p.pav === z.pav) || vagao.pontos[0];
+                      const pontoZ = vagao.pontos.find((p: PontoVagao) => p.pav === z.pav) || vagao.pontos[0];
                       const temConflito2 = pontoZ ? conflitosVisuais.some(c => c.tarefasIds.includes(pontoZ.id)) : false;
 
                       return (
@@ -1468,7 +1509,7 @@ export default function LinhaDeBalanco() {
                       const midIdx = Math.floor(centerPoints.length / 2);
                       const labelPonto = centerPoints[midIdx];
                       const primeiroP = vagao.pontos[0];
-                      const temConflito3 = vagao.pontos.some((p: any) => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
+                      const temConflito3 = vagao.pontos.some((p: PontoVagao) => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
 
                       return (
                         <g 
@@ -1522,7 +1563,7 @@ export default function LinhaDeBalanco() {
                           {/* NÓS/MARCADORES EM CADA SETOR COM ARRASTE DIRETO POR SETOR */}
                           {centerPoints.map((p, idx) => {
                             const z = zonasConsolidadas[idx];
-                            const pontoZ = vagao.pontos.find((pt: any) => pt.pav === z?.pav) || vagao.pontos[0];
+                            const pontoZ = vagao.pontos.find((pt: PontoVagao) => pt.pav === z?.pav) || vagao.pontos[0];
                             return (
                               <circle 
                                 key={idx} 
@@ -1575,7 +1616,7 @@ export default function LinhaDeBalanco() {
               ) : (
                 /* MODO BLOCOS: VISÃO POR LOTES CONSOLIDADOS POR SETOR COM TEXTO LEGÍVEL */
                 <div className="absolute inset-0 pointer-events-auto">
-                  {lotesConsolidadosPorSetor.map((setLotes: any) => {
+                  {(lotesConsolidadosPorSetor as SetorLotes[]).map((setLotes) => {
                     const { pav, rowIdx, lotes, totalLanes } = setLotes;
                     const lanesCount = totalLanes || 1;
                     return (
@@ -1584,7 +1625,7 @@ export default function LinhaDeBalanco() {
                         style={{ height: `${rowHeight}px`, top: `${rowIdx * rowHeight}px` }}
                         className="absolute w-full"
                       >
-                        {lotes.map((lote: any) => {
+                        {lotes.map((lote) => {
                           const xIni = getX(lote.start);
                           const xFim = getX(lote.end);
                           const rawWidth = Math.max(0, xFim - xIni);
@@ -1608,7 +1649,7 @@ export default function LinhaDeBalanco() {
                                 e.stopPropagation();
                                 if (nivelAgrupamento === 'macro') {
                                   const macroVagao = macroFluxo.find(m => m.nome === lote.vagaoNome);
-                                  if (macroVagao) setVagaoSelecionado(macroVagao as any);
+                                  if (macroVagao) setVagaoSelecionado(macroVagao as VagaoFluxo);
                                 } else {
                                   const vEncontrado = vagoesFluxo.find(v => v.nome === lote.vagaoNome);
                                   if (vEncontrado) setVagaoSelecionado(vEncontrado);

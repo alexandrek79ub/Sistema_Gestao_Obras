@@ -112,7 +112,7 @@ export async function GET(request: Request) {
       : [];
     const arqRelatorio = candRelatorio.length > 0 ? path.join(sstDir, candRelatorio[0]) : null;
 
-    let programasLegais: ProgramaLegal[] = [];
+    const programasLegais: ProgramaLegal[] = [];
     if (arqRelatorio && fs.existsSync(arqRelatorio)) {
       try {
         const mdText = fs.readFileSync(arqRelatorio, 'utf-8');

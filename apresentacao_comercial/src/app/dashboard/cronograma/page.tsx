@@ -5,6 +5,7 @@ import LinhaDeBalanco from '@/components/LinhaDeBalanco';
 import TremDeProducaoLean from '@/components/TremDeProducaoLean';
 import GanttExecutivo from '@/components/GanttExecutivo';
 import { useObra } from '@/context/ObraContext';
+import { TarefaLOB, MetaGlobal } from '@/types/cronograma';
 import { 
   Calendar, 
   Layers, 
@@ -14,7 +15,6 @@ import {
   ExternalLink,
   ShieldCheck,
   Clock,
-  CheckCircle2,
   Users,
   Truck,
   PackageCheck,
@@ -94,7 +94,7 @@ export default function CronogramaPage() {
   const { obraAtiva } = useObra();
   const [activeTab, setActiveTab] = useState<'lob' | 'curto_prazo' | 'cpm' | 'curva_s'>('curto_prazo');
   const [cpmAtividades, setCpmAtividades] = useState<AtividadeCPM[]>([]);
-  const [tarefas, setTarefas] = useState<any[]>([]);
+  const [tarefas, setTarefas] = useState<TarefaLOB[]>([]);
   const [curvaS, setCurvaS] = useState<CurvaSItem[]>([]);
   const [lotes, setLotes] = useState<LoteCurtoPrazo[]>([]);
   const [histogramaMensal, setHistogramaMensal] = useState<HistogramaItem[]>([]);
@@ -105,7 +105,7 @@ export default function CronogramaPage() {
   const [filtroGrupoFuncao, setFiltroGrupoFuncao] = useState<string>('TODOS');
   const [filtroSemana, setFiltroSemana] = useState<string>('Semana 01');
   const [modoCurtoPrazo, setModoCurtoPrazo] = useState<'trem' | 'tabela'>('trem');
-  const [metaGlobal, setMetaGlobal] = useState<any>({
+  const [metaGlobal, setMetaGlobal] = useState<MetaGlobal>({
     diasCorridos: 180,
     semanas: 26,
     valorTurnkey: 1660762.28,
@@ -172,6 +172,7 @@ export default function CronogramaPage() {
           <h1 className="text-3xl font-bold text-white tracking-tight flex items-center gap-3">
             <Calendar className="w-8 h-8 text-blue-500" />
             Planejamento & Cronograma Integrado
+            {loading && <span className="text-xs font-normal text-zinc-500 animate-pulse">(Carregando...)</span>}
           </h1>
           <p className="text-zinc-400 mt-1">
             Gestão 5D em 3 níveis: <span className="text-zinc-200 font-semibold">Longo Prazo</span> (Linha de Balanço & CPM), <span className="text-zinc-200 font-semibold">Médio Prazo</span> (Lookahead 4-6 sem) e <span className="text-zinc-200 font-semibold">Curto Prazo</span> (Lotes de Produção com Recursos Previstos).

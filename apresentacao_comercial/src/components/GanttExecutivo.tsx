@@ -2,10 +2,10 @@
 
 import React, { useState, useMemo } from 'react';
 import { 
-  GitCommit, Calendar, Layers, CheckCircle2, AlertTriangle, 
-  Search, Filter, ChevronDown, ChevronRight, ZoomIn, ZoomOut,
-  Clock, ShieldAlert, Sparkles, X, Users, ArrowRight, Check,
-  Maximize2, Minimize2, BarChart3, HelpCircle
+  GitCommit, Layers, CheckCircle2, 
+  Search, Filter, ChevronDown, ChevronRight,
+  Clock, ShieldAlert, Sparkles, X,
+  BarChart3
 } from 'lucide-react';
 
 interface AtividadeCPM {
@@ -20,6 +20,10 @@ interface AtividadeCPM {
   critica?: boolean;
   dataInicio?: string;
   dataFim?: string;
+  tipo?: string;
+  duration?: number;
+  equipe?: string;
+  pav?: string;
 }
 
 interface TarefaDetalhada {
@@ -35,7 +39,13 @@ interface TarefaDetalhada {
   dataFim?: string;
   predecessoresNomes?: string[];
   sucessoresNomes?: string[];
+  critica?: boolean;
+  folga_dias?: number;
+  duracao_dias?: number;
+  predecessoras?: string[];
 }
+
+type ItemGanttSelecionado = AtividadeCPM | TarefaDetalhada;
 
 interface GanttExecutivoProps {
   cpmAtividades: AtividadeCPM[];
@@ -92,7 +102,7 @@ export default function GanttExecutivo({
   const [filtroApenasCriticas, setFiltroApenasCriticas] = useState(false);
   const [buscaTexto, setBuscaTexto] = useState('');
   const [gruposAbertos, setGruposAbertos] = useState<Record<string, boolean>>({});
-  const [itemSelecionado, setItemSelecionado] = useState<any | null>(null);
+  const [itemSelecionado, setItemSelecionado] = useState<ItemGanttSelecionado | null>(null);
 
   const totalDias = metaGlobal.caminhoCriticoDias || 178;
   const totalSemanas = 26;

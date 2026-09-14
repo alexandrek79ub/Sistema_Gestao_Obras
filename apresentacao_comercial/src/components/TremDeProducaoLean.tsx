@@ -7,20 +7,15 @@ import {
   Users, 
   Clock, 
   ShieldCheck, 
-  Calendar, 
   Sparkles, 
   CheckCircle2, 
-  ArrowRight,
-  Info,
   Hammer,
   Truck,
   Building2,
   Paintbrush,
   Zap,
   Filter,
-  Droplets,
-  Wind,
-  Wrench
+  Wind
 } from 'lucide-react';
 
 interface LoteCurtoPrazo {
@@ -420,7 +415,7 @@ export default function TremDeProducaoLean({ lotes }: TremProps) {
                         
                         // Lógica precisa de alocação da equipe no lote deste ciclo
                         let estaNesteLote = false;
-                        let etapaTexto = lote?.etapaZona || 'Geral';
+                        const etapaTexto = lote?.etapaZona || 'Geral';
 
                         if (lote) {
                           const eqLower = (lote.equipePrevista || '').toLowerCase();

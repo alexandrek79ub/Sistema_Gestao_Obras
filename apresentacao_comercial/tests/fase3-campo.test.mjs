@@ -8,9 +8,6 @@ const appDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ler = (...partes) => fs.readFileSync(path.join(appDir, ...partes), 'utf-8');
 
 test('Fase 3 / AUD-001 e AUD-010: validação estrita em staging de campo', async () => {
-  const { registrarSubmissaoCampo } = await import('../src/lib/campoStaging.js').catch(() =>
-    import('../.next/server/chunks/campoStaging.js').catch(() => ({ registrarSubmissaoCampo: null }))
-  ) || {};
 
   // Validação estática do módulo campoStaging.ts
   const stagingCodigo = ler('src', 'lib', 'campoStaging.ts');

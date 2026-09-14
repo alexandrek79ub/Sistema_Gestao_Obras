@@ -134,7 +134,7 @@ export default function Home() {
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-purple-400">2</div>
                   <div>
                     <h4 className="font-bold text-lg text-white">Planos de Ação Autônomos</h4>
-                    <p className="text-zinc-400">Se o caminho crítico atrasar, a IA sugere soluções imediatas: <em>"Contrate +2 pedreiros (R$ 3k) para recuperar o prazo."</em></p>
+                    <p className="text-zinc-400">Se o caminho crítico atrasar, a IA sugere soluções imediatas: <em>&ldquo;Contrate +2 pedreiros (R$ 3k) para recuperar o prazo.&rdquo;</em></p>
                   </div>
                 </li>
               </ul>
@@ -202,10 +202,10 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-sm text-zinc-300">
-                  "Bom dia, João! Suas metas para hoje na Obra Lumina são:<br/><br/>
+                  &ldquo;Bom dia, João! Suas metas para hoje na Obra Lumina são:<br/><br/>
                   1. Levantar Alvenaria Pav. 3.<br/>
                   2. Chapiscar Muro dos fundos.<br/><br/>
-                  Lembre-se de não iniciar o reboco sem a FVS assinada. Bom trabalho!"
+                  Lembre-se de não iniciar o reboco sem a FVS assinada. Bom trabalho!&rdquo;
                 </p>
               </div>
 

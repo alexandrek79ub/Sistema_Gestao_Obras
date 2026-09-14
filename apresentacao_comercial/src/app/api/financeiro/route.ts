@@ -99,7 +99,7 @@ export async function GET(request: Request) {
     ];
     const caminhoFluxo = candidatosFluxo.find((c) => fs.existsSync(c));
 
-    let fluxoMensal: FluxoMensal[] = [];
+    const fluxoMensal: FluxoMensal[] = [];
     let kpis = {
       faturamentoTotal: 0,
       desembolsoTotal: 0,
@@ -226,7 +226,7 @@ export async function GET(request: Request) {
     ];
     const arqCalendario = candCalendario.find((c) => fs.existsSync(c));
 
-    let medicoesQuinzenais: MedicaoEmpreiteiro[] = [];
+    const medicoesQuinzenais: MedicaoEmpreiteiro[] = [];
     if (arqCalendario) {
       try {
         const mdText = fs.readFileSync(arqCalendario, 'utf-8');
