@@ -484,7 +484,11 @@ export async function GET(request: Request) {
   let filePath = possiblePaths.find(p => fs.existsSync(p)) || possiblePaths[0];
 
   try {
-    const rawData = parseCSV(filePath);
+  const csvLinhaBalanco = parseCSV(filePath);
+  if (csvLinhaBalanco.status !== 'ok' && csvLinhaBalanco.status !== 'empty') {
+    return NextResponse.json({ error: csvLinhaBalanco.error, status: csvLinhaBalanco.status }, { status: csvLinhaBalanco.status === 'not_found' ? 404 : 422 });
+  }
+  const rawData = csvLinhaBalanco.data;
     const { adj, revAdj } = buildLOBGraph(rawData);
     
     const pavimentosSet = new Set<string>();
@@ -777,7 +781,11 @@ export async function GET(request: Request) {
     let lotesCurtoPrazo: any[] = [];
     const progFile = progPaths.find(p => fs.existsSync(p));
     if (progFile) {
-      const rawProg = parseCSV(progFile);
+      const csvProgramacao = parseCSV(progFile);
+      if (csvProgramacao.status !== 'ok' && csvProgramacao.status !== 'empty') {
+        return NextResponse.json({ error: csvProgramacao.error, status: csvProgramacao.status }, { status: csvProgramacao.status === 'not_found' ? 404 : 422 });
+      }
+      const rawProg = csvProgramacao.data;
       lotesCurtoPrazo = rawProg.map(row => ({
         codLote: row['COD_LOTE'],
         semana: row['SEMANA'],
@@ -977,7 +985,11 @@ export async function POST() {
       return NextResponse.json({ error: `Arquivo LINHA_DE_BALANCO.csv não encontrado para ${obra}` }, { status: 404 });
     }
 
-    const rawRows = parseCSV(filePath);
+    const csvEdicao = parseCSV(filePath);
+    if (csvEdicao.status !== 'ok' && csvEdicao.status !== 'empty') {
+      return NextResponse.json({ error: csvEdicao.error, status: csvEdicao.status }, { status: csvEdicao.status === 'not_found' ? 404 : 422 });
+    }
+    const rawRows = csvEdicao.data;
     if (rawRows.length === 0) {
       return NextResponse.json({ error: 'Arquivo CSV vazio' }, { status: 400 });
     }

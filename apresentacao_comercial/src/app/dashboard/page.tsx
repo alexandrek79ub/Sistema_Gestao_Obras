@@ -3,17 +3,32 @@
 import { useEffect, useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
 import { AlertTriangle, CheckCircle2, ArrowDownRight, ArrowUpRight } from 'lucide-react';
+import { useObra } from '@/context/ObraContext';
 
 export default function DashboardPage() {
+  const { obraAtiva } = useObra();
   const [evmData, setEvmData] = useState<any[]>([]);
   const [bac, setBac] = useState<number>(0);
   const [spi, setSpi] = useState<number>(1);
   const [cpi, setCpi] = useState<number>(1);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/evm')
-      .then(res => res.json())
+    if (!obraAtiva) {
+      setLoading(false);
+      setError('Nenhuma obra disponível para consulta.');
+      return;
+    }
+    const controller = new AbortController();
+    setLoading(true);
+    setError(null);
+    fetch(`/api/evm?obra=${encodeURIComponent(obraAtiva)}`, { signal: controller.signal })
+      .then(async (res) => {
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || 'Falha ao buscar EVM.');
+        return data;
+      })
       .then(data => {
         if (data.semanas) setEvmData(data.semanas);
         if (data.bac) setBac(data.bac);
@@ -22,10 +37,14 @@ export default function DashboardPage() {
         setLoading(false);
       })
       .catch(err => {
-        console.error('Erro ao buscar EVM', err);
-        setLoading(false);
+        if (err.name !== 'AbortError') {
+          console.error('Erro ao buscar EVM', err);
+          setError(err instanceof Error ? err.message : 'Falha ao buscar EVM.');
+          setLoading(false);
+        }
       });
-  }, []);
+    return () => controller.abort();
+  }, [obraAtiva]);
 
   const formatCurrency = (val: number) => {
     return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(val);
@@ -63,6 +82,8 @@ export default function DashboardPage() {
 
       {loading ? (
         <div className="p-8 text-center text-zinc-500">Carregando painel EVM...</div>
+      ) : error ? (
+        <div className="p-8 text-center text-red-400">{error}</div>
       ) : (
         <>
           {/* KPI CARDS */}

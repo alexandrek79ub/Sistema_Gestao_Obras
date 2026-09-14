@@ -1,71 +1,61 @@
+import fs from 'fs';
+import path from 'path';
 import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
-import path from 'path';
-import fs from 'fs';
+import { ErroObra, obterObraObrigatoria } from '@/lib/obra';
 
 export const dynamic = 'force-dynamic';
 
+const CONTRATO_ORCAMENTO = {
+  requiredHeaderGroups: [
+    ['CIA', 'COD_EAP', 'Código EAP', 'Codigo EAP'],
+    ['SERVICO', 'DESCRICAO_DO_SERVICO', 'Item / Descricao', 'Descricao'],
+    ['CUSTO_TOTAL', 'Custo Total (R$)', 'Custo Total'],
+  ],
+};
+
+function respostaErroCsv(status: string, error?: string) {
+  const httpStatus = status === 'not_found' ? 404 : status === 'empty' ? 200 : 422;
+  return NextResponse.json({ error: error || 'Falha ao ler orçamento base.', status, itens: [], totalBaseline: 0 }, { status: httpStatus });
+}
+
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const obra = searchParams.get('obra') || 'OBRA';
-  
-  const basePath = process.env.OBRA_PATH 
-    ? process.env.OBRA_PATH.replace(/OBRA$/, obra)
-    : path.resolve(process.cwd(), `../projetos/${obra}`);
-    
-  const orcamentoDir = path.join(basePath, '02_ORCAMENTO_BASE_E_CONTRATOS');
-
-  // Ordem de prioridade para encontrar o orçamento:
-  // 1. ORCAMENTO_BASE_CONSOLIDADO.csv (gerado pelo motor mestre)
-  // 2. ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv (obras específicas)
-  // 3. TEMPLATE_ORCAMENTO_BASE.csv (template legado / padrão)
-  const candidatos = [
-    path.join(orcamentoDir, 'ORCAMENTO_BASE_CONSOLIDADO.csv'),
-    path.join(orcamentoDir, `ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv`),
-    path.join(orcamentoDir, 'TEMPLATE_ORCAMENTO_BASE.csv')
-  ];
-
-  const filePath = candidatos.find(p => fs.existsSync(p)) || candidatos[2];
-  
   try {
-    const rawData = parseCSV<Record<string, string>>(filePath);
-    
-    let totalBaseline = 0;
-    const itens = rawData.map(item => {
-      const eap = item['COD_EAP'] || item['Código EAP'] || item['Codigo EAP'] || '';
-      const desc = item['DESCRICAO_DO_SERVICO'] || item['Item / Descricao'] || item['Descricao'] || '';
-      const unid = item['UNIDADE'] || item['Unidade UCC'] || item['Unidade Proj'] || '';
-      const qtd = item['QUANTIDADE_TOTAL'] || item['Qtd Comercial UCC'] || item['Qtd Projeto'] || '0';
-      const preco = item['CUSTO_UNITARIO_BDI'] || item['Preço Unitário (R$)'] || item['Preco Unitario'] || '-';
-      const total = item['CUSTO_TOTAL'] || item['Custo Total (R$)'] || item['Custo Total'] || '';
-      const resp = item['EMPREITEIRO_VINCULADO'] || item['Disciplina'] || 'Engenharia';
-      
-      if (total && total.trim() !== '' && total !== '-') {
-        const custoStr = total.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-        const custo = parseFloat(custoStr);
-        if (!isNaN(custo)) {
-          totalBaseline += custo;
-        }
-      }
+    const { obra, diretorio } = obterObraObrigatoria(request);
+    const orcamentoDir = path.join(diretorio, '02_ORCAMENTO_BASE_E_CONTRATOS');
+    const candidatos = [
+      path.join(orcamentoDir, 'ORCAMENTO_BASE_CONSOLIDADO.csv'),
+      path.join(orcamentoDir, `ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv`),
+      path.join(orcamentoDir, 'TEMPLATE_ORCAMENTO_BASE.csv'),
+    ];
+    const filePath = candidatos.find((candidato) => fs.existsSync(candidato));
+    if (!filePath) return respostaErroCsv('not_found', 'Orçamento base não encontrado para a obra selecionada.');
 
+    const csv = parseCSV<Record<string, string>>(filePath, CONTRATO_ORCAMENTO);
+    if (csv.status !== 'ok' && csv.status !== 'empty') return respostaErroCsv(csv.status, csv.error);
+
+    let totalBaseline = 0;
+    const itens = csv.data.map((item) => {
+      const eap = item.COD_EAP || item['Código EAP'] || item['Codigo EAP'] || item.CIA || '';
+      const descricao = item.DESCRICAO_DO_SERVICO || item['Item / Descricao'] || item.Descricao || item.SERVICO || '';
+      const total = item.CUSTO_TOTAL || item['Custo Total (R$)'] || item['Custo Total'] || '';
+      const custo = Number(total.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+      if (Number.isFinite(custo)) totalBaseline += custo;
       return {
         ...item,
         COD_EAP: eap,
-        DESCRICAO_DO_SERVICO: desc,
-        UNIDADE: unid,
-        QUANTIDADE_TOTAL: qtd,
-        CUSTO_UNITARIO_BDI: preco,
+        DESCRICAO_DO_SERVICO: descricao,
+        UNIDADE: item.UNIDADE || item['Unidade UCC'] || item.UNIDADE_MEDIDA || '',
+        QUANTIDADE_TOTAL: item.QUANTIDADE_TOTAL || item['Qtd Comercial UCC'] || item.QUANTIDADE_UCC || item.QUANTIDADE || '0',
+        CUSTO_UNITARIO_BDI: item.CUSTO_UNITARIO_BDI || item['Preço Unitário (R$)'] || item.PRECO_UNIT || '',
         CUSTO_TOTAL: total,
-        EMPREITEIRO_VINCULADO: resp
+        EMPREITEIRO_VINCULADO: item.EMPREITEIRO_VINCULADO || item.Disciplina || item.DISCIPLINA || '',
       };
-    }).filter(item => item.COD_EAP && item.DESCRICAO_DO_SERVICO);
+    }).filter((item) => item.COD_EAP && item.DESCRICAO_DO_SERVICO);
 
-    return NextResponse.json({ 
-      itens, 
-      totalBaseline, 
-      arquivoOrigem: path.basename(filePath) 
-    });
-  } catch (error) {
-    return NextResponse.json({ error: 'Falha ao ler orçamento base', details: String(error) }, { status: 500 });
+    return NextResponse.json({ obra, itens, totalBaseline, arquivoOrigem: path.basename(filePath), status: csv.status });
+  } catch (error: unknown) {
+    if (error instanceof ErroObra) return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: 'Falha ao ler orçamento base.' }, { status: 500 });
   }
 }

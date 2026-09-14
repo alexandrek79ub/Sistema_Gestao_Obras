@@ -6,6 +6,10 @@ import { useObra } from '@/context/ObraContext';
 export default function ProjectSelector() {
   const { obraAtiva, setObraAtiva, listaObras } = useObra();
 
+  if (listaObras.length === 0 || !obraAtiva) {
+    return <h2 className="text-xl font-semibold text-zinc-100">Projeto: indisponível</h2>;
+  }
+
   if (listaObras.length <= 1) {
     return <h2 className="text-xl font-semibold text-zinc-100">Projeto: {obraAtiva}</h2>;
   }

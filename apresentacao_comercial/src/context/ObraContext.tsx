@@ -11,23 +11,28 @@ interface ObraContextType {
 const ObraContext = createContext<ObraContextType | undefined>(undefined);
 
 export function ObraProvider({ children }: { children: ReactNode }) {
-  const [obraAtiva, setObraAtiva] = useState<string>('OBRA_TMULT');
-  const [listaObras, setListaObras] = useState<string[]>(['OBRA_TMULT', 'RESIDENCIAL_ALPHA']);
+  const [obraAtiva, setObraAtiva] = useState<string>('');
+  const [listaObras, setListaObras] = useState<string[]>([]);
 
   useEffect(() => {
     fetch('/api/obras')
-      .then(res => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error('Não foi possível listar as obras disponíveis.');
+        return res.json() as Promise<{ obras?: unknown }>;
+      })
       .then(data => {
-        if (data && data.obras && data.obras.length > 0) {
-          setListaObras(data.obras);
-          if (!data.obras.includes(obraAtiva)) {
-            setObraAtiva(data.obras[0]);
-          }
+        const obras = Array.isArray(data?.obras) ? data.obras.filter((obra): obra is string => typeof obra === 'string') : [];
+        setListaObras(obras);
+        if (obras.length > 0) {
+          setObraAtiva((atual) => obras.includes(atual) ? atual : obras[0]);
+        } else {
+          setObraAtiva('');
         }
       })
       .catch(err => {
         console.error('Erro ao buscar lista de obras:', err);
-        setListaObras(['OBRA_TMULT', 'RESIDENCIAL_ALPHA']);
+        setListaObras([]);
+        setObraAtiva('');
       });
   }, []);
 
@@ -38,7 +43,7 @@ export function ObraProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useObra() {
+export function useObra(): ObraContextType {
   const context = useContext(ObraContext);
   if (context === undefined) {
     throw new Error('useObra deve ser usado dentro de um ObraProvider');

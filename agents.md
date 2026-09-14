@@ -10,15 +10,23 @@ Sua principal função é atuar como o **cérebro central** de um ecossistema mu
 
 ## 🚦 SEÇÃO 0 — Protocolo de Inicialização (EXECUÇÃO OBRIGATÓRIA)
 
-> 🛑 **ESTA SEÇÃO TEM PRECEDÊNCIA ABSOLUTA.** Antes de formular qualquer resposta — independente do pedido — execute os 4 passos abaixo na ordem. Não há exceção.
+> 🛑 **ESTA SEÇÃO TEM PRECEDÊNCIA ABSOLUTA.** Antes de formular qualquer resposta, classifique o escopo do pedido e execute os passos aplicáveis abaixo na ordem.
 
-### Passo 1 — Identificar a Obra Ativa
+### Passo 0 — Classificar o Escopo: Obra ou Ecossistema Compartilhado
+
+- A seleção de uma obra ativa é obrigatória somente quando a tarefa depender de dados, artefatos ou regras específicas de uma obra.
+- Para tarefas de arquitetura, infraestrutura compartilhada, manutenção do código-base, auditoria global, testes, CI/CD, documentação, governança ou execução de itens transversais do `PLANO_MELHORIAS_AUDITORIA.md`, utilizar: `Obra: Ecossistema compartilhado (sem obra ativa)`.
+- Nesses casos, não perguntar qual é a obra ativa, não inferir contexto de uma obra e não utilizar qualquer obra existente — incluindo `OBRA_TMULT`, `OBRA_PETROBRAS_PORTARIA` ou `RESIDENCIAL_ALPHA` — apenas para satisfazer formalmente este protocolo.
+- Se, durante a execução de tarefa transversal, surgir necessidade real de acessar, validar ou modificar dados específicos de uma obra, interromper somente essa parte, informar a necessidade e solicitar a definição/autorização da obra antes de prosseguir.
+
+### Passo 1 — Identificar a Obra Ativa (somente para escopo de obra)
+- Aplicar este passo apenas quando a tarefa depender de dados, artefatos ou regras específicas de uma obra.
 - Se o usuário mencionou explicitamente o nome da obra → use.
 - Se há um arquivo de obra aberto no editor → infira do caminho (`/projetos/[NOME_OBRA]/`).
 - Se nenhum contexto disponível → **perguntar obrigatoriamente:** *"Qual obra estamos trabalhando hoje?"* antes de prosseguir.
 - Registrar mentalmente: `OBRA_ATIVA = [NOME_OBRA]`.
 
-### Passo 2 — Carregar Contexto Mínimo da Obra (verificação rápida)
+### Passo 2 — Carregar Contexto Mínimo da Obra (somente para escopo de obra)
 Com a obra identificada, verificar na pasta `/projetos/[OBRA_ATIVA]/01_ENGENHARIA_E_PROJETOS/`:
 
 - **RFI_CONTROL.csv:** Existe? → Verificar se há RFIs com STATUS `ABERTA` ou `AGUARDANDO` há mais de 10 dias. Se sim → **alertar no topo da resposta** antes de qualquer outro conteúdo.
@@ -46,6 +54,13 @@ Toda resposta técnica deve abrir com o bloco abaixo (máximo 3 linhas):
 🏗️ Obra: [NOME_OBRA] | Frente: [GESTÃO / QUANTITATIVO / DEV / POPs / AUTOMAÇÃO]
 📋 Skills acionadas: [Lista das skills carregadas]
 ⚠️ Alertas ativos: [RFIs vencidas / RDO desatualizado / Nenhum]
+```
+
+Para tarefas transversais, utilizar:
+```
+🏗️ Obra: Ecossistema compartilhado (sem obra ativa) | Frente: [GESTÃO / QUANTITATIVO / DEV / POPs / AUTOMAÇÃO]
+📋 Skills acionadas: [Lista das skills carregadas]
+⚠️ Alertas ativos: Nenhum
 ```
 
 ---

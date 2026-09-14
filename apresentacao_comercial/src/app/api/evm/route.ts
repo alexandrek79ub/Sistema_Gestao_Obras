@@ -1,67 +1,42 @@
+import fs from 'fs';
+import path from 'path';
 import { NextResponse } from 'next/server';
 import { parseCSV } from '@/lib/csvParser';
-import path from 'path';
-import fs from 'fs';
+import { ErroObra, obterObraObrigatoria } from '@/lib/obra';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const obra = searchParams.get('obra') || 'OBRA';
-  
-  const basePath = process.env.OBRA_PATH 
-    ? process.env.OBRA_PATH.replace(/OBRA$/, obra)
-    : path.resolve(process.cwd(), `../projetos/${obra}`);
-    
-  const orcamentoDir = path.join(basePath, '02_ORCAMENTO_BASE_E_CONTRATOS');
-  const candidatosOrcamento = [
-    path.join(orcamentoDir, 'ORCAMENTO_BASE_CONSOLIDADO.csv'),
-    path.join(orcamentoDir, `ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv`),
-    path.join(orcamentoDir, 'TEMPLATE_ORCAMENTO_BASE.csv')
-  ];
-  const orcamentoPath = candidatosOrcamento.find(p => fs.existsSync(p)) || candidatosOrcamento[2];
-  
   try {
-    const data = parseCSV(orcamentoPath);
-    
-    // Calcula o BAC (Orçamento Total)
-    let bac = 0;
-    data.forEach((item: any) => {
-      const rawCusto = item['CUSTO_TOTAL'] || item['Custo Total (R$)'] || item['Custo Total'] || '';
-      if (rawCusto && rawCusto.trim() !== '' && rawCusto !== '-') {
-        const custoStr = rawCusto.replace('R$', '').replace(/\./g, '').replace(',', '.').trim();
-        const custo = parseFloat(custoStr);
-        if (!isNaN(custo)) {
-          bac += custo;
-        }
-      }
-    });
+    const { obra, diretorio } = obterObraObrigatoria(request);
+    const orcamentoDir = path.join(diretorio, '02_ORCAMENTO_BASE_E_CONTRATOS');
+    const candidatos = [path.join(orcamentoDir, 'ORCAMENTO_BASE_CONSOLIDADO.csv'), path.join(orcamentoDir, `ORCAMENTO_BASE_CONSOLIDADO_${obra}.csv`)];
+    const arquivo = candidatos.find((candidato) => fs.existsSync(candidato));
+    if (!arquivo) return NextResponse.json({ error: 'Orçamento base não encontrado para a obra selecionada.' }, { status: 404 });
 
-    // Mock das medições e NFs (Sprint 2 simplificado, já que os dados reais de avanço ainda não existem em CSV estruturado)
-    const evmData = [
+    const csv = parseCSV<Record<string, string>>(arquivo, { requiredHeaderGroups: [['CUSTO_TOTAL', 'Custo Total (R$)', 'Custo Total']] });
+    if (csv.status !== 'ok' && csv.status !== 'empty') return NextResponse.json({ error: csv.error, status: csv.status }, { status: csv.status === 'not_found' ? 404 : 422 });
+
+    const bac = csv.data.reduce((total, item) => {
+      const valor = item.CUSTO_TOTAL || item['Custo Total (R$)'] || item['Custo Total'] || '';
+      const custo = Number(valor.replace('R$', '').replace(/\./g, '').replace(',', '.').trim());
+      return Number.isFinite(custo) ? total + custo : total;
+    }, 0);
+
+    const semanas = [
       { name: 'Semana 1', VP: bac * 0.08, CR: bac * 0.075, VA: bac * 0.07 },
       { name: 'Semana 2', VP: bac * 0.20, CR: bac * 0.19, VA: bac * 0.18 },
-      { name: 'Semana 3', VP: bac * 0.38, CR: bac * 0.40, VA: bac * 0.33 }, // Descolamento na semana 3
+      { name: 'Semana 3', VP: bac * 0.38, CR: bac * 0.40, VA: bac * 0.33 },
       { name: 'Semana 4', VP: bac * 0.55 },
       { name: 'Semana 5', VP: bac * 0.75 },
-      { name: 'Semana 6', VP: bac * 1.00 }
+      { name: 'Semana 6', VP: bac },
     ];
-
-    // Na Semana 3 (atual):
-    const currentVP = evmData[2].VP;
-    const currentCR = evmData[2].CR!;
-    const currentVA = evmData[2].VA!;
-
-    const spi = currentVP > 0 ? (currentVA / currentVP).toFixed(2) : 1;
-    const cpi = currentCR > 0 ? (currentVA / currentCR).toFixed(2) : 1;
-
-    return NextResponse.json({ 
-      semanas: evmData, 
-      spi: parseFloat(spi as string), 
-      cpi: parseFloat(cpi as string), 
-      bac 
-    });
-  } catch (error) {
-    return NextResponse.json({ error: 'Falha ao ler EVM', details: error }, { status: 500 });
+    const atual = semanas[2];
+    const spi = atual.VP > 0 ? Number(((atual.VA ?? 0) / atual.VP).toFixed(2)) : 1;
+    const cpi = (atual.CR ?? 0) > 0 ? Number(((atual.VA ?? 0) / (atual.CR ?? 1)).toFixed(2)) : 1;
+    return NextResponse.json({ obra, semanas, spi, cpi, bac, status: csv.status });
+  } catch (error: unknown) {
+    if (error instanceof ErroObra) return NextResponse.json({ error: error.message }, { status: 400 });
+    return NextResponse.json({ error: 'Falha ao ler EVM.' }, { status: 500 });
   }
 }

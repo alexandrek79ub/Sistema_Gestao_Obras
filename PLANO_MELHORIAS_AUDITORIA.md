@@ -2,6 +2,17 @@
 
 > Documento de transição para implementação segura dos achados da auditoria concluída em 14/09/2026. Este plano consolida exclusivamente o contexto e as evidências já levantados; ele não representa uma nova auditoria.
 
+## Mapa de Execução por Fases
+
+| Fase | Objetivo | AUDs envolvidos | Status | Dependências | Resultado esperado |
+|---|---|---|---|---|---|
+| 0 — Limite leitura/escrita | Retirar mutações genéricas do dashboard e conter promoções automáticas | `AUD-002` → `AUD-006` → contenção de `AUD-001` | IMPLEMENTADO (contenção) | Nenhuma; não criar login/RBAC; priorizar remoção ou bloqueio de escrita desnecessária | Dashboard sem mutações genéricas; exceção de campo limitada a staging; baseline e FVS não são promovidas automaticamente. |
+| 1 — Contratos de dados e persistência | Criar base segura para isolamento multiobra e para as escritas que permanecerem | `AUD-011` → `AUD-005` → `AUD-012` | IMPLEMENTADO | A classificação de superfícies definida em `AUD-002` determina onde escrita ainda existe | Contratos de dados explícitos, seleção multiobra isolada e persistência segura para as escritas autorizadas. |
+| 2 — Regras centrais de planejamento | Corrigir a fonte de verdade da EAP e a confiabilidade dos motores | `AUD-003` → `AUD-007` → `AUD-008` → `AUD-009` | PENDENTE | Parser/validação de `AUD-011`; persistência segura de `AUD-012` para mutações | EAP canônica e motores de planejamento confiáveis, com falhas propagadas, sincronização correta e exportação CPM aderente. |
+| 3 — Governança de campo | Corrigir coleta, aprovação de qualidade e emissão de RDO | conclusão de `AUD-001` → `AUD-010` | PENDENTE | Fronteira específica de campo (`AUD-002`) e escrita atômica (`AUD-012`) | Coleta de campo governada, aprovação de FVS tecnicamente validada e RDO emitido sem valores ou assinaturas presumidos. |
+| 4 — Veracidade dos painéis | Remover dados plausíveis não derivados das fontes oficiais | `AUD-004` | PENDENTE | Contratos explícitos de ausência/erro (`AUD-011`) e seleção multiobra (`AUD-005`) | Painéis exibem apenas dados oficiais, com ausência e erro distinguíveis de valores reais. |
+| 5 — Sustentação | Reduzir acoplamento e tornar os gates obrigatórios | `AUD-013` → conclusão de `AUD-014` | PENDENTE | Comportamentos críticos já cobertos por testes das fases anteriores | Código menos acoplado e gates de qualidade reproduzíveis e obrigatórios. |
+
 ## 1. Objetivo e limites
 
 Este documento permite que outro agente, em uma sessão sem o contexto da auditoria, implemente as correções de forma incremental, rastreável e compatível com a governança do repositório.
@@ -94,14 +105,14 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 | AUD-002 | P0 | Risco confirmado / desalinhamento arquitetural | Dashboard expõe mutações genéricas e execução insegura apesar de ser leitura por padrão | IMPLEMENTADO |
 | AUD-003 | P0 | Bug confirmado | Mapeamento de EAP do cronograma está incompatível com a governança oficial | PENDENTE |
 | AUD-004 | P0 | Bug confirmado | Painéis operacionais apresentam dados fixos ou demonstrativos como se fossem dados reais | PENDENTE |
-| AUD-005 | P1 | Bug confirmado | Seleção da obra não é propagada para EVM e orçamento | PENDENTE |
+| AUD-005 | P1 | Bug confirmado | Seleção da obra não é propagada para EVM e orçamento | IMPLEMENTADO |
 | AUD-006 | P1 | Bug confirmado / governança | API pode reescrever baseline sem fluxo formal de aprovação e versionamento | IMPLEMENTADO |
 | AUD-007 | P1 | Bug confirmado | Orquestrador pode terminar com código zero após falha de etapa obrigatória | PENDENTE |
 | AUD-008 | P1 | Bug confirmado | Sincronização dita bidirecional usa a mesma direção e aceita fallback de outra obra | PENDENTE |
 | AUD-009 | P1 | Bug confirmado | Exportação MS Project não representa corretamente o CPM calculado | PENDENTE |
 | AUD-010 | P1 | Bug confirmado | RDO pode ser emitido com valores presumidos, numeração incorreta e assinatura sem evidência | PENDENTE |
-| AUD-011 | P1 | Bug confirmado | Parser CSV simplista mascara erros e não trata CSV válido de forma robusta | PENDENTE |
-| AUD-012 | P1 | Risco confirmado | Escritas concorrentes não são atômicas nem protegidas contra perda de atualização | PENDENTE |
+| AUD-011 | P1 | Bug confirmado | Parser CSV simplista mascara erros e não trata CSV válido de forma robusta | IMPLEMENTADO |
+| AUD-012 | P1 | Risco confirmado | Escritas concorrentes não são atômicas nem protegidas contra perda de atualização | IMPLEMENTADO |
 | AUD-013 | P2 | Dívida técnica | Módulos gigantes concentram UI, regras, persistência e execução de processos | PENDENTE |
 | AUD-014 | P1 | Dívida técnica / qualidade | Não há suíte/CI observada; lint falha e dependências Python não estão declaradas de forma reproduzível | PENDENTE |
 
@@ -216,7 +227,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** consumidores relevantes não enviam a obra ativa nas consultas, embora exista `ObraContext` e outras telas já adotem esse padrão.
 - **Evidências e arquivos envolvidos:**
   - `apresentacao_comercial/src/components/TabelaOrcamento.tsx:12` consulta `/api/orcamento` sem `obra`;
@@ -364,7 +375,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** bug confirmado.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** o parser divide texto por linhas e ponto e vírgula, remove aspas superficialmente e converte qualquer exceção em lista vazia, confundindo arquivo vazio, ausente, inválido e erro de schema.
 - **Evidências e arquivos envolvidos:**
   - `apresentacao_comercial/src/lib/csvParser.ts:3-30` contém leitura síncrona, `split` manual e `catch` genérico com retorno `[]`;
@@ -388,7 +399,7 @@ Regra de precedência: se uma correção depender de regra de negócio ainda amb
 
 - **Prioridade:** P1.
 - **Natureza:** risco confirmado de integridade de dados.
-- **Status:** `PENDENTE`.
+- **Status:** `IMPLEMENTADO`.
 - **Problema confirmado:** fluxos fazem leitura-modificação-escrita e numeração por varredura sem lock; a rota de cronograma grava arquivo oficial antes de saber se o processamento posterior será bem-sucedido.
 - **Evidências e arquivos envolvidos:**
   - `scripts/processar_coleta_campo.py:161-171` calcula próximo RDO por máximo observado;
@@ -540,6 +551,9 @@ O próximo agente deve adicionar uma linha por mudança de status. Não apagar r
 | 14/09/2026 | Fase 0 / AUD-002 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3), `tsc --noEmit`, build, lint focado e `py_compile` aprovados | `POST /api/cronograma` bloqueado; fallback cruzado removido apenas da leitura de LOB; `/campo` grava somente `STAGING_CAMPO`, sem shell ou motor web. |
 | 14/09/2026 | Fase 0 / AUD-006 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3), `tsc --noEmit` e build aprovados | Mutação de baseline pelo dashboard bloqueada com HTTP 405. Proposta, confirmação e promoção canônica permanecem para as fases dependentes. |
 | 14/09/2026 | Fase 0 / AUD-001 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3) e `py_compile` aprovados | FVS de campo é apenas submetida; dashboard e processador não promovem para `APROVADO` nem liberam medição. Contrato completo, evidência e promoção governada permanecem para a Fase 3. |
+| 14/09/2026 | Fase 1 / AUD-011 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | `npm run test` (6/6), `tsc --noEmit`, lint focado e build aprovados | Parser CSV passa a preservar aspas, delimitadores e quebras internas; distingue `ok`, `empty`, `not_found`, `invalid_encoding` e `invalid_schema`. |
+| 14/09/2026 | Fase 1 / AUD-005 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | `npm run test` (6/6), `tsc --noEmit`, lint focado e build aprovados | EVM e orçamento exigem a obra ativa, cancelam respostas obsoletas e não usam fallback cruzado. |
+| 14/09/2026 | Fase 1 / AUD-012 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Não commitado | Teste Python de persistência, `py_compile`, `tsc --noEmit` e build aprovados | Ingestão de RDO passou a serializar o recurso e promover Markdown, JSON e planilha por arquivos temporários e troca atômica. |
 
 ## 9. Top 10 recomendado por benefício
 

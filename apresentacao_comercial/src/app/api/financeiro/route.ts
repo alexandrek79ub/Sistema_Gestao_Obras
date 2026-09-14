@@ -64,7 +64,11 @@ export async function GET(request: Request) {
   const caminhoFluxo = fs.existsSync(fluxoCsvPath) ? fluxoCsvPath : (fs.existsSync(fluxoCsvDefault) ? fluxoCsvDefault : null);
   if (caminhoFluxo) {
     try {
-      const rows = parseCSV<Record<string, string>>(caminhoFluxo);
+      const csvFluxo = parseCSV<Record<string, string>>(caminhoFluxo);
+      if (csvFluxo.status !== 'ok' && csvFluxo.status !== 'empty') {
+        return NextResponse.json({ success: false, error: csvFluxo.error, status: csvFluxo.status }, { status: csvFluxo.status === 'not_found' ? 404 : 422 });
+      }
+      const rows = csvFluxo.data;
       const rowEntradas = rows.find(r => (r['Conta / Rubrica Financeira'] || '').includes('TOTAL DE ENTRADAS'));
       const rowSaidas = rows.find(r => (r['Conta / Rubrica Financeira'] || '').includes('TOTAL DE SAÍDAS'));
       const rowSaldoAcum = rows.find(r => (r['Conta / Rubrica Financeira'] || '').includes('Saldo de Caixa Acumulado'));

@@ -19,6 +19,7 @@ from datetime import datetime
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
+from common.persistencia import bloquear_recurso, salvar_json_atomico, salvar_texto_atomico, salvar_workbook_atomico
 
 if sys.platform == "win32":
     try:
@@ -215,8 +216,7 @@ def processar_ingestao_rdo(obra_dir, config, rdo_data):
 *Assinado digitalmente via Coleta Digital Mobile Antigravity PMO Virtual.*
 """
     caminho_md = os.path.join(rdos_dir, f"RDO_{num_fmt}_{data_slug}.md")
-    with open(caminho_md, "w", encoding="utf-8") as f:
-        f.write(conteudo_md)
+    salvar_texto_atomico(caminho_md, conteudo_md)
 
     # 2. Inserir linha na planilha PAINEL_RDOS_OBRA.xlsx
     excel_path = os.path.join(producao_dir, "PAINEL_RDOS_OBRA.xlsx")
@@ -290,7 +290,7 @@ def processar_ingestao_rdo(obra_dir, config, rdo_data):
             ws_log.row_dimensions[row].height = 20
 
             # O Painel Geral é automaticamente recalculado via fórmulas do Excel
-            wb.save(excel_path)
+            salvar_workbook_atomico(excel_path, wb)
 
     # 3. Trilha de Auditoria
     trilha_path = os.path.join(producao_dir, "fila_apontamentos_campo.json")
@@ -310,8 +310,7 @@ def processar_ingestao_rdo(obra_dir, config, rdo_data):
         "dados": rdo_data
     }
     fila.append(registro)
-    with open(trilha_path, "w", encoding="utf-8") as f:
-        json.dump(fila, f, indent=2, ensure_ascii=False)
+    salvar_json_atomico(trilha_path, fila)
 
     return {
         "status": "sucesso",
@@ -491,7 +490,9 @@ def main():
 
     if tipo == "rdo":
         print("[1/2] Processando Apontamento Diário de RDO...")
-        res = processar_ingestao_rdo(obra_dir, config, payload)
+        producao_dir = os.path.join(obra_dir, "04_PRODUCAO_E_AVANCO")
+        with bloquear_recurso(producao_dir, "ingestao_rdo"):
+            res = processar_ingestao_rdo(obra_dir, config, payload)
         print(f"      ✅ RDO gerado com sucesso: {res['rdo_numero']}")
         print(f"      ✅ Arquivo Markdown criado: {res['arquivo_md']}")
         print(f"      ✅ Planilha PAINEL_RDOS_OBRA.xlsx atualizada com sucesso!")
