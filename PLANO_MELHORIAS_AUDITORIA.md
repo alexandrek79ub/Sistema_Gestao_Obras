@@ -537,9 +537,9 @@ O próximo agente deve adicionar uma linha por mudança de status. Não apagar r
 |---|---|---|---|---|---|---|
 | 14/09/2026 | Plano inicial | — → PENDENTE | Auditoria técnica | `PLANO_MELHORIAS_AUDITORIA.md` | Consolidação documental dos achados já auditados | Nenhuma correção implementada |
 | 14/09/2026 | Premissa arquitetural | PENDENTE → PENDENTE | Tech Lead | `PLANO_MELHORIAS_AUDITORIA.md` | Revisão documental localizada; sem nova auditoria | Agente como operador, dashboard somente leitura e `/campo` como exceção; removidos requisitos de login/RBAC |
-| 14/09/2026 | Fase 0 / AUD-002 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Sem commit | `npm run test` (3/3), `tsc --noEmit`, build, lint focado e `py_compile` aprovados | `POST /api/cronograma` bloqueado; fallback cruzado removido apenas da leitura de LOB; `/campo` grava somente `STAGING_CAMPO`, sem shell ou motor web. |
-| 14/09/2026 | Fase 0 / AUD-006 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Sem commit | `npm run test` (3/3), `tsc --noEmit` e build aprovados | Mutação de baseline pelo dashboard bloqueada com HTTP 405. Proposta, confirmação e promoção canônica permanecem para as fases dependentes. |
-| 14/09/2026 | Fase 0 / AUD-001 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | Sem commit | `npm run test` (3/3) e `py_compile` aprovados | FVS de campo é apenas submetida; dashboard e processador não promovem para `APROVADO` nem liberam medição. Contrato completo, evidência e promoção governada permanecem para a Fase 3. |
+| 14/09/2026 | Fase 0 / AUD-002 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3), `tsc --noEmit`, build, lint focado e `py_compile` aprovados | `POST /api/cronograma` bloqueado; fallback cruzado removido apenas da leitura de LOB; `/campo` grava somente `STAGING_CAMPO`, sem shell ou motor web. |
+| 14/09/2026 | Fase 0 / AUD-006 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3), `tsc --noEmit` e build aprovados | Mutação de baseline pelo dashboard bloqueada com HTTP 405. Proposta, confirmação e promoção canônica permanecem para as fases dependentes. |
+| 14/09/2026 | Fase 0 / AUD-001 | PENDENTE → IMPLEMENTADO | Codex / Tech Lead | `f040d9b` | `npm run test` (3/3) e `py_compile` aprovados | FVS de campo é apenas submetida; dashboard e processador não promovem para `APROVADO` nem liberam medição. Contrato completo, evidência e promoção governada permanecem para a Fase 3. |
 
 ## 9. Top 10 recomendado por benefício
 
