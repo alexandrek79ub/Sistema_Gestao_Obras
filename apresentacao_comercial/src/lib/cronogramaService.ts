@@ -160,16 +160,7 @@ export function buildLOBGraph(rawRows: Record<string, string>[]): {
       const dataFimU = parseDateRobust(rawRows[u]['DATA_FIM']);
       const dataIniV = parseDateRobust(rawRows[v]['DATA_INICIO']);
 
-      if (dataFimU && dataIniV) {
-        if (dataIniV.getTime() < dataFimU.getTime()) {
-          const mesmaData = dataFimU.getTime() === parseDateRobust(rawRows[u]['DATA_INICIO'])?.getTime();
-          if (!mesmaData) {
-            addEdge(u, v);
-          }
-        } else {
-          addEdge(u, v);
-        }
-      } else {
+      if (dataFimU && dataIniV && dataIniV.getTime() >= dataFimU.getTime()) {
         addEdge(u, v);
       }
     }
@@ -191,29 +182,6 @@ export function buildLOBGraph(rawRows: Record<string, string>[]): {
       const pav = r['LOCAL_PAVIMENTO'] || '';
       if (vagao.includes('07.') && pav.toLowerCase().includes('zona 04')) {
         addEdge(idxAlvenariaZ3!, idx);
-      }
-    });
-  }
-
-  // 4. Marco de Comissionamento e Entrega (Vagão 15 sucede todas as frentes)
-  const indicesComissionamento: number[] = [];
-  rawRows.forEach((r, idx) => {
-    const vagao = r['VAGAO'] || '';
-    if (vagao.includes('15.')) {
-      indicesComissionamento.push(idx);
-    }
-  });
-
-  if (indicesComissionamento.length > 0) {
-    const primeiroComissionamento = Math.min(...indicesComissionamento);
-    rawRows.forEach((r, idx) => {
-      const vagao = r['VAGAO'] || '';
-      if (!vagao.includes('15.')) {
-        const dataFim = parseDateRobust(r['DATA_FIM']);
-        const dataComiss = parseDateRobust(rawRows[primeiroComissionamento]['DATA_INICIO']);
-        if (dataFim && dataComiss && dataFim.getTime() <= dataComiss.getTime()) {
-          addEdge(idx, primeiroComissionamento);
-        }
       }
     });
   }
@@ -550,7 +518,7 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
 
         return {
           id,
-          duracao_dias: atv?.duracao_dias || 1,
+          duracao_dias: atv?.duracao_dias,
           predecessoras: atv?.predecessoras || [],
           es_inicio_mais_cedo: esVal,
           ef_fim_mais_cedo: efVal,
@@ -586,29 +554,35 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
   const progFile = progPaths.find((p) => fs.existsSync(p));
   if (progFile) {
     const csvProgramacao = parseCSV(progFile);
-    if (csvProgramacao.status === 'ok') {
-      const rawProg = csvProgramacao.data;
-      lotesCurtoPrazo = rawProg.map((row) => ({
-        codLote: row['COD_LOTE'] || '',
-        semana: row['SEMANA'] || '',
-        diasSemana: row['DIAS_SEMANA'] || '',
-        dataInicio: row['DATA_INICIO'] || '',
-        dataFim: row['DATA_FIM'] || '',
-        etapaZona: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',
-        vagaoEsteira: row['VAGAO_ESTEIRA'] || 'Geral',
-        setor: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',
-        servico: row['SERVICO_LOTE'] || '',
-        metaFisica: row['META_FISICA'] || '',
-        duracaoDias: parseInt(row['DURACAO_DIAS'] || '3', 10),
-        equipePrevista: row['EQUIPE_PREVISTA'] || '',
-        headcount: parseInt(row['HEADCOUNT_PREVISTO'] || '4', 10),
-        equipamentos: row['EQUIPAMENTOS_PREVISTOS'],
-        materiaisUcc: row['MATERIAIS_UCC'],
-        rupMeta: row['RUP_META_HH_UNID'],
-        status: row['STATUS_EXECUCAO'],
-        rdoVinculado: row['RDO_VINCULADO'],
-      }));
+    if (csvProgramacao.status !== 'ok' && csvProgramacao.status !== 'empty') {
+      return {
+        ok: false,
+        error: csvProgramacao.error || 'Erro ao processar CSV de programação de curto prazo',
+        status: csvProgramacao.status,
+        httpStatus: csvProgramacao.status === 'not_found' ? 404 : 422,
+      };
     }
+    const rawProg = csvProgramacao.data;
+    lotesCurtoPrazo = rawProg.map((row) => ({
+      codLote: row['COD_LOTE'],
+      semana: row['SEMANA'],
+      diasSemana: row['DIAS_SEMANA'] || '',
+      dataInicio: row['DATA_INICIO'] || '',
+      dataFim: row['DATA_FIM'] || '',
+      etapaZona: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',
+      vagaoEsteira: row['VAGAO_ESTEIRA'] || 'Geral',
+      setor: row['ETAPA_ZONA'] || row['SETOR'] || 'Geral',
+      servico: row['SERVICO_LOTE'],
+      metaFisica: row['META_FISICA'],
+      duracaoDias: parseInt(row['DURACAO_DIAS'] || '3', 10),
+      equipePrevista: row['EQUIPE_PREVISTA'],
+      headcount: parseInt(row['HEADCOUNT_PREVISTO'] || '4', 10),
+      equipamentos: row['EQUIPAMENTOS_PREVISTOS'],
+      materiaisUcc: row['MATERIAIS_UCC'],
+      rupMeta: row['RUP_META_HH_UNID'],
+      status: row['STATUS_EXECUCAO'],
+      rdoVinculado: row['RDO_VINCULADO'],
+    }));
   }
 
   // Histograma Oficial de Mão de Obra e Headcount Sincronizado

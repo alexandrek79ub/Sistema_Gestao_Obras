@@ -72,7 +72,7 @@ export interface LoteLOBDetalhado {
 
 export interface AtividadeCPM {
   id: string;
-  duracao_dias: number;
+  duracao_dias?: number;
   predecessoras: string[];
   es_inicio_mais_cedo: number;
   ef_fim_mais_cedo: number;
@@ -85,18 +85,18 @@ export interface AtividadeCPM {
 }
 
 export interface LoteCurtoPrazo {
-  codLote: string;
-  semana: string;
+  codLote?: string;
+  semana?: string;
   diasSemana: string;
   dataInicio: string;
   dataFim: string;
   etapaZona: string;
   vagaoEsteira: string;
   setor: string;
-  servico: string;
-  metaFisica: string;
+  servico?: string;
+  metaFisica?: string;
   duracaoDias: number;
-  equipePrevista: string;
+  equipePrevista?: string;
   headcount: number;
   equipamentos?: string;
   materiaisUcc?: string;
