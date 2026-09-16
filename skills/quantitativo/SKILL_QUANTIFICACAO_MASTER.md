@@ -58,32 +58,23 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ---
 
-## 🤖 1.1. Arquitetura Híbrida de Quantitativo (Tool Use & Motor Python)
+## 🤖 1.1. Arquitetura Híbrida de Quantitativo de Alta Velocidade (Python Engine na CPU)
 
-Para garantir **zero alucinação matemática e precisão contábil absoluta**, o processo de levantamento quantitativo adota uma arquitetura híbrida em 2 etapas:
+Para garantir **zero alucinação matemática, precisão contábil absoluta e resposta em SEGUNDOS**, o processo de levantamento quantitativo adota execução nativa em Python:
 
-1. **O Agente de IA (Extração e Regras):**  
-   - Lê as pranchas executivas em PDF ou imagem.
-   - Aplica as regras normativas desta Skill Master e dos Módulos Específicos.
-   - **NUNCA calcula o valor numérico final de cabeça.**
-   - Extrai as cotas e monta as expressões matemáticas no formato literal puro em um arquivo `.json` estruturado conforme o [template_dados_orcamento.json](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/template_dados_orcamento.json).
-   - *Exemplo de expressão no JSON:* `"12 * pi * (0.30/2)**2 * 6.00"` ou `"11 * 1.4 * 1.4 * 0.7"`.
+1. **Extração e Varredura Automatizada de Pranchas (1 a 2 segundos):**
+   - Ao receber uma prancha em PDF (ex: `EGS-051.pdf`), o Agente aciona diretamente o extrator automatizado:
+     ```bash
+     python scripts/motor_quantitativos/importadores/extrator_estrutural.py [caminho_prancha.pdf]
+     ```
+   - 🛑 **PROIBIÇÃO ABSOLUTA DE LOOPS VISUAIS LENTOS:** É expressamente proibido fazer recortes sucessivos manuais de imagem e mandar para a LLM analisar em múltiplos turnos de rede. A CPU local varre o PDF, tabelas de vigas, pilares, resumos de ferro e pranchas correlatas no mesmo segundo.
 
 2. **O Motor Python na CPU ([cli.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/motor_quantitativos/cli.py)):**  
-   - O Agente aciona a execução no terminal:
-     ```bash
-     python scripts/motor_quantitativos/cli.py [caminho_do_json] --db data/pmo_virtual.sqlite
-     ```
-   - O script resolve a matemática na CPU via AST segura, apura rigorosamente a **geometria líquida nominal de projeto (sem aplicação de perdas ou arredondamentos de compras)**, persiste as tabelas no **SQLite oficial (`data/pmo_virtual.sqlite`) como Única Fonte da Verdade (SSOT)** e gera automaticamente os artefatos derivados:
-     - 📊 O Caderno Master Executivo em Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com formatação corporativa e fórmulas dinâmicas nativas do Excel (`ROUND`, `SUM`, `IF`) distribuídas em 6 abas executivas:
-       1. `01_ORCAMENTO_EAP`: EAP com BDI e somas dinâmicas;
-       2. `02_PARAMETRICO_BDI`: Taxas e equações do Acórdão 2622/2013 TCU;
-       3. `03_COMPOSICOES_CCU`: Decomposição de custos (Material, Mão de Obra e Equipamentos);
-       4. `04_CURVA_ABC`: Matriz Pareto 80/20 com ranking dinâmico e classificação automática;
-       5. `05_MEMORIA_CALCULO`: Cubagem geométrica com equações literais e pranchas de projeto;
-       6. `06_BOLETIM_MEDICAO`: Planilha de medição físico-financeira com avanço % e saldos automáticos.
+   - O extrator gera as equações nominais literais e dispara a ingestão no **SQLite oficial (`data/pmo_virtual.sqlite`) como Única Fonte da Verdade (SSOT)**.
+   - Gera instantaneamente todos os artefatos derivados:
+     - 📊 O Caderno Master Executivo em Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com 6 abas executivas e fórmulas dinâmicas;
      - 📝 As Memórias de Cálculo em Markdown nativo auditável (`MEMORIA_CALCULO_[DISC].md`);
-     - 📑 Os quantitativos físicos e orçamentos em CSV (`QUANTITATIVO_[DISC].csv`, `QUANTITATIVO_MESTRE.csv`, `ORCAMENTO_BASE_CONSOLIDADO.csv`) para portabilidade e integração externa.
+     - 📑 Os quantitativos físicos e orçamentos em CSV (`QUANTITATIVO_[DISC].csv`, `QUANTITATIVO_MESTRE.csv`, `ORCAMENTO_BASE_CONSOLIDADO.csv`);
    - O Dashboard Next.js consome diretamente os dados do SQLite via `@/lib/db.ts` (`node:sqlite`).
 
 
