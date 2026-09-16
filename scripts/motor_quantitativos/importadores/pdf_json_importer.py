@@ -1,16 +1,12 @@
-#!/usr/bin/env python3
-"""Importação inicial explícita: JSON de levantamento -> SQLite oficial.
-
-Depois desta etapa, alterações devem ocorrer apenas via API/serviço do SQLite. O JSON nunca é
-reaplicado sem ``--substituir``, para preservar revisões realizadas no banco.
-"""
-import argparse
 import json
 from pathlib import Path
 
-from gerador_orcamento_mestre import calcular_expressao
-from motor_quantitativos.db import (connect, exportar_artefatos, garantir_obra, gravar_orcamento,
-                                    registrar_revisao, substituir_quantitativos)
+from motor_quantitativos.calculo.avaliador_expressoes import calcular_expressao
+from motor_quantitativos.repositorio.sqlite_repository import (
+    connect, garantir_obra, gravar_orcamento, substituir_quantitativos
+)
+from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
+from motor_quantitativos.exportadores import exportar_artefatos
 
 
 def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False) -> list[Path]:
@@ -19,6 +15,7 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
     obra_codigo = projeto.upper().replace(" ", "_")
     base_dir = str(Path(data.get("base_dir", Path(json_path).parent)).resolve())
     itens, itens_orcamento = [], []
+    
     for disciplina, bloco in data.get("disciplinas", {}).items():
         for item in bloco.get("itens_orcamento", []):
             expressoes = item.get("equacoes", [])
@@ -37,6 +34,7 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
                 "centro_custo": item.get("centro_custo", ""), "codigo_sinapi": item.get("codigo_sinapi", ""),
                 "fonte_preco": item.get("fonte_preco", ""),
             })
+            
     db = connect(db_path)
     try:
         obra_id = garantir_obra(db, obra_codigo, projeto, base_dir)
@@ -46,10 +44,13 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
         if existentes and substituir:
             db.execute("DELETE FROM itens_orcamento WHERE obra_id=?", (obra_id,))
             db.execute("DELETE FROM itens_quantitativo WHERE obra_id=?", (obra_id,))
+        
         revisao_quant = registrar_revisao(db, obra_id, "QUANTITATIVO", f"importacao-inicial:{json_path}", "motor-python", "Importação inicial autorizada")
         substituir_quantitativos(db, obra_id, itens, revisao_quant)
+        
         revisao_orc = registrar_revisao(db, obra_id, "ORCAMENTO", f"importacao-inicial:{json_path}", "motor-python", "Orçamento importado junto ao levantamento inicial")
         gravar_orcamento(db, obra_id, itens_orcamento, revisao_orc)
+        
         saidas = exportar_artefatos(db, obra_id)
         db.commit()
     except Exception:
@@ -57,15 +58,5 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
         raise
     finally:
         db.close()
+        
     return saidas
-
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Importa o JSON uma única vez para o SQLite oficial.")
-    parser.add_argument("json_path")
-    parser.add_argument("--db", default="data/pmo_virtual.sqlite")
-    parser.add_argument("--substituir", action="store_true", help="Reimporta e sobrescreve dados existentes após aprovação humana.")
-    args = parser.parse_args()
-    arquivos = importar_json_inicial(args.json_path, args.db, args.substituir)
-    print("Importação concluída. Exportações derivadas:")
-    print("\n".join(f"- {arquivo}" for arquivo in arquivos))

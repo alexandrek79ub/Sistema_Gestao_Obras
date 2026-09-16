@@ -6,7 +6,7 @@ CSV e Markdown são somente exportações derivadas e nunca devem ser editados c
 ## Importação inicial para o banco
 
 ```text
-python scripts/gerador_orcamento_mestre.py scripts/template_dados_orcamento.json --db data/pmo_virtual.sqlite
+python scripts/motor_quantitativos/cli.py scripts/template_dados_orcamento.json --db data/pmo_virtual.sqlite
 ```
 
 O comando calcula as expressões, importa o quantitativo e o orçamento e exporta os arquivos da

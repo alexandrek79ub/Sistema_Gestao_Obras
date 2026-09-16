@@ -7,10 +7,13 @@ from http.server import ThreadingHTTPServer
 from pathlib import Path
 
 from api_pmo import Handler
-from migrar_quantitativo_sqlite import importar_json_inicial
-from motor_quantitativos.db import (atualizar_quantitativo, connect, exportar_artefatos, garantir_obra,
-                                    gravar_orcamento, recalcular_orcamento, registrar_revisao,
-                                    substituir_quantitativos)
+from motor_quantitativos.importadores.pdf_json_importer import importar_json_inicial
+from motor_quantitativos.repositorio.sqlite_repository import (
+    atualizar_quantitativo, connect, garantir_obra, gravar_orcamento, 
+    recalcular_orcamento, substituir_quantitativos
+)
+from motor_quantitativos.exportadores import exportar_artefatos
+from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
 
 
 class MotorQuantitativosTest(unittest.TestCase):

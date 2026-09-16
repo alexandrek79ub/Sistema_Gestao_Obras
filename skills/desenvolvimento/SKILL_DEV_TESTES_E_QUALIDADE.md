@@ -75,7 +75,7 @@ Antes de cada entrega de nova funcionalidade, executar o fluxo do início ao fim
     (incluir casos de borda: campos vazios, zeros, valores longos)
          ↓
 [2] Rodar o motor Python (se aplicável):
-    python scripts/gerador_orcamento_mestre.py [json_path]
+    python scripts/motor_quantitativos/cli.py [json_path]
          ↓
 [3] Verificar o CSV gerado:
     - Schema correto?

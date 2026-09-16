@@ -6,7 +6,9 @@ import secrets
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import parse_qs, urlparse
 
-from motor_quantitativos.db import atualizar_quantitativo, connect, criar_backup, exportar_artefatos, recalcular_orcamento
+from motor_quantitativos.repositorio.sqlite_repository import atualizar_quantitativo, connect, recalcular_orcamento
+from motor_quantitativos.auditoria.trilha_revisoes import criar_backup
+from motor_quantitativos.exportadores import exportar_artefatos
 
 
 class Handler(BaseHTTPRequestHandler):

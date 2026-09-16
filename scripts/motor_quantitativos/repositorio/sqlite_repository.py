@@ -1,27 +1,11 @@
-from __future__ import annotations
-
-import csv
-import hashlib
 import json
-import re
 import sqlite3
-import unicodedata
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
-
-STATUS_QUANTITATIVO = {"LEVANTADO", "PENDENTE_RFI", "NAO_LEVANTADO"}
-COLUNAS_QUANTITATIVO = (
-    "COD_EAP", "DESCRICAO_DO_SERVICO", "DISCIPLINA", "UNIDADE",
-    "QUANTIDADE_TOTAL", "PRANCHA_REFERENCIA", "STATUS",
-)
-COLUNAS_ORCAMENTO = (
-    "COD_EAP", "DESCRICAO_DO_SERVICO", "DISCIPLINA", "UNIDADE",
-    "QUANTIDADE_TOTAL", "CUSTO_UNITARIO_BDI", "CUSTO_TOTAL",
-    "EMPREITEIRO_VINCULADO", "PRANCHA_REFERENCIA", "FONTE_PRECO", "STATUS",
-    "CODIGO_SINAPI", "CENTRO_CUSTO",
-)
+from motor_quantitativos.domain.modelos import STATUS_QUANTITATIVO
+from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
 
 
 def agora() -> str:
@@ -118,22 +102,6 @@ def connect(path: str | Path) -> sqlite3.Connection:
     return db
 
 
-def criar_backup(db_path: str | Path, diretorio_backup: str | Path | None = None) -> Path:
-    """Cria um snapshot consistente via API SQLite, inclusive quando WAL está ativo."""
-    origem = Path(db_path)
-    destino_dir = Path(diretorio_backup) if diretorio_backup else origem.parent / "backups"
-    destino_dir.mkdir(parents=True, exist_ok=True)
-    destino = destino_dir / f"{origem.stem}_{datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')}.sqlite"
-    fonte = sqlite3.connect(str(origem))
-    alvo = sqlite3.connect(str(destino))
-    try:
-        fonte.backup(alvo)
-    finally:
-        alvo.close()
-        fonte.close()
-    return destino
-
-
 def garantir_obra(db: sqlite3.Connection, codigo: str, nome: str, diretorio_base: str = "") -> int:
     instante = agora()
     db.execute(
@@ -144,17 +112,6 @@ def garantir_obra(db: sqlite3.Connection, codigo: str, nome: str, diretorio_base
         (codigo, nome, diretorio_base, instante, instante),
     )
     return int(db.execute("SELECT id FROM obras WHERE codigo=?", (codigo,)).fetchone()[0])
-
-
-def registrar_revisao(db: sqlite3.Connection, obra_id: int, tipo: str, origem: str,
-                      usuario: str = "motor-python", justificativa: str = "") -> int:
-    if tipo not in {"QUANTITATIVO", "ORCAMENTO"}:
-        raise ValueError("Tipo de revisão inválido")
-    cur = db.execute(
-        "INSERT INTO revisoes(obra_id,tipo,usuario,justificativa,origem,created_at) VALUES(?,?,?,?,?,?)",
-        (obra_id, tipo, usuario.strip() or "motor-python", justificativa.strip() or "Atualização automatizada", origem, agora()),
-    )
-    return int(cur.lastrowid)
 
 
 def substituir_quantitativos(db: sqlite3.Connection, obra_id: int, itens: Iterable[dict[str, Any]],
@@ -245,61 +202,3 @@ def gravar_orcamento(db: sqlite3.Connection, obra_id: int, itens: Iterable[dict[
              float(item.get("custo_material", 0) or 0), float(item.get("custo_mao_obra", 0) or 0), float(item.get("custo_equipamento", 0) or 0),
              preco, bdi, total, agora()),
         )
-
-
-def exportar_checksum(db: sqlite3.Connection, obra_id: int) -> str:
-    rows = [dict(row) for row in db.execute("SELECT cod_eap,descricao,disciplina,unidade,quantidade_liquida,expressao_matematica,prancha_referencia,status,versao FROM itens_quantitativo WHERE obra_id=? ORDER BY id", (obra_id,))]
-    return hashlib.sha256(json.dumps(rows, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
-
-
-def _nome_disciplina(disciplina: str) -> str:
-    sem_acento = "".join(c for c in unicodedata.normalize("NFKD", disciplina) if not unicodedata.combining(c))
-    nome = re.sub(r"[^A-Z0-9]+", "_", sem_acento.upper()).strip("_")
-    return nome or "SEM_DISCIPLINA"
-
-
-def _escrever_csv(destino: Path, cabecalho: tuple[str, ...], linhas: Iterable[Iterable[Any]]) -> None:
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    with destino.open("w", newline="", encoding="utf-8-sig") as arquivo:
-        writer = csv.writer(arquivo, delimiter=";")
-        writer.writerow(cabecalho)
-        writer.writerows(linhas)
-
-
-def exportar_artefatos(db: sqlite3.Connection, obra_id: int, diretorio_base: str | Path | None = None) -> list[Path]:
-    obra = db.execute("SELECT nome,diretorio_base FROM obras WHERE id=?", (obra_id,)).fetchone()
-    if obra is None:
-        raise ValueError("Obra não encontrada")
-    base = Path(diretorio_base or obra["diretorio_base"])
-    if not str(base):
-        raise ValueError("Diretório de exportação da obra não definido")
-    itens = db.execute("""
-        SELECT q.*, o.codigo_sinapi,o.centro_custo,o.fonte_preco,o.preco_unitario,o.bdi_pct,o.custo_total
-        FROM itens_quantitativo q LEFT JOIN itens_orcamento o ON o.quantitativo_id=q.id AND o.obra_id=q.obra_id
-        WHERE q.obra_id=? ORDER BY q.disciplina,q.cod_eap,q.prancha_referencia
-    """, (obra_id,)).fetchall()
-    saidas: list[Path] = []
-    linhas_quant = [(r["cod_eap"], r["descricao"], r["disciplina"], r["unidade"], r["quantidade_liquida"], r["prancha_referencia"], r["status"]) for r in itens]
-    mestre = base / "QUANTITATIVO_MESTRE.csv"
-    _escrever_csv(mestre, COLUNAS_QUANTITATIVO, linhas_quant)
-    saidas.append(mestre)
-    linhas_orc = [(r["cod_eap"], r["descricao"], r["disciplina"], r["unidade"], r["quantidade_liquida"], r["preco_unitario"] or 0, r["custo_total"] or 0, "Engenharia", r["prancha_referencia"], r["fonte_preco"] or "", r["status"], r["codigo_sinapi"] or "", r["centro_custo"] or "") for r in itens]
-    orcamento = base / "ORCAMENTO_BASE_CONSOLIDADO.csv"
-    _escrever_csv(orcamento, COLUNAS_ORCAMENTO, linhas_orc)
-    saidas.append(orcamento)
-    for disciplina in sorted({r["disciplina"] for r in itens}):
-        grupo = [r for r in itens if r["disciplina"] == disciplina]
-        sufixo = _nome_disciplina(disciplina)
-        quant_disc = base / f"QUANTITATIVO_{sufixo}.csv"
-        _escrever_csv(quant_disc, COLUNAS_QUANTITATIVO, [(r["cod_eap"], r["descricao"], r["disciplina"], r["unidade"], r["quantidade_liquida"], r["prancha_referencia"], r["status"]) for r in grupo])
-        saidas.append(quant_disc)
-        memoria = base / f"MEMORIA_CALCULO_{sufixo}.md"
-        linhas = [f"# Memória de Cálculo Auditável: {disciplina}", "", f"**Obra:** {obra['nome']}  ", f"**Checksum do quantitativo:** `{exportar_checksum(db, obra_id)}`", "", "---", "", "## 1. Demonstração Matemática Detalhada", ""]
-        for r in grupo:
-            linhas.extend([f"### {r['cod_eap']} — {r['descricao']}", f"- **Expressão:** `{r['expressao_matematica']}`", f"- **Resultado líquido:** `{r['quantidade_liquida']} {r['unidade']}`", f"- **Prancha:** `{r['prancha_referencia']}`", ""])
-        linhas.extend(["## 2. Tabela Consolidada de Quantitativos Físicos de Projeto", "", "| EAP | Serviço | Quantidade líquida | Unidade | Prancha | Status |", "|---|---|---:|---|---|---|"])
-        linhas.extend(f"| {r['cod_eap']} | {r['descricao']} | {r['quantidade_liquida']} | {r['unidade']} | {r['prancha_referencia']} | {r['status']} |" for r in grupo)
-        linhas.extend(["", "## 3. Tabela Oficial de Serviços para EAP e Cronograma", "", "| EAP | Serviço | Status |", "|---|---|---|", *(f"| {r['cod_eap']} | {r['descricao']} | {r['status']} |" for r in grupo), ""])
-        memoria.write_text("\n".join(linhas), encoding="utf-8")
-        saidas.append(memoria)
-    return saidas

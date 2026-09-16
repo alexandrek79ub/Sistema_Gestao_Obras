@@ -69,10 +69,10 @@ Para garantir **zero alucinação matemática e precisão contábil absoluta**, 
    - Extrai as cotas e monta as expressões matemáticas no formato literal puro em um arquivo `.json` estruturado conforme o [template_dados_orcamento.json](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/template_dados_orcamento.json).
    - *Exemplo de expressão no JSON:* `"12 * pi * (0.30/2)**2 * 6.00"` ou `"11 * 1.4 * 1.4 * 0.7"`.
 
-2. **O Motor Python na CPU ([gerador_orcamento_mestre.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/gerador_orcamento_mestre.py)):**  
+2. **O Motor Python na CPU ([cli.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/motor_quantitativos/cli.py)):**  
    - O Agente aciona a execução no terminal:
      ```bash
-     python scripts/gerador_orcamento_mestre.py [caminho_do_json]
+     python scripts/motor_quantitativos/cli.py [caminho_do_json]
      ```
    - O script resolve a matemática na CPU via AST segura, apura rigorosamente a **geometria líquida nominal de projeto (sem aplicação de perdas ou arredondamentos de compras)** e gera automaticamente:
      - As Memórias de Cálculo em Markdown nativo (`MEMORIA_CALCULO_[DISC].md`);
