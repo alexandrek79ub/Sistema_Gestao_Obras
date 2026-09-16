@@ -1,16 +1,17 @@
 # 📊 SKILL: Schema dos CSVs e Estrutura de Dados do Sistema
 
 > **Frente:** Desenvolvimento (`SKILL_DEV_SENIOR.md`)
-> **Propósito:** Fonte única da verdade para os CSVs consumidos pelo Dashboard Next.js e gerados pelo motor Python.
+> **Propósito:** O SQLite é a fonte única da verdade; os CSVs são exportações consumidas pelo Dashboard Next.js.
 
 ## 1. Arquitetura de dados
 
-Os CSVs são organizados por obra em `/projetos/[NOME_OBRA]/` e usam `;` como separador e UTF-8.
+O banco oficial é `data/pmo_virtual.sqlite`. Os documentos e exportações continuam organizados por obra em `/projetos/[NOME_OBRA]/` e usam `;` como separador e UTF-8.
 Valores ausentes são strings vazias; nunca usar `null` ou `N/A` nos arquivos de produção.
 
 ## 2. Orçamento base, quantitativo e EAP
 
-`ORCAMENTO_BASE_CONSOLIDADO.csv` é o contrato comum entre EAP, quantitativo físico e Dashboard.
+`itens_quantitativo` no SQLite é o contrato comum entre EAP, quantitativo físico e Dashboard.
+`ORCAMENTO_BASE_CONSOLIDADO.csv` é apenas uma exportação derivada.
 Cada linha é um serviço da EAP, com quantidade nominal líquida. Insumos miúdos, perdas,
 empolamento e arredondamentos comerciais não pertencem a este arquivo.
 
@@ -27,6 +28,8 @@ empolamento e arredondamentos comerciais não pertencem a este arquivo.
 | `PRANCHA_REFERENCIA` | string | sim | Prancha ou detalhe que fundamenta a quantidade |
 | `FONTE_PRECO` | string | não | SINAPI, cotação ou contrato que fundamenta o custo unitário |
 | `STATUS` | string | sim | `LEVANTADO`, `PENDENTE_RFI` ou `NAO_LEVANTADO` |
+| `CODIGO_SINAPI` | string | não | Composição SINAPI vinculada ao item de orçamento; não pertence ao quantitativo físico |
+| `CENTRO_CUSTO` | string | não | Classificação financeira do orçamento; não altera EAP nem quantidade líquida |
 
 O código `COD_EAP` é o identificador do serviço para cronograma, medição e consolidação do
 orçamento. `CIA`, ambiente e pavimento podem ser mantidos em arquivos analíticos de origem,
@@ -66,6 +69,7 @@ usar `0` e registrar o impedimento.
 3. Novas colunas entram no final e devem ser registradas nesta skill antes do uso.
 4. Nenhuma coluna de perdas/UCC pode ser usada para alterar a quantidade física do projeto.
 5. Alterações de schema exigem atualização do parser, das rotas, dos componentes e dos testes.
+6. A API exige versão esperada, justificativa e chave local; uma edição gera backup, auditoria e novas exportações.
 
 ## 7. Tolerância a falhas no Dashboard
 

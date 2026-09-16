@@ -311,5 +311,13 @@ def gerar_orcamento(json_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Motor de cálculo matemático e formatação de CSV/MD a partir do JSON extraído pela IA.")
     parser.add_argument("json_path", help="Caminho para o JSON com as equações literais.")
+    parser.add_argument("--db", help="Importa o JSON inicialmente para o SQLite oficial e gera exportações derivadas.")
+    parser.add_argument("--substituir", action="store_true", help="Permite reimportação explícita para uma obra já existente no SQLite.")
     args = parser.parse_args()
-    gerar_orcamento(args.json_path)
+    if args.db:
+        from migrar_quantitativo_sqlite import importar_json_inicial
+        arquivos = importar_json_inicial(args.json_path, args.db, args.substituir)
+        print("SQLite é a fonte oficial. Exportações derivadas atualizadas:")
+        print("\n".join(f"- {arquivo}" for arquivo in arquivos))
+    else:
+        gerar_orcamento(args.json_path)

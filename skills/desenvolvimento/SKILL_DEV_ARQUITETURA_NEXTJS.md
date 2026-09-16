@@ -76,7 +76,7 @@ const { obraAtiva } = useObra();
 ### Regra geral
 - **Server Components** leem os CSVs diretamente via `parseCSV` e passam os dados como props.
 - **Client Components** (marcados com `"use client"`) NUNCA leem arquivos diretamente — recebem dados via props ou via contexto/API Route.
-- **Lógica de negócio** (cálculo de SPI, CPI, RUP) pertence a `/lib/` ou hooks, NUNCA dentro do JSX.
+- **Lógica de negócio** (quantitativo, orçamento, SPI, CPI, RUP) pertence ao backend Python; o Next.js consulta a API e renderiza.
 
 ### Exemplo — Adicionar uma nova página ao dashboard:
 
@@ -87,12 +87,12 @@ import path from 'path';
 
 // Tipagem dos dados do CSV (SEMPRE tipar explicitamente)
 interface LinhaOrcamento {
-  CIA: string;
-  SERVICO: string;
+  COD_EAP: string;
+  DESCRICAO_DO_SERVICO: string;
   QUANTIDADE_TOTAL: string;
   CUSTO_UNITARIO_BDI: string;
   CUSTO_TOTAL: string;
-  PRECO_UNIT: string;
+  PRANCHA_REFERENCIA: string;
   // ... outras colunas do schema
 }
 
@@ -131,23 +131,23 @@ Checklist passo a passo — **não pule etapas**:
 
 ---
 
-## 6. Integração com o Motor Python
+## 6. Integração com o Motor Python e SQLite
 
 O fluxo completo de dados:
 
 ```
-1. IA extrai cotas → monta JSON (template_dados_orcamento.json)
+1. IA/Python extrai cotas e calcula as expressões
                      ↓
-2. python scripts/gerador_orcamento_mestre.py [json_path]
+2. Python grava quantitativo e orçamento no `data/pmo_virtual.sqlite`
                      ↓
-3. Gera: ORCAMENTO_BASE_CONSOLIDADO.csv + MEMORIA_CALCULO_[DISC].md
+3. API Python fornece leitura e edição auditável
                      ↓
-4. Dashboard Next.js lê o CSV via Server Component
+4. Exportadores geram CSV e Markdown derivados
                      ↓
-5. Componentes exibem os dados ao usuário
+5. Dashboard Next.js consulta a API
 ```
 
-**Regra:** O Dashboard é READ-ONLY em relação aos CSVs — ele lê mas nunca escreve. Toda escrita de dado passa pelo motor Python ou por entrada manual no CSV.
+**Regra:** o Dashboard não escreve CSV. Toda escrita passa pela API Python, que atualiza o SQLite e regenera as exportações.
 
 ---
 

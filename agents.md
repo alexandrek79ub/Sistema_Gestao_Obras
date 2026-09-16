@@ -54,7 +54,17 @@ Toda resposta técnica deve abrir com o bloco abaixo (máximo 3 linhas):
 
 Interpretar os problemas, necessidades e relatos do usuário, identificar quais disciplinas estão envolvidas, **acessar as Skills (Módulos)** relevantes, cruzar informações e fornecer soluções completas, rastreáveis e técnicas.
 
-Atuar ativamente na **Frente de Consultoria PMO Virtual**, processando dados inseridos via CSV/Markdown e validando-os no Dashboard Next.js, mantendo a Trilha de Auditoria via commits do Git.
+Atuar ativamente na **Frente de Consultoria PMO Virtual**, mantendo o SQLite como fonte oficial dos dados e usando CSV/Markdown apenas como exportações auditáveis para consumo e apresentação. O Dashboard Next.js consulta a API Python; a trilha de auditoria fica no SQLite e no Git.
+
+### Fonte Oficial e Fluxo de Dados
+
+- O banco oficial é `data/pmo_virtual.sqlite`.
+- `itens_quantitativo` guarda somente serviços e quantidades físicas líquidas de projeto: sem perdas, UCC, empolamento ou insumos derivados.
+- `itens_orcamento` acrescenta composição/preço, fonte SINAPI ou cotação, BDI e centro de custo; esses campos não alteram a quantidade física nem a EAP.
+- O JSON (`template_dados_orcamento.json`) é aceito somente na importação inicial ou em reimportação explicitamente autorizada com `--substituir`.
+- A API Python é a única porta de edição para a interface. Toda alteração exige chave de API, justificativa e versão esperada, registra auditoria, cria backup, recalcula o orçamento e regenera os arquivos derivados.
+- `QUANTITATIVO_[DISC].csv`, `MEMORIA_CALCULO_[DISC].md`, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.csv` não são fontes editáveis. Se houver divergência, corrigir o SQLite e regenerar as exportações.
+- Comandos principais: `python scripts/gerador_orcamento_mestre.py <json> --db data/pmo_virtual.sqlite` para importação inicial; `python scripts/api_pmo.py --db data/pmo_virtual.sqlite --api-key <chave>` para edição controlada.
 
 ---
 
@@ -95,14 +105,14 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
-- 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento usando os arquivos locais como Banco de Dados.
-- 📐 **Motor de Orçamento, SINAPI e Automações de Engenharia**: Execução via `python scripts/gerador_orcamento_mestre.py` (Motor Híbrido Cérebro/CPU v2.0 com AST) para resolver expressões matemáticas e gerar CSV/MD com trilha auditável, consulta rápida à base oficial SINAPI SP via `python scripts/consultar_sinapi.py`, e `extrair_carimbos.py` / `gerar_lista_desenhos.py` para catalogar pranchas PDF.
+- 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para consultar a API Python/SQLite e plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento. CSV/Markdown são derivados e não devem ser editados pela interface.
+- 📐 **Motor de Quantitativos, Orçamento e SINAPI**: `python scripts/gerador_orcamento_mestre.py <json> --db data/pmo_virtual.sqlite` realiza a importação inicial e exporta a partir do SQLite; `python scripts/api_pmo.py` controla edições auditáveis. A CPU resolve expressões matemáticas via AST. A consulta SINAPI permanece em `python scripts/consultar_sinapi.py`, com `extrair_carimbos.py` / `gerar_lista_desenhos.py` para catalogar pranchas PDF.
 - 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API).
 
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
 Quando o sistema exigir criação, manutenção ou auditoria do código (Next.js, APIs), garantindo as melhores práticas e a qualidade da entrega técnica.
 - 👨‍💻 **[Desenvolvedor Sênior e Tech Lead](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SENIOR.md)**: Skill de entrada da frente. O agente aplica o "Loop de QA" e mantém a locomotiva nos trilhos.
-- 🗂️ **[Schema dos CSVs](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md)**: Fonte da verdade dos dados. Consultar antes de qualquer leitura ou escrita de CSV no dashboard.
+- 🗂️ **[Schema dos CSVs](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_SCHEMA_CSV.md)**: Contrato das tabelas SQLite e exportações. Consultar antes de qualquer leitura, escrita ou alteração do schema.
 - 🏗️ **[Arquitetura Next.js](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_ARQUITETURA_NEXTJS.md)**: Mapa de pastas, padrões de naming, contextos React, fluxo de fetch e checklist para adicionar novos relatórios.
 - 🧪 **[Testes e Qualidade](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_TESTES_E_QUALIDADE.md)**: Verificações obrigatórias, edge cases por componente e checklist pré-entrega.
 
@@ -137,7 +147,7 @@ Sempre que receber um pedido, siga estes passos:
 - **PROIBIDO** pagar por avanço presumido. A medição deve ser física (A Regra da Trena - POP 09).
 - **FIDELIDADE DE MEDIÇÃO:** As medições físicas do projeto mantêm suas unidades exatas de engenharia (m³, m², kg, m, unid). Conversões para embalagens comerciais pertencem exclusivamente à fase de compras no almoxarifado e não alteram o quantitativo.
 - **MEMÓRIA DE CÁLCULO AUDITÁVEL COMPLETA EM MARKDOWN NATIVO:** É OBRIGATÓRIO escrever todas as memórias em Markdown nativo limpo (codeblocks e citações), sendo PROIBIDO o uso de blocos KaTeX ($$) ou \text{}. Toda entrega de quantitativo DEVE conter a **Seção 1 (Demonstração Matemática Detalhada passo a passo com deduções de vãos, nós e trigonometria)**, a **Seção 2 (Tabela Consolidada de Quantitativos Físicos de Projeto)** e a **Seção 3 (Tabela Oficial de Serviços para EAP e Cronograma)**. O motor mestre preserva automaticamente demonstrações manuais auditadas existentes.
-- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final de cabeça. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e gera o arquivo `template_dados_orcamento.json`. O script `gerador_orcamento_mestre.py` roda na CPU para calcular o resultado e gerar o CSV/MD.
+- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final de cabeça. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e produz o JSON apenas como entrada de importação. O script `gerador_orcamento_mestre.py` roda na CPU para calcular o resultado, gravar o SQLite e gerar os CSV/MD derivados. Depois da importação, o SQLite é a fonte exclusiva.
 - **O ORÇAMENTO É A LEI SUPREMA & BASE OFICIAL SINAPI SP:** Toda despesa deve ser cruzada com a viabilidade financeira da obra (Skill ADM). É terminantemente PROIBIDO estimar ou inventar preços unitários "de cabeça". Todo custo unitário deve ter fonte comprovada na base oficial **SINAPI SP 07/2026** (`apoio/sinapi_sp/`), em cotação de 3 fornecedores ou contrato de empreitada, registrado com seu Código CIA unívoco. Se a obra atrasa, afeta dinheiro e equipe de imediato. Ação e Reação.
 - 🧹 **PROIBIÇÃO DE POLUIÇÃO DO REPOSITÓRIO (LIMPEZA MANDATÓRIA DE ARQUIVOS TEMPORÁRIOS / SCRATCH):** É expressamente PROIBIDO deixar scripts de inspeção descartáveis, recortes intermediários de pranchas (.png) ou arquivos provisórios acumulados no repositório (como a pasta `scratch/` ou arquivos soltos na raiz). Se o agente precisar gerar scripts ou recortes temporários para decodificar PDFs de engenharia, deve DELETAR obrigatoriamente todos esses arquivos auxiliares assim que o levantamento for finalizado. Apenas os arquivos oficiais de entrega (`dados_orcamento.json`, memórias `.md` e planilhas `.csv` dentro de `/projetos/[OBRA]/`) devem permanecer no repositório.
 
