@@ -57,5 +57,5 @@ Seção 6 da `SKILL_GESTAO_07`) — nunca aceitar a primeira hipótese sem checa
    `SKILL_GESTAO_10`, mantendo consistência entre as duas skills.
 
 ---
-*Trabalha junto com `SKILL_GESTAO_10_CONTRATOS_EMPREITEIROS.md` (glosa por não conformidade) e
+*Trabalha junto com `SKILL_GESTAO_10_CONTRATOS.md` (glosa por não conformidade) e
 `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (retrabalho distorce RUP se não for separado).*

@@ -16,13 +16,13 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 - `governanca/INDICE_MESTRE_SKILLS.md`: O mapa de consulta completo que resolve sobreposições de Skills e regras de autonomia.
 
 ### 📐 Pilar 2: Engenharia de Custos (Quantitativo)
-*Regra: Arredondar sempre para Unidade Comercial de Compra (UCC).*
+*Regra: o quantitativo preserva a quantidade física líquida; UCC e arredondamentos pertencem exclusivamente às compras.*
 - `SKILL_QUANTIFICACAO_MASTER.md`: A regra mãe de cálculo. Define os modelos de tabela e as regras matemáticas universais.
 - `SKILL_QUANT_01_FUNDACOES.md`: Estacas, Sapatas, Radiers.
 - `SKILL_QUANT_02_ESTRUTURA.md`: Pilares, Lajes, Aço (CA-50/60) e Fôrmas.
 - `SKILL_QUANT_03_ARQUITETURA.md`: Alvenaria, Reboco, Pisos, Gesso, Pintura.
-- `SKILL_QUANT_04_ELETRICA.md` & `05_HIDRAULICA.md`: Módulos de instalações.
-- `SKILL_QUANTIFICACAO_ORCAMENTACAO.md`, `PEDIDO_DE_COMPRA.md` e `CONCILIACAO_3_PONTAS.md`: Skills avançadas de orçamento e validação fiscal.
+- `SKILL_QUANT_04_ELETRICA.md` & `SKILL_QUANT_05_HIDRAULICA.md`: Módulos de instalações.
+- `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`, `SKILL_QUANTIFICACAO_PEDIDO_DE_COMPRA.md` e `SKILL_QUANTIFICACAO_CONCILIACAO_3_PONTAS.md`: composição, compras e conciliação.
 
 ### 📊 Pilar 3: A Gestão de Obra (O Backoffice)
 *Onde a IA cruza dinheiro, prazo e segurança.*

@@ -206,10 +206,10 @@ C_transpasse ≥ 25 × Ø  (zona de compressão)
 C_transpasse ≥ 60 × Ø  (ambiente agressivo, CAA III)
 
 Peso_barra = L_barra × Peso_linear (kg/m)
-Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
+Peso_total_bitola = Σ (n_barras × Peso_barra)
 ```
 
-### 3.3 Taxas de Perda por Fornecimento
+### 3.3 Taxas de Perda por Fornecimento (somente CPU/BOM, fora do quantitativo)
 
 | Fornecimento | Taxa de Perda |
 |---|---|

@@ -75,11 +75,12 @@ def gerar_orcamento(json_path):
 
     os.makedirs(base_dir, exist_ok=True)
 
+    # Contrato único consumido pelo Dashboard e pelos arquivos de EAP/orçamento.
+    # Quantitativo é físico e líquido; UCC, perdas e insumos derivados ficam fora daqui.
     header_csv = [
-        "Código EAP", "Item / Descricao", "Disciplina", 
-        "Qtd Projeto", "Unidade Proj", "Perda (%)", 
-        "Qtd Comercial UCC", "Unidade UCC", "Prancha Referencia",
-        "Preço Unitário (R$)", "Custo Total (R$)"
+        "COD_EAP", "DESCRICAO_DO_SERVICO", "DISCIPLINA", "UNIDADE",
+        "QUANTIDADE_TOTAL", "CUSTO_UNITARIO_BDI", "CUSTO_TOTAL",
+        "EMPREITEIRO_VINCULADO", "PRANCHA_REFERENCIA", "FONTE_PRECO", "STATUS"
     ]
     consolidated_rows = [header_csv]
 
@@ -119,10 +120,8 @@ def gerar_orcamento(json_path):
             cod_eap = item.get("codigo_eap", "")
             descricao = item.get("descricao", "")
             unidade = item.get("unidade", "")
-            perda_pct = float(item.get("perda_pct", 0))
-            unidade_ucc = item.get("unidade_ucc", unidade)
             ref_prancha = item.get("ref_prancha", pranchas_ref)
-            fator_ucc = float(item.get("fator_conversao_ucc", 1.0))
+            fonte_preco = item.get("fonte_preco", "")
             preco_unit = float(item.get("preco_unitario", item.get("custo_unitario", 0.0)))
             
             # Processamento Matemático Físico
@@ -145,8 +144,6 @@ def gerar_orcamento(json_path):
             # REGRA DE ENGENHARIA: Zero perdas ou arredondamentos de compra no levantamento físico
             # Quantitativo de projeto reflete 100% a geometria líquida nominal das pranchas
             qtd_nominal = total_qtd_projeto
-            perda_pct = 0
-            
             # Cálculo Financeiro Opcional
             custo_total_item = round(qtd_nominal * preco_unit, 2) if preco_unit > 0 else 0.0
             subtotal_disc_financeiro += custo_total_item
@@ -160,8 +157,8 @@ def gerar_orcamento(json_path):
             
             # Montagem da Linha do CSV (compatibilidade garantida com dashboard Next.js)
             r_novo = [
-                cod_eap, descricao, titulo_disc, total_qtd_projeto, unidade, 
-                0, total_qtd_projeto, unidade, ref_prancha, preco_str, total_str
+                cod_eap, descricao, titulo_disc, unidade, total_qtd_projeto,
+                preco_str, total_str, "Engenharia", ref_prancha, fonte_preco, "LEVANTADO"
             ]
             rows_com_disciplina.append(r_novo)
             consolidated_rows.append(r_novo)
@@ -169,9 +166,17 @@ def gerar_orcamento(json_path):
         # Suporte a datasets existentes com linhas pré-compiladas ("rows")
         if not itens and "rows" in disc:
             for r in disc["rows"]:
+                # Compatibilidade de entrada: linhas antigas do motor são
+                # normalizadas para o contrato atual sem transportar perdas/UCC.
                 r_exp = list(r)
-                while len(r_exp) < len(header_csv):
-                    r_exp.append("-")
+                if len(r_exp) >= 11:
+                    r_exp = [
+                        r_exp[0], r_exp[1], r_exp[2], r_exp[4], r_exp[3],
+                        r_exp[9], r_exp[10], "Engenharia", r_exp[8], "", "LEVANTADO"
+                    ]
+                else:
+                    while len(r_exp) < len(header_csv):
+                        r_exp.append("")
                 rows_com_disciplina.append(r_exp)
                 consolidated_rows.append(r_exp)
 
@@ -274,7 +279,7 @@ def gerar_orcamento(json_path):
         md_content += "| :---: | :--- | :---: | :---: | :--- | :---: | :---: |\n"
         
         for r in rows_com_disciplina:
-            md_content += f"| **{r[0]}** | {r[1]} | **{r[3]}** | `{r[4]}` | `{r[8]}` | {r[9]} | **{r[10]}** |\n"
+            md_content += f"| **{r[0]}** | {r[1]} | **{r[4]}** | `{r[3]}` | `{r[8]}` | {r[5]} | **{r[6]}** |\n"
 
         if subtotal_disc_financeiro > 0:
             md_content += f"\n> 💰 **Subtotal Financeiro da Disciplina:** `{formatar_moeda(subtotal_disc_financeiro)}`\n"

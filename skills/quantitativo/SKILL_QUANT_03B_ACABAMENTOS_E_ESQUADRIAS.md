@@ -17,7 +17,9 @@
 A_piso = Comp × Larg
 A_arremate = Perímetro_interno × 0,30m
 A_impermeab = A_piso + A_arremate
-A_final = A_impermeab × 1,15  (15% perda)
+A_final = A_impermeab
+
+> Perdas, recortes e embalagens comerciais pertencem somente à CPU/BOM de compras.
 ```
 
 ### 1.2 Box de Banheiro

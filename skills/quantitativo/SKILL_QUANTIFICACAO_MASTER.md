@@ -23,7 +23,7 @@ Este é o **arquivo núcleo** do sistema de quantificação. Ele define os proto
 | [SKILL_QUANT_04_ELETRICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md) | Elétrica, Lógica & SPDA | Eletrodutos, Cabos, QDC, Dutos Enterrados, SPDA, Entrada/Poste, Subestação, **Telefonia, Dados, Fibra, CFTV & Interfonia** |
 | [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md) | Hidráulica, Incêndio & Gás | Tubulações PVC/PEAD, Caixas Enterradas, Rede de Incêndio Aço, Gás, **Cavalete, Cisternas & Castelo D'Água Elevado** |
 | [SKILL_QUANT_06_SERVICOS_ESPECIAIS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_06_SERVICOS_ESPECIAIS.md) | Serviços Especiais & Canteiro | Preliminares, Terraplenagem/Contenções, HVAC, Elevadores/Bombas, SDAI/Extintores, **Comunicação Visual, Paisagismo, Piscinas & Áreas de Lazer** |
-| [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md) | Auditoria e Verificação | Loop de QA anti-erro de leitura, checklists de cotas, desmembramento de cantos e validação UCC |
+| [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md) | Auditoria e Verificação | Loop de QA anti-erro de leitura, checklists de cotas e geometria líquida |
 
 > **Protocolo de uso:** Sempre carregar este MASTER + o módulo da disciplina necessária + **SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md** para validação final.
 

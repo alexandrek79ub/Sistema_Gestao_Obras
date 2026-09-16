@@ -54,4 +54,4 @@ Quando uma revisão de projeto muda uma quantidade já orçada/comprada:
 
 ---
 *Trabalha junto com `SKILL_QUANTIFICACAO_MASTER.md` (fonte do quantitativo) e
-`SKILL_GESTAO_10_CONTRATOS_EMPREITEIROS.md` (mudança de projeto como gatilho de aditivo).*
+`SKILL_GESTAO_10_CONTRATOS.md` (mudança de projeto como gatilho de aditivo).*

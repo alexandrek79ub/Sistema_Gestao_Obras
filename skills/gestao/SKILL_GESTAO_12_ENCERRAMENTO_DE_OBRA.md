@@ -65,5 +65,5 @@ obra inteira, não só por serviço individual.
    um checklist assinado sem síntese do que foi aprendido.
 
 ---
-*Trabalha junto com `SKILL_GESTAO_10_CONTRATOS_EMPREITEIROS.md`, `SKILL_GESTAO_11_QUALIDADE_NAO_CONFORMIDADE.md`
+*Trabalha junto com `SKILL_GESTAO_10_CONTRATOS.md`, `SKILL_GESTAO_11_QUALIDADE_NAO_CONFORMIDADE.md`
 e `SKILL_GESTAO_08_PRODUTIVIDADE_E_RECURSOS.md` (fechamento do ciclo de melhoria contínua).*

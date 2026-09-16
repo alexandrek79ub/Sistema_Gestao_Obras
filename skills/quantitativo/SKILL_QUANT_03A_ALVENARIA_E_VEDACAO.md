@@ -209,7 +209,7 @@ Areia = A_alvenaria_líquida × 0,022 m³/m² × 1,05
   - [ ] Pinos de aço c/ arruela + cartuchos de pólvora
   - [ ] Adesivo plastificante (chapisco)
   - [ ] **Espuma de Poliuretano Expansiva PU 750ml** (encunhamento topo de parede)
-- [ ] **Insumos de argamassa de assentamento** (cimento, cal, areia) presentes na tabela com quantidades em UCC (sacos/m³)
+- [ ] **Serviço de alvenaria e argamassa** presente na tabela como quantidade física líquida; cimento, cal e areia ficam na CPU/BOM, nunca no quantitativo da EAP
 
 > Se algum item acima estiver ausente → **NÃO EMITIR A TABELA.** Calcular o item faltante e registrar memória de cálculo antes de prosseguir.
 

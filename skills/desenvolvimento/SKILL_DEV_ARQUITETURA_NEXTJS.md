@@ -89,7 +89,9 @@ import path from 'path';
 interface LinhaOrcamento {
   CIA: string;
   SERVICO: string;
-  QUANTIDADE_UCC: string;
+  QUANTIDADE_TOTAL: string;
+  CUSTO_UNITARIO_BDI: string;
+  CUSTO_TOTAL: string;
   PRECO_UNIT: string;
   // ... outras colunas do schema
 }

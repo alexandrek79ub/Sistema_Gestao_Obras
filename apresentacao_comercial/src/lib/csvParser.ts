@@ -8,7 +8,7 @@ export function parseCSV<T = Record<string, string>>(absolutePath: string): T[] 
     if (lines.length === 0) return [];
 
     // Parse header and remove quotes
-    const headers = lines[0].split(';').map(header => header.replace(/^"|"$/g, '').trim());
+    const headers = lines[0].split(';').map(header => header.replace(/^"|"$/g, '').replace(/^\uFEFF/, '').trim());
     
     const results: T[] = [];
 

@@ -10,26 +10,26 @@
 | Serviço / Fase | POP a Acionar | Quando acionar |
 |---|---|---|
 | **Implantação do canteiro** | `POP_01_CANTEIRO_LEAN.md` | Antes da mobilização de qualquer equipe |
-| **Rotina diária / Kanban de obra** | `POP_02_ROTINA_KANBAN.md` | Todo dia útil de obra |
-| **Controle de EPIs e ferramentas** | `POP_03_EPI_FERRAMENTAS.md` | Onboarding de trabalhador e troca de EPI |
+| **Rotina diária / Kanban de obra** | `POP_02_ROTINAS_LEAN.md` | Todo dia útil de obra |
+| **Controle de EPIs e ferramentas** | `POP_03_SST_FERRAMENTAS.md` | Onboarding de trabalhador e troca de EPI |
 | **Operação de equipamentos** | `POP_04_EQUIPAMENTOS.md` | Antes de operar guincho, betoneira, grua |
-| **Pedido de compra / suprimentos** | `POP_05_COMPRAS_UCC.md` | Qualquer solicitação de material novo |
-| **Recebimento de NF e material** | `POP_06_RECEBIMENTO_NF.md` | Chegada de caminhão / entrega de material |
-| **Controle de estoque (almoxarifado)** | `POP_07_ESTOQUE_PEPS.md` | Entrada e saída de material do almoxarifado |
-| **Inspeção de serviço executado / FVS** | `POP_08_FVS_RNC.md` | Após conclusão de qualquer serviço inspecionável |
-| **Medição física de serviço (Regra da Trena)** | `POP_09_MEDICAO_TRENA.md` | Medição de empreiteiro ou avanço físico do RDO |
-| **Fundação (escavação, estacas, brocas, sapatas)** | `POP_10_FUNDACAO.md` | Início da fase de infraestrutura |
-| **Concretagem (lançamento e cura)** | `POP_11_CONCRETO.md` | Antes de qualquer concretagem de estrutura |
+| **Pedido de compra / suprimentos** | `POP_05_SOLICITACAO_COMPRAS.md` | Qualquer solicitação de material novo |
+| **Recebimento de NF e material** | `POP_06_RECEBIMENTO.md` | Chegada de caminhão / entrega de material |
+| **Controle de estoque (almoxarifado)** | `POP_07_ALMOXARIFADO.md` | Entrada e saída de material do almoxarifado |
+| **Inspeção de serviço executado / FVS** | `POP_08_QUALIDADE_FVS.md` | Após conclusão de qualquer serviço inspecionável |
+| **Medição física de serviço (Regra da Trena)** | `POP_09_PLANEJAMENTO_MEDICAO.md` | Medição de empreiteiro ou avanço físico do RDO |
+| **Fundação (escavação, estacas, brocas, sapatas)** | `POP_10_FUNDACOES.md` | Início da fase de infraestrutura |
+| **Concretagem (lançamento e cura)** | `POP_11_CONCRETAGEM.md` | Antes de qualquer concretagem de estrutura |
 | **Alvenaria de vedação / estrutural** | `POP_12_ALVENARIA.md` | Início de elevação de paredes |
-| **Revestimentos (chapisco, emboço, gesso, cerâmica)** | `POP_13_REVESTIMENTO.md` | Início de fase de acabamentos internos |
+| **Revestimentos (chapisco, emboço, gesso, cerâmica)** | `POP_13_REVESTIMENTOS.md` | Início de fase de acabamentos internos |
 | **Impermeabilização** | `POP_14_IMPERMEABILIZACAO.md` | Antes de qualquer serviço de impermeabilização |
-| **Instalações hidráulicas** | `POP_15_HIDRAULICA.md` | Execução de tubulações de água e esgoto |
-| **Instalações elétricas** | `POP_16_ELETRICA.md` | Execução de eletrodutos, fiação e QDC |
+| **Instalações hidráulicas** | `POP_15_INSTALACOES_HIDROS.md` | Execução de tubulações de água e esgoto |
+| **Instalações elétricas** | `POP_16_INSTALACOES_ELETRICAS.md` | Execução de eletrodutos, fiação e QDC |
 | **Onboarding de terceiro / empreiteiro novo** | `POP_17_ONBOARDING_TERCEIROS.md` | Antes de qualquer empresa terceira entrar na obra |
-| **As-Built e DataBook final** | `POP_18_ASBUILT_DATABOOK.md` | Fase de encerramento e entrega ao cliente |
-| **Fôrmas e cimbramento** | `POP_19_FORMAS.md` | Antes de montar fôrmas para lajes/pilares/vigas |
-| **Trabalho em altura (qualquer serviço)** | `POP_20_ANDAIMES_NR35.md` | Todo serviço executado acima de 2,00m |
-| **Topografia / verificação de gabarito** | `POP_21_TOPOGRAFIA.md` | Antes de iniciar fase, marco ou controle de nível |
+| **As-Built e DataBook final** | `POP_18_ENTREGA_DATABOOK.md` | Fase de encerramento e entrega ao cliente |
+| **Fôrmas e cimbramento** | `POP_19_FORMAS_CIMBRAMENTO.md` | Antes de montar fôrmas para lajes/pilares/vigas |
+| **Trabalho em altura (qualquer serviço)** | `POP_20_ANDAIMES_FACHADEIROS.md` | Todo serviço executado acima de 2,00m |
+| **Topografia / verificação de gabarito** | `POP_21_TOPOGRAFIA_PRECISAO.md` | Antes de iniciar fase, marco ou controle de nível |
 | **Controle tecnológico de concreto** | `POP_22_CONTROLE_CONCRETO.md` | Coleta de CPs aos 7 e 28 dias |
 | **SESMT, DDS e treinamentos obrigatórios** | `POP_23_SESMT_TREINAMENTOS.md` | Início de obra e fases de alto risco |
 | **Cobertura / telhado** | `POP_24_COBERTURA.md` | Antes de iniciar montagem de telhado |
