@@ -1,4 +1,4 @@
 ﻿COD_EAP;DESCRICAO_DO_SERVICO;DISCIPLINA;UNIDADE;QUANTIDADE_TOTAL;CUSTO_UNITARIO_BDI;CUSTO_TOTAL;EMPREITEIRO_VINCULADO;PRANCHA_REFERENCIA;FONTE_PRECO;STATUS;CODIGO_SINAPI;CENTRO_CUSTO
-1.1.1;Escavação Manual/Mecanizada de Sapatas e Baldrames;Infraestrutura e Fundações;m³;35.5377;65.0;2309.95;Engenharia;EGS-01;;LEVANTADO;;
-1.1.2;Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm);Infraestrutura e Fundações;m³;5.0894;480.0;2442.91;Engenharia;EGS-01;;LEVANTADO;;
-1.1.5;Aço CA-50 8.0mm Sapatas Isoladas;Infraestrutura e Fundações;kg;46.926;58.5;2745.17;Engenharia;EGS-02;;LEVANTADO;;
+1.1.1;Escavação Manual/Mecanizada de Sapatas e Baldrames;Infraestrutura e Fundações;m³;35.5377;81.25;2887.44;Engenharia;EGS-01;SINAPI 09/2026 Não Desonerado;LEVANTADO;93358;Infraestrutura
+1.1.2;Estacas Escavadas em Concreto Usinado fck 30 MPa (Brocas Ø30cm);Infraestrutura e Fundações;m³;5.0894;600.0;3053.64;Engenharia;EGS-01;SINAPI 09/2026;LEVANTADO;96535;Infraestrutura
+1.1.5;Aço CA-50 8.0mm Sapatas Isoladas;Infraestrutura e Fundações;kg;46.926;73.12;3431.46;Engenharia;EGS-02;SINAPI 09/2026;LEVANTADO;92762;Infraestrutura

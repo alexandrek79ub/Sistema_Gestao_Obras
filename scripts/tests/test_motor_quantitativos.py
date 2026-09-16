@@ -78,7 +78,22 @@ class MotorQuantitativosTest(unittest.TestCase):
         banco = Path(self.tmp.name) / "importacao.sqlite"
         saidas = importar_json_inicial(str(arquivo_json), str(banco))
         self.assertTrue(any(arquivo.name == "ORCAMENTO_BASE_CONSOLIDADO.csv" for arquivo in saidas))
+        self.assertTrue(any(arquivo.name == "ORCAMENTO_BASE_CONSOLIDADO.xlsx" for arquivo in saidas))
         
+        arquivo_xlsx = next(a for a in saidas if a.name == "ORCAMENTO_BASE_CONSOLIDADO.xlsx")
+        import openpyxl
+        wb = openpyxl.load_workbook(str(arquivo_xlsx))
+        self.assertIn("01_Orçamento_Base", wb.sheetnames)
+        self.assertIn("02_BDI_Analítico", wb.sheetnames)
+        self.assertIn("03_Composições_CCU", wb.sheetnames)
+        self.assertIn("04_Curva_ABC_Serviços", wb.sheetnames)
+        self.assertIn("05_Memória_Quantitativos", wb.sheetnames)
+        self.assertIn("06_Boletim_Medição", wb.sheetnames)
+        ws = wb["01_Orçamento_Base"]
+        self.assertEqual(ws["H5"].value, "=ROUND(F5*(1+G5/100), 2)")
+        self.assertEqual(ws["I5"].value, "=ROUND(E5*H5, 2)")
+        wb.close()
+
         db_import = connect(banco)
         try:
             row = db_import.execute("SELECT custo_material, custo_mao_obra, preco_unitario, bdi_pct, custo_total FROM itens_orcamento").fetchone()
@@ -89,6 +104,7 @@ class MotorQuantitativosTest(unittest.TestCase):
             self.assertEqual(row["custo_total"], 312.5)
         finally:
             db_import.close()
+
 
         with self.assertRaises(ValueError):
             importar_json_inicial(str(arquivo_json), str(banco))

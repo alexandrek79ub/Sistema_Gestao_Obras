@@ -1,6 +1,12 @@
-#!/usr/bin/env python3
 import argparse
+import sys
+from pathlib import Path
+
+# Adiciona o diretorio scripts ao sys.path para importacoes absolutas
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from motor_quantitativos.importadores.pdf_json_importer import importar_json_inicial
+
 
 def main():
     parser = argparse.ArgumentParser(description="Motor de Quantitativos e Orçamento PMO Virtual")

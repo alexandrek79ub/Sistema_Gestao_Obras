@@ -8,7 +8,9 @@ from typing import Any
 
 from motor_quantitativos.domain.modelos import COLUNAS_ORCAMENTO, COLUNAS_QUANTITATIVO
 from motor_quantitativos.exportadores.csv_exporter import escrever_csv
+from motor_quantitativos.exportadores.excel_exporter import escrever_orcamento_excel
 from motor_quantitativos.exportadores.markdown_exporter import escrever_memoria_calculo
+
 
 
 def exportar_checksum(db: sqlite3.Connection, obra_id: int) -> str:
@@ -35,7 +37,8 @@ def exportar_artefatos(db: sqlite3.Connection, obra_id: int, diretorio_base: str
         raise ValueError("Diretório de exportação da obra não definido")
         
     itens = db.execute("""
-        SELECT q.*, o.codigo_sinapi,o.centro_custo,o.fonte_preco,o.preco_unitario,o.bdi_pct,o.custo_total
+        SELECT q.*, o.codigo_sinapi,o.centro_custo,o.fonte_preco,o.preco_unitario,o.bdi_pct,o.custo_total,
+               o.custo_material,o.custo_mao_obra,o.custo_equipamento
         FROM itens_quantitativo q LEFT JOIN itens_orcamento o ON o.quantitativo_id=q.id AND o.obra_id=q.obra_id
         WHERE q.obra_id=? ORDER BY q.disciplina,q.cod_eap,q.prancha_referencia
     """, (obra_id,)).fetchall()
@@ -65,6 +68,12 @@ def exportar_artefatos(db: sqlite3.Connection, obra_id: int, diretorio_base: str
     saidas.append(orcamento)
     
     checksum = exportar_checksum(db, obra_id)
+    
+    # 2.1. ORCAMENTO_BASE_CONSOLIDADO.xlsx (Planilha Excel Dinâmica com Fórmulas Vivas)
+    orcamento_xlsx = base / "ORCAMENTO_BASE_CONSOLIDADO.xlsx"
+    escrever_orcamento_excel(orcamento_xlsx, obra["nome"], checksum, [dict(r) for r in itens])
+    saidas.append(orcamento_xlsx)
+
     
     # 3. Exportações por disciplina
     for disciplina in sorted({r["disciplina"] for r in itens}):

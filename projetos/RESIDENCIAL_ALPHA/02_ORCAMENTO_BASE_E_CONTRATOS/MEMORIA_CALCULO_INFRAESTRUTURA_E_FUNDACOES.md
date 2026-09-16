@@ -1,7 +1,7 @@
 # Memória de Cálculo Auditável: Infraestrutura e Fundações
 
 **Obra:** Residencial Alpha  
-**Checksum do quantitativo:** `b0f824e945b617c4939f751bd756e66a0d6f7607fb0a14c17ff58a06cbe6420d`
+**Checksum do quantitativo:** `3de41336caee99133501463613700fffb7c1d2b16a0710226714e80f99d2ff3a`
 
 ---
 
