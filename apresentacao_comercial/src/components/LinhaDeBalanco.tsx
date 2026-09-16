@@ -361,6 +361,7 @@ export default function LinhaDeBalanco() {
   const [relatorioSobreposicao, setRelatorioSobreposicao] = useState<RelatorioSobreposicaoItem | null>(null);
   const [showAjuda, setShowAjuda] = useState(false);
   const [showBannerConflito, setShowBannerConflito] = useState(false);
+  const [showConflitosNoGrafico, setShowConflitosNoGrafico] = useState(false);
 
   // Estados de Edição Interativa, Autonomia e RUP
   const [isEditando, setIsEditando] = useState(false);
@@ -690,6 +691,8 @@ export default function LinhaDeBalanco() {
     return conflitosConsolidados;
   }, [tarefas, totalDias]);
 
+  const conflitosExibidos = showConflitosNoGrafico ? conflitosVisuais : [];
+
   const handleZoomInX = () => setZoomX(prev => Math.min(prev + 0.5, 3));
   const handleZoomOutX = () => setZoomX(prev => Math.max(prev - 0.5, 0.5));
   const handleZoomInY = () => setZoomY(prev => Math.min(prev + 0.5, 2.5));
@@ -997,6 +1000,22 @@ export default function LinhaDeBalanco() {
             </button>
           </div>
 
+          <button
+            type="button"
+            aria-pressed={showConflitosNoGrafico}
+            onClick={() => setShowConflitosNoGrafico((visivel) => !visivel)}
+            disabled={conflitosVisuais.length === 0}
+            className={`px-3 py-1.5 rounded-lg border text-xs flex items-center gap-1.5 transition-colors font-medium ${
+              showConflitosNoGrafico
+                ? 'bg-amber-950/70 border-amber-500/60 text-amber-200'
+                : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:text-white'
+            } disabled:opacity-40 disabled:cursor-not-allowed`}
+            title="Exibe ou oculta indícios automáticos de sobreposição; a confirmação exige validação de campo"
+          >
+            <AlertTriangle className="w-3.5 h-3.5" />
+            {showConflitosNoGrafico ? 'Ocultar sobreposições' : 'Ver sobreposições potenciais'}
+          </button>
+
           {/* SELETOR DE NÍVEL DE CONSOLIDAÇÃO: MACROETAPAS (7 FASES) VS VAGÕES (15) */}
           <div className="bg-zinc-950 p-1 rounded-lg border border-zinc-800 flex items-center text-xs">
             <button
@@ -1110,10 +1129,10 @@ export default function LinhaDeBalanco() {
             <div className="flex items-center gap-2 text-zinc-300">
               <span className="w-2 h-2 rounded-full bg-amber-400"></span>
               <span className="font-medium text-zinc-200">
-                Sobreposições de Equipe Mapeadas no Orçamento Baseline:
+                Sobreposições potenciais detectadas automaticamente:
               </span>
               <span className="font-mono text-zinc-400">
-                {conflitosVisuais.length} intervalo{conflitosVisuais.length > 1 ? 's' : ''} pré-existente{conflitosVisuais.length > 1 ? 's' : ''}
+                {conflitosVisuais.length} intervalo{conflitosVisuais.length > 1 ? 's' : ''} para validação
               </span>
             </div>
             <button
@@ -1127,8 +1146,7 @@ export default function LinhaDeBalanco() {
           {showBannerConflito && (
             <div className="p-4 border-t border-zinc-800/80 bg-zinc-950/80 space-y-2 animate-in fade-in duration-150">
               <p className="text-zinc-400">
-                Intervalos onde a mesma equipe está alocada em frentes simultâneas no orçamento original (ex: fundações/estruturas). 
-                Ao mover atividades com folga, o sistema permite ajustar livremente os prazos sem gerar travas.
+                Indícios calculados a partir de equipes e zonas amplas. Eles não comprovam conflito espacial nem necessidade de efetivo extra sem validação da subzona e da composição real das equipes.
               </p>
               <div className="flex flex-wrap gap-2 pt-1">
                 {conflitosVisuais.map((c, idx) => (
@@ -1262,6 +1280,7 @@ export default function LinhaDeBalanco() {
                 {/* CAMADA VETORIAL SVG COM AS LINHAS DE BALANÇO (LOB REAL ↗) */}
                 {estiloLOB === 'linhas' ? (
                   <svg 
+                    data-testid="lob-lines-layer"
                     className="absolute inset-0 w-full"
                   style={{ height: `${chartHeight}px` }}
                 >
@@ -1281,7 +1300,7 @@ export default function LinhaDeBalanco() {
                   </defs>
 
                   {/* CAMADA VISUAL DE CONFLITOS E SOBREPOSIÇÃO DE EQUIPES (DUPLA FRENTE) */}
-                  {conflitosVisuais.map((c) => {
+                  {conflitosExibidos.map((c) => {
                     const xIni = getX(c.diaInicio);
                     const xFim = getX(c.diaFim);
                     const w = Math.max(34, xFim - xIni);
@@ -1382,7 +1401,7 @@ export default function LinhaDeBalanco() {
                       const yBottom = chartHeight - 8;
                       const height = yBottom - yTop;
                       const ponto0 = vagao.pontos[0];
-                      const temConflito1 = ponto0 ? conflitosVisuais.some(c => c.tarefasIds.includes(ponto0.id)) : false;
+                      const temConflito1 = ponto0 ? conflitosExibidos.some(c => c.tarefasIds.includes(ponto0.id)) : false;
 
                       return (
                         <g 
@@ -1458,7 +1477,7 @@ export default function LinhaDeBalanco() {
                       const height = 36;
                       const yTop = yCenter - height / 2;
                       const pontoZ = vagao.pontos.find((p: PontoVagao) => p.pav === z.pav) || vagao.pontos[0];
-                      const temConflito2 = pontoZ ? conflitosVisuais.some(c => c.tarefasIds.includes(pontoZ.id)) : false;
+                      const temConflito2 = pontoZ ? conflitosExibidos.some(c => c.tarefasIds.includes(pontoZ.id)) : false;
 
                       return (
                         <g 
@@ -1528,7 +1547,7 @@ export default function LinhaDeBalanco() {
                       const midIdx = Math.floor(centerPoints.length / 2);
                       const labelPonto = centerPoints[midIdx];
                       const primeiroP = vagao.pontos[0];
-                      const temConflito3 = vagao.pontos.some((p: PontoVagao) => conflitosVisuais.some(c => c.tarefasIds.includes(p.id)));
+                      const temConflito3 = vagao.pontos.some((p: PontoVagao) => conflitosExibidos.some(c => c.tarefasIds.includes(p.id)));
 
                       return (
                         <g 
@@ -1634,7 +1653,7 @@ export default function LinhaDeBalanco() {
                 </svg>
               ) : (
                 /* MODO BLOCOS: VISÃO POR LOTES CONSOLIDADOS POR SETOR COM TEXTO LEGÍVEL */
-                <div className="absolute inset-0 pointer-events-auto">
+                <div data-testid="lob-blocks-layer" className="absolute inset-0 pointer-events-auto">
                   {(lotesConsolidadosPorSetor as SetorLotes[]).map((setLotes) => {
                     const { pav, rowIdx, lotes, totalLanes } = setLotes;
                     const lanesCount = totalLanes || 1;
@@ -1651,7 +1670,7 @@ export default function LinhaDeBalanco() {
                           // Garante respiro de 3px entre lotes sequenciais contíguos sem colisão visual
                           const width = Math.max(26, rawWidth > 5 ? rawWidth - 3 : rawWidth);
                           const cor = lote.corHex || getCorVagao(lote.vagaoNome);
-                          const temConflito = conflitosVisuais.some(c => c.tarefasIds.includes(lote.tarefaId));
+                          const temConflito = conflitosExibidos.some(c => c.tarefasIds.includes(lote.tarefaId));
 
                           // Dimensionamento de pista (lane) vertical dentro da linha do setor
                           const laneHeight = lanesCount === 1 

@@ -1,53 +1,48 @@
 ﻿LOCAL_PAVIMENTO;SEQUENCIA;VAGAO;ATIVIDADE;EQUIPE_RESPONSAVEL;RITMO_DIAS_POR_LOCAL;DATA_INICIO;DATA_FIM
-Zona 01 - Recepção/Diretoria;1;01. Topografia & Canteiro;Mobilização de Canteiro NR-18 e Locação Gabarito Geral;1 Topógrafo + 2 Ajudantes + 4 Serventes;10;01/10/2026;12/10/2026
-Zona 01 - Recepção/Diretoria;2;02. Fundações Sapatas;Escavação Mecanizada e Lastro S1 a S12 + Corte e Dobra de Armaduras na Bancada;1 Operador + 2 Armadores (Central de Aço) + 4 Serventes;2;13/10/2026;14/10/2026
-Zona 01 - Recepção/Diretoria;3;02. Fundações Sapatas;Armação e Fôrmas das Sapatas S1 a S12 (Etapa 1);2 Carpinteiros + 2 Armadores + 4 Serventes;2;20/10/2026;21/10/2026
-Zona 02 - Salas Técnicas/CPD;4;02. Fundações Sapatas;Escavação/Lastro S13 a S24 + Concretagem S1 a S12 + Corte e Dobra Bancada S13 a S24;1 Operador + 2 Armadores (Central de Aço) + 2 Pedreiros + 4 Serventes;2;15/10/2026;16/10/2026
-Zona 02 - Salas Técnicas/CPD;5;02. Fundações Sapatas;Armação e Fôrmas Sapatas S13 a S24 [Etapa 1 em Cura e Desforma];2 Carpinteiros + 2 Armadores + 4 Serventes;2;22/10/2026;23/10/2026
-Zona 03 - Sanitários e Apoio;6;02. Fundações Sapatas;Escavação S25 a S32 + Concretagem S13 a S24 + Corte e Dobra Bancada S25 a S32 e Baldrames;1 Operador + 2 Armadores (Central de Aço) + 2 Pedreiros + 4 Serventes;2;17/10/2026;19/10/2026
-Zona 03 - Sanitários e Apoio;7;02. Fundações Sapatas;Armação, Fôrmas e Concretagem Sapatas S25 a S32 (Etapa 3);2 Carpinteiros + 2 Armadores + 1 Pedreiro + 4 Serventes;3;24/10/2026;27/10/2026
-Zona 01 - Recepção/Diretoria;8;03. Vigas Baldrames;Montagem Fôrmas e Armação Baldrames VB1 a VB6 [Esteira Entra em Vigas];3 Carpinteiros + 2 Armadores + 4 Serventes;5;28/10/2026;02/11/2026
-Zona 01 - Recepção/Diretoria;9;03. Vigas Baldrames;Concretagem VB1 a VB6 (Etapa 1) + Fôrmas/Armação VB7 a VB12 (Etapa 2);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;04/11/2026;04/11/2026
-Zona 02 - Salas Técnicas/CPD;10;03. Vigas Baldrames;Concretagem VB7 a VB12 (Etapa 2) + Fôrmas/Armação VB13 a VB19 (Etapa 3);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;06/11/2026;06/11/2026
-Zona 03 - Sanitários e Apoio;11;03. Vigas Baldrames;Concretagem VB13 a VB19 + Fôrmas e Armação Pilares P1 a P8 (Etapa 1);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;09/11/2026;09/11/2026
-Zona 01 - Recepção/Diretoria;12;04. Pilares Supraestrutura;Concretagem Pilares P1 a P8 (Etapa 1) + Fôrmas Pilares P9 a P16 (Etapa 2);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;11/11/2026;11/11/2026
-Zona 02 - Salas Técnicas/CPD;13;04. Pilares Supraestrutura;Concretagem Pilares P9 a P16 + Fôrmas Pilares P17 a P24 (Etapa 3);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;13/11/2026;13/11/2026
-Zona 03 - Sanitários e Apoio;14;04. Pilares Supraestrutura;Concretagem Pilares P17 a P24 + Cimbramento Vigas V101 a V108 (Etapa 1);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;1;16/11/2026;16/11/2026
-Zona 02 - Salas Técnicas/CPD;15;05. Vigas & Laje H12;Montagem Cimbramento e Armação Vigas V109 a V115 (Etapas 2 e 3);4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;2;18/11/2026;19/11/2026
-Zona 01 - Recepção/Diretoria;16;05. Vigas & Laje H12;Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem Laje H12;1 Mestre + 4 Carpinteiros + 3 Pedreiros + 6 Serventes;6;21/11/2026;27/11/2026
-Zona 01 - Recepção/Diretoria;17;06. Alvenaria de Vedação;Alvenaria de Vedação Blocos Concreto 14x19x39 - Etapa 1;5 Pedreiros + 5 Serventes (SUB-02);1;30/11/2026;30/11/2026
-Zona 02 - Salas Técnicas/CPD;18;06. Alvenaria de Vedação;Alvenaria de Vedação Blocos Concreto 14x19x39 - Etapa 2 [Esteira Move];5 Pedreiros + 5 Serventes (SUB-02);1;02/12/2026;02/12/2026
-Zona 03 - Sanitários e Apoio;19;06. Alvenaria de Vedação;Alvenaria de Vedação Blocos Concreto - Etapa 3 [Conclusão Paredes];5 Pedreiros + 5 Serventes (SUB-02);1;04/12/2026;04/12/2026
-Zona 01 - Recepção/Diretoria;20;07. Cobertura Metálica;Montagem das Terças Metálicas da Cobertura e Rufos;3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio;2;07/12/2026;08/12/2026
-Zona 01 - Recepção/Diretoria;21;07. Cobertura Metálica;Instalação de Telhas Termoacústicas Sandwich PIR 30mm;3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio;2;10/12/2026;11/12/2026
-Zona 01 - Recepção/Diretoria;22;08. Instalações Embutidas;Ranhuras, Eletrodutos, Caixas de Tomada e Tubulações Embutidas;2 Eletricistas + 2 Encanadores + 4 Serventes (SUB-03/04);2;14/12/2026;15/12/2026
-Zona 01 - Recepção/Diretoria;23;08. Instalações Embutidas;Teste Hidrostático Pressurizado 72h em Redes de Água e Esgoto;1 Encanador Oficial + 1 TST + 2 Serventes;1;17/12/2026;17/12/2026
-Zona 01 - Recepção/Diretoria;24;09. Reboco Paulista;Chapisco Rolado com Resina Acrílica Fixadora nas Paredes;4 Pedreiros + 4 Serventes (SUB-02);2;19/12/2026;21/12/2026
-Zona 01 - Recepção/Diretoria;25;09. Reboco Paulista;Emboço/Reboco Paulista Projetado Mecanicamente - Etapa 1;4 Pedreiros + 4 Serventes (SUB-02);2;23/12/2026;24/12/2026
-Zona 02 - Salas Técnicas/CPD;26;09. Reboco Paulista;Emboço/Reboco Paulista Projetado - Etapa 2 e 3 [Esteira Move];4 Pedreiros + 4 Serventes (SUB-02);2;26/12/2026;28/12/2026
-Zona 03 - Sanitários e Apoio;27;10. Pisos & Porcelanato;Impermeabilização com Membrana Polimérica em Sanitários e Copa;2 Impermeabilizadores + 3 Serventes (SUB-01);1;30/12/2026;30/12/2026
-Zona 01 - Recepção/Diretoria;28;10. Pisos & Porcelanato;Execução de Contrapiso Sarrafeado e Nivelado e=3cm;3 Pedreiros + 4 Serventes (SUB-02);2;01/01/2027;02/01/2027
-Zona 01 - Recepção/Diretoria;29;10. Pisos & Porcelanato;Assentamento de Porcelanato Retificado 60x60cm - Etapa 1;3 Ladrilhistas + 3 Ajudantes (SUB-05);1;04/01/2027;04/01/2027
-Zona 02 - Salas Técnicas/CPD;30;10. Pisos & Porcelanato;Assentamento de Porcelanato Retificado 60x60cm - Etapa 2;3 Ladrilhistas + 3 Ajudantes (SUB-05);1;06/01/2027;06/01/2027
-Zona 03 - Sanitários e Apoio;31;10. Pisos & Porcelanato;Assentamento de Cerâmica Esmaltada nas Paredes dos Sanitários;3 Ladrilhistas + 3 Ajudantes (SUB-05);1;08/01/2027;08/01/2027
-Zona 01 - Recepção/Diretoria;32;10. Pisos & Porcelanato;Rejuntamento Resinado Geral e Fixação de Rodapés em Porcelanato;3 Ladrilhistas + 3 Ajudantes (SUB-05);2;11/01/2027;12/01/2027
-Zona 01 - Recepção/Diretoria;33;11. Esquadrias de Alumínio;Instalação de Janelas de Alumínio Linha Suprema e Vidros Temperados;2 Montadores de Esquadrias + 2 Ajudantes;1;14/01/2027;14/01/2027
-Zona 03 - Sanitários e Apoio;34;11. Esquadrias de Alumínio;Fixação de Portas de Alumínio, Vidros Fixos e Vedações PU;2 Montadores de Esquadrias + 2 Ajudantes;1;16/01/2027;16/01/2027
-Zona 01 - Recepção/Diretoria;35;12. Climatização HVAC;Instalação de Redes Frigorígenas de Cobre Isoladas e Drenos;2 Técnicos de Refrigeração HVAC + 2 Ajudantes (SUB-08);3;18/01/2027;20/01/2027
-Zona 01 - Recepção/Diretoria;36;12. Climatização HVAC;Pressurização com Nitrogênio e Teste de Vácuo em Linhas VRF;2 Técnicos de Refrigeração HVAC + 2 Ajudantes (SUB-08);1;22/01/2027;22/01/2027
-Zona 01 - Recepção/Diretoria;37;13. Acabamentos Elétr./Hidr.;Enfiamento de Cabos de Força, Iluminação e Cabling Cat.6;2 Eletricistas Instaladores + 2 Ajudantes (SUB-03);1;25/01/2027;25/01/2027
-Zona 01 - Recepção/Diretoria;38;13. Acabamentos Elétr./Hidr.;Montagem, Barramentos e Identificação de Circuitos nos Quadros;2 Eletricistas Instaladores + 2 Ajudantes (SUB-03);1;27/01/2027;27/01/2027
-Zona 01 - Recepção/Diretoria;39;14. Pintura Acrílica Final;Emassamento com Massa Corrida Acrílica e Lixamento Mecanizado;4 Pintores Oficiais + 2 Ajudantes (SUB-06);1;29/01/2027;29/01/2027
-Zona 03 - Sanitários e Apoio;40;14. Pintura Acrílica Final;Emassamento e Selador em Fachadas e Setor 3 [Esteira Move];4 Pintores Oficiais + 2 Ajudantes (SUB-06);1;01/02/2027;01/02/2027
-Zona 03 - Sanitários e Apoio;41;13. Acabamentos Elétr./Hidr.;Instalação de Bacias Acopladas, Cubas e Torneiras Temporizadas;2 Encanadores Oficiais + 2 Ajudantes (SUB-04);1;03/02/2027;03/02/2027
-Zona 01 - Recepção/Diretoria;42;13. Acabamentos Elétr./Hidr.;Instalação de Luminárias Painel LED 40W, Interruptores e Tomadas;2 Eletricistas Instaladores + 2 Ajudantes (SUB-03);1;05/02/2027;05/02/2027
-Zona 01 - Recepção/Diretoria;43;14. Pintura Acrílica Final;Pintura Látex Acrílica Fosca Lavável em Duas Demãos de Acabamento;4 Pintores Oficiais + 2 Ajudantes (SUB-06);2;08/02/2027;09/02/2027
-Zona 01 - Recepção/Diretoria;44;12. Climatização HVAC;Instalação de Evaporadoras Cassete, Carga de Gás R-410A e Startup;2 Técnicos de Refrigeração HVAC + 2 Ajudantes (SUB-08);1;11/02/2027;11/02/2027
-Zona 01 - Recepção/Diretoria;45;15. Comissionamento & Entrega;Comissionamento Elétrico sob Carga, Termografia e Equilíbrio HVAC;1 Engenheiro Residente + 2 Eletricistas + 1 Técnico HVAC;1;13/02/2027;13/02/2027
-Zona 01 - Recepção/Diretoria;46;15. Comissionamento & Entrega;Limpeza Química Pós-Obra Especializada e Desmobilização de Canteiro;1 Mestre de Obras + 4 Auxiliares de Limpeza Especializada;1;15/02/2027;15/02/2027
-Zona 01 - Recepção/Diretoria;47;15. Comissionamento & Entrega;Vistoria e Testes de Carga Elétrica, Automação e Pressão Hidráulica Final;1 Engenheiro Residente + 2 Eletricistas + 1 Encanador + 2 Serventes;1;17/02/2027;17/02/2027
-Zona 01 - Recepção/Diretoria;48;15. Comissionamento & Entrega;Consolidação de Desenhos As-Built, Manuais de Operação e Termos de Garantia;1 Engenheiro Residente + 1 Técnico de Edificações + 2 Apoio Administrativo;1;19/02/2027;19/02/2027
-Zona 01 - Recepção/Diretoria;49;15. Comissionamento & Entrega;Treinamento Técnico Operacional da Equipe de Facilties e Manutenção do Terminal;1 Engenheiro Residente + 1 Técnico HVAC + 1 Eletricista Instalador;1;22/02/2027;22/02/2027
-Zona 01 - Recepção/Diretoria;50;15. Comissionamento & Entrega;Auditoria Final de Qualidade, SST e Desmobilização Total do Canteiro NR-18;1 Mestre de Obras + 4 Serventes Apoio;3;24/02/2027;26/02/2027
-Zona 01 - Recepção/Diretoria;51;15. Comissionamento & Entrega;Vistoria Conjunta de Recebimento Provisório (Fiscalização do Porto x Construtora);1 Engenheiro Residente + 1 Mestre de Obras + Fiscalização Portuária;1;01/03/2027;01/03/2027
-Zona 01 - Recepção/Diretoria;52;15. Comissionamento & Entrega;Assinatura do Termo de Recebimento Definitivo e Entrega das Chaves Turnkey;Diretoria Técnica + Engenheiro Residente + Gestores TMULT;1;03/03/2027;03/03/2027
+Zona 01 - Recepção/Diretoria;1;01. Topografia & Canteiro;Mobilização de Canteiro NR-18 e Locação Geral com Estação Total;1 Topógrafo + 2 Ajudantes + 4 Serventes + Engenheiro Residente;10;01/10/2026;12/10/2026
+Zona 01 - Recepção/Diretoria;2;02. Fundações Sapatas;Escavação Mecanizada de Cavas e Valas de Fundação (S1 a S32);1 Operador de Retroescavadeira + 2 Armadores (Bancada) + 4 Serventes;6;13/10/2026;19/10/2026
+Zona 01 - Recepção/Diretoria;3;02. Fundações Sapatas;Concreto Magro, Fôrmas, Armação e Concretagem das 32 Sapatas Isoladas;3 Carpinteiros + 2 Armadores + 2 Pedreiros + 4 Serventes;7;20/10/2026;27/10/2026
+Zona 01 - Recepção/Diretoria;4;03. Vigas Baldrames;Fôrmas, Armação e Concretagem das Vigas Baldrames VB1 a VB19;4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes [Zona 01];8;28/10/2026;05/11/2026
+Zona 02 - Salas Técnicas/CPD;4;03. Vigas Baldrames;Fôrmas, Armação e Concretagem das Vigas Baldrames VB1 a VB19;4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes [Zona 02];8;28/10/2026;05/11/2026
+Zona 03 - Sanitários e Apoio;4;03. Vigas Baldrames;Fôrmas, Armação e Concretagem das Vigas Baldrames VB1 a VB19;4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes [Zona 03];8;28/10/2026;05/11/2026
+Zona 01 - Recepção/Diretoria;5;03. Vigas Baldrames;Impermeabilização Asfáltica com Tinta Betuminosa em Baldrames (Portão 1);2 Impermeabilizadores + 3 Serventes (SUB-01) [Zona 01];3;06/11/2026;09/11/2026
+Zona 02 - Salas Técnicas/CPD;5;03. Vigas Baldrames;Impermeabilização Asfáltica com Tinta Betuminosa em Baldrames (Portão 1);2 Impermeabilizadores + 3 Serventes (SUB-01) [Zona 02];3;06/11/2026;09/11/2026
+Zona 03 - Sanitários e Apoio;5;03. Vigas Baldrames;Impermeabilização Asfáltica com Tinta Betuminosa em Baldrames (Portão 1);2 Impermeabilizadores + 3 Serventes (SUB-01) [Zona 03];3;06/11/2026;09/11/2026
+Zona 01 - Recepção/Diretoria;6;01. Topografia & Canteiro;Reaterro Compactado com Solo Cimento, Nivelamento e Bota-fora;1 Operador + 1 Compactadorista + 3 Serventes;3;10/11/2026;12/11/2026
+Zona 01 - Recepção/Diretoria;7;04. Pilares Supraestrutura;Fôrmas, Armação, Prumo e Concretagem dos 24 Pilares de Supraestrutura;4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;9;13/11/2026;23/11/2026
+Zona 01 - Recepção/Diretoria;8;05. Vigas & Laje H12;Cimbramento Metálico, Fôrmas e Armação das Vigas Superiores V101 a V115;4 Carpinteiros + 3 Armadores + 2 Pedreiros + 5 Serventes;8;24/11/2026;02/12/2026
+Zona 01 - Recepção/Diretoria;9;05. Vigas & Laje H12;Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem da Laje H12;1 Mestre + 4 Carpinteiros + 3 Pedreiros + 6 Serventes [Zona 01];6;03/12/2026;09/12/2026
+Zona 02 - Salas Técnicas/CPD;9;05. Vigas & Laje H12;Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem da Laje H12;1 Mestre + 4 Carpinteiros + 3 Pedreiros + 6 Serventes [Zona 02];6;03/12/2026;09/12/2026
+Zona 03 - Sanitários e Apoio;9;05. Vigas & Laje H12;Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem da Laje H12;1 Mestre + 4 Carpinteiros + 3 Pedreiros + 6 Serventes [Zona 03];6;03/12/2026;09/12/2026
+Zona 01 - Recepção/Diretoria;10;05. Vigas & Laje H12;Cura Úmida Contínua e Desforma Controlada com Re-escoramento (Portão 2);2 Carpinteiros + 2 Serventes (SUB-01) [Zona 01];12;10/12/2026;23/12/2026
+Zona 02 - Salas Técnicas/CPD;10;05. Vigas & Laje H12;Cura Úmida Contínua e Desforma Controlada com Re-escoramento (Portão 2);2 Carpinteiros + 2 Serventes (SUB-01) [Zona 02];12;10/12/2026;23/12/2026
+Zona 03 - Sanitários e Apoio;10;05. Vigas & Laje H12;Cura Úmida Contínua e Desforma Controlada com Re-escoramento (Portão 2);2 Carpinteiros + 2 Serventes (SUB-01) [Zona 03];12;10/12/2026;23/12/2026
+Zona 04 - Cobertura e Platibanda;11;07. Cobertura Metálica;Montagem das Terças Metálicas da Cobertura em Perfil U e Rufos;3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio;10;24/12/2026;04/01/2027
+Zona 01 - Recepção/Diretoria;12;06. Alvenaria de Vedação;Alvenaria de Vedação em Blocos de Concreto 14x19x39 com Vergas e Telas;5 Pedreiros + 5 Serventes (SUB-02);20;24/12/2026;15/01/2027
+Zona 04 - Cobertura e Platibanda;13;07. Cobertura Metálica;Instalação de Telhas Termoacústicas Sandwich PIR 30mm, Calhas e Platibanda;3 Montadores Especialistas + 2 Ajudantes + 4 Serventes Apoio;10;16/01/2027;27/01/2027
+Zona 02 - Salas Técnicas/CPD;14;08. Instalações Embutidas;Abertura de Rasgos, Eletrodutos PVC, Caixas 4x2 e Quadros QGBT/QDF;2 Eletricistas Oficiais + 2 Ajudantes + 2 Serventes (SUB-03);10;28/01/2027;08/02/2027
+Zona 03 - Sanitários e Apoio;15;08. Instalações Embutidas;Tubulações Soldáveis de Água Fria, Esgoto Primário/Secundário e Pluvial;2 Encanadores Oficiais + 2 Ajudantes + 2 Serventes (SUB-04);10;28/01/2027;08/02/2027
+Zona 03 - Sanitários e Apoio;16;08. Instalações Embutidas;Teste Hidrostático Pressurizado 72h em Redes de Água e Esgoto (Portão 3);1 Encanador Oficial + 1 TST + 2 Serventes;3;09/02/2027;11/02/2027
+Zona 01 - Recepção/Diretoria;17;09. Reboco Paulista;Chapisco Rolado com Resina e Emboço/Reboco Paulista Projetado Mecanicamente;4 Pedreiros + 4 Serventes (SUB-02);14;12/02/2027;27/02/2027
+Zona 03 - Sanitários e Apoio;18;10. Pisos & Porcelanato;Impermeabilização com Membrana Polimérica Flexível em Sanitários e Copa;2 Impermeabilizadores + 2 Serventes (SUB-01);3;01/03/2027;03/03/2027
+Zona 01 - Recepção/Diretoria;19;10. Pisos & Porcelanato;Execução de Contrapiso Sarrafeado e Regularizado com Nível Laser e=3cm;3 Pedreiros + 4 Serventes (SUB-02) [Zona 01];6;01/03/2027;06/03/2027
+Zona 02 - Salas Técnicas/CPD;19;10. Pisos & Porcelanato;Execução de Contrapiso Sarrafeado e Regularizado com Nível Laser e=3cm;3 Pedreiros + 4 Serventes (SUB-02) [Zona 02];6;01/03/2027;06/03/2027
+Zona 03 - Sanitários e Apoio;19;10. Pisos & Porcelanato;Execução de Contrapiso Sarrafeado e Regularizado com Nível Laser e=3cm;3 Pedreiros + 4 Serventes (SUB-02) [Zona 03];6;01/03/2027;06/03/2027
+Zona 01 - Recepção/Diretoria;20;12. Climatização HVAC;Infraestrutura de Tubulações Frigorígenas de Cobre, Isolamento e Drenos;2 Mecânicos de Refrigeração + 2 Ajudantes (SUB-08);10;01/03/2027;11/03/2027
+Zona 01 - Recepção/Diretoria;21;11. Esquadrias de Alumínio;Fixação de Caixilhos, Janelas Linha Suprema, Vidros Temperados e Portas;2 Montadores de Esquadrias + 2 Ajudantes (SUB-07);8;01/03/2027;09/03/2027
+Zona 03 - Sanitários e Apoio;22;10. Pisos & Porcelanato;Assentamento de Porcelanato Retificado 60x60cm e Azulejos nas Paredes dos WCs;4 Ladrilhistas Especialistas + 4 Ajudantes (SUB-05);14;08/03/2027;23/03/2027
+Zona 01 - Recepção/Diretoria;23;13. Acabamentos Elétr./Hidr.;Enfiamento de Cabos Elétricos Antichama 750V e Cabeamento Lógica Cat.6;2 Eletricistas Oficiais + 2 Cabistas de Rede (SUB-03);10;01/03/2027;11/03/2027
+Zona 01 - Recepção/Diretoria;24;10. Pisos & Porcelanato;Rejuntamento Resinado Geral, Rodapés em Porcelanato e Forração de Proteção;3 Ladrilhistas + 3 Ajudantes (SUB-05) [Zona 01];4;24/03/2027;27/03/2027
+Zona 02 - Salas Técnicas/CPD;24;10. Pisos & Porcelanato;Rejuntamento Resinado Geral, Rodapés em Porcelanato e Forração de Proteção;3 Ladrilhistas + 3 Ajudantes (SUB-05) [Zona 02];4;24/03/2027;27/03/2027
+Zona 03 - Sanitários e Apoio;24;10. Pisos & Porcelanato;Rejuntamento Resinado Geral, Rodapés em Porcelanato e Forração de Proteção;3 Ladrilhistas + 3 Ajudantes (SUB-05) [Zona 03];4;24/03/2027;27/03/2027
+Zona 01 - Recepção/Diretoria;25;14. Pintura Acrílica Final;Selador Primer, Emassamento Acrílico com Lixamento e 1ª Demão (Portão 4);4 Pintores Oficiais + 2 Ajudantes (SUB-06);5;29/03/2027;02/04/2027
+Zona 01 - Recepção/Diretoria;26;12. Climatização HVAC;Instalação de Evaporadoras Cassete, Condensadoras, Vácuo e Carga de Gás;2 Técnicos Especialistas em Refrigeração + 2 Ajudantes (SUB-08);6;03/04/2027;09/04/2027
+Zona 03 - Sanitários e Apoio;27;13. Acabamentos Elétr./Hidr.;Instalação de Louças Sanitárias Deca, Cubas de Embutir e Metais Nobres Docol;2 Encanadores Oficiais + 2 Ajudantes (SUB-04);6;03/04/2027;09/04/2027
+Zona 01 - Recepção/Diretoria;28;13. Acabamentos Elétr./Hidr.;Fixação de Luminárias Painel LED 40W, Espelhos, Tomadas e Interruptores;2 Eletricistas Oficiais + 2 Ajudantes (SUB-03);5;03/04/2027;08/04/2027
+Zona 01 - Recepção/Diretoria;29;14. Pintura Acrílica Final;Demãos Finais de Pintura Látex Acrílica Fosca Lavável e Retoques Finais;4 Pintores Oficiais + 2 Ajudantes (SUB-06);7;10/04/2027;17/04/2027
+Zona 01 - Recepção/Diretoria;30;15. Comissionamento & Entrega;Comissionamento Integrado sob Carga, Termografia Fluke e Testes Globais;Engenheiro Residente + Eletrotécnico + Técnico HVAC + TST [Zona 01];6;19/04/2027;24/04/2027
+Zona 02 - Salas Técnicas/CPD;30;15. Comissionamento & Entrega;Comissionamento Integrado sob Carga, Termografia Fluke e Testes Globais;Engenheiro Residente + Eletrotécnico + Técnico HVAC + TST [Zona 02];6;19/04/2027;24/04/2027
+Zona 03 - Sanitários e Apoio;30;15. Comissionamento & Entrega;Comissionamento Integrado sob Carga, Termografia Fluke e Testes Globais;Engenheiro Residente + Eletrotécnico + Técnico HVAC + TST [Zona 03];6;19/04/2027;24/04/2027
+Zona 01 - Recepção/Diretoria;31;15. Comissionamento & Entrega;Limpeza Química Pós-Obra, As-Built, Desmobilização e Entrega de Chaves Turnkey;Diretoria Técnica + Engenheiro Residente + Equipe Limpeza Fina [Zona 01];5;26/04/2027;30/04/2027
+Zona 02 - Salas Técnicas/CPD;31;15. Comissionamento & Entrega;Limpeza Química Pós-Obra, As-Built, Desmobilização e Entrega de Chaves Turnkey;Diretoria Técnica + Engenheiro Residente + Equipe Limpeza Fina [Zona 02];5;26/04/2027;30/04/2027
+Zona 03 - Sanitários e Apoio;31;15. Comissionamento & Entrega;Limpeza Química Pós-Obra, As-Built, Desmobilização e Entrega de Chaves Turnkey;Diretoria Técnica + Engenheiro Residente + Equipe Limpeza Fina [Zona 03];5;26/04/2027;30/04/2027

@@ -429,6 +429,8 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
       const cpmRaw = JSON.parse(fs.readFileSync(cpmPath, 'utf-8'));
       interface AtividadeRaw {
         id: string;
+        nome?: string;
+        servico?: string;
         duracao_dias?: number;
         predecessoras?: string[];
       }
@@ -518,6 +520,7 @@ export function obterDadosCronograma(basePath: string, obra: string): ResultadoC
 
         return {
           id,
+          tipo: atv?.nome || atv?.servico || id,
           duracao_dias: atv?.duracao_dias,
           predecessoras: atv?.predecessoras || [],
           es_inicio_mais_cedo: esVal,

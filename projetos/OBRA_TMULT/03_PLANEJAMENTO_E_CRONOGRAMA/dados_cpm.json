@@ -1,226 +1,256 @@
 {
   "atividades": [
     {
-      "id": "A01_MOB_CANTEIRO",
-      "duracao_dias": 7,
+      "id": "A01",
+      "nome": "Mobilização de Canteiro NR-18 e Locação Geral com Estação Total",
+      "duracao_dias": 10,
       "predecessoras": []
     },
     {
-      "id": "A02_ESCAV_INFRA",
-      "duracao_dias": 4,
-      "predecessoras": [
-        "A01_MOB_CANTEIRO"
-      ]
-    },
-    {
-      "id": "A03_SAPATAS_CONC",
-      "duracao_dias": 5,
-      "predecessoras": [
-        "A02_ESCAV_INFRA"
-      ]
-    },
-    {
-      "id": "A04_BALDRAMES_CONC",
+      "id": "A02",
+      "nome": "Escavação Mecanizada de Cavas e Valas de Fundação (S1 a S32)",
       "duracao_dias": 6,
       "predecessoras": [
-        "A03_SAPATAS_CONC"
+        "A01"
       ]
     },
     {
-      "id": "A05_IMPERM_BALDRAME",
-      "duracao_dias": 2,
-      "predecessoras": [
-        "A04_BALDRAMES_CONC"
-      ]
-    },
-    {
-      "id": "A06_REATERRO_INFRA",
-      "duracao_dias": 2,
-      "predecessoras": [
-        "A05_IMPERM_BALDRAME"
-      ]
-    },
-    {
-      "id": "A07_PILARES_SUPRA",
+      "id": "A03",
+      "nome": "Concreto Magro, Fôrmas, Armação e Concretagem das 32 Sapatas Isoladas",
       "duracao_dias": 7,
       "predecessoras": [
-        "A06_REATERRO_INFRA"
+        "A02"
       ]
     },
     {
-      "id": "A08_VIGAS_LAJE_FORMA",
-      "duracao_dias": 6,
+      "id": "A04",
+      "nome": "Fôrmas, Armação e Concretagem das Vigas Baldrames VB1 a VB19",
+      "duracao_dias": 8,
       "predecessoras": [
-        "A07_PILARES_SUPRA"
+        "A03"
       ]
     },
     {
-      "id": "A09_CONCRET_LAJE_H12",
-      "duracao_dias": 1,
-      "predecessoras": [
-        "A08_VIGAS_LAJE_FORMA"
-      ]
-    },
-    {
-      "id": "A10_CURA_DESFORMA",
-      "duracao_dias": 12,
-      "predecessoras": [
-        "A09_CONCRET_LAJE_H12"
-      ]
-    },
-    {
-      "id": "A11_ESTRUT_TERCAS_COB",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A10_CURA_DESFORMA"
-      ]
-    },
-    {
-      "id": "A12_ALVENARIA_VEDACAO",
-      "duracao_dias": 15,
-      "predecessoras": [
-        "A10_CURA_DESFORMA"
-      ]
-    },
-    {
-      "id": "A13_TELHAS_SANDWICH_PLAT",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A11_ESTRUT_TERCAS_COB",
-        "A12_ALVENARIA_VEDACAO"
-      ]
-    },
-    {
-      "id": "A14_ELET_EMBUTIDA",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A13_TELHAS_SANDWICH_PLAT"
-      ]
-    },
-    {
-      "id": "A15_HIDR_EMBUTIDA",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A13_TELHAS_SANDWICH_PLAT"
-      ]
-    },
-    {
-      "id": "A16_TESTE_HIDROSTATICO_72H",
-      "duracao_dias": 2,
-      "predecessoras": [
-        "A15_HIDR_EMBUTIDA"
-      ]
-    },
-    {
-      "id": "A17_EMBOCO_REBOCO",
-      "duracao_dias": 10,
-      "predecessoras": [
-        "A16_TESTE_HIDROSTATICO_72H",
-        "A14_ELET_EMBUTIDA"
-      ]
-    },
-    {
-      "id": "A18_IMPERM_WCS",
-      "duracao_dias": 2,
-      "predecessoras": [
-        "A17_EMBOCO_REBOCO"
-      ]
-    },
-    {
-      "id": "A19_CONTRAPISO",
-      "duracao_dias": 4,
-      "predecessoras": [
-        "A17_EMBOCO_REBOCO"
-      ]
-    },
-    {
-      "id": "A20_INFRA_DUTOS_HVAC",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A17_EMBOCO_REBOCO"
-      ]
-    },
-    {
-      "id": "A21_ESQUADRIAS_FIX",
-      "duracao_dias": 6,
-      "predecessoras": [
-        "A17_EMBOCO_REBOCO"
-      ]
-    },
-    {
-      "id": "A22_PISO_PORCELANATO",
-      "duracao_dias": 10,
-      "predecessoras": [
-        "A19_CONTRAPISO",
-        "A18_IMPERM_WCS"
-      ]
-    },
-    {
-      "id": "A23_FIACAO_TELECOM",
-      "duracao_dias": 7,
-      "predecessoras": [
-        "A17_EMBOCO_REBOCO"
-      ]
-    },
-    {
-      "id": "A24_RODAPES_ACAB",
+      "id": "A05",
+      "nome": "Impermeabilização Asfáltica com Tinta Betuminosa em Baldrames (Portão 1)",
       "duracao_dias": 3,
       "predecessoras": [
-        "A22_PISO_PORCELANATO"
+        "A04"
       ]
     },
     {
-      "id": "A25_PINTURA_1A_DEMAO",
+      "id": "A06",
+      "nome": "Reaterro Compactado com Solo Cimento, Nivelamento e Bota-fora",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A05"
+      ]
+    },
+    {
+      "id": "A07",
+      "nome": "Fôrmas, Armação, Prumo e Concretagem dos 24 Pilares de Supraestrutura",
+      "duracao_dias": 9,
+      "predecessoras": [
+        "A06"
+      ]
+    },
+    {
+      "id": "A08",
+      "nome": "Cimbramento Metálico, Fôrmas e Armação das Vigas Superiores V101 a V115",
+      "duracao_dias": 8,
+      "predecessoras": [
+        "A07"
+      ]
+    },
+    {
+      "id": "A09",
+      "nome": "Vigotas Treliçadas, Blocos EPS, Malha Q-138 e Concretagem da Laje H12",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A08"
+      ]
+    },
+    {
+      "id": "A10",
+      "nome": "Cura Úmida Contínua e Desforma Controlada com Re-escoramento (Portão 2)",
+      "duracao_dias": 12,
+      "predecessoras": [
+        "A09"
+      ]
+    },
+    {
+      "id": "A11",
+      "nome": "Montagem das Terças Metálicas da Cobertura em Perfil U e Rufos",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A10"
+      ]
+    },
+    {
+      "id": "A12",
+      "nome": "Alvenaria de Vedação em Blocos de Concreto 14x19x39 com Vergas e Telas",
+      "duracao_dias": 20,
+      "predecessoras": [
+        "A10"
+      ]
+    },
+    {
+      "id": "A13",
+      "nome": "Instalação de Telhas Termoacústicas Sandwich PIR 30mm, Calhas e Platibanda",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A11",
+        "A12"
+      ]
+    },
+    {
+      "id": "A14",
+      "nome": "Abertura de Rasgos, Eletrodutos PVC, Caixas 4x2 e Quadros QGBT/QDF",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A13"
+      ]
+    },
+    {
+      "id": "A15",
+      "nome": "Tubulações Soldáveis de Água Fria, Esgoto Primário/Secundário e Pluvial",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A13"
+      ]
+    },
+    {
+      "id": "A16",
+      "nome": "Teste Hidrostático Pressurizado 72h em Redes de Água e Esgoto (Portão 3)",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A14",
+        "A15"
+      ]
+    },
+    {
+      "id": "A17",
+      "nome": "Chapisco Rolado com Resina e Emboço/Reboco Paulista Projetado Mecanicamente",
+      "duracao_dias": 14,
+      "predecessoras": [
+        "A16"
+      ]
+    },
+    {
+      "id": "A18",
+      "nome": "Impermeabilização com Membrana Polimérica Flexível em Sanitários e Copa",
+      "duracao_dias": 3,
+      "predecessoras": [
+        "A17"
+      ]
+    },
+    {
+      "id": "A19",
+      "nome": "Execução de Contrapiso Sarrafeado e Regularizado com Nível Laser e=3cm",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A17"
+      ]
+    },
+    {
+      "id": "A20",
+      "nome": "Infraestrutura de Tubulações Frigorígenas de Cobre, Isolamento e Drenos",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A17"
+      ]
+    },
+    {
+      "id": "A21",
+      "nome": "Fixação de Caixilhos, Janelas Linha Suprema, Vidros Temperados e Portas",
+      "duracao_dias": 8,
+      "predecessoras": [
+        "A17"
+      ]
+    },
+    {
+      "id": "A22",
+      "nome": "Assentamento de Porcelanato Retificado 60x60cm e Azulejos nas Paredes dos WCs",
+      "duracao_dias": 14,
+      "predecessoras": [
+        "A18",
+        "A19"
+      ]
+    },
+    {
+      "id": "A23",
+      "nome": "Enfiamento de Cabos Elétricos Antichama 750V e Cabeamento Lógica Cat.6",
+      "duracao_dias": 10,
+      "predecessoras": [
+        "A17"
+      ]
+    },
+    {
+      "id": "A24",
+      "nome": "Rejuntamento Resinado Geral, Rodapés em Porcelanato e Forração de Proteção",
       "duracao_dias": 4,
       "predecessoras": [
-        "A24_RODAPES_ACAB",
-        "A20_INFRA_DUTOS_HVAC",
-        "A21_ESQUADRIAS_FIX",
-        "A23_FIACAO_TELECOM"
+        "A22"
       ]
     },
     {
-      "id": "A26_APARELHOS_HVAC",
-      "duracao_dias": 4,
-      "predecessoras": [
-        "A25_PINTURA_1A_DEMAO"
-      ]
-    },
-    {
-      "id": "A27_LOUCAS_METAIS",
-      "duracao_dias": 4,
-      "predecessoras": [
-        "A25_PINTURA_1A_DEMAO"
-      ]
-    },
-    {
-      "id": "A28_LUMINARIAS_ESPELHOS",
-      "duracao_dias": 4,
-      "predecessoras": [
-        "A25_PINTURA_1A_DEMAO"
-      ]
-    },
-    {
-      "id": "A29_PINTURA_FINAL",
+      "id": "A25",
+      "nome": "Selador Primer, Emassamento Acrílico com Lixamento e 1ª Demão (Portão 4)",
       "duracao_dias": 5,
       "predecessoras": [
-        "A26_APARELHOS_HVAC",
-        "A27_LOUCAS_METAIS",
-        "A28_LUMINARIAS_ESPELHOS"
+        "A24"
       ]
     },
     {
-      "id": "A30_COMISSIONAMENTO",
-      "duracao_dias": 4,
+      "id": "A26",
+      "nome": "Instalação de Evaporadoras Cassete, Condensadoras, Vácuo e Carga de Gás",
+      "duracao_dias": 6,
       "predecessoras": [
-        "A29_PINTURA_FINAL"
+        "A20",
+        "A25"
       ]
     },
     {
-      "id": "A31_LIMPEZA_ENTREGA",
+      "id": "A27",
+      "nome": "Instalação de Louças Sanitárias Deca, Cubas de Embutir e Metais Nobres Docol",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A25"
+      ]
+    },
+    {
+      "id": "A28",
+      "nome": "Fixação de Luminárias Painel LED 40W, Espelhos, Tomadas e Interruptores",
       "duracao_dias": 5,
       "predecessoras": [
-        "A30_COMISSIONAMENTO"
+        "A23",
+        "A25"
+      ]
+    },
+    {
+      "id": "A29",
+      "nome": "Demãos Finais de Pintura Látex Acrílica Fosca Lavável e Retoques Finais",
+      "duracao_dias": 7,
+      "predecessoras": [
+        "A26",
+        "A27",
+        "A28"
+      ]
+    },
+    {
+      "id": "A30",
+      "nome": "Comissionamento Integrado sob Carga, Termografia Fluke e Testes Globais",
+      "duracao_dias": 6,
+      "predecessoras": [
+        "A29"
+      ]
+    },
+    {
+      "id": "A31",
+      "nome": "Limpeza Química Pós-Obra, As-Built, Desmobilização e Entrega de Chaves Turnkey",
+      "duracao_dias": 5,
+      "predecessoras": [
+        "A30"
       ]
     }
   ]

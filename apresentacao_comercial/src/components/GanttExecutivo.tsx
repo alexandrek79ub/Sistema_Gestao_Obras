@@ -207,7 +207,7 @@ export default function GanttExecutivo({
   // Filtragem e ordenação do CPM
   const cpmFiltrado = useMemo(() => {
     return cpmAtividades.filter(atv => {
-      const nomeAmigavel = NOMES_CPM_AMIGAVEIS[atv.id] || atv.id;
+      const nomeAmigavel = atv.tipo || NOMES_CPM_AMIGAVEIS[atv.id] || atv.id;
       const matchBusca = !buscaTexto || 
         nomeAmigavel.toLowerCase().includes(buscaTexto.toLowerCase()) || 
         atv.id.toLowerCase().includes(buscaTexto.toLowerCase());
@@ -458,7 +458,7 @@ export default function GanttExecutivo({
           {modoVisao === 'cpm' && (
             <div className="divide-y divide-zinc-800/40">
               {cpmFiltrado.map((atv, idx) => {
-                const nomeAmigavel = NOMES_CPM_AMIGAVEIS[atv.id] || atv.id;
+                const nomeAmigavel = atv.tipo || NOMES_CPM_AMIGAVEIS[atv.id] || atv.id;
                 const isSelected = itemSelecionado?.id === atv.id;
                 return (
                   <div

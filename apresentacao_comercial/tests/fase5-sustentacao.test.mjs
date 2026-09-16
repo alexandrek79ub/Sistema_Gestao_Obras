@@ -104,6 +104,31 @@ test('Fase 5 / regressão: LOB preserva as dependências do commit 141402c', () 
   assert.deepEqual(Array.from(sequenciais.adj.get(0)), [1], 'sequência não paralela do mesmo vagão mantém precedência');
 });
 
+test('Fase 5 / regressão: seletor LOB inicia em blocos e controla a camada renderizada', () => {
+  const componente = ler('src/components/LinhaDeBalanco.tsx');
+
+  assert.match(
+    componente,
+    /useState<'linhas' \| 'blocos'>\('blocos'\)/,
+    'A visão executiva deve iniciar em Blocos Mestres'
+  );
+  assert.match(
+    componente,
+    /useState<'macro' \| 'vagao'>\('macro'\)/,
+    'O agrupamento inicial deve consolidar as macroatividades'
+  );
+  assert.match(
+    componente,
+    /\{estiloLOB === 'linhas' \? \(/,
+    'O seletor deve controlar de fato a alternância entre linhas e blocos'
+  );
+  assert.doesNotMatch(
+    componente,
+    /\{true \? \(\s*<svg/,
+    'A camada vetorial não pode permanecer forçada por uma condição constante'
+  );
+});
+
 test('Fase 5 / regressão: erro de parsing do takt é propagado pela API', () => {
   const { obterDadosCronograma } = carregarCronogramaService({
     existsSync: (arquivo) => String(arquivo).includes('LINHA_DE_BALANCO') || String(arquivo).includes('PROGRAMACAO_CURTO_PRAZO_OBRA_TESTE.csv'),
