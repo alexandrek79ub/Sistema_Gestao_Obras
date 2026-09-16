@@ -1,19 +1,19 @@
-# 📊 SKILL: Schema dos CSVs e Estrutura de Dados do Sistema
+# 📊 SKILL: Schema dos CSVs, Excel e Estrutura de Dados do Sistema
 
 > **Frente:** Desenvolvimento (`SKILL_DEV_SENIOR.md`)
-> **Propósito:** O SQLite é a fonte única da verdade; os CSVs são exportações consumidas pelo Dashboard Next.js.
+> **Propósito:** O SQLite (`data/pmo_virtual.sqlite`) é a **ÚNICA Fonte da Verdade (SSOT)**. O Dashboard Next.js consome o SQLite diretamente via `@/lib/db.ts` (`node:sqlite`). Os arquivos CSV, Markdown e Excel (`.xlsx`) são artefatos derivados exportados automaticamente pelo motor para portabilidade, auditoria externa e relatórios executivos.
 
 ## 1. Arquitetura de dados
 
-O banco oficial é `data/pmo_virtual.sqlite`. Os documentos e exportações continuam organizados por obra em `/projetos/[NOME_OBRA]/` e usam `;` como separador e UTF-8.
+O banco oficial é `data/pmo_virtual.sqlite`. Os documentos e exportações derivados ficam organizados por obra em `/projetos/[NOME_OBRA]/` e usam `;` como separador e codificação UTF-8 para CSVs, além do caderno mestre `ORCAMENTO_BASE_CONSOLIDADO.xlsx` gerado com fórmulas dinâmicas e 6 abas executivas.
 Valores ausentes são strings vazias; nunca usar `null` ou `N/A` nos arquivos de produção.
 
 ## 2. Orçamento base, quantitativo e EAP
 
-`itens_quantitativo` no SQLite é o contrato comum entre EAP, quantitativo físico e Dashboard.
-`ORCAMENTO_BASE_CONSOLIDADO.csv` é apenas uma exportação derivada.
+`itens_quantitativo` e `itens_orcamento` no SQLite formam o contrato comum entre EAP, quantitativo físico e Dashboard.
+`ORCAMENTO_BASE_CONSOLIDADO.csv` e `ORCAMENTO_BASE_CONSOLIDADO.xlsx` são exclusivamente produtos derivados de exportação gerados por `exportar_artefatos()`.
 Cada linha é um serviço da EAP, com quantidade nominal líquida. Insumos miúdos, perdas,
-empolamento e arredondamentos comerciais não pertencem a este arquivo.
+empolamento e arredondamentos comerciais não pertencem a este arquivo consolidado.
 
 | Coluna | Tipo | Obrigatório | Regra |
 |---|---|---:|---|
@@ -40,6 +40,35 @@ mas não substituem o código EAP no consolidado.
 `QUANTIDADE_UCC`, `UNIDADE_UCC` e `TAXA_PERDA` não fazem parte do quantitativo físico nem da
 EAP. Quando necessários, são gerados em BOM/lista de compras separada, após a composição de
 custos, sem alterar `QUANTIDADE_TOTAL`.
+
+## 2.1 Caderno Master Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com Fórmulas Vivas
+
+Gerado pelo subpacote Python modular `scripts/motor_quantitativos/exportadores/excel/` com formatação corporativa (Navy `#1E293B`, cabeçalhos destacados, bordas finas e formatação de moeda R$ `#,##0.00`).
+Todas as operações aritméticas utilizam fórmulas nativas do Excel em inglês (`ROUND`, `SUM`, `IF`):
+
+1. **Aba `01_ORCAMENTO_EAP`** (`sheet_orcamento.py`):
+   - Preço Unitário com BDI: `=ROUND(F{row}*(1+G{row}/100), 2)`
+   - Custo Total por Item: `=ROUND(E{row}*H{row}, 2)`
+   - Custo Total Consolidado: `=SUM(I5:I{last_row})`
+2. **Aba `02_PARAMETRICO_BDI`** (`sheet_bdi.py`):
+   - Estrutura paramétrica analítica conforme Acórdão 2622/2013 TCU (AC, S, R, DF, L, Tributos).
+3. **Aba `03_COMPOSICOES_CCU`** (`sheet_composicoes.py`):
+   - Decomposição analítica de cada serviço em Material, Mão de Obra e Equipamento.
+   - Custo Direto Unitário: `=ROUND(SUM(D{row}:F{row}), 2)`
+4. **Aba `04_CURVA_ABC`** (`sheet_curva_abc.py`):
+   - Matriz Pareto 80/20 ordenada por impacto financeiro decrescente.
+   - % do Orçamento: `=ROUND((D{row}/$D${total_row})*100, 2)`
+   - % Acumulado: `=ROUND(SUM($E$5:E{row}), 2)`
+   - Classe Pareto: `=IF(F{row}<=80, "A", IF(F{row}<=95, "B", "C"))`
+5. **Aba `05_MEMORIA_CALCULO`** (`sheet_memoria.py`):
+   - Rastreabilidade de cubagem geométrica e equações literais por EAP e prancha.
+6. **Aba `06_BOLETIM_MEDICAO`** (`sheet_medicao.py`):
+   - Boletim de medição física e financeira de obra.
+   - Quantidade Acumulada: `=F{row}+G{row}`
+   - Saldo a Executar: `=E{row}-H{row}`
+   - Valor Medido Período: `=ROUND(G{row}*D{row}, 2)`
+   - Valor Medido Acumulado: `=ROUND(H{row}*D{row}, 2)`
+   - Avanço Físico (%): `=ROUND((H{row}/E{row})*100, 2)`
 
 ## 3. RDO
 

@@ -54,17 +54,24 @@ Toda resposta técnica deve abrir com o bloco abaixo (máximo 3 linhas):
 
 Interpretar os problemas, necessidades e relatos do usuário, identificar quais disciplinas estão envolvidas, **acessar as Skills (Módulos)** relevantes, cruzar informações e fornecer soluções completas, rastreáveis e técnicas.
 
-Atuar ativamente na **Frente de Consultoria PMO Virtual**, mantendo o SQLite como fonte oficial dos dados e usando CSV/Markdown apenas como exportações auditáveis para consumo e apresentação. O Dashboard Next.js consulta a API Python; a trilha de auditoria fica no SQLite e no Git.
+Atuar ativamente na **Frente de Consultoria PMO Virtual**, mantendo o SQLite como fonte oficial dos dados e gerando artefatos derivados (Excel Master Book com fórmulas dinâmicas, CSVs e Markdown) para consumo e apresentação executiva. O Dashboard Next.js consulta diretamente o SQLite oficial via `@/lib/db.ts` (`node:sqlite`); a trilha de auditoria e controle de versões residem no SQLite e no Git.
 
 ### Fonte Oficial e Fluxo de Dados
 
-- O banco oficial é `data/pmo_virtual.sqlite`.
-- `itens_quantitativo` guarda somente serviços e quantidades físicas líquidas de projeto: sem perdas, UCC, empolamento ou insumos derivados.
-- `itens_orcamento` acrescenta composição/preço, fonte SINAPI ou cotação, BDI e centro de custo; esses campos não alteram a quantidade física nem a EAP.
-- O JSON (`template_dados_orcamento.json`) é aceito somente na importação inicial ou em reimportação explicitamente autorizada com `--substituir`.
-- A API Python é a única porta de edição para a interface. Toda alteração exige chave de API, justificativa e versão esperada, registra auditoria, cria backup, recalcula o orçamento e regenera os arquivos derivados.
-- `QUANTITATIVO_[DISC].csv`, `MEMORIA_CALCULO_[DISC].md`, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.csv` não são fontes editáveis. Se houver divergência, corrigir o SQLite e regenerar as exportações.
-- Comandos principais: `python scripts/motor_quantitativos/cli.py <json> --db data/pmo_virtual.sqlite` para importação inicial; `python scripts/api_pmo.py --db data/pmo_virtual.sqlite --api-key <chave>` para edição controlada.
+- **SQLite é a ÚNICA Fonte da Verdade (SSOT):** O banco oficial é `data/pmo_virtual.sqlite`.
+- `itens_quantitativo` guarda exclusivamente serviços e quantidades físicas líquidas nominais de projeto: sem perdas, UCC, empolamento ou insumos derivados.
+- `itens_orcamento` armazena as composições analíticas de preço unitário (Material, Mão de Obra, Equipamento), fonte SINAPI ou cotação, BDI, centro de custo e totais orçados; esses dados não alteram a quantidade física nem a EAP.
+- O JSON (`template_dados_orcamento.json`) é aceito exclusivamente na importação inicial ou em reimportação explicitamente autorizada com `--substituir`.
+- A API Python (`scripts/api_pmo.py`) é a porta de edição controlada para a interface externa. Toda alteração exige chave de API, justificativa e versão esperada, registra auditoria, cria backup, recalcula o orçamento e regenera os arquivos derivados.
+- **Caderno Master Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com Fórmulas Dinâmicas:** Exportado a partir do SQLite pelo subpacote modular `scripts/motor_quantitativos/exportadores/excel/`, contendo 6 abas com fórmulas nativas do Excel (sem valores estáticos "hardcoded"):
+  1. `01_ORCAMENTO_EAP`: Orçamento executivo com fórmulas de BDI `=ROUND(F*(1+G/100), 2)`, total do item `=ROUND(E*H, 2)` e total geral `=SUM(...)`.
+  2. `02_PARAMETRICO_BDI`: Taxas e fórmula paramétrica analítica do BDI conforme Acórdão 2622/2013 TCU / IBEC.
+  3. `03_COMPOSICOES_CCU`: Decomposição analítica de cada serviço (Material, Mão de Obra e Equipamento) com somas dinâmicas `=ROUND(SUM(D:F), 2)`.
+  4. `04_CURVA_ABC`: Matriz Pareto 80/20 com percentuais acumulados e classificação dinâmica via fórmulas de condição `=IF(...)`.
+  5. `05_MEMORIA_CALCULO`: Rastreabilidade física completa com equações literais de cubagem geométrica e pranchas de projeto.
+  6. `06_BOLETIM_MEDICAO`: Planilha de medição física e financeira de obra, acumulado `=Anterior+Período`, avanço % e saldo a executar.
+- **Artefatos Derivados de Portabilidade:** `QUANTITATIVO_[DISC].csv`, `MEMORIA_CALCULO_[DISC].md`, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.csv` são exclusivamente produtos derivados de exportação, nunca fontes editáveis manualmente. Se houver divergência, o SQLite deve ser corrigido e as exportações regeradas.
+- Comandos principais: `python scripts/motor_quantitativos/cli.py <json> --db data/pmo_virtual.sqlite` para importação inicial e compilação de artefatos; `python scripts/api_pmo.py --db data/pmo_virtual.sqlite --api-key <chave>` para edição controlada.
 
 ---
 
@@ -93,6 +100,8 @@ Quando o problema for "calcular materiais", "levantar volume de concreto" ou "qu
 - 📥 **[Gestão de RFI](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_ENGENHARIA_RFI.md)**: Acionar quando faltar informação na prancha. Documenta a RFI, controla o ciclo de vida e incorpora a resposta no quantitativo.
 
 ### 3. Frente do CHÃO DE FÁBRICA (Biblioteca de POPs)
+
+
 Para resolver patologias construtivas ou impor processos rígidos logísticos e técnicos de campo, consulte a pasta `/procedimentos/`. Estes são os **Manuais da Franquia**.
 - **Módulo 1 (Implantação):** POP 01 (Canteiro Lean), 02 (Rotina Kanban), 03 (EPIs/Ferramentas), 04 (Equipamentos).
 - **Módulo 2 (Logística):** POP 05 (Compras UCC), 06 (Recebimento NF), 07 (Estoque PEPS).
@@ -105,9 +114,11 @@ Para resolver patologias construtivas ou impor processos rígidos logísticos e 
 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
-- 📈 **Dashboards Next.js**: Utilização da arquitetura web em React para consultar a API Python/SQLite e plotar Curva S (EVM), Linha de Balanço (LOB) e Alertas de Orçamento. CSV/Markdown são derivados e não devem ser editados pela interface.
-- 📐 **Motor de Quantitativos, Orçamento e SINAPI**: `python scripts/motor_quantitativos/cli.py <json> --db data/pmo_virtual.sqlite` realiza a importação inicial e exporta a partir do SQLite; `python scripts/api_pmo.py` controla edições auditáveis. A CPU resolve expressões matemáticas via AST. A consulta SINAPI permanece em `python scripts/consultar_sinapi.py`, com `extrair_carimbos.py` / `gerar_lista_desenhos.py` para catalogar pranchas PDF.
-- 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API).
+- 📈 **Dashboards Next.js (`apresentacao_comercial/`)**: Aplicação web em React/Next.js conectada **diretamente ao SQLite** (`data/pmo_virtual.sqlite`) via `@/lib/db.ts` (`node:sqlite`), garantindo latência zero e fidelidade total aos dados de engenharia. Renderiza Curva S (EVM com SPI/CPI), Linha de Balanço (LOB) e Tabela Analítica de Orçamento com fallback automático para CSV caso necessário.
+- 📊 **Exportador Modular Excel com Fórmulas Dinâmicas (`scripts/motor_quantitativos/exportadores/excel/`)**: Subpacote Python modular que gera o Caderno Master `ORCAMENTO_BASE_CONSOLIDADO.xlsx` em 6 abas executivas com formatação corporativa (Navy/Slate) e fórmulas nativas do Excel (`ROUND`, `SUM`, `IF`), integrando EAP, BDI TCU 2622, Composições CCU, Curva ABC 80/20, Memória Geométrica e Boletim de Medição.
+- 📐 **Motor de Quantitativos e CLI**: `python scripts/motor_quantitativos/cli.py <json> --db data/pmo_virtual.sqlite` realiza o cálculo das expressões matemáticas na CPU via AST segura, persiste no SQLite (SSOT) e exporta os artefatos derivados (Excel com fórmulas, CSVs e Markdowns).
+- 🔒 **API PMO Local Controlada**: `python scripts/api_pmo.py --db data/pmo_virtual.sqlite --api-key <chave>` controla edições auditadas, registrando justificativa, versão esperada, criando snapshots de backup e regenerando os artefatos.
+- 🤖 **[Roadmap de Automações 4.0](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/automacoes/ROADMAP_AUTOMACOES_4_0.md)**: Integrações com WhatsApp (Evolution API) e inteligência de pranchas.
 
 ### 5. Frente de DESENVOLVIMENTO E QUALIDADE DE SOFTWARE (Tech Lead)
 Quando o sistema exigir criação, manutenção ou auditoria do código (Next.js, APIs), garantindo as melhores práticas e a qualidade da entrega técnica.
@@ -147,8 +158,7 @@ Sempre que receber um pedido, siga estes passos:
 - **PROIBIDO** pagar por avanço presumido. A medição deve ser física (A Regra da Trena - POP 09).
 - **FIDELIDADE DE MEDIÇÃO:** As medições físicas do projeto mantêm suas unidades exatas de engenharia (m³, m², kg, m, unid). Conversões para embalagens comerciais pertencem exclusivamente à fase de compras no almoxarifado e não alteram o quantitativo.
 - **MEMÓRIA DE CÁLCULO AUDITÁVEL COMPLETA EM MARKDOWN NATIVO:** É OBRIGATÓRIO escrever todas as memórias em Markdown nativo limpo (codeblocks e citações), sendo PROIBIDO o uso de blocos KaTeX ($$) ou \text{}. Toda entrega de quantitativo DEVE conter a **Seção 1 (Demonstração Matemática Detalhada passo a passo com deduções de vãos, nós e trigonometria)**, a **Seção 2 (Tabela Consolidada de Quantitativos Físicos de Projeto)** e a **Seção 3 (Tabela Oficial de Serviços para EAP e Cronograma)**. O motor mestre preserva automaticamente demonstrações manuais auditadas existentes.
-- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final de cabeça. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e produz o JSON apenas como entrada de importação. O script `scripts/motor_quantitativos/cli.py` roda na CPU para calcular o resultado, gravar o SQLite e gerar os CSV/MD derivados. Depois da importação, o SQLite é a fonte exclusiva.
+- **ARQUITETURA HÍBRIDA DE QUANTITATIVO (TOOL USE):** A IA NUNCA calcula o resultado final de cabeça. A IA extrai as dimensões, monta a expressão matemática no formato literal (ex: `11 * 1.4 * 1.4 * 0.7`) e produz o JSON apenas como entrada de importação. O script `scripts/motor_quantitativos/cli.py` roda na CPU para calcular o resultado, gravar o SQLite e gerar os artefatos derivados (Excel com fórmulas, CSVs e Markdowns). Depois da importação, o SQLite é a fonte exclusiva.
+- 🏛️ **SQLITE É A ÚNICA FONTE DA VERDADE (SSOT) & ARTEFATOS DERIVADOS COM FÓRMULAS:** O banco `data/pmo_virtual.sqlite` é a única fonte primária de verdade do sistema. É terminantemente PROIBIDO editar arquivos `.csv`, `.xlsx` ou `.md` manualmente como repositório de dados. Toda e qualquer alteração de quantidades físicas, custos, composições CCU ou taxas de BDI deve ser gravada no SQLite (via CLI ou API controlada). O Caderno Master `ORCAMENTO_BASE_CONSOLIDADO.xlsx` (gerado pelo exportador modular Python em 6 abas com fórmulas nativas do Excel), os CSVs e as memórias em Markdown são produtos derivados gerados automaticamente para portabilidade, auditoria e visualização executiva.
 - **O ORÇAMENTO É A LEI SUPREMA & BASE OFICIAL SINAPI SP:** Toda despesa deve ser cruzada com a viabilidade financeira da obra (Skill ADM). É terminantemente PROIBIDO estimar ou inventar preços unitários "de cabeça". Todo custo unitário deve ter fonte comprovada na base oficial **SINAPI SP 07/2026** (`apoio/sinapi_sp/`), em cotação de 3 fornecedores ou contrato de empreitada, registrado com seu Código CIA unívoco. Se a obra atrasa, afeta dinheiro e equipe de imediato. Ação e Reação.
-- 🧹 **PROIBIÇÃO DE POLUIÇÃO DO REPOSITÓRIO (LIMPEZA MANDATÓRIA DE ARQUIVOS TEMPORÁRIOS / SCRATCH):** É expressamente PROIBIDO deixar scripts de inspeção descartáveis, recortes intermediários de pranchas (.png) ou arquivos provisórios acumulados no repositório (como a pasta `scratch/` ou arquivos soltos na raiz). Se o agente precisar gerar scripts ou recortes temporários para decodificar PDFs de engenharia, deve DELETAR obrigatoriamente todos esses arquivos auxiliares assim que o levantamento for finalizado. Apenas os arquivos oficiais de entrega (`dados_orcamento.json`, memórias `.md` e planilhas `.csv` dentro de `/projetos/[OBRA]/`) devem permanecer no repositório.
-
-
+- 🧹 **PROIBIÇÃO DE POLUIÇÃO DO REPOSITÓRIO (LIMPEZA MANDATÓRIA DE ARQUIVOS TEMPORÁRIOS / SCRATCH):** É expressamente PROIBIDO deixar scripts de inspeção descartáveis, recortes intermediários de pranchas (.png) ou arquivos provisórios acumulados no repositório (como a pasta `scratch/` ou arquivos soltos na raiz). Se o agente precisar gerar scripts ou recortes temporários para decodificar PDFs de engenharia, deve DELETAR obrigatoriamente todos esses arquivos auxiliares assim que o levantamento for finalizado. Apenas os arquivos oficiais de entrega (`dados_orcamento.json`, memórias `.md`, planilhas `.xlsx`/`.csv` e o banco `.sqlite` dentro de `data/`) devem permanecer no repositório.

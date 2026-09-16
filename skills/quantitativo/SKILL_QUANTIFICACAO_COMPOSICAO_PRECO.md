@@ -242,7 +242,10 @@ Quando houver alteração de quantidade no quantitativo (`itens_quantitativo`):
 1. A alteração gera uma nova revisão com usuário e justificativa auditável.
 2. O método `recalcular_orcamento(db, obra_id, revisao_id)` é acionado imediatamente pelo sistema.
 3. O `custo_total` é recomputado instantaneamente com base na nova quantidade líquida e nas composições unitárias pré-estabelecidas.
-4. Os artefatos derivados (`ORCAMENTO_BASE_CONSOLIDADO.csv`, `QUANTITATIVO_MESTRE.csv`, `MEMORIA_CALCULO_*.md`) são regerados de forma consistente com checksum SHA-256 atualizado.
+4. Os artefatos derivados são regerados de forma consistente com fórmulas e integridade auditável:
+   - 📊 Caderno Master Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com 6 abas executivas e fórmulas nativas (`ROUND`, `SUM`, `IF`);
+   - 📑 Arquivos CSV consolidados (`ORCAMENTO_BASE_CONSOLIDADO.csv`, `QUANTITATIVO_MESTRE.csv`);
+   - 📝 Memórias de cálculo em Markdown (`MEMORIA_CALCULO_[DISC].md`) com checksum SHA-256.
 
 ---
 
@@ -264,4 +267,4 @@ Quando houver alteração de quantidade no quantitativo (`itens_quantitativo`):
 2. **Proibição de Estimativa sem Fonte:** Nenhum custo unitário (CCU) é arbitrado sem fonte declarada (SINAPI, cotação formal de 3 fornecedores ou contrato de empreitada). Ausência de fonte gera pendência formal (RFI), não estimativa.
 3. **Transparência de BDI:** O percentual de BDI é sempre declarado de forma explícita e justificado por categoria (serviço vs. fornecimento de equipamentos), nunca embutido silenciosamente no preço unitário.
 4. **Sincronismo com Revisões (`SKILL_GESTAO_14`):** Qualquer alteração de quantidade decorrente de revisão de projeto atualiza imediatamente o orçamento vinculado via `recalcular_orcamento()`.
-5. **SQLite como SSOT Inegociável:** Composições e orçamentos são gravados na tabela `itens_orcamento` do SQLite oficial (`data/pmo_virtual.sqlite`). O arquivo `ORCAMENTO_BASE_CONSOLIDADO.csv` é exclusivamente um artefato derivado exportado automaticamente por `exportar_artefatos()`, sendo proibida sua edição direta manual.
+5. **SQLite como SSOT Inegociável & Master Book com Fórmulas:** Composições e orçamentos são persistidos na tabela `itens_orcamento` do SQLite oficial (`data/pmo_virtual.sqlite`), consumido diretamente pelo Dashboard Next.js (`@/lib/db.ts`). O Master Book Excel `ORCAMENTO_BASE_CONSOLIDADO.xlsx` (6 abas com fórmulas vivas), os CSVs e as memórias em Markdown são exclusivamente artefatos derivados exportados automaticamente por `exportar_artefatos()`, sendo expressamente proibida sua edição direta manual.

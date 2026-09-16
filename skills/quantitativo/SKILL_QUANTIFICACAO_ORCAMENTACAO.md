@@ -99,8 +99,10 @@ Valor final do item: [Custo direto × (1+BDI)]
 3. BDI é sempre declarado explicitamente, nunca embutido silenciosamente no preço unitário.
 4. Mudança de revisão do quantitativo (`SKILL_GESTAO_14`) que altera quantidade reflete
    automaticamente no orçamento vinculado via `recalcular_orcamento()` no SQLite.
-5. O SQLite (`data/pmo_virtual.sqlite`) é a única Fonte da Verdade (SSOT); CSVs e Markdowns são
-   artefatos derivados gerados pela camada de exportadores do motor.
+5. O SQLite (`data/pmo_virtual.sqlite`) é a única Fonte da Verdade (SSOT), consumido diretamente
+   pelo Dashboard Next.js (`@/lib/db.ts`). O Master Book Excel `ORCAMENTO_BASE_CONSOLIDADO.xlsx`
+   (com 6 abas executivas e fórmulas dinâmicas para EAP, BDI, CCU, Curva ABC, Memória e Medição),
+   bem como os CSVs e Markdowns, são exclusivamente artefatos derivados gerados pelos exportadores do motor.
 
 ---
 *Trabalha junto com `SKILL_QUANTIFICACAO_MASTER.md` (fonte da quantidade, via código CIA),

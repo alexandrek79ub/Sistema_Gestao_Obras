@@ -8,21 +8,22 @@ Aqui você entende **O QUE** nós temos, **PARA QUE** serve e **COMO** ligar os 
 
 ## 🧭 1. A ARQUITETURA DO SISTEMA (O que nós temos)
 
-O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) nunca deve tentar resolver um problema sem acionar o arquivo correto de sua respectiva área.
+O nosso ecossistema está dividido em **5 Grandes Pilares**. A IA (ou o humano) nunca deve tentar resolver um problema sem acionar o arquivo correto de sua respectiva área.
 
 ### 🧠 Pilar 1: A Mente Central (Roteamento)
 - `agents.md`: O arquivo mestre que dá a persona para a Inteligência Artificial. Ele sabe para onde direcionar a dúvida do usuário (se é para custos ou se é para campo).
 - `skills/gestao/agents_gestor_obras.md`: O "Cérebro" do Gerente de Projetos. Ele puxa as skills de gestão e obriga a comparação de tudo com a Bíblia da Obra (Orçamento).
 - `governanca/INDICE_MESTRE_SKILLS.md`: O mapa de consulta completo que resolve sobreposições de Skills e regras de autonomia.
 
-### 📐 Pilar 2: Engenharia de Custos (Quantitativo)
-*Regra: o quantitativo preserva a quantidade física líquida; UCC e arredondamentos pertencem exclusivamente às compras.*
+### 📐 Pilar 2: Engenharia de Custos (Quantitativo e Orçamento)
+*Regra: o quantitativo preserva a quantidade física líquida nominal; composições CCU, BDI, perdas e UCC pertencem ao orçamento e compras.*
 - `SKILL_QUANTIFICACAO_MASTER.md`: A regra mãe de cálculo. Define os modelos de tabela e as regras matemáticas universais.
 - `SKILL_QUANT_01_FUNDACOES.md`: Estacas, Sapatas, Radiers.
 - `SKILL_QUANT_02_ESTRUTURA.md`: Pilares, Lajes, Aço (CA-50/60) e Fôrmas.
 - `SKILL_QUANT_03_ARQUITETURA.md`: Alvenaria, Reboco, Pisos, Gesso, Pintura.
 - `SKILL_QUANT_04_ELETRICA.md` & `SKILL_QUANT_05_HIDRAULICA.md`: Módulos de instalações.
 - `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`, `SKILL_QUANTIFICACAO_PEDIDO_DE_COMPRA.md` e `SKILL_QUANTIFICACAO_CONCILIACAO_3_PONTAS.md`: composição, compras e conciliação.
+- `SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md`: Filtro anti-erro e emissão do certificado de auditoria.
 
 ### 📊 Pilar 3: A Gestão de Obra (O Backoffice)
 *Onde a IA cruza dinheiro, prazo e segurança.*
@@ -47,10 +48,18 @@ O nosso ecossistema está dividido em **4 Grandes Pilares**. A IA (ou o humano) 
 - *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro) e `MANUAL_BOAS_PRATICAS_EXECUCAO.md` (Mapa de fases com checkpoints topográficos).
 
 ### 🤖 Pilar 5: Automação e Engenharia 4.0
-*Onde a escala acontece. Integração de sistemas proprietários.*
-- **BIM 5D Antigravity (Fase 1):** Operação 100% estruturada na IDE Antigravity. Os arquivos em texto plano (CSV e Markdown) são o Banco de Dados. O sistema de controle de versão (Git) atua como a Trilha de Auditoria inquebrável (Compliance).
-- **Dashboard PMO (Apresentação):** Sistema Next.js atuando como Front-End para a Diretoria, lendo os CSVs e renderizando a Curva S do EVM, Linha de Balanço e gatilhos de pagamento em tempo real.
-- **Roadmap 4.0:** Automação de despachos diários aos empreiteiros via WhatsApp utilizando Webhooks conectados à **Evolution API**. Leitura de Notas Fiscais via OCR.
+*Onde a tecnologia potencializa a governança corporativa.*
+- **SQLite como ÚNICA Fonte da Verdade (SSOT):** O banco `data/pmo_virtual.sqlite` centraliza quantitativos (`itens_quantitativo`), orçamentos (`itens_orcamento`), revisões e obras. Nunca se edita planilhas ou markdowns diretamente.
+- **Exportador Modular Excel com Fórmulas (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`):** Subpacote Python modular (`scripts/motor_quantitativos/exportadores/excel/`) que exporta um Master Book corporativo com 6 abas integradas contendo fórmulas nativas do Excel (`ROUND`, `SUM`, `IF`):
+  1. `01_ORCAMENTO_EAP`: EAP e orçamento com fórmulas de BDI e totais dinâmicos;
+  2. `02_PARAMETRICO_BDI`: Taxas e fórmula paramétrica analítica do BDI (Acórdão 2622/2013 TCU);
+  3. `03_COMPOSICOES_CCU`: Decomposição unitária analítica (Material, Mão de Obra e Equipamento);
+  4. `04_CURVA_ABC`: Matriz Pareto 80/20 com ranking dinâmico e classificação automática;
+  5. `05_MEMORIA_CALCULO`: Cubagem geométrica com equações literais e pranchas de projeto;
+  6. `06_BOLETIM_MEDICAO`: Planilha de medição física e financeira de obra com saldos automáticos.
+- **Artefatos Derivados de Exportação:** CSVs (`ORCAMENTO_BASE_CONSOLIDADO.csv`, `QUANTITATIVO_MESTRE.csv`) e memórias em Markdown (`MEMORIA_CALCULO_[DISC].md`) gerados automaticamente pelo motor para portabilidade, transparência e consumo externo.
+- **Dashboard PMO (Next.js):** Front-end em React/Next.js conectado **diretamente ao SQLite** via `@/lib/db.ts` (`node:sqlite`), garantindo latência zero para Curva S (EVM com SPI/CPI), Linha de Balanço e Orçamento.
+- **Roadmap 4.0:** Automação de despachos aos empreiteiros via WhatsApp (**Evolution API**) e leitura automatizada de pranchas PDF.
 
 ---
 
@@ -60,23 +69,23 @@ Acabou de assinar um contrato novo? É assim que você utiliza o sistema para in
 
 ### Passo 1: Orçamento Cego (O Nascimento da Bíblia)
 1. Acione o **Gestor/Orçamentista** e forneça os projetos.
-2. A IA deve ler a `SKILL_QUANTIFICACAO_MASTER.md` + Módulos 01 a 03.
-3. Gere as Memórias de Cálculo por ambiente (CIA: T-101-SAL).
-4. Gere a **Tabela de Insumos** convertida em *Unidade Comercial de Compra (UCC)* (Ex: tubos de 6m, cimento 50kg).
-5. O Engenheiro precifica no SINAPI. Está formado o Orçamento Base.
+2. A IA lê a `SKILL_QUANTIFICACAO_MASTER.md` + Módulos 01 a 03.
+3. Extrai as cotas das pranchas e monta o JSON estruturado com equações matemáticas puras (sem calcular de cabeça).
+4. O motor Python (`cli.py`) executa os cálculos na CPU via AST segura, persiste no SQLite (`data/pmo_virtual.sqlite`) e compila as exportações derivadas (Excel com fórmulas, CSVs e Markdowns).
+5. O Engenheiro vincula as composições de custo unitário (CCU) via SINAPI SP (`apoio/sinapi_sp/`) ou cotações com BDI paramétrico.
 
 ### Passo 2: O Kickoff e o "Dossiê de Take-off" (Fase Zero)
 Antes de qualquer tijolo ser assentado, o Gestor/PMO DEVE organizar, travar (baseline) e gravar todos os documentos fundamentais da obra no sistema.
 1. **Acione a `SKILL_GESTAO_00_KICKOFF.md`.**
-2. **Monte o Dossiê de Take-Off:** Toda nova obra DEVE ser montada na pasta `/projetos/OBRA/`, seguindo estritamente a árvore abaixo. A IA buscará e atualizará os dados diretamente nestas pastas:
+2. **Monte o Dossiê de Take-Off:** Toda nova obra DEVE ser montada na pasta `/projetos/OBRA/`, seguindo estritamente a árvore abaixo. A IA buscará e atualizará os dados com persistência oficial no SQLite e artefatos derivados nas pastas:
    - 📂 `01_ENGENHARIA_E_PROJETOS/` -> Plantas, Cortes e Projetos Complementares.
-   - 📂 `02_ORCAMENTO_BASE_E_CONTRATOS/` -> Planilha Baseline (TEMPLATE_ORCAMENTO_BASE.csv), Propostas e Curva ABC.
+   - 📂 `02_ORCAMENTO_BASE_E_CONTRATOS/` -> Master Book Excel com fórmulas (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`), CSVs consolidados, Propostas e Curva ABC.
    - 📂 `03_PLANEJAMENTO_E_CRONOGRAMA/` -> Cronograma Mestre, TEMPLATE_LINHA_DE_BALANCO.csv (Location-Based Scheduling) e Histograma.
    - 📂 `04_PRODUCAO_E_AVANCO/` -> Relatório Diário de Obra (TEMPLATE_RDO.md), Medições e FVS (Qualidade).
    - 📂 `05_SUPRIMENTOS_E_FINANCEIRO/` -> Notas Fiscais (NFs), Fluxo de Caixa e Controle de Estoque.
    - 📂 `06_SST_E_RH/` -> Treinamentos, Fichas de EPI e Controle de Efetivo.
    - 📂 `07_DATABOOK_E_ASBUILT/` -> Projetos Executados (As-Built) e Manuais para entrega.
-3. **Sincronização Visual:** Garanta que os dados preenchidos nestes CSVs reflitam imediatamente no Dashboard Next.js para visualização de Diretoria.
+3. **Sincronização Visual:** Os dados gravados no SQLite refletem instantaneamente no Dashboard Next.js para visualização da Diretoria e Engenharia.
 4. **Logística Inicial:** Cruze a Tabela de Insumos com as necessidades físicas usando o **POP 01 (Canteiro Lean)** para desenhar o layout de descarga do material pesado (aço, blocos, areia).
 
 ### Passo 3: Compras Iniciais (O Motor Liga)
@@ -101,11 +110,12 @@ Antes de qualquer tijolo ser assentado, o Gestor/PMO DEVE organizar, travar (bas
 
 Se alguma destas regras for quebrada, a Inteligência Artificial (ou o Gestor) DEVE travar o processo e emitir um ALERTA:
 
-1. **PROIBIDO PAGAR POR AVANÇO PRESUMIDO:** Só se paga medição após verificação com trena *in loco* (POP 09).
-2. **PROIBIDO COMPRAR "QUEBRADO":** A Engenharia calcula "13,4 metros", o Compras obrigatoriamente compra barra fechada ("18 metros"). (Regra UCC - POP 05).
-3. **A REGRA DA TRENA (POP 09):** Nenhuma Nota Fiscal de serviço de empreiteiro pode ser paga sem Medição Física In-Loco. Proibido pagar "porcentagem de avanço" no olho.
-4. **O ORÇAMENTO É A LEI SUPREMA:** Nenhuma contratação pode exceder o valor do Orçamento Base. Se estourar, tem que gerar Alerta de "Estouro de Verba" (`SKILL_GESTAO_03`).
-5. **NÃO HÁ RESUMO DE SKILL:** A Inteligência Artificial (Agente) nunca deve agir baseada em um resumo. Ela DEVE ler os arquivos `md` na íntegra para dar uma resposta.
+1. **SQLITE É A ÚNICA FONTE DA VERDADE (SSOT):** É expressamente PROIBIDO editar arquivos `.csv`, `.xlsx` ou `.md` manualmente como repositório de dados. Todas as alterações devem ocorrer no SQLite.
+2. **PROIBIDO PAGAR POR AVANÇO PRESUMIDO:** Só se paga medição após verificação com trena *in loco* (POP 09).
+3. **PROIBIDO COMPRAR "QUEBRADO":** A Engenharia calcula "13,4 metros", o Compras obrigatoriamente compra barra fechada ("18 metros"). (Regra UCC - POP 05).
+4. **A REGRA DA TRENA (POP 09):** Nenhuma Nota Fiscal de serviço de empreiteiro pode ser paga sem Medição Física In-Loco. Proibido pagar "porcentagem de avanço" no olho.
+5. **O ORÇAMENTO É A LEI SUPREMA:** Nenhuma contratação pode exceder o valor do Orçamento Base. Se estourar, tem que gerar Alerta de "Estouro de Verba" (`SKILL_GESTAO_03`).
+6. **NÃO HÁ RESUMO DE SKILL:** A Inteligência Artificial (Agente) nunca deve agir baseada em um resumo. Ela DEVE ler os arquivos `md` na íntegra para dar uma resposta.
 
 ---
 *Gerado por: Antigravity AI — Engenheiro Chefe.*

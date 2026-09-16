@@ -139,3 +139,18 @@ Após a verificação, o Agente de Auditoria deve emitir o seguinte bloco no rel
 ====================================================================
 ```
 
+---
+
+## 🚀 Próximo Passo: Ingestão no SQLite Oficial e Compilação dos Artefatos
+
+Com o certificado de auditoria emitido e o JSON estruturado validado:
+1. **Executar a ingestão no SQLite SSOT:**
+   ```bash
+   python scripts/motor_quantitativos/cli.py caminho/para/dados_obra.json
+   ```
+2. **Artefatos Derivados Compilados Automaticamente:**
+   - 📊 `ORCAMENTO_BASE_CONSOLIDADO.xlsx` (Caderno Master com 6 abas e fórmulas dinâmicas)
+   - 📑 `ORCAMENTO_BASE_CONSOLIDADO.csv` e `QUANTITATIVO_MESTRE.csv`
+   - 📝 `MEMORIA_CALCULO_[DISCIPLINA].md` com checksum SHA-256 e rastreabilidade absoluta
+
+

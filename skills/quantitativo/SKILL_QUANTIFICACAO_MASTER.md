@@ -72,12 +72,19 @@ Para garantir **zero alucinação matemática e precisão contábil absoluta**, 
 2. **O Motor Python na CPU ([cli.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/motor_quantitativos/cli.py)):**  
    - O Agente aciona a execução no terminal:
      ```bash
-     python scripts/motor_quantitativos/cli.py [caminho_do_json]
+     python scripts/motor_quantitativos/cli.py [caminho_do_json] --db data/pmo_virtual.sqlite
      ```
-   - O script resolve a matemática na CPU via AST segura, apura rigorosamente a **geometria líquida nominal de projeto (sem aplicação de perdas ou arredondamentos de compras)** e gera automaticamente:
-     - As Memórias de Cálculo em Markdown nativo (`MEMORIA_CALCULO_[DISC].md`);
-     - Os quantitativos físicos em CSV por disciplina (`QUANTITATIVO_[DISC].csv`);
-     - O consolidado unificado (`ORCAMENTO_BASE_CONSOLIDADO.csv`), diretamente consumível pelo Dashboard Next.js.
+   - O script resolve a matemática na CPU via AST segura, apura rigorosamente a **geometria líquida nominal de projeto (sem aplicação de perdas ou arredondamentos de compras)**, persiste as tabelas no **SQLite oficial (`data/pmo_virtual.sqlite`) como Única Fonte da Verdade (SSOT)** e gera automaticamente os artefatos derivados:
+     - 📊 O Caderno Master Executivo em Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com formatação corporativa e fórmulas dinâmicas nativas do Excel (`ROUND`, `SUM`, `IF`) distribuídas em 6 abas executivas:
+       1. `01_ORCAMENTO_EAP`: EAP com BDI e somas dinâmicas;
+       2. `02_PARAMETRICO_BDI`: Taxas e equações do Acórdão 2622/2013 TCU;
+       3. `03_COMPOSICOES_CCU`: Decomposição de custos (Material, Mão de Obra e Equipamentos);
+       4. `04_CURVA_ABC`: Matriz Pareto 80/20 com ranking dinâmico e classificação automática;
+       5. `05_MEMORIA_CALCULO`: Cubagem geométrica com equações literais e pranchas de projeto;
+       6. `06_BOLETIM_MEDICAO`: Planilha de medição físico-financeira com avanço % e saldos automáticos.
+     - 📝 As Memórias de Cálculo em Markdown nativo auditável (`MEMORIA_CALCULO_[DISC].md`);
+     - 📑 Os quantitativos físicos e orçamentos em CSV (`QUANTITATIVO_[DISC].csv`, `QUANTITATIVO_MESTRE.csv`, `ORCAMENTO_BASE_CONSOLIDADO.csv`) para portabilidade e integração externa.
+   - O Dashboard Next.js consome diretamente os dados do SQLite via `@/lib/db.ts` (`node:sqlite`).
 
 
 ---
