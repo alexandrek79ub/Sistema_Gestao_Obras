@@ -28,12 +28,23 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
                 "prancha_referencia": prancha, "status": item.get("status", "LEVANTADO"),
                 "observacao": "Importação inicial do JSON; a partir desta revisão, SQLite é a fonte oficial.",
             })
+            c_mat = float(item.get("custo_material", 0) or 0)
+            c_mo = float(item.get("custo_mao_obra", 0) or 0)
+            c_eq = float(item.get("custo_equipamento", 0) or 0)
+            pu = item.get("preco_unitario")
+            if pu is None or (float(pu) == 0 and (c_mat + c_mo + c_eq) > 0):
+                pu = c_mat + c_mo + c_eq
+            else:
+                pu = float(pu) if pu is not None else 0.0
+
             itens_orcamento.append({
                 "cod_eap": item["codigo_eap"], "prancha_referencia": prancha,
-                "preco_unitario": item.get("preco_unitario", 0), "bdi_pct": item.get("bdi_pct", 0),
+                "preco_unitario": pu, "bdi_pct": item.get("bdi_pct", 0),
                 "centro_custo": item.get("centro_custo", ""), "codigo_sinapi": item.get("codigo_sinapi", ""),
                 "fonte_preco": item.get("fonte_preco", ""),
+                "custo_material": c_mat, "custo_mao_obra": c_mo, "custo_equipamento": c_eq,
             })
+
             
     db = connect(db_path)
     try:

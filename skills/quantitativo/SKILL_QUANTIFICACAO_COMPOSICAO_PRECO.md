@@ -214,14 +214,35 @@ Toda composição e orçamento vinculado DEVE ser entregue na seguinte estrutura
 
 ---
 
-## 7. Integração com o CSV de Orçamento
+## 7. Integração com o SQLite Oficial e Exportação de Artefatos
 
-Após compor os preços, preencher obrigatoriamente no `ORCAMENTO_BASE_CONSOLIDADO.csv`:
+> 🚨 **REGRA DE OURO (SSOT):** O banco SQLite (`data/pmo_virtual.sqlite`) é a **ÚNICA Fonte da Verdade**. O arquivo `ORCAMENTO_BASE_CONSOLIDADO.csv` é um artefato derivado gerado automaticamente pela camada `exportadores/` (`exportar_artefatos()`). **NUNCA edite o CSV diretamente.**
 
-- `CODIGO_CIA` → Código CIA vinculando ao quantitativo e à EAP
-- `PRECO_UNIT` → Custo Direto (sem BDI) por unidade de medida de engenharia (CCU)
-- `CUSTO_TOTAL` → `QUANTIDADE_UCC × PRECO_UNIT × (1 + BDI%)`
-- `FONTE_PRECO` → Ex: `SINAPI 09/2026 | Cotação 3 fornecedores 08/2026`
+### 7.1 Mapeamento no Banco de Dados (`itens_orcamento`)
+
+Ao fechar a composição de custo de um item, os dados são persistidos na tabela `itens_orcamento` vinculado ao item de quantitativo correspondente (`quantitativo_id`):
+
+| Coluna SQLite | Origem na Composição | Descrição / Exemplo |
+|---|---|---|
+| `quantitativo_id` | `itens_quantitativo.id` | Chave estrangeira que vincula a quantidade levantada |
+| `codigo_sinapi` | Código do Insumo / Composição | Ex: `93358` (SINAPI) ou código interno de insumo |
+| `centro_custo` | EAP / Disciplina | Ex: `01.01 Infraestrutura`, `Acabamentos` |
+| `fonte_preco` | Metadados da Fonte | Ex: `SINAPI 09/2026 Não Desonerado` ou `Cotação 3 Fornecedores` |
+| `custo_material` | Σ (Qtd × Preço) materiais | R$ parcela material da composição unitária |
+| `custo_mao_obra` | Σ (Hh × Custo Hh) mão de obra | R$ parcela de mão de obra da composição unitária |
+| `custo_equipamento` | Σ (H_maq × Custo horário) | R$ parcela de equipamento da composição unitária |
+| `preco_unitario` | Custo Direto (CCU) | `custo_material + custo_mao_obra + custo_equipamento` |
+| `bdi_pct` | Taxa de BDI declarada | Ex: `25.0` para 25% |
+| `custo_total` | Custo Total Orçado | `quantidade_liquida * preco_unitario * (1 + bdi_pct / 100)` |
+| `revisao_id` | `revisoes.id` | Vínculo com a trilha de auditoria (tipo `'ORCAMENTO'`) |
+
+### 7.2 Recálculo Automático e Propagação de Revisões
+
+Quando houver alteração de quantidade no quantitativo (`itens_quantitativo`):
+1. A alteração gera uma nova revisão com usuário e justificativa auditável.
+2. O método `recalcular_orcamento(db, obra_id, revisao_id)` é acionado imediatamente pelo sistema.
+3. O `custo_total` é recomputado instantaneamente com base na nova quantidade líquida e nas composições unitárias pré-estabelecidas.
+4. Os artefatos derivados (`ORCAMENTO_BASE_CONSOLIDADO.csv`, `QUANTITATIVO_MESTRE.csv`, `MEMORIA_CALCULO_*.md`) são regerados de forma consistente com checksum SHA-256 atualizado.
 
 ---
 
@@ -239,7 +260,8 @@ Após compor os preços, preencher obrigatoriamente no `ORCAMENTO_BASE_CONSOLIDA
 
 ## ⚠️ 9. Regras de Ouro da Orçamentação e Composição
 
-1. **Rastreabilidade CIA Obrigatória:** Todo item orçado tem rastreabilidade até a linha exata do quantitativo que gerou a quantidade através do mesmo Código CIA. Orçamento nunca existe desconectado do quantitativo.
+1. **Rastreabilidade CIA Obrigatória:** Todo item orçado tem rastreabilidade até a linha exata do quantitativo que gerou a quantidade através do mesmo Código CIA (`quantitativo_id`). Orçamento nunca existe desconectado do quantitativo.
 2. **Proibição de Estimativa sem Fonte:** Nenhum custo unitário (CCU) é arbitrado sem fonte declarada (SINAPI, cotação formal de 3 fornecedores ou contrato de empreitada). Ausência de fonte gera pendência formal (RFI), não estimativa.
 3. **Transparência de BDI:** O percentual de BDI é sempre declarado de forma explícita e justificado por categoria (serviço vs. fornecimento de equipamentos), nunca embutido silenciosamente no preço unitário.
-4. **Sincronismo com Revisões (`SKILL_GESTAO_14`):** Qualquer alteração de quantidade decorrente de revisão de projeto deve atualizar imediatamente o orçamento vinculado ao respectivo CIA.
+4. **Sincronismo com Revisões (`SKILL_GESTAO_14`):** Qualquer alteração de quantidade decorrente de revisão de projeto atualiza imediatamente o orçamento vinculado via `recalcular_orcamento()`.
+5. **SQLite como SSOT Inegociável:** Composições e orçamentos são gravados na tabela `itens_orcamento` do SQLite oficial (`data/pmo_virtual.sqlite`). O arquivo `ORCAMENTO_BASE_CONSOLIDADO.csv` é exclusivamente um artefato derivado exportado automaticamente por `exportar_artefatos()`, sendo proibida sua edição direta manual.

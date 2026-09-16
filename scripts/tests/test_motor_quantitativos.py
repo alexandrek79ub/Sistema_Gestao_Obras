@@ -72,13 +72,27 @@ class MotorQuantitativosTest(unittest.TestCase):
         arquivo_json.write_text(json.dumps({"projeto": "Importação Teste", "base_dir": str(destino), "disciplinas": {
             "fundacao": {"titulo": "Fundação", "pranchas_ref": "F-01", "itens_orcamento": [{
                 "codigo_eap": "1.3.11", "descricao": "Impermeabilização", "unidade": "m²",
-                "preco_unitario": 20, "equacoes": [{"expressao_matematica": "5 * 2.5"}],
+                "preco_unitario": 20, "custo_material": 12, "custo_mao_obra": 8, "custo_equipamento": 0, "bdi_pct": 25,
+                "equacoes": [{"expressao_matematica": "5 * 2.5"}],
             }]}}}, ensure_ascii=False), encoding="utf-8")
         banco = Path(self.tmp.name) / "importacao.sqlite"
         saidas = importar_json_inicial(str(arquivo_json), str(banco))
         self.assertTrue(any(arquivo.name == "ORCAMENTO_BASE_CONSOLIDADO.csv" for arquivo in saidas))
+        
+        db_import = connect(banco)
+        try:
+            row = db_import.execute("SELECT custo_material, custo_mao_obra, preco_unitario, bdi_pct, custo_total FROM itens_orcamento").fetchone()
+            self.assertEqual(row["custo_material"], 12)
+            self.assertEqual(row["custo_mao_obra"], 8)
+            self.assertEqual(row["preco_unitario"], 20)
+            self.assertEqual(row["bdi_pct"], 25)
+            self.assertEqual(row["custo_total"], 312.5)
+        finally:
+            db_import.close()
+
         with self.assertRaises(ValueError):
             importar_json_inicial(str(arquivo_json), str(banco))
+
 
     def test_api_exige_chave_versao_e_regenera_exportacoes(self):
         anteriores = Handler.db_path, Handler.api_key, Handler.usuario, Handler.backup_dir

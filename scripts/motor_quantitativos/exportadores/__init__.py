@@ -49,7 +49,17 @@ def exportar_artefatos(db: sqlite3.Connection, obra_id: int, diretorio_base: str
     saidas.append(mestre)
     
     # 2. ORCAMENTO_BASE_CONSOLIDADO.csv
-    linhas_orc = [(r["cod_eap"], r["descricao"], r["disciplina"], r["unidade"], r["quantidade_liquida"], r["preco_unitario"] or 0, r["custo_total"] or 0, "Engenharia", r["prancha_referencia"], r["fonte_preco"] or "", r["status"], r["codigo_sinapi"] or "", r["centro_custo"] or "") for r in itens]
+    linhas_orc = []
+    for r in itens:
+        pu = float(r["preco_unitario"] or 0)
+        bdi = float(r["bdi_pct"] or 0)
+        pu_bdi = round(pu * (1 + bdi / 100.0), 2) if bdi else pu
+        linhas_orc.append((
+            r["cod_eap"], r["descricao"], r["disciplina"], r["unidade"],
+            r["quantidade_liquida"], pu_bdi, r["custo_total"] or 0,
+            "Engenharia", r["prancha_referencia"], r["fonte_preco"] or "",
+            r["status"], r["codigo_sinapi"] or "", r["centro_custo"] or ""
+        ))
     orcamento = base / "ORCAMENTO_BASE_CONSOLIDADO.csv"
     escrever_csv(orcamento, COLUNAS_ORCAMENTO, linhas_orc)
     saidas.append(orcamento)

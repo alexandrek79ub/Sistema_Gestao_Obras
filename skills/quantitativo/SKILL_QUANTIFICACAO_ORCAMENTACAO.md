@@ -39,8 +39,8 @@ Quantitativo (SKILL_QUANTIFICACAO_MASTER)      Tabela de Custo Unitário (CCU)
    declarando a data-base da tabela usada (preço de referência desatualizado é uma fonte comum de
    erro silencioso).
 3. **Nunca "estimar" custo unitário sem fonte** — se não há nem histórico nem referência
-   disponível para um item, a IA para e pede ao usuário, marcando esse CIA como pendente na
-   aba de premissas do orçamento.
+   disponível para um item, a IA para e pede ao usuário, abrindo RFI formal e mantendo o item
+   como pendente no sistema até a definição da fonte oficial.
 
 ---
 
@@ -93,13 +93,14 @@ Valor final do item: [Custo direto × (1+BDI)]
 ## ⚠️ 6. Regras de Ouro
 
 1. Todo item orçado tem rastreabilidade até a linha exata do quantitativo que gerou a
-   quantidade (mesmo CIA) — orçamento nunca existe desconectado do quantitativo que o originou.
+   quantidade (mesmo CIA) — orçamento nunca existe desconectado do quantitativo.
 2. Nenhum custo unitário é estimado sem fonte declarada (histórico próprio ou referência com
    data-base) — ausência de fonte gera pendência, não estimativa.
 3. BDI é sempre declarado explicitamente, nunca embutido silenciosamente no preço unitário.
-4. Mudança de revisão do quantitativo (`SKILL_GESTAO_14`) que altera quantidade deve refletir
-   automaticamente no orçamento vinculado — orçamento não fica "congelado" enquanto o
-   quantitativo muda por baixo.
+4. Mudança de revisão do quantitativo (`SKILL_GESTAO_14`) que altera quantidade reflete
+   automaticamente no orçamento vinculado via `recalcular_orcamento()` no SQLite.
+5. O SQLite (`data/pmo_virtual.sqlite`) é a única Fonte da Verdade (SSOT); CSVs e Markdowns são
+   artefatos derivados gerados pela camada de exportadores do motor.
 
 ---
 *Trabalha junto com `SKILL_QUANTIFICACAO_MASTER.md` (fonte da quantidade, via código CIA),

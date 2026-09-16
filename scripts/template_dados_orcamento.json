@@ -16,6 +16,13 @@
           "fator_conversao_ucc": 1.0,
           "ref_prancha": "EGS-01",
           "preco_unitario": 65.00,
+          "custo_material": 0.00,
+          "custo_mao_obra": 40.00,
+          "custo_equipamento": 25.00,
+          "bdi_pct": 25.0,
+          "codigo_sinapi": "93358",
+          "centro_custo": "Infraestrutura",
+          "fonte_preco": "SINAPI 09/2026 Não Desonerado",
           "equacoes": [
             {
               "descricao_memoria": "Escavação das Sapatas S1 (1,0x1,0m -> Cava 1,4x1,4x0,7m)",
@@ -40,6 +47,13 @@
           "fator_conversao_ucc": 1.0,
           "ref_prancha": "EGS-01",
           "preco_unitario": 480.00,
+          "custo_material": 320.00,
+          "custo_mao_obra": 110.00,
+          "custo_equipamento": 50.00,
+          "bdi_pct": 25.0,
+          "codigo_sinapi": "96535",
+          "centro_custo": "Infraestrutura",
+          "fonte_preco": "SINAPI 09/2026",
           "equacoes": [
             {
               "descricao_memoria": "Volume das 12 Estacas Brocas Ø30cm Prof=6,00m",
@@ -56,6 +70,13 @@
           "fator_conversao_ucc": 0.211,
           "ref_prancha": "EGS-02",
           "preco_unitario": 58.50,
+          "custo_material": 48.00,
+          "custo_mao_obra": 10.50,
+          "custo_equipamento": 0.00,
+          "bdi_pct": 25.0,
+          "codigo_sinapi": "92762",
+          "centro_custo": "Infraestrutura",
+          "fonte_preco": "SINAPI 09/2026",
           "equacoes": [
             {
               "descricao_memoria": "Armação Inferior Sapatas S1",
