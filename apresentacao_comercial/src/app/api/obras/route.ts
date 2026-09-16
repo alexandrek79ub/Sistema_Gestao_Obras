@@ -1,11 +1,24 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { getDb } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   try {
+    const db = getDb();
+    if (db) {
+      try {
+        const rows = db.prepare('SELECT codigo FROM obras ORDER BY nome').all() as Array<{ codigo: string }>;
+        if (rows && rows.length > 0) {
+          return NextResponse.json({ obras: rows.map(r => r.codigo) });
+        }
+      } catch (err) {
+        console.warn('Erro ao consultar obras no SQLite, usando fallback:', err);
+      }
+    }
+
     const projetosPath = process.env.OBRA_PATH 
       ? path.resolve(process.env.OBRA_PATH, '..')
       : path.resolve(process.cwd(), '../projetos');

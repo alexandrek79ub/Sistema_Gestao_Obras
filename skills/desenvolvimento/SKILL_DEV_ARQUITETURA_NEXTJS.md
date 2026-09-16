@@ -67,16 +67,17 @@ import { useObra } from '@/context/ObraContext';
 const { obraAtiva } = useObra();
 ```
 
-**Fonte de dados:** Endpoint `/api/obras` que lê as subpastas de `/projetos/`.
+**Fonte de dados:** Endpoint `/api/obras` que consulta prioritariamente a tabela `obras` no SQLite (`data/pmo_virtual.sqlite`), com fallback para subpastas de `/projetos/`.
 
 ---
 
-## 4. Padrão de Fetch de Dados (CSV → Componente)
+## 4. Padrão de Fetch de Dados (SQLite SSOT → API Routes → Componentes)
 
 ### Regra geral
-- **Server Components** leem os CSVs diretamente via `parseCSV` e passam os dados como props.
-- **Client Components** (marcados com `"use client"`) NUNCA leem arquivos diretamente — recebem dados via props ou via contexto/API Route.
-- **Lógica de negócio** (quantitativo, orçamento, SPI, CPI, RUP) pertence ao backend Python; o Next.js consulta a API e renderiza.
+- **Fonte da Verdade Oficial:** As rotas de API (`/api/obras`, `/api/orcamento`, `/api/evm`) conectam-se diretamente ao SQLite (`data/pmo_virtual.sqlite`) através de `@/lib/db.ts` (`node:sqlite`).
+- **Fallback de Compatibilidade:** Se uma obra antiga ainda não foi migrada para o SQLite, as rotas utilizam automaticamente fallback para os CSVs correspondentes em `/projetos/`.
+- **Client Components** (marcados com `"use client"`) NUNCA leem arquivos ou banco diretamente — recebem dados via props ou via fetch nas API Routes (`/api/*`).
+- **Lógica de negócio** (quantitativo, orçamento, SPI, CPI, RUP) pertence ao motor oficial no SQLite; o Next.js consulta os dados consolidados e renderiza.
 
 ### Exemplo — Adicionar uma nova página ao dashboard:
 
