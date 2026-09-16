@@ -64,47 +64,45 @@ Este módulo cobre o quantitativo de **toda a arquitetura e acabamentos** de uma
 
 ## 📊 2. Tabela de Serviços / EAP — Disciplina Arquitetura (OBRIGATÓRIA)
 
-> 🚨 **REGRA INVIOLÁVEL:** Todo levantamento de Arquitetura DEVE gerar esta tabela de serviços além da Lista de Compras UCC (BOM). Os serviços são os **pacotes de trabalho da EAP** que alimentam o cronograma físico-financeiro e os contratos de empreitada. **É PROIBIDO entregar BOM sem a Tabela de Serviços correspondente.**
-
-> ⚠️ **Nota de Governança:** As miudezas e insumos de fixação constam na BOM vinculados ao serviço, mas **NÃO geram pacotes de trabalho próprios na EAP**. Elas são subordinadas ao serviço principal (ex: "Dobradiças" não é pacote EAP — pertence ao pacote "Esquadrias de Madeira").
+> 🚨 **REGRA INVIOLÁVEL:** Todo levantamento de Arquitetura DEVE gerar esta tabela de serviços executivos da EAP. Os serviços são os pacotes de trabalho que alimentam o cronograma físico-financeiro e os contratos de empreitada.
 
 ### 2.1 Tabela Padrão — Arquitetura Interna e Vedação
 
-| Código EAP | Serviço / Pacote de Trabalho | Medição | Unidade | Insumos Principais da BOM |
-|:---:|:---|:---:|:---:|:---|
-| **2.1.1** | Alvenaria de Vedação em Bloco de Concreto/Cerâmico | Área líquida | m² | B144, B142, C144, Graute, Aço CA-50 Ø8mm, Cimento, Cal, Areia, Telas, Pinos, Espuma PU |
-| **2.1.2** | Chapisco de Paredes (2 faces) | Área (2 faces) | m² | Cimento CP II, Areia grossa, Adesivo plastificante |
-| **2.1.3** | Emboço / Reboco Paulista e=20mm (2 faces) | Área (2 faces) | m² | Argamassa industrializada / Cimento, Cal, Areia |
-| **2.1.4** | Contrapiso de Regularização | Área interna | m² | Cimento CP II, Areia grossa |
-| **2.1.5** | Piso Cerâmico / Porcelanato | Área interna | m² | Porcelanato/Cerâmica (cx), Cimentcola AC, Rejunte, Espaçadores, Clips, Cunhas, Primer |
-| **2.1.6** | Revestimento Cerâmico de Parede (Áreas Molhadas) | Área de WCs/molhadas | m² | Cerâmica (cx), Cimentcola AC-II, Rejunte, Espaçadores |
-| **2.1.7** | Rodapé Cerâmico / Porcelanato | Comprimento linear | m | Porcelanato rodapé (cx/m) |
-| **2.1.8** | Pintura Interna Látex Acrílica (Paredes + Tetos) | Área total | m² | Tinta látex (lt), Selador acrílico (lt), Lixa grossa, Lixa fina, Fita crepe, Lona |
-| **2.1.9** | Esquadrias de Madeira — Portas (conjunto completo) | Unidades | conj | Porta + marco + alizar + dobradiças + fechadura + batedor + espuma PU + parafusos + pregos + cola |
-| **2.1.10** | Esquadrias de Alumínio — Janelas (conjunto completo) | Unidades | conj | Janela + vidro + ferragens + selante PU perimetral |
-| **2.1.11** | Impermeabilização — Áreas Molhadas (banheiros, sacadas) | Área | m² | Membrana polimérica (cx/kg), Tela poliéster, Primer |
-| **2.1.12** | Gesso Liso / Massa Corrida PVA em Paredes e Tetos | Área | m² | Gesso em pó (sc) / Massa PVA (lt), Lixa fina |
-| **2.1.13** | Drywall — Paredes e Forros | Área | m² | Chapas ST, Montantes, Guias, Parafusos, Fita, Massa |
+| Código EAP | Serviço / Pacote de Trabalho | Critério de Medição Física | Unidade |
+|:---:|:---|:---:|:---:|
+| **2.1.1** | Alvenaria de Vedação em Bloco de Concreto/Cerâmico | Área líquida descontando vãos (NBR 12721) | m² |
+| **2.1.2** | Chapisco de Paredes | Área real de aplicação | m² |
+| **2.1.3** | Emboço / Reboco Paulista e=20mm | Área real de aplicação | m² |
+| **2.1.4** | Contrapiso de Regularização | Área útil de piso interno | m² |
+| **2.1.5** | Piso Cerâmico / Porcelanato | Área líquida de piso revestido | m² |
+| **2.1.6** | Revestimento Cerâmico de Parede (Áreas Molhadas) | Área vertical líquida revestida | m² |
+| **2.1.7** | Rodapé Cerâmico / Porcelanato / Madeira | Extensão linear instalada | m |
+| **2.1.8** | Pintura Interna Látex Acrílica (Paredes + Tetos) | Área de desenvolvimento de pintura | m² |
+| **2.1.9** | Esquadrias de Madeira — Portas (conjunto completo) | Contagem exata de unidades | conj / un |
+| **2.1.10** | Esquadrias de Alumínio — Janelas (conjunto completo) | Contagem exata de unidades | conj / un |
+| **2.1.11** | Impermeabilização — Áreas Molhadas (banheiros, sacadas) | Área líquida impermeabilizada | m² |
+| **2.1.12** | Gesso Liso / Massa Corrida em Paredes e Tetos | Área real de aplicação | m² |
+| **2.1.13** | Drywall — Paredes e Forros | Área real de placas montadas | m² |
 
 ### 2.2 Tabela Padrão — Cobertura e Fachada
 
-| Código EAP | Serviço / Pacote de Trabalho | Medição | Unidade | Insumos Principais da BOM |
-|:---:|:---|:---:|:---:|:---|
-| **2.2.1** | Cobertura — Telhas (área inclinada real) | Área inclinada | m² | Telhas (un), Parafusos autobrocantes (cx), Parafusos costura (cx), Fita butílica (rl) |
-| **2.2.2** | Estrutura Metálica de Cobertura — Terças / Caibros | Peso / Comprimento | kg / m | Perfis metálicos (barras), Parabolts/Chumbadores |
-| **2.2.3** | Muretas de Apoio e Alvenaria de Entreforro | Área | m² | Bloco 9×19×39cm, Argamassa de assentamento |
-| **2.2.4** | Alvenaria de Platibanda | Área | m² | Bloco 14×19×39cm, Argamassa, Graute (se canaleta) |
-| **2.2.5** | Calhas e Rufos em Chapa Galvanizada | Comprimento | m | Chapas galvanizadas (peças 3m), Rebites, Selante |
-| **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | Área | m² | Manta asfáltica 4mm (rl), Primer asfáltico (balde), GLP P-13 |
-| **2.2.7** | Revestimento de Fachada — Chapisco + Textura / Grafiato | Área | m² | Cimento, Selador ext., Textura/Grafiato (sc), Tinta elastomérica |
-| **2.2.8** | Pintura de Platibanda (Face Interna — Acrílica Impermeável) | Área | m² | Tinta impermeável (lt), Selador acrílico (lt) |
-| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | Comprimento / Unidades | m / un | Blocos de concreto, Baldrames, Chapins, Portões e Motores |
-| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | Área / Comprimento | m² / m | Paver intertravado, Sub-base BGS, Colchão de areia, Meio-fio |
+| Código EAP | Serviço / Pacote de Trabalho | Critério de Medição Física | Unidade |
+|:---:|:---|:---:|:---:|
+| **2.2.1** | Cobertura — Telhas | Área inclinada real de telhado | m² |
+| **2.2.2** | Estrutura Metálica / Madeira de Cobertura | Peso / Extensão linear de perfis | kg / m |
+| **2.2.3** | Muretas de Apoio e Alvenaria de Entreforro | Área de elevação | m² |
+| **2.2.4** | Alvenaria de Platibanda | Área de elevação | m² |
+| **2.2.5** | Calhas e Rufos em Chapa Galvanizada | Extensão linear desenvolvida | m |
+| **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | Área impermeabilizada | m² |
+| **2.2.7** | Revestimento de Fachada — Textura / Grafiato | Área líquida externa desenvolvida | m² |
+| **2.2.8** | Pintura de Platibanda (Face Interna) | Área real desenvolvida | m² |
+| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | Extensão linear / Unidades | m / un |
+| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | Área pavimentada / Comprimento | m² / m |
 
 ### 2.3 Regras da Tabela de Serviços
 
-1. **Código EAP:** Usar o mesmo esquema numérico da BOM para rastreabilidade (ex: 2.1.1 = Alvenaria na BOM e na EAP).
-2. **Unidade de Medição:** É a unidade do **serviço contratado** com o empreiteiro (m², m, conj, kg) — não a unidade de compra do insumo (sacos, caixas, barras).
-3. **Insumos Principais:** Listar apenas os insumos principais do serviço. Os acessórios e miudezas ficam na BOM mas NÃO criam linhas separadas na EAP.
-4. **Serviços Compostos:** Um pacote de trabalho pode englobar múltiplos insumos (ex: "Piso Porcelanato" inclui a peça + cimentcola + rejunte + espaçadores).
-5. **Cronograma:** A sequência lógica de execução é: `Fundações → Estrutura → Alvenaria (2.1.1) → Chapisco (2.1.2) → Contrapiso (2.1.4) → Emboço (2.1.3) → Impermeabilização (2.1.11) → Piso (2.1.5) → Revestimento Cerâmico (2.1.6) → Esquadrias (2.1.9/2.1.10) → Pintura (2.1.8/2.2.8) → Rodapé (2.1.7)`.
+1. **Código EAP:** Usar o esquema numérico padronizado da EAP.
+2. **Unidade de Medição:** É a unidade do **serviço executivo de engenharia** contratado (m², m, conj, un, kg).
+3. **Zero Insumos Miúdos:** Insumos e consumíveis (pregos, colas, arames, lixas, fitas) não são explodidos na tabela de serviços; já compõem as CPUs.
+4. **Cronograma:** Sequência lógica: `Alvenaria (2.1.1) → Chapisco (2.1.2) → Contrapiso (2.1.4) → Emboço (2.1.3) → Impermeabilização (2.1.11) → Piso (2.1.5) → Revestimento (2.1.6) → Esquadrias (2.1.9/2.1.10) → Pintura (2.1.8/2.2.8) → Rodapé (2.1.7)`.
+

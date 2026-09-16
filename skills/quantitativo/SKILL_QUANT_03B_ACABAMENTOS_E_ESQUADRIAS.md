@@ -45,19 +45,9 @@ A_final = A_impermeab × 1,15
 | **Argamassa polimérica (2 demãos)** | Argamassa polim. | 3,0 | kg/m² |
 | | Tela de poliéster (reforço) | 1,10 | m²/m² |
 
-### 1.5 Kit de Impermeabilização (Miudezas Obrigatórias)
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Primer asfáltico (baldes 18L) | `A_manta × 0,40` | balde ↑ |
-| Tela de poliéster/véu fibra vidro (rolos 50m²) | `A_impermeab × 1,10` | rolo ↑ |
-| Fita asfáltica autoadesiva aluminizada (rolos 10m) | `Perim_ralos + juntas / 10` | rolo ↑ |
-| Gás GLP P-13 para maçarico de manta | `A_manta / 50` | botijão ↑ |
-| Geotêxtil separador Bidim (1,10 m²/m²) | `A_manta_horiz × 1,10` | m² |
-
 ---
 
-## 📐 2. Esquadrias, Vidros, Fechaduras e Derivação de Vergas
+## 📐 2. Esquadrias, Vidros e Derivação de Vergas
 
 ### 2.1 Quadro Mestre de Tipologias Cadastrais
 
@@ -81,21 +71,6 @@ Verga (topo do vão):       L_verga = (Larg + 2 × 0,20m) × Qtd_Total
 Contraverga (base janela): L_contrv = (Larg + 2 × 0,20m) × Qtd_Janelas
 ```
 
-### 2.3 Kit Esquadrias (Miudezas Obrigatórias)
-
-> 🛑 **PROIBIÇÃO DE ORÇAMENTOS SINTÉTICOS** — quantificar todos os acessórios peça a peça.
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Dobradiças aço inox 3½"×3" (3 por folha de abrir) | `N_folhas × 3 × 1,05` | unid |
-| Fechaduras completas (máq + cilindro + maçaneta) | `N_portas_total` | unid |
-| Batedores de porta de piso c/ amortecedor | `N_folhas_total` | unid |
-| Espuma PU 750ml (1 tubo / 2,5 marcos) | `Ceil(N_portas / 2,5) × 1,05` | tubo |
-| Parafusos + buchas S8 fixação batente (8/porta) | `N_portas × 8 × 1,05` | unid |
-| Pregos s/ cabeça 12×12 para alizares (20/vão) | `N_portas × 20 × 1,05` | unid |
-| Cola branca PVA D3 (fr. 500g — 1 a cada 8 portas) | `Ceil(N_portas / 8) × 1,05` | frasco |
-| Selante PU40 calafetação caixilhos ext. (10m/tubo) | `Ceil(Perim_ext / 10) × 1,05` | tubo |
-
 ---
 
 ## 📐 3. Rodapés, Peitoris e Soleiras
@@ -109,14 +84,12 @@ Baguete de box (m) = Largura_box (contenção de água)
 
 ---
 
-## 📐 4. Louças, Metais e Acessórios Sanitários (Matriz por Ambiente × Pavimento)
-
-> ⚠️ O levantamento DEVE ser em matriz de ambientes × repetição de pavimento.
+## 📐 4. Louças, Metais e Cubas
 
 ### 4.1 Categorias
 
-| Família | Itens | Unidade |
-|---|---|---|
+| Categoria | Descrição | Unidade |
+|---|---|:---:|
 | **LOUÇAS** | Bacia c/ cx. acoplada, lavatório c/ coluna, cuba de embutir, tanque | un |
 | **CUBAS INOX** | Cuba simples/dupla, tanque inox | un |
 | **METAIS** | Torneira de lavatório, torneira pia, misturador, ducha higiênica, chuveiro | un |
@@ -127,17 +100,6 @@ Baguete de box (m) = Largura_box (contenção de água)
 ```
 Qtd_Total_k = Σ (Qtd_Unid_Cômodo × N_ambientes_por_andar × N_andares_repetidos)
 ```
-
-### 4.3 Kit Louças/Metais (Miudezas Obrigatórias)
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Engates flexíveis aço inox ½"×40cm | `N_bacias + N_torneiras_lav + N_cubas` | unid |
-| Sifões universais PP/cromado | `N_cubas + N_lavatórios + N_tanques` | unid |
-| Válvulas de escoamento | `= N_sifões` | unid |
-| Anel de cera c/ guia (bacia) | `N_bacias_total` | unid |
-| Parafusos B10/B12 latão/inox (bacias/lavatórios) | `(N_bacias + N_lavatórios) × par` | par |
-| Fita veda rosca PTFE 18mm × 25m | `Ceil((N_torneiras + N_engates + N_reg) / 10)` | rolo |
 
 ---
 
@@ -161,52 +123,24 @@ A_total_COD_k = Σ (A_total_local para todas as ocorrências do CÓD k)
 
 ---
 
-## 📐 6. Kit de Pisos — Miudezas de Assentamento
+### 6.1 Checklist de Conferência de Serviços — Módulo 03B (🚨 OBRIGATÓRIO)
 
-> 🛑 **Proibido omitir acessórios de assentamento.**
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Cimentcola (sacos 20kg) | `A × consumo (5 ou 10 kg/m²)` | saco 20kg ↑ |
-| Rejunte (sacos 5kg) | `A × consumo por §9.11` | saco 5kg ↑ |
-| Espaçadores/cruzetas (sacos 100un) | `A_total × 6 / 100` | saco ↑ |
-| Clips niveladores (sacos 100un — porcelanato ≥60×60) | `N_peças × 4 / 100` | saco ↑ |
-| Cunhas niveladoras (30% dos clips) | `N_clips × 0,30 / 100` | saco ↑ |
-| **Primer de contato acrílico** (substrato poroso / contrapiso absorvente antes da cimentcola) | `A × 0,15 L/m²` | lata 18L ↑ |
-| **Argamassa de regularização / nivelamento local** (faixas mestre ou caimento forçado em pisos molhados) | conforme indicado em projeto | saco 20kg ↑ |
-| Lã de róckwool / junta de dilatacão PE expandido 5mm (porçat./grês > 3m lineares) | `Perím_amb × 1,05` | rolo 10m ↑ |
-
-> ⚠️ **Regra Primer:** Aplicar primer de contato sempre que o substrato (contrapiso ou concreto) for novo e poroso. Se o projeto não especificar, perguntar ao responsável antes de orçar ou omitir.
-
----
-
-### 6.1 Checklist Anti-Omissão de Miudezas — Módulo 03B (🚨 OBRIGATÓRIO)
-
-Antes de fechar a Tabela Consolidada de qualquer serviço coberto por este módulo:
+Antes de finalizar o levantamento de acabamentos:
 
 **Impermeabilização (§1):**
-- [ ] Primer asfáltico base solvente calculado e na tabela (0,40 L/m²)
-- [ ] Tela de poliéster / véu de fibra de vidro calculado e na tabela
-- [ ] Fita asfáltica autoadesiva aluminizada (juntas e arremates) calculada e na tabela
-- [ ] Gás GLP P-13 para maçarico de manta (se manta asfáltica) calculado e na tabela
+- [ ] Áreas reais líquidas de piso e rodapés virados de banheiros, sacadas e áreas molhadas apuradas conforme projeto (m²).
+- [ ] Zero aplicação de perdas percentuais no quantitativo físico.
 
-**Esquadrias (§2.3):**
-- [ ] Dobradiças em aço inox (3 por folha) calculadas e na tabela
-- [ ] Fechaduras completas (máq + cilindro + maçaneta) calculadas e na tabela
-- [ ] Batedores de porta c/ amortecedor calculados e na tabela
-- [ ] Espuma PU 750ml para marcos calculada e na tabela
-- [ ] Parafusos + buchas S8 para batentes calculados e na tabela
-- [ ] Pregos s/ cabeça para alizares calculados e na tabela
-- [ ] Cola branca PVA D3 calculada e na tabela
-- [ ] Selante PU 40 / silicone neutro para caixilhos externos calculado e na tabela
+**Esquadrias (§2):**
+- [ ] Contagem exata de portas e janelas confrontada com o Quadro de Esquadrias do projeto de arquitetura (conjuntos).
+- [ ] Dimensões de vão (largura × altura) e tipo de abertura conferidos.
 
 **Pisos e Revestimentos Cerâmicos (§6):**
-- [ ] Cimentcola AC-I/II/III calculada (escolher conforme área seca/úmida/dupla colagem)
-- [ ] Rejunte calculado (consumo varia por tipo de peça e junta)
-- [ ] Espaçadores/cruzetas calculados
-- [ ] Clips niveladores calculados (obrigatórios para porcelanato ≥60×60cm)
-- [ ] Cunhas niveladoras calculadas (30% dos clips)
-- [ ] Primer de contato avaliado (necessário em substratos absorventes)
+- [ ] Área líquida real de piso por ambiente descontando soleiras e bases fixas (m²).
+- [ ] Área de revestimento de parede descontando vãos conforme NBR 12721 (m²).
+- [ ] Extensão linear de rodapés descontando os vãos de portas (m).
+- [ ] Zero insumos miúdos explodidos (rejunte, colas e espaçadores já compõem as CPUs).
+
 
 
 ---

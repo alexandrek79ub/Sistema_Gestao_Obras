@@ -90,74 +90,10 @@ Toda caixa de ponto de elétrica deve ser decomposta individualmente nos seus co
 
 ---
 
-### 2.4 Algoritmo Matemático de Derivação Automática de Miudezas e Conexões (Kits de Montagem)
-Para eliminar omissões e esquecimentos no orçamento de compras, as miudezas de fixação e conexão **DEVEM ser calculadas automaticamente por derivação matemática direta** dos elementos principais:
-
-1. **Luvas de Emenda para Eletroduto Rígido PVC (unid):**  
-   Os eletrodutos rígidos são fornecidos em varas de 3 metros. Cada vara requer 1 luva de união:
-   `N_luvas = ⌈ L_eletroduto / 3,00m ⌉ × 1,05`
-2. **Adaptadores Box Reto em PVC para Caixas e Quadros (unid):**  
-   Cada caixa de parede/teto e cada chegada no quadro de distribuição exige adaptadores com rosca e porca para travamento mecânico:
-   `N_adaptadores_box = [ 2 × (N_caixas_4x2 + N_caixas_4x4 + N_caixas_octogonais) + N_circuitos_QDC ] × 1,05`
-3. **Abraçadeiras Tipo D em Aço Galvanizado c/ Cunha e Parafusos/Buchas S6 (unid):**  
-   Para tubulações aparentes em teto, laje, entreforro ou perfilados, a fixação deve ocorrer no máximo a cada 1,50 m:
-   `N_abraçadeiras = ⌈ L_eletroduto_aparente/forro / 1,50m ⌉ × 1,05`
-4. **Conectores de Emenda Rápida por Alavanca (tipo Wago / Derivação - unid):**  
-   Nas caixas de passagem e derivação de múltiplos circuitos:
-   `N_conectores_rápidos = 3 × N_caixas_passagem + 2 × N_luminárias_teto`
-5. **Terminais Pré-Isolados Tipo Ilhós (Cobre Estanhado - unid):**  
-   Para terminação de condutores de 2,5mm² e 4,0mm² nos bornes de disjuntores e módulos de tomadas:
-   `N_terminais_ilhós = (2 × N_polos_disjuntores) + (3 × N_módulos_tomada)`
-6. **Fita Isolante Antichama 19mm x 20m (rolos):**  
-   `N_rolos_fita = ⌈ N_pontos_elétricos_total / 50 ⌉ rolos (mínimo 2 rolos por obra)`
-7. **Parafusos Chipboard e Buchas de Nylon S6 / S8 (unid):**  
-   Fixação de todas as caixas de embutir (4×2, 4×4, octogonais), quadros de distribuição e suportes de luminárias:
-   `N_buchas = [ 2 × (N_caixas_4x2 + N_caixas_4x4 + N_caixas_octogonais + N_luminárias) + 4 × N_quadros_QDC ] × 1,05`
-8. **Talco Industrial / Vaselina Líquida Neutra para Puxamento de Cabos:**  
-   Facilitador de deslizamento para alimentação de circuitos pesados e longos sem danificar a isolação:
-   `N_frascos_500mL = ⌈ L_cabos_≥_6mm² / 200m ⌉`
-9. **Guia de Tração (Passa-fio de Nylon/Aço Maleável com Ponteira Metálica):**  
-   1 unidade por equipe de eletricistas (insumo/ferramental de canteiro, registrado na logística de obra).
-10. **Fita de Autofusão 19mm × 10m (Isolação de Alta Confiabilidade / Áreas Úmidas):**  
-    Para impermeabilização e recomposição de isolação em caixas de passagem enterradas, poços e áreas molhadas:
-    `N_rolos_autofusão = max(2, ⌈ N_emendas_subterrâneas / 5 ⌉)`
-11. **Prensa-cabos Termoplásticos / Latão Rosca PG/Métrico IP68 (unid):**  
-    Vedação estanque em cada entrada e saída de eletrodutos em caixas externas e quadros de força:
-    `N_prensa_cabos = N_chegadas_de_eletroduto_nos_quadros_e_caixas_externas`
-12. **Tirantes Roscados 1/4" × 1m c/ Porcas, Arruelas e Chumbadores (unid):**  
-    Sustentação suspensa de perfilados perfurados e eletrocalhas metálicas sob lajes:
-    `N_tirantes = ⌈ L_eletrocalha/perfilado / 1,20m ⌉ × 1,05`
-13. **Anilhas Plásticas Marcadoras Numeradas / Marcadores de Circuitos:**  
-    Identificação padronizada de condutores nos barramentos e disjuntores: 1 jogo completo por QDC instalado.
-14. **Fita Plástica de Advertência Enterrada "PERIGO: REDE ELÉTRICA":**  
-    Sinalização preventiva instalada 30cm acima do banco de dutos ou cabos diretamente enterrados:
-    `L_fita = L_valas_dutos_subterrâneos × 1,10 m`
-
-### 🛡️ 2.5 Checklist Anti-Omissão de SKUs de Instalações Elétricas (15 SKUs Obrigatórios na UCC/BOM)
-
-> Antes de fechar o quantitativo e a requisição de compras de instalações elétricas, o PMO Virtual DEVE auditar e confirmar a presença de todos os 15 SKUs na BOM:
-
-- [ ] **Luvas de Emenda para Eletroduto Rígido PVC:** 1 luva por vara de 3m (`⌈ L_eletroduto / 3m ⌉ × 1,05`).
-- [ ] **Adaptadores Box Reto PVC c/ Rosca e Porca:** 2 por caixa 4×2/4×4/octogonal + chegadas de circuitos no QDC.
-- [ ] **Abraçadeiras Tipo D c/ Cunha e Buchas S6:** 1 a cada 1,50m de eletroduto aparente ou em entreforro.
-- [ ] **Conectores Rápidos por Alavanca (Wago ou similar):** 3 por caixa de passagem/derivação + 2 por ponto de iluminação.
-- [ ] **Terminais Pré-Isolados Tipo Ilhós:** `(2 × polos de disjuntores) + (3 × módulos de tomada)`.
-- [ ] **Fita Isolante Antichama 19mm × 20m:** 1 rolo a cada 50 pontos elétricos (mínimo 2 rolos por obra).
-- [ ] **Parafusos Chipboard + Buchas S6/S8:** 2 por caixa embutida / suporte de luminária.
-- [ ] **Talco / Vaselina Líquida para Puxamento:** 1 frasco de 500mL a cada 200m de cabos de bitola ≥ 6 mm².
-- [ ] **Fita de Autofusão 19mm × 10m:** Mínimo 2 rolos por obra; 1 rolo extra a cada 5 emendas em caixas subterrâneas.
-- [ ] **Prensa-cabos Termoplásticos IP68:** 1 por chegada de eletroduto nos quadros QDC/QG e caixas externas.
-- [ ] **Tirantes Roscados 1/4" + Porcas + Arruelas:** 1 conjunto a cada 1,20m de eletrocalha ou perfilado suspenso.
-- [ ] **Anilhas Numeradas / Marcadores de Identificação:** 1 estojo/jogo completo por QDC instalado.
-- [ ] **Espaçadores Plásticos Pente para Banco de Dutos:** 1 pente a cada 1,50m de vala por camada de tubos.
-- [ ] **Fita Plástica de Advertência Enterrada "REDE ELÉTRICA":** Metragem linear igual ao comprimento total de valas subterrâneas + 10%.
-- [ ] **Cartuchos de Solda Exotérmica e Moldes de Grafite (SPDA):** 1 cartucho por conexão de cabo de cobre na malha/hastes.
-
----
-
 ## 📋 3. Tabela Oficial de Serviços para EAP e Cronograma de Elétrica (Nível 3.1 — 5 Fases Civis)
 
-> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**. Os consumíveis (luvas, adaptadores box, conectores rápidos, fitas, terminais, talco) NÃO recebem código EAP e pertencem à lista UCC/BOM derivada (§2.4 e §2.5).
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**, medidos por avanço físico em campo. Insumos secundários e consumíveis (luvas, adaptadores, fitas, terminais, parafusos) já estão embutidos nas composições de serviço (CPUs/SINAPI) e não são explodidos no quantitativo físico de projeto.
+
 
 | Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Civil | Observação Executiva |
 |:---:|:---|:---:|:---:|:---|

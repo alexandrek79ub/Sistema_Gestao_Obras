@@ -40,26 +40,12 @@
    - **Caçambas Estacionárias de Entulho (5m³):** Locação por rotatividade conforme volume estimado de bota-fora e sobras.
    - **Lixeiras Seletivas e Tambores para Resíduos Classe A, B, C e D (tintas/solventes).**
 
-### 🛡️ 1.4 Checklist Anti-Omissão de Canteiro e Fechamento (12 SKUs Obrigatórios na UCC/BOM)
+---
 
-> Antes de emitir o relatório de suprimentos gerais de canteiro, o PMO Virtual DEVE auditar e certificar a presença dos seguintes 12 SKUs na BOM:
+### 📋 1.4 Tabela Oficial de Serviços para EAP e Cronograma (Níveis 1.1, 1.2, 4.1, 4.2 e 5.1)
 
-- [ ] **Tapume de Compensado 10mm com Estrutura de Pontaletes:** Metragem linear completa do perímetro da obra (m).
-- [ ] **Placa de Obra em Chapa Galvanizada com Impressão Vinílica:** Dimensão mínima normatizada (unid).
-- [ ] **Tela de Segurança de Fachada Polipropileno Verde:** Área total de projeção vertical de fachadas (m²).
-- [ ] **Guarda-Corpo Provisório com Rodapé (NR-18):** Metragem linear de vãos e aberturas em lajes (m).
-- [ ] **Extintores Provisórios de Canteiro 2kg/4kg PQS ABC:** 1 por pavimento de serviço ativo (unid).
-- [ ] **Cones de Sinalização Laranja Refletivos + Fita Zebrada:** Kit de sinalização viária e perimetral.
-- [ ] **Papelão Ondulado 3mm para Proteção de Pisos:** Área equivalente aos pisos cerâmicos/madeira + 8% (m²).
-- [ ] **Plástico Bolha para Proteção de Bancadas e Louças:** Quantidade suficiente para tampos e cubas instaladas (m²).
-- [ ] **Lonas Plásticas e Fitas de Empacotamento para Caixilhos:** Proteção de todas as esquadrias instaladas (cj).
-- [ ] **Conjunto de Placas de Sinalização de Segurança NR-18:** Placas regulamentares em PVC refletivo (cj).
-- [ ] **Caçambas de Entulho para Coleta Seletiva (5m³):** Previsão mensal conforme cronograma de obra.
-- [ ] **Lixeiras / Tambores Identificados para Resíduos Perigosos (tintas e solventes conforme PGRCC).**
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela estrutura as fases de abertura de canteiro, contenções, sistemas especiais e o encerramento da obra com foco estritamente em serviços executivos e marcos de engenharia da EAP.
 
-### 📋 1.5 Tabela Oficial de Serviços para EAP e Cronograma (Níveis 1.1, 1.2, 4.1, 4.2 e 5.1)
-
-> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela estrutura as fases de abertura de canteiro, contenções, sistemas especiais e o encerramento da obra. Miudezas e insumos de apoio constam da UCC (§1.3 e §1.4).
 
 | Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Observação Executiva |
 |:---:|:---|:---:|:---:|:---|

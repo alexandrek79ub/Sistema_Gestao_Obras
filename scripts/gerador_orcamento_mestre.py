@@ -140,22 +140,15 @@ def gerar_orcamento(json_path):
                 # Escreve a memória granular
                 memoria_calculo_dinamica.append(f"- **{desc_eq}:** `{expressao}` = **{resultado} {unidade}**")
             
-            # Aplicação de Perdas e Unidade Comercial (UCC) com Regra da Trena / POP 05
-            unid_ucc_clean = unidade_ucc.lower().strip()
-            eh_discreto = any(u in unid_ucc_clean for u in unidades_discretas) or item.get("arredondar_cima", False)
-            
-            qtd_com_perda = total_qtd_projeto * (1 + (perda_pct / 100))
-            
-            if eh_discreto:
-                # Arredondamento para CIMA (teto) para insumos inteiros de compra
-                qtd_ucc = math.ceil(round(qtd_com_perda * fator_ucc, 6))
-            else:
-                qtd_ucc = round(qtd_com_perda * fator_ucc, 2)
-                
             total_qtd_projeto = round(total_qtd_projeto, 4)
             
+            # REGRA DE ENGENHARIA: Zero perdas ou arredondamentos de compra no levantamento físico
+            # Quantitativo de projeto reflete 100% a geometria líquida nominal das pranchas
+            qtd_nominal = total_qtd_projeto
+            perda_pct = 0
+            
             # Cálculo Financeiro Opcional
-            custo_total_item = round(qtd_ucc * preco_unit, 2) if preco_unit > 0 else 0.0
+            custo_total_item = round(qtd_nominal * preco_unit, 2) if preco_unit > 0 else 0.0
             subtotal_disc_financeiro += custo_total_item
             total_geral_financeiro += custo_total_item
 
@@ -163,12 +156,12 @@ def gerar_orcamento(json_path):
             total_str = formatar_moeda(custo_total_item)
             
             nota_financeira = f" | **Custo Total:** `{total_str}`" if custo_total_item > 0 else ""
-            memoria_calculo_dinamica.append(f"\n> **Total Projeto:** `{total_qtd_projeto} {unidade}` | **Com Perda ({perda_pct}%):** `{round(qtd_com_perda, 4)} {unidade}` | **Pedido (UCC):** `{qtd_ucc} {unidade_ucc}`{nota_financeira}\n")
+            memoria_calculo_dinamica.append(f"\n> **Total de Projeto (Geometria Líquida):** `{total_qtd_projeto} {unidade}`{nota_financeira}\n")
             
-            # Montagem da Linha do CSV
+            # Montagem da Linha do CSV (compatibilidade garantida com dashboard Next.js)
             r_novo = [
                 cod_eap, descricao, titulo_disc, total_qtd_projeto, unidade, 
-                perda_pct, qtd_ucc, unidade_ucc, ref_prancha, preco_str, total_str
+                0, total_qtd_projeto, unidade, ref_prancha, preco_str, total_str
             ]
             rows_com_disciplina.append(r_novo)
             consolidated_rows.append(r_novo)
@@ -276,12 +269,12 @@ def gerar_orcamento(json_path):
         elif secao_memoria_preservada:
             md_content += f"{secao_memoria_preservada}\n\n---\n\n"
         
-        md_content += "## 📊 2. Tabela Consolidada de Quantitativos e Pedido de Compras (UCC)\n\n"
-        md_content += "| Código EAP | Descrição do Insumo / Serviço | Qtd Projeto | Perda (%) | Qtd Comercial UCC | Unidade UCC | Prancha Ref | Preço Unit. | Custo Total |\n"
-        md_content += "| :---: | :--- | :---: | :---: | :---: | :---: | :--- | :---: | :---: |\n"
+        md_content += "## 📊 2. Tabela Consolidada de Quantitativos de Projeto (Geometria Líquida)\n\n"
+        md_content += "| Código EAP | Descrição do Serviço | Qtd Projeto (Líquida) | Unid. | Prancha Ref | Preço Unit. | Custo Total |\n"
+        md_content += "| :---: | :--- | :---: | :---: | :--- | :---: | :---: |\n"
         
         for r in rows_com_disciplina:
-            md_content += f"| **{r[0]}** | {r[1]} | {r[3]} {r[4]} | {r[5]}% | **{r[6]}** | `{r[7]}` | `{r[8]}` | {r[9]} | **{r[10]}** |\n"
+            md_content += f"| **{r[0]}** | {r[1]} | **{r[3]}** | `{r[4]}` | `{r[8]}` | {r[9]} | **{r[10]}** |\n"
 
         if subtotal_disc_financeiro > 0:
             md_content += f"\n> 💰 **Subtotal Financeiro da Disciplina:** `{formatar_moeda(subtotal_disc_financeiro)}`\n"

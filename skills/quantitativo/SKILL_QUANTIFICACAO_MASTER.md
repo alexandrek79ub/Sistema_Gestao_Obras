@@ -74,10 +74,11 @@ Para garantir **zero alucinação matemática e precisão contábil absoluta**, 
      ```bash
      python scripts/gerador_orcamento_mestre.py [caminho_do_json]
      ```
-   - O script resolve a matemática na CPU via AST segura, aplica perdas percentuais, converte para Unidade Comercial de Compra (UCC) aplicando teto (`math.ceil`) em itens inteiros, e gera automaticamente:
+   - O script resolve a matemática na CPU via AST segura, apura rigorosamente a **geometria líquida nominal de projeto (sem aplicação de perdas ou arredondamentos de compras)** e gera automaticamente:
      - As Memórias de Cálculo em Markdown nativo (`MEMORIA_CALCULO_[DISC].md`);
-     - Os quantitativos em CSV por disciplina (`QUANTITATIVO_[DISC].csv`);
-     - O orçamento consolidado unificado (`ORCAMENTO_BASE_CONSOLIDADO.csv`), diretamente consumível pelo Dashboard Next.js.
+     - Os quantitativos físicos em CSV por disciplina (`QUANTITATIVO_[DISC].csv`);
+     - O consolidado unificado (`ORCAMENTO_BASE_CONSOLIDADO.csv`), diretamente consumível pelo Dashboard Next.js.
+
 
 ---
 
@@ -351,71 +352,50 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 4. **Ignorar a Regra de Desconto de Apoios / Interseções** — Em cruzamentos de elementos (ex: vigas x pilares/pilaretes), é obrigatório descontar os apoios na viga para que ela seja levantada apenas nos vãos livres, se os pilaretes já foram ou serão levantados inteiros. Jamais gere duplicidade de concreto, fôrma ou impermeabilização no mesmo nó.
 5. **Omitir o Código CIA** em qualquer resultado.
 6. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
-7. **Usar taxas de perda sem registrar qual foi aplicada** — a taxa é parte da memória.
+7. **Aplicar taxas de perda no levantamento de projeto** — É expressamente PROIBIDO aplicar perdas de material (concreto, aço, argamassa, madeira) ou empolamentos no levantamento físico. As perdas pertencem estritamente às Composições de Preço Unitário (CPUs/SINAPI) e compras.
 8. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
-9. **Arredondar para baixo** — quantitativos arredondam para CIMA na compra.
+9. **Arredondar artificialmente números no projeto** — manter a precisão nominal geométrica de 2 casas decimais.
 10. **Misturar área de teto com área de parede** — serviços separados, memórias separadas.
 11. **Somar paredes irregulares como 2×C+2×L** — medir cada trecho individualmente (P1, P2...).
 12. **Apresentar resultado sem unidade de medida** — m², m³, kg, m, unid são obrigatórios.
-13. **Estimar preços** — o agente quantifica, o engenheiro precifica com SINAPI/cotações.
-14. **Fechar a Tabela Consolidada sem antes varrer TODOS os Kits de Miudezas** de cada disciplina presente na obra: Fundações (§1.4 SKILL 01), Estrutura (§4.2 SKILL 02), Alvenaria (§1.6/§1.8 SKILL 03A), Pintura (§5 SKILL 03A), Esquadrias (§2.3 SKILL 03B), Pisos (§6 SKILL 03B), Impermeabilização (§1.5 SKILL 03B), Cobertura/Fachada (§2.4 SKILL 03C), Elétrica (§2.5 SKILL 04), Hidráulica (§2.4 SKILL 05) e Canteiro (§1.4 SKILL 06). A omissão de miudezas resulta em **REPROVAÇÃO IMEDIATA** pela auditoria.
-15. **Emitir Tabela Consolidada sem a Tabela de Serviços / EAP correspondente** — todo levantamento de compras DEVE ser acompanhado do mapeamento de insumos → serviços → pacotes de trabalho EAP para alimentar o cronograma e os contratos de empreitada.
-16. **Apresentar uma linha na Tabela Consolidada sem sua memória de cálculo detalhada** — cada insumo na tabela de compras DEVE ter sua expressão algébrica documentada na Seção 1 da Memória de Cálculo. Tabela sem memória correspondente = documento inválido.
-17. **Emitir o documento final sem auditar a Tabela de Serviços / EAP e o Checklist Anti-Omissão de SKUs da disciplina correspondente** — O Agente DEVE confirmar na SKILL da disciplina quantificada se a Tabela de Serviços / EAP e o Checklist Anti-Omissão de SKUs foram gerados e rubricados. As skills 01 (§1.2, §1.4), 02 (§4.1, §4.2), 03 (§2), 03C (§2.4, §2.5), 04 (§2.5, §3), 05 (§2.4, §3) e 06 (§1.4, §1.5) contêm os artefatos mandatórios desta verificação.
+13. **Estimar preços ou quantitativos** — o agente apura o quantitativo físico das pranchas, o engenheiro orça com SINAPI/cotações.
+14. **Inserir insumos miúdos, consumíveis ou embalagens comerciais (arames, pregos, espaçadores, fitas, tintas avulsas)** — É expressamente PROIBIDO explodir insumos secundários no levantamento físico. Esses insumos já estão inclusos nas composições de serviço.
+15. **Emitir quantitativo sem a Tabela de Serviços / EAP correspondente** — todo levantamento deve estar vinculado aos serviços executivos e pacotes de trabalho da EAP para alimentar o cronograma e o avanço físico.
+16. **Apresentar uma linha na Tabela de Quantitativos sem sua memória de cálculo detalhada** — cada serviço deve ter sua expressão algébrica documentada na Memória de Cálculo.
+17. **Omitir cotas ou inventar dimensões ausentes em prancha** — se faltar cota ou detalhe, abrir RFI formal imediatamente.
 
 ---
 
-## 📏 6. Regras de Precisão e Arredondamento
+## 📏 6. Regras de Precisão e Geometria Líquida Nominal
 
-| Grandeza | Casas Decimais | Regra de Arredondamento Final |
+| Grandeza | Casas Decimais | Regra de Medição no Projeto |
 |---|---|---|
 | Dimensões lineares (m) | 2 decimais | Usar valor exato do projeto |
-| Áreas (m²) | 2 decimais | Arredondar para cima na compra |
-| Volumes (m³) | 2 decimais | Arredondar para cima na compra |
-| Peso de aço (kg) | 2 decimais | Arredondar para cima na compra |
-| Quantidade de blocos (unid) | 0 decimais | Arredondar para cima SEMPRE |
-| Sacos de cimento / cal (unid) | 0 decimais | Arredondar para cima SEMPRE |
-| Latas de tinta / massa (unid) | 0 decimais | Arredondar para cima SEMPRE |
+| Áreas de fôrma, alvenaria, revestimento (m²) | 2 decimais | Valor geométrico líquido nominal |
+| Volumes de concreto, escavação, lastro (m³) | 2 decimais | Volume geométrico líquido nominal |
+| Peso de armadura CA-50 / CA-60 (kg) | 2 decimais | Peso líquido conforme tabelas de ferro das pranchas |
+| Peças pré-moldadas, portas, louças (unid) | Inteiro | Contagem exata de projeto |
 
-### Conversão Obrigatória para Unidade Comercial de Compra (UCC)
-O quantitativo de engenharia puro (físico/matemático) quase nunca bate com a embalagem do fornecedor. Para a Tabela de Insumos final, o Agente DEVE converter as quantidades para a Unidade Comercial (UCC):
-- **Aço (Vergalhão):** Vendido em barras de **12 metros**. Se a obra precisa de 25 metros, deve-se comprar 3 barras (36m).
-- **Tubos de PVC (Hidráulica):** Vendidos em barras de **3 metros** ou **6 metros** (dependendo da bitola). Se o projeto pede 14 metros de tubo esgoto 100mm, comprar 3 barras de 6m (18m).
-- **Cimento / Argamassa:** Vendidos em sacos de **50kg** (cimento) ou **20kg** (argamassa). Dividir o total de kg pela capacidade do saco e arredondar o número de sacos para CIMA.
-- **Pisos / Revestimentos:** Vendidos em **Caixas fechadas**. O Engenheiro deve fornecer o m²/caixa do modelo escolhido para que a divisão resulte em caixas inteiras.
-
-> Resultados intermediários (por ambiente) mantêm 2 casas decimais. A conversão para UCC e o arredondamento para cima ocorrem somente no TOTAL FINAL de compra.
+> **Nota de Engenharia:** O levantamento de projeto deve preservar a fidelidade matemática absoluta da prancha. Conversões para embalagens comerciais de fornecedores (UCC) e coeficientes de perda de canteiro pertencem às composições de custo e às solicitações de compra, nunca ao quantitativo físico de projeto.
 
 ---
 
 ## ✅ 7. Checklist Universal de Entrega
 
-Antes de encerrar qualquer levantamento:
+Antes de encerrar qualquer levantamento de quantitativo:
 
 - [ ] Hierarquia completa preenchida (Obra > Pavimento > Unidade > Ambiente > Disciplina > Serviço)
 - [ ] Código CIA atribuído a cada ambiente
-- [ ] Quadro de Esquadrias gerado (se houver serviços de revestimento)
-- [ ] Memória de cálculo transcrita para **cada serviço em cada ambiente** — incluindo expressão algébrica para cada insumo
-- [ ] **Cada linha da Tabela Consolidada rastreada para sua memória de cálculo** (sem linha órfã)
+- [ ] Quadro de Esquadrias gerado (se houver serviços de alvenaria e acabamentos)
+- [ ] Memória de cálculo transcrita para **cada serviço em cada ambiente** (expressão literal auditável)
+- [ ] **Cada linha da Tabela de Serviços rastreada para sua memória de cálculo** (sem linha órfã)
 - [ ] Revestimento de PAREDE separado de TETO
 - [ ] Desconto de vãos aplicado (NBR 12721 — tabela de 3 faixas)
-- [ ] Taxas de perda explicitadas na memória
+- [ ] **Zero perdas aplicadas** (quantitativo reflete 100% a geometria nominal das pranchas)
+- [ ] **Zero insumos miúdos explodidos** (sem arames, pregos, desmoldantes, fitas poluindo o quantitativo)
 - [ ] Pavimento Tipo com multiplicador aplicado (se houver)
 - [ ] Tabela Resumo por Disciplina gerada com subtotais
-- [ ] Tabela de Insumos para Compra (BOM) gerada
-- [ ] **Kits de Miudezas varridos por disciplina** (verificar cada checklist antes de fechar a BOM):
-  - [ ] **Fundações:** Kit §1.4 da [SKILL_QUANT_01_FUNDACOES.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_01_FUNDACOES.md) (arame, espaçadores solo, desmoldante, pregos, sarrafos, lona, emulsão, rolos/trinchas, dreno, manta, brita)
-  - [ ] **Superestrutura:** Kit §4.2 da [SKILL_QUANT_02_ESTRUTURA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_02_ESTRUTURA.md) (espaçadores pilar/viga/laje, arame, desmoldante, pregos, sarrafos, fita crepe, tensores, membrana de cura)
-  - [ ] **Alvenaria:** Kit §1.6 + §1.8 da [SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md) (telas amarração, pinos/finca-pinos, adesivo, espuma PU encunhamento)
-  - [ ] **Pinturas:** Kit §5 da [SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03A_ALVENARIA_E_VEDACAO.md) (selador, lixas, fita crepe, lona proteção)
-  - [ ] **Pisos / Cerâmicos:** Kit §6 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (cimentcola, rejunte, espaçadores, clips niveladores, cunhas)
-  - [ ] **Esquadrias:** Kit §2.3 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (dobradiças, fechaduras, batedores, espuma PU, parafusos, pregos, cola PVA, selante)
-  - [ ] **Impermeabilização:** Kit §1.5 da [SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03B_ACABAMENTOS_E_ESQUADRIAS.md) (primer, tela poliéster, fita asfáltica, GLP)
-  - [ ] **Coberturas e Fachadas:** Kit §2.4 da [SKILL_QUANT_03C_FACHADAS_E_EXTERNOS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_03C_FACHADAS_E_EXTERNOS.md) (autobrocantes, costura, fita butílica, parabolts, rebites, selante PU, mastique, selador fachada, cantoneiras tela)
-  - [ ] **Instalações Elétricas:** Kit §2.5 da [SKILL_QUANT_04_ELETRICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_04_ELETRICA.md) (luvas, adaptadores box, abraçadeiras D, conectores Wago, terminais ilhós, fita isolante, buchas/parafusos, talco, autofusão, prensa-cabos, tirantes, anilhas, fita perigo, solda exotérmica)
-  - [ ] **Instalações Hidrossanitárias:** Kit §2.4 da [SKILL_QUANT_05_HIDRAULICA.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_05_HIDRAULICA.md) (cola PVC, preparador, veda-rosca, lubrificante esgoto, anéis borracha, abraçadeiras prumada, lixas, plugues teste, abraçadeiras gota, selante intumescente, anel cera bacia, parafusos inox, sifões, engates)
-  - [ ] **Canteiro e Logística:** Kit §1.4 da [SKILL_QUANT_06_SERVICOS_ESPECIAIS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_06_SERVICOS_ESPECIAIS.md) (tapume, placa de obra, tela fachada, guarda-corpo, extintores provisórios, cones/fita zebrada, papelão piso, plástico bolha tampos, caçambas)
-- [ ] **Tabela de Serviços / EAP gerada** (mapeamento insumo → serviço → pacote de trabalho → cronograma)
+- [ ] Tabela Oficial de Serviços para EAP gerada (mapeamento serviço → pacote de trabalho → cronograma)
 - [ ] Totais auditáveis (soma dos subtotais por ambiente)
 - [ ] Unidades de medida em todos os resultados
 - [ ] Precisão decimal: 2 casas para m², m³, kg

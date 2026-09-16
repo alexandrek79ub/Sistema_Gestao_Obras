@@ -90,37 +90,23 @@ A_inclinada = A_horizontal / cos(θ)
 | **Fita Crepe Larga 48mm para Demarcação de Frisos** | `⌈L_frisos / 50m⌉` | rolo 50m |
 | **Cantoneiras de PVC com Tela para Quinas de Fachada** | Metragem linear total de cantos e quinas externas expostas | barras 3m |
 
-### 🛡️ 2.4 Checklist Anti-Omissão de Cobertura e Fachadas (10 SKUs Obrigatórios na UCC/BOM)
+### 📋 2.4 Tabela Oficial de Serviços para EAP e Cronograma (Nível 2.2 — Cobertura e Fachada)
 
-> Antes de emitir o relatório quantitativo de cobertura e fachada, o PMO Virtual DEVE auditar e certificar a presença de todos os 10 SKUs na BOM:
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela alinha os pacotes executivos de obras externas e envoltória da edificação com o nível 2.2 da EAP, medidos exclusivamente por critérios físicos de engenharia.
 
-- [ ] **Parafusos Autobrocantes 12×1"/2" c/ Arruela EPDM:** Mínimo 4,5 un/m² de área real inclinada.
-- [ ] **Parafusos de Costura (Stitch) 10×3/4":** Emendas longitudinais e costuras de sobreposição a cada 50cm.
-- [ ] **Fita de Vedação Butílica Autoadesiva 15mm:** Vedação estanque de transpasses de telhas e calhas.
-- [ ] **Chumbadores Parabolts CBA 3/8"×3":** Fixação de terças e perfis nas muretas e apoios de concreto.
-- [ ] **Rebites de Repuxo em Alumínio 4,0×10mm:** 10 un por metro de emenda de calhas e rufos.
-- [ ] **Selante PU 40 para Calhas e Rufos:** 1 tubo de 310mL a cada 5m lineares de emenda e rufo.
-- [ ] **Mastique / Selante de Poliuretano para Juntas de Fachada:** 1 tubo a cada 3m de junta de dilatação.
-- [ ] **Selador Acrílico Pigmentado:** Fundo preparador para textura/grafiato na proporção de 0,10 L/m².
-- [ ] **Fita Crepe Larga para Demarcação de Frisos:** 1 rolo de 50m a cada 50m lineares de friso projetado.
-- [ ] **Cantoneiras de PVC com Tela de Fibra:** Reforço estrutural anti-fissuração em todas as quinas de fachada.
-
-### 📋 2.5 Tabela Oficial de Serviços para EAP e Cronograma (Nível 2.2 — Cobertura e Fachada)
-
-> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela alinha os pacotes executivos de obras externas e envoltória da edificação, em consonância direta com o nível 2.2 da EAP padronizada em `SKILL_QUANT_03_ARQUITETURA.md`. Miudezas constam exclusivamente da UCC (§2.3 e §2.4).
-
-| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Insumos BOM Derivados |
+| Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Imediata | Critério de Medição Física |
 |:---:|:---|:---:|:---:|:---|
-| **2.2.1** | Cobertura — Telhas (área inclinada real) | m² | 2.2.2 Estrutura de Cobertura | Telhas (un), parafusos autobrocantes, parafusos costura, fitas butílicas |
-| **2.2.2** | Estrutura Metálica de Cobertura — Terças / Caibros | kg / m | 1.4.12 Desforma lajes | Perfis metálicos, chumbadores parabolts CBA |
-| **2.2.3** | Muretas de Apoio e Alvenaria de Entreforro | m² | 1.4.8 Concretagem laje | Blocos 9×19×39cm, argamassa de assentamento |
-| **2.2.4** | Alvenaria de Platibanda | m² | 1.4.8 Concretagem laje | Blocos 14×19×39cm, canaletas, graute |
-| **2.2.5** | Calhas e Rufos em Chapa Galvanizada | m | 2.2.1 Telhas montadas | Chapas galvanizadas, rebites de repuxo, selante PU 40 |
-| **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | m² | 2.2.5 Calhas instaladas | Manta asfáltica 4mm, primer asfáltico, gás GLP P-13 |
-| **2.2.7** | Revestimento de Fachada — Chapisco + Textura / Grafiato | m² | 2.1.1 Alvenaria externa | Selador acrílico, textura/grafiato, cantoneiras c/ tela |
-| **2.2.8** | Pintura de Platibanda (Face Interna — Acrílica Impermeável) | m² | 2.2.4 Platibanda rebocada | Tinta acrílica impermeabilizante, selador acrílico |
-| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | m / un | 1.3.11 Baldrame do muro | Blocos, concreto baldrame, chapins, portões e motores |
-| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | m² / m | 2.2.9 Muro + 3.2.1 Drenagem | Paver intertravado, sub-base BGS, areia, meio-fio |
+| **2.2.1** | Cobertura — Telhas | m² | 2.2.2 Estrutura de Cobertura | Área inclinada real de telhado |
+| **2.2.2** | Estrutura Metálica de Cobertura — Terças / Caibros | kg / m | 1.4.12 Desforma lajes | Peso ou extensão linear de perfis |
+| **2.2.3** | Muretas de Apoio e Alvenaria de Entreforro | m² | 1.4.8 Concretagem laje | Área líquida de alvenaria |
+| **2.2.4** | Alvenaria de Platibanda | m² | 1.4.8 Concretagem laje | Área líquida de alvenaria |
+| **2.2.5** | Calhas e Rufos em Chapa Galvanizada | m | 2.2.1 Telhas montadas | Extensão linear instalada |
+| **2.2.6** | Impermeabilização — Manta Asfáltica em Calhas | m² | 2.2.5 Calhas instaladas | Área líquida impermeabilizada |
+| **2.2.7** | Revestimento de Fachada — Chapisco + Textura / Grafiato | m² | 2.1.1 Alvenaria externa | Área líquida externa desenvolvida |
+| **2.2.8** | Pintura de Platibanda (Face Interna — Acrílica Impermeável) | m² | 2.2.4 Platibanda rebocada | Área real desenvolvida |
+| **2.2.9** | Muros de Fechamento Perimetral e Portões de Acesso | m / un | 1.3.11 Baldrame do muro | Extensão linear / Unidades |
+| **2.2.10** | Pavimentação Externa, Calçadas e Meio-Fio | m² / m | 2.2.9 Muro + 3.2.1 Drenagem | Área pavimentada / Comprimento |
+
 
 ---
 

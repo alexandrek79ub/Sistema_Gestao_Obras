@@ -170,19 +170,8 @@ Areia = A_alvenaria_líquida × 0,022 m³/m² × 1,05
 
 ---
 
-### 1.6 Kit de Acessórios de Alvenaria (Miudezas Obrigatórias)
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Telas de amarração galvanizadas 15×50cm (a cada 2 fiadas) | `N_interfaces_pilar × Floor(H/0,40m) × 1,05` | unid |
-| Pinos finca-pinos + cartuchos de pólvora | `N_telas × 2 × 1,05` | unid |
-| Adesivo plastificante (0,20 L/m² de chapisco) | `A_chapisco × 0,20` | lata 18L ↑ |
-| **Espuma de Poliuretano Expansiva PU 750ml** (encunhamento flexível sob vigas, laje e telhado) | `Ceil(L_total_topo / 3,0m) × 1,05` | tubo 750ml ↑ |
-| Argamassa de encunhamento industrializada (alternativa ao PU — trapo areia fina) | `L_total_topo × 0,14m × 0,05m × 2.000 kg/m³` | saco 20kg ↑ |
-
-> ⚠️ **Regra:** Usar Espuma PU quando o projeto especificar fechamento flexível; argamassa quando especificar graute rígido. Se não houver especificação, parar e emitir RFI.
-
 ---
+
 
 ### 1.7 Coeficientes TCPO — Alvenaria
 
@@ -340,20 +329,8 @@ A_final = A_forro × (1 + 10%)
 | **Grafiato (textura riscada)** | Grafiato | 2,5 | kg/m² |
 | | Selador acrílico | 0,10 | L/m² |
 
-### Kit de Pintura (Miudezas Obrigatórias)
-
-| Item | Cálculo | UCC |
-|---|---|---|
-| Selador acrílico (18L) | `A_nova × 0,10 L/m²` | lata ↑ |
-| Fundo preparador (18L) | `(A_gesso + A_drywall) × 0,10` | lata ↑ |
-| Massa PVA / Acrílica (25kg) | `A × consumo kg/m²` | lata ↑ |
-| Lixa grossa gr.80 | `A_reboco × 0,05` | folha ↑ |
-| Lixa fina gr.150 | `A_massa × 0,10` | folha ↑ |
-| Fita crepe 24mm × 50m | `Perim_proteção / 50m` | rolo ↑ |
-| Lona plástica (bobinas 100m²) | `A_piso / 100` | bobina ↑ |
-| Aguarrás mineral (L) | `V_esmalte / 10` | litro ↑ |
-
 ---
+
 
 ## 🌳 Árvore de Decisão — SKILL 03A
 

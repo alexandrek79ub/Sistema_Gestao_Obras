@@ -45,62 +45,10 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
 
 ---
 
-### 2.3 Algoritmo Matemático de Derivação de Miudezas e Consumíveis Hidráulicos
-Para eliminar omissões e garantir o kit completo de instalação:
-1. **Adesivo Plástico para PVC (frascos 175g ou 850g):**  
-   `N_adesivo_175g = ⌈ Σ (Conexões Soldáveis) / 30 ⌉ frascos (mínimo 1 frasco por obra)`
-2. **Solução Preparadora / Limpadora PVC (frascos 200ml):**  
-   `N_solução_limpadora = ⌈ N_frascos_adesivo / 2 ⌉ frascos`
-3. **Fita Veda-Rosca PTFE 18mm x 50m (rolos):**  
-   `N_rolos_veda_rosca = ⌈ Σ (Pontos Roscáveis, Registros e Torneiras) / 15 ⌉ rolos (mínimo 2 rolos)`
-4. **Pasta Lubrificante para Tubos de Esgoto com Junta Elástica (bisnagas 160g):**  
-   `N_pasta_lubrificante = ⌈ Σ (Tubos e Conexões de Esgoto c/ Bolsa) / 20 ⌉ bisnagas`
-5. **Anéis de Borracha para Esgoto (unid):**  
-   1 anel para cada bolsa de tubo ou conexão de esgoto (DN 40, 50, 75, 100, 150mm).
-6. **Abraçadeiras de Fixação para Prumadas e Tubulações Suspensas (unid):**  
-   Fixação a cada 1,50 m em prumadas verticais e trechos suspensos sob laje:
-   `N_abraçadeiras = ⌈ L_tubulação_suspensa/prumada / 1,50m ⌉ × 1,05`
-7. **Lixas d'Água Grão 100 e 120 (unid / folhas):**  
-   Quebra de brilho e lixamento superficial dos tubos e bolsas de conexões PVC/CPVC antes da aplicação do adesivo:
-   `N_folhas = ⌈ N_conexões_soldáveis / 25 ⌉ folhas (mínimo 1 folha por sistema)`
-8. **Plugues Plásticos Roscáveis / Buchões de Vedação 1/2" e 3/4" (unid):**  
-   Proteção provisória contra entrada de entulho e tamponamento para teste hidrostático pressurizado:
-   `N_plugues = N_pontos_de_água (chuveiro, lavatório, bacia, torneiras) × 1,05`
-9. **Abraçadeiras Tipo Gota em Aço Galvanizado c/ Tirante 1/4" (unid):**  
-   Suspensão sob laje de ramais horizontais de esgoto e águas pluviais:
-   `N_abraçadeiras_gota = ⌈ L_esgoto_suspenso_sob_laje / 1,50m ⌉ × 1,05`
-10. **Selante Intumescente Corta-Fogo / Espuma de Vedação (bisnagas 310mL):**  
-    Vedação estanque e corta-fogo em travessias de tubulações plásticas em lajes e paredes de compartimentação (NBR 14432):
-    `N_bisnagas = ⌈ N_travessias_de_laje_DN_≥_50mm / 3 ⌉`
-11. **Fita Aluminizada Autoadesiva com Proteção Anti-UV (m lineares):**  
-    Proteção mecânica e bloqueio de degradação solar em tubulações aparentes de PVC/PPR instaladas em coberturas ou fachadas:
-    `L_fita = L_tubulações_externas_expostas × 1,10 m`
-
-### 🛡️ 2.4 Checklist Anti-Omissão de SKUs de Instalações Hidráulicas (15 SKUs Obrigatórios na UCC/BOM)
-
-> Antes de emitir a lista de compras ou relatório quantitativo de hidráulica, o PMO Virtual DEVE auditar e certificar a presença mandatória de todos os 15 insumos consumíveis na BOM:
-
-- [ ] **Adesivo Plástico para PVC Soldável (frascos 175g/850g):** `⌈ N_conexões_soldáveis / 30 ⌉` frascos.
-- [ ] **Solução Limpadora / Preparadora PVC (frascos 200mL):** `⌈ N_frascos_adesivo / 2 ⌉` frascos.
-- [ ] **Fita Veda-Rosca PTFE 18mm × 50m:** `⌈ N_pontos_roscáveis / 15 ⌉` rolos (mínimo 2 rolos).
-- [ ] **Pasta Lubrificante para Tubos de Esgoto c/ Bolsa (bisnagas 160g):** `⌈ N_bolsas_esgoto / 20 ⌉` bisnagas.
-- [ ] **Anéis de Borracha para Esgoto (junta elástica):** 1 un por bolsa de tubo ou conexão (DN 40 a 150mm).
-- [ ] **Abraçadeiras de Fixação para Prumadas Verticais:** `⌈ L_prumada / 1,50m ⌉ × 1,05`.
-- [ ] **Lixas d'Água Grão 100/120:** `⌈ N_conexões_soldáveis / 25 ⌉` folhas.
-- [ ] **Plugues Plásticos Roscáveis 1/2" e 3/4" (buchões de ensaio):** 1 un por saída de água fria/quente.
-- [ ] **Abraçadeiras Tipo Gota (esgoto suspenso sob laje):** `⌈ L_esgoto_suspenso / 1,50m ⌉`.
-- [ ] **Selante Intumescente Corta-Fogo:** 1 bisnaga a cada 3 passagens de laje de prumadas DN ≥ 50mm.
-- [ ] **Fita Aluminizada Anti-UV:** Extensão igual à tubulação plástica aparente externa + 10%.
-- [ ] **Anel de Vedação de Cera com Guia para Bacia Sanitária:** 1 un por bacia sanitária.
-- [ ] **Conjunto de Parafusos de Fixação de Bacia S10 Inox:** 1 conjunto (2 parafusos) por bacia instalada.
-- [ ] **Sifão Sanfonado Universal c/ Adaptador:** 1 un por cuba, lavatório, tanque ou pia.
-- [ ] **Engates Flexíveis Inox 40cm / 50cm:** 1 a 2 un por ponto de água de torneiras, lavatórios e bacias.
-
----
-
 ## 📋 3. Tabela Oficial de Serviços para EAP e Cronograma de Hidráulica (Nível 3.2 — 5 Fases Civis + Marco de Teste)
 
-> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**. Os consumíveis (cola, veda-rosca, plugues, lixas, abraçadeiras) NÃO recebem código EAP e pertencem à lista UCC/BOM derivada (§2.3 e §2.4).
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela contém **exclusivamente pacotes de trabalho e serviços executivos de engenharia**, medidos por avanço físico em campo. Consumíveis e insumos de fixação (adesivos, veda-rosca, abraçadeiras, plugues) já compõem as CPUs oficiais (SINAPI/TCPO) e não são explodidos no quantitativo físico de projeto.
+
 
 | Código EAP | Pacote de Trabalho | Unid. Avanço Físico | Predecessora Civil | Observação Crítica |
 |:---:|:---|:---:|:---:|:---|
@@ -129,39 +77,23 @@ Para eliminar omissões e garantir o kit completo de instalação:
 ╠══════════════════════════════════════════════════════════════════╣
 ║  TUBULAÇÃO LÍQUIDA MEDIDA (Planta Baixa + Prumada Vertical Z):  ║
 ║    Horizontal: X,XX m | Vertical (Z): X,XX m                     ║
-║    Subtotal: X,XX m + Perda 10% = X,XX m                        ║
+║    Comprimento Líquido Nominal: X,XX m                          ║
 ║                                                                  ║
 ║  CONEXÕES DETALHADAS PEÇA POR PEÇA:                              ║
 ║    Joelho 90º DN 100mm: X unid                                   ║
 ║    Junção Y 100x50mm: X unid                                     ║
 ║    Ralo Sifonado 150x150x50mm: X unid                            ║
 ║    Bacia Sanitária c/ Caixa Acoplada: X conjuntos montados       ║
-║                                                                  ║
-║  MIUDEZAS DE MONTAGEM E FIXAÇÃO:                                 ║
-║    Engates flexíveis inox 40cm: X unid                           ║
-║    Anel de vedação de cera: X unid                               ║
-║    Parafusos bacia S10 inox: X conjuntos                         ║
-║    Adesivo PVC + Fita veda-rosca: X frascos / rolos              ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
 ---
 
-## 5. Tabela Oficial de Compras: Padronização das Unidades Comerciais (UCC)
+## 5. Diretrizes de Quantitativo de Instalações Hidráulicas
 
-> 🛑 **REGRA RÍGIDA DE SEPARAÇÃO DE UCC PARA MATERIAIS HIDRÁULICOS:**
-1. **Tubos Rígidos Soldáveis de Água Fria (PVC, PPR, CPVC):**  
-   * **Unidade Comercial:** **BARRAS DE 6 METROS (`barras`)** ou 3 metros conforme catálogo fabricante.  
-   * **Arredondamento:** `Qtd. UCC = ⌈ L_total × 1,10 / 6m ⌉`.
-2. **Tubos de Esgoto Série Normal e Série Reforçada (PVC):**  
-   * **Unidade Comercial:** **BARRAS DE 6 METROS COM BOLSA (`barras`)**.  
-   * **Arredondamento:** `Qtd. UCC = ⌈ L_total × 1,10 / 6m ⌉`.
-3. **Registros de Gaveta e Pressão:**  
-   * **Unidade Comercial:** **PEÇA / UNIDADE (`un`)**, especificando bruto ou com canopla cromada.
-4. **Louças Sanitárias e Metais:**  
-   * **Unidade Comercial:** **CONJUNTO MONTADO (`cj`)** ou **PEÇA (`un`)**, incluindo louça, assento, mecanismo interno e torneira.
-5. **Formatação da Tabela de Compras (Sem Ambiguidade):**  
-   Apresentar sempre as colunas: `Unid. Proj.` (metros ou unidades de projeto), `Qtd. UCC`, `Unid. UCC` (`barras`, `un`, `cj`, `rolos`, `frascos`) e `Embalagem de Fornecimento`.
+> 🛑 **REGRA DE MEDIÇÃO LÍQUIDA NOMINAL:**  
+> O levantamento de instalações hidrossanitárias apura as extensões lineares reais dos tubos e a contagem exata de conexões e aparelhos conforme especificado em projeto. Perdas de corte e insumos secundários (fitas, adesivos, lixas) pertencem exclusivamente às composições de custo (SINAPI/CPU).
+
 
 ---
 

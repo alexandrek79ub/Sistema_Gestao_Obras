@@ -8,10 +8,9 @@
 > **REGRAS ABSOLUTAS DO PMO VIRTUAL (INVIOLÁVEIS)**
 > - **ZERO ESTIMATIVA / ZERO CHUTE:** É EXPRESSAMENTE PROIBIDO estimar, inferir ou chutar dimensões, comprimentos, áreas, volumes ou quantitativos de projeto de estruturas.
 > - **LEITURA OBRIGATÓRIA:** Toda cota DEVE ser lida 100% diretamente das pranchas. Se faltar cota ou prancha, PARE A EXECUÇÃO E SOLICITE AO USUÁRIO. O orçamento é executivo e a gestão de obras não admite achismos.
-> - **GRANULARIDADE 100% (PEÇA A PEÇA):** É PROIBIDO agrupar insumos (ex: "vigas V1 a V18"). O levantamento DEVE quantificar minuciosamente pilar por pilar, viga por viga, detalhando dimensões individuais.
-> - **SEGREGAÇÃO MANDATÓRIA EAP vs. UCC (NÃO POLUIR A EAP):** 
->   - **Na EAP de Superestrutura:** Devem constar **exclusivamente serviços puros de engenharia** (Concreto Usinado, Fôrmas, Aço Armado, Vigotas Treliçadas, Blocos de Enchimento EPS, Escoramento Metálico).
->   - **Na UCC (Lista de Compras / BOM / Almoxarifado):** Devem ser discriminadas todas as **miudezas e insumos de apoio executivo** (Arame Recozido BWG 18, Espaçadores Plásticos de cobrimento, Desmoldante para fôrmas, Pregos 17x27/18x30, Sarrafos de madeira para gravatas, Lona de cura úmida). As miudezas NUNCA devem receber código de serviço da EAP.
+> - **GRANULARIDADE 100% (PEÇA A PEÇA):** É PROIBIDO agrupar peças sem individualização. O levantamento DEVE quantificar minuciosamente pilar por pilar, viga por viga, detalhando dimensões individuais.
+> - **ZERO INSUMOS MIÚDOS E ZERO PERDAS NO LEVANTAMENTO:** O levantamento de superestrutura apura exclusivamente quantidades geométricas nominais de serviços (Concreto Usinado m³, Fôrmas m², Aço Armado kg extraído do quadro de ferro da prancha). É expressamente **PROIBIDO explodir insumos miúdos (arame recozido, pregos, sarrafos, espaçadores plásticos, desmoldantes)** ou aplicar taxas de perdas percentuais, pois esses materiais já compõem as CPUs oficiais (SINAPI/TCPO).
+
 
 ---
 
@@ -233,33 +232,13 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 
 > ⚠️ Taxas médias são apenas estimativas para orçamento preliminar. Para orçamento executivo, usar o detalhamento de armadura do projeto estrutural.
 
-### 🔩 3.5 Matriz Consolidada de Miudezas e Consumíveis da Superestrutura (UCC / BOM)
-
-> 🛑 **REGRA DE OURO DA GOVERNANÇA: EAP É SERVIÇO, UCC É COMPRA!**  
-> Estes insumos e consumíveis de canteiro **NÃO recebem código EAP**. São derivados parametricamente dos serviços executivos de fôrmas, armação e concretagem e alocados estritamente na Lista de Compras (BOM / UCC):
-
-| Insumo Consumível / Miudeza | Fórmula de Consumo Paramétrico | Unidade de Compra (UCC) |
-|:---|:---|:---:|
-| **Espaçadores circulares tipo roda/estrela com garra (Pilares)** | 3 a 4 un/m² de área lateral de pilar (garantia de cobrimento NBR 6118) | Caixa 100 un |
-| **Espaçadores tipo cadeira/garra lateral (Vigas)** | 4 un/m linear de viga (2 no fundo + 2 nas laterais) | Caixa 100 un |
-| **Espaçadores tipo centopeia/torre (Lajes)** | 2 a 3 un/m² de laje (armadura positiva e negativa) | Caixa 100 un |
-| **Arame Recozido BWG 18** | 1,5% a 2,0% do peso total de aço CA-50/CA-60 (kg) | Rolo 1 kg |
-| **Desmoldante para Compensado Resinado** | 1 L para cada 25 a 30 m² de fôrma de madeira | Bombona 18 L |
-| **Desmoldante para Compensado Plastificado** | 1 L para cada 35 a 40 m² de chapa plastificada | Bombona 18 L |
-| **Pregos com Cabeça 17×27 e 18×30** | 0,05 kg por m² de fôrma de compensado | Caixa 10 kg |
-| **Sarrafos Pinus 2,5×7,0cm (gravatas e contenção de pilares)** | 1,2 m lineares por m² de fôrma de pilar e viga | Dúzia de barras 3m |
-| **Fita Adesiva Crepe Larga 48mm×50m (vedação de emendas)** | 1 rolo a cada 40 m² de fôrma (evita fuga de pasta/bicheiras) | Rolo 50 m |
-| **Membrana de Cura Química Líquida (aspersão — Sika Antisol)** | 1 L para cada 6 m² de laje ou viga exposta | Frasco 3,6 L / Balde 18 L |
-| **Lona Plástica Preta 200µ (cura úmida / proteção de lajes)** | 1 bobina (200 m²) a cada 200 m² de laje concretada | Bobina 200 m² |
-| **Agulhas / Tensores de Barra Roscada 1/2" c/ Porca Borboleta** | 2 tensores por m² de face de pilar alto (H > 3,00m) | Barra 1m + porcas |
-
 ---
 
 ## 🔄 4. Cronograma, EAP e Controle de Pavimento Tipo (Nível 1.4)
 
 ### 📋 4.1 Tabela Oficial de Serviços para EAP e Cronograma (Nível 1.4 — Ciclo de Pavimento Tipo)
 
-> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela estrutura a linha de balanço e o ciclo executivo de cada pavimento da superestrutura. Miudezas e consumíveis constam exclusivamente da UCC (§3.5 e §4.2).
+> 🛑 **REGRA DE SEGREGAÇÃO:** Esta tabela estrutura a linha de balanço e o ciclo executivo de cada pavimento da superestrutura, focando estritamente em serviços executivos de engenharia.
 
 | Código EAP | Pacote de Trabalho (Ciclo de Pavimento) | Unid. Avanço | Predecessora Imediata | Prazo Mínimo Normativo (NBR 14931) |
 |:---:|:---|:---:|:---:|:---:|
@@ -276,22 +255,8 @@ Peso_total_bitola = Σ (n_barras × Peso_barra) × (1 + Taxa_perda)
 | **1.4.11** | Desforma de Fundo de Vigas e Lajes + Re-escoramento | m² | 1.4.8 FF+14d | Mínimo 14 dias com re-escoramento mantido |
 | **1.4.12** | Alívio Total de Escoramento (Retirada definitiva) | m² | 1.4.8 FF+28d | Mínimo 28 dias (100% do Fck alcançado) |
 
-### 🛡️ 4.2 Checklist Anti-Omissão de Superestrutura (10 SKUs Obrigatórios na UCC/BOM)
+### 🏢 4.2 Controle de Pavimento Tipo (Andares Repetidos)
 
-> Antes do fechamento do lote de compras ou requisição de materiais da superestrutura, auditar a inclusão mandatória de:
-
-- [ ] **Espaçadores de Pilar (tipo roda/estrela com garra):** 3 a 4 un/m² de pilar concretado.
-- [ ] **Espaçadores de Viga (tipo cadeira/garra):** 4 un/m linear de viga estrutural.
-- [ ] **Espaçadores de Laje (tipo centopeia/torre):** 2 a 3 un/m² de laje.
-- [ ] **Arame Recozido BWG 18:** 1,5% a 2,0% do peso total de aço (kg).
-- [ ] **Desmoldante para Fôrmas:** Tipo apropriado ao compensado (resinado ou plastificado), conforme taxa de consumo paramétrica.
-- [ ] **Pregos com Cabeça 17×27 / 18×30:** 0,05 kg por m² de fôrma.
-- [ ] **Sarrafos de Gravata e Travamento:** 1,2 m lineares por m² de fôrma de pilar/viga.
-- [ ] **Fita Adesiva Crepe para Vedação de Emendas:** 1 rolo de 50m a cada 40 m² de fôrma montada.
-- [ ] **Agulhas / Tensores de Barra Roscada:** Para contenção de fôrmas em pilares de pé-direito superior a 3,00m.
-- [ ] **Membrana de Cura Química ou Lona Plástica 200µ:** Quantidade total proporcional à área de lajes e topos de vigas para cumprimento integral da NBR 14931.
-
-### 🏢 4.3 Controle de Pavimento Tipo (Andares Repetidos)
 
 Quando N andares possuem layout estrutural idêntico:
 
