@@ -6,6 +6,7 @@
 
 > [!CAUTION]
 > **REGRAS ABSOLUTAS DO PMO VIRTUAL (INVIOLÁVEIS)**
+> - **HÍBRIDA NEURO-SIMBÓLICA - ZERO CÁLCULO PELA IA:** É ESTRITAMENTE PROIBIDO realizar cálculos numéricos geométricos "de cabeça". Você deve delegar os cálculos para o `scripts/motor_quantitativos/importadores/roteador.py`. O `ParserEstrutura` embarcado aplicará matematicamente as fórmulas documentadas abaixo.
 > - **ZERO ESTIMATIVA / ZERO CHUTE:** É EXPRESSAMENTE PROIBIDO estimar, inferir ou chutar dimensões, comprimentos, áreas, volumes ou quantitativos de projeto de estruturas.
 > - **LEITURA OBRIGATÓRIA:** Toda cota DEVE ser lida 100% diretamente das pranchas. Se faltar cota ou prancha, PARE A EXECUÇÃO E SOLICITE AO USUÁRIO. O orçamento é executivo e a gestão de obras não admite achismos.
 > - **GRANULARIDADE 100% (PEÇA A PEÇA):** É PROIBIDO agrupar peças sem individualização. O levantamento DEVE quantificar minuciosamente pilar por pilar, viga por viga, detalhando dimensões individuais.

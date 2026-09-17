@@ -22,7 +22,12 @@ Cobre o **levantamento quantitativo físico e geométrico de todos os elementos 
 
 ## 🚨 DIRETRIZES FUNDAMENTAIS DO LEVANTAMENTO (INVIOLÁVEIS)
 
-### 1. Proibição de Inserção de Insumos na Skill de Quantitativo
+### 1. HÍBRIDA NEURO-SIMBÓLICA - ZERO CÁLCULO PELA IA
+- **É ESTRITAMENTE PROIBIDO realizar cálculos numéricos geométricos ou tentar resolver expressões matemáticas "de cabeça"**.
+- A IA atua **apenas como orquestradora**. Para obter quantidades e aplicar as fórmulas abaixo, **VOCÊ DEVE DELEGAR** a extração ao script determinístico localizado em `scripts/motor_quantitativos/importadores/roteador.py`.
+- O Motor Quantitativo possui embarcado o `ParserFundacoes` (em `scripts/motor_quantitativos/importadores/disciplinas/parser_fundacoes.py`), que executará matematicamente as fórmulas que estão documentadas nesta skill. As fórmulas abaixo servem apenas como **Base de Conhecimento e Manual de Engenharia**.
+
+### 2. Proibição de Inserção de Insumos na Skill de Quantitativo
 - O papel do Levantamento Quantitativo de Engenharia (Take-off) é apurar estritamente os **Serviços Executivos e Elementos Físicos de Projeto** (ex: Concreto $m^3$, Fôrma $m^2$, Aço $kg$, Escavação $m^3$, Impermeabilização $m^2$).
 - **É expressamente PROIBIDO explodir ou calcular insumos miúdos derivados** (arames recozidos, pregos, sarrafos, desmoldantes, espaçadores, fitas, rolos ou trinchas) dentro das memórias de cálculo ou tabelas de quantitativo.
 - **Motivo técnico:** As Composições de Preço Unitário (CPUs oficiais como SINAPI e TCPO) **já contêm esses insumos e seus coeficientes de consumo embutidos no custo unitário do serviço**. Inserir esses insumos no quantitativo físico causa **dupla contagem** e infla indevidamente o custo da obra.
