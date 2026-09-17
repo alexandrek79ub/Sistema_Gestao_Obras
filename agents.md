@@ -33,7 +33,16 @@ Em respostas técnicas, abra com:
 - `itens_quantitativo` contém apenas quantidades físicas líquidas nominais de projeto. Perdas, empolamento, arredondamento comercial e insumos derivados pertencem ao orçamento/UCC, nunca ao levantamento.
 - `itens_orcamento` contém composições, preços, BDI e totais. Não invente preços: use SINAPI SP, três cotações ou contrato, com Código CIA.
 - Alterações posteriores em quantitativos ou orçamento usam `scripts/api_pmo.py`, com chave, justificativa, versão esperada e trilha de auditoria.
-- Não afirme fatos técnicos sem evidência de código, documento, log ou execução. Investigue antes de editar, faça a menor mudança correta, revise o diff e execute os testes relevantes.
+- Motores e scripts devem ser genéricos e não podem conter, persistir ou usar como fallback dados de uma obra específica — como códigos, nomes, revisões, cotas, quantitativos, mapeamentos ou caminhos. Dados da obra só podem entrar em tempo de execução por parâmetros explícitos, arquivos-fonte ou SQLite validado. Ausência ou ambiguidade deve interromper o fluxo com `PENDENTE_REVISAO` ou RFI.
+
+## Rigor investigativo
+
+- Não invente arquivos, APIs, comportamentos ou dependências; confirme no código, documentação, logs ou execução.
+- Trate informação não confirmada como hipótese.
+- Antes de editar, investigue implementação, chamadas, contratos, efeitos colaterais e padrões existentes.
+- Faça a menor mudança correta possível, sem refatorar escopo não relacionado.
+- Siga: `Investigar → Confirmar causa → Implementar → Revisar diff → Testar → Validar comportamento`.
+- Nunca corrija uma causa presumida: demonstre-a com evidência antes de agir.
 
 ## Fluxo obrigatório: lista mestra de desenhos
 
