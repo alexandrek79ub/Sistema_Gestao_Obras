@@ -9,20 +9,37 @@ import csv
 import hashlib
 import json
 import re
+import sqlite3
 import sys
+
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from motor_quantitativos.repositorio.sqlite_repository import connect, garantir_obra
-
-
-STATUS_TITULO = {"EXTRAIDO", "PENDENTE_REVISAO", "CONFIRMADO"}
-STATUS_DOCUMENTO = {"VIGENTE", "SUPERADA", "PENDENTE_REVISAO"}
-
-
 def agora() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
+
+
+def connect(path: str | Path) -> sqlite3.Connection:
+    Path(path).parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(str(path))
+    db.row_factory = sqlite3.Row
+    db.execute("PRAGMA foreign_keys = ON")
+    db.execute("PRAGMA journal_mode = WAL")
+    return db
+
+
+def garantir_obra(db: sqlite3.Connection, codigo: str, nome: str, diretorio_base: str = "") -> int:
+    instante = agora()
+    db.execute(
+        "INSERT INTO obras(codigo,nome,diretorio_base,created_at,updated_at) VALUES(?,?,?,?,?) "
+        "ON CONFLICT(codigo) DO UPDATE SET nome=excluded.nome, "
+        "diretorio_base=CASE WHEN excluded.diretorio_base <> '' THEN excluded.diretorio_base ELSE obras.diretorio_base END, "
+        "updated_at=excluded.updated_at",
+        (codigo, nome, diretorio_base, instante, instante),
+    )
+    return int(db.execute("SELECT id FROM obras WHERE codigo=?", (codigo,)).fetchone()[0])
+
 
 
 def caminho_relativo(path: str | Path, raiz: Path) -> str:

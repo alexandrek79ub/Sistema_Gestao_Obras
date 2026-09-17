@@ -61,29 +61,17 @@ Em respostas técnicas, abra com:
 3. Revisão superior comparável torna-se `VIGENTE`; a anterior, `SUPERADA`. Dados ambíguos permanecem `PENDENTE_REVISAO`; nunca promova uma revisão por suposição.
 4. O processo exporta `LISTA_DE_DESENHOS.csv` e `LISTA_DE_DESENHOS.md` na pasta da obra.
 
-## Fluxo obrigatório: levantamento quantitativo físico
+## Fluxo obrigatório: levantamento quantitativo físico (Pipeline Unificado)
 
-0. **Pré-Check Anti-Duplicidade no SQLite (Mandatório):** Antes de iniciar qualquer leitura de prancha ou extração geométrica, consulte o banco oficial executando:
+1. **Visão Direta da Prancha:** A IA lê a prancha PDF de uma só vez (sem recortar imagens manuais ou executar scripts de inspeção no terminal).
+2. **Apresentação Imediata:** Apresenta ao usuário a tabela de cubagem física líquida ($m, m^2, m^3, kg$) com os elementos e expressões nominais.
+3. **Execução em Comando Único:** Após validação, grava no SQLite e gera os artefatos com exatamente **1 comando**:
    ```bash
-   python scripts/consultar_prancha_sqlite.py <codigo_ou_nome_prancha> --obra <codigo_obra>
+   python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --dados itens.json
    ```
-   Se a prancha ou serviços correlatos já constarem em `itens_quantitativo`, **PARE O FLUXO IMEDIATAMENTE** e emita o alerta listando os itens existentes. Pergunte ao usuário se ele deseja auditar/revisar os dados existentes ou substituir, evitando retrabalho e duplicidade.
-1. Para qualquer levantamento físico, leitura de prancha, extração de quantidades ou medição geométrica, leia integralmente `skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md` e selecione a skill da disciplina pelo Índice Mestre.
-2. Leia 100% da prancha: plantas, cortes, elevações, notas e callouts. Faça dois passes independentes (cross-check).
-3. Sem cota ou evidência geométrica suficiente, pare: abra e controle a RFI conforme `skills/gestao/SKILL_ENGENHARIA_RFI.md`. Nunca estime, infira ou use valores típicos.
-4. Apresente as evidências e obtenha confirmação explícita do usuário. Sem `USER_CONFIRMED`, não calcule nem grave dados.
-5. Após a confirmação explícita (`USER_CONFIRMED`), estruture as evidências geométricas extraídas pela visão da IA em um JSON físico auditável e execute o motor determinístico oficial:
+4. **Segregação Estrita (Quantitativo ≠ Orçamento):** Se o pedido for "levantamento" ou "quantitativo", é PROIBIDO incluir preços, BDI, consultar SINAPI ou emitir orçamentos. A precificação só é executada se solicitada explicitamente com `--orcamento`.
+5. **Memória de Cálculo Compactada:** Toda memória de cálculo é gerada em formato tabular executivo e denso (com agrupamento por EAP e multiplicadores $N \times$), proibindo a repetição vertical excessiva de blocos para peças idênticas.
 
-   ```bash
-   python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite
-   ```
-
-6. O fluxo vigente é: `Prancha CAD (Visão Multimodal) → evidências e geometria → USER_CONFIRMED → JSON Físico → cli.py (Avaliador AST Determinístico) → SQLite (SSOT) → Exportadores`.
-7. Persista apenas quantitativos líquidos e gere memória de cálculo auditável, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.xlsx/.csv`.
-8. A memória de cálculo usa Markdown nativo, sem KaTeX, com demonstração matemática, tabela consolidada e tabela EAP/cronograma.
-9. A composição de preço é posterior e segregada: somente após consolidar o físico, use `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`.
-
-Todo levantamento deve respeitar a Tabela Oficial de Serviços da disciplina e os portões de bloqueio do `INDICE_MESTRE_SKILLS.md` §1.1.
 
 ## Regras de campo e higiene do repositório
 
