@@ -61,16 +61,25 @@ Em respostas técnicas, abra com:
 3. Revisão superior comparável torna-se `VIGENTE`; a anterior, `SUPERADA`. Dados ambíguos permanecem `PENDENTE_REVISAO`; nunca promova uma revisão por suposição.
 4. O processo exporta `LISTA_DE_DESENHOS.csv` e `LISTA_DE_DESENHOS.md` na pasta da obra.
 
-## Fluxo obrigatório: levantamento quantitativo físico (Pipeline Unificado)
+## Fluxo obrigatório: levantamento quantitativo físico
 
-1. **Visão Direta da Prancha:** A IA lê a prancha PDF de uma só vez (sem recortar imagens manuais ou executar scripts de inspeção no terminal).
-2. **Apresentação Imediata:** Apresenta ao usuário a tabela de cubagem física líquida ($m, m^2, m^3, kg$) com os elementos e expressões nominais.
-3. **Execução em Comando Único:** Após validação, grava no SQLite e gera os artefatos com exatamente **1 comando**:
+A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
+
+```text
+PDF -> skill da disciplina -> LLM extrai evidências -> JSON
+    -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
+```
+
+1. A LLM lê a prancha e devolve somente elementos, inputs nominais, revisão/página/região e `regra_id` permitida pela skill.
+2. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
+3. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
+4. O cálculo é executado exclusivamente pelo motor determinístico:
    ```bash
-   python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --dados itens.json
+   python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --dados evidencias.json
    ```
-4. **Segregação Estrita (Quantitativo ≠ Orçamento):** Se o pedido for "levantamento" ou "quantitativo", é PROIBIDO incluir preços, BDI, consultar SINAPI ou emitir orçamentos. A precificação só é executada se solicitada explicitamente com `--orcamento`.
-5. **Memória de Cálculo Compactada:** Toda memória de cálculo é gerada em formato tabular executivo e denso (com agrupamento por EAP e multiplicadores $N \times$), proibindo a repetição vertical excessiva de blocos para peças idênticas.
+5. `--obra` é obrigatório. Scripts não podem possuir obra padrão ou fallback específico.
+6. Erro de validação ou cálculo bloqueia o processamento; nunca converter erro em quantidade zero.
+7. Quantitativo físico não inclui preços, BDI, perdas, empolamento comercial ou consumíveis.
 
 
 ## Regras de campo e higiene do repositório
