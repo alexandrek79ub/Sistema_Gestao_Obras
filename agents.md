@@ -63,6 +63,11 @@ Em respostas técnicas, abra com:
 
 ## Fluxo obrigatório: levantamento quantitativo físico
 
+0. **Pré-Check Anti-Duplicidade no SQLite (Mandatório):** Antes de iniciar qualquer leitura de prancha ou extração geométrica, consulte o banco oficial executando:
+   ```bash
+   python scripts/consultar_prancha_sqlite.py <codigo_ou_nome_prancha> --obra <codigo_obra>
+   ```
+   Se a prancha ou serviços correlatos já constarem em `itens_quantitativo`, **PARE O FLUXO IMEDIATAMENTE** e emita o alerta listando os itens existentes. Pergunte ao usuário se ele deseja auditar/revisar os dados existentes ou substituir, evitando retrabalho e duplicidade.
 1. Para qualquer levantamento físico, leitura de prancha, extração de quantidades ou medição geométrica, leia integralmente `skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md` e selecione a skill da disciplina pelo Índice Mestre.
 2. Leia 100% da prancha: plantas, cortes, elevações, notas e callouts. Faça dois passes independentes (cross-check).
 3. Sem cota ou evidência geométrica suficiente, pare: abra e controle a RFI conforme `skills/gestao/SKILL_ENGENHARIA_RFI.md`. Nunca estime, infira ou use valores típicos.

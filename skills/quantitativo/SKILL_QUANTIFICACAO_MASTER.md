@@ -63,12 +63,13 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 O levantamento somente pode seguir esta cadeia; cada transição é rastreável e bloqueia a seguinte se estiver incompleta:
 
 ```text
-PDF → EvidenceRecord (REVIEW_REQUIRED) → confirmação humana (USER_CONFIRMED)
-    → ElementRecord com evidência por atributo → RuleDefinition
-    → expressão literal → avaliador AST seguro → QuantifiedItem
+Pré-Check SQLite (Anti-Duplicidade) → PDF → EvidenceRecord (REVIEW_REQUIRED) 
+    → confirmação humana (USER_CONFIRMED) → ElementRecord com evidência por atributo 
+    → RuleDefinition → expressão literal → avaliador AST seguro → QuantifiedItem
     → SQLite (SSOT) → Excel / CSV / Markdown derivados
 ```
 
+0. **Pré-Check de Duplicidade no SQLite (Portão Zero):** Antes de ler o PDF ou extrair cotas, deve-se obrigatoriamente consultar o banco oficial (`python scripts/consultar_prancha_sqlite.py <prancha> --obra <obra>`). Se o desenho ou seus elementos já constarem em `itens_quantitativo`, o fluxo é interrompido com alerta imediato para evitar duplicidade de dados e retrabalho.
 1. **Extração de evidências:** a IA multimodal varre a prancha gráfica 2D (plantas, cortes, eixos e cotas), estruturando a geometria e evidências.
 2. **Confirmação e entrada:** após validação das cotas (`USER_CONFIRMED`), gera-se o JSON físico com equações literais e executa-se o motor:
    ```bash
