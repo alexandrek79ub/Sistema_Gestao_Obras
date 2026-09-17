@@ -2,10 +2,20 @@ import os
 import sys
 import glob
 import argparse
+import hashlib
 import pymupdf
 
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding='utf-8')
+
+
+def calcular_hash_arquivo(path, tamanho_bloco=1024 * 1024):
+    """Identifica alteração de conteúdo mesmo quando o nome do PDF não muda."""
+    digest = hashlib.sha256()
+    with open(path, "rb") as arquivo:
+        for bloco in iter(lambda: arquivo.read(tamanho_bloco), b""):
+            digest.update(bloco)
+    return digest.hexdigest()
 
 def extrair_carimbos(dir_path, output_dir=None, crop_x_pct=0.35, crop_y_pct=0.35, dpi=150):
     """
@@ -56,13 +66,20 @@ def extrair_carimbos(dir_path, output_dir=None, crop_x_pct=0.35, crop_y_pct=0.35
             resultados.append({
                 "pdf": filename,
                 "carimbo_img": out_path,
-                "texto": texto_carimbo
+                "texto": texto_carimbo,
+                "hash_arquivo": calcular_hash_arquivo(path)
             })
             print(f"  [OK] {filename:<45} -> {out_fname}")
         except Exception as e:
             print(f"  [ERRO] {filename}: Erro ao processar ({e})")
 
-    print(f"\n[SUCESSO] Concluído! {len(resultados)} carimbos salvos em: {output_dir}\n")
+    import json
+    json_path = os.path.join(output_dir, "carimbos_metadados.json")
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(resultados, f, ensure_ascii=False, indent=4)
+
+    print(f"\n[SUCESSO] Concluído! {len(resultados)} carimbos salvos em: {output_dir}")
+    print(f"[SUCESSO] Metadados exportados para: {json_path}\n")
     return resultados
 
 if __name__ == "__main__":

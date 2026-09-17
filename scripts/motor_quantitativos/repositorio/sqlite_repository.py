@@ -113,6 +113,30 @@ def aplicar_migracoes(db: sqlite3.Connection) -> None:
     if not db.execute("SELECT 1 FROM schema_migrations WHERE versao=3").fetchone():
         _migrar_chave_quantitativo_por_elemento(db)
         db.execute("INSERT INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (3, agora()))
+    if not db.execute("SELECT 1 FROM schema_migrations WHERE versao=4").fetchone():
+        db.executescript("""
+        CREATE TABLE IF NOT EXISTS lista_desenhos (
+            id INTEGER PRIMARY KEY,
+            obra_id INTEGER NOT NULL REFERENCES obras(id),
+            codigo TEXT NOT NULL,
+            titulo TEXT NOT NULL DEFAULT '',
+            titulo_status TEXT NOT NULL CHECK(titulo_status IN ('EXTRAIDO','PENDENTE_REVISAO','CONFIRMADO')),
+            revisao TEXT NOT NULL,
+            revisao_tipo TEXT NOT NULL DEFAULT '',
+            revisao_ordem INTEGER,
+            status TEXT NOT NULL DEFAULT 'PENDENTE_REVISAO' CHECK(status IN ('VIGENTE','SUPERADA','PENDENTE_REVISAO')),
+            arquivo_pdf TEXT NOT NULL,
+            carimbo_img TEXT NOT NULL DEFAULT '',
+            texto_carimbo TEXT NOT NULL DEFAULT '',
+            hash_arquivo TEXT NOT NULL DEFAULT '',
+            data_registro TEXT NOT NULL,
+            updated_at TEXT NOT NULL,
+            UNIQUE(obra_id, codigo, revisao)
+        );
+        CREATE INDEX IF NOT EXISTS idx_desenhos_obra_codigo ON lista_desenhos(obra_id, codigo);
+        CREATE INDEX IF NOT EXISTS idx_desenhos_obra_status ON lista_desenhos(obra_id, status);
+        """)
+        db.execute("INSERT INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (4, agora()))
 
 
 def _migrar_chave_quantitativo_por_elemento(db: sqlite3.Connection) -> None:
