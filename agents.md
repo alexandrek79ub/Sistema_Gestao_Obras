@@ -67,19 +67,13 @@ Em respostas técnicas, abra com:
 2. Leia 100% da prancha: plantas, cortes, elevações, notas e callouts. Faça dois passes independentes (cross-check).
 3. Sem cota ou evidência geométrica suficiente, pare: abra e controle a RFI conforme `skills/gestao/SKILL_ENGENHARIA_RFI.md`. Nunca estime, infira ou use valores típicos.
 4. Apresente as evidências e obtenha confirmação explícita do usuário. Sem `USER_CONFIRMED`, não calcule nem grave dados.
-5. Após a confirmação, execute o roteador contratual:
-
-   ```bash
-   python scripts/motor_quantitativos/importadores/roteador.py <prancha.pdf> --obra <codigo> --nome-obra <nome> --revisao <rev> --disciplina <disciplina> --diretorio-obra <pasta> --confirmar-evidencias
-   ```
-
-   Para JSON físico já validado:
+5. Após a confirmação explícita (`USER_CONFIRMED`), estruture as evidências geométricas extraídas pela visão da IA em um JSON físico auditável e execute o motor determinístico oficial:
 
    ```bash
    python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite
    ```
 
-6. O fluxo vigente é: `PDF → evidências → USER_CONFIRMED → roteador → parser da disciplina → regras/cálculo AST → SQLite → exportadores`.
+6. O fluxo vigente é: `Prancha CAD (Visão Multimodal) → evidências e geometria → USER_CONFIRMED → JSON Físico → cli.py (Avaliador AST Determinístico) → SQLite (SSOT) → Exportadores`.
 7. Persista apenas quantitativos líquidos e gere memória de cálculo auditável, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.xlsx/.csv`.
 8. A memória de cálculo usa Markdown nativo, sem KaTeX, com demonstração matemática, tabela consolidada e tabela EAP/cronograma.
 9. A composição de preço é posterior e segregada: somente após consolidar o físico, use `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`.

@@ -69,17 +69,14 @@ PDF → EvidenceRecord (REVIEW_REQUIRED) → confirmação humana (USER_CONFIRME
     → SQLite (SSOT) → Excel / CSV / Markdown derivados
 ```
 
-1. **Extração de evidências:** o leitor de PDF varre páginas, texto e coordenadas, criando evidências revisáveis. A extração não confirma cotas e não calcula quantidades.
-2. **Confirmação e entrada:** para pranchas, usar exclusivamente o roteador contratual:
+1. **Extração de evidências:** a IA multimodal varre a prancha gráfica 2D (plantas, cortes, eixos e cotas), estruturando a geometria e evidências.
+2. **Confirmação e entrada:** após validação das cotas (`USER_CONFIRMED`), gera-se o JSON físico com equações literais e executa-se o motor:
    ```bash
-   python scripts/motor_quantitativos/importadores/roteador.py <prancha.pdf> --obra <codigo> --nome-obra <nome> --revisao <rev> --disciplina <disciplina> --diretorio-obra <pasta> --confirmar-evidencias
+   python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite
    ```
-   Sem obra, revisão, disciplina ou confirmação explícita, o processo deve falhar sem escrever no banco.
-3. **Parser:** transforma evidência confirmada em `ElementRecord`, vinculando cada atributo à sua evidência, arquivo e revisão. Parser não contém fórmula, não executa cálculo, não aplica preço e não pode usar fallback.
-4. **Motor de regras:** o catálogo central de `RuleDefinition` contém as fórmulas. Ele monta a expressão literal e o avaliador AST seguro é o único responsável pelo resultado numérico. A IA e o parser não substituem esse cálculo.
-5. **Persistência e exportação:** cada `QuantifiedItem` é identificado por obra, EAP, prancha, elemento e regra. O SQLite é a SSOT; Excel, CSV e Markdown são derivados e não podem ser editados como fonte.
-6. **Bloqueios:** evidência ausente, ambígua, inválida ou sem regra aplicável gera pendência/RFI. É proibido confirmar automaticamente, converter erro em zero ou adotar dimensão típica. Parsers legados estão desativados.
-7. **Separação de custos:** JSON físico e esta rota de prancha rejeitam preço, BDI, composição, perdas e insumos. Esses dados pertencem ao fluxo de composição/orçamentação, posterior e separado.
+3. **Avaliador AST Determinístico:** o motor calcula matematicamente as expressões literais de cada serviço sem aproximações ou alucinações.
+4. **Persistência e exportação:** o SQLite é a SSOT oficial (`data/pmo_virtual.sqlite`). Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`), CSV (`QUANTITATIVO_MESTRE.csv`) e Markdown são gerados automaticamente.
+5. **Separação de custos:** o levantamento físico rejeita preços, BDI e perdas. Esses dados pertencem ao fluxo de composição/orçamentação, posterior e separado.
 
 
 ---

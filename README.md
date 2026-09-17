@@ -137,12 +137,9 @@ python scripts/extrair_carimbos.py <pasta_pdfs>
 python scripts/gerar_lista_desenhos.py --obra <codigo> --pasta <pasta_pdfs> --db data/pmo_virtual.sqlite
 ```
 
-### Motor de Quantitativos e Roteador Contratual
+### Motor de Quantitativos e Avaliador AST
 ```bash
-# Roteamento e processamento de prancha PDF confirmada:
-python scripts/motor_quantitativos/importadores/roteador.py <prancha.pdf> --obra <codigo> --nome-obra <nome> --revisao <rev> --disciplina <disciplina> --diretorio-obra <pasta> --confirmar-evidencias
-
-# Importação de JSON físico validado:
+# Importação e cálculo determinístico de JSON físico validado:
 python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite
 ```
 

@@ -15,7 +15,6 @@ from motor_quantitativos.repositorio.sqlite_repository import (
     recalcular_orcamento, substituir_quantitativos, persistir_itens_quantificados
 )
 from motor_quantitativos.calculo.avaliador_expressoes import calcular_expressao
-from motor_quantitativos.importadores.roteador import processar_prancha
 from motor_quantitativos.exportadores import exportar_artefatos
 from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
 
@@ -155,29 +154,6 @@ class MotorQuantitativosTest(unittest.TestCase):
             self.assertEqual(migrado.execute("SELECT custo_total FROM itens_orcamento WHERE quantitativo_id=1").fetchone()[0], 10)
         finally:
             migrado.close()
-
-    def test_fluxo_pdf_contratual_exige_confirmacao_e_persiste_rastreabilidade(self):
-        import fitz
-        pdf = Path(self.tmp.name) / "F-01.pdf"
-        documento = fitz.open()
-        documento.new_page().insert_text((72, 72), "2x S1 (100x150x40 cm)")
-        documento.save(pdf)
-        documento.close()
-        banco = Path(self.tmp.name) / "fluxo.sqlite"
-        saida = Path(self.tmp.name) / "artefatos"
-        args = dict(obra_codigo="OBRA_TESTE", obra_nome="Obra Teste", source_revision="R1",
-                    disciplina="FUNDACOES", db_path=banco, diretorio_obra=saida)
-        with self.assertRaises(ValueError):
-            processar_prancha(pdf, **args)
-        resultado = processar_prancha(pdf, evidencias_confirmadas=True, **args)
-        self.assertEqual((resultado["elementos"], resultado["itens"]), (1, 1))
-        db = connect(banco)
-        try:
-            row = db.execute("SELECT quantidade_liquida,element_id,rule_id,source_revision,evidence_json FROM itens_quantitativo").fetchone()
-            self.assertEqual((row["quantidade_liquida"], row["element_id"], row["rule_id"], row["source_revision"]), (1.2, "S1", "FUN.SAPATA_CONCRETO", "R1"))
-            self.assertIn("EVD-", row["evidence_json"])
-        finally:
-            db.close()
 
     def test_api_exige_chave_versao_e_regenera_exportacoes(self):
         anteriores = Handler.db_path, Handler.api_key, Handler.usuario, Handler.backup_dir
