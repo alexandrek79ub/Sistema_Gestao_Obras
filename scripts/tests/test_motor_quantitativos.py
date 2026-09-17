@@ -43,7 +43,7 @@ class MotorQuantitativosTest(unittest.TestCase):
         row = self.db.execute("SELECT quantidade_liquida,status FROM itens_quantitativo WHERE id=?", (self.item,)).fetchone()
         self.assertEqual((row[0], row[1]), (12.5, "LEVANTADO"))
         self.assertFalse(self.db.execute("SELECT 1 FROM pragma_table_info('itens_quantitativo') WHERE name='taxa_perda'").fetchone())
-        self.assertEqual(self.db.execute("SELECT versao FROM schema_migrations").fetchone()[0], 1)
+        self.assertEqual(self.db.execute("SELECT MAX(versao) FROM schema_migrations").fetchone()[0], 2)
 
     def test_edicao_auditavel_recalcula_orcamento_e_exporta(self):
         revisao = atualizar_quantitativo(self.db, self.obra, self.item, {"quantidade_liquida": 14.0}, "teste-web", "Correção da prancha", 1)

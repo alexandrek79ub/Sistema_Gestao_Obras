@@ -20,6 +20,9 @@ def escrever_memoria_calculo(destino: Path, obra_nome: str, checksum: str, disci
             f"- **Expressão:** `{r['expressao_matematica']}`", 
             f"- **Resultado líquido:** `{r['quantidade_liquida']} {r['unidade']}`", 
             f"- **Prancha:** `{r['prancha_referencia']}`", 
+            f"- **Regra:** `{r.get('rule_id', '')}` v{r.get('rule_version', 0)}",
+            f"- **CIA/Elemento:** `{r.get('cia', '')}` / `{r.get('element_id', '')}`",
+            f"- **Evidências:** `{r.get('evidence_json', '[]')}`",
             ""
         ])
         

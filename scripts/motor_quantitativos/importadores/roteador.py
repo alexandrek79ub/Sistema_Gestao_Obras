@@ -56,11 +56,10 @@ def processar_prancha(caminho_pdf: str | Path,
         itens_eap = parser.gerar_itens_eap(dados)
         titulo_disciplina = "Instalações Prediais"
     else:
-        # Fallback de segurança
-        parser = ParserFundacoes(leitor)
-        dados = parser.extrair(incluir_correlatas=True)
-        itens_eap = parser.gerar_itens_eap(dados)
-        titulo_disciplina = "Infraestrutura e Fundações"
+        raise ValueError(
+            f"Disciplina não reconhecida para {caminho.name}; "
+            "informe --disciplina explicitamente ou corrija o selo da prancha."
+        )
 
     # 3. Montagem do payload padronizado
     dados_json = {

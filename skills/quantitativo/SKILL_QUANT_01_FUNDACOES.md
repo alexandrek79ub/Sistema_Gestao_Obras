@@ -1,302 +1,148 @@
-# 🏛️ SKILL MÓDULO 01: Fundações
+# SKILL QUANT 01 — FUNDAÇÕES
 
-> **Dependência:** Carregar sempre com [SKILL_QUANTIFICACAO_MASTER.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_MASTER.md)  
-> **Normas:** NBR 6118 (Projeto de estruturas de concreto), NBR 6122 (Projeto e execução de fundações), NBR 14931 (Execução de estruturas de concreto)  
-> **Fck mínimo para fundações:** C30 (solo com agressividade II-III conforme NBR 6118)
+> Dependência: `SKILL_QUANTIFICACAO_MASTER.md`
+> Referências: NBR 6118, NBR 6122 e NBR 14931, conforme edição aplicável à obra.
 
----
+Esta skill contém a lógica de levantamento físico líquido de fundações. Não contém dimensões, nomes de elementos, referências de prancha ou resultados de nenhuma obra.
 
-## 🧭 Escopo deste Módulo
+## 1. Escopo
 
-Cobre o **levantamento quantitativo físico e geométrico de todos os elementos de fundação** de uma edificação:
+Abrange fundações diretas (sapatas isoladas, associadas e corridas), fundações profundas (estacas e brocas), blocos de coroamento, pedestais, vigas baldrame, cintas, radier, lastro, escavação, reaterro, drenagem e remoção de terra quando comprovados nas pranchas executivas.
 
-- **Fundações diretas:** Sapatas isoladas, associadas e corridas;
-- **Fundações profundas:** Estacas pré-moldadas, estacas raiz, trado mecânico, hélice contínua;
-- **Blocos de coroamento** sobre estacas;
-- **Vigas baldrame** e cintas de fundação;
-- **Radier** (fundação em laje maciça ou nervurada);
-- **Concreto de regularização** (lastro magro) e lastro de brita;
-- **Movimento de terra:** Escavação de cavas/valas, reaterro compactado e terra excedente.
+## 2. Regras invioláveis
 
----
+- A IA extrai dimensões e monta expressões; o motor determinístico calcula o resultado.
+- Toda entrada (`b`, `L`, `h`, diâmetro, comprimento, cota e quantidade) deve ter evidência de prancha, revisão e página.
+- Ausência, conflito ou revisão indefinida gera `PENDENTE_RFI`; nunca usar valor padrão ou fallback.
+- Quantidades são físicas, líquidas e nominais: sem perdas, empolamento, arredondamento comercial ou coeficientes de consumo.
+- Arame, pregos, espaçadores, desmoldante, madeira de consumo, embalagens e demais consumíveis pertencem exclusivamente à CPU/BOM posterior.
+- Aço deve ser extraído do quadro/resumo de armaduras da prancha, por elemento e bitola; não usar taxa genérica de kg/m³.
 
-## 🚨 DIRETRIZES FUNDAMENTAIS DO LEVANTAMENTO (INVIOLÁVEIS)
+## 3. Matriz de serviços e critérios de medição
 
-### 1. HÍBRIDA NEURO-SIMBÓLICA - ZERO CÁLCULO PELA IA
-- **É ESTRITAMENTE PROIBIDO realizar cálculos numéricos geométricos ou tentar resolver expressões matemáticas "de cabeça"**.
-- A IA atua **apenas como orquestradora**. Para obter quantidades e aplicar as fórmulas abaixo, **VOCÊ DEVE DELEGAR** a extração ao script determinístico localizado em `scripts/motor_quantitativos/importadores/roteador.py`.
-- O Motor Quantitativo possui embarcado o `ParserFundacoes` (em `scripts/motor_quantitativos/importadores/disciplinas/parser_fundacoes.py`), que executará matematicamente as fórmulas que estão documentadas nesta skill. As fórmulas abaixo servem apenas como **Base de Conhecimento e Manual de Engenharia**.
+| Serviço | Unidade | Critério físico líquido |
+|---|---:|---|
+| Locação e gabarito | un / m² | Eixos e área efetivamente locados conforme planta |
+| Perfuração ou cravação de estacas | m / un | Comprimento nominal ou unidades indicadas |
+| Arrasamento/descabeçamento | un | Unidades explicitamente indicadas |
+| Escavação de cavas e valas | m³ | Volume geométrico da seção de projeto |
+| Apiloamento/compactação de fundo | m² | Área de fundo efetivamente preparada |
+| Lastro/regularização | m³ | Área da base × espessura nominal indicada |
+| Fôrmas | m² | Área real de contato executada |
+| Armaduras | kg | Peso do quadro/resumo de aço da prancha |
+| Concreto estrutural | m³ | Volume geométrico nominal das peças |
+| Desforma/cura, quando EAP medir o serviço | m² / un | Área ou unidade liberada conforme projeto e controle de qualidade |
+| Impermeabilização | m² | Superfícies especificadas, descontando encostos e interseções documentados |
+| Drenagem perimetral | m | Extensão indicada em projeto específico |
+| Reaterro compactado | m³ | Volume líquido após liberação da impermeabilização |
+| Remoção de terra excedente | m³ | Volume de corte não aproveitado no reaterro |
 
-### 2. Proibição de Inserção de Insumos na Skill de Quantitativo
-- O papel do Levantamento Quantitativo de Engenharia (Take-off) é apurar estritamente os **Serviços Executivos e Elementos Físicos de Projeto** (ex: Concreto $m^3$, Fôrma $m^2$, Aço $kg$, Escavação $m^3$, Impermeabilização $m^2$).
-- **É expressamente PROIBIDO explodir ou calcular insumos miúdos derivados** (arames recozidos, pregos, sarrafos, desmoldantes, espaçadores, fitas, rolos ou trinchas) dentro das memórias de cálculo ou tabelas de quantitativo.
-- **Motivo técnico:** As Composições de Preço Unitário (CPUs oficiais como SINAPI e TCPO) **já contêm esses insumos e seus coeficientes de consumo embutidos no custo unitário do serviço**. Inserir esses insumos no quantitativo físico causa **dupla contagem** e infla indevidamente o custo da obra.
+## 4. EAP e portões
 
-### 2. Proibição de Aplicação de Taxas de Perdas ou Fatores de Empolamento
-- Todas as quantidades devem ser apuradas em sua **Geometria Líquida Real de Projeto** ($100\%$ nominal conforme as pranchas).
-- **É expressamente PROIBIDO aplicar percentuais de perdas** (ex: $5\%$ de concreto, $10\%$ de aço, perdas de madeira) ou coeficientes empíricos de empolamento de solo no quantitativo de projeto.
-- **Motivo técnico:** Os coeficientes de perda de materiais pertencem à elaboração das composições de preço e ao planejamento de compras/suprimentos, e não à medição física dos projetos de engenharia.
+| Código | Serviço | Unidade |
+|---|---|---:|
+| 1.3.1 | Locação e gabarito topográfico | un / m² |
+| 1.3.2 | Perfuração/cravação de estacas | m / un |
+| 1.3.3 | Arrasamento/descabeçamento | un |
+| 1.3.4 | Escavação de valas e cavas | m³ |
+| 1.3.5 | Apiloamento de fundo | m² |
+| 1.3.6 | Lastro ou regularização | m³ |
+| 1.3.7 | Fôrmas de fundações | m² |
+| 1.3.8 | Armaduras CA-50/CA-60 | kg |
+| 1.3.9 | Concretagem estrutural | m³ |
+| 1.3.10 | Desforma/cura, quando prevista | m² / un |
+| 1.3.11 | Impermeabilização | m² |
+| 1.3.12 | Drenagem perimetral, quando projetada | m |
+| 1.3.13 | Reaterro compactado | m³ |
+| 1.3.14 | Remoção de terra excedente | m³ |
 
----
+O portão 1.3.11 bloqueia 1.3.13. A liberação depende de inspeção e evidência de impermeabilização conforme projeto.
 
-## 📐 1. Matriz de Serviços de Infraestrutura (Geometria Líquida)
-
-Para cada elemento de fundação detalhado em projeto, apuram-se os seguintes serviços de engenharia:
-
-| ID | Serviço de Infraestrutura | Unid. | Regra de Medição Geométrica Líquida |
-|:---:|:---|:---:|:---|
-| **01** | Locação da Obra e Gabarito | un / m² | Área de projeção da edificação ou unidades locadas conforme planta de locação |
-| **02** | Perfuração / Cravação de Estacas | m / un | Comprimento nominal em projeto ($H_{estaca} = \text{Cota Topo} - \text{Cota Apoio}$) ou unidades cravadas |
-| **03** | Arrasamento / Descabeçamento | un | Quantidade exata de estacas de projeto a descabeçar até a cota de arrasamento |
-| **04** | Escavação de Cavas e Valas | m³ | Volume geométrico da cava: $(b + 2 \times \text{folga}) \times (L + 2 \times \text{folga}) \times h_{escav}$ (folga de 10cm por lado para fôrma) |
-| **05** | Apiloamento de Fundo de Vala | m² | Área geométrica da base da cava escavada: $(b + 2 \times \text{folga}) \times (L + 2 \times \text{folga})$ |
-| **06** | Lastro de Concreto Magro / Regularização | m³ | Área da base da cava $\times$ espessura nominal de projeto (ex: $e = 0,05\text{m}$) |
-| **07** | Fôrma de Madeira / Compensado | m² | Área líquida de contato vertical da peça: Perímetro de contato lateral $\times$ altura da peça |
-| **08** | Concreto Estrutural de Fundação | m³ | Volume geométrico nominal da peça (sapatas, blocos, baldrames, fuste de estacas, radier) |
-| **09** | Armadura de Fundação (Aço CA-50/60) | kg | **Extraído 100% dos Resumos e Tabelas de Ferro das Pranchas Estruturais** (peso líquido por bitola) |
-| **10** | Impermeabilização com Tinta/Manta Asfáltica | m² | Área real de contato com o solo: Topo + faces laterais (descontando encostos e nós de pilaretes) |
-| **11** | Drenagem Perimetral de Fundações | m | Extensão linear de dreno executado conforme projeto específico |
-| **12** | Reaterro Compactado de Valas | m³ | Volume líquido geométrico: $V_{escavado} - V_{concreto\_enterrado} - V_{lastro}$ |
-| **13** | Terra Excedente de Escavação | m³ | Volume geométrico de corte não aproveitado no reaterro: $V_{escavado} - V_{reaterro}$ |
-
----
-
-## 📋 1.2 Tabela Oficial de Serviços para EAP (Nível 1.3 — Fundações)
-
-> 🛑 **REGRA DE SEGREGAÇÃO:** A EAP e o cronograma contêm exclusivamente **serviços executivos de engenharia**, mensuráveis por avanço físico em campo.
-
-| Código EAP | Pacote de Trabalho / Serviço | Unidade | Predecessora Imediata | Critério de Medição Física |
-|:---:|:---|:---:|:---:|:---|
-| **1.3.1** | Locação da Obra e Gabarito Topográfico | un / m² | 1.1.2 Mobilização | Área total locada e eixos marcados em gabarito |
-| **1.3.2** | Perfuração / Cravação de Estacas | m / un | 1.3.1 Locação | Metros lineares perfurados ou estacas cravadas |
-| **1.3.3** | Arrasamento e Descabeçamento de Estacas | un | 1.3.2 Estacas (após cura) | Unidades de estacas descabeçadas e limpas |
-| **1.3.4** | Escavação Mecanizada / Manual de Valas e Cavas | m³ | 1.3.1 Locação | Volume geométrico escavado no corte do terreno |
-| **1.3.5** | Apiloamento de Fundo da Cava | m² | 1.3.4 Escavação | Área de fundo de cava compactada |
-| **1.3.6** | Lastro de Concreto Magro ou Brita Drenante | m³ | 1.3.5 Apiloamento | Volume nominal do lastro executado |
-| **1.3.7** | Fôrmas de Sapatas, Blocos e Baldrames | m² | 1.3.6 Lastro | Área real de contato lateral montada |
-| **1.3.8** | Armação de Aço CA-50 / CA-60 | kg | 1.3.7 Fôrmas | Peso total de armaduras posicionadas no elemento |
-| **1.3.9** | Concretagem Estrutural de Fundação | m³ | 1.3.8 Armação | Volume geométrico de concreto lançado e adensado |
-| **1.3.10** | Desforma e Cura Úmida (NBR 14931) | m² | 1.3.9 Concretagem | Área desformada após período normativo de cura |
-| **1.3.11** | Impermeabilização de Elementos Enterrados | m² | 1.3.10 Desforma | Área líquida de superfície impermeabilizada |
-| **1.3.12** | Drenagem Perimetral de Fundações | m | 1.3.10 Desforma | Metros lineares de tubo dreno e camada drenante instalada |
-| **1.3.13** | Reaterro Compactado de Valas | m³ | 1.3.11 Impermeabilização | Volume geométrico de cava preenchido e compactado |
-| **1.3.14** | Remoção de Terra Excedente | m³ | 1.3.13 Reaterro | Volume geométrico líquido de terra removida |
-
----
-
-## ⛓️ 1.3 Sequência Executiva e Travas de Qualidade
-
-1. **Cadeia Executiva:**
-   ```text
-   Locação (1.3.1) → Perfuração/Cravação (1.3.2) → Arrasamento (1.3.3) → Escavação (1.3.4) 
-   → Apiloamento (1.3.5) → Lastro Magro (1.3.6) → Fôrmas (1.3.7) → Armação (1.3.8) 
-   → Concretagem (1.3.9) → Cura 7 dias (1.3.10) → Desforma → Impermeabilização (1.3.11) 
-   → Drenagem (1.3.12) → Reaterro (1.3.13) → Remoção de Terra (1.3.14)
-   ```
-
-2. **Portões de Bloqueio Críticos:**
-   - 🛑 **Impermeabilização (1.3.11) bloqueia Reaterro (1.3.13):** Jamais reaterrar valas ou cavas antes da cura e liberação formal da impermeabilização.
-   - 🛑 **Cura Conforme NBR 14931:** Concretos de fundação em contato com solo exigem período mínimo de **7 dias de cura úmida contínua** antes de receberem esforços ou reaterros precoces.
-   - 🛑 **Descabeçamento de Estacas (1.3.3):** Respeitar cura mínima de 5 dias após a concretagem da estaca para evitar danos ao topo do fuste.
-
----
-
-## 📐 2. Geometrias e Fórmulas de Cálculo Líquido
-
-### 2.1 Sapatas Isoladas, Associadas e Pedestais
+## 5. Sequência executiva e interfaces
 
 ```text
-Volume de Concreto da Sapata:
-V_sapata = b × L × h_sapata
-
-Volume do Pedestal / Arranque:
-V_ped = b_ped × h_ped × H_ped
-
-Volume Total de Concreto:
-V_total = V_sapata + V_ped
-
-Área de Fôrma:
-A_forma_sapata = 2 × (b + L) × h_sapata
-A_forma_ped = 2 × (b_ped + h_ped) × H_ped
-(Faces laterais verticais — fundo apoia no lastro de concreto magro)
+Locação → escavação/perfuração → preparo do fundo → lastro
+→ fôrmas → armaduras → concretagem → cura/desforma
+→ impermeabilização → drenagem → reaterro → remoção de excedente
 ```
 
-### 2.2 Bloco de Coroamento sobre 3 Estacas (Seção Poligonal / Trapezoidal)
+A sequência real deve respeitar o projeto, o plano de inspeção e os portões da EAP. Não usar prazos normativos como quantidade ou como substituto de evidência.
+
+## 6. Fórmulas de cálculo
+
+### 6.1 Sapata, pedestal e bloco prismático
 
 ```text
-Área da Seção em Planta:
-A_seção = [(L1 + L2) × H1 / 2] + [(L2 + L3) × H2 / 2]
-
-Volume de Concreto:
-V_bloco = A_seção × H_bloco × Quantidade
-
-Área de Fôrma:
-A_forma = Perímetro_externo_poligonal × H_bloco
+V_sapata = b_sapata × L_sapata × h_sapata
+V_pedestal = b_pedestal × L_pedestal × h_pedestal
+V_concreto = Σ volumes das partes comprovadas
+A_fôrma_lateral = Σ (perímetro_de_contato × altura_da_parte)
 ```
 
-### 2.3 Vigas Baldrame / Cintas de Fundação
-
-> 🛑 **REGRA DO NÓ (Desconto de Apoios):**  
-> As vigas baldrames devem ser quantificadas em seus **vãos livres** (face a face de apoios/pilaretes), garantindo zero sobreposição de concreto, fôrma ou impermeabilização com os pilaretes já levantados.
+### 6.2 Bloco de coroamento irregular
 
 ```text
-Dimensões: b (largura), h (altura), L_vao_livre (comprimento líquido), Quantidade
-
-Volume de Concreto:
-V_baldrame = b × h × L_vao_livre × Quantidade
-
-Área de Fôrma (2 laterais, sem fundo se apoiada em lastro):
-A_forma = (2 × h) × L_vao_livre × Quantidade
-
-Área de Impermeabilização (Face superior + 2 laterais):
-A_impermeab = (b + 2 × h) × L_vao_livre × Quantidade
+A_seção = Σ áreas das figuras que compõem a seção em planta
+V_bloco = A_seção × altura_do_bloco
+A_fôrma = perímetro_externo_de_contato × altura_do_bloco
 ```
 
-### 2.4 Estacas e Brocas
+### 6.3 Baldrame ou cinta
 
 ```text
-Comprimento Útil:
-H_estaca = Cota_Apoio − Cota_Topo_Arrasamento
-
-Volume de Concreto do Fuste:
-V_estaca = π × (Ø / 2)² × H_estaca × Quantidade
-
-Volume de Escavação / Perfuração:
-V_escav_estaca = V_estaca
+V_baldrame = Σ (largura_da_seção × altura_da_seção × comprimento_do_trecho)
+A_fôrma = Σ (faces_de_contato × comprimento_do_trecho)
+A_impermeabilização = Σ superfícies especificadas no detalhe
 ```
 
-### 2.5 Radier (Fundação em Laje)
+Trechos devem ser medidos face a face dos apoios quando o critério de interface estiver documentado, evitando duplicidade com pilares, pilaretes ou blocos.
+
+### 6.4 Estaca ou broca
 
 ```text
-Volume de Concreto da Laje:
-V_radier = Área_projetada × espessura_radier
-
-Volume de Nervuras / Vigas Invertidas (se houver):
-V_nervuras = Σ (b_nervura × h_nervura × L_nervura)
-
-Área de Fôrma de Borda:
-A_forma = Perímetro_externo × espessura_radier
+H_estaca = cota_de_apoio − cota_de_topo_ou_arrasamento
+V_estaca_unitária = π × (diâmetro / 2)² × H_estaca
+V_estacas = V_estaca_unitária × quantidade
 ```
 
----
+### 6.5 Radier e nervuras
 
-## 🔩 3. Armadura de Fundações (Aço CA-50 e CA-60)
-
-### Regra de Ouro da Armadura de Projeto
-- O quantitativo de aço de fundações **DEVE ser extraído diretamente das tabelas de ferro e resumos de aço das pranchas executivas de engenharia** (peso em kg segregado por diâmetro e tipo: CA-50 ou CA-60).
-- **PROIBIDO calcular arame recozido ou perdas:** Arame e perdas de ponta de aço são insumos e coeficientes pertencentes às composições de custo e suprimentos, não ao levantamento de projeto.
-- **Se a prancha não contiver resumo de ferro:** É dever do agente emitir **RFI formal** solicitando o detalhamento ou resumo do calculista. Nunca inventar ou estimar pesos de armação sem respaldar em prancha.
-
----
-
-## 🏗️ 4. Movimento de Terra (Escavação, Reaterro e Bota-fora)
-
-Todas as movimentações de terra no levantamento são apuradas pelo seu **Volume Geométrico Líquido no Corte**:
-
-### 4.1 Escavação de Cavas e Valas
 ```text
-Cavas para Sapatas / Blocos:
-V_escav = (b + 0,20m) × (L + 0,20m) × h_escav × Quantidade
-
-Valas para Baldrame:
-V_escav = (b + 0,20m) × h_escav × L_trecho × Quantidade
-(Folga operacional de 0,10m de cada lado para montagem e desforma das peças)
+V_radier = área_projetada × espessura_nominal
+V_nervuras = Σ (largura × altura × comprimento)
+V_concreto_total = V_radier + V_nervuras + demais volumes desenhados
+A_fôrma_lateral = perímetro_externo × espessura (quando aplicável)
 ```
 
-### 4.2 Lastro de Concreto Magro / Regularização
+### 6.6 Escavação, preparo, lastro e terra
+
 ```text
-V_lastro = Área_base_cava × espessura_lastro (nominal em projeto, ex: 0,05m)
+V_escavação = volume geométrico da cava ou vala conforme seção de projeto
+A_apiloamento = área de fundo efetivamente preparada
+V_lastro = área_base × espessura_nominal_de_projeto
+V_reaterro = V_escavação − volumes enterrados comprovados
+V_excedente = V_escavação − V_reaterro
 ```
 
-### 4.3 Reaterro Compactado de Valas
+Folgas, taludes, escoramentos e volumes auxiliares só entram quando dimensões e critérios estiverem expressos na prancha ou memorial.
+
+### 6.7 Armaduras
+
 ```text
-V_reaterro = V_escavado − V_concreto_enterrado − V_lastro
+P_aço_elemento = peso indicado no quadro/resumo de aço da prancha
+P_aço_total = Σ P_aço_elemento por elemento e bitola
 ```
 
-### 4.4 Terra Excedente (Corte para Bota-fora)
-```text
-V_terra_excedente = V_escavado − V_reaterro
-(Volume geométrico em corte. Fatores de empolamento pertencem à composição de transporte)
-```
+## 7. Memória, evidência e auditoria
 
----
+Cada item deve conter obra, prancha, revisão, página, elemento, dimensões transcritas, expressão literal, regra aplicada, resultado do motor, unidade e status (`VALIDADO`, `PENDENTE_RFI` ou `BLOQUEADO`).
 
-## 📦 5. Parâmetros Normativos NBR 6118 e NBR 6122
+Checklist:
 
-| Elemento | Fck Mínimo | Classe de Agressividade (CAA) | Cobrimento Nominal ($c_{nom}$) |
-|---|:---:|:---:|:---:|
-| Lastro de regularização | C10 – C15 | Não estrutural | — |
-| Sapatas, Blocos e Baldrames em contato com solo | C30 | CAA II (Urbano / Solo comum) | 45 mm (solo regularizado com lastro) |
-| Fundações em solo com agressividade severa | C35 – C40 | CAA III / IV (Industrial / Marinho) | 50 mm |
-
----
-
-## 🌳 6. Árvore de Decisão — Levantamento de Fundações
-
-| Pedido do Usuário | Procedimento do Agente |
-|---|---|
-| "Quantifique as sapatas do projeto" | Ler prancha estrutural: dimensões $b$, $L$, $h_{sapata}$, pedestal $b_{ped}$, $h_{ped}$, $H_{ped}$, e resumo de aço da prancha |
-| "Quanto concreto para o radier?" | Ler prancha de fôrma: Área projetada, espessura, dimensões das nervuras e desníveis |
-| "Calcule o baldrame da obra" | Ler planta de fôrma: seções $b \times h$ e comprimentos de vãos livres (descontando apoios/pilaretes) |
-| "Qual o volume de escavação e reaterro?" | Calcular volume geométrico da cava com folga de 10cm, deduzindo o volume do concreto e lastro para o reaterro |
-| "Qual a armadura das fundações?" | Localizar a tabela / quadro de resumo de ferro da prancha de fundação e transcrever o peso líquido por bitola |
-
----
-
-## 📋 7. Modelo de Memória de Cálculo — Sapata Isolada
-
-```
-╔══════════════════════════════════════════════════════════════════╗
-║        MEMÓRIA DE CÁLCULO — FUNDAÇÃO: SAPATA ISOLADA            ║
-╠══════════════════════════════════════════════════════════════════╣
-║  OBRA:        [Nome da Obra]         CIA: [FUN-GER-F01]          ║
-║  ELEMENTO:    Sapata S-01            PILAR: P-01                 ║
-║  PRANCHA REF: [Identificação da Prancha de Fundação / Rev]      ║
-║  ESPECIF.:    Concreto fck = 30 MPa | Aço CA-50                  ║
-╠══════════════════════════════════════════════════════════════════╣
-║  1. ESCAVAÇÃO GEOMÉTRICA DA CAVA (m³):                           ║
-║     Dimensões com folga: (b + 0,20) × (L + 0,20) × h_cava        ║
-║     V_escav = (1,40 + 0,20) × (1,40 + 0,20) × 1,20 = 3,07 m³    ║
-║                                                                  ║
-║  2. APILOAMENTO DE FUNDO (m²):                                   ║
-║     A_apiloamento = 1,60 × 1,60 = 2,56 m²                        ║
-║                                                                  ║
-║  3. LASTRO DE CONCRETO MAGRO (e = 0,05m):                        ║
-║     V_lastro = 1,60 × 1,60 × 0,05 = 0,13 m³                      ║
-║                                                                  ║
-║  4. CONCRETO ESTRUTURAL LÍQUIDO (m³):                            ║
-║     Sapata: b × L × h = 1,40 × 1,40 × 0,50 = 0,98 m³             ║
-║     Pedestal: 0,30 × 0,30 × 0,65 = 0,06 m³                       ║
-║     V_concreto_total = 0,98 + 0,06 = 1,04 m³                     ║
-║                                                                  ║
-║  5. FÔRMA VERTICAL DE CONTATO (m²):                              ║
-║     Sapata: 2 × (1,40 + 1,40) × 0,50 = 2,80 m²                   ║
-║     Pedestal: 2 × (0,30 + 0,30) × 0,65 = 0,78 m²                 ║
-║     A_forma_total = 2,80 + 0,78 = 3,58 m²                        ║
-║                                                                  ║
-║  6. ARMADURA CA-50 (kg — Quadro de Ferro da Prancha):            ║
-║     Malha da sapata (N1 Ø 10.0mm): 18,40 kg                      ║
-║     Arranque do pilar (N2 Ø 12.5mm): 12,20 kg                    ║
-║     Estribos do arranque (N3 Ø 6.3mm): 3,10 kg                   ║
-║     Peso Total de Aço CA-50 = 33,70 kg                           ║
-║                                                                  ║
-║  7. IMPERMEABILIZAÇÃO ASFÁLTICA (m²):                            ║
-║     Topo sapata + faces laterais (descontando arranque): 3,69 m² ║
-║                                                                  ║
-║  8. REATERRO COMPACTADO (m³):                                    ║
-║     V_reaterro = 3,07 - 1,04 (concreto) - 0,13 (lastro) = 1,90 m³║
-║                                                                  ║
-║  9. TERRA EXCEDENTE PARA BOTA-FORA (m³):                         ║
-║     V_excedente = 3,07 - 1,90 = 1,17 m³                          ║
-╠══════════════════════════════════════════════════════════════════╣
-║  ✅ RESUMO QUANTITATIVO NOMINAL DE PROJETO:                      ║
-║     • Concreto Estrutural C30:   1,04 m³                         ║
-║     • Fôrmas de Madeira:         3,58 m²                         ║
-║     • Aço CA-50 Nominal:         33,70 kg                        ║
-║     • Escavação Mecânica/Manual: 3,07 m³                         ║
-║     • Lastro de Concreto Magro:  0,13 m³                         ║
-║     • Impermeabilização:         3,69 m²                         ║
-║     • Reaterro Compactado:       1,90 m³                         ║
-║     • Terra Excedente:           1,17 m³                         ║
-╚══════════════════════════════════════════════════════════════════╝
-```
+- [ ] Todas as dimensões vieram de pranchas executivas.
+- [ ] Nenhum valor de exemplo ou fallback foi utilizado.
+- [ ] Nenhuma perda, empolamento ou consumível foi aplicado.
+- [ ] Armaduras vieram do quadro/resumo de aço.
+- [ ] Interfaces e descontos não duplicam elementos.
+- [ ] Reaterro respeita o portão de impermeabilização.
+- [ ] Cada resultado possui expressão, unidade e evidência.

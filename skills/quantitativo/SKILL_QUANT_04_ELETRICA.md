@@ -19,8 +19,7 @@ O Agente deve extrair quantidades dos projetos unifilares elétricos, separando-
   - `Tomada Média / Interruptor (h = 1,10m do piso):` Descida do teto = `H_pé-direito - 1,10m`.
   - `Tomada Alta (Chuveiro / Ar-condicionado / Exaustor h = 2,10m a 2,20m):` Descida do teto = `H_pé-direito - 2,10m`.
   - `Prumadas de Shaft / Subestação:` Comprimento vertical da prumada entre pavimentos multiplicada pelo número de andares + travessia de lajes.
-- **Taxa de Perda:** Adicionar **10%** sobre o comprimento total calculado.
-- **Regra UCC:** Comprar eletrodutos flexíveis sempre em múltiplos de **50 metros** (Rolo padrão). Tubos rígidos em múltiplos de **3 metros**.
+> 🛑 O levantamento registra somente o comprimento líquido de projeto. Perdas e UCC pertencem à CPU/BOM e não alteram esse resultado.
 
 ### 2.2 Fios e Cabos — Método de Quantificação por Circuito (Fase, Neutro, Terra e Retorno)
 A metragem de condutores **NÃO é uma simples multiplicação do comprimento do eletroduto pelo número total de fios**. O levantamento DEVE ser feito **trecho a trecho, circuito por circuito**, multiplicando a extensão real do eletroduto (horizontal + descidas verticais) pela quantidade de condutores de cada função presentes naquele trecho (indicados pela simbologia unifilar: Fase `|`, Neutro `┬`, Terra `┴`, Retorno `/`).

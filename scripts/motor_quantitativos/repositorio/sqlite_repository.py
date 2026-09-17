@@ -51,6 +51,13 @@ def aplicar_migracoes(db: sqlite3.Connection) -> None:
         status TEXT NOT NULL CHECK(status IN ('LEVANTADO','PENDENTE_RFI','NAO_LEVANTADO')),
         rfi TEXT NOT NULL DEFAULT '',
         observacao TEXT NOT NULL DEFAULT '',
+        cia TEXT NOT NULL DEFAULT '',
+        element_type TEXT NOT NULL DEFAULT '',
+        element_id TEXT NOT NULL DEFAULT '',
+        rule_id TEXT NOT NULL DEFAULT '',
+        rule_version INTEGER NOT NULL DEFAULT 0,
+        evidence_json TEXT NOT NULL DEFAULT '[]',
+        source_revision TEXT NOT NULL DEFAULT '',
         versao INTEGER NOT NULL DEFAULT 1,
         updated_at TEXT NOT NULL,
         UNIQUE(obra_id, cod_eap, prancha_referencia)
@@ -90,6 +97,19 @@ def aplicar_migracoes(db: sqlite3.Connection) -> None:
     if not _tem_coluna(db, "obras", "diretorio_base"):
         db.execute("ALTER TABLE obras ADD COLUMN diretorio_base TEXT NOT NULL DEFAULT ''")
     db.execute("INSERT OR IGNORE INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (1, agora()))
+    novas_colunas = {
+        "cia": "TEXT NOT NULL DEFAULT ''",
+        "element_type": "TEXT NOT NULL DEFAULT ''",
+        "element_id": "TEXT NOT NULL DEFAULT ''",
+        "rule_id": "TEXT NOT NULL DEFAULT ''",
+        "rule_version": "INTEGER NOT NULL DEFAULT 0",
+        "evidence_json": "TEXT NOT NULL DEFAULT '[]'",
+        "source_revision": "TEXT NOT NULL DEFAULT ''",
+    }
+    for coluna, definicao in novas_colunas.items():
+        if not _tem_coluna(db, "itens_quantitativo", coluna):
+            db.execute(f"ALTER TABLE itens_quantitativo ADD COLUMN {coluna} {definicao}")
+    db.execute("INSERT OR IGNORE INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (2, agora()))
 
 
 def connect(path: str | Path) -> sqlite3.Connection:
@@ -122,15 +142,20 @@ def substituir_quantitativos(db: sqlite3.Connection, obra_id: int, itens: Iterab
         valores = (
             obra_id, revisao_id, item["cod_eap"], item["descricao"], item["disciplina"], item["unidade"],
             float(item["quantidade_liquida"]), item["expressao_matematica"], item["prancha_referencia"],
-            item.get("status", "LEVANTADO"), item.get("rfi", ""), item.get("observacao", ""), agora(),
+            item.get("status", "LEVANTADO"), item.get("rfi", ""), item.get("observacao", ""),
+            item.get("cia", ""), item.get("element_type", ""), item.get("element_id", ""),
+            item.get("rule_id", ""), int(item.get("rule_version", 0) or 0), item.get("evidence_json", "[]"),
+            item.get("source_revision", ""), agora(),
         )
         db.execute(
             "INSERT INTO itens_quantitativo(obra_id,revisao_id,cod_eap,descricao,disciplina,unidade,quantidade_liquida,"
-            "expressao_matematica,prancha_referencia,status,rfi,observacao,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?) "
+            "expressao_matematica,prancha_referencia,status,rfi,observacao,cia,element_type,element_id,rule_id,rule_version,evidence_json,source_revision,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
             "ON CONFLICT(obra_id,cod_eap,prancha_referencia) DO UPDATE SET revisao_id=excluded.revisao_id,"
             "descricao=excluded.descricao,disciplina=excluded.disciplina,unidade=excluded.unidade,"
             "quantidade_liquida=excluded.quantidade_liquida,expressao_matematica=excluded.expressao_matematica,"
-            "status=excluded.status,rfi=excluded.rfi,observacao=excluded.observacao,"
+            "status=excluded.status,rfi=excluded.rfi,observacao=excluded.observacao,cia=excluded.cia,"
+            "element_type=excluded.element_type,element_id=excluded.element_id,rule_id=excluded.rule_id,"
+            "rule_version=excluded.rule_version,evidence_json=excluded.evidence_json,source_revision=excluded.source_revision,"
             "versao=itens_quantitativo.versao+1,updated_at=excluded.updated_at",
             valores,
         )
@@ -139,6 +164,30 @@ def substituir_quantitativos(db: sqlite3.Connection, obra_id: int, itens: Iterab
             (obra_id, item["cod_eap"], item["prancha_referencia"]),
         ).fetchone()[0]))
     return ids
+
+
+def persistir_itens_quantificados(db: sqlite3.Connection, obra_id: int, itens: Iterable[Any],
+                                 revisao_id: int, prancha_referencia: str = "",
+                                 disciplina: str = "") -> list[int]:
+    """Persiste saídas de ``QuantifiedItem`` sem introduzir preço ou perda."""
+    payload = []
+    for item in itens:
+        payload.append({
+            "cod_eap": item.cod_eap,
+            "descricao": item.description,
+            "disciplina": disciplina or item.rule_id.split(".", 1)[0],
+            "unidade": item.unit,
+            "quantidade_liquida": item.quantity_net,
+            "expressao_matematica": item.expression,
+            "prancha_referencia": prancha_referencia,
+            "status": item.status,
+            "cia": item.element_ids[0] if item.element_ids else "",
+            "element_id": item.element_ids[0] if item.element_ids else "",
+            "rule_id": item.rule_id,
+            "rule_version": item.rule_version,
+            "evidence_json": json.dumps(item.evidence_ids, ensure_ascii=False),
+        })
+    return substituir_quantitativos(db, obra_id, payload, revisao_id)
 
 
 def atualizar_quantitativo(db: sqlite3.Connection, obra_id: int, item_id: int, alteracoes: dict[str, Any],

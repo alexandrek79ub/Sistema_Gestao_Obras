@@ -18,10 +18,7 @@
   - `Ponto de Lavatório / Pia de Cozinha (h = 0,60m a 1,10m do piso).`
   - `Ponto de Bacia Sanitária c/ Caixa Acoplada (h = 0,20m do piso) / Válvula de Descarga (h = 1,10m).`
   - `Prumadas Verticais (Shafts):` `L_prumada = (H_pé-direito + e_laje) × N_pavimentos + Interligação Barrilete/Subsolo`.
-- **Taxa de Perda:** Adicionar **10%** no total medido.
-- **Regra UCC:** 
-  - Tubos Soldáveis (Água): Barras de **3 metros** ou **6 metros** (arredondar CIMA).
-  - Tubos de Esgoto: Barras de **6 metros**.
+> 🛑 A metragem aqui é física, líquida e nominal. Perdas e conversão para barras comerciais (UCC) pertencem à CPU/BOM e não alteram o quantitativo.
 
 ### 2.2 Detalhamento Meticuloso de Registros, Conexões e Kits de Terminais
 Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos seus componentes de compra:
@@ -58,7 +55,7 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
 | **3.2.4** | Rasgos em Alvenaria para Ramais de Água e Esgoto | m | 2.1.1 — Alvenaria concluída | Após cura da argamassa de assentamento |
 | **3.2.5** | Instalação de Ramais de Água Fria e Água Quente | m | 3.2.4 | Antes do chapisco/emboço |
 | **3.2.6** | Instalação de Ramais de Esgoto e Coluna de Ventilação | m | 3.2.4 | Antes do chapisco/emboço |
-| **3.2.7** | 🔴 TESTE HIDROSTÁTICO (24h sob 1,5× pressão de trabalho) | un | 3.2.5 + 3.2.6 | **PREDECESSORA BLOQUEANTE de 2.1.2 (chapisco/emboço)** |
+| **3.2.7** | 🔴 TESTE HIDROSTÁTICO (72h sob pressão, com manômetro calibrado) | un | 3.2.5 + 3.2.6 | **PREDECESSORA BLOQUEANTE de 2.1.2 (chapisco/emboço)** |
 | **3.2.8** | Prumadas Verticais de Água, Esgoto e Pluvial em Shafts | m | 1.4.12 — Desforma total | Após lajes liberadas para carga |
 | **3.2.9** | Barrilete, Conexões de Reservatório e Bombas de Recalque | m / un | 3.2.8 | Após prumadas instaladas |
 | **3.2.10** | Instalação de Bacias Sanitárias, Lavatórios, Pias e Cubas | un | 2.1.5 — Piso assentado + Esquadrias | Fase final de acabamentos |
@@ -98,6 +95,8 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
 ---
 
 ## 6. Caixas Enterradas de Infraestrutura Hidráulica/Elétrica (Concreto vs. Alvenaria)
+
+> Limite de escopo: esta seção quantifica serviços físicos comprovados na prancha. Qualquer derivação de insumos, coeficiente de consumo, perda ou embalagem é exclusiva da BOM/CPU e não entra em `itens_quantitativo`.
 
 > ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo de caixas de inspeção, passagem, gordura, sabão, retenção e drenagem DEVE derivar automaticamente todos os insumos de escavação, **talude de segurança (NR-18 para H > 1,25m)**, fôrmas internas/externas, concreto, aço, emboço interno, impermeabilização e tampas.
 

@@ -210,28 +210,9 @@ Peso_barra = L_barra × Peso_linear (kg/m)
 Peso_total_bitola = Σ (n_barras × Peso_barra)
 ```
 
-### 3.3 Taxas de Perda por Fornecimento (somente CPU/BOM, fora do quantitativo)
+### 3.3 Armadura sem detalhamento
 
-| Fornecimento | Taxa de Perda |
-|---|---|
-| Aço em vergalhão 12m (CA-50) | 5% |
-| Aço em barra curta | 8% |
-| Aço em rolo (CA-60 Ø≤10mm) | 3% |
-
-**Arame recozido BWG 18:** 15 a 20 kg por tonelada de aço (1,5% a 2,0%)
-
-### 3.4 Taxas Médias de Consumo por Elemento (referência — quando sem projeto)
-
-| Elemento | Taxa (kg/m³) | Observação |
-|---|---|---|
-| Laje maciça | 80 a 120 | Aumenta com vão e carga |
-| Laje nervurada | 60 a 100 | Menor taxa por m³ (menos concreto) |
-| Viga | 120 a 180 | Aumenta com vão e momento |
-| Pilar | 150 a 250 | Aumenta com esforço e altura |
-| Escada | 100 a 150 | — |
-| Reservatório | 80 a 120 | — |
-
-> ⚠️ Taxas médias são apenas estimativas para orçamento preliminar. Para orçamento executivo, usar o detalhamento de armadura do projeto estrutural.
+> 🛑 Sem tabela de ferro ou detalhamento executivo, o peso de aço não pode ser levantado. Registrar o item como `PENDENTE_RFI` e solicitar o quadro de ferro ao projetista. Perdas de fornecimento e arame recozido pertencem exclusivamente à CPU/BOM, fora desta skill de quantitativo.
 
 ---
 
@@ -295,7 +276,7 @@ A memória de cálculo DEVE registrar:
 | "Volume de concreto do pilar P1" | Solicitar b, h, H_pilar líquido; perguntar se seção é regular ou especial | §1.1 |
 | "Fôrma da viga V-03" | Solicitar b, h, L_livre | §2.2 |
 | "Calcule o aço da viga V-03 (com projeto)" | Solicitar detalhamento: n° barras × Ø × comprimento + estribos | §3.2 |
-| "Estime o aço da laje L1 sem projeto" | Usar taxa de 80–120 kg/m³ e alertar que é estimativa | §3.4 |
+| "Aço da laje L1 sem projeto" | Registrar `PENDENTE_RFI` e solicitar o detalhamento de armadura | §3.3 |
 | "Quantifique a escada" | Solicitar: Larg, H_desnível, L_projeção, n°_degraus, e_laje | §1.4 + §2.4 |
 | "Quantifique todos os pilares do tipo" | Calcular 1 pavimento tipo → multiplicar por N andares | §4 |
 | "Quantifique a laje nervurada" | Solicitar: A_projetada, e_total, dimensões do caixote/cubeta | §1.3 |

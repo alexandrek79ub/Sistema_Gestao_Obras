@@ -82,6 +82,8 @@ Para garantir **zero alucinação matemática, precisão contábil absoluta e re
 
 ## 📋 2. Modelos Universais de Memória de Cálculo
 
+> Todos os números exibidos nos modelos desta seção são fictícios e servem somente como marcadores de preenchimento. Devem ser substituídos por evidências da prancha; nunca podem ser reutilizados como dados de uma obra. O resultado persistido é sempre a quantidade física líquida, sem perdas, UCC ou insumos derivados.
+
 O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. Não omitir etapas.
 
 > 🛑 **Padrão Obrigatório de Formatação Visual (Markdown Nativo Anti-Erro):**  
@@ -120,9 +122,7 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 ║    Σ Descontos = X,XX m²                                         ║
 ║                                                                  ║
 ║  ÁREA LÍQUIDA = XX,XX − X,XX = XX,XX m²                         ║
-║  TAXA DE PERDA (X%) = XX,XX × 1,0X = XX,XX m²                   ║
-║                                                                  ║
-║  ✅ RESULTADO FINAL: XX,XX m²                                    ║
+║  ✅ RESULTADO FÍSICO LÍQUIDO: XX,XX m²                           ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
@@ -137,14 +137,7 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 ║  A_piso = Comp × Larg = X,XX × X,XX = XX,XX m²                  ║
 ║  Descontos: pilares embutidos, ralos = X,XX m²                  ║
 ║  ÁREA LÍQUIDA = XX,XX m²                                        ║
-║  TAXA DE PERDA (10%/15%) = XX,XX × 1,1X = XX,XX m²             ║
-║                                                                  ║
-║  INSUMOS (TCPO §9.10–§9.14 do módulo Arquitetura):             ║
-║    Argamassa colante AC-[I/II/III]: XX,XX m² × 5,0 = XX,XX kg  ║
-║    Rejunte (junta Xmm): XX,XX m² × X,XX = XX,XX kg             ║
-║    Espaçadores: XX,XX m² × 6 = XX unid                         ║
-║                                                                  ║
-║  ✅ RESULTADO FINAL: XX,XX m² de piso                           ║
+║  ✅ RESULTADO FÍSICO LÍQUIDO: XX,XX m² de piso                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
@@ -164,9 +157,8 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 ║  FÔRMA:                                                          ║
 ║    A_forma = (2b + 2h) × H = XX,XX m²                           ║
 ╠══════════════════════════════════════════════════════════════════╣
-║  ARMADURA (taxa estimada ou detalhamento):                       ║
-║    Taxa: XXX kg/m³ → Peso = X,XX × XXX = XXX,XX kg              ║
-║    Arame recozido (1,5%): X,XX kg                                ║
+║  ARMADURA (detalhamento executivo obrigatório):                 ║
+║    Peso líquido conforme quadro de ferro: XXX,XX kg             ║
 ║                                                                  ║
 ║  ✅ CONCRETO: X,XX m³ | FÔRMA: XX,XX m² | AÇO: XXX,XX kg        ║
 ╚══════════════════════════════════════════════════════════════════╝
@@ -189,11 +181,9 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 ║    Ø 6,3mm (CA-60): 20 estribos × 0,90m = 18,00m                ║
 ║      → 18,00m × 0,245 kg/m = 4,41 kg                            ║
 ║                                                                  ║
-║  SUBTOTAL = 18,49 + 5,68 + 4,41 = 28,58 kg                      ║
-║  TAXA DE PERDA (5%) = 28,58 × 1,05 = 30,01 kg                   ║
-║  ARAME RECOZIDO (1,5%) = 30,01 × 0,015 = 0,45 kg                ║
+║  SUBTOTAL LÍQUIDO = 18,49 + 5,68 + 4,41 = 28,58 kg              ║
 ║                                                                  ║
-║  ✅ AÇO TOTAL: 30,01 kg + 0,45 kg arame = 30,46 kg              ║
+║  ✅ AÇO TOTAL LÍQUIDO: 28,58 kg                                 ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 
@@ -243,12 +233,11 @@ Antes de emitir o orçamento, o agente DEVE listar explicitamente todas as chama
 
 | Prancha | Círculo / Chamada no Desenho | Descrição do Detalhe | Status no Levantamento |
 |---|---|---|---|
-| DW-2054-101 | Detalhe 01 / Corte AA | Impermeabilização da Calha e Platibanda | [X] Quantificado |
-| DW-2054-102 | Detalhe 02 / 08 | Mureta de Apoio e Terça Metálica | [X] Quantificado (3x apoios) |
-| DW-2054-102 | Detalhe 04 | Pingadeira Pré-moldada no topo da Platibanda | [X] Quantificado |
-| DW-2054-102 | Detalhe 06 | Rufo Metálico de Encontro Telha/Platibanda | [X] Quantificado |
+| [PRANCHA] | [DETALHE / CORTE] | [DESCRIÇÃO] | [LEVANTADO / PENDENTE_RFI] |
 
 #### Etapa 2 — Varredura Tridimensional por Matriz de Integridade
+
+> A matriz abaixo é de cobertura de elementos e serviços executivos. Insumos secundários, consumíveis, perdas e embalagens são verificados apenas como exclusões e permanecem na BOM/CPU.
 Para cada disciplina, o agente deve verificar a **Cadeia Completa de Insumos Secundários**:
 
 - **Fundações:** Estaca + Bloco + Lastro + Armadura + Fôrmas + Escavação + Reaterro.
@@ -269,12 +258,12 @@ Se o agente identificar um detalhe construtivo ou elemento desenhado nas prancha
 ❓ INTERROGATÓRIO TÉCNICO DE ALINHAMENTO DE ORÇAMENTO
 
 Identifiquei os seguintes detalhes no projeto que requerem confirmação de critério:
-1. DETALHE 06 (Rufo da Platibanda - Prancha DW-2054-102):
-   - Opção A (Recomendada): Quantificar como Rufo em Chapa Galvanizada corte 33cm (20,36 m linear).
+1. [DETALHE / PRANCHA]:
+   - Opção A: [critério técnico confirmado em projeto].
    - Opção B: Quantificar como Calha-Rufo moldada in loco.
 
-2. MURETAS DE APOIO DA COBERTURA (Corte BB):
-   - Opção A (Recomendada): Quantificar as 3 muretas escalonadas em Bloco 9x19x39cm (11,62 m²) SEM revestimento/emboço.
+2. [ELEMENTO / CORTE]:
+   - Opção A: [critério técnico confirmado em projeto].
    - Opção B: Quantificar com emboço simples de proteção.
 ```
 
@@ -294,7 +283,9 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 | Radier | — | m² | — | — | — | C30 | Fundação | — |
 | | | | **TOTAL** | **TOTAL** | **TOTAL** | | | **R$ —** |
 
-### 3.3 Tabela de Insumos para Compra
+### 3.3 Tabela de Insumos para Compra (FORA DO QUANTITATIVO FISICO)
+
+> Interface posterior de BOM/CPU e compras. Esta tabela nao pertence a EAP fisica, nao e persistida em `itens_quantitativo` e nao pode alterar quantidades liquidas. Perdas, coeficientes, embalagens e precos entram somente nas etapas posteriores autorizadas.
 
 | Insumo | Und | Qtd Calculada | Coef. TCPO | Qtd para Compra | Preço Unit. (R$) | Custo (R$) |
 |---|---|---|---|---|---|---|

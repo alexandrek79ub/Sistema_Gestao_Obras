@@ -7,6 +7,9 @@ decodificação de caracteres CAD e extração de blocos e metadados.
 from pathlib import Path
 from typing import List, Dict, Any, Optional
 import re
+import hashlib
+
+from .evidencias import EvidenceRecord
 
 try:
     import fitz  # PyMuPDF
@@ -36,6 +39,36 @@ class LeitorPDFBase:
             return ""
         return self.doc[pagina_idx].get_text()
 
+    def obter_texto_todas_paginas(self) -> str:
+        """Retorna texto de todas as páginas, preservando separadores de página."""
+        return "\n\n".join(self.doc[pagina].get_text() for pagina in range(self.total_paginas))
+
+    def iterar_blocos(self):
+        """Percorre blocos de todas as páginas com página e coordenadas."""
+        for pagina_idx in range(self.total_paginas):
+            for bloco in self.obter_blocos(pagina_idx):
+                yield pagina_idx + 1, bloco
+
+    def extrair_evidencias(self, source_revision: str = "REV_DESCONHECIDA") -> list[EvidenceRecord]:
+        """Extrai blocos textuais verificáveis; não interpreta nem calcula engenharia."""
+        evidencias: list[EvidenceRecord] = []
+        for page, bloco in self.iterar_blocos():
+            raw_text = bloco["texto"].strip()
+            if not raw_text:
+                continue
+            digest = hashlib.sha1(f"{self.caminho_pdf}|{page}|{bloco['x0']}|{bloco['y0']}|{raw_text}".encode("utf-8")).hexdigest()[:16]
+            evidencias.append(EvidenceRecord(
+                evidence_id=f"EVD-{digest}",
+                source_file=self.caminho_pdf.name,
+                source_revision=source_revision,
+                page=page,
+                region=f"{bloco['x0']:.2f},{bloco['y0']:.2f},{bloco['x1']:.2f},{bloco['y1']:.2f}",
+                raw_text=raw_text,
+                evidence_type="TEXT",
+                confidence="CONFIRMED",
+            ))
+        return evidencias
+
     def obter_blocos(self, pagina_idx: int = 0) -> List[Dict[str, Any]]:
         """Extrai blocos de texto com coordenadas espaciais."""
         if pagina_idx >= self.total_paginas:
@@ -52,7 +85,7 @@ class LeitorPDFBase:
 
     def detectar_disciplina(self, pagina_idx: int = 0) -> str:
         """Identifica a disciplina provável pelo selo/carimbo e notas da prancha."""
-        texto = self.obter_texto_completo(pagina_idx).upper()
+        texto = (self.obter_texto_todas_paginas() if pagina_idx == 0 else self.obter_texto_completo(pagina_idx)).upper()
         
         # Fundações / Infraestrutura
         if any(k in texto for k in ["BALDRAME", "SAPATA", "BLOCO DE COROAMENTO", "ESTACA", "FUNDAÇÃO", "FUNDACAO"]):

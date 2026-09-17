@@ -47,12 +47,6 @@ class ParserEstrutura:
                 nome, esp, area_str = m_laje.groups()
                 self.lajes[nome] = {"qtd": 1, "e": float(esp)/100, "area": float(area_str.replace(',','.'))}
 
-        # Fallback para teste se a prancha não for facilmente parseável pelo OCR simples
-        if not self.pilares and not self.vigas and not self.lajes:
-            self.pilares = {"P1": {"qtd": 8, "b": 0.20, "h": 0.40, "pé_direito": 3.00}}
-            self.vigas = {"V1": {"qtd": 4, "b": 0.20, "h": 0.50, "L": 4.50}}
-            self.lajes = {"L1": {"qtd": 1, "e": 0.12, "area": 35.00}}
-
         return {
             "prancha_principal": self.caminho_pdf.name,
             "disciplina": "ESTRUTURA",

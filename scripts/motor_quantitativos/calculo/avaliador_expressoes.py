@@ -45,5 +45,4 @@ def calcular_expressao(expressao: str) -> float:
         resultado = eval(compile(node, '<string>', 'eval'), {"__builtins__": None}, math_context)
         return round(float(resultado), 4)
     except Exception as e:
-        print(f"[AVISO] Não foi possível calcular a expressão '{expressao}': {e}")
-        return 0.0
+        raise ValueError(f"Expressão inválida ou não permitida: {expressao!r}: {e}") from e

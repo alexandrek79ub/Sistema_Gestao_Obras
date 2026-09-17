@@ -202,7 +202,7 @@ Sempre que uma informação necessária não constar nas pranchas:
 > ⚠️ OBSERVAÇÃO DE AUDITORIA — ITEM NÃO LEVANTADO:
 > - Serviço/Elemento: [Ex: Pingadeira de concreto no topo do muro]
 > - Localização: [Ex: Muro Norte — trecho 01]
-> - Prancha de Referência: [Ex: Prancha AÇU-3.DES-A100 Rev 01]
+> - Prancha de Referência: [Ex: PRANCHA-REFERENCIA Rev XX]
 > - Motivo: Cota da pingadeira e especificação do material não indicadas na prancha.
 > - Ação: RFI nº [XX] emitida. Item será incorporado após resposta.
 ```

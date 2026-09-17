@@ -19,6 +19,8 @@
 
 ### 🔩 1.3 Matriz de Suprimentos, Consumíveis e Proteções de Canteiro (UCC / BOM)
 
+> Esta seção é interface de BOM/UCC para suprimentos. Consumíveis, percentuais e embalagens não são quantitativo físico, não recebem linha em `itens_quantitativo` e não podem alimentar o cálculo líquido.
+
 > 🛑 **REGRA DE OURO DA GOVERNANÇA: EAP É SERVIÇO, UCC É COMPRA!**  
 > Os itens de apoio, sinalização, EPIs e proteções de acabamento **NÃO recebem código EAP**. São derivados parametricamente da escala da obra e lançados na Lista de Compras (BOM / UCC):
 

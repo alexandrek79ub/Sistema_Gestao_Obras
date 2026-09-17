@@ -119,7 +119,7 @@ Se o relatório contiver qualquer um destes erros, a verificação **REPROVA** o
 
 ## 📝 Protocolo de Emissão do Certificado de Auditoria de Quantitativos
 
-Após a verificação, o Agente de Auditoria deve emitir o seguinte bloco no relatório:
+Após a verificação, o Agente de Auditoria deve emitir o seguinte bloco no relatório. O bloco é um modelo vazio: nenhuma obra pode ser marcada como APROVADA sem evidências, revisão da prancha e identificação da obra/revisão.
 
 ```text
 ====================================================================
