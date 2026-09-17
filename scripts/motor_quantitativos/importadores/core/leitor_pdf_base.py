@@ -49,8 +49,12 @@ class LeitorPDFBase:
             for bloco in self.obter_blocos(pagina_idx):
                 yield pagina_idx + 1, bloco
 
-    def extrair_evidencias(self, source_revision: str = "REV_DESCONHECIDA") -> list[EvidenceRecord]:
+    def extrair_evidencias(self, source_revision: str, confidence: str = "REVIEW_REQUIRED") -> list[EvidenceRecord]:
         """Extrai blocos textuais verificáveis; não interpreta nem calcula engenharia."""
+        if not source_revision or not source_revision.strip():
+            raise ValueError("A revisão da prancha é obrigatória para extrair evidências")
+        if confidence not in {"REVIEW_REQUIRED", "USER_CONFIRMED"}:
+            raise ValueError("Confiança de extração inválida")
         evidencias: list[EvidenceRecord] = []
         for page, bloco in self.iterar_blocos():
             raw_text = bloco["texto"].strip()
@@ -65,7 +69,7 @@ class LeitorPDFBase:
                 region=f"{bloco['x0']:.2f},{bloco['y0']:.2f},{bloco['x1']:.2f},{bloco['y1']:.2f}",
                 raw_text=raw_text,
                 evidence_type="TEXT",
-                confidence="CONFIRMED",
+                confidence=confidence,
             ))
         return evidencias
 
@@ -110,14 +114,9 @@ class LeitorPDFBase:
         nome = self.caminho_pdf.name
         pasta = self.caminho_pdf.parent
         
-        match = re.match(r"(.*?EGS-05)\d", nome)
+        match = re.match(r"(?P<prefix>.*?)(?P<numero>\d+)(?:\D.*)?\.pdf$", nome, re.IGNORECASE)
         if match:
-            prefixo = match.group(1)
-            return sorted([p for p in pasta.glob(f"{prefixo}*.pdf") if p != self.caminho_pdf])
-            
-        match = re.match(r"(.*?EGS-)\d+", nome)
-        if match:
-            prefixo = match.group(1)
+            prefixo = match.group("prefix")
             return sorted([p for p in pasta.glob(f"{prefixo}*.pdf") if p != self.caminho_pdf])
             
         return []

@@ -108,6 +108,15 @@ Fase 2 iniciada: contrato de dados em `governanca/CONTRATO_DADOS_QUANTITATIVOS.m
 - Correção posterior: as Skills 03A e 03B foram reescritas para remover fórmulas operacionais de perdas, SKUs, consumos, coeficientes, insumos e UCC. Permanecem apenas regras de medição física líquida, evidência e RFI.
 - Correção posterior: a Skill 01 Fundações foi reescrita sem resultados, nomes de elementos, pranchas ou dimensões de obra. Permaneceram apenas EAP, regras de evidência e fórmulas simbólicas.
 
+## Estabilização do fluxo contratual (2026-09-17)
+
+- O roteador operacional passou a exigir obra, revisão, disciplina e confirmação explícita de evidências; ele não chama parsers legados nem cria JSON intermediário de orçamento.
+- Parsers legados foram desativados como stubs de compatibilidade, removendo preços, fallbacks, pranchas e dados de obra de sua implementação.
+- A extração de PDF inicia evidências como `REVIEW_REQUIRED`; somente a confirmação explícita as promove para uso no cálculo.
+- A migração SQLite 3 identifica quantitativos por obra, EAP, prancha, elemento e regra, preservando múltiplos elementos da mesma prancha.
+- A importação JSON física rejeita preço e composição; orçamento permanece em etapa separada.
+- Testes cobrem expressão inválida, separação físico/orçamento, migração de schema anterior, persistência de elementos distintos e fluxo PDF → evidência confirmada → elemento → regra → SQLite.
+
 ## Fase 9 — início da homologação e bloqueios do legado
 
 - Removido fallback que injetava dimensões fictícias no `parser_estrutura.py`.

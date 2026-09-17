@@ -47,5 +47,13 @@ class ParserFundacoesContrato:
                         "altura_m": _number(match.group("h")),
                     },
                     evidence_ids=(item.evidence_id,),
+                    attribute_evidence={
+                        "occurrence": (item.evidence_id,),
+                        "largura_m": (item.evidence_id,),
+                        "comprimento_m": (item.evidence_id,),
+                        "altura_m": (item.evidence_id,),
+                    },
+                    source_file=item.source_file,
+                    source_revision=item.source_revision,
                 ))
         return elementos

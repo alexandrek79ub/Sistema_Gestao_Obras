@@ -60,7 +60,7 @@ def aplicar_migracoes(db: sqlite3.Connection) -> None:
         source_revision TEXT NOT NULL DEFAULT '',
         versao INTEGER NOT NULL DEFAULT 1,
         updated_at TEXT NOT NULL,
-        UNIQUE(obra_id, cod_eap, prancha_referencia)
+        UNIQUE(obra_id, cod_eap, prancha_referencia, element_id, rule_id)
     );
     CREATE TABLE IF NOT EXISTS itens_orcamento (
         id INTEGER PRIMARY KEY,
@@ -110,6 +110,57 @@ def aplicar_migracoes(db: sqlite3.Connection) -> None:
         if not _tem_coluna(db, "itens_quantitativo", coluna):
             db.execute(f"ALTER TABLE itens_quantitativo ADD COLUMN {coluna} {definicao}")
     db.execute("INSERT OR IGNORE INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (2, agora()))
+    if not db.execute("SELECT 1 FROM schema_migrations WHERE versao=3").fetchone():
+        _migrar_chave_quantitativo_por_elemento(db)
+        db.execute("INSERT INTO schema_migrations(versao,aplicada_em) VALUES(?,?)", (3, agora()))
+
+
+def _migrar_chave_quantitativo_por_elemento(db: sqlite3.Connection) -> None:
+    """Preserva os itens existentes e passa a identificar cada linha pelo elemento e regra."""
+    db.execute("PRAGMA foreign_keys=OFF")
+    try:
+        db.executescript("""
+        ALTER TABLE itens_orcamento RENAME TO itens_orcamento_v2;
+        ALTER TABLE itens_quantitativo RENAME TO itens_quantitativo_v2;
+        CREATE TABLE itens_quantitativo (
+            id INTEGER PRIMARY KEY,
+            obra_id INTEGER NOT NULL REFERENCES obras(id),
+            revisao_id INTEGER REFERENCES revisoes(id),
+            cod_eap TEXT NOT NULL,
+            descricao TEXT NOT NULL,
+            disciplina TEXT NOT NULL,
+            unidade TEXT NOT NULL,
+            quantidade_liquida REAL NOT NULL CHECK(quantidade_liquida >= 0),
+            expressao_matematica TEXT NOT NULL,
+            prancha_referencia TEXT NOT NULL,
+            status TEXT NOT NULL CHECK(status IN ('LEVANTADO','PENDENTE_RFI','NAO_LEVANTADO')),
+            rfi TEXT NOT NULL DEFAULT '', observacao TEXT NOT NULL DEFAULT '', cia TEXT NOT NULL DEFAULT '',
+            element_type TEXT NOT NULL DEFAULT '', element_id TEXT NOT NULL DEFAULT '',
+            rule_id TEXT NOT NULL DEFAULT '', rule_version INTEGER NOT NULL DEFAULT 0,
+            evidence_json TEXT NOT NULL DEFAULT '[]', source_revision TEXT NOT NULL DEFAULT '',
+            versao INTEGER NOT NULL DEFAULT 1, updated_at TEXT NOT NULL,
+            UNIQUE(obra_id, cod_eap, prancha_referencia, element_id, rule_id)
+        );
+        INSERT INTO itens_quantitativo SELECT * FROM itens_quantitativo_v2;
+        CREATE TABLE itens_orcamento (
+            id INTEGER PRIMARY KEY,
+            obra_id INTEGER NOT NULL REFERENCES obras(id),
+            quantitativo_id INTEGER NOT NULL REFERENCES itens_quantitativo(id),
+            revisao_id INTEGER REFERENCES revisoes(id),
+            codigo_sinapi TEXT NOT NULL DEFAULT '', centro_custo TEXT NOT NULL DEFAULT '', fonte_preco TEXT NOT NULL DEFAULT '',
+            custo_material REAL NOT NULL DEFAULT 0, custo_mao_obra REAL NOT NULL DEFAULT 0,
+            custo_equipamento REAL NOT NULL DEFAULT 0, bdi_pct REAL NOT NULL DEFAULT 0,
+            preco_unitario REAL NOT NULL DEFAULT 0, custo_total REAL NOT NULL DEFAULT 0, updated_at TEXT NOT NULL,
+            UNIQUE(obra_id, quantitativo_id)
+        );
+        INSERT INTO itens_orcamento SELECT * FROM itens_orcamento_v2;
+        DROP TABLE itens_orcamento_v2;
+        DROP TABLE itens_quantitativo_v2;
+        CREATE INDEX IF NOT EXISTS idx_quant_obra_eap ON itens_quantitativo(obra_id, cod_eap);
+        CREATE INDEX IF NOT EXISTS idx_orc_obra ON itens_orcamento(obra_id);
+        """)
+    finally:
+        db.execute("PRAGMA foreign_keys=ON")
 
 
 def connect(path: str | Path) -> sqlite3.Connection:
@@ -150,7 +201,7 @@ def substituir_quantitativos(db: sqlite3.Connection, obra_id: int, itens: Iterab
         db.execute(
             "INSERT INTO itens_quantitativo(obra_id,revisao_id,cod_eap,descricao,disciplina,unidade,quantidade_liquida,"
             "expressao_matematica,prancha_referencia,status,rfi,observacao,cia,element_type,element_id,rule_id,rule_version,evidence_json,source_revision,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) "
-            "ON CONFLICT(obra_id,cod_eap,prancha_referencia) DO UPDATE SET revisao_id=excluded.revisao_id,"
+            "ON CONFLICT(obra_id,cod_eap,prancha_referencia,element_id,rule_id) DO UPDATE SET revisao_id=excluded.revisao_id,"
             "descricao=excluded.descricao,disciplina=excluded.disciplina,unidade=excluded.unidade,"
             "quantidade_liquida=excluded.quantidade_liquida,expressao_matematica=excluded.expressao_matematica,"
             "status=excluded.status,rfi=excluded.rfi,observacao=excluded.observacao,cia=excluded.cia,"
@@ -160,8 +211,8 @@ def substituir_quantitativos(db: sqlite3.Connection, obra_id: int, itens: Iterab
             valores,
         )
         ids.append(int(db.execute(
-            "SELECT id FROM itens_quantitativo WHERE obra_id=? AND cod_eap=? AND prancha_referencia=?",
-            (obra_id, item["cod_eap"], item["prancha_referencia"]),
+            "SELECT id FROM itens_quantitativo WHERE obra_id=? AND cod_eap=? AND prancha_referencia=? AND element_id=? AND rule_id=?",
+            (obra_id, item["cod_eap"], item["prancha_referencia"], item.get("element_id", ""), item.get("rule_id", "")),
         ).fetchone()[0]))
     return ids
 
@@ -179,13 +230,15 @@ def persistir_itens_quantificados(db: sqlite3.Connection, obra_id: int, itens: I
             "unidade": item.unit,
             "quantidade_liquida": item.quantity_net,
             "expressao_matematica": item.expression,
-            "prancha_referencia": prancha_referencia,
+            "prancha_referencia": prancha_referencia or item.source_file,
             "status": item.status,
-            "cia": item.element_ids[0] if item.element_ids else "",
+            "cia": item.cia,
+            "element_type": item.element_type,
             "element_id": item.element_ids[0] if item.element_ids else "",
             "rule_id": item.rule_id,
             "rule_version": item.rule_version,
             "evidence_json": json.dumps(item.evidence_ids, ensure_ascii=False),
+            "source_revision": item.source_revision,
         })
     return substituir_quantitativos(db, obra_id, payload, revisao_id)
 

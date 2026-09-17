@@ -18,7 +18,8 @@ def _m(value: str) -> float:
 def _record(obra: str, evidence: EvidenceRecord, tipo: str, ident: str, attrs: dict, disciplina: str) -> ElementRecord:
     return ElementRecord(obra, "NÃO_INFORMADO", "NÃO_INFORMADO", "NÃO_INFORMADO",
                          f"{disciplina[:3]}-GER-{ident}", disciplina, tipo, ident, 1, attrs,
-                         (evidence.evidence_id,))
+                         (evidence.evidence_id,), attribute_evidence={field: (evidence.evidence_id,) for field in attrs},
+                         source_file=evidence.source_file, source_revision=evidence.source_revision)
 
 
 def extrair_estrutura(obra: str, evidence: Iterable[EvidenceRecord]) -> list[ElementRecord]:

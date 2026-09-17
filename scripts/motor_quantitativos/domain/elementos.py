@@ -18,6 +18,9 @@ class ElementRecord:
     attributes: dict[str, Any]
     evidence_ids: tuple[str, ...]
     status: str = "LEVANTADO"
+    attribute_evidence: dict[str, tuple[str, ...]] = field(default_factory=dict)
+    source_file: str = ""
+    source_revision: str = ""
 
 
 @dataclass(frozen=True)
@@ -32,3 +35,7 @@ class QuantifiedItem:
     element_ids: tuple[str, ...] = field(default_factory=tuple)
     evidence_ids: tuple[str, ...] = field(default_factory=tuple)
     status: str = "LEVANTADO"
+    cia: str = ""
+    element_type: str = ""
+    source_file: str = ""
+    source_revision: str = ""

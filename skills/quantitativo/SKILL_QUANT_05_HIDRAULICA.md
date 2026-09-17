@@ -98,18 +98,18 @@ Toda prumada ou kit de ponto hidráulico deve ser decomposto individualmente nos
 
 > Limite de escopo: esta seção quantifica serviços físicos comprovados na prancha. Qualquer derivação de insumos, coeficiente de consumo, perda ou embalagem é exclusiva da BOM/CPU e não entra em `itens_quantitativo`.
 
-> ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo de caixas de inspeção, passagem, gordura, sabão, retenção e drenagem DEVE derivar automaticamente todos os insumos de escavação, **talude de segurança (NR-18 para H > 1,25m)**, fôrmas internas/externas, concreto, aço, emboço interno, impermeabilização e tampas.
+> ⚠️ **REGRA DE CAIXAS ENTERRADAS:** O quantitativo deve levantar os serviços físicos comprovados em projeto — escavação, preparo de fundo, lastro, paredes, fundo, tampa, impermeabilização e reaterro, quando aplicáveis. Insumos, coeficientes, embalagens e perdas não são derivados nesta etapa.
 
 ### 5.1 Geometria e Parâmetros de Entrada da Caixa
 | Parâmetro | Descrição Técnica | Aplicação Geométrica |
 |---|---|---|
 | A, C | Dimensões Internas em Planta (m) | Largura útil (A) e Comprimento útil (C) da caixa |
 | B, D | Dimensões Externas em Planta (m) | B = A + 2 × E e D = C + 2 × E (inclui espessuras) |
-| E | Espessura das Paredes da Caixa (m) | Tipicamente 0,10m a 0,15m (concreto) ou 0,12m/0,25m (alvenaria) |
-| F | Espessura da Laje de Fundo (m) | Laje de fundo em concreto (tipicamente 0,08m a 0,15m) |
+| E | Espessura das Paredes da Caixa (m) | Conforme detalhe executivo da caixa |
+| F | Espessura da Laje de Fundo (m) | Conforme detalhe executivo da caixa |
 | G | Altura Interna Útil (m) | Projeção vertical útil do fluxo/inspeção |
 | H | Altura Total Externa da Cava (m) | H = G + F + I (profundidade total de escavação) |
-| I | Espessura da Tampa de Concreto (m) | Tampa superior estrutural (tipicamente 0,07m a 0,10m) |
+| I | Espessura da Tampa de Concreto (m) | Conforme detalhe executivo da caixa |
 
 ### 5.2 Fórmulas Integradas de Derivação de Serviços (Caixa de Concreto)
 ```text

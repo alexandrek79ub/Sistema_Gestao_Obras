@@ -15,6 +15,10 @@ def validar_elementos(elements: Iterable[ElementRecord]) -> list[ElementRecord]:
             raise ValueError(f"Identidade incompleta no elemento {element.element_id!r}")
         if element.status == "LEVANTADO" and not element.evidence_ids:
             raise ValueError(f"Elemento levantado sem evidência: {element.element_id}")
+        if element.status == "LEVANTADO":
+            missing_evidence = [field for field in element.attributes if not element.attribute_evidence.get(field)]
+            if missing_evidence:
+                raise ValueError(f"Atributos sem evidência no elemento {element.element_id}: {', '.join(missing_evidence)}")
         if element.occurrence < 0:
             raise ValueError(f"Ocorrência negativa: {element.element_id}")
         validos.append(element)

@@ -2,9 +2,7 @@ import json
 from pathlib import Path
 
 from motor_quantitativos.calculo.avaliador_expressoes import calcular_expressao
-from motor_quantitativos.repositorio.sqlite_repository import (
-    connect, garantir_obra, gravar_orcamento, substituir_quantitativos
-)
+from motor_quantitativos.repositorio.sqlite_repository import connect, garantir_obra, substituir_quantitativos
 from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
 from motor_quantitativos.exportadores import exportar_artefatos
 
@@ -14,10 +12,13 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
     projeto = data.get("projeto", "OBRA_NAO_NOMEADA")
     obra_codigo = projeto.upper().replace(" ", "_")
     base_dir = str(Path(data.get("base_dir", Path(json_path).parent)).resolve())
-    itens, itens_orcamento = [], []
+    itens = []
     
     for disciplina, bloco in data.get("disciplinas", {}).items():
         for item in bloco.get("itens_orcamento", []):
+            campos_orcamento = {"preco_unitario", "custo_material", "custo_mao_obra", "custo_equipamento", "bdi_pct", "codigo_sinapi", "centro_custo", "fonte_preco"}
+            if campos_orcamento.intersection(item):
+                raise ValueError("O JSON de quantitativo não aceita preço ou composição; importe custos em etapa separada")
             expressoes = item.get("equacoes", [])
             prancha = item.get("ref_prancha", bloco.get("pranchas_ref", ""))
             itens.append({
@@ -28,23 +29,6 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
                 "prancha_referencia": prancha, "status": item.get("status", "LEVANTADO"),
                 "observacao": "Importação inicial do JSON; a partir desta revisão, SQLite é a fonte oficial.",
             })
-            c_mat = float(item.get("custo_material", 0) or 0)
-            c_mo = float(item.get("custo_mao_obra", 0) or 0)
-            c_eq = float(item.get("custo_equipamento", 0) or 0)
-            pu = item.get("preco_unitario")
-            if pu is None or (float(pu) == 0 and (c_mat + c_mo + c_eq) > 0):
-                pu = c_mat + c_mo + c_eq
-            else:
-                pu = float(pu) if pu is not None else 0.0
-
-            itens_orcamento.append({
-                "cod_eap": item["codigo_eap"], "prancha_referencia": prancha,
-                "preco_unitario": pu, "bdi_pct": item.get("bdi_pct", 0),
-                "centro_custo": item.get("centro_custo", ""), "codigo_sinapi": item.get("codigo_sinapi", ""),
-                "fonte_preco": item.get("fonte_preco", ""),
-                "custo_material": c_mat, "custo_mao_obra": c_mo, "custo_equipamento": c_eq,
-            })
-
             
     db = connect(db_path)
     try:
@@ -58,9 +42,6 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
         
         revisao_quant = registrar_revisao(db, obra_id, "QUANTITATIVO", f"importacao-inicial:{json_path}", "motor-python", "Importação inicial autorizada")
         substituir_quantitativos(db, obra_id, itens, revisao_quant)
-        
-        revisao_orc = registrar_revisao(db, obra_id, "ORCAMENTO", f"importacao-inicial:{json_path}", "motor-python", "Orçamento importado junto ao levantamento inicial")
-        gravar_orcamento(db, obra_id, itens_orcamento, revisao_orc)
         
         saidas = exportar_artefatos(db, obra_id)
         db.commit()

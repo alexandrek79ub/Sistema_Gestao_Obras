@@ -58,24 +58,28 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ---
 
-## 🤖 1.1. Arquitetura Híbrida de Quantitativo de Alta Velocidade (Python Engine na CPU)
+## 🤖 1.1. Arquitetura Contratual de Quantificação (evidência → cálculo determinístico)
 
-Para garantir **zero alucinação matemática, precisão contábil absoluta e resposta em SEGUNDOS**, o processo de levantamento quantitativo adota execução nativa em Python:
+O levantamento somente pode seguir esta cadeia; cada transição é rastreável e bloqueia a seguinte se estiver incompleta:
 
-1. **Extração e Varredura Automatizada de Pranchas (1 a 2 segundos):**
-   - Ao receber uma prancha em PDF (ex: `EGS-051.pdf`), o Agente aciona diretamente o extrator automatizado:
-     ```bash
-     python scripts/motor_quantitativos/importadores/extrator_estrutural.py [caminho_prancha.pdf]
-     ```
-   - 🛑 **PROIBIÇÃO ABSOLUTA DE LOOPS VISUAIS LENTOS:** É expressamente proibido fazer recortes sucessivos manuais de imagem e mandar para a LLM analisar em múltiplos turnos de rede. A CPU local varre o PDF, tabelas de vigas, pilares, resumos de ferro e pranchas correlatas no mesmo segundo.
+```text
+PDF → EvidenceRecord (REVIEW_REQUIRED) → confirmação humana (USER_CONFIRMED)
+    → ElementRecord com evidência por atributo → RuleDefinition
+    → expressão literal → avaliador AST seguro → QuantifiedItem
+    → SQLite (SSOT) → Excel / CSV / Markdown derivados
+```
 
-2. **O Motor Python na CPU ([cli.py](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/scripts/motor_quantitativos/cli.py)):**  
-   - O extrator gera as equações nominais literais e dispara a ingestão no **SQLite oficial (`data/pmo_virtual.sqlite`) como Única Fonte da Verdade (SSOT)**.
-   - Gera instantaneamente todos os artefatos derivados:
-     - 📊 O Caderno Master Executivo em Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com 6 abas executivas e fórmulas dinâmicas;
-     - 📝 As Memórias de Cálculo em Markdown nativo auditável (`MEMORIA_CALCULO_[DISC].md`);
-     - 📑 Os quantitativos físicos e orçamentos em CSV (`QUANTITATIVO_[DISC].csv`, `QUANTITATIVO_MESTRE.csv`, `ORCAMENTO_BASE_CONSOLIDADO.csv`);
-   - O Dashboard Next.js consome diretamente os dados do SQLite via `@/lib/db.ts` (`node:sqlite`).
+1. **Extração de evidências:** o leitor de PDF varre páginas, texto e coordenadas, criando evidências revisáveis. A extração não confirma cotas e não calcula quantidades.
+2. **Confirmação e entrada:** para pranchas, usar exclusivamente o roteador contratual:
+   ```bash
+   python scripts/motor_quantitativos/importadores/roteador.py <prancha.pdf> --obra <codigo> --nome-obra <nome> --revisao <rev> --disciplina <disciplina> --diretorio-obra <pasta> --confirmar-evidencias
+   ```
+   Sem obra, revisão, disciplina ou confirmação explícita, o processo deve falhar sem escrever no banco.
+3. **Parser:** transforma evidência confirmada em `ElementRecord`, vinculando cada atributo à sua evidência, arquivo e revisão. Parser não contém fórmula, não executa cálculo, não aplica preço e não pode usar fallback.
+4. **Motor de regras:** o catálogo central de `RuleDefinition` contém as fórmulas. Ele monta a expressão literal e o avaliador AST seguro é o único responsável pelo resultado numérico. A IA e o parser não substituem esse cálculo.
+5. **Persistência e exportação:** cada `QuantifiedItem` é identificado por obra, EAP, prancha, elemento e regra. O SQLite é a SSOT; Excel, CSV e Markdown são derivados e não podem ser editados como fonte.
+6. **Bloqueios:** evidência ausente, ambígua, inválida ou sem regra aplicável gera pendência/RFI. É proibido confirmar automaticamente, converter erro em zero ou adotar dimensão típica. Parsers legados estão desativados.
+7. **Separação de custos:** JSON físico e esta rota de prancha rejeitam preço, BDI, composição, perdas e insumos. Esses dados pertencem ao fluxo de composição/orçamentação, posterior e separado.
 
 
 ---
@@ -196,16 +200,10 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 ║  SERVIÇO: Impermeabilização — [Tipo: Manta Asfáltica / Polimérica] ║
 ╠══════════════════════════════════════════════════════════════════╣
 ║  A_piso = Comp × Larg = X,XX × X,XX = XX,XX m²                  ║
-║  A_arremate (30cm) = Perímetro × 0,30 = XX,XX m²               ║
-║  A_box (1,80m, se houver) = Perím_box × 1,80 = X,XX m²          ║
+║  A_arremate = Perímetro × altura_especificada = XX,XX m²        ║
+║  A_box (se houver) = Perím_box × altura_especificada = X,XX m²  ║
 ║  ÁREA TOTAL = XX,XX + X,XX + X,XX = XX,XX m²                    ║
-║  TAXA DE PERDA (15%) = XX,XX × 1,15 = XX,XX m²                  ║
-║                                                                  ║
-║  INSUMOS (TCPO §9.14 do módulo Arquitetura):                    ║
-║    Manta 3mm: XX,XX × 1,20 = XX,XX m²                           ║
-║    Primer: XX,XX × 0,40 = XX,XX L                               ║
-║                                                                  ║
-║  ✅ RESULTADO FINAL: XX,XX m² impermeabilizados                 ║
+║  ✅ RESULTADO FÍSICO LÍQUIDO: XX,XX m² impermeabilizados        ║
 ╚══════════════════════════════════════════════════════════════════╝
 ```
 

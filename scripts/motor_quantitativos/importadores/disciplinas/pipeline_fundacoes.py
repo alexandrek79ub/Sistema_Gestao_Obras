@@ -25,5 +25,9 @@ def quantificar_sapatas(elements: Iterable[ElementRecord]) -> list[QuantifiedIte
             rule_version=result.rule_version,
             element_ids=(element.element_id,),
             evidence_ids=element.evidence_ids,
+            cia=element.cia,
+            element_type=element.element_type,
+            source_file=element.source_file,
+            source_revision=element.source_revision,
         ))
     return saida

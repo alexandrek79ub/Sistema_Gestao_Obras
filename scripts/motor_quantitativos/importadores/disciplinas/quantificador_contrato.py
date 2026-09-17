@@ -21,8 +21,10 @@ def quantificar_elementos(elements: Iterable[ElementRecord]) -> list[QuantifiedI
     itens: list[QuantifiedItem] = []
     for element in elements:
         rule_id = _RULE_BY_TYPE.get((element.disciplina, element.element_type))
-        if rule_id is None or element.status != "LEVANTADO":
-            continue
+        if element.status != "LEVANTADO":
+            raise ValueError(f"Elemento bloqueado para cálculo: {element.element_id} ({element.status})")
+        if rule_id is None:
+            raise ValueError(f"Sem regra contratual para {element.disciplina}/{element.element_type}: {element.element_id}")
         result = calcular_regra(rule_id, {**element.attributes, "occurrence": element.occurrence})
         rule = get_rule(rule_id)
         itens.append(QuantifiedItem(
@@ -31,5 +33,7 @@ def quantificar_elementos(elements: Iterable[ElementRecord]) -> list[QuantifiedI
             unit=result.unit, quantity_net=result.quantity_net, expression=result.expression,
             rule_id=result.rule_id, rule_version=result.rule_version,
             element_ids=(element.element_id,), evidence_ids=element.evidence_ids,
+            cia=element.cia, element_type=element.element_type,
+            source_file=element.source_file, source_revision=element.source_revision,
         ))
     return itens

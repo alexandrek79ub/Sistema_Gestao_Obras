@@ -1,129 +1,93 @@
-"""
-Roteador de Extração e Ingestão Automatizada de Pranchas
-Identifica a disciplina da prancha (Fundações, Estrutura, Arquitetura, etc.)
-e delega para o parser especializado correspondente.
-"""
+"""Entrada segura: PDF → evidência confirmada → elemento → regra → SQLite."""
 
-import sys
-import json
-import time
+import argparse
 from pathlib import Path
-from typing import Dict, Any, Optional
+from typing import Callable
 
-# Garante acesso ao pacote motor_quantitativos
-diretorio_scripts = Path(__file__).resolve().parent.parent.parent
-if str(diretorio_scripts) not in sys.path:
-    sys.path.insert(0, str(diretorio_scripts))
-
+from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
+from motor_quantitativos.exportadores import exportar_artefatos
 from motor_quantitativos.importadores.core.leitor_pdf_base import LeitorPDFBase
-from motor_quantitativos.importadores.disciplinas import (
-    ParserFundacoes, ParserEstrutura, ParserArquitetura, ParserInstalacoes
+from motor_quantitativos.importadores.disciplinas.parser_contrato import validar_elementos
+from motor_quantitativos.importadores.disciplinas.parser_fundacoes_contrato import ParserFundacoesContrato
+from motor_quantitativos.importadores.disciplinas.parsers_contrato import (
+    extrair_arquitetura, extrair_estrutura, extrair_instalacoes, extrair_servicos_especiais,
 )
-from motor_quantitativos.importadores.pdf_json_importer import importar_json_inicial
+from motor_quantitativos.importadores.disciplinas.pipeline_fundacoes import quantificar_sapatas
+from motor_quantitativos.importadores.disciplinas.quantificador_contrato import quantificar_elementos
+from motor_quantitativos.repositorio.sqlite_repository import connect, garantir_obra, persistir_itens_quantificados
 
 
-def processar_prancha(caminho_pdf: str | Path,
-                      disciplina_forcada: Optional[str] = None,
-                      db_path: str = "data/pmo_virtual.sqlite",
-                      substituir: bool = True) -> Dict[str, Any]:
-    """Processa uma prancha de engenharia e alimenta o motor de quantitativos em segundos."""
-    t0 = time.time()
-    caminho = Path(caminho_pdf).resolve()
-    
-    # 1. Leitura base
-    leitor = LeitorPDFBase(caminho)
-    disciplina = disciplina_forcada or leitor.detectar_disciplina()
-    
-    # 2. Seleção do parser especializado por disciplina
-    if disciplina in {"FUNDACOES", "INFRAESTRUTURA"}:
-        parser = ParserFundacoes(leitor)
-        dados = parser.extrair(incluir_correlatas=True)
-        itens_eap = parser.gerar_itens_eap(dados)
-        titulo_disciplina = "Infraestrutura e Fundações"
-    elif disciplina == "ESTRUTURA":
-        parser = ParserEstrutura(leitor)
-        dados = parser.extrair(incluir_correlatas=True)
-        itens_eap = parser.gerar_itens_eap(dados)
-        titulo_disciplina = "Estrutura"
-    elif disciplina == "ARQUITETURA":
-        parser = ParserArquitetura(leitor)
-        dados = parser.extrair(incluir_correlatas=True)
-        itens_eap = parser.gerar_itens_eap(dados)
-        titulo_disciplina = "Arquitetura e Acabamentos"
-    elif disciplina == "INSTALACOES":
-        parser = ParserInstalacoes(leitor)
-        dados = parser.extrair(incluir_correlatas=True)
-        itens_eap = parser.gerar_itens_eap(dados)
-        titulo_disciplina = "Instalações Prediais"
-    else:
-        raise ValueError(
-            f"Disciplina não reconhecida para {caminho.name}; "
-            "informe --disciplina explicitamente ou corrija o selo da prancha."
+def _extrair(disciplina: str, obra_codigo: str, evidencias):
+    if disciplina == "FUNDACOES":
+        elementos = ParserFundacoesContrato(obra_codigo, evidencias).extrair_sapatas()
+        return elementos, quantificar_sapatas
+    extractors: dict[str, Callable] = {
+        "ESTRUTURA": extrair_estrutura,
+        "ARQUITETURA": extrair_arquitetura,
+        "INSTALACOES": extrair_instalacoes,
+        "SERVICOS_ESPECIAIS": extrair_servicos_especiais,
+    }
+    try:
+        return extractors[disciplina](obra_codigo, evidencias), quantificar_elementos
+    except KeyError as exc:
+        raise ValueError(f"Disciplina não suportada pelo fluxo contratual: {disciplina}") from exc
+
+
+def processar_prancha(caminho_pdf: str | Path, *, obra_codigo: str, obra_nome: str,
+                      source_revision: str, disciplina: str, db_path: str | Path,
+                      diretorio_obra: str | Path, evidencias_confirmadas: bool = False) -> dict:
+    """Persiste apenas quantitativos líquidos com evidência confirmada explicitamente."""
+    if not evidencias_confirmadas:
+        raise ValueError("Extração concluída sem gravação: revise as evidências e confirme explicitamente antes de calcular")
+
+    leitor = LeitorPDFBase(caminho_pdf)
+    try:
+        evidencias = leitor.extrair_evidencias(source_revision, confidence="USER_CONFIRMED")
+    finally:
+        leitor.doc.close()
+    elementos, quantificador = _extrair(disciplina.upper(), obra_codigo, evidencias)
+    if not elementos:
+        raise ValueError("Nenhum elemento com cotas explícitas foi encontrado; registrar RFI, sem criar quantitativo")
+    elementos = validar_elementos(elementos)
+    itens = quantificador(elementos)
+    if not itens:
+        raise ValueError("Nenhum item quantificável foi produzido; registrar RFI, sem criar quantitativo")
+
+    db = connect(db_path)
+    try:
+        obra_id = garantir_obra(db, obra_codigo, obra_nome, str(Path(diretorio_obra).resolve()))
+        revisao_id = registrar_revisao(
+            db, obra_id, "QUANTITATIVO", f"pdf-contratual:{Path(caminho_pdf).name}",
+            "motor-python", f"Importação contratual da revisão {source_revision}",
         )
-
-    # 3. Montagem do payload padronizado
-    dados_json = {
-        "projeto": "PORTO DO AÇU - TMULT FASE I",
-        "base_dir": str(caminho.parent),
-        "data_auditoria": time.strftime("%d/%m/%Y"),
-        "disciplinas": {
-            disciplina.lower(): {
-                "titulo": titulo_disciplina,
-                "pranchas_ref": ", ".join(dados["pranchas_processadas"]),
-                "itens_orcamento": itens_eap
-            }
-        }
-    }
-
-    # 4. Gravação intermediária limpa para rastreabilidade
-    caminho_json = Path("data") / f"levantamento_{disciplina.lower()}_auto.json"
-    caminho_json.parent.mkdir(parents=True, exist_ok=True)
-    caminho_json.write_text(json.dumps(dados_json, indent=2, ensure_ascii=False), encoding="utf-8")
-
-    # 5. Ingestão oficial no SQLite e geração dos artefatos
-    arquivos_gerados = importar_json_inicial(str(caminho_json), db_path, substituir=substituir)
-    tempo_total = time.time() - t0
-
-    return {
-        "disciplina": disciplina,
-        "tempo_total_s": round(tempo_total, 2),
-        "dados_extracao": dados,
-        "total_itens_eap": len(itens_eap),
-        "arquivos_gerados": [str(a) for a in arquivos_gerados]
-    }
+        item_ids = persistir_itens_quantificados(db, obra_id, itens, revisao_id)
+        arquivos = exportar_artefatos(db, obra_id)
+        db.commit()
+    except Exception:
+        db.rollback()
+        raise
+    finally:
+        db.close()
+    return {"obra_id": obra_id, "elementos": len(elementos), "itens": len(item_ids), "arquivos": [str(a) for a in arquivos]}
 
 
-def main():
-    if len(sys.argv) < 2:
-        print("Uso: python roteador.py <caminho_prancha.pdf> [--db <caminho_db>] [--disciplina <NOME>]")
-        sys.exit(1)
-        
-    pdf_alvo = sys.argv[1]
-    db_alvo = "data/pmo_virtual.sqlite"
-    disc = None
-    
-    if "--db" in sys.argv:
-        idx = sys.argv.index("--db")
-        if idx + 1 < len(sys.argv):
-            db_alvo = sys.argv[idx + 1]
-            
-    if "--disciplina" in sys.argv:
-        idx = sys.argv.index("--disciplina")
-        if idx + 1 < len(sys.argv):
-            disc = sys.argv[idx + 1].upper()
-
-    res = processar_prancha(pdf_alvo, disciplina_forcada=disc, db_path=db_alvo, substituir=True)
-    
-    print("\n" + "="*70)
-    print("[SUCESSO] ROTEADOR DE EXTRACAO EXECUTADO COM SUCESSO!")
-    print(f"Disciplina detectada: {res['disciplina']}")
-    print(f"Tempo total de execucao: {res['tempo_total_s']} segundos")
-    print(f"Total de itens EAP gerados: {res['total_itens_eap']}")
-    print("="*70)
-    print("Arquivos gerados:")
-    for a in res["arquivos_gerados"]:
-        print(f"  -> {a}")
-    print("="*70 + "\n")
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Importação contratual e multiobra de quantitativos")
+    parser.add_argument("pdf_path")
+    parser.add_argument("--obra", required=True, help="Código estável da obra")
+    parser.add_argument("--nome-obra", required=True)
+    parser.add_argument("--revisao", required=True, help="Revisão da prancha")
+    parser.add_argument("--disciplina", required=True, choices=("FUNDACOES", "ESTRUTURA", "ARQUITETURA", "INSTALACOES", "SERVICOS_ESPECIAIS"))
+    parser.add_argument("--db", default="data/pmo_virtual.sqlite")
+    parser.add_argument("--diretorio-obra", required=True)
+    parser.add_argument("--confirmar-evidencias", action="store_true", help="Declara que as evidências extraídas foram revisadas")
+    args = parser.parse_args()
+    resultado = processar_prancha(
+        args.pdf_path, obra_codigo=args.obra, obra_nome=args.nome_obra, source_revision=args.revisao,
+        disciplina=args.disciplina, db_path=args.db, diretorio_obra=args.diretorio_obra,
+        evidencias_confirmadas=args.confirmar_evidencias,
+    )
+    print(resultado)
 
 
 if __name__ == "__main__":
