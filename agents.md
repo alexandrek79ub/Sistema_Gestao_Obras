@@ -29,7 +29,7 @@ Em respostas técnicas, abra com:
 
 ## Dados, alterações e evidência
 
-- `data/pmo_virtual.sqlite` é a única fonte de verdade. Não edite manualmente CSV, XLSX ou Markdown como fonte de dados.
+- `data/pmo_virtual.sqlite` é a única fonte de verdade para dados quantitativos e orçamentários. Não edite manualmente CSV, XLSX ou Markdown como fonte primária de dados. Contudo, correções cosméticas, títulos, identificações de prancha ou textos explicativos em memórias Markdown devem ser editados diretamente no arquivo, sem complexidade de reprocessamento.
 - `itens_quantitativo` contém apenas quantidades físicas líquidas nominais de projeto. Perdas, empolamento, arredondamento comercial e insumos derivados pertencem ao orçamento/UCC, nunca ao levantamento.
 - `itens_orcamento` contém composições, preços, BDI e totais. Não invente preços: use SINAPI SP, três cotações ou contrato, com Código CIA.
 - Alterações posteriores em quantitativos ou orçamento usam `scripts/api_pmo.py`, com chave, justificativa, versão esperada e trilha de auditoria.
@@ -91,3 +91,9 @@ Todo levantamento deve respeitar a Tabela Oficial de Serviços da disciplina e o
 - Antes de liberar serviço de campo, aplique o POP indicado pela ponte de produção e a skill de gestão correspondente.
 - Leia as skills e POPs aplicáveis na íntegra; não opere por resumo.
 - Remova ao fim do trabalho recortes, scripts descartáveis e arquivos temporários. Mantenha somente entregáveis oficiais e dados auditáveis.
+
+## Regra Anti-Sobre-Engenharia (Navalha de Occam)
+
+- **Ajustes textuais e visuais em relatórios já gerados:** Se o usuário apontar uma correção de texto, cabeçalho, legenda, número de desenho ou formato em uma memória (.md) ou documento já existente, **faça o ajuste diretamente no arquivo via ferramenta de edição**. É terminantemente PROIBIDO disparar cadeias de scripts de terminal, pipelines de re-exportação ou suítes de testes (`pytest`) para correções pontuais de apresentação.
+- **Alterações de motor/código só sob demanda explícita:** Refatorar scripts de exportação ou alterar geradores Python só deve ser feito se o usuário pedir expressamente para atualizar a base de código do motor.
+- **Zero comandos desnecessários:** Cada comando de terminal consome tempo e polui a interface do usuário. Priorize sempre a ação mais simples, direta e silenciosa possível.

@@ -1,0 +1,6 @@
+﻿COD_EAP;DESCRICAO_DO_SERVICO;DISCIPLINA;UNIDADE;QUANTIDADE_TOTAL;CUSTO_UNITARIO_BDI;CUSTO_TOTAL;EMPREITEIRO_VINCULADO;PRANCHA_REFERENCIA;FONTE_PRECO;STATUS;CODIGO_SINAPI;CENTRO_CUSTO
+1.3.7.1;Fôrma de Madeira Compensada para Sapatas Isoladas;Infraestrutura e Fundações;m²;35.88;72.0;2583.36;Engenharia;AÇU-3.DES-2.3100-11-EGS-052 rev.A.pdf;SINAPI-SP 07/2026;LEVANTADO;92443;FUNDACOES
+1.3.7.2;Fôrma de Madeira Compensada para Arranques de Pilares;Infraestrutura e Fundações;m²;25.76;138.5;3567.76;Engenharia;AÇU-3.DES-2.3100-11-EGS-052 rev.A.pdf;SINAPI-SP 07/2026;LEVANTADO;92412;FUNDACOES
+1.3.8.1;Armação Aço CA-50 em Sapatas e Arranques de Pilares;Infraestrutura e Fundações;kg;401.7;14.5;5824.65;Engenharia;AÇU-3.DES-2.3100-11-EGS-052 rev.A.pdf;SINAPI-SP 07/2026;LEVANTADO;92762;FUNDACOES
+1.3.9.1;Concreto Usinado C30 para Sapatas Isoladas;Infraestrutura e Fundações;m³;8.55;510.0;4360.5;Engenharia;AÇU-3.DES-2.3100-11-EGS-052 rev.A.pdf;SINAPI-SP 07/2026;LEVANTADO;94970;FUNDACOES
+1.3.9.2;Concreto Usinado C30 para Arranques de Pilares;Infraestrutura e Fundações;m³;1.86;510.0;948.6;Engenharia;AÇU-3.DES-2.3100-11-EGS-052 rev.A.pdf;SINAPI-SP 07/2026;LEVANTADO;103672;FUNDACOES
