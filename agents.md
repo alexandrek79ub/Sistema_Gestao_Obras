@@ -71,17 +71,9 @@ Atuar ativamente na **Frente de Consultoria PMO Virtual**, mantendo o SQLite com
 - A entrada de PDF é `scripts/motor_quantitativos/importadores/roteador.py`; exige obra, nome da obra, revisão, disciplina, diretório da obra e `--confirmar-evidencias`. Parsers legados estão desativados e não devem ser chamados.
 - Evidência ausente, ambígua ou inválida bloqueia o item e exige RFI; é proibido substituir por zero, valor típico ou confirmação automática.
 - A API Python (`scripts/api_pmo.py`) é a porta de edição controlada para a interface externa. Toda alteração exige chave de API, justificativa e versão esperada, registra auditoria, cria backup, recalcula o orçamento e regenera os arquivos derivados.
-- **Caderno Master Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com Fórmulas Dinâmicas:** Exportado a partir do SQLite pelo subpacote modular `scripts/motor_quantitativos/exportadores/excel/`, contendo 6 abas com fórmulas nativas do Excel (sem valores estáticos "hardcoded"):
-  1. `01_ORCAMENTO_EAP`: Orçamento executivo com fórmulas de BDI `=ROUND(F*(1+G/100), 2)`, total do item `=ROUND(E*H, 2)` e total geral `=SUM(...)`.
-  2. `02_PARAMETRICO_BDI`: Taxas e fórmula paramétrica analítica do BDI conforme Acórdão 2622/2013 TCU / IBEC.
-  3. `03_COMPOSICOES_CCU`: Decomposição analítica de cada serviço (Material, Mão de Obra e Equipamento) com somas dinâmicas `=ROUND(SUM(D:F), 2)`.
-  4. `04_CURVA_ABC`: Matriz Pareto 80/20 com percentuais acumulados e classificação dinâmica via fórmulas de condição `=IF(...)`.
-  5. `05_MEMORIA_CALCULO`: Rastreabilidade física completa com equações literais de cubagem geométrica e pranchas de projeto.
-  6. `06_BOLETIM_MEDICAO`: Planilha de medição física e financeira de obra, acumulado `=Anterior+Período`, avanço % e saldo a executar.
+- **Caderno Master Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`) com Fórmulas Dinâmicas:** Exportado a partir do SQLite pelo subpacote modular `scripts/motor_quantitativos/exportadores/excel/`, contendo 6 abas com fórmulas nativas do Excel (`ROUND`, `SUM`, `IF`) sem valores estáticos "hardcoded" (detalhadas no [README.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/README.md)).
 - **Artefatos Derivados de Portabilidade:** `QUANTITATIVO_[DISC].csv`, `MEMORIA_CALCULO_[DISC].md`, `QUANTITATIVO_MESTRE.csv` e `ORCAMENTO_BASE_CONSOLIDADO.csv` são exclusivamente produtos derivados de exportação, nunca fontes editáveis manualmente. Se houver divergência, o SQLite deve ser corrigido e as exportações regeradas.
 - Comandos principais: `python scripts/motor_quantitativos/importadores/roteador.py <prancha.pdf> --obra <codigo> --nome-obra <nome> --revisao <rev> --disciplina <disciplina> --diretorio-obra <pasta> --confirmar-evidencias` para pranchas confirmadas; `python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite` para importação física aprovada; `python scripts/api_pmo.py --db data/pmo_virtual.sqlite --api-key <chave>` para edição controlada.
-
----
 
 ## 📚 Sistema de Conhecimento (Ecossistema de Skills)
 Seu conhecimento está estruturado em módulos independentes. Você **DEVE** sempre consultar os arquivos corretos para o problema apresentado. Existem **cinco frentes principais** de atuação:
@@ -108,22 +100,13 @@ Quando o problema for "calcular materiais", "levantar volume de concreto" ou "qu
 - 📥 **[Gestão de RFI](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/gestao/SKILL_ENGENHARIA_RFI.md)**: Acionar quando faltar informação na prancha. Documenta a RFI, controla o ciclo de vida e incorpora a resposta no quantitativo.
 
 ### 3. Frente do CHÃO DE FÁBRICA (Biblioteca de POPs)
-
-
-Para resolver patologias construtivas ou impor processos rígidos logísticos e técnicos de campo, consulte a pasta `/procedimentos/`. Estes são os **Manuais da Franquia**.
-- **Módulo 1 (Implantação):** POP 01 (Canteiro Lean), 02 (Rotina Kanban), 03 (EPIs/Ferramentas), 04 (Equipamentos).
-- **Módulo 2 (Logística):** POP 05 (Compras UCC), 06 (Recebimento NF), 07 (Estoque PEPS).
-- **Módulo 3 (Controle):** POP 08 (FVS/RNC), 09 (Medição/Trena).
-- **Módulo 4 (Engenharia):** POP 10 (Fundação), 11 (Concreto), 12 (Alvenaria), 13 (Revestimento), 14 (Impermeabilização), 15 (Instalações Hidráulicas), 16 (Instalações Elétricas).
-- **Módulo 5 (Compliance e Closeout):** POP 17 (Onboarding Terceiros), POP 18 (As-Built e DataBook).
-- **Módulo 6 (Canteiro Pesado e SESMT):** POP 19 (Fôrmas e Cimbramento), POP 20 (Andaimes e NR-35), POP 21 (Topografia a Laser), POP 22 (Controle de Concreto), POP 23 (SESMT e Treinamentos).
-- **Módulo 7 (Acabamentos Externos):** POP 24 (Cobertura), POP 25 (Esquadrias).
-- *Extra:* `GUIA_TRACOS_CONCRETO.md` (Emergências no canteiro) e **[Manual de Boas Práticas](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_EXECUCAO.md)** (Checkpoints topográficos).
+Para resolver patologias construtivas ou impor processos rígidos logísticos e técnicos de campo, consulte a pasta `/procedimentos/` e o [`INDICE_MESTRE_SKILLS.md`](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/governanca/INDICE_MESTRE_SKILLS.md). Estes são os **Manuais da Franquia** (POPs 01 a 25 catalogados detalhadamente no [README.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/README.md)).
+- **POPs e Manuais:** Módulo 1 (Implantação 01-04), Módulo 2 (Logística 05-07), Módulo 3 (Controle 08-09), Módulo 4 (Engenharia 10-16), Módulo 5 (Compliance 17-18), Módulo 6 (Canteiro Pesado e SESMT 19-23), Módulo 7 (Acabamentos 24-25), `GUIA_TRACOS_CONCRETO.md` e **[Manual de Boas Práticas](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/MANUAL_BOAS_PRATICAS_EXECUCAO.md)**.
 
 ### 4. Frente de AUTOMAÇÃO E APRESENTAÇÃO (BIM 5D)
 Quando o assunto envolver demonstração de dados para Diretoria ou automações sistêmicas.
-- 📈 **Dashboards Next.js (`apresentacao_comercial/`)**: Aplicação web em React/Next.js conectada **diretamente ao SQLite** (`data/pmo_virtual.sqlite`) via `@/lib/db.ts` (`node:sqlite`), garantindo latência zero e fidelidade total aos dados de engenharia. Renderiza Curva S (EVM com SPI/CPI), Linha de Balanço (LOB) e Tabela Analítica de Orçamento com fallback automático para CSV caso necessário.
-- 📊 **Exportador Modular Excel com Fórmulas Dinâmicas (`scripts/motor_quantitativos/exportadores/excel/`)**: Subpacote Python modular que gera o Caderno Master `ORCAMENTO_BASE_CONSOLIDADO.xlsx` em 6 abas executivas com formatação corporativa (Navy/Slate) e fórmulas nativas do Excel (`ROUND`, `SUM`, `IF`), integrando EAP, BDI TCU 2622, Composições CCU, Curva ABC 80/20, Memória Geométrica e Boletim de Medição.
+- 📈 **Dashboards Next.js (`apresentacao_comercial/`)**: Aplicação web em React/Next.js conectada **diretamente ao SQLite** (`data/pmo_virtual.sqlite`) via `@/lib/db.ts` (`node:sqlite`). Renderiza Curva S (EVM com SPI/CPI), Linha de Balanço (LOB) e Tabela Analítica de Orçamento.
+- 📊 **Exportador Modular Excel com Fórmulas Dinâmicas (`scripts/motor_quantitativos/exportadores/excel/`)**: Subpacote Python modular que gera o Caderno Master `ORCAMENTO_BASE_CONSOLIDADO.xlsx` em 6 abas executivas com fórmulas nativas do Excel (`ROUND`, `SUM`, `IF`).
 - 📐 **Motor de Quantitativos**: o roteador contratual converte apenas evidências humanas confirmadas em elementos rastreáveis; o catálogo de regras e o avaliador AST seguro calculam na CPU, persistem no SQLite (SSOT) e exportam Excel, CSVs e Markdown derivados.
 - 📋 **Lista Mestra de Desenhos e Revisões**: O fluxo oficial é `PDF → scripts/extrair_carimbos.py → carimbos_metadados.json → scripts/gerar_lista_desenhos.py → SQLite (lista_desenhos) → LISTA_DE_DESENHOS.csv/.md`. O SQLite é a fonte de verdade; CSV e Markdown são somente exportações derivadas. O registro preserva cada revisão por obra e código: uma revisão superior comparável torna-se `VIGENTE` e as anteriores passam a `SUPERADA`, devendo a revisão vigente ser priorizada em execução, quantitativos e consultas. Revisões com padrão ambíguo e títulos ausentes, ruidosos ou repetidos ficam `PENDENTE_REVISAO` para confirmação humana — nunca são promovidos ou corrigidos por suposição. Executar `python scripts/extrair_carimbos.py <pasta_pdfs>` e, em seguida, `python scripts/gerar_lista_desenhos.py --obra <codigo> --pasta <pasta_pdfs> --db data/pmo_virtual.sqlite`.
 - 🧪 **[Testes e Qualidade](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/desenvolvimento/SKILL_DEV_TESTES_E_QUALIDADE.md)**: Verificações obrigatórias, edge cases por componente e checklist pré-entrega.
