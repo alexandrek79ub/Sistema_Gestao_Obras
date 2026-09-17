@@ -1,159 +1,128 @@
-# SKILL QUANT 01 — FUNDAÇÕES
+# SKILL QUANT 01 — FUNDAÇÕES (EXTRAÇÃO)
 
 > Dependência: `SKILL_QUANTIFICACAO_MASTER.md`
-> Referências: NBR 6118, NBR 6122 e NBR 14931, conforme edição aplicável à obra.
+> Papel desta skill: orientar a LLM a **ler a prancha e transcrever evidências**.
+> O cálculo é responsabilidade exclusiva de `scripts/processar_prancha.py`.
 
-Esta skill contém a lógica de levantamento físico líquido de fundações. Não contém dimensões, nomes de elementos, referências de prancha ou resultados de nenhuma obra.
+## 1. Princípio
 
-## 1. Escopo
+A LLM não calcula quantitativos. Ela apenas identifica:
 
-Abrange fundações diretas (sapatas isoladas, associadas e corridas), fundações profundas (estacas e brocas), blocos de coroamento, pedestais, vigas baldrame, cintas, radier, lastro, escavação, reaterro, drenagem e remoção de terra quando comprovados nas pranchas executivas.
+- tipo do elemento;
+- código/identificador do elemento;
+- valores dimensionais explicitamente visíveis;
+- quantidade/ocorrência explicitamente comprovada;
+- revisão, página e região da evidência;
+- regra de cálculo permitida que corresponde ao dado observado.
 
-## 2. Regras invioláveis
+Se um campo obrigatório não estiver claramente comprovado, não invente, não estime e não use fallback. O item deve ficar fora do JSON de cálculo e ser reportado como pendência/RFI.
 
-- A IA extrai dimensões e monta expressões; o motor determinístico calcula o resultado.
-- Toda entrada (`b`, `L`, `h`, diâmetro, comprimento, cota e quantidade) deve ter evidência de prancha, revisão e página.
-- Ausência, conflito ou revisão indefinida gera `PENDENTE_RFI`; nunca usar valor padrão ou fallback.
-- Quantidades são físicas, líquidas e nominais: sem perdas, empolamento, arredondamento comercial ou coeficientes de consumo.
-- Arame, pregos, espaçadores, desmoldante, madeira de consumo, embalagens e demais consumíveis pertencem exclusivamente à CPU/BOM posterior.
-- Aço deve ser extraído do quadro/resumo de armaduras da prancha, por elemento e bitola; não usar taxa genérica de kg/m³.
-- **Tipologia de Pranchas (Detalhe vs. Locação/Geometria):**
-  - **Pranchas de Detalhe Estrutural (Armação e Cortes de Peças Isoladas):** Respondem estrita e exclusivamente por Concreto Estrutural, Fôrmas e Armaduras CA-50/CA-60 do elemento individual.
-  - **Pranchas de Planta de Locação / Geometria de Fundações e Terraplenagem:** São a **única fonte técnica válida** para quantificar Escavação (cavas/valas), Apiloamento de fundo, Lastro de regularização/magro, Reaterro compactado e Bota-fora. É expressamente PROIBIDO calcular movimentação de terra a partir de prancha de detalhe isolada, evitando distorções com o platô terraplenado e duplicidades de escavação entre cavas de sapatas e valas de vigas baldrames.
+## 2. Formato de saída obrigatório
 
+A saída para fundações deve seguir este formato:
 
-## 3. Matriz de serviços e critérios de medição
-
-| Serviço | Unidade | Critério físico líquido |
-|---|---:|---|
-| Locação e gabarito | un / m² | Eixos e área efetivamente locados conforme planta |
-| Perfuração ou cravação de estacas | m / un | Comprimento nominal ou unidades indicadas |
-| Arrasamento/descabeçamento | un | Unidades explicitamente indicadas |
-| Escavação de cavas e valas | m³ | Volume geométrico da seção de projeto |
-| Apiloamento/compactação de fundo | m² | Área de fundo efetivamente preparada |
-| Lastro/regularização | m³ | Área da base × espessura nominal indicada |
-| Fôrmas | m² | Área real de contato executada |
-| Armaduras | kg | Peso do quadro/resumo de aço da prancha |
-| Concreto estrutural | m³ | Volume geométrico nominal das peças |
-| Desforma/cura, quando EAP medir o serviço | m² / un | Área ou unidade liberada conforme projeto e controle de qualidade |
-| Impermeabilização | m² | Superfícies especificadas, descontando encostos e interseções documentados |
-| Drenagem perimetral | m | Extensão indicada em projeto específico |
-| Reaterro compactado | m³ | Volume líquido após liberação da impermeabilização |
-| Remoção de terra excedente | m³ | Volume de corte não aproveitado no reaterro |
-
-## 4. EAP e portões
-
-| Código | Serviço | Unidade |
-|---|---|---:|
-| 1.3.1 | Locação e gabarito topográfico | un / m² |
-| 1.3.2 | Perfuração/cravação de estacas | m / un |
-| 1.3.3 | Arrasamento/descabeçamento | un |
-| 1.3.4 | Escavação de valas e cavas | m³ |
-| 1.3.5 | Apiloamento de fundo | m² |
-| 1.3.6 | Lastro ou regularização | m³ |
-| 1.3.7 | Fôrmas de fundações | m² |
-| 1.3.8 | Armaduras CA-50/CA-60 | kg |
-| 1.3.9 | Concretagem estrutural | m³ |
-| 1.3.10 | Desforma/cura, quando prevista | m² / un |
-| 1.3.11 | Impermeabilização | m² |
-| 1.3.12 | Drenagem perimetral, quando projetada | m |
-| 1.3.13 | Reaterro compactado | m³ |
-| 1.3.14 | Remoção de terra excedente | m³ |
-
-O portão 1.3.11 bloqueia 1.3.13. A liberação depende de inspeção e evidência de impermeabilização conforme projeto.
-
-## 5. Sequência executiva e interfaces
-
-```text
-Locação → escavação/perfuração → preparo do fundo → lastro
-→ fôrmas → armaduras → concretagem → cura/desforma
-→ impermeabilização → drenagem → reaterro → remoção de excedente
+```json
+{
+  "schema_version": 1,
+  "disciplina": "FUNDACOES",
+  "fonte": {
+    "arquivo": "EGS-051.pdf",
+    "revisao": "A",
+    "pagina": 1
+  },
+  "medicoes": [
+    {
+      "elemento": "S01",
+      "tipo_elemento": "SAPATA",
+      "cia": "FUN-GER-S01",
+      "regra_id": "FUN.SAPATA.CONCRETO.V1",
+      "inputs": {
+        "largura_m": 1.5,
+        "comprimento_m": 1.8,
+        "altura_m": 0.5,
+        "quantidade": 4
+      },
+      "evidencias": {
+        "largura_m": {"raw_text": "1,50", "region": "DETALHE S01"},
+        "comprimento_m": {"raw_text": "1,80", "region": "DETALHE S01"},
+        "altura_m": {"raw_text": "0,50", "region": "CORTE S01"},
+        "quantidade": {"raw_text": "4x S01", "region": "PLANTA DE LOCAÇÃO"}
+      }
+    }
+  ]
+}
 ```
 
-A sequência real deve respeitar o projeto, o plano de inspeção e os portões da EAP. Não usar prazos normativos como quantidade ou como substituto de evidência.
+## 3. Campos proibidos na saída da LLM
 
-## 6. Fórmulas de cálculo
+Nunca incluir:
 
-### 6.1 Sapata, pedestal e bloco prismático
+- `quantidade_liquida`
+- `quantity_net`
+- `resultado`
+- `expressao_matematica`
+- `expression`
+- preço, BDI ou custo
 
-```text
-V_sapata = b_sapata × L_sapata × h_sapata
-V_pedestal = b_pedestal × L_pedestal × h_pedestal
-V_concreto = Σ volumes das partes comprovadas
-A_fôrma_lateral = Σ (perímetro_de_contato × altura_da_parte)
-```
+O motor Python cria a expressão auditável e o resultado.
 
-### 6.2 Bloco de coroamento irregular
+## 4. Regras disponíveis
 
-```text
-A_seção = Σ áreas das figuras que compõem a seção em planta
-V_bloco = A_seção × altura_do_bloco
-A_fôrma = perímetro_externo_de_contato × altura_do_bloco
-```
+Use somente uma das regras abaixo quando todos os inputs obrigatórios estiverem comprovados.
 
-### 6.3 Baldrame ou cinta
+| regra_id | Elemento/serviço | Inputs obrigatórios |
+|---|---|---|
+| `FUN.SAPATA.CONCRETO.V1` | Concreto de sapata | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.SAPATA.FORMA.V1` | Fôrma lateral de sapata | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.PEDESTAL.CONCRETO.V1` | Concreto de pedestal | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.PEDESTAL.FORMA.V1` | Fôrma lateral de pedestal | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.BLOCO.CONCRETO.V1` | Concreto de bloco prismático | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.BLOCO.FORMA.V1` | Fôrma lateral de bloco prismático | `largura_m`, `comprimento_m`, `altura_m` |
+| `FUN.BALDRAME.CONCRETO.V1` | Concreto de baldrame | `largura_m`, `altura_m`, `comprimento_m` |
+| `FUN.BALDRAME.FORMA_2_FACES.V1` | Fôrma de baldrame apoiado no solo | `altura_m`, `comprimento_m` |
+| `FUN.ESTACA.CONCRETO.V1` | Concreto de estaca circular | `diametro_m`, `comprimento_m` |
+| `FUN.ESTACA.PERFURACAO.V1` | Perfuração/cravação | `comprimento_m` |
+| `FUN.RADIER.CONCRETO.V1` | Concreto de radier | `area_m2`, `espessura_m` |
+| `FUN.RADIER.FORMA.V1` | Fôrma de borda de radier | `perimetro_m`, `espessura_m` |
+| `FUN.ARMADURA.PESO.V1` | Armadura | `peso_kg` |
+| `FUN.LASTRO.VOLUME.V1` | Lastro/regularização | `area_base_m2`, `espessura_m` |
+| `FUN.ESCAVACAO.RETANGULAR.V1` | Escavação retangular | `largura_m`, `comprimento_m`, `profundidade_m` |
+| `FUN.APILOAMENTO.AREA.V1` | Apiloamento/preparo de fundo | `area_m2` |
+| `FUN.IMPERMEABILIZACAO.AREA.V1` | Impermeabilização | `area_m2` |
+| `FUN.DRENAGEM.COMPRIMENTO.V1` | Drenagem perimetral | `comprimento_m` |
 
-```text
-V_baldrame = Σ (largura_da_seção × altura_da_seção × comprimento_do_trecho)
-A_fôrma = Σ (faces_de_contato × comprimento_do_trecho)
-A_impermeabilização = Σ superfícies especificadas no detalhe
-```
+`quantidade` é opcional e, quando omitida, o motor assume 1 ocorrência. Se informada, também exige evidência.
 
-Trechos devem ser medidos face a face dos apoios quando o critério de interface estiver documentado, evitando duplicidade com pilares, pilaretes ou blocos.
+## 5. Regras de leitura
 
-### 6.4 Estaca ou broca
+- Preserve a unidade observada e converta para SI apenas quando a conversão for inequívoca.
+- Cada input usado deve possuir `raw_text` e `region`.
+- Armadura só pode usar `FUN.ARMADURA.PESO.V1` quando o peso estiver explicitamente indicado em quadro/resumo ou documento equivalente.
+- Não estimar aço por kg/m³.
+- Não inventar folga de escavação, espessura de lastro, talude ou empolamento.
+- Movimentação de terra exige planta/geometry de locação suficiente para evitar sobreposição entre cavas e valas.
+- Uma prancha de detalhe isolado não deve originar escavação, reaterro ou bota-fora sem a geometria de implantação correspondente.
+- Baldrames devem usar comprimentos comprovados; não atravesse apoios por suposição.
+- Para geometrias não suportadas pelas regras acima, interrompa e solicite nova regra Python. Não improvise fórmula.
 
-```text
-H_estaca = cota_de_apoio − cota_de_topo_ou_arrasamento
-V_estaca_unitária = π × (diâmetro / 2)² × H_estaca
-V_estacas = V_estaca_unitária × quantidade
-```
+## 6. Pendências
 
-### 6.5 Radier e nervuras
-
-```text
-V_radier = área_projetada × espessura_nominal
-V_nervuras = Σ (largura × altura × comprimento)
-V_concreto_total = V_radier + V_nervuras + demais volumes desenhados
-A_fôrma_lateral = perímetro_externo × espessura (quando aplicável)
-```
-
-### 6.6 Escavação, preparo, lastro e terra
-
-```text
-V_escavação = volume geométrico da cava ou vala conforme seção de projeto
-A_apiloamento = área de fundo efetivamente preparada
-V_lastro = área_base × espessura_nominal_de_projeto
-V_reaterro = V_escavação − volumes enterrados comprovados
-V_excedente = V_escavação − V_reaterro
-```
-
-Folgas, taludes, escoramentos e volumes auxiliares só entram quando dimensões e critérios estiverem expressos na prancha ou memorial.
-
-> 🚨 **VINCULAÇÃO OBRIGATÓRIA À PLANTA DE LOCAÇÃO:**  
-> A movimentação de terra de fundações (escavação, lastro, reaterro e bota-fora) NUNCA deve ser calculada isoladamente por prancha de detalhe estrutural. Ela exige a **Planta de Locação / Geometria das Baldrames e Fundações** cruzada com as cotas do **Platô de Terraplenagem**, garantindo:
-> 1. Desconto da interseção física entre as cavas de sapatas e as valas de vigas baldrame (eliminação de duplicidade de escavação e bota-fora).
-> 2. Verificação do método executivo real (valas contínuas mecanizadas vs. cavas isoladas manuais).
-> 3. Ancoragem na cota real do terreno executivo e não em cotas soltas de cortes esquemáticos.
-
-
-### 6.7 Armaduras
+Quando faltar informação necessária, responda de forma explícita, por exemplo:
 
 ```text
-P_aço_elemento = peso indicado no quadro/resumo de aço da prancha
-P_aço_total = Σ P_aço_elemento por elemento e bitola
+PENDENTE_RFI — S01: altura da sapata não está legível na prancha.
 ```
 
-## 7. Memória, evidência e auditoria
+Não produza medição parcial calculável para esse serviço.
 
-Cada item deve conter obra, prancha, revisão, página, elemento, dimensões transcritas, expressão literal, regra aplicada, resultado do motor, unidade e status (`VALIDADO`, `PENDENTE_RFI` ou `BLOQUEADO`).
+## 7. Responsabilidades
 
-Checklist:
+```text
+LLM:
+PDF -> elementos -> inputs -> evidências -> regra_id
 
-- [ ] Todas as dimensões vieram de pranchas executivas.
-- [ ] Nenhum valor de exemplo ou fallback foi utilizado.
-- [ ] Nenhuma perda, empolamento ou consumível foi aplicado.
-- [ ] Armaduras vieram do quadro/resumo de aço.
-- [ ] Interfaces e descontos não duplicam elementos.
-- [ ] Reaterro respeita o portão de impermeabilização.
-- [ ] Cada resultado possui expressão, unidade e evidência.
+Python:
+validação -> expressão -> cálculo -> SQLite -> CSV/Markdown
+```
+
+Esta separação é obrigatória.
