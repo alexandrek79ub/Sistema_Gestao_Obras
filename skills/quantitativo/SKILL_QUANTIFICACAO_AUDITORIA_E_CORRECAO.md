@@ -27,6 +27,7 @@ Garantir zero erros de leitura visual de pranchas, proibir deduções matemátic
 
 Antes de aprovar qualquer dimensão ou altura:
 
+- [ ] **Separação por Tipologia de Prancha:** Pranchas de Detalhes Estruturais (armação, cortes de peças isoladas) respondem estritamente por Concreto Estrutural, Fôrmas e Aço CA-50/CA-60. A movimentação de terra (escavação, lastro, reaterro, bota-fora) só pode ser aprovada se confrontada e ancorada na **Planta de Locação/Geometria de Fundações** e nas cotas do **Platô de Terraplenagem**. *PROIBIDO calcular cavas no vácuo de pranchas de detalhes de armadura.*
 - [ ] **Separação de Elementos:** A espessura usada no cálculo da laje pertence à laje (`h_laje`), e a espessura usada na parede pertence à parede (`esp_parede`). *PROIBIDO usar espessura de alvenaria em cálculo estrutural ou vice-versa.*
 - [ ] **Leitura de Níveis (Cotas de Fôrma):** A cota de fundo de laje/viga é a cota direta de fôrma indicada na prancha (`EL. de fôrma`). *PROIBIDO deduzir fundo via `(cota_topo − espessura)` se houver a cota direta no desenho.*
 - [ ] **Consistência de Unidades:** Cotas em centímetros (ex: 892 cm, 540 cm) foram convertidas corretamente para metros (8,92m e 5,40m) mantendo a precisão de 2 casas decimais.
@@ -37,6 +38,7 @@ Antes de aprovar qualquer dimensão ou altura:
 
 Para vigas baldrame, cintas, vigas de teto e paredes perimétricas:
 
+- [ ] **Interferência Cava de Sapata × Vala de Baldrame:** Se houver vigas baldrames interligando sapatas ou blocos de coroamento, a escavação da vala do baldrame desconta a área da cava da sapata (ou vice-versa), eliminando duplicidade na medição de escavação, reaterro e bota-fora.
 - [ ] **Desmembramento de Cantos:** O comprimento total NÃO foi calculado por simples soma de eixos (`2×C + 2×L`).
 - [ ] **Fórmula da Geometria Executiva Aplicada:**
   `Comprimento Líquido = (2 × L_ext.long.) + 2 × (L_ext.transv. - 2 × e_peça)`

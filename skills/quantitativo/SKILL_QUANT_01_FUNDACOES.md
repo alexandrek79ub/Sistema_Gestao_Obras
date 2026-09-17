@@ -17,6 +17,10 @@ Abrange fundações diretas (sapatas isoladas, associadas e corridas), fundaçõ
 - Quantidades são físicas, líquidas e nominais: sem perdas, empolamento, arredondamento comercial ou coeficientes de consumo.
 - Arame, pregos, espaçadores, desmoldante, madeira de consumo, embalagens e demais consumíveis pertencem exclusivamente à CPU/BOM posterior.
 - Aço deve ser extraído do quadro/resumo de armaduras da prancha, por elemento e bitola; não usar taxa genérica de kg/m³.
+- **Tipologia de Pranchas (Detalhe vs. Locação/Geometria):**
+  - **Pranchas de Detalhe Estrutural (Armação e Cortes de Peças Isoladas):** Respondem estrita e exclusivamente por Concreto Estrutural, Fôrmas e Armaduras CA-50/CA-60 do elemento individual.
+  - **Pranchas de Planta de Locação / Geometria de Fundações e Terraplenagem:** São a **única fonte técnica válida** para quantificar Escavação (cavas/valas), Apiloamento de fundo, Lastro de regularização/magro, Reaterro compactado e Bota-fora. É expressamente PROIBIDO calcular movimentação de terra a partir de prancha de detalhe isolada, evitando distorções com o platô terraplenado e duplicidades de escavação entre cavas de sapatas e valas de vigas baldrames.
+
 
 ## 3. Matriz de serviços e critérios de medição
 
@@ -125,6 +129,13 @@ V_excedente = V_escavação − V_reaterro
 ```
 
 Folgas, taludes, escoramentos e volumes auxiliares só entram quando dimensões e critérios estiverem expressos na prancha ou memorial.
+
+> 🚨 **VINCULAÇÃO OBRIGATÓRIA À PLANTA DE LOCAÇÃO:**  
+> A movimentação de terra de fundações (escavação, lastro, reaterro e bota-fora) NUNCA deve ser calculada isoladamente por prancha de detalhe estrutural. Ela exige a **Planta de Locação / Geometria das Baldrames e Fundações** cruzada com as cotas do **Platô de Terraplenagem**, garantindo:
+> 1. Desconto da interseção física entre as cavas de sapatas e as valas de vigas baldrame (eliminação de duplicidade de escavação e bota-fora).
+> 2. Verificação do método executivo real (valas contínuas mecanizadas vs. cavas isoladas manuais).
+> 3. Ancoragem na cota real do terreno executivo e não em cotas soltas de cortes esquemáticos.
+
 
 ### 6.7 Armaduras
 
