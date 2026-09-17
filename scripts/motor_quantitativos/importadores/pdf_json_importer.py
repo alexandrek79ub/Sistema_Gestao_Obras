@@ -7,7 +7,7 @@ from motor_quantitativos.auditoria.trilha_revisoes import registrar_revisao
 from motor_quantitativos.exportadores import exportar_artefatos
 
 
-def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False) -> list[Path]:
+def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False, acrescentar: bool = False) -> list[Path]:
     data = json.loads(Path(json_path).read_text(encoding="utf-8"))
     projeto = data.get("projeto", "OBRA_NAO_NOMEADA")
     obra_codigo = projeto.upper().replace(" ", "_")
@@ -27,14 +27,21 @@ def importar_json_inicial(json_path: str, db_path: str, substituir: bool = False
                 "quantidade_liquida": sum(calcular_expressao(e["expressao_matematica"]) for e in expressoes),
                 "expressao_matematica": " + ".join(e["expressao_matematica"] for e in expressoes) or "0",
                 "prancha_referencia": prancha, "status": item.get("status", "LEVANTADO"),
+                "rfi": item.get("rfi", ""), "cia": item.get("cia", ""),
+                "element_type": item.get("element_type", ""), "element_id": item.get("element_id", ""),
+                "rule_id": item.get("rule_id", ""), "rule_version": item.get("rule_version", 1),
+                "evidence_json": json.dumps(item.get("evidence", []), ensure_ascii=False),
+                "source_revision": item.get("source_revision", ""),
+                "observacao": item.get("observacao", "Importacao pelo motor; SQLite e a fonte oficial."),
                 "observacao": "Importação inicial do JSON; a partir desta revisão, SQLite é a fonte oficial.",
+                "observacao": item.get("observacao", "Importacao pelo motor; SQLite e a fonte oficial."),
             })
             
     db = connect(db_path)
     try:
         obra_id = garantir_obra(db, obra_codigo, projeto, base_dir)
         existentes = db.execute("SELECT COUNT(*) FROM itens_quantitativo WHERE obra_id=?", (obra_id,)).fetchone()[0]
-        if existentes and not substituir:
+        if existentes and not substituir and not acrescentar:
             raise ValueError("A obra já possui dados no SQLite. Use --substituir somente para uma reimportação aprovada.")
         if existentes and substituir:
             db.execute("DELETE FROM itens_orcamento WHERE obra_id=?", (obra_id,))

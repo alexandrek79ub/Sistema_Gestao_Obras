@@ -1,0 +1,3062 @@
+{
+  "projeto": "OBRA_PORTO",
+  "base_dir": "projetos/OBRA_PORTO/02_ORCAMENTO_BASE_E_CONTRATOS",
+  "disciplinas": {
+    "Estrutura": {
+      "titulo": "Estrutura de concreto armado",
+      "itens_orcamento": [
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P1 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P1",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P01",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P1"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P1 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P1",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P01",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P1"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P1 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P1",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P01",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P1"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P2 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P2",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P02",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P2"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P2 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P2",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P02",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P2"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P2 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P2",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P02",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P2"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P3 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P3",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P03",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P3"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P3 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P3",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P03",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P3"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P3 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P3",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P03",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P3"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P4 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P4",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P04",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P4"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P4 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P4",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P04",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P4"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P4 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P4",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P04",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P4"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P5 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P5",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P05",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P5"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P5 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P5",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P05",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P5"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P5 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P5",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P05",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P5"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P6 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P6",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P06",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P6"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P6 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P6",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P06",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P6"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P6 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P6",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P06",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P6"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P7 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P7",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P07",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P7"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P7 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P7",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P07",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P7"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P7 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P7",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P07",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P7"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P8 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P8",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P08",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P8"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P8 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P8",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P08",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P8"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P8 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P8",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P08",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P8"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P9 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P9",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P09",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P9"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P9 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P9",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P09",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P9"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P9 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P9",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P09",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P9"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P10 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P10",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P10",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P10"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P10 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P10",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P10",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P10"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P10 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P10",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P10",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P10"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P11 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P11",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P11",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P11"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P11 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P11",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P11",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P11"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P11 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P11",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P11",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P11"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P12 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P12",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P12",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P12"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P12 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P12",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P12",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P12"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P12 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P12",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P12",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P12"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P13 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P13",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P13",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P13"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P13 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P13",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P13",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P13"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P13 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P13",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P13",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P13"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P14 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P14",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P14",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P14"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P14 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P14",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P14",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P14"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P14 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P14",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P14",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P14"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P15 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P15",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P15",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P15"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P15 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P15",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P15",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P15"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P15 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P15",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P15",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P15"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P16 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P16",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P16",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P16"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P16 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P16",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P16",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P16"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P16 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P16",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P16",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P16"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P17 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P17",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P17",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P17"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P17 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P17",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P17",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P17"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P17 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P17",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P17",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P17"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P18 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P18",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P18",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P18"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P18 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P18",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P18",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P18"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P18 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P18",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P18",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P18"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P19 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P19",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P19",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P19"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P19 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P19",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P19",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P19"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P19 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P19",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P19",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P19"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P20 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P20",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P20",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P20"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P20 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P20",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P20",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P20"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P20 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P20",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P20",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P20"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P21 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P21",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P21",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P21"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P21 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P21",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P21",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P21"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P21 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P21",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P21",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P21"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P22 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P22",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P22",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P22"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P22 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P22",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P22",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P22"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P22 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P22",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P22",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P22"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P23 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P23",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P23",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P23"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P23 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P23",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P23",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P23"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P23 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P23",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P23",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P23"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.1",
+          "descricao": "Fôrma do pilar P24 — seção 30 x 30 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(4 * 0.30) * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P24",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.FORMA",
+          "rule_version": 1,
+          "cia": "COB-EST-P24",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P24"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.2",
+          "descricao": "Armadura do pilar P24 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "395 / 24"
+            }
+          ],
+          "element_id": "P24",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-P24",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P24"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.3",
+          "descricao": "Concreto C30 do pilar P24 — seção 30 x 30 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.30 * 0.30 * (8.63 - 5.65)"
+            }
+          ],
+          "element_id": "P24",
+          "element_type": "PILAR",
+          "rule_id": "EST.PILAR.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-P24",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "P24"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Levantamento granular auditado contra o detalhamento da prancha."
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V101 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 11.21"
+            }
+          ],
+          "element_id": "V101",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V101",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V101"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Fundo calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V101 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(2 * 0.50) * 11.21"
+            }
+          ],
+          "element_id": "V101",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V101",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V101"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Laterais calculadas pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V101 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "51 * 1.16 * 0.245 + (4 * 11.95 + 4 * 0.94) * 0.395 + (2 * 11.19 + 2 * 1.08 + 2 * 11.50 + 2 * 2.27) * 0.963"
+            }
+          ],
+          "element_id": "V101",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V101",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V101"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Peso recalculado a partir da relação de aço da prancha; sem perdas."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V101 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 0.50 * 11.21"
+            }
+          ],
+          "element_id": "V101",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V101",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V101"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Volume calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V103 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 11.21"
+            }
+          ],
+          "element_id": "V103",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V103",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V103"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Fundo calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V103 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(2 * 0.50) * 11.21"
+            }
+          ],
+          "element_id": "V103",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V103",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V103"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Laterais calculadas pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V103 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "51 * 1.16 * 0.245 + (4 * 11.95 + 4 * 0.94) * 0.395 + (2 * 11.19 + 2 * 1.08 + 2 * 11.50 + 2 * 2.27) * 0.963"
+            }
+          ],
+          "element_id": "V103",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V103",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V103"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Peso recalculado a partir da relação de aço da prancha; sem perdas."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V103 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 0.50 * 11.21"
+            }
+          ],
+          "element_id": "V103",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V103",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V103"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Volume calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V106 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 11.21"
+            }
+          ],
+          "element_id": "V106",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V106",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V106"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Fundo calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V106 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(2 * 0.50) * 11.21"
+            }
+          ],
+          "element_id": "V106",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V106",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V106"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Laterais calculadas pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V106 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "51 * 1.16 * 0.245 + (4 * 11.95 + 4 * 0.94) * 0.395 + (2 * 11.56 + 2 * 1.45 + 2 * 11.50 + 2 * 2.02) * 0.963"
+            }
+          ],
+          "element_id": "V106",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V106",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V106"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Peso recalculado a partir da relação de aço da prancha; sem perdas."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V106 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 0.50 * 11.21"
+            }
+          ],
+          "element_id": "V106",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V106",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V106"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Volume calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V110 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 28.00"
+            }
+          ],
+          "element_id": "V110",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V110",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V110"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Fundo calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V110 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(2 * 0.50) * 28.00"
+            }
+          ],
+          "element_id": "V110",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V110",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V110"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Laterais calculadas pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V110 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "125 * 1.16 * 0.245 + (8 * 12.00 + 4 * 6.61) * 0.395 + (2 * 11.88 + 2 * 11.75 + 2 * 5.98) * 0.963 + (2 * 11.96 + 2 * 12.00 + 2 * 7.65) * 1.578"
+            }
+          ],
+          "element_id": "V110",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V110",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V110"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Peso recalculado a partir da relação de aço da prancha; sem perdas."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V110 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 0.50 * 28.00"
+            }
+          ],
+          "element_id": "V110",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V110",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V110"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Volume calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V111 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 28.00"
+            }
+          ],
+          "element_id": "V111",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V111",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V111"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Fundo calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V111 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "(2 * 0.50) * 28.00"
+            }
+          ],
+          "element_id": "V111",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V111",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V111"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Laterais calculadas pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V111 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "125 * 1.16 * 0.245 + (8 * 12.00 + 4 * 6.61) * 0.395 + (2 * 11.88 + 2 * 11.75 + 2 * 5.98) * 0.963 + (2 * 2.15 + 2 * 11.96 + 2 * 12.00 + 2 * 7.57) * 1.578"
+            }
+          ],
+          "element_id": "V111",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V111",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V111"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Peso recalculado a partir da relação de aço da prancha; sem perdas."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V111 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0.20 * 0.50 * 28.00"
+            }
+          ],
+          "element_id": "V111",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V111",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-056 rev.A.pdf",
+              "page": 1,
+              "element": "V111"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Volume calculado pelos vãos detalhados;"
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V109 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V109",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V109",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V109"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+    "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V109 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V109",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V109",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V109"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V109 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V109",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V109",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V109"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Soma peça a peça não reconcilia com o resumo da EGS-057; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V109 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V109",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V109",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V109"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V112 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V112",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V112",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V112"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V112 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V112",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V112",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V112"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V112 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V112",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V112",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V112"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Soma peça a peça não reconcilia com o resumo da EGS-057; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V112 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V112",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V112",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V112"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V113 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V113",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V113",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V113"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V113 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V113",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V113",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V113"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V113 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V113",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V113",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V113"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Soma peça a peça não reconcilia com o resumo da EGS-057; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V113 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V113",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V113",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V113"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V114 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V114",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V114",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V114"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V114 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V114",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V114",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V114"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V114 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V114",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V114",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V114"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Soma peça a peça não reconcilia com o resumo da EGS-057; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V114 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V114",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V114",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V114"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.4",
+          "descricao": "Fôrma de fundo da viga V115 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V115",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.FUNDO",
+          "rule_version": 1,
+          "cia": "COB-EST-V115",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V115"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.7",
+          "descricao": "Fôrma lateral da viga V115 — seção 20 x 50 cm",
+          "unidade": "m²",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V115",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.LATERAL",
+          "rule_version": 1,
+          "cia": "COB-EST-V115",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V115"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.5",
+          "descricao": "Armadura da viga V115 — CA-50",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V115",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.ACO",
+          "rule_version": 1,
+          "cia": "COB-EST-V115",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V115"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Soma peça a peça não reconcilia com o resumo da EGS-057; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.8",
+          "descricao": "Concreto C30 da viga V115 — seção 20 x 50 cm",
+          "unidade": "m³",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "0"
+            }
+          ],
+          "element_id": "V115",
+          "element_type": "VIGA",
+          "rule_id": "EST.VIGA.CONCRETO",
+          "rule_version": 1,
+          "cia": "COB-EST-V115",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-057 rev.A.pdf",
+              "page": 1,
+              "element": "V115"
+            }
+          ],
+          "status": "PENDENTE_RFI",
+          "rfi": "RFI-OBRA_PORTO-001",
+          "observacao": "Resumo impresso diverge da soma dos vãos detalhados; não estimado."
+        },
+        {
+          "codigo_eap": "1.4.6",
+          "descricao": "Armadura total das vigotas treliçadas VT1a a VT27a — TR16745, CA-60",
+          "unidade": "kg",
+          "ref_prancha": "AÇU-3.DES-2.3100-11-EGS-059 rev.A.pdf",
+          "equacoes": [
+            {
+              "expressao_matematica": "999.8"
+            }
+          ],
+          "element_id": "VT-GRUPO-TOTAL",
+          "element_type": "VIGA",
+          "rule_id": "EST.LAJE.VIGOTAS",
+          "rule_version": 1,
+          "cia": "COB-EST-VT",
+          "source_revision": "A",
+          "evidence": [
+            {
+              "source_file": "AÇU-3.DES-2.3100-11-EGS-059 rev.A.pdf",
+              "page": 1,
+              "element": "VT-GRUPO-TOTAL"
+            }
+          ],
+          "status": "LEVANTADO",
+          "rfi": "",
+          "observacao": "Resumo de aço da prancha EGS-059; levantamento de concreto e fôrma da laje permanece fora deste escopo."
+        }
+      ]
+    }
+  }
+}

@@ -14,9 +14,12 @@ def main():
     parser.add_argument("--db", default="data/pmo_virtual.sqlite", help="Caminho do SQLite oficial")
     parser.add_argument("--substituir", action="store_true", help="Permite reimportação explícita para uma obra já existente")
     
+    parser.add_argument("--acrescentar", action="store_true", help="Acrescenta itens e preserva os registros existentes")
     args = parser.parse_args()
     
-    arquivos = importar_json_inicial(args.json_path, args.db, args.substituir)
+    if args.substituir and args.acrescentar:
+        parser.error("Use apenas uma das opcoes: --substituir ou --acrescentar")
+    arquivos = importar_json_inicial(args.json_path, args.db, args.substituir, args.acrescentar)
     print("Importação concluída. Exportações derivadas atualizadas:")
     for arquivo in arquivos:
         print(f"- {arquivo}")
