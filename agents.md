@@ -14,7 +14,7 @@ Documentos de referência:
 Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele tem precedência sobre o protocolo geral de contexto.
 
 1. Leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`.
-2. Pela lista, selecione somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
+2. Pela própria lista, use `disciplina_desenho` e `tipo_desenho` para selecionar somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
 3. Use os próprios campos da lista `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo` para decidir o que já foi levantado.
 4. Abra somente as pranchas em que o serviço/escopo solicitado ainda não esteja registrado.
 5. Carregue apenas `SKILL_QUANTIFICACAO_MASTER.md` + a skill específica da disciplina/subdisciplina necessária.
@@ -22,6 +22,8 @@ Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele
 7. Gere JSON, execute o cálculo determinístico e grave no SQLite.
 
 Durante este Fast Path, não consultar RFI, RDO, índice geral de skills, cronograma, compras, orçamento, auditoria ou outras disciplinas antes do levantamento, salvo se uma informação faltante realmente bloquear o item.
+
+É proibido usar como rota alternativa de descoberta `_carimbos_extraidos/`, `carimbos_metadados.json`, `os.walk`, `glob`, varredura recursiva de pastas, consultas SQL exploratórias ou scripts temporários para identificar pranchas. A seleção de desenhos deve sair exclusivamente da `LISTA_DE_DESENHOS.csv`. Se `disciplina_desenho` ou `tipo_desenho` vier como `INDEFINIDA/INDEFINIDO`, trate somente essa linha como pendente de classificação; não inspecione todo o acervo.
 
 ## Protocolo obrigatório
 
