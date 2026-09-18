@@ -1,7 +1,5 @@
 # 🔗 SKILL QUANTIFICAÇÃO: Conciliação de 3 Pontas (Pedido × Nota Fiscal × Recebimento)
 
-> **Pré-requisito obrigatório:** Antes de aplicar esta skill, leia `SKILL_QUANTIFICACAO_MASTER.md` e siga o fluxo, as responsabilidades e as regras universais definidos nele. Esta skill complementa o MASTER e não substitui suas diretrizes.
-
 Formaliza o fluxo principal de entrada de material discutido com o usuário: quando existe um
 pedido de compra vinculado, a tarefa do agente é **conciliar**, não classificar do zero. Trabalha
 junto com `SKILL_QUANTIFICACAO_PEDIDO_DE_COMPRA.md` (que cobre o pedido em si) e a Hierarquia de
