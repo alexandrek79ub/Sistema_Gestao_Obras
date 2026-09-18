@@ -9,6 +9,23 @@ Documentos de referência:
 - `governanca/ADENDO_AGENTS_REGRAS_DE_AUTONOMIA.md`: limites de autonomia.
 - `README.md`: estrutura do repositório e artefatos derivados.
 
+## Gate Zero — levantamento quantitativo de prancha
+
+Quando o pedido envolver **levantar/quantificar uma prancha específica**, esta é a primeira ação obrigatória e tem precedência sobre RFI, RDO, índice de skills, leitura de PDFs e qualquer outra investigação.
+
+Execute somente:
+
+```bash
+python scripts/verificar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>"
+```
+
+Interprete apenas os dois estados válidos:
+
+- `JA_LEVANTADA|N`: interrompa imediatamente e informe que a prancha já possui N itens no SQLite, salvo pedido explícito de reprocessamento.
+- `NAO_LEVANTADA|0`: prossiga para o fluxo normal.
+
+Antes desse Gate Zero, não explorar pastas, não abrir PDF, não carregar skills e não executar checagens de contexto. O objetivo é evitar gasto desnecessário de tempo e tokens.
+
 ## Protocolo obrigatório
 
 1. Identifique a obra ativa pelo pedido ou pelo caminho em `/projetos/[OBRA]/`. Sem contexto, pergunte qual é a obra antes de executar tarefa específica de obra.
@@ -66,11 +83,11 @@ Em respostas técnicas, abra com:
 A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
 
 ```text
-consulta direta ao SQLite -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
-                         -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
+verificar_prancha.py -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
+                     -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
 ```
 
-1. Antes de ler o PDF com a LLM, o agente deve consultar diretamente `data/pmo_virtual.sqlite`, tabela `itens_quantitativo`, para a obra ativa e a prancha solicitada. Compare a referência da prancha pelo nome/código normalizado. Se já houver itens levantados, interrompa e informe o usuário, salvo pedido explícito de reprocessamento. Não é necessário chamar `processar_prancha.py` para esse pré-check.
+1. Antes de qualquer outra ação, execute o Gate Zero com `scripts/verificar_prancha.py`. Se retornar `JA_LEVANTADA|N`, interrompa salvo pedido explícito de reprocessamento. Se retornar `NAO_LEVANTADA|0`, prossiga.
 2. A skill orienta como medir. A LLM multimodal interpreta a prancha e devolve elementos, inputs nominais ou líquidos conforme a regra, revisão/página/região e `regra_id`.
 3. Descontos, face a face e interseções que dependem da leitura do projeto são aplicados pela LLM antes do JSON. O Python não descobre geometria do PDF. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
 4. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
