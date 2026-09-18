@@ -9,22 +9,26 @@ Documentos de referência:
 - `governanca/ADENDO_AGENTS_REGRAS_DE_AUTONOMIA.md`: limites de autonomia.
 - `README.md`: estrutura do repositório e artefatos derivados.
 
-## Gate Zero — levantamento quantitativo de prancha
+## Fast Path — levantamento quantitativo
 
-Quando o pedido envolver **levantar/quantificar uma prancha específica**, esta é a primeira ação obrigatória e tem precedência sobre RFI, RDO, índice de skills, leitura de PDFs e qualquer outra investigação.
+Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele tem precedência sobre o protocolo geral de contexto.
 
-Execute somente:
+1. Leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`.
+2. Pela lista, selecione somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
+3. Verifique todas as pranchas selecionadas no SQLite em uma única execução:
 
 ```bash
-python scripts/verificar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>"
+python scripts/verificar_prancha.py --obra <id_obra> \
+  --prancha "<arquivo1.pdf>" \
+  --prancha "<arquivo2.pdf>"
 ```
 
-Interprete apenas os dois estados válidos:
+4. Ignore as que retornarem `JA_LEVANTADA`. Abra somente as `NAO_LEVANTADA`.
+5. Carregue apenas `SKILL_QUANTIFICACAO_MASTER.md` + a skill específica da disciplina/subdisciplina necessária.
+6. Leia somente as pranchas mínimas necessárias para obter os dados exigidos pela skill. Expanda para outra prancha apenas se faltar informação concreta.
+7. Gere JSON, execute o cálculo determinístico e grave no SQLite.
 
-- `JA_LEVANTADA|N`: interrompa imediatamente e informe que a prancha já possui N itens no SQLite, salvo pedido explícito de reprocessamento.
-- `NAO_LEVANTADA|0`: prossiga para o fluxo normal.
-
-Antes desse Gate Zero, não explorar pastas, não abrir PDF, não carregar skills e não executar checagens de contexto. O objetivo é evitar gasto desnecessário de tempo e tokens.
+Durante este Fast Path, não consultar RFI, RDO, índice geral de skills, cronograma, compras, orçamento, auditoria ou outras disciplinas antes do levantamento, salvo se uma informação faltante realmente bloquear o item.
 
 ## Protocolo obrigatório
 
@@ -61,33 +65,23 @@ Em respostas técnicas, abra com:
 - Siga: `Investigar → Confirmar causa → Implementar → Revisar diff → Testar → Validar comportamento`.
 - Nunca corrija uma causa presumida: demonstre-a com evidência antes de agir.
 
-## Fluxo obrigatório: lista mestra de desenhos
+## Lista mestra de desenhos
 
-1. Extraia carimbos de todos os PDFs:
+Para pedidos de levantamento, a lista já existente em `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv` é o ponto de entrada obrigatório. Não recriar a lista nem revarrer pastas durante um levantamento normal.
 
-   ```bash
-   python scripts/extrair_carimbos.py <pasta_pdfs>
-   ```
-
-2. Sincronize a lista no SQLite:
-
-   ```bash
-   python scripts/gerar_lista_desenhos.py --obra <codigo> --pasta <pasta_pdfs> --db data/pmo_virtual.sqlite
-   ```
-
-3. Revisão superior comparável torna-se `VIGENTE`; a anterior, `SUPERADA`. Dados ambíguos permanecem `PENDENTE_REVISAO`; nunca promova uma revisão por suposição.
-4. O processo exporta `LISTA_DE_DESENHOS.csv` e `LISTA_DE_DESENHOS.md` na pasta da obra.
+Os scripts `extrair_carimbos.py` e `gerar_lista_desenhos.py` só devem ser usados quando o usuário pedir criação/atualização da lista ou quando ela estiver ausente/desatualizada.
 
 ## Fluxo obrigatório: levantamento quantitativo físico
 
 A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
 
 ```text
-verificar_prancha.py -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
-                     -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
+LISTA_DE_DESENHOS.csv -> verificar_prancha.py (lote) -> PDFs mínimos da disciplina
+                      -> MASTER + skill específica -> LLM -> JSON
+                      -> processar_prancha.py -> SQLite -> CSV/Markdown
 ```
 
-1. Antes de qualquer outra ação, execute o Gate Zero com `scripts/verificar_prancha.py`. Se retornar `JA_LEVANTADA|N`, interrompa salvo pedido explícito de reprocessamento. Se retornar `NAO_LEVANTADA|0`, prossiga.
+1. Leia primeiro a `LISTA_DE_DESENHOS.csv` da obra, filtre as pranchas relevantes para a disciplina e execute `scripts/verificar_prancha.py` em lote. Abra somente as pranchas ainda não levantadas.
 2. A skill orienta como medir. A LLM multimodal interpreta a prancha e devolve elementos, inputs nominais ou líquidos conforme a regra, revisão/página/região e `regra_id`.
 3. Descontos, face a face e interseções que dependem da leitura do projeto são aplicados pela LLM antes do JSON. O Python não descobre geometria do PDF. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
 4. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
