@@ -14,6 +14,12 @@ Documentos de referência:
 Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele tem precedência sobre o protocolo geral de contexto.
 
 1. Leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`.
+   - O cabeçalho obrigatório do Fast Path deve conter: `disciplina_desenho`, `tipo_desenho`, `disciplinas_levantadas`, `servicos_levantados`, `qtd_itens_quantitativo`.
+   - Se qualquer uma dessas colunas estiver ausente, NÃO investigar PDFs, carimbos, SQLite manualmente ou pastas. Execute somente:
+     ```bash
+     python scripts/gerar_lista_desenhos.py --obra <CODIGO_OBRA> --somente-exportar --saida "projetos/<OBRA>/01_ENGENHARIA_E_PROJETOS"
+     ```
+     Depois releia a lista e continue.
 2. Pela própria lista, use `disciplina_desenho` e `tipo_desenho` para selecionar somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
 3. Use os próprios campos da lista `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo` para decidir o que já foi levantado.
 4. Abra somente as pranchas em que o serviço/escopo solicitado ainda não esteja registrado.
@@ -23,7 +29,7 @@ Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele
 
 Durante este Fast Path, não consultar RFI, RDO, índice geral de skills, cronograma, compras, orçamento, auditoria ou outras disciplinas antes do levantamento, salvo se uma informação faltante realmente bloquear o item.
 
-É proibido usar como rota alternativa de descoberta `_carimbos_extraidos/`, `carimbos_metadados.json`, `os.walk`, `glob`, varredura recursiva de pastas, consultas SQL exploratórias ou scripts temporários para identificar pranchas. A seleção de desenhos deve sair exclusivamente da `LISTA_DE_DESENHOS.csv`. Se `disciplina_desenho` ou `tipo_desenho` vier como `INDEFINIDA/INDEFINIDO`, trate somente essa linha como pendente de classificação; não inspecione todo o acervo.
+Mesmo que a lista esteja incompleta ou inconsistente, é proibido tentar "confirmar por fora". É proibido usar como rota alternativa de descoberta `_carimbos_extraidos/`, `carimbos_metadados.json`, `os.walk`, `glob`, varredura recursiva de pastas, consultas SQL exploratórias ou scripts temporários para identificar pranchas. A seleção de desenhos deve sair exclusivamente da `LISTA_DE_DESENHOS.csv`. Se `disciplina_desenho` ou `tipo_desenho` vier como `INDEFINIDA/INDEFINIDO`, trate somente essa linha como pendente de classificação; não inspecione todo o acervo.
 
 ## Protocolo obrigatório
 
