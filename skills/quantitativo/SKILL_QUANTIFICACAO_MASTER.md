@@ -60,10 +60,10 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de acionar a LLM, consulte o SQLite para evitar releitura e duplicidade de prancha já levantada:
+O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de acionar a LLM, o agente consulta diretamente o SQLite para evitar releitura e duplicidade de prancha já levantada:
 
 ```text
-Pré-check SQLite
+Consulta direta ao SQLite
 ↓
 PDF
 ↓
@@ -114,11 +114,9 @@ A LLM não deve enviar resultado final calculado, preço, BDI, custo ou express�
 
 ### Pré-check obrigatório
 
-Antes da leitura multimodal, verificar se a prancha já possui quantitativos no SQLite. Se já existir, interromper o levantamento e informar o usuário, salvo pedido explícito de reprocessamento.
+Antes da leitura multimodal, o agente deve consultar diretamente `data/pmo_virtual.sqlite`, tabela `itens_quantitativo`, usando a obra ativa e a referência normalizada da prancha. Se já existirem itens para essa prancha, interromper o levantamento e informar o usuário, salvo pedido explícito de reprocessamento.
 
-```bash
-python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --verificar
-```
+Esse pré-check pertence à orquestração do agente e não ao `processar_prancha.py`. O script de processamento mantém apenas a proteção final contra gravação duplicada.
 
 ### Responsabilidade do Python
 
