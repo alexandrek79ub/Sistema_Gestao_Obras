@@ -1,5 +1,7 @@
 # 💵 SKILL QUANTIFICAÇÃO: Orçamentação (CCU + BDI)
 
+> **Pré-requisito obrigatório:** Antes de aplicar esta skill, leia `SKILL_QUANTIFICACAO_MASTER.md` e siga o fluxo, as responsabilidades e as regras universais definidos nele. Esta skill complementa o MASTER e não substitui suas diretrizes.
+
 > 📢 **AVISO DE CONSOLIDAÇÃO / DIRETRIZ UNIFICADA:**  
 > Esta skill foi consolidada e suas diretrizes (Vínculo unívoco por Código CIA, Tabela de Custo Unitário CCU, Composição Analítica e Regras Fiscais de BDI) foram integradas na [`SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`](SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md).  
 > Para novos orçamentos, composições de custos e fechamento financeiro de quantitativos, utilize prioritariamente a `SKILL_QUANTIFICACAO_COMPOSICAO_PRECO.md`.
