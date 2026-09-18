@@ -120,7 +120,15 @@ A LLM não deve enviar resultado final calculado, preço, BDI, custo ou express�
 
 ### Entrada obrigatória: Lista de Desenhos
 
-Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas; não faça varredura de pastas para descobrir PDFs quando a lista existir.
+Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas.
+
+O cabeçalho obrigatório deve conter `disciplina_desenho`, `tipo_desenho`, `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo`. Se essas colunas não existirem, a lista está desatualizada. Nesse caso, a única ação permitida antes de continuar é regenerar a exportação a partir do SQLite:
+
+```bash
+python scripts/gerar_lista_desenhos.py --obra <CODIGO_OBRA> --somente-exportar --saida "projetos/<OBRA>/01_ENGENHARIA_E_PROJETOS"
+```
+
+Esse modo não lê PDFs nem carimbos. Após a atualização, releia a lista. Não tente compensar uma lista antiga abrindo carimbos, consultando SQL manualmente ou varrendo diretórios.
 
 Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada usando os próprios campos da lista:
 - `disciplina_desenho`;
