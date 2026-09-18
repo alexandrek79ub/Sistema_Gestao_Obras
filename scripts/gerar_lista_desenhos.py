@@ -11,6 +11,7 @@ import json
 import re
 import sqlite3
 import sys
+import unicodedata
 
 from datetime import datetime, timezone
 from pathlib import Path
@@ -57,6 +58,12 @@ def hash_arquivo(path: Path) -> str:
         for bloco in iter(lambda: arquivo.read(1024 * 1024), b""):
             digest.update(bloco)
     return digest.hexdigest()
+
+
+def normalizar_referencia_prancha(valor: str) -> str:
+    """Normaliza o nome-base para cruzar lista de desenhos e quantitativos."""
+    nome = Path(str(valor).strip()).stem
+    return unicodedata.normalize("NFKC", nome).casefold().strip()
 
 
 def normalizar_revisao(valor: str) -> tuple[str, int, str] | None:
@@ -245,38 +252,94 @@ def importar_desenhos(obra: str, pasta: Path, db_path: Path) -> dict[str, int]:
 
 
 def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: bool = False) -> tuple[Path, Path]:
+    """Exporta a lista já enriquecida com o que foi levantado em cada prancha."""
     db = connect(db_path)
     try:
+        obra_row = db.execute("SELECT id FROM obras WHERE codigo=?", (obra,)).fetchone()
+        if not obra_row:
+            raise ValueError(f"obra '{obra}' não existe no SQLite")
+        obra_id = int(obra_row["id"])
+
         filtros = "" if incluir_superadas else "AND d.status='VIGENTE'"
         linhas = db.execute(
             "SELECT d.codigo,d.titulo,d.titulo_status,d.revisao,d.status,d.arquivo_pdf,d.carimbo_img "
             "FROM lista_desenhos d JOIN obras o ON o.id=d.obra_id WHERE o.codigo=? " + filtros +
             " ORDER BY d.codigo,d.revisao_ordem,d.revisao", (obra,)
         ).fetchall()
+
+        quantitativos = {}
+        for item in db.execute(
+            "SELECT prancha_referencia,disciplina,cod_eap,descricao "
+            "FROM itens_quantitativo WHERE obra_id=?",
+            (obra_id,),
+        ).fetchall():
+            chave = normalizar_referencia_prancha(item["prancha_referencia"])
+            if not chave:
+                continue
+            resumo = quantitativos.setdefault(
+                chave,
+                {"disciplinas": set(), "servicos": set(), "qtd": 0},
+            )
+            disciplina = str(item["disciplina"] or "").strip()
+            if disciplina:
+                resumo["disciplinas"].add(disciplina)
+            cod_eap = str(item["cod_eap"] or "").strip()
+            descricao = str(item["descricao"] or "").strip()
+            servico = " — ".join(parte for parte in (cod_eap, descricao) if parte)
+            if servico:
+                resumo["servicos"].add(servico)
+            resumo["qtd"] += 1
     finally:
         db.close()
+
     saida.mkdir(parents=True, exist_ok=True)
     csv_path = saida / "LISTA_DE_DESENHOS.csv"
     md_path = saida / "LISTA_DE_DESENHOS.md"
+
+    registros = []
+    for linha in linhas:
+        item = dict(linha)
+        item["orientacao"] = (
+            "Priorizar para execução, quantitativos e consultas" if item["status"] == "VIGENTE"
+            else "Não utilizar — revisão superada" if item["status"] == "SUPERADA"
+            else "Revisão pendente de confirmação humana"
+        )
+        resumo = quantitativos.get(
+            normalizar_referencia_prancha(item["arquivo_pdf"]),
+            {"disciplinas": set(), "servicos": set(), "qtd": 0},
+        )
+        item["disciplinas_levantadas"] = " | ".join(sorted(resumo["disciplinas"]))
+        item["servicos_levantados"] = " | ".join(sorted(resumo["servicos"]))
+        item["qtd_itens_quantitativo"] = int(resumo["qtd"])
+        registros.append(item)
+
     with csv_path.open("w", newline="", encoding="utf-8-sig") as arquivo:
-        campos = ["codigo", "titulo", "titulo_status", "revisao", "status", "orientacao", "arquivo_pdf", "carimbo_img"]
+        campos = [
+            "codigo", "titulo", "titulo_status", "revisao", "status", "orientacao",
+            "disciplinas_levantadas", "servicos_levantados", "qtd_itens_quantitativo",
+            "arquivo_pdf", "carimbo_img",
+        ]
         writer = csv.DictWriter(arquivo, fieldnames=campos, delimiter=";")
         writer.writeheader()
-        for linha in linhas:
-            item = dict(linha)
-            item["orientacao"] = (
-                "Priorizar para execução, quantitativos e consultas" if item["status"] == "VIGENTE"
-                else "Não utilizar — revisão superada" if item["status"] == "SUPERADA"
-                else "Revisão pendente de confirmação humana"
-            )
-            writer.writerow(item)
+        writer.writerows(registros)
+
     with md_path.open("w", encoding="utf-8") as arquivo:
         arquivo.write(f"# Lista Mestra de Desenhos — {obra}\n\n")
-        arquivo.write("Fonte oficial: `data/pmo_virtual.sqlite`. Esta exportação prioriza as revisões vigentes.\n\n")
-        arquivo.write("| Código | Título | Rev. | Status | Orientação | PDF |\n|---|---|---:|---|---|---|\n")
-        for linha in linhas:
-            orientacao = "Priorizar para execução, quantitativos e consultas" if linha["status"] == "VIGENTE" else "Não utilizar — revisão superada"
-            arquivo.write(f"| {linha['codigo']} | {linha['titulo']} | {linha['revisao']} | {linha['status']} | {orientacao} | `{linha['arquivo_pdf']}` |\n")
+        arquivo.write(
+            "Fonte oficial: `data/pmo_virtual.sqlite`. A lista inclui o estado atual dos quantitativos por prancha.\n\n"
+        )
+        arquivo.write(
+            "| Código | Título | Rev. | Status | Disciplinas levantadas | Serviços levantados | Itens | PDF |\n"
+            "|---|---|---:|---|---|---|---:|---|\n"
+        )
+        for item in registros:
+            disciplinas = item["disciplinas_levantadas"] or "—"
+            servicos = item["servicos_levantados"] or "—"
+            arquivo.write(
+                f"| {item['codigo']} | {item['titulo']} | {item['revisao']} | {item['status']} | "
+                f"{disciplinas} | {servicos} | {item['qtd_itens_quantitativo']} | "
+                f"`{item['arquivo_pdf']}` |\n"
+            )
     return csv_path, md_path
 
 
