@@ -91,6 +91,50 @@ def extrair_codigo_revisao(nome_pdf: str, texto_carimbo: str) -> tuple[str, str]
     return nome, revisao_texto.group(1).upper() if revisao_texto else "DESCONHECIDA"
 
 
+def classificar_desenho(titulo: str, texto_carimbo: str, arquivo_pdf: str) -> tuple[str, str]:
+    """Classifica disciplina e tipo uma única vez na geração da lista.
+
+    A classificação é conservadora: quando os metadados não sustentam uma decisão,
+    retorna INDEFINIDA em vez de inventar.
+    """
+    bruto = " ".join([str(titulo or ""), str(texto_carimbo or ""), str(arquivo_pdf or "")])
+    texto = unicodedata.normalize("NFKD", bruto).encode("ascii", "ignore").decode("ascii").upper()
+
+    regras_disciplina = [
+        ("ELETRICA", r"\b(ELETRIC|ILUMINAC|TOMAD|QDC|QUADRO DE DISTRIB|SPDA|ATERRAMENTO|UNIFILAR|DIAGRAMA ELETR)"),
+        ("HIDRAULICA", r"\b(HIDRAUL|SANITAR|ESGOTO|AGUA FRIA|AGUA QUENTE|PLUVIAL|DRENAGEM|ISOMETR|PRUMADA|INCENDIO|GAS)"),
+        ("FUNDACOES", r"\b(FUNDAC|SAPATA|BLOCO DE COROAMENTO|ESTACA|BROCA|BALDRAME|LOCACAO DE FUND)"),
+        ("ESTRUTURA", r"\b(ESTRUT|FORMA|ARMADURA|PILAR|VIGA|LAJE|CONCRETO ARMADO|DETALHE DE ACO)"),
+        ("ARQUITETURA", r"\b(ARQUITET|PLANTA BAIXA|PAVIMENTO|ALVENARIA|VEDAC|FACHADA|CORTE|COBERTURA|ESQUADRIA|LAYOUT)"),
+        ("SERVICOS_ESPECIAIS", r"\b(HVAC|AR CONDICIONADO|CLIMATIZ|ELEVADOR|PAISAGIS|PAVIMENTACAO|URBANIZACAO|CANTEIRO)"),
+    ]
+    disciplina = "INDEFINIDA"
+    for nome, padrao in regras_disciplina:
+        if re.search(padrao, texto):
+            disciplina = nome
+            break
+
+    regras_tipo = [
+        ("PLANTA_BAIXA", r"\bPLANTA BAIXA\b"),
+        ("CORTE", r"\bCORTE[S]?\b"),
+        ("ELEVACAO_FACHADA", r"\b(ELEVACAO|FACHADA)\b"),
+        ("IMPLANTACAO_LOCACAO", r"\b(IMPLANTACAO|LOCACAO)\b"),
+        ("COBERTURA", r"\bCOBERTURA\b"),
+        ("FORMA", r"\bFORMA[S]?\b"),
+        ("ARMADURA", r"\b(ARMADURA|FERRAGEM|ACO)\b"),
+        ("ISOMETRICO", r"\bISOMETR"),
+        ("DIAGRAMA_UNIFILAR", r"\b(UNIFILAR|DIAGRAMA)\b"),
+        ("DETALHAMENTO", r"\b(DETALHE|DETALHAMENTO)\b"),
+        ("PLANTA", r"\bPLANTA\b"),
+    ]
+    tipo = "INDEFINIDO"
+    for nome, padrao in regras_tipo:
+        if re.search(padrao, texto):
+            tipo = nome
+            break
+    return disciplina, tipo
+
+
 def limpar_titulo(texto_carimbo: str) -> tuple[str, str]:
     """Extrai um título candidato; ausência de sinal claro permanece pendente."""
     if any(ord(caractere) < 32 and caractere not in "\n\r\t" for caractere in texto_carimbo):
@@ -262,7 +306,7 @@ def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: boo
 
         filtros = "" if incluir_superadas else "AND d.status='VIGENTE'"
         linhas = db.execute(
-            "SELECT d.codigo,d.titulo,d.titulo_status,d.revisao,d.status,d.arquivo_pdf,d.carimbo_img "
+            "SELECT d.codigo,d.titulo,d.titulo_status,d.revisao,d.status,d.arquivo_pdf,d.carimbo_img,d.texto_carimbo "
             "FROM lista_desenhos d JOIN obras o ON o.id=d.obra_id WHERE o.codigo=? " + filtros +
             " ORDER BY d.codigo,d.revisao_ordem,d.revisao", (obra,)
         ).fetchall()
@@ -304,6 +348,12 @@ def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: boo
             else "Não utilizar — revisão superada" if item["status"] == "SUPERADA"
             else "Revisão pendente de confirmação humana"
         )
+        disciplina_desenho, tipo_desenho = classificar_desenho(
+            item["titulo"], item.get("texto_carimbo", ""), item["arquivo_pdf"]
+        )
+        item["disciplina_desenho"] = disciplina_desenho
+        item["tipo_desenho"] = tipo_desenho
+        item.pop("texto_carimbo", None)
         resumo = quantitativos.get(
             normalizar_referencia_prancha(item["arquivo_pdf"]),
             {"disciplinas": set(), "servicos": set(), "qtd": 0},
@@ -316,6 +366,7 @@ def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: boo
     with csv_path.open("w", newline="", encoding="utf-8-sig") as arquivo:
         campos = [
             "codigo", "titulo", "titulo_status", "revisao", "status", "orientacao",
+            "disciplina_desenho", "tipo_desenho",
             "disciplinas_levantadas", "servicos_levantados", "qtd_itens_quantitativo",
             "arquivo_pdf", "carimbo_img",
         ]
@@ -329,15 +380,16 @@ def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: boo
             "Fonte oficial: `data/pmo_virtual.sqlite`. A lista inclui o estado atual dos quantitativos por prancha.\n\n"
         )
         arquivo.write(
-            "| Código | Título | Rev. | Status | Disciplinas levantadas | Serviços levantados | Itens | PDF |\n"
-            "|---|---|---:|---|---|---|---:|---|\n"
+            "| Código | Título | Disciplina | Tipo | Rev. | Status | Disciplinas levantadas | Serviços levantados | Itens | PDF |\n"
+            "|---|---|---|---|---:|---|---|---|---:|---|\n"
         )
         for item in registros:
             disciplinas = item["disciplinas_levantadas"] or "—"
             servicos = item["servicos_levantados"] or "—"
             arquivo.write(
-                f"| {item['codigo']} | {item['titulo']} | {item['revisao']} | {item['status']} | "
-                f"{disciplinas} | {servicos} | {item['qtd_itens_quantitativo']} | "
+                f"| {item['codigo']} | {item['titulo']} | {item['disciplina_desenho']} | {item['tipo_desenho']} | "
+                f"{item['revisao']} | {item['status']} | {disciplinas} | {servicos} | "
+                f"{item['qtd_itens_quantitativo']} | "
                 f"`{item['arquivo_pdf']}` |\n"
             )
     return csv_path, md_path
