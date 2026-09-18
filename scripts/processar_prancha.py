@@ -22,6 +22,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
+from gerar_lista_desenhos import exportar_lista
+
 
 DISCIPLINA = "Infraestrutura e Fundações"
 STATUS_OK = "LEVANTADO"
@@ -336,6 +338,20 @@ def exportar_arquivos_obra(conn: sqlite3.Connection, obra_id: int) -> list[str]:
     return [str(csv_path), str(md_path)]
 
 
+def atualizar_lista_desenhos(conn: sqlite3.Connection, db_path: Path, obra_id: int) -> list[str]:
+    """Regenera a lista derivada já com disciplinas/serviços levantados."""
+    obra = conn.execute(
+        "SELECT codigo,diretorio_base FROM obras WHERE id=?",
+        (obra_id,),
+    ).fetchone()
+    if not obra or not obra["diretorio_base"]:
+        return []
+
+    saida = Path(obra["diretorio_base"])
+    csv_path, md_path = exportar_lista(str(obra["codigo"]), db_path, saida)
+    return [str(csv_path), str(md_path)]
+
+
 def contar_itens_prancha(conn: sqlite3.Connection, obra_id: int, prancha: str) -> int:
     obra = conn.execute("SELECT id FROM obras WHERE id=?", (obra_id,)).fetchone()
     if not obra:
@@ -421,6 +437,7 @@ def main() -> None:
             itens = validar_e_calcular(documento)
             revisao_id = gravar(conn, args.obra, itens, args.prancha, args.sobrescrever)
             saidas = exportar_arquivos_obra(conn, args.obra)
+            saidas.extend(atualizar_lista_desenhos(conn, db_path, args.obra))
         finally:
             conn.close()
 
