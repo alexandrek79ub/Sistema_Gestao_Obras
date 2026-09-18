@@ -66,20 +66,21 @@ Em respostas técnicas, abra com:
 A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
 
 ```text
-PDF -> skill da disciplina -> LLM extrai evidências -> JSON
-    -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
+pré-check SQLite -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
+                 -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
 ```
 
-1. A LLM lê a prancha e devolve somente elementos, inputs nominais, revisão/página/região e `regra_id` permitida pela skill.
-2. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
-3. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
-4. O cálculo é executado exclusivamente pelo motor determinístico:
+1. Antes de ler o PDF com a LLM, execute `python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --verificar`. Se retornar `[JA_LEVANTADA]`, interrompa salvo pedido explícito de reprocessamento.
+2. A skill orienta como medir. A LLM multimodal interpreta a prancha e devolve elementos, inputs nominais ou líquidos conforme a regra, revisão/página/região e `regra_id`.
+3. Descontos, face a face e interseções que dependem da leitura do projeto são aplicados pela LLM antes do JSON. O Python não descobre geometria do PDF. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
+4. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
+5. O cálculo é executado exclusivamente pelo motor determinístico:
    ```bash
    python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --dados evidencias.json
    ```
-5. `--obra` é obrigatório. Scripts não podem possuir obra padrão ou fallback específico.
-6. Erro de validação ou cálculo bloqueia o processamento; nunca converter erro em quantidade zero.
-7. Quantitativo físico não inclui preços, BDI, perdas, empolamento comercial ou consumíveis.
+6. `--obra` é obrigatório. Scripts não podem possuir obra padrão ou fallback específico.
+7. Erro de validação ou cálculo bloqueia o processamento; nunca converter erro em quantidade zero.
+8. Quantitativo físico não inclui preços, BDI, perdas, empolamento comercial ou consumíveis.
 
 
 ## Regras de campo e higiene do repositório
