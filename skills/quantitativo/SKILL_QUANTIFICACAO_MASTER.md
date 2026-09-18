@@ -60,88 +60,63 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O fluxo oficial de todas as disciplinas é simples e obrigatório. A navegação começa sempre pela lista de desenhos existente da obra:
+O início do levantamento é determinístico. A LLM **não escolhe como procurar desenhos**.
 
 ```text
-LISTA_DE_DESENHOS.csv
+preparar_levantamento.py
 ↓
-selecionar pela própria lista usando disciplina_desenho + tipo_desenho
+ABRIR|tipo|PDF
 ↓
-ler disciplinas_levantadas / servicos_levantados / qtd_itens_quantitativo
+MASTER + skill específica
 ↓
-abrir somente o que ainda falta
+LLM multimodal lê somente os PDFs autorizados
 ↓
-PDF
+JSON com inputs + evidências
 ↓
-Skill da disciplina
+processar_prancha.py
 ↓
-LLM multimodal
-├─ lê a prancha
-├─ interpreta tecnicamente
-├─ aplica os critérios de medição definidos na skill
-├─ resolve descontos, apoios e interseções que dependem da leitura visual
-└─ produz JSON estruturado com os inputs líquidos e suas evidências
+SQLite
 ↓
-Python
-├─ valida estrutura, tipos, unidades e evidências
-├─ rejeita campos ausentes, incoerentes ou regras desconhecidas
-├─ executa somente a matemática determinística
-└─ grava no SQLite
-↓
-SQLite (fonte oficial)
-↓
-CSV / Markdown / Excel derivados
+lista de desenhos atualizada
 ```
+
+### Regra de entrada
+
+A primeira ação de qualquer levantamento é:
+
+```bash
+python scripts/preparar_levantamento.py --obra <CODIGO_OBRA> --servico "<SERVICO>"
+```
+
+Antes desse comando, não executar nenhuma outra investigação. Não consultar SQLite manualmente, não abrir `LISTA_DE_DESENHOS.csv` manualmente, não abrir carimbos, não varrer diretórios, não executar busca, `git status`, catálogo, testes ou scripts temporários.
+
+A LLM deve obedecer literalmente à saída:
+
+- `ABRIR|<tipo>|<arquivo.pdf>` → abrir somente esse PDF;
+- `NENHUMA_PRANCHA_PENDENTE` → encerrar;
+- `ERRO|...` → interromper.
+
+O roteador cuida da lista de desenhos, classificação, vigência e estado do levantamento. A LLM começa seu trabalho técnico **somente depois** que os PDFs autorizados já estiverem definidos.
 
 ### Responsabilidade da Skill
 
-A skill da disciplina define:
-- o que procurar na prancha;
+A skill da disciplina define apenas:
+- o que procurar nos PDFs já selecionados;
 - como interpretar os elementos;
 - os critérios de medição;
 - como tratar apoios, encontros, vãos, interseções e descontos;
-- quais dados são obrigatórios;
-- quais regras Python podem ser acionadas;
-- quando interromper e abrir RFI.
-
-A skill não deve transferir fórmulas aritméticas simples para a LLM quando elas puderem ser executadas deterministicamente pelo Python.
+- quais inputs e evidências são obrigatórios;
+- quando um item fica pendente.
 
 ### Responsabilidade da LLM multimodal
 
-A LLM é responsável pela interpretação visual e técnica do projeto. Ela deve:
-- identificar elementos e dimensões;
-- entender relações espaciais visíveis na prancha;
-- aplicar os critérios de medição da skill;
-- fornecer comprimentos, áreas e demais inputs já líquidos quando o critério depender da leitura gráfica;
-- registrar a evidência de cada input;
-- indicar pendência quando a informação não estiver comprovada.
-
-A LLM não deve enviar resultado final calculado, preço, BDI, custo ou expressão matemática como autoridade do sistema.
-
-### Entrada obrigatória: Lista de Desenhos
-
-Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas.
-
-O cabeçalho obrigatório deve conter `disciplina_desenho`, `tipo_desenho`, `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo`. Se essas colunas não existirem, a lista está desatualizada. Nesse caso, a única ação permitida antes de continuar é regenerar a exportação a partir do SQLite:
-
-```bash
-python scripts/gerar_lista_desenhos.py --obra <CODIGO_OBRA> --somente-exportar --saida "projetos/<OBRA>/01_ENGENHARIA_E_PROJETOS"
-```
-
-Esse modo não lê PDFs nem carimbos. Após a atualização, releia a lista. Não tente compensar uma lista antiga abrindo carimbos, consultando SQL manualmente ou varrendo diretórios.
-
-Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada usando os próprios campos da lista:
-- `disciplina_desenho`;
-- `tipo_desenho`;
-- `disciplinas_levantadas`;
-- `servicos_levantados`;
-- `qtd_itens_quantitativo`.
-
-A decisão de abrir ou não uma prancha deve ser feita diretamente por esses campos. Não executar consulta SQLite adicional apenas para descobrir se o levantamento já existe.
-
-No Fast Path é proibido usar `_carimbos_extraidos/`, `carimbos_metadados.json`, varredura de diretórios, `glob`, `os.walk`, scripts temporários ou inspeção em massa de PDFs para descobrir qual prancha usar. Se uma linha estiver classificada como `INDEFINIDA/INDEFINIDO`, ela deve permanecer pendente de classificação ou ser verificada isoladamente; isso não autoriza explorar todas as pranchas.
-
-Depois disso, carregue apenas este MASTER + a skill específica necessária. Não coletar contexto geral da obra, RFI, RDO, cronograma, compras, orçamento ou outras disciplinas antes do levantamento. Buscar contexto adicional somente quando uma lacuna concreta da prancha impedir a medição.
+A LLM:
+- lê somente os PDFs retornados pelo roteador;
+- interpreta visualmente a geometria necessária;
+- aplica os critérios da skill;
+- produz inputs nominais ou líquidos e evidências;
+- não procura desenhos adicionais por conta própria;
+- não envia quantidade final calculada nem expressão matemática.
 
 ### Responsabilidade do Python
 
