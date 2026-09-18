@@ -66,11 +66,11 @@ Em respostas técnicas, abra com:
 A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
 
 ```text
-pré-check SQLite -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
-                 -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
+consulta direta ao SQLite -> PDF -> skill da disciplina -> LLM interpreta/extrai -> JSON
+                         -> processar_prancha.py valida/calcula -> SQLite -> CSV/Markdown
 ```
 
-1. Antes de ler o PDF com a LLM, execute `python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --verificar`. Se retornar `[JA_LEVANTADA]`, interrompa salvo pedido explícito de reprocessamento.
+1. Antes de ler o PDF com a LLM, o agente deve consultar diretamente `data/pmo_virtual.sqlite`, tabela `itens_quantitativo`, para a obra ativa e a prancha solicitada. Compare a referência da prancha pelo nome/código normalizado. Se já houver itens levantados, interrompa e informe o usuário, salvo pedido explícito de reprocessamento. Não é necessário chamar `processar_prancha.py` para esse pré-check.
 2. A skill orienta como medir. A LLM multimodal interpreta a prancha e devolve elementos, inputs nominais ou líquidos conforme a regra, revisão/página/região e `regra_id`.
 3. Descontos, face a face e interseções que dependem da leitura do projeto são aplicados pela LLM antes do JSON. O Python não descobre geometria do PDF. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
 4. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
