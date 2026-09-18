@@ -15,15 +15,8 @@ Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele
 
 1. Leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`.
 2. Pela lista, selecione somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
-3. Verifique todas as pranchas selecionadas no SQLite em uma única execução:
-
-```bash
-python scripts/verificar_prancha.py --obra <id_obra> \
-  --prancha "<arquivo1.pdf>" \
-  --prancha "<arquivo2.pdf>"
-```
-
-4. Ignore as que retornarem `JA_LEVANTADA`. Abra somente as `NAO_LEVANTADA`.
+3. Use os próprios campos da lista `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo` para decidir o que já foi levantado.
+4. Abra somente as pranchas em que o serviço/escopo solicitado ainda não esteja registrado.
 5. Carregue apenas `SKILL_QUANTIFICACAO_MASTER.md` + a skill específica da disciplina/subdisciplina necessária.
 6. Leia somente as pranchas mínimas necessárias para obter os dados exigidos pela skill. Expanda para outra prancha apenas se faltar informação concreta.
 7. Gere JSON, execute o cálculo determinístico e grave no SQLite.
@@ -76,12 +69,12 @@ Os scripts `extrair_carimbos.py` e `gerar_lista_desenhos.py` só devem ser usado
 A fronteira da LLM é a extração. Ela não calcula quantidade final nem monta expressão matemática.
 
 ```text
-LISTA_DE_DESENHOS.csv -> verificar_prancha.py (lote) -> PDFs mínimos da disciplina
+LISTA_DE_DESENHOS.csv -> filtra o que falta -> PDFs mínimos da disciplina
                       -> MASTER + skill específica -> LLM -> JSON
                       -> processar_prancha.py -> SQLite -> CSV/Markdown
 ```
 
-1. Leia primeiro a `LISTA_DE_DESENHOS.csv` da obra, filtre as pranchas relevantes para a disciplina e execute `scripts/verificar_prancha.py` em lote. Abra somente as pranchas ainda não levantadas.
+1. Leia primeiro a `LISTA_DE_DESENHOS.csv` da obra e use `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo` para filtrar diretamente o que ainda falta.
 2. A skill orienta como medir. A LLM multimodal interpreta a prancha e devolve elementos, inputs nominais ou líquidos conforme a regra, revisão/página/região e `regra_id`.
 3. Descontos, face a face e interseções que dependem da leitura do projeto são aplicados pela LLM antes do JSON. O Python não descobre geometria do PDF. É proibido a LLM fornecer `quantidade_liquida`, `resultado` ou `expressao_matematica`.
 4. Todo input usado em cálculo deve possuir evidência local no JSON. Campo ausente ou ambíguo deve ser tratado como pendência/RFI.
