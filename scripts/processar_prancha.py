@@ -1,8 +1,11 @@
 """Pipeline mínimo de quantitativos de fundações.
 
 Contrato:
-pré-check SQLite -> PDF -> skill -> LLM interpreta/extrai -> JSON -> este script valida/calcula
--> SQLite -> CSV/Markdown.
+PDF -> skill -> LLM interpreta/extrai -> JSON -> este script valida/calcula -> SQLite -> CSV/Markdown.
+
+Pré-condição operacional: antes de ler o PDF, o agente consulta diretamente o SQLite para
+verificar se a prancha já possui levantamento. Este script mantém apenas a trava final contra
+gravação duplicada.
 
 A LLM NÃO envia quantidade final calculada nem expressão matemática. Quando o critério depende
 da leitura visual do projeto, ela aplica a skill e entrega o input líquido comprovado na prancha.
@@ -401,12 +404,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Valida extração da LLM e calcula quantitativos de fundações.")
     parser.add_argument("--obra", type=int, required=True, help="ID da obra no SQLite")
     parser.add_argument("--prancha", required=True, help="Arquivo/código da prancha")
-    parser.add_argument("--dados", help="JSON de evidências produzido pela LLM")
-    parser.add_argument(
-        "--verificar",
-        action="store_true",
-        help="Consulta o SQLite antes da leitura do PDF e informa se a prancha já foi levantada",
-    )
+    parser.add_argument("--dados", required=True, help="JSON de evidências produzido pela LLM")
     parser.add_argument("--sobrescrever", action="store_true")
     parser.add_argument("--db", default="data/pmo_virtual.sqlite")
     args = parser.parse_args()
@@ -419,17 +417,6 @@ def main() -> None:
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
         try:
-            if args.verificar:
-                existente = contar_itens_prancha(conn, args.obra, args.prancha)
-                if existente:
-                    print(f"[JA_LEVANTADA] prancha '{args.prancha}' já possui {existente} itens no SQLite.")
-                else:
-                    print(f"[LIVRE] prancha '{args.prancha}' ainda não possui quantitativos no SQLite.")
-                return
-
-            if not args.dados:
-                raise ValueError("--dados é obrigatório quando --verificar não for usado")
-
             documento = json.loads(Path(args.dados).read_text(encoding="utf-8"))
             itens = validar_e_calcular(documento)
             revisao_id = gravar(conn, args.obra, itens, args.prancha, args.sobrescrever)
