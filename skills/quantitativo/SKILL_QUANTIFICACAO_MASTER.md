@@ -65,7 +65,7 @@ O fluxo oficial de todas as disciplinas é simples e obrigatório. A navegação
 ```text
 LISTA_DE_DESENHOS.csv
 ↓
-selecionar somente pranchas da disciplina
+selecionar pela própria lista usando disciplina_desenho + tipo_desenho
 ↓
 ler disciplinas_levantadas / servicos_levantados / qtd_itens_quantitativo
 ↓
@@ -122,12 +122,16 @@ A LLM não deve enviar resultado final calculado, preço, BDI, custo ou express�
 
 Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas; não faça varredura de pastas para descobrir PDFs quando a lista existir.
 
-Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada e use os próprios campos da lista:
+Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada usando os próprios campos da lista:
+- `disciplina_desenho`;
+- `tipo_desenho`;
 - `disciplinas_levantadas`;
 - `servicos_levantados`;
 - `qtd_itens_quantitativo`.
 
 A decisão de abrir ou não uma prancha deve ser feita diretamente por esses campos. Não executar consulta SQLite adicional apenas para descobrir se o levantamento já existe.
+
+No Fast Path é proibido usar `_carimbos_extraidos/`, `carimbos_metadados.json`, varredura de diretórios, `glob`, `os.walk`, scripts temporários ou inspeção em massa de PDFs para descobrir qual prancha usar. Se uma linha estiver classificada como `INDEFINIDA/INDEFINIDO`, ela deve permanecer pendente de classificação ou ser verificada isoladamente; isso não autoriza explorar todas as pranchas.
 
 Depois disso, carregue apenas este MASTER + a skill específica necessária. Não coletar contexto geral da obra, RFI, RDO, cronograma, compras, orçamento ou outras disciplinas antes do levantamento. Buscar contexto adicional somente quando uma lacuna concreta da prancha impedir a medição.
 
@@ -288,10 +292,10 @@ O Agente DEVE usar um destes modelos para **cada serviço, em cada ambiente**. N
 
 ---
 
-## 🔍 4. Protocolo de Varredura Exaustiva de Projetos e Interrogatório Técnico (Varredura 360° — Regra Universal)
+## 🔍 4. Protocolo de cobertura das pranchas selecionadas
 
-> ⚠️ **REGRA OBRIGATÓRIA E UNIVERSAL ANTI-OMISSÃO (APLICA-SE A TODAS AS DISCIPLINAS):**  
-> 1. **Varredura 100% da Prancha:** Toda prancha de desenho deve ser varrida de ponta a ponta. É **ESTRITAMENTE PROIBIDO** olhar apenas para a Planta Baixa principal! O levantamento deve incluir obrigatoriamente: Plantas, Cortes, Elevações, Quadros de Legenda/Notas Técnicas, Prumadas, Esquemas Unifilares/Isométricos e **todos os Callouts de Detalhes Construtivos (Detalhes 01 a N)**. Nenhum detalhe pode ser esquecido ou ignorado.  
+> ⚠️ **REGRA ANTI-OMISSÃO:** esta seção vale somente para as pranchas previamente selecionadas pela `LISTA_DE_DESENHOS.csv`. Ela não autoriza varrer o acervo inteiro.
+> 1. **Varredura completa somente da prancha selecionada:** depois que a lista indicar que uma prancha é necessária, leia nela plantas, cortes, elevações, notas, quadros e detalhes relevantes ao serviço solicitado. Não abrir outras pranchas sem uma lacuna concreta.  
 > 2. **Consulta Obrigatória ao Usuário:** Caso exista algum detalhe ou especificação no desenho que **NÃO possua instruções diretas ou regras claras nas Skills**, o Agente é **PROIBIDO de omitir ou assumir premissas por conta própria**. O Agente **DEVE OBRIGATORIAMENTE PARAR E PERGUNTAR AO USUÁRIO** (formulando o Interrogatório Técnico de Alinhamento) antes de prosseguir.
 
 ### 4.1 As 4 Etapas da Varredura Exaustiva
