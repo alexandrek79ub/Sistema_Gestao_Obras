@@ -67,9 +67,9 @@ LISTA_DE_DESENHOS.csv
 ↓
 selecionar somente pranchas da disciplina
 ↓
-verificar_prancha.py em lote
+ler disciplinas_levantadas / servicos_levantados / qtd_itens_quantitativo
 ↓
-abrir somente pranchas NÃO levantadas
+abrir somente o que ainda falta
 ↓
 PDF
 ↓
@@ -122,15 +122,12 @@ A LLM não deve enviar resultado final calculado, preço, BDI, custo ou express�
 
 Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas; não faça varredura de pastas para descobrir PDFs quando a lista existir.
 
-Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada e verifique todas em lote:
+Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada e use os próprios campos da lista:
+- `disciplinas_levantadas`;
+- `servicos_levantados`;
+- `qtd_itens_quantitativo`.
 
-```bash
-python scripts/verificar_prancha.py --obra <id_obra> \
-  --prancha "<arquivo1.pdf>" \
-  --prancha "<arquivo2.pdf>"
-```
-
-Abra somente as pranchas marcadas `NAO_LEVANTADA`. Pranchas `JA_LEVANTADA` são ignoradas, salvo pedido explícito de reprocessamento.
+A decisão de abrir ou não uma prancha deve ser feita diretamente por esses campos. Não executar consulta SQLite adicional apenas para descobrir se o levantamento já existe.
 
 Depois disso, carregue apenas este MASTER + a skill específica necessária. Não coletar contexto geral da obra, RFI, RDO, cronograma, compras, orçamento ou outras disciplinas antes do levantamento. Buscar contexto adicional somente quando uma lacuna concreta da prancha impedir a medição.
 
