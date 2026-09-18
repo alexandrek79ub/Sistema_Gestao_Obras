@@ -7,14 +7,17 @@
 ## 1. Separação de responsabilidades
 
 ```text
-LLM:
-PDF -> identifica elemento -> transcreve dimensões -> registra evidências -> informa relações geométricas
+Skill:
+define o que procurar -> define como medir -> define critérios anti-duplicidade
+
+LLM multimodal:
+PDF -> identifica elementos -> interpreta relações -> aplica critérios -> extrai inputs líquidos + evidências -> JSON
 
 Python:
-valida -> aplica critérios de medição -> desconta interfaces/interseções -> calcula -> SQLite
+valida JSON -> aplica fórmula cadastrada -> gera expressão auditável -> SQLite
 ```
 
-A simplificação do pipeline não elimina critérios de engenharia. Ela apenas tira esses critérios da execução mental da LLM.
+O Python não lê o PDF e não descobre interseções. Toda decisão que dependa da geometria visível da prancha deve ser resolvida pela LLM conforme esta skill antes da geração do JSON.
 
 ## 2. Regras invioláveis
 
