@@ -60,10 +60,16 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de qualquer leitura multimodal, execute o Gate Zero determinístico:
+O fluxo oficial de todas as disciplinas é simples e obrigatório. A navegação começa sempre pela lista de desenhos existente da obra:
 
 ```text
-verificar_prancha.py
+LISTA_DE_DESENHOS.csv
+↓
+selecionar somente pranchas da disciplina
+↓
+verificar_prancha.py em lote
+↓
+abrir somente pranchas NÃO levantadas
 ↓
 PDF
 ↓
@@ -112,20 +118,21 @@ A LLM é responsável pela interpretação visual e técnica do projeto. Ela dev
 
 A LLM não deve enviar resultado final calculado, preço, BDI, custo ou expressão matemática como autoridade do sistema.
 
-### Gate Zero obrigatório
+### Entrada obrigatória: Lista de Desenhos
 
-Antes de RFI, RDO, índice de skills, leitura do PDF ou qualquer outra investigação, execute:
+Para qualquer levantamento, leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`. Essa lista é o mapa oficial para localizar as pranchas; não faça varredura de pastas para descobrir PDFs quando a lista existir.
+
+Selecione apenas as pranchas potencialmente necessárias à disciplina solicitada e verifique todas em lote:
 
 ```bash
-python scripts/verificar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>"
+python scripts/verificar_prancha.py --obra <id_obra> \
+  --prancha "<arquivo1.pdf>" \
+  --prancha "<arquivo2.pdf>"
 ```
 
-O script deve ser tratado como um portão binário:
+Abra somente as pranchas marcadas `NAO_LEVANTADA`. Pranchas `JA_LEVANTADA` são ignoradas, salvo pedido explícito de reprocessamento.
 
-- `JA_LEVANTADA|N`: interromper imediatamente e informar o usuário, salvo pedido explícito de reprocessamento;
-- `NAO_LEVANTADA|0`: prosseguir para MASTER + skill da disciplina + leitura multimodal.
-
-Nenhuma exploração adicional deve ocorrer antes desse Gate Zero. O `processar_prancha.py` mantém apenas a trava final contra gravação duplicada.
+Depois disso, carregue apenas este MASTER + a skill específica necessária. Não coletar contexto geral da obra, RFI, RDO, cronograma, compras, orçamento ou outras disciplinas antes do levantamento. Buscar contexto adicional somente quando uma lacuna concreta da prancha impedir a medição.
 
 ### Responsabilidade do Python
 
@@ -143,7 +150,13 @@ Erro de validação ou cálculo deve bloquear o item. Nunca converter erro em qu
 
 ### Regra de simplicidade
 
-Não criar camadas intermediárias como `EvidenceRecord → ElementRecord → CalculationRequest` sem necessidade comprovada. O contrato oficial entre IA e código é o JSON de extração da disciplina.
+- Não criar camadas intermediárias como `EvidenceRecord → ElementRecord → CalculationRequest` sem necessidade comprovada.
+- Não explorar o repositório inteiro para um levantamento específico.
+- Não carregar skills não relacionadas ao pedido.
+- Não abrir todas as pranchas da obra; usar a lista e abrir somente as necessárias.
+- Expandir contexto somente quando faltar um dado concreto para concluir a medição.
+
+O contrato oficial entre IA e código é o JSON de extração da disciplina.
 
 ### Regra de evidência
 
