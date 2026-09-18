@@ -60,10 +60,10 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de acionar a LLM, o agente consulta diretamente o SQLite para evitar releitura e duplicidade de prancha já levantada:
+O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de qualquer leitura multimodal, execute o Gate Zero determinístico:
 
 ```text
-Consulta direta ao SQLite
+verificar_prancha.py
 ↓
 PDF
 ↓
@@ -112,11 +112,20 @@ A LLM é responsável pela interpretação visual e técnica do projeto. Ela dev
 
 A LLM não deve enviar resultado final calculado, preço, BDI, custo ou expressão matemática como autoridade do sistema.
 
-### Pré-check obrigatório
+### Gate Zero obrigatório
 
-Antes da leitura multimodal, o agente deve consultar diretamente `data/pmo_virtual.sqlite`, tabela `itens_quantitativo`, usando a obra ativa e a referência normalizada da prancha. Se já existirem itens para essa prancha, interromper o levantamento e informar o usuário, salvo pedido explícito de reprocessamento.
+Antes de RFI, RDO, índice de skills, leitura do PDF ou qualquer outra investigação, execute:
 
-Esse pré-check pertence à orquestração do agente e não ao `processar_prancha.py`. O script de processamento mantém apenas a proteção final contra gravação duplicada.
+```bash
+python scripts/verificar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>"
+```
+
+O script deve ser tratado como um portão binário:
+
+- `JA_LEVANTADA|N`: interromper imediatamente e informar o usuário, salvo pedido explícito de reprocessamento;
+- `NAO_LEVANTADA|0`: prosseguir para MASTER + skill da disciplina + leitura multimodal.
+
+Nenhuma exploração adicional deve ocorrer antes desse Gate Zero. O `processar_prancha.py` mantém apenas a trava final contra gravação duplicada.
 
 ### Responsabilidade do Python
 
