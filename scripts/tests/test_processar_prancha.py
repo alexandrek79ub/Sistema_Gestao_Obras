@@ -1,6 +1,7 @@
+import sqlite3
 import unittest
 
-from processar_prancha import validar_e_calcular
+from processar_prancha import contar_itens_prancha, validar_e_calcular
 
 
 def documento_base():
@@ -78,6 +79,49 @@ class ProcessarPranchaTest(unittest.TestCase):
         del doc["medicoes"][0]["evidencias"]["quantidade"]
         item = validar_e_calcular(doc)[0]
         self.assertAlmostEqual(item["quantidade_liquida"], 1.35)
+
+
+    def test_baldrame_exige_comprimento_liquido(self):
+        doc = documento_base()
+        med = doc["medicoes"][0]
+        med["elemento"] = "VB01"
+        med["tipo_elemento"] = "BALDRAME"
+        med["regra_id"] = "FUN.BALDRAME.CONCRETO.V1"
+        med["inputs"] = {
+            "largura_m": 0.20,
+            "altura_m": 0.40,
+            "comprimento_liquido_m": 3.80,
+        }
+        med["evidencias"] = {
+            "largura_m": {"raw_text": "20", "region": "DET. VB01"},
+            "altura_m": {"raw_text": "40", "region": "DET. VB01"},
+            "comprimento_liquido_m": {
+                "raw_text": "3,80 face a face",
+                "region": "PLANTA DE LOCACAO",
+            },
+        }
+        item = validar_e_calcular(doc)[0]
+        self.assertAlmostEqual(item["quantidade_liquida"], 0.304)
+
+    def test_precheck_encontra_prancha_pelo_nome_exato(self):
+        conn = sqlite3.connect(":memory:")
+        conn.row_factory = sqlite3.Row
+        conn.execute("CREATE TABLE obras (id INTEGER PRIMARY KEY)")
+        conn.execute(
+            "CREATE TABLE itens_quantitativo (id INTEGER PRIMARY KEY, obra_id INTEGER, prancha_referencia TEXT)"
+        )
+        conn.execute("INSERT INTO obras (id) VALUES (3)")
+        conn.execute(
+            "INSERT INTO itens_quantitativo (obra_id, prancha_referencia) VALUES (?, ?)",
+            (3, "/projetos/obra/F-01.pdf"),
+        )
+        conn.execute(
+            "INSERT INTO itens_quantitativo (obra_id, prancha_referencia) VALUES (?, ?)",
+            (3, "/projetos/obra/F-010.pdf"),
+        )
+        self.assertEqual(contar_itens_prancha(conn, 3, "F-01.pdf"), 1)
+        self.assertEqual(contar_itens_prancha(conn, 3, "F-02.pdf"), 0)
+        conn.close()
 
 
 if __name__ == "__main__":
