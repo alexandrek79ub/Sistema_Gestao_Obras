@@ -1,5 +1,7 @@
 # 🛒 SKILL QUANTIFICAÇÃO: Pedido de Compra com Análise Técnica
 
+> **Pré-requisito obrigatório:** Antes de aplicar esta skill, leia `SKILL_QUANTIFICACAO_MASTER.md` e siga o fluxo, as responsabilidades e as regras universais definidos nele. Esta skill complementa o MASTER e não substitui suas diretrizes.
+
 Cobre a dor de "pedido de compra feito de achismo" — sem lastro no quantitativo, sem checar se a
 etapa da obra já chegou naquele item, e com erro de conversão de unidade. Complementa a
 `SKILL_QUANTIFICACAO_MASTER.md` (já tem a regra de UCC — comprar unidade comercial fechada, não
