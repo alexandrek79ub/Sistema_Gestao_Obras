@@ -11,25 +11,35 @@ Documentos de referência:
 
 ## Fast Path — levantamento quantitativo
 
-Quando o pedido envolver levantamento quantitativo, use este caminho curto e ele tem precedência sobre o protocolo geral de contexto.
+Quando o pedido envolver levantamento quantitativo, **não investigue o repositório**. A primeira ação é sempre um único comando determinístico:
 
-1. Leia primeiro `projetos/[OBRA]/01_ENGENHARIA_E_PROJETOS/LISTA_DE_DESENHOS.csv`.
-   - O cabeçalho obrigatório do Fast Path deve conter: `disciplina_desenho`, `tipo_desenho`, `disciplinas_levantadas`, `servicos_levantados`, `qtd_itens_quantitativo`.
-   - Se qualquer uma dessas colunas estiver ausente, NÃO investigar PDFs, carimbos, SQLite manualmente ou pastas. Execute somente:
-     ```bash
-     python scripts/gerar_lista_desenhos.py --obra <CODIGO_OBRA> --somente-exportar --saida "projetos/<OBRA>/01_ENGENHARIA_E_PROJETOS"
-     ```
-     Depois releia a lista e continue.
-2. Pela própria lista, use `disciplina_desenho` e `tipo_desenho` para selecionar somente as pranchas potencialmente úteis à disciplina pedida. Não explore pastas para descobrir desenhos se a lista existir.
-3. Use os próprios campos da lista `disciplinas_levantadas`, `servicos_levantados` e `qtd_itens_quantitativo` para decidir o que já foi levantado.
-4. Abra somente as pranchas em que o serviço/escopo solicitado ainda não esteja registrado.
-5. Carregue apenas `SKILL_QUANTIFICACAO_MASTER.md` + a skill específica da disciplina/subdisciplina necessária.
-6. Leia somente as pranchas mínimas necessárias para obter os dados exigidos pela skill. Expanda para outra prancha apenas se faltar informação concreta.
-7. Gere JSON, execute o cálculo determinístico e grave no SQLite.
+```bash
+python scripts/preparar_levantamento.py --obra <CODIGO_OBRA> --servico "<SERVICO>"
+```
 
-Durante este Fast Path, não consultar RFI, RDO, índice geral de skills, cronograma, compras, orçamento, auditoria ou outras disciplinas antes do levantamento, salvo se uma informação faltante realmente bloquear o item.
+Exemplo:
 
-Mesmo que a lista esteja incompleta ou inconsistente, é proibido tentar "confirmar por fora". É proibido usar como rota alternativa de descoberta `_carimbos_extraidos/`, `carimbos_metadados.json`, `os.walk`, `glob`, varredura recursiva de pastas, consultas SQL exploratórias ou scripts temporários para identificar pranchas. A seleção de desenhos deve sair exclusivamente da `LISTA_DE_DESENHOS.csv`. Se `disciplina_desenho` ou `tipo_desenho` vier como `INDEFINIDA/INDEFINIDO`, trate somente essa linha como pendente de classificação; não inspecione todo o acervo.
+```bash
+python scripts/preparar_levantamento.py --obra OBRA_PORTO --servico ALVENARIA
+```
+
+Interprete somente a saída do script:
+
+- `ABRIR|<tipo>|<arquivo.pdf>`: abrir apenas esse PDF.
+- `NENHUMA_PRANCHA_PENDENTE`: encerrar e informar que não há prancha pendente para o serviço.
+- `ERRO|...`: interromper e informar o erro.
+
+**Antes desse comando é proibido** executar SQL, `git status`, busca textual, abrir catálogo, testes, JSONs, carimbos, diretórios, skills, PDFs ou scripts temporários.
+
+Depois da saída `ABRIR`:
+
+1. Carregue apenas `SKILL_QUANTIFICACAO_MASTER.md` + a skill específica do serviço.
+2. Abra somente os PDFs retornados pelo script.
+3. Extraia apenas os dados exigidos pela skill.
+4. Gere o JSON.
+5. Execute `processar_prancha.py` para validar, calcular e gravar no SQLite.
+
+O script `preparar_levantamento.py` é o único roteador permitido para iniciar um levantamento quantitativo. Ele próprio lê/atualiza a `LISTA_DE_DESENHOS.csv`; a LLM não deve reproduzir esse trabalho manualmente.
 
 ## Protocolo obrigatório
 
