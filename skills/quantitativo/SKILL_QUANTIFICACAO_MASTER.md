@@ -60,9 +60,11 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O fluxo oficial de todas as disciplinas é simples e obrigatório:
+O fluxo oficial de todas as disciplinas é simples e obrigatório. Antes de acionar a LLM, consulte o SQLite para evitar releitura e duplicidade de prancha já levantada:
 
 ```text
+Pré-check SQLite
+↓
 PDF
 ↓
 Skill da disciplina
@@ -104,11 +106,19 @@ A LLM é responsável pela interpretação visual e técnica do projeto. Ela dev
 - identificar elementos e dimensões;
 - entender relações espaciais visíveis na prancha;
 - aplicar os critérios de medição da skill;
-- fornecer comprimentos, áreas, quantidades ou demais inputs já líquidos quando o critério depender da leitura gráfica;
+- fornecer comprimentos, áreas e demais inputs já líquidos quando o critério depender da leitura gráfica;
 - registrar a evidência de cada input;
 - indicar pendência quando a informação não estiver comprovada.
 
 A LLM não deve enviar resultado final calculado, preço, BDI, custo ou expressão matemática como autoridade do sistema.
+
+### Pré-check obrigatório
+
+Antes da leitura multimodal, verificar se a prancha já possui quantitativos no SQLite. Se já existir, interromper o levantamento e informar o usuário, salvo pedido explícito de reprocessamento.
+
+```bash
+python scripts/processar_prancha.py --obra <id_obra> --prancha "<arquivo.pdf>" --verificar
+```
 
 ### Responsabilidade do Python
 
