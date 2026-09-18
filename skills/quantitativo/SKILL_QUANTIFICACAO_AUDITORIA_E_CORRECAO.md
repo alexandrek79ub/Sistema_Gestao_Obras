@@ -1,7 +1,5 @@
 # 🔍 SKILL MÓDULO: Auditoria, Verificação e Correção de Quantitativos
 
-> **Pré-requisito obrigatório:** Antes de aplicar esta skill, leia `SKILL_QUANTIFICACAO_MASTER.md` e siga o fluxo, as responsabilidades e as regras universais definidos nele. Esta skill complementa o MASTER e não substitui suas diretrizes.
-
 > **Finalidade:** Esta skill é o **Filtro Anti-Erro de Leitura e Auditoria de Orçamento**. Ela deve ser executada obrigatoriamente **APÓS** qualquer levantamento quantitativo de projetos em PDF, antes de entregar a memória de cálculo ou salvar o orçamento no banco de dados.
 
 ---
