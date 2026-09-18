@@ -398,13 +398,33 @@ def exportar_lista(obra: str, db_path: Path, saida: Path, incluir_superadas: boo
 def main() -> int:
     parser = argparse.ArgumentParser(description="Registra e exporta a lista mestra de desenhos.")
     parser.add_argument("--obra", required=True, help="Código da obra")
-    parser.add_argument("--pasta", required=True, type=Path, help="Pasta com os PDFs e _carimbos_extraidos")
+    parser.add_argument("--pasta", type=Path, help="Pasta com os PDFs e _carimbos_extraidos")
     parser.add_argument("--db", type=Path, default=Path("data/pmo_virtual.sqlite"), help="Banco SQLite oficial")
-    parser.add_argument("--saida", type=Path, help="Pasta dos artefatos derivados; padrão: pai de --pasta")
+    parser.add_argument("--saida", type=Path, help="Pasta dos artefatos derivados")
     parser.add_argument("--incluir-superadas", action="store_true", help="Inclui revisões superadas na exportação")
+    parser.add_argument(
+        "--somente-exportar",
+        action="store_true",
+        help="Regenera LISTA_DE_DESENHOS a partir do SQLite sem reler PDFs ou carimbos",
+    )
     args = parser.parse_args()
+
+    if args.somente_exportar:
+        if not args.saida:
+            raise ValueError("--saida é obrigatório com --somente-exportar")
+        csv_path, md_path = exportar_lista(
+            args.obra, args.db, args.saida, args.incluir_superadas
+        )
+        print(f"CSV derivado: {csv_path}\nMarkdown derivado: {md_path}")
+        return 0
+
+    if not args.pasta:
+        raise ValueError("--pasta é obrigatório, salvo com --somente-exportar")
+
     resumo = importar_desenhos(args.obra, args.pasta, args.db)
-    csv_path, md_path = exportar_lista(args.obra, args.db, args.saida or args.pasta.parent, args.incluir_superadas)
+    csv_path, md_path = exportar_lista(
+        args.obra, args.db, args.saida or args.pasta.parent, args.incluir_superadas
+    )
     print(f"{resumo['importados']} desenho(s) processado(s): {resumo['vigentes']} revisão(ões) vigente(s), "
           f"{resumo['revisoes_pendentes']} revisão(ões) pendente(s), {resumo['titulos_pendentes']} título(s) pendente(s).")
     print(f"CSV derivado: {csv_path}\nMarkdown derivado: {md_path}")
