@@ -1,8 +1,8 @@
 # SKILL QUANT 01 — FUNDAÇÕES
 
 > Dependência: `SKILL_QUANTIFICACAO_MASTER.md`
-> Papel desta skill: definir **o que a LLM deve extrair** e os **critérios de medição** que o motor Python deve aplicar.
-> A LLM não calcula resultado final nem cria expressão matemática.
+> Papel desta skill: orientar a LLM multimodal sobre **o que ler no projeto** e **como medir** cada serviço de fundações.
+> A LLM aplica os critérios visuais de medição e entrega inputs líquidos com evidência. O Python valida e faz somente a matemática final.
 
 ## 1. Separação de responsabilidades
 
@@ -23,7 +23,7 @@ A simplificação do pipeline não elimina critérios de engenharia. Ela apenas 
 - Quantidades são físicas, líquidas e nominais: sem perdas, empolamento comercial ou coeficientes de consumo.
 - Aço vem do quadro/resumo de armaduras; não estimar kg/m³.
 - Folgas de escavação, taludes, escoramento, espessura de lastro e critérios de impermeabilização só entram quando comprovados no projeto/memorial.
-- Geometria não suportada pelo motor deve bloquear o cálculo; a LLM não improvisa fórmula.
+- A LLM não envia quantidade final calculada nem expressão matemática.
 
 ## 3. Tipologia de prancha
 
@@ -72,7 +72,7 @@ Quando um baldrame encontra uma sapata, bloco, pedestal ou pilarete já quantifi
 - medir o baldrame **face a face** do apoio;
 - não prolongar o volume da viga através do apoio;
 - o mesmo critério vale para fôrma e impermeabilização quando as superfícies de contato já pertencem ao apoio;
-- registrar no JSON qual elemento está no início/fim do trecho e a dimensão do apoio necessária para o desconto.
+- entregar ao JSON o `comprimento_liquido_m` já resultante desse critério, com evidência da região usada na leitura.
 
 ### 5.2 Baldrame × baldrame
 
@@ -80,8 +80,8 @@ Em encontros em T, cruzamentos ou nós:
 
 - cada volume físico deve existir apenas uma vez;
 - a viga secundária deve terminar na face da viga principal quando este for o critério geométrico do projeto;
-- em cruzamentos onde ambas são contínuas, o motor deve descontar a região comum uma única vez;
-- a LLM deve extrair a geometria do nó, mas não calcular o desconto.
+- em cruzamentos onde ambas são contínuas, a LLM deve interpretar a região comum e produzir comprimentos/áreas líquidos sem duplicidade;
+- se a prancha não permitir decidir o critério com segurança, gerar `PENDENTE_RFI`.
 
 ### 5.3 Cava de sapata × vala de baldrame
 
@@ -90,33 +90,33 @@ Para escavação, apiloamento, lastro, reaterro e bota-fora:
 - nunca somar simplesmente todas as cavas + todas as valas quando elas se interceptam;
 - a região comum entre cava e vala deve ser contabilizada uma única vez;
 - a planta de locação/geometria é obrigatória para comprovar essas relações;
-- o JSON deve identificar as relações/interseções observadas para o motor consolidar o volume líquido.
+- a LLM deve entregar a `area_base_liquida_m2` ou `area_liquida_m2` já sem sobreposição, conforme a regra utilizada.
 
 ### 5.4 Vala de baldrame × vala de baldrame
 
 - interseções de valas em T, L ou cruzamento não podem ser contadas duas vezes;
 - a área/volume comum pertence ao conjunto escavado uma única vez;
-- o cálculo deve ser consolidado pelo motor, não por soma independente dos trechos.
+- a LLM consolida visualmente a geometria e fornece o input líquido; o Python não reconstrói a planta.
 
 ## 6. Critérios por serviço
 
 ### Escavação
-`V_escavacao` é o volume geométrico líquido da união das cavas e valas válidas do conjunto. Folgas somente quando explicitamente projetadas.
+A LLM determina a área de base líquida do conjunto válido, sem sobreposição. O Python calcula `V_escavacao = area_base_liquida_m2 × profundidade_m`. Se houver profundidades diferentes, separar em medições distintas.
 
 ### Apiloamento / compactação de fundo
-Área líquida efetivamente preparada. Interseções de fundos de valas/cavas contam uma vez.
+Usar `area_liquida_m2`: área efetivamente preparada, com interseções contadas uma vez.
 
 ### Lastro / concreto magro
-Área líquida de base × espessura indicada. Não duplicar lastro onde cava e vala compartilham a mesma região.
+Usar `area_base_liquida_m2 × espessura_m`. Não duplicar regiões compartilhadas entre cava e vala.
 
 ### Fôrmas
 Somente faces com contato real de fôrma. Fundo apoiado no solo não recebe fôrma. Faces encostadas em outro elemento já executado não são duplicadas.
 
 ### Concreto estrutural
-Somar volumes líquidos dos elementos. Interfaces devem obedecer ao critério face-a-face ou desconto de região comum definido pelo projeto.
+Para baldrames, usar `comprimento_liquido_m` conforme os encontros visíveis no projeto. Para elementos isolados, usar as dimensões nominais comprovadas.
 
 ### Impermeabilização
-Somente superfícies especificadas. Descontar faces de encosto e áreas de interseção já pertencentes a outro elemento.
+Usar `area_liquida_m2`: somente superfícies especificadas, sem faces de encosto ou áreas duplicadas.
 
 ### Reaterro
 ```text
@@ -154,25 +154,13 @@ A LLM envia dados e relações, nunca resultados:
       "inputs": {
         "largura_m": 0.20,
         "altura_m": 0.40,
-        "comprimento_m": 3.80
-      },
-      "interfaces": {
-        "inicio": {"elemento": "S01", "tipo": "SAPATA"},
-        "fim": {"elemento": "S02", "tipo": "SAPATA"}
+        "comprimento_liquido_m": 3.80
       },
       "evidencias": {
         "largura_m": {"raw_text": "20", "region": "DET. VB"},
         "altura_m": {"raw_text": "40", "region": "DET. VB"},
-        "comprimento_m": {"raw_text": "3,80", "region": "PLANTA"}
+        "comprimento_liquido_m": {"raw_text": "3,80 face a face", "region": "PLANTA ENTRE S01 E S02"}
       }
-    }
-  ],
-  "intersecoes": [
-    {
-      "elemento_a": "VALA_VB01",
-      "elemento_b": "CAVA_S01",
-      "tipo": "ESCAVACAO",
-      "evidencia": {"raw_text": "interseção visível em planta", "region": "EIXO A/1"}
     }
   ]
 }
@@ -184,7 +172,6 @@ Nunca incluir:
 - `quantidade_liquida`;
 - `resultado`;
 - `expressao_matematica`;
-- volume de interseção calculado;
 - preço, BDI ou custo.
 
 ## 9. Regras disponíveis no motor atual
@@ -210,14 +197,14 @@ Nunca incluir:
 | `FUN.IMPERMEABILIZACAO.AREA.V1` | Impermeabilização |
 | `FUN.DRENAGEM.COMPRIMENTO.V1` | Drenagem |
 
-> Importante: as regras simples acima **não autorizam** ignorar interfaces. Quando existir interseção/nó, o motor deve usar uma regra de consolidação apropriada ou bloquear até ela existir.
+> Importante: quando existir interseção/nó, a LLM deve aplicar o critério visual da skill e entregar o input líquido. O Python não interpreta nem consolida geometria de PDF.
 
 ## 10. Pendências
 
 Se a informação necessária para eliminar duplicidade não estiver disponível:
 
 ```text
-PENDENTE_RFI — geometria de interface insuficiente para calcular o volume líquido sem dupla contagem.
+PENDENTE_RFI — geometria insuficiente para definir o input líquido sem dupla contagem.
 ```
 
-Não aceitar uma soma bruta como resultado final.
+Não aceitar soma bruta nem pedir ao Python que descubra a geometria do PDF.
