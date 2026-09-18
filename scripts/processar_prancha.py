@@ -1,10 +1,11 @@
 """Pipeline mínimo de quantitativos de fundações.
 
 Contrato:
-PDF -> LLM extrai dados/evidências -> JSON -> este script valida/calcula -> SQLite -> CSV/Markdown.
+pré-check SQLite -> PDF -> skill -> LLM interpreta/extrai -> JSON -> este script valida/calcula
+-> SQLite -> CSV/Markdown.
 
-A LLM NÃO envia quantidade calculada nem expressão matemática. Ela só escolhe uma regra
-permitida e transcreve os inputs comprovados na prancha.
+A LLM NÃO envia quantidade final calculada nem expressão matemática. Quando o critério depende
+da leitura visual do projeto, ela aplica a skill e entrega o input líquido comprovado na prancha.
 """
 
 import argparse
@@ -77,15 +78,15 @@ REGRAS: dict[str, Regra] = {
     ),
     "FUN.BALDRAME.CONCRETO.V1": Regra(
         "1.3.9", "Concreto estrutural — viga baldrame", "m³",
-        ("largura_m", "altura_m", "comprimento_m"),
-        lambda d: d["largura_m"] * d["altura_m"] * d["comprimento_m"] * _q(d),
-        lambda d: f'{d["largura_m"]} * {d["altura_m"]} * {d["comprimento_m"]} * {_q(d)}',
+        ("largura_m", "altura_m", "comprimento_liquido_m"),
+        lambda d: d["largura_m"] * d["altura_m"] * d["comprimento_liquido_m"] * _q(d),
+        lambda d: f'{d["largura_m"]} * {d["altura_m"]} * {d["comprimento_liquido_m"]} * {_q(d)}',
     ),
     "FUN.BALDRAME.FORMA_2_FACES.V1": Regra(
         "1.3.7", "Fôrmas — viga baldrame, duas faces", "m²",
-        ("altura_m", "comprimento_m"),
-        lambda d: 2 * d["altura_m"] * d["comprimento_m"] * _q(d),
-        lambda d: f'2 * {d["altura_m"]} * {d["comprimento_m"]} * {_q(d)}',
+        ("altura_m", "comprimento_liquido_m"),
+        lambda d: 2 * d["altura_m"] * d["comprimento_liquido_m"] * _q(d),
+        lambda d: f'2 * {d["altura_m"]} * {d["comprimento_liquido_m"]} * {_q(d)}',
     ),
     "FUN.ESTACA.CONCRETO.V1": Regra(
         "1.3.9", "Concreto estrutural — estaca", "m³",
@@ -101,15 +102,15 @@ REGRAS: dict[str, Regra] = {
     ),
     "FUN.RADIER.CONCRETO.V1": Regra(
         "1.3.9", "Concreto estrutural — radier", "m³",
-        ("area_m2", "espessura_m"),
-        lambda d: d["area_m2"] * d["espessura_m"] * _q(d),
-        lambda d: f'{d["area_m2"]} * {d["espessura_m"]} * {_q(d)}',
+        ("area_liquida_m2", "espessura_m"),
+        lambda d: d["area_liquida_m2"] * d["espessura_m"] * _q(d),
+        lambda d: f'{d["area_liquida_m2"]} * {d["espessura_m"]} * {_q(d)}',
     ),
     "FUN.RADIER.FORMA.V1": Regra(
         "1.3.7", "Fôrmas — borda de radier", "m²",
-        ("perimetro_m", "espessura_m"),
-        lambda d: d["perimetro_m"] * d["espessura_m"] * _q(d),
-        lambda d: f'{d["perimetro_m"]} * {d["espessura_m"]} * {_q(d)}',
+        ("perimetro_liquido_m", "espessura_m"),
+        lambda d: d["perimetro_liquido_m"] * d["espessura_m"] * _q(d),
+        lambda d: f'{d["perimetro_liquido_m"]} * {d["espessura_m"]} * {_q(d)}',
     ),
     "FUN.ARMADURA.PESO.V1": Regra(
         "1.3.8", "Armaduras CA-50 / CA-60", "kg",
@@ -119,33 +120,33 @@ REGRAS: dict[str, Regra] = {
     ),
     "FUN.LASTRO.VOLUME.V1": Regra(
         "1.3.6", "Lastro / regularização", "m³",
-        ("area_base_m2", "espessura_m"),
-        lambda d: d["area_base_m2"] * d["espessura_m"] * _q(d),
-        lambda d: f'{d["area_base_m2"]} * {d["espessura_m"]} * {_q(d)}',
+        ("area_base_liquida_m2", "espessura_m"),
+        lambda d: d["area_base_liquida_m2"] * d["espessura_m"] * _q(d),
+        lambda d: f'{d["area_base_liquida_m2"]} * {d["espessura_m"]} * {_q(d)}',
     ),
     "FUN.ESCAVACAO.RETANGULAR.V1": Regra(
         "1.3.4", "Escavação de vala / cava", "m³",
-        ("largura_m", "comprimento_m", "profundidade_m"),
-        lambda d: d["largura_m"] * d["comprimento_m"] * d["profundidade_m"] * _q(d),
-        lambda d: f'{d["largura_m"]} * {d["comprimento_m"]} * {d["profundidade_m"]} * {_q(d)}',
+        ("area_base_liquida_m2", "profundidade_m"),
+        lambda d: d["area_base_liquida_m2"] * d["profundidade_m"] * _q(d),
+        lambda d: f'{d["area_base_liquida_m2"]} * {d["profundidade_m"]} * {_q(d)}',
     ),
     "FUN.APILOAMENTO.AREA.V1": Regra(
         "1.3.5", "Apiloamento / preparo de fundo", "m²",
-        ("area_m2",),
-        lambda d: d["area_m2"] * _q(d),
-        lambda d: f'{d["area_m2"]} * {_q(d)}',
+        ("area_liquida_m2",),
+        lambda d: d["area_liquida_m2"] * _q(d),
+        lambda d: f'{d["area_liquida_m2"]} * {_q(d)}',
     ),
     "FUN.IMPERMEABILIZACAO.AREA.V1": Regra(
         "1.3.11", "Impermeabilização de fundações", "m²",
-        ("area_m2",),
-        lambda d: d["area_m2"] * _q(d),
-        lambda d: f'{d["area_m2"]} * {_q(d)}',
+        ("area_liquida_m2",),
+        lambda d: d["area_liquida_m2"] * _q(d),
+        lambda d: f'{d["area_liquida_m2"]} * {_q(d)}',
     ),
     "FUN.DRENAGEM.COMPRIMENTO.V1": Regra(
         "1.3.12", "Drenagem perimetral", "m",
-        ("comprimento_m",),
-        lambda d: d["comprimento_m"] * _q(d),
-        lambda d: f'{d["comprimento_m"]} * {_q(d)}',
+        ("comprimento_liquido_m",),
+        lambda d: d["comprimento_liquido_m"] * _q(d),
+        lambda d: f'{d["comprimento_liquido_m"]} * {_q(d)}',
     ),
 }
 
@@ -332,25 +333,42 @@ def exportar_arquivos_obra(conn: sqlite3.Connection, obra_id: int) -> list[str]:
     return [str(csv_path), str(md_path)]
 
 
-def gravar(conn: sqlite3.Connection, obra_id: int, itens: list[dict], prancha: str, sobrescrever: bool) -> int:
+def contar_itens_prancha(conn: sqlite3.Connection, obra_id: int, prancha: str) -> int:
     obra = conn.execute("SELECT id FROM obras WHERE id=?", (obra_id,)).fetchone()
     if not obra:
         raise ValueError(f"obra_id {obra_id} não existe no SQLite")
 
-    termo = f"%{Path(prancha).stem}%"
-    existente = conn.execute(
-        "SELECT COUNT(*) AS n FROM itens_quantitativo WHERE obra_id=? AND prancha_referencia LIKE ?",
-        (obra_id, termo),
-    ).fetchone()["n"]
+    alvo = Path(prancha).stem.casefold()
+    refs = conn.execute(
+        "SELECT prancha_referencia FROM itens_quantitativo WHERE obra_id=?",
+        (obra_id,),
+    ).fetchall()
+    return sum(
+        1
+        for row in refs
+        if Path(str(row["prancha_referencia"])).stem.casefold() == alvo
+    )
+
+
+def gravar(conn: sqlite3.Connection, obra_id: int, itens: list[dict], prancha: str, sobrescrever: bool) -> int:
+    existente = contar_itens_prancha(conn, obra_id, prancha)
 
     if existente and not sobrescrever:
         raise ValueError(
             f"prancha '{prancha}' já possui {existente} itens; use --sobrescrever para substituir"
         )
     if existente:
-        conn.execute(
-            "DELETE FROM itens_quantitativo WHERE obra_id=? AND prancha_referencia LIKE ?",
-            (obra_id, termo),
+        ids = [
+            row["id"]
+            for row in conn.execute(
+                "SELECT id, prancha_referencia FROM itens_quantitativo WHERE obra_id=?",
+                (obra_id,),
+            ).fetchall()
+            if Path(str(row["prancha_referencia"])).stem.casefold() == Path(prancha).stem.casefold()
+        ]
+        conn.executemany(
+            "DELETE FROM itens_quantitativo WHERE id=?",
+            [(item_id,) for item_id in ids],
         )
 
     agora = datetime.now(timezone.utc).isoformat()
@@ -383,15 +401,17 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Valida extração da LLM e calcula quantitativos de fundações.")
     parser.add_argument("--obra", type=int, required=True, help="ID da obra no SQLite")
     parser.add_argument("--prancha", required=True, help="Arquivo/código da prancha")
-    parser.add_argument("--dados", required=True, help="JSON de evidências produzido pela LLM")
+    parser.add_argument("--dados", help="JSON de evidências produzido pela LLM")
+    parser.add_argument(
+        "--verificar",
+        action="store_true",
+        help="Consulta o SQLite antes da leitura do PDF e informa se a prancha já foi levantada",
+    )
     parser.add_argument("--sobrescrever", action="store_true")
     parser.add_argument("--db", default="data/pmo_virtual.sqlite")
     args = parser.parse_args()
 
     try:
-        documento = json.loads(Path(args.dados).read_text(encoding="utf-8"))
-        itens = validar_e_calcular(documento)
-
         db_path = Path(args.db)
         if not db_path.exists():
             raise ValueError(f"SQLite não encontrado: {db_path}")
@@ -399,6 +419,19 @@ def main() -> None:
         conn = sqlite3.connect(db_path)
         conn.row_factory = sqlite3.Row
         try:
+            if args.verificar:
+                existente = contar_itens_prancha(conn, args.obra, args.prancha)
+                if existente:
+                    print(f"[JA_LEVANTADA] prancha '{args.prancha}' já possui {existente} itens no SQLite.")
+                else:
+                    print(f"[LIVRE] prancha '{args.prancha}' ainda não possui quantitativos no SQLite.")
+                return
+
+            if not args.dados:
+                raise ValueError("--dados é obrigatório quando --verificar não for usado")
+
+            documento = json.loads(Path(args.dados).read_text(encoding="utf-8"))
+            itens = validar_e_calcular(documento)
             revisao_id = gravar(conn, args.obra, itens, args.prancha, args.sobrescrever)
             saidas = exportar_arquivos_obra(conn, args.obra)
         finally:
