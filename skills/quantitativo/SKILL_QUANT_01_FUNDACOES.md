@@ -1,25 +1,140 @@
-# SKILL QUANT 01 — FUNDAÇÕES (EXTRAÇÃO)
+# SKILL QUANT 01 — FUNDAÇÕES
 
 > Dependência: `SKILL_QUANTIFICACAO_MASTER.md`
-> Papel desta skill: orientar a LLM a **ler a prancha e transcrever evidências**.
-> O cálculo é responsabilidade exclusiva de `scripts/processar_prancha.py`.
+> Papel desta skill: definir **o que a LLM deve extrair** e os **critérios de medição** que o motor Python deve aplicar.
+> A LLM não calcula resultado final nem cria expressão matemática.
 
-## 1. Princípio
+## 1. Separação de responsabilidades
 
-A LLM não calcula quantitativos. Ela apenas identifica:
+```text
+LLM:
+PDF -> identifica elemento -> transcreve dimensões -> registra evidências -> informa relações geométricas
 
-- tipo do elemento;
-- código/identificador do elemento;
-- valores dimensionais explicitamente visíveis;
-- quantidade/ocorrência explicitamente comprovada;
-- revisão, página e região da evidência;
-- regra de cálculo permitida que corresponde ao dado observado.
+Python:
+valida -> aplica critérios de medição -> desconta interfaces/interseções -> calcula -> SQLite
+```
 
-Se um campo obrigatório não estiver claramente comprovado, não invente, não estime e não use fallback. O item deve ficar fora do JSON de cálculo e ser reportado como pendência/RFI.
+A simplificação do pipeline não elimina critérios de engenharia. Ela apenas tira esses critérios da execução mental da LLM.
 
-## 2. Formato de saída obrigatório
+## 2. Regras invioláveis
 
-A saída para fundações deve seguir este formato:
+- Toda dimensão, quantidade, cota e relação geométrica deve ter evidência de prancha, revisão e página.
+- Ausência, conflito ou revisão indefinida gera `PENDENTE_RFI`; nunca usar fallback.
+- Quantidades são físicas, líquidas e nominais: sem perdas, empolamento comercial ou coeficientes de consumo.
+- Aço vem do quadro/resumo de armaduras; não estimar kg/m³.
+- Folgas de escavação, taludes, escoramento, espessura de lastro e critérios de impermeabilização só entram quando comprovados no projeto/memorial.
+- Geometria não suportada pelo motor deve bloquear o cálculo; a LLM não improvisa fórmula.
+
+## 3. Tipologia de prancha
+
+### Detalhes estruturais
+Podem alimentar:
+- concreto estrutural;
+- fôrmas;
+- armaduras;
+- dimensões de sapatas, blocos, pedestais, estacas e baldrames.
+
+### Planta de locação / geometria / terraplenagem
+É necessária para:
+- escavação de cavas e valas;
+- apiloamento/compactação do fundo;
+- lastro/regularização;
+- reaterro;
+- remoção/bota-fora;
+- análise de interseções entre cavas, valas e elementos.
+
+É proibido quantificar movimentação de terra apenas a partir de um detalhe isolado.
+
+## 4. Critérios oficiais de medição
+
+| Serviço | Unidade | Critério físico líquido |
+|---|---:|---|
+| Locação/gabarito | un / m² | Eixos/área efetivamente locados |
+| Perfuração/cravação | m / un | Comprimento nominal/unidades indicadas |
+| Arrasamento | un | Unidades indicadas |
+| Escavação | m³ | Volume geométrico líquido das cavas/valas, sem dupla contagem de interseções |
+| Apiloamento | m² | Área líquida de fundo preparada, sem sobreposição |
+| Lastro/magro | m³ | Área líquida da base × espessura nominal |
+| Fôrmas | m² | Área real de contato executada |
+| Armaduras | kg | Peso indicado no quadro/resumo |
+| Concreto | m³ | Volume geométrico líquido dos elementos |
+| Impermeabilização | m² | Superfícies especificadas, descontando encostos/interseções |
+| Drenagem | m | Extensão efetivamente projetada |
+| Reaterro | m³ | Escavação líquida menos volumes enterrados comprovados |
+| Bota-fora | m³ | Escavação líquida menos material reaproveitado no reaterro |
+
+## 5. Regra central anti-duplicidade
+
+### 5.1 Baldrame × sapata/bloco/pedestal
+
+Quando um baldrame encontra uma sapata, bloco, pedestal ou pilarete já quantificado:
+
+- medir o baldrame **face a face** do apoio;
+- não prolongar o volume da viga através do apoio;
+- o mesmo critério vale para fôrma e impermeabilização quando as superfícies de contato já pertencem ao apoio;
+- registrar no JSON qual elemento está no início/fim do trecho e a dimensão do apoio necessária para o desconto.
+
+### 5.2 Baldrame × baldrame
+
+Em encontros em T, cruzamentos ou nós:
+
+- cada volume físico deve existir apenas uma vez;
+- a viga secundária deve terminar na face da viga principal quando este for o critério geométrico do projeto;
+- em cruzamentos onde ambas são contínuas, o motor deve descontar a região comum uma única vez;
+- a LLM deve extrair a geometria do nó, mas não calcular o desconto.
+
+### 5.3 Cava de sapata × vala de baldrame
+
+Para escavação, apiloamento, lastro, reaterro e bota-fora:
+
+- nunca somar simplesmente todas as cavas + todas as valas quando elas se interceptam;
+- a região comum entre cava e vala deve ser contabilizada uma única vez;
+- a planta de locação/geometria é obrigatória para comprovar essas relações;
+- o JSON deve identificar as relações/interseções observadas para o motor consolidar o volume líquido.
+
+### 5.4 Vala de baldrame × vala de baldrame
+
+- interseções de valas em T, L ou cruzamento não podem ser contadas duas vezes;
+- a área/volume comum pertence ao conjunto escavado uma única vez;
+- o cálculo deve ser consolidado pelo motor, não por soma independente dos trechos.
+
+## 6. Critérios por serviço
+
+### Escavação
+`V_escavacao` é o volume geométrico líquido da união das cavas e valas válidas do conjunto. Folgas somente quando explicitamente projetadas.
+
+### Apiloamento / compactação de fundo
+Área líquida efetivamente preparada. Interseções de fundos de valas/cavas contam uma vez.
+
+### Lastro / concreto magro
+Área líquida de base × espessura indicada. Não duplicar lastro onde cava e vala compartilham a mesma região.
+
+### Fôrmas
+Somente faces com contato real de fôrma. Fundo apoiado no solo não recebe fôrma. Faces encostadas em outro elemento já executado não são duplicadas.
+
+### Concreto estrutural
+Somar volumes líquidos dos elementos. Interfaces devem obedecer ao critério face-a-face ou desconto de região comum definido pelo projeto.
+
+### Impermeabilização
+Somente superfícies especificadas. Descontar faces de encosto e áreas de interseção já pertencentes a outro elemento.
+
+### Reaterro
+```text
+V_reaterro = V_escavacao_liquida - volumes_enterrados_comprovados
+```
+
+Os volumes enterrados podem incluir concreto estrutural, lastro e outros elementos permanentes explicitamente comprovados.
+
+### Bota-fora / excedente
+```text
+V_excedente_nominal = V_escavacao_liquida - V_reaterro
+```
+
+Empolamento não pertence ao quantitativo físico líquido; se necessário para logística/orçamento, é aplicado em camada posterior.
+
+## 7. Formato de saída da LLM
+
+A LLM envia dados e relações, nunca resultados:
 
 ```json
 {
@@ -28,101 +143,81 @@ A saída para fundações deve seguir este formato:
   "fonte": {
     "arquivo": "EGS-051.pdf",
     "revisao": "A",
-    "pagina": 1
+    "pagina": 1,
+    "tipo_prancha": "LOCACAO_GEOMETRIA"
   },
   "medicoes": [
     {
-      "elemento": "S01",
-      "tipo_elemento": "SAPATA",
-      "cia": "FUN-GER-S01",
-      "regra_id": "FUN.SAPATA.CONCRETO.V1",
+      "elemento": "VB01",
+      "tipo_elemento": "BALDRAME",
+      "regra_id": "FUN.BALDRAME.CONCRETO.V1",
       "inputs": {
-        "largura_m": 1.5,
-        "comprimento_m": 1.8,
-        "altura_m": 0.5,
-        "quantidade": 4
+        "largura_m": 0.20,
+        "altura_m": 0.40,
+        "comprimento_m": 3.80
+      },
+      "interfaces": {
+        "inicio": {"elemento": "S01", "tipo": "SAPATA"},
+        "fim": {"elemento": "S02", "tipo": "SAPATA"}
       },
       "evidencias": {
-        "largura_m": {"raw_text": "1,50", "region": "DETALHE S01"},
-        "comprimento_m": {"raw_text": "1,80", "region": "DETALHE S01"},
-        "altura_m": {"raw_text": "0,50", "region": "CORTE S01"},
-        "quantidade": {"raw_text": "4x S01", "region": "PLANTA DE LOCAÇÃO"}
+        "largura_m": {"raw_text": "20", "region": "DET. VB"},
+        "altura_m": {"raw_text": "40", "region": "DET. VB"},
+        "comprimento_m": {"raw_text": "3,80", "region": "PLANTA"}
       }
+    }
+  ],
+  "intersecoes": [
+    {
+      "elemento_a": "VALA_VB01",
+      "elemento_b": "CAVA_S01",
+      "tipo": "ESCAVACAO",
+      "evidencia": {"raw_text": "interseção visível em planta", "region": "EIXO A/1"}
     }
   ]
 }
 ```
 
-## 3. Campos proibidos na saída da LLM
+## 8. Campos proibidos na saída da LLM
 
 Nunca incluir:
+- `quantidade_liquida`;
+- `resultado`;
+- `expressao_matematica`;
+- volume de interseção calculado;
+- preço, BDI ou custo.
 
-- `quantidade_liquida`
-- `quantity_net`
-- `resultado`
-- `expressao_matematica`
-- `expression`
-- preço, BDI ou custo
+## 9. Regras disponíveis no motor atual
 
-O motor Python cria a expressão auditável e o resultado.
+| regra_id | Serviço |
+|---|---|
+| `FUN.SAPATA.CONCRETO.V1` | Concreto de sapata |
+| `FUN.SAPATA.FORMA.V1` | Fôrma de sapata |
+| `FUN.PEDESTAL.CONCRETO.V1` | Concreto de pedestal |
+| `FUN.PEDESTAL.FORMA.V1` | Fôrma de pedestal |
+| `FUN.BLOCO.CONCRETO.V1` | Concreto de bloco prismático |
+| `FUN.BLOCO.FORMA.V1` | Fôrma de bloco |
+| `FUN.BALDRAME.CONCRETO.V1` | Concreto de baldrame |
+| `FUN.BALDRAME.FORMA_2_FACES.V1` | Fôrma de baldrame |
+| `FUN.ESTACA.CONCRETO.V1` | Concreto de estaca |
+| `FUN.ESTACA.PERFURACAO.V1` | Perfuração/cravação |
+| `FUN.RADIER.CONCRETO.V1` | Concreto de radier |
+| `FUN.RADIER.FORMA.V1` | Fôrma de radier |
+| `FUN.ARMADURA.PESO.V1` | Armadura por peso comprovado |
+| `FUN.LASTRO.VOLUME.V1` | Lastro/regularização |
+| `FUN.ESCAVACAO.RETANGULAR.V1` | Escavação retangular simples |
+| `FUN.APILOAMENTO.AREA.V1` | Apiloamento |
+| `FUN.IMPERMEABILIZACAO.AREA.V1` | Impermeabilização |
+| `FUN.DRENAGEM.COMPRIMENTO.V1` | Drenagem |
 
-## 4. Regras disponíveis
+> Importante: as regras simples acima **não autorizam** ignorar interfaces. Quando existir interseção/nó, o motor deve usar uma regra de consolidação apropriada ou bloquear até ela existir.
 
-Use somente uma das regras abaixo quando todos os inputs obrigatórios estiverem comprovados.
+## 10. Pendências
 
-| regra_id | Elemento/serviço | Inputs obrigatórios |
-|---|---|---|
-| `FUN.SAPATA.CONCRETO.V1` | Concreto de sapata | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.SAPATA.FORMA.V1` | Fôrma lateral de sapata | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.PEDESTAL.CONCRETO.V1` | Concreto de pedestal | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.PEDESTAL.FORMA.V1` | Fôrma lateral de pedestal | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.BLOCO.CONCRETO.V1` | Concreto de bloco prismático | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.BLOCO.FORMA.V1` | Fôrma lateral de bloco prismático | `largura_m`, `comprimento_m`, `altura_m` |
-| `FUN.BALDRAME.CONCRETO.V1` | Concreto de baldrame | `largura_m`, `altura_m`, `comprimento_m` |
-| `FUN.BALDRAME.FORMA_2_FACES.V1` | Fôrma de baldrame apoiado no solo | `altura_m`, `comprimento_m` |
-| `FUN.ESTACA.CONCRETO.V1` | Concreto de estaca circular | `diametro_m`, `comprimento_m` |
-| `FUN.ESTACA.PERFURACAO.V1` | Perfuração/cravação | `comprimento_m` |
-| `FUN.RADIER.CONCRETO.V1` | Concreto de radier | `area_m2`, `espessura_m` |
-| `FUN.RADIER.FORMA.V1` | Fôrma de borda de radier | `perimetro_m`, `espessura_m` |
-| `FUN.ARMADURA.PESO.V1` | Armadura | `peso_kg` |
-| `FUN.LASTRO.VOLUME.V1` | Lastro/regularização | `area_base_m2`, `espessura_m` |
-| `FUN.ESCAVACAO.RETANGULAR.V1` | Escavação retangular | `largura_m`, `comprimento_m`, `profundidade_m` |
-| `FUN.APILOAMENTO.AREA.V1` | Apiloamento/preparo de fundo | `area_m2` |
-| `FUN.IMPERMEABILIZACAO.AREA.V1` | Impermeabilização | `area_m2` |
-| `FUN.DRENAGEM.COMPRIMENTO.V1` | Drenagem perimetral | `comprimento_m` |
-
-`quantidade` é opcional e, quando omitida, o motor assume 1 ocorrência. Se informada, também exige evidência.
-
-## 5. Regras de leitura
-
-- Preserve a unidade observada e converta para SI apenas quando a conversão for inequívoca.
-- Cada input usado deve possuir `raw_text` e `region`.
-- Armadura só pode usar `FUN.ARMADURA.PESO.V1` quando o peso estiver explicitamente indicado em quadro/resumo ou documento equivalente.
-- Não estimar aço por kg/m³.
-- Não inventar folga de escavação, espessura de lastro, talude ou empolamento.
-- Movimentação de terra exige planta/geometry de locação suficiente para evitar sobreposição entre cavas e valas.
-- Uma prancha de detalhe isolado não deve originar escavação, reaterro ou bota-fora sem a geometria de implantação correspondente.
-- Baldrames devem usar comprimentos comprovados; não atravesse apoios por suposição.
-- Para geometrias não suportadas pelas regras acima, interrompa e solicite nova regra Python. Não improvise fórmula.
-
-## 6. Pendências
-
-Quando faltar informação necessária, responda de forma explícita, por exemplo:
+Se a informação necessária para eliminar duplicidade não estiver disponível:
 
 ```text
-PENDENTE_RFI — S01: altura da sapata não está legível na prancha.
+PENDENTE_RFI — geometria de interface insuficiente para calcular o volume líquido sem dupla contagem.
 ```
 
-Não produza medição parcial calculável para esse serviço.
-
-## 7. Responsabilidades
-
-```text
-LLM:
-PDF -> elementos -> inputs -> evidências -> regra_id
-
-Python:
-validação -> expressão -> cálculo -> SQLite -> CSV/Markdown
-```
-
-Esta separação é obrigatória.
+Não aceitar uma soma bruta como resultado final.
