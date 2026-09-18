@@ -1,5 +1,7 @@
 # 💰 SKILL: Composição de Preço — Do Quantitativo ao Custo Total Auditável
 
+> **Pré-requisito obrigatório:** Antes de aplicar esta skill, leia `SKILL_QUANTIFICACAO_MASTER.md` e siga o fluxo, as responsabilidades e as regras universais definidos nele. Esta skill complementa o MASTER e não substitui suas diretrizes.
+
 > **Frente:** Quantitativo → Orçamento
 > **Propósito:** Fechar o loop orçamentário: todo item levantado por um skill de quantitativo DEVE passar por esta skill para receber custo unitário composto (material + mão de obra + BDI) com fonte rastreável.
 > **Ativar quando:** "qual o custo de", "calcule o orçamento de", "feche o orçamento", "qual o preço unitário de", "monte a composição de custo"
