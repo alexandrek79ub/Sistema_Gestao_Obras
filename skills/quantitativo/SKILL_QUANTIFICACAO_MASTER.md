@@ -25,7 +25,7 @@ Este é o **arquivo núcleo** do sistema de quantificação. Ele define os proto
 | [SKILL_QUANT_06_SERVICOS_ESPECIAIS.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANT_06_SERVICOS_ESPECIAIS.md) | Serviços Especiais & Canteiro | Preliminares, Terraplenagem/Contenções, HVAC, Elevadores/Bombas, SDAI/Extintores, **Comunicação Visual, Paisagismo, Piscinas & Áreas de Lazer** |
 | [SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md](file:///c:/Users/Alexandre/Workspace/A11_SISTEMA_DE_GESTAO_OBRAS/skills/quantitativo/SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md) | Auditoria e Verificação | Loop de QA anti-erro de leitura, checklists de cotas e geometria líquida |
 
-> **Protocolo de uso:** Sempre carregar este MASTER + o módulo da disciplina necessária + **SKILL_QUANTIFICACAO_AUDITORIA_E_CORRECAO.md** para validação final.
+> **Protocolo de uso:** Carregar este MASTER + a skill da disciplina necessária. A skill de auditoria é complementar e deve ser usada quando houver revisão, conferência ou suspeita de inconsistência; não é uma etapa obrigatória em todo levantamento.
 
 ---
 
@@ -58,27 +58,79 @@ Cada ambiente recebe um código único no formato: `[Pav]-[Unidade]-[Abrev]`
 
 ---
 
-## 🤖 1.1. Arquitetura Contratual de Quantificação (evidência → cálculo determinístico)
+## 🤖 1.1. Arquitetura Universal de Quantificação
 
-O levantamento somente pode seguir esta cadeia; cada transição é rastreável e bloqueia a seguinte se estiver incompleta:
+O fluxo oficial de todas as disciplinas é simples e obrigatório:
 
 ```text
-Pré-Check SQLite (Anti-Duplicidade) → PDF → EvidenceRecord (REVIEW_REQUIRED) 
-    → confirmação humana (USER_CONFIRMED) → ElementRecord com evidência por atributo 
-    → RuleDefinition → expressão literal → avaliador AST seguro → QuantifiedItem
-    → SQLite (SSOT) → Excel / CSV / Markdown derivados
+PDF
+↓
+Skill da disciplina
+↓
+LLM multimodal
+├─ lê a prancha
+├─ interpreta tecnicamente
+├─ aplica os critérios de medição definidos na skill
+├─ resolve descontos, apoios e interseções que dependem da leitura visual
+└─ produz JSON estruturado com os inputs líquidos e suas evidências
+↓
+Python
+├─ valida estrutura, tipos, unidades e evidências
+├─ rejeita campos ausentes, incoerentes ou regras desconhecidas
+├─ executa somente a matemática determinística
+└─ grava no SQLite
+↓
+SQLite (fonte oficial)
+↓
+CSV / Markdown / Excel derivados
 ```
 
-0. **Pré-Check de Duplicidade no SQLite (Portão Zero):** Antes de ler o PDF ou extrair cotas, deve-se obrigatoriamente consultar o banco oficial (`python scripts/consultar_prancha_sqlite.py <prancha> --obra <obra>`). Se o desenho ou seus elementos já constarem em `itens_quantitativo`, o fluxo é interrompido com alerta imediato para evitar duplicidade de dados e retrabalho.
-1. **Extração de evidências:** a IA multimodal varre a prancha gráfica 2D (plantas, cortes, eixos e cotas), estruturando a geometria e evidências.
-2. **Confirmação e entrada:** após validação das cotas (`USER_CONFIRMED`), gera-se o JSON físico com equações literais e executa-se o motor:
-   ```bash
-   python scripts/motor_quantitativos/cli.py <json_fisico> --db data/pmo_virtual.sqlite
-   ```
-3. **Avaliador AST Determinístico:** o motor calcula matematicamente as expressões literais de cada serviço sem aproximações ou alucinações.
-4. **Persistência e exportação:** o SQLite é a SSOT oficial (`data/pmo_virtual.sqlite`). Excel (`ORCAMENTO_BASE_CONSOLIDADO.xlsx`), CSV (`QUANTITATIVO_MESTRE.csv`) e Markdown são gerados automaticamente.
-5. **Separação de custos:** o levantamento físico rejeita preços, BDI e perdas. Esses dados pertencem ao fluxo de composição/orçamentação, posterior e separado.
+### Responsabilidade da Skill
 
+A skill da disciplina define:
+- o que procurar na prancha;
+- como interpretar os elementos;
+- os critérios de medição;
+- como tratar apoios, encontros, vãos, interseções e descontos;
+- quais dados são obrigatórios;
+- quais regras Python podem ser acionadas;
+- quando interromper e abrir RFI.
+
+A skill não deve transferir fórmulas aritméticas simples para a LLM quando elas puderem ser executadas deterministicamente pelo Python.
+
+### Responsabilidade da LLM multimodal
+
+A LLM é responsável pela interpretação visual e técnica do projeto. Ela deve:
+- identificar elementos e dimensões;
+- entender relações espaciais visíveis na prancha;
+- aplicar os critérios de medição da skill;
+- fornecer comprimentos, áreas, quantidades ou demais inputs já líquidos quando o critério depender da leitura gráfica;
+- registrar a evidência de cada input;
+- indicar pendência quando a informação não estiver comprovada.
+
+A LLM não deve enviar resultado final calculado, preço, BDI, custo ou expressão matemática como autoridade do sistema.
+
+### Responsabilidade do Python
+
+O Python não interpreta o PDF. Ele recebe somente o JSON produzido pela LLM e:
+- valida o contrato de dados;
+- verifica campos obrigatórios;
+- verifica tipos e unidades;
+- rejeita valores inválidos;
+- executa a fórmula cadastrada;
+- gera a expressão auditável;
+- grava a quantidade calculada no SQLite;
+- gera artefatos derivados.
+
+Erro de validação ou cálculo deve bloquear o item. Nunca converter erro em quantidade zero.
+
+### Regra de simplicidade
+
+Não criar camadas intermediárias como `EvidenceRecord → ElementRecord → CalculationRequest` sem necessidade comprovada. O contrato oficial entre IA e código é o JSON de extração da disciplina.
+
+### Regra de evidência
+
+Todo input usado em cálculo deve possuir evidência identificável no projeto. Sem evidência, o item não é calculado e deve ser tratado como `PENDENTE_RFI`.
 
 ---
 
@@ -331,12 +383,12 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 
 ## ⚠️ 5. Regras de Ouro — O Agente NUNCA deve:
 
-1. **Gerar quantidades sem transcrever a memória de cálculo** — fórmula, valores e critério de desconto de vão obrigatórios.
+1. **Gerar quantidades sem rastreabilidade** — todo resultado deve possuir inputs, evidências, regra aplicada e memória auditável gerada pelo motor.
 2. **Resumir, agrupar ou omitir insumos/acessórios** — O levantamento DEVE ser 100% granular e detalhado peça-a-peça em todas as disciplinas (caixas, conexões, ferragens, suportes, aterramentos, calhas, rufos, etc.).
 3. **Misturar serviços de disciplinas diferentes na mesma memória** — Estrutura e Arquitetura são sempre separadas.
-4. **Ignorar a Regra de Desconto de Apoios / Interseções** — Em cruzamentos de elementos (ex: vigas x pilares/pilaretes), é obrigatório descontar os apoios na viga para que ela seja levantada apenas nos vãos livres, se os pilaretes já foram ou serão levantados inteiros. Jamais gere duplicidade de concreto, fôrma ou impermeabilização no mesmo nó.
+4. **Ignorar a Regra de Desconto de Apoios / Interseções** — Em cruzamentos de elementos (ex: vigas x pilares/pilaretes), é obrigatório medir apenas a geometria líquida conforme a skill da disciplina. A LLM, por enxergar a prancha, aplica o critério visual de face a face, encontros e interseções antes de gerar o JSON. O Python apenas calcula sobre esses inputs líquidos. Jamais gerar duplicidade de concreto, fôrma, escavação, lastro, impermeabilização ou reaterro no mesmo nó.
 5. **Omitir o Código CIA** em qualquer resultado.
-6. **Assumir dimensões sem confirmação** — perguntar explicitamente antes de calcular.
+6. **Assumir dimensões sem evidência** — dado ausente ou ambíguo gera `PENDENTE_RFI`; não estimar nem completar por suposição.
 7. **Aplicar taxas de perda no levantamento de projeto** — É expressamente PROIBIDO aplicar perdas de material (concreto, aço, argamassa, madeira) ou empolamentos no levantamento físico. As perdas pertencem estritamente às Composições de Preço Unitário (CPUs/SINAPI) e compras.
 8. **Gerar totais globais sem os subtotais por ambiente** — totais são soma auditável dos ambientes.
 9. **Arredondar artificialmente números no projeto** — manter a precisão nominal geométrica de 2 casas decimais.
@@ -346,7 +398,7 @@ No final de cada levantamento, o agente DEVE declarar se 100% das pranchas e cha
 13. **Estimar preços ou quantitativos** — o agente apura o quantitativo físico das pranchas, o engenheiro orça com SINAPI/cotações.
 14. **Inserir insumos miúdos, consumíveis ou embalagens comerciais (arames, pregos, espaçadores, fitas, tintas avulsas)** — É expressamente PROIBIDO explodir insumos secundários no levantamento físico. Esses insumos já estão inclusos nas composições de serviço.
 15. **Emitir quantitativo sem a Tabela de Serviços / EAP correspondente** — todo levantamento deve estar vinculado aos serviços executivos e pacotes de trabalho da EAP para alimentar o cronograma e o avanço físico.
-16. **Apresentar uma linha na Tabela de Quantitativos sem sua memória de cálculo detalhada** — cada serviço deve ter sua expressão algébrica documentada na Memória de Cálculo.
+16. **Apresentar uma linha na Tabela de Quantitativos sem memória auditável** — a expressão final deve ser gerada pelo Python a partir dos inputs validados.
 17. **Omitir cotas ou inventar dimensões ausentes em prancha** — se faltar cota ou detalhe, abrir RFI formal imediatamente.
 
 ---
@@ -372,7 +424,7 @@ Antes de encerrar qualquer levantamento de quantitativo:
 - [ ] Hierarquia completa preenchida (Obra > Pavimento > Unidade > Ambiente > Disciplina > Serviço)
 - [ ] Código CIA atribuído a cada ambiente
 - [ ] Quadro de Esquadrias gerado (se houver serviços de alvenaria e acabamentos)
-- [ ] Memória de cálculo transcrita para **cada serviço em cada ambiente** (expressão literal auditável)
+- [ ] Cada serviço possui inputs líquidos, evidências e regra aplicada; a expressão literal auditável é gerada pelo Python
 - [ ] **Cada linha da Tabela de Serviços rastreada para sua memória de cálculo** (sem linha órfã)
 - [ ] Revestimento de PAREDE separado de TETO
 - [ ] Desconto de vãos aplicado (NBR 12721 — tabela de 3 faixas)
