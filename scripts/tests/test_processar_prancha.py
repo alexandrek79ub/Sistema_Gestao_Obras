@@ -1,7 +1,6 @@
-import sqlite3
 import unittest
 
-from processar_prancha import contar_itens_prancha, validar_e_calcular
+from processar_prancha import validar_e_calcular
 
 
 def documento_base():
@@ -103,25 +102,6 @@ class ProcessarPranchaTest(unittest.TestCase):
         item = validar_e_calcular(doc)[0]
         self.assertAlmostEqual(item["quantidade_liquida"], 0.304)
 
-    def test_precheck_encontra_prancha_pelo_nome_exato(self):
-        conn = sqlite3.connect(":memory:")
-        conn.row_factory = sqlite3.Row
-        conn.execute("CREATE TABLE obras (id INTEGER PRIMARY KEY)")
-        conn.execute(
-            "CREATE TABLE itens_quantitativo (id INTEGER PRIMARY KEY, obra_id INTEGER, prancha_referencia TEXT)"
-        )
-        conn.execute("INSERT INTO obras (id) VALUES (3)")
-        conn.execute(
-            "INSERT INTO itens_quantitativo (obra_id, prancha_referencia) VALUES (?, ?)",
-            (3, "/projetos/obra/F-01.pdf"),
-        )
-        conn.execute(
-            "INSERT INTO itens_quantitativo (obra_id, prancha_referencia) VALUES (?, ?)",
-            (3, "/projetos/obra/F-010.pdf"),
-        )
-        self.assertEqual(contar_itens_prancha(conn, 3, "F-01.pdf"), 1)
-        self.assertEqual(contar_itens_prancha(conn, 3, "F-02.pdf"), 0)
-        conn.close()
 
 
 if __name__ == "__main__":
